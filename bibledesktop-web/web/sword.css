@@ -1,0 +1,124 @@
+
+body
+{
+    background-image: url(banner.gif);
+    background-color: #C8E3BF;
+    border: 2px solid white;
+    vertical-align: middle;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 60px;
+    margin-right: 60px;
+    background-repeat: no-repeat;
+}
+
+html
+{
+    background-color: #A6C0CA;
+}
+
+#lsidediv
+{
+    position: absolute;
+    top: 100px;
+    left: 35px;
+    width: 105px;
+}
+
+.lsidecell
+{
+    border: 2px solid white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 7px;
+    color: white;
+}
+
+.lsidecell a
+{
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
+
+.current
+{
+    background-color: #444482;
+}
+
+.pagelink
+{
+    background-color: #7474b1;
+}
+
+.subscribe
+{
+    margin-top: 30px;
+    background-color: #AAAAAA;
+    font-size: small;
+    color: black;
+    padding: 5px;
+    margin-bottom: 7px;
+}
+
+.subscribe input
+{
+    margin-bottom: 4px;
+    border: 1px solid black;
+}
+
+.subscribe form
+{
+    margin-bottom: 0px;
+}
+
+#rsidediv
+{
+    width: 90px;
+    position: absolute;
+    top: 100px;
+    right: 35px;
+    border: 2px solid white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 7px;
+    color: white;
+    font-size: small;
+    background-color: #7474b1;
+}
+
+#rsidediv a
+{
+    color: white;
+    display: block;
+    background-color: #036;
+    width: 90px;
+    padding: 2px 8px;
+    text-decoration: none;
+}
+
+#rsidediv a:hover
+{
+    background-color: #8f8fcc;
+    color: #white;
+}
+
+#rsidediv ul
+{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+#navcontainer li
+{
+    margin-top: 4px;
+}
