@@ -38,13 +38,12 @@
   <!--=======================================================================
     == Override targets that should do nothing
     =======================================================================-->
-  <!-- It is necessary to build and prepare the dependencies - ->
+  <!-- It is necessary to build and prepare the dependencies -->
   <target name="prepare"
           depends="prepare.dependency"
           description="Prepare the build by copying needed jars and files">
-    <!- - There are no jars to copy - ->
+    <!-- There are no jars to copy -->
   </target>
-  -->
 
   <target name="build" 
           depends="build.dependency"
