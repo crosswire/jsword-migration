@@ -213,6 +213,21 @@
     <xsl:if test="string-length($title) > 0">
       <h3><xsl:value-of select="$title"/></h3>
     </xsl:if>
+    <!-- Always output the verse -->
+    <xsl:choose>
+ 	  <xsl:when test="$VLine = 'true'">
+        <div class="l"><xsl:call-template name="versenum"/><xsl:apply-templates/><xsl:text> </xsl:text></div>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="versenum"/><xsl:apply-templates/>
+        <!-- Follow the verse with an extra space -->
+        <!-- when they don't start on lines to themselves -->
+        <xsl:text> </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="versenum">
     <!-- Are verse numbers wanted? -->
     <xsl:if test="$VNum = 'true'">
       <xsl:variable name="versenum">
@@ -236,20 +251,7 @@
       	</xsl:otherwise>
       </xsl:choose>
     </xsl:if>
-    <!-- Always output the verse -->
-    <xsl:choose>
- 	  <xsl:when test="$VLine = 'true'">
-        <div class="l"><xsl:apply-templates/><xsl:text> </xsl:text></div>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates/>
-        <!-- Follow the verse with an extra space -->
-        <!-- when they don't start on lines to themselves -->
-        <xsl:text> </xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
   </xsl:template>
-
   <!--=======================================================================-->
   <!-- Avoid adding whitespace -->
   <xsl:template match="a">
