@@ -76,6 +76,7 @@
         writeLink("side", "index.html", "Home");
         writeLink("side", "download.html", "Download");
         writeLink("side", "screenshot.html", "Screenshots");
+        writeLink("side", "howto.html", "How-To");
         ]]>
       </script>
 

@@ -26,6 +26,7 @@ import java.util.Set;
 
 import javax.swing.ButtonGroup;
 import javax.swing.FocusManager;
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -424,6 +425,7 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
         contentPane.add(corePanel, BorderLayout.CENTER);
         setJMenuBar(barMenu);
 
+        setIconImage(ICON_APP.getImage());
         setEnabled(true);
         setTitle(Msg.getApplicationTitle());
     }
@@ -1118,6 +1120,11 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
     protected static final Logger log = Logger.getLogger(Desktop.class);
 
     protected DesktopActions actions;
+
+    /**
+     * The application icon
+     */
+    private static final ImageIcon ICON_APP = GuiUtil.getIcon("images/icon16.png"); //$NON-NLS-1$
 
     /*
      * GUI components
