@@ -68,7 +68,7 @@ public class TextPaneBookMetaDataDisplay
         try
         {
 
-            SAXEventProvider osissep = new JDOMSAXEventProvider(book.getBookMetaData().toOSIS());
+            SAXEventProvider osissep = new JDOMSAXEventProvider(book.toOSIS());
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
             String text = XMLUtil.writeToString(htmlsep);
 

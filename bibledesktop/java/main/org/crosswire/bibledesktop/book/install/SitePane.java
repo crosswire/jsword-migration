@@ -265,6 +265,7 @@ public class SitePane extends JPanel
         else
         {
             panel.add(new JButton(actions.getAction(DELETE)));
+            panel.add(new JButton(actions.getAction(UNINDEX)));
         }
         return panel;
     }
@@ -285,16 +286,52 @@ public class SitePane extends JPanel
 
         try
         {
-            book.getBookMetaData().getDriver().delete(book);
+            if (JOptionPane.showConfirmDialog(this, Msg.CONFIRM_DELETE_BOOK.toString(new Object[] {book.getName()}),
+                            Msg.CONFIRM_DELETE_TITLE.toString(),
+                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+            {
+                book.getDriver().delete(book);
 
+                IndexManager imanager = IndexManagerFactory.getIndexManager();
+                if (imanager.isIndexed(book))
+                {
+                    imanager.deleteIndex(book);
+                }
+            }
+        }
+        catch (BookException e)
+        {
+            Reporter.informUser(this, e);
+        }
+    }
+
+    /**
+     * Delete the current book
+     */
+    public void doUnindex()
+    {
+        TreePath path = treAvailable.getSelectionPath();
+        if (path == null)
+        {
+            return;
+        }
+
+        Object last = path.getLastPathComponent();
+        Book book = getBook(last);
+
+        try
+        {
             IndexManager imanager = IndexManagerFactory.getIndexManager();
             if (imanager.isIndexed(book))
             {
-                imanager.deleteIndex(book);
+                if (JOptionPane.showConfirmDialog(this, Msg.CONFIRM_UNINSTALL_BOOK.toString(new Object[] {book.getName()}),
+                                Msg.CONFIRM_UNINSTALL_TITLE.toString(),
+                                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+                {
+                    imanager.deleteIndex(book);
+                }
             }
-//            // unselect it and then remove from list.
-//            treAvailable.removeSelectionPath(path);
-//            ((DefaultTreeModel)treAvailable.getModel()).removeNodeFromParent((MutableTreeNode) last);
+            actions.getAction(UNINDEX).setEnabled(imanager.isIndexed(book));
         }
         catch (BookException e)
         {
@@ -343,15 +380,15 @@ public class SitePane extends JPanel
         try
         {
             // Is the book already installed? Then nothing to do.
-            Book book = Books.installed().getBook(name.getBookMetaData().getName());
+            Book book = Books.installed().getBook(name.getName());
             if (book != null && !installer.isNewer(name))
             {
-                Reporter.informUser(this, Msg.INSTALLED, name.getBookMetaData().getName());
+                Reporter.informUser(this, Msg.INSTALLED, name.getName());
                 return;
             }
 
             float size = NetUtil.getSize(installer.toRemoteURL(name)) / 1024.0F;
-            if (JOptionPane.showConfirmDialog(this, Msg.SIZE.toString(new Object[] {name.getBookMetaData().getName(), new Float(size)}),
+            if (JOptionPane.showConfirmDialog(this, Msg.SIZE.toString(new Object[] {name.getName(), new Float(size)}),
                             Msg.CONFIRMATION_TITLE.toString(),
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
             {
@@ -407,7 +444,9 @@ public class SitePane extends JPanel
         }
         display.setBook(book);
 
+        IndexManager imanager = IndexManagerFactory.getIndexManager();
         actions.getAction(DELETE).setEnabled(bookSelected && book.getDriver().isDeletable(book));
+        actions.getAction(UNINDEX).setEnabled(bookSelected && imanager.isIndexed(book));
         actions.getAction(INSTALL).setEnabled(bookSelected);
         actions.getAction(INSTALL_SEARCH).setEnabled(bookSelected && book.getType() == BookType.BIBLE);
     }
@@ -447,6 +486,7 @@ public class SitePane extends JPanel
     private static final String INSTALL = "Install"; //$NON-NLS-1$
     private static final String INSTALL_SEARCH = "InstallSearch"; //$NON-NLS-1$
     private static final String DELETE = "Delete"; //$NON-NLS-1$
+    private static final String UNINDEX = "Unindex"; //$NON-NLS-1$
 
     /**
      * From which we get our list of installable modules

@@ -114,7 +114,7 @@ public class JDTBURLConnection extends URLConnection
      */
     public static URL createURL(Book book, Key key) throws MalformedURLException
     {
-        return new URL(PROTOCOL_NAME + PROTOCOL_SEPARATOR1 + book.getBookMetaData().getInitials() + PROTOCOL_SEPARATOR2 + key);
+        return new URL(PROTOCOL_NAME + PROTOCOL_SEPARATOR1 + book.getInitials() + PROTOCOL_SEPARATOR2 + key);
     }
 
     public static final String PROTOCOL_NAME = "book"; //$NON-NLS-1$

@@ -96,7 +96,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         selected = mdlBible.getSelectedBook();
         if (selected != null)
         {
-            cboBible.setToolTipText(selected.getBookMetaData().toString());
+            selected.addPropertyChangeListener(pcl);
+            cboBible.setToolTipText(selected.toString());
         }
         else
         {
@@ -420,8 +421,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
         if (selected != null && selected != newSelected)
         {
-            selected.getBookMetaData().removePropertyChangeListener(pcl);
-            newSelected.getBookMetaData().addPropertyChangeListener(pcl);
+            selected.removePropertyChangeListener(pcl);
+            newSelected.addPropertyChangeListener(pcl);
         }
 
         selected = newSelected;
@@ -472,8 +473,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     protected void enableComponents()
     {
         boolean readable = selected != null;
-        boolean searchable = readable && selected.getBookMetaData().getIndexStatus().equals(IndexStatus.DONE);
-        boolean indexable = readable && selected.getBookMetaData().getIndexStatus().equals(IndexStatus.UNDONE);
+        boolean searchable = readable && selected.getIndexStatus().equals(IndexStatus.DONE);
+        boolean indexable = readable && selected.getIndexStatus().equals(IndexStatus.UNDONE);
 
         txtSearch.setEnabled(searchable);
         txtSearch.setBackground(searchable ? SystemColor.text : SystemColor.control);

@@ -61,7 +61,7 @@ public class ReferenceBookTreeNode implements TreeNode
      */
     public String toString()
     {
-        return book.getBookMetaData().getName();
+        return book.getName();
     }
 
     /* (non-Javadoc)

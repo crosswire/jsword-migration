@@ -157,11 +157,11 @@ public class MaintenancePane extends EirPanel
             }
 
             if (JOptionPane.showConfirmDialog(this,
-                "Are you sure you want to delete "+book.getBookMetaData().getName()+"?\nDeleted Books can not be recovered", //$NON-NLS-1$ //$NON-NLS-2$
+                "Are you sure you want to delete "+book.getName()+"?\nDeleted Books can not be recovered", //$NON-NLS-1$ //$NON-NLS-2$
                 "Delete Bible", //$NON-NLS-1$
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
             {
-                book.getBookMetaData().getDriver().delete(book);
+                book.getDriver().delete(book);
             }
         }
         catch (Exception ex)

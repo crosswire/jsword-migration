@@ -38,6 +38,10 @@ class Msg extends MsgBase
     static final Msg DELETE_FAILED = new Msg("SitePane.DeleteFailed"); //$NON-NLS-1$
     static final Msg AVAILABLE_DESC = new Msg("SitePane.AvailableDesc"); //$NON-NLS-1$
     static final Msg NONE_AVAILABLE_DESC = new Msg("SitePane.NoneAvailableDesc"); //$NON-NLS-1$
+    static final Msg CONFIRM_DELETE_TITLE = new Msg("SitePane.ConfirmDeleteTitle"); //$NON-NLS-1$
+    static final Msg CONFIRM_DELETE_BOOK = new Msg("SitePane.ConfirmDeleteBook"); //$NON-NLS-1$
+    static final Msg CONFIRM_UNINSTALL_TITLE = new Msg("SitePane.ConfirmUninstallTitle"); //$NON-NLS-1$
+    static final Msg CONFIRM_UNINSTALL_BOOK = new Msg("SitePane.ConfirmUninstallBook"); //$NON-NLS-1$
 
     static final Msg EDIT_SITE_TITLE = new Msg("EditSitePane.EditSitesTitle"); //$NON-NLS-1$
     static final Msg MISSING_SITE = new Msg("EditSitePane.MissingSite"); //$NON-NLS-1$

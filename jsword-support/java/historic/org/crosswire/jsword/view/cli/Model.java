@@ -146,7 +146,7 @@ public class Model
         for (Iterator it = list.iterator(); it.hasNext();)
         {
             Book book = (Book) it.next();
-            buffer.append(book.getBookMetaData().getFullName());
+            buffer.append(book.getFullName());
             
             if (it.hasNext())
             {
