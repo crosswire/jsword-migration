@@ -13,11 +13,11 @@
 <jsp:scriptlet><![CDATA[
   String localprefix = application.getInitParameter("localprefix");
   if (localprefix == null)
-  	throw new NullPointerException("localprefix");
+      throw new NullPointerException("localprefix");
 
   String webprefix = application.getInitParameter("webprefix");
   if (webprefix == null)
-  	throw new NullPointerException("webprefix");
+      throw new NullPointerException("webprefix");
 ]]></jsp:scriptlet>
 
 <h1>Stable Release</h1>
@@ -40,10 +40,10 @@
 <p>We keep official releases hanging around for a while.</p>
 <table width="90%" align="center" border="1" bordercolor="#000000" cellspacing="0" cellpadding="2">
   <tr>
-	<td>-</td>
-	<td colspan="2" align="center">Binary</td>
-	<td colspan="2" align="center">Source</td>
-	<td colspan="2" align="center">Docs</td>
+    <td>-</td>
+    <td colspan="2" align="center">Binary</td>
+    <td colspan="2" align="center">Source</td>
+    <td colspan="2" align="center">Docs</td>
   </tr>
   <tr>
     <td>Compression</td>
@@ -60,13 +60,13 @@
   {
   ]]></jsp:scriptlet>
   <tr>
-	<td><jsp:expression>dls[i].getVersionString()</jsp:expression></td>
-	<td><jsp:expression>dls[i].getLinkString(DownloadSet.BIN_ZIP)</jsp:expression></td>
-	<td><jsp:expression>dls[i].getLinkString(DownloadSet.BIN_TGZ)</jsp:expression></td>
-	<td><jsp:expression>dls[i].getLinkString(DownloadSet.SRC_ZIP)</jsp:expression></td>
-	<td><jsp:expression>dls[i].getLinkString(DownloadSet.SRC_TGZ)</jsp:expression></td>
-	<td><jsp:expression>dls[i].getLinkString(DownloadSet.DOC_ZIP)</jsp:expression></td>
-	<td><jsp:expression>dls[i].getLinkString(DownloadSet.DOC_TGZ)</jsp:expression></td>
+    <td><jsp:expression>dls[i].getVersionString()</jsp:expression></td>
+    <td><jsp:expression>dls[i].getLinkString(DownloadSet.BIN_ZIP)</jsp:expression></td>
+    <td><jsp:expression>dls[i].getLinkString(DownloadSet.BIN_TGZ)</jsp:expression></td>
+    <td><jsp:expression>dls[i].getLinkString(DownloadSet.SRC_ZIP)</jsp:expression></td>
+    <td><jsp:expression>dls[i].getLinkString(DownloadSet.SRC_TGZ)</jsp:expression></td>
+    <td><jsp:expression>dls[i].getLinkString(DownloadSet.DOC_ZIP)</jsp:expression></td>
+    <td><jsp:expression>dls[i].getLinkString(DownloadSet.DOC_TGZ)</jsp:expression></td>
   </tr>
   <jsp:scriptlet><![CDATA[
   }
@@ -92,10 +92,10 @@
 </p>
 <table width="90%" align="center" border="1" bordercolor="#000000" cellspacing="0" cellpadding="2">
   <tr>
-	<td>-</td>
-	<td colspan="2" align="center">Binary</td>
-	<td colspan="2" align="center">Source</td>
-	<td colspan="2" align="center">Docs</td>
+    <td>-</td>
+    <td colspan="2" align="center">Binary</td>
+    <td colspan="2" align="center">Source</td>
+    <td colspan="2" align="center">Docs</td>
   </tr>
   <tr>
     <td>Compression</td>
@@ -112,13 +112,13 @@
   {
   ]]></jsp:scriptlet>
   <tr>
-	<td><jsp:expression>dls[i].getDateString()</jsp:expression></td>
-	<td><jsp:expression>dls[i].getLinkString(DownloadSet.BIN_ZIP)</jsp:expression></td>
-	<td><jsp:expression>dls[i].getLinkString(DownloadSet.BIN_TGZ)</jsp:expression></td>
-	<td><jsp:expression>dls[i].getLinkString(DownloadSet.SRC_ZIP)</jsp:expression></td>
-	<td><jsp:expression>dls[i].getLinkString(DownloadSet.SRC_TGZ)</jsp:expression></td>
-	<td><jsp:expression>dls[i].getLinkString(DownloadSet.DOC_ZIP)</jsp:expression></td>
-	<td><jsp:expression>dls[i].getLinkString(DownloadSet.DOC_TGZ)</jsp:expression></td>
+    <td><jsp:expression>dls[i].getDateString()</jsp:expression></td>
+    <td><jsp:expression>dls[i].getLinkString(DownloadSet.BIN_ZIP)</jsp:expression></td>
+    <td><jsp:expression>dls[i].getLinkString(DownloadSet.BIN_TGZ)</jsp:expression></td>
+    <td><jsp:expression>dls[i].getLinkString(DownloadSet.SRC_ZIP)</jsp:expression></td>
+    <td><jsp:expression>dls[i].getLinkString(DownloadSet.SRC_TGZ)</jsp:expression></td>
+    <td><jsp:expression>dls[i].getLinkString(DownloadSet.DOC_ZIP)</jsp:expression></td>
+    <td><jsp:expression>dls[i].getLinkString(DownloadSet.DOC_TGZ)</jsp:expression></td>
   </tr>
   <jsp:scriptlet><![CDATA[
   }

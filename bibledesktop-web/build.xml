@@ -1,7 +1,7 @@
 <project name="jsword-web" default="all">
 
   <import file="../common/core.xml"/>
-  <property name="dependency"       value="jsword-web"/>
+  <property name="dependency"       value="bibledesktop"/>
   <property name="dependency.jar"   value="../${dependency}/target/ant/jar"/>
   <property name="dependency.install" value="../${dependency}/target/ant/${dependency}"/>
   <property name="jnlp.web.hostname" value="http://www.crosswire.org"/>
@@ -9,154 +9,50 @@
 
   <!--=======================================================================-->
   <property name="source.web"       value="${source.root}/web"/>
-  <property name="target.download"  value="${target.root}/download"/> <!-- designed for override -->
-  <property name="target.web"       value="${target.root}/web"/> <!-- designed for override -->
 
-  <property name="gener.root"       value="target/gener"/>
-  <property name="target.swingui"   value="${target.root}/swingui/jsword"/>
+  <property name="webapp.bibledesktop" value="${target.root}/web"/> <!-- override -->
+  <property name="jnlp.hostname"    value="localhost:8080"/> <!-- override -->
+  <property name="ftp.base"         value="${basedir}/${target.root}/download"/> <!-- override -->
+  <property name="web.prefix"       value="../download"/> <!-- override -->
 
-  <property name="ant.lib"          value="${ant.home}/lib"/>
-  <property name="jnlp.hostname"    value="localhost:8080"/> <!-- override this with -Djnlp.hostname=www.crosswire.org to build in live -->
-  <property name="webprefix"        value="../download"/> <!-- override this to build in live. This probably won't work without overriding -->
-  <property name="localprefix"      value="${basedir}/${target.download}"/>
-  <property name="nightly.dir"      value="${localprefix}/nightly"/>
-  <property name="release.dir"      value="${localprefix}/release"/>
-
-  <property name="target.installed" value="${target.web}/jnlp"/>
-
-  <!--=======================================================================-->
-  <path id="path.alljava">
-    <pathelement path="../common/java/config"/>
-    <pathelement path="../common/java/core"/>
-    <pathelement path="../common/java/gpl"/>
-    <pathelement path="../common/java/swing"/>
-    <pathelement path="../jsword/java/jsword"/>
-    <pathelement path="../bibledesktop/java/main"/>
-    <pathelement path="../jsword-web/java/main"/>
-  </path>
-  <patternset id="pattern.alljava">
-    <include name="common/java/config/**/*.java"/>
-    <include name="common/java/core/**/*.java"/>
-    <include name="common/java/gpl/**/*.java"/>
-    <include name="common/java/swing/**/*.java"/>
-    <include name="jsword/java/jsword/**/*.java"/>
-    <include name="bibledesktop/java/main/**/*.java"/>
-    <include name="jsword-web/java/main/**/*.java"/>
-  </patternset>
-  <fileset id="fileset.alljava" dir="..">
-    <patternset refid="pattern.alljava"/>
-  </fileset>
-  <path id="path.allclasses">
-    <pathelement path="../common/${target.classes}"/>
-    <pathelement path="../jsword/${target.classes}"/>
-    <pathelement path="../bibledesktop/${target.classes}"/>
-    <pathelement path="../jsword-web/${target.classes}"/>
-  </path>
-  <patternset id="pattern.allclasses">
-    <include name="common/${target.classes}/**/*.class"/>
-    <include name="jsword/${target.classes}/**/*.class"/>
-    <include name="bibledesktop/${target.classes}/**/*.class"/>
-    <include name="jsword-web/${target.classes}/**/*.class"/>
-  </patternset>
-  <fileset id="fileset.allclasses" dir="..">
-    <patternset refid="pattern.allclasses"/>
-  </fileset>
-
-  <!--=======================================================================-->
-  <target name="files" depends="build" description="Build an unpacked war file">
-    <mkdir dir="${target.web}"/>
-    <style basedir="${source.web}" extension=".html" style="${source.web}/template.xsl" destdir="${target.web}">
-      <include name="**/*.html"/>
-      <xmlcatalog>
-        <dtd publicid="-//W3C//DTD XHTML 1.0 Transitional//EN" location="${source.etc}/xhtml1-transitional.dtd"/>
-      </xmlcatalog>
-    </style>
-    <style basedir="${source.web}" extension=".jsp" style="${source.web}/template.xsl" destdir="${target.web}">
-      <include name="*.jsp"/>
-    </style>
-    <copy todir="${target.web}">
-      <fileset dir="${source.web}">
-        <exclude name="*.jsp"/>
-        <exclude name="*.html"/>
-        <exclude name="*.xsl"/>
-      </fileset>
-    </copy>
-    <mkdir dir="${target.web}/WEB-INF"/>
-    <copy todir="${target.web}/WEB-INF" filtering="true">
-      <filterset>
-        <filter token="localprefix" value="${localprefix}"/>
-        <filter token="webprefix" value="${webprefix}"/>
-      </filterset>
-      <fileset dir="${source.etc}/web"/>
-    </copy>
-    <mkdir dir="${target.web}/WEB-INF/classes"/>
-    <mkdir dir="${target.web}/WEB-INF/lib"/>
-    <copy todir="${target.web}/WEB-INF/lib">
-      <fileset dir="${target.jar}" includes="*.jar"/>
-    </copy>
-    <!-- needed by the download servlet -->
-    <mkdir dir="${nightly.dir}"/>
-    <mkdir dir="${release.dir}"/>
-  </target>
+  <property name="nightly.dir"      value="${ftp.base}/nightly"/>
+  <property name="release.dir"      value="${ftp.base}/release"/>
+  <property name="target.installed" value="${webapp.jsword}/jnlp"/>
 
   <!--=======================================================================-->
   <target name="webapp" description="Build an unpacked war file">
-    <mkdir dir="${target.web}"/>
-    <style basedir="${source.web}" extension=".html" style="${source.web}/template.xsl" destdir="${target.web}">
+    <mkdir dir="${webapp.bibledesktop}"/>
+    <style basedir="${source.web}" extension=".html" style="${source.web}/template.xsl" destdir="${webapp.bibledesktop}">
       <include name="**/*.html"/>
       <xmlcatalog>
         <dtd publicid="-//W3C//DTD XHTML 1.0 Transitional//EN" location="${source.etc}/xhtml1-transitional.dtd"/>
       </xmlcatalog>
     </style>
-    <style basedir="${source.web}" extension=".jsp" style="${source.web}/template.xsl" destdir="${target.web}">
-      <include name="*.jsp"/>
-    </style>
-    <copy todir="${target.web}">
+    <copy todir="${webapp.bibledesktop}" filtering="true">
+      <fileset dir="${source.web}">
+        <include name="**/*.jnlp"/>
+      </fileset>
+      <filterset>
+        <filter token="jnlp.hostname" value="${jnlp.hostname}"/>
+      </filterset>
+    </copy>
+    <copy todir="${webapp.bibledesktop}">
       <fileset dir="${source.web}">
         <exclude name="*.jsp"/>
         <exclude name="*.html"/>
         <exclude name="*.xsl"/>
-      </fileset>
-    </copy>
-    <mkdir dir="${target.web}/WEB-INF"/>
-    <copy todir="${target.web}/WEB-INF" filtering="true">
-      <filterset>
-        <filter token="localprefix" value="${localprefix}"/>
-        <filter token="webprefix" value="${webprefix}"/>
-      </filterset>
-      <fileset dir="${source.etc}/web"/>
-    </copy>
-    <mkdir dir="${target.web}/WEB-INF/classes"/>
-    <mkdir dir="${target.web}/WEB-INF/lib"/>
-    <copy todir="${target.web}/WEB-INF/lib">
-      <fileset dir="${target.jar}" includes="*.jar"/>
-    </copy>
-    <!-- needed by the download servlet -->
-    <mkdir dir="${nightly.dir}"/>
-    <mkdir dir="${release.dir}"/>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="jnlp" description="Prepares for web based jnlp deploy" >
-    <mkdir dir="${target.installed}"/>
-    <copy todir="${target.installed}" filtering="true">
-      <fileset dir="${dependency.install}">
-        <include name="**/*.jnlp"/>
-      </fileset>
-      <filterset>
-        <filter token="HOSTNAME" value="${jnlp.web.hostname}"/>
-        <filter token="WEBAPP" value="${jnlp.web.location}"/>
-      </filterset>
-    </copy>
-    <copy todir="${target.installed}" filtering="false">
-      <fileset dir="${dependency.install}">
         <exclude name="**/*.jnlp"/>
       </fileset>
     </copy>
+    <mkdir dir="${webapp.bibledesktop}/WEB-INF/classes"/>
+    <mkdir dir="${webapp.bibledesktop}/WEB-INF/lib"/>
+    <copy todir="${webapp.bibledesktop}/WEB-INF/lib">
+      <fileset dir="${target.jar}" includes="*.jar"/>
+    </copy>
   </target>
 
   <!--=======================================================================-->
-  <target name="install" depends="install.dependency, jnlp, webapp" description="Install all the files" >
+  <target name="install" depends="install.dependency, webapp" description="Install all the files" >
   </target>
 
   <!--=======================================================================-->

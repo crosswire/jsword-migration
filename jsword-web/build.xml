@@ -1,27 +1,21 @@
 <project name="jsword-web" default="all">
 
   <import file="../common/core.xml"/>
-  <property name="dependency"       value="bibledesktop"/>
-  <property name="dependency.jar"   value="../${dependency}/target/ant/jar"/>
+  <property name="dependency"         value="bibledesktop"/>
+  <property name="dependency.jar"     value="../${dependency}/target/ant/jar"/>
   <property name="dependency.install" value="../${dependency}/target/ant/${dependency}"/>
-  <property name="jnlp.web.hostname" value="http://www.crosswire.org"/>
-  <property name="jnlp.web.location" value="jnlp"/>
-  
+
   <!--=======================================================================-->
   <property name="source.web"       value="${source.root}/web"/>
-  <property name="target.download"  value="${target.root}/download"/> <!-- designed for override -->
-  <property name="target.web"       value="${target.root}/web"/> <!-- designed for override -->
-  <property name="target.installed" value="${target.web}/jnlp"/>
 
-  <property name="gener.root"       value="target/gener"/>
-  <property name="target.swingui"   value="${target.root}/swingui/jsword"/>
+  <property name="webapp.jsword"    value="${target.root}/web"/> <!-- override -->
+  <property name="jnlp.hostname"    value="localhost:8080"/> <!-- override -->
+  <property name="ftp.base"         value="${basedir}/${target.root}/download"/> <!-- override -->
+  <property name="web.prefix"       value="../download"/> <!-- override -->
 
-  <property name="ant.lib"          value="${ant.home}/lib"/>
-  <property name="jnlp.hostname"    value="localhost:8080"/> <!-- override this with -Djnlp.hostname=www.crosswire.org to build in live -->
-  <property name="webprefix"        value="../download"/> <!-- override this to build in live. This probably won't work without overriding -->
-  <property name="localprefix"      value="${basedir}/${target.download}"/>
-  <property name="nightly.dir"      value="${localprefix}/nightly"/>
-  <property name="release.dir"      value="${localprefix}/release"/>
+  <property name="nightly.dir"      value="${ftp.base}/nightly"/>
+  <property name="release.dir"      value="${ftp.base}/release"/>
+  <property name="target.webapp"    value="${webapp.jsword}"/>
 
   <!--=======================================================================-->
   <path id="path.alljava">
@@ -61,72 +55,79 @@
     <patternset refid="pattern.allclasses"/>
   </fileset>
 
-  <!--=======================================================================-->
   <property name="support.tools" value="../jsword-support/tools"/>
   <import file="${support.tools}/checkstyle33/build.xml"/>
   <import file="${support.tools}/java2html131/build.xml"/>
-  <import file="${support.tools}/javadoc/build.xml"/>
   <import file="${support.tools}/javancss2141/build.xml"/>
   <import file="${support.tools}/jcoverage104/build.xml"/>
   <import file="${support.tools}/jdepend26/build.xml"/>
   <import file="${support.tools}/findbugs070/build.xml"/>
   <import file="${support.tools}/pmd-1.8/build.xml"/>
-<!-- ignored
-  <import file="${support.tools}/tomcat/build.xml"/>
--->
+  <!-- ignored <import file="${support.tools}/tomcat/build.xml"/> -->
 
-  <!--=======================================================================-->
-  <target name="install" depends="install.dependency,jnlp,webapp,tools,release.nightly" description="Install all the files" >
+  <target name="javadoc" description="Create JavaDoc">
+    <mkdir dir="${target.webapp}/api"/>
+    <javadoc
+        sourcepathref="path.alljava"
+        packagenames="org.crosswire.*,gnu.gpl.*"
+        classpathref="runtime.jarpath"
+        stylesheetfile="${source.etc}/javadoc/stylesheet.css"
+        destdir="${target.webapp}/api"
+        overview="../jsword/java/jsword/overview.html"
+        private="true"
+        author="true"
+        use="true"
+        splitindex="true"
+        version="true"
+        source="1.4"
+        failonerror="false">
+      <footer>Copyright &#168; 2003-2004</footer>
+      <link offline="true" href="http://java.sun.com/j2se/1.4/docs/api/" packagelistLoc="${source.etc}/javadoc"/>
+    </javadoc>
   </target>
 
-  <target name="jnlp" description="Prepares for web based jnlp deploy" >
-    <mkdir dir="${target.installed}"/>
-    <copy todir="${target.installed}" filtering="true">
-      <fileset dir="${dependency.install}">
-        <include name="**/*.jnlp"/>
-      </fileset>
-      <filterset>
-        <filter token="HOSTNAME" value="${jnlp.web.hostname}"/>
-        <filter token="WEBAPP" value="${jnlp.web.location}"/>
-      </filterset>
-    </copy>
-    <copy todir="${target.installed}" filtering="false">
-      <fileset dir="${dependency.install}">
-        <exclude name="**/*.jnlp"/>
-      </fileset>
-    </copy>
+  <target name="tools" depends="">
+    <!--
+    temporarily removed to make things quicker:
+    checkstyle, javadoc, java2html, javancss, findbugs, pmd, cpd, jdepend
+    -->
+  </target>
+
+  <!--=======================================================================-->
+  <target name="install" depends="install.dependency, webapp, tools, release.nightly" description="Install all the files">
   </target>
 
   <!--=======================================================================-->
   <target name="webapp" description="Build an unpacked war file">
-    <mkdir dir="${target.web}"/>
-    <style basedir="${source.web}" extension=".html" style="${source.web}/template.xsl" destdir="${target.web}">
+    <mkdir dir="${target.webapp}"/>
+    <style basedir="${source.web}" extension=".html" style="${source.web}/template.xsl" destdir="${target.webapp}">
       <include name="**/*.html"/>
       <xmlcatalog>
         <dtd publicid="-//W3C//DTD XHTML 1.0 Transitional//EN" location="${source.etc}/xhtml1-transitional.dtd"/>
       </xmlcatalog>
     </style>
-    <style basedir="${source.web}" extension=".jsp" style="${source.web}/template.xsl" destdir="${target.web}">
+    <style basedir="${source.web}" extension=".jsp" style="${source.web}/template.xsl" destdir="${target.webapp}">
       <include name="*.jsp"/>
     </style>
-    <copy todir="${target.web}">
+    <mkdir dir="${target.webapp}/WEB-INF"/>
+    <copy todir="${target.webapp}/WEB-INF" filtering="true">
+      <filterset>
+        <filter token="webapp.jsword" value="${webapp.jsword}"/>
+        <filter token="web.prefix" value="${web.prefix}"/>
+      </filterset>
+      <fileset dir="${source.web}/WEB-INF"/>
+    </copy>
+    <copy todir="${target.webapp}">
       <fileset dir="${source.web}">
         <exclude name="*.jsp"/>
         <exclude name="*.html"/>
         <exclude name="*.xsl"/>
+        <exclude name="WEB-INF/**"/>
       </fileset>
     </copy>
-    <mkdir dir="${target.web}/WEB-INF"/>
-    <copy todir="${target.web}/WEB-INF" filtering="true">
-      <filterset>
-        <filter token="localprefix" value="${localprefix}"/>
-        <filter token="webprefix" value="${webprefix}"/>
-      </filterset>
-      <fileset dir="${source.etc}/web"/>
-    </copy>
-    <mkdir dir="${target.web}/WEB-INF/classes"/>
-    <mkdir dir="${target.web}/WEB-INF/lib"/>
-    <copy todir="${target.web}/WEB-INF/lib">
+    <mkdir dir="${target.webapp}/WEB-INF/classes"/>
+    <mkdir dir="${target.webapp}/WEB-INF/lib"/>
+    <copy todir="${target.webapp}/WEB-INF/lib">
       <fileset dir="${target.jar}" includes="*.jar"/>
     </copy>
     <!-- needed by the download servlet -->
@@ -170,26 +171,18 @@
     </tar>
     <!-- binary packages -->
     <zip zipfile="${directory}/jsword-${version}-bin.zip">
-      <zipfileset prefix="jsword-${version}" dir="${target.installed}"/>
+      <zipfileset prefix="jsword-${version}" dir="${dependency.install}"/>
     </zip>
     <tar tarfile="${directory}/jsword-${version}-bin.tar.gz" compression="gzip">
-      <tarfileset prefix="jsword-${version}" dir="${target.installed}"/>
+      <tarfileset prefix="jsword-${version}" dir="${dependency.install}"/>
     </tar>
     <!-- documentation packages -->
     <zip zipfile="${directory}/jsword-${version}-doc.zip">
-      <zipfileset prefix="jsword-${version}" dir="${target.web}/api"/>
+      <zipfileset prefix="jsword-${version}" dir="${target.webapp}/api"/>
     </zip>
     <tar tarfile="${directory}/jsword-${version}-doc.tar.gz" compression="gzip">
-      <tarfileset prefix="jsword-${version}" dir="${target.web}/api"/>
+      <tarfileset prefix="jsword-${version}" dir="${target.webapp}/api"/>
     </tar>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="tools" depends="">
-    <!--
-    temporarily removed to make things quicker:
-    checkstyle, javadoc, java2html, javancss, findbugs, pmd, cpd, jdepend
-    -->
   </target>
 
   <!--=======================================================================-->
