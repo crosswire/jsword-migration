@@ -3,6 +3,7 @@
 	<name>jsword-support</name>
 	<comment></comment>
 	<projects>
+		<project>jsword</project>
 	</projects>
 	<buildSpec>
 	</buildSpec>
