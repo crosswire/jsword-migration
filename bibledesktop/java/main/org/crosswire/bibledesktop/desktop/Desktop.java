@@ -222,6 +222,18 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         splash.close();
 
         frame.pack();
+
+        // News users probably wont have any Bibles installedso we give them a
+        // hand getting to the installation diallog.
+        List bibles = Books.installed().getBookMetaDatas(BookFilters.getBibles());
+        if (bibles.size() == 0)
+        {
+            int reply = JOptionPane.showConfirmDialog(frame, Msg.NO_BIBLES_MESSAGE, Msg.NO_BIBLES_TITLE.toString(), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (reply == JOptionPane.OK_OPTION)
+            {
+                actions.doBooks();
+            }
+        }
     }
 
     /**

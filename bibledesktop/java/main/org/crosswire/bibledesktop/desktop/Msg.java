@@ -53,6 +53,10 @@ public class Msg extends MsgBase
     static final Msg STARTUP_GENERATE = new Msg("Desktop.StartupGenerate"); //$NON-NLS-1$
     static final Msg STARTUP_GENERAL_CONFIG = new Msg("Desktop.StartupGeneral"); //$NON-NLS-1$
 
+    // No Bibles "wizard"
+    static final Msg NO_BIBLES_MESSAGE = new Msg("Desktop.NoBiblesMessage"); //$NON-NLS-1$
+    static final Msg NO_BIBLES_TITLE = new Msg("Desktop.NoBiblesTitle"); //$NON-NLS-1$
+
     // Strings for DesktopAction
     static final Msg NO_HELP = new Msg("DesktopActions.NoHelp"); //$NON-NLS-1$
     static final Msg NOT_IMPLEMENTED = new Msg("DesktopActions.NotImplemented"); //$NON-NLS-1$
