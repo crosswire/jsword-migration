@@ -9,12 +9,19 @@
 
   <!-- enforce package documentation -->
   <module name="PackageHtml"/>
+  <module name="NewlineAtEndOfFile"/>
 
   <module name="TreeWalker">
 
     <property name="cacheFile" value="@target.checkstyle@/cachefile.dat"/>
 
     <!-- JavaDoc checks -->
+    <module name="JavadocType">
+       <property name="authorFormat" value="\S"/>
+    </module>
+
+    <!-- Imports -->
+    <module name="AvoidStarImport"/>
     <module name="IllegalImport"/>
     <module name="RedundantImport"/>
     <module name="UnusedImports"/>
@@ -102,17 +109,22 @@
     <module name="FileLength">
       <property name="max" value="2000"/>
     </module>
+    <!-- Buggy
+    <module name="RedundantThrows"/>
+    -->
+    <module name="HideUtilityClassConstructor"/>
 
     <!-- Potential Bugs -->
     <module name="EqualsHashCode"/>
     <module name="GenericIllegalRegexp">
       <property name="format" value="((public)|(protected))\s+void\s+finalize\(\s*\)"/>
     </module>
-    <!-- This is buggy, confusing static and non-static
+    <module name="EmptyStatement"/>
+    <!-- This is buggy, confusing static and non-static -->
     <module name="HiddenField">
       <property name="tokens" value="VARIABLE_DEF"/>
     </module>
-    -->
+    <!-- -->
 
     <!-- Work in progress -->
     <module name="TodoComment"/>
