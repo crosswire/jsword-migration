@@ -14,7 +14,6 @@ public class TimeoutReader extends Reader implements Runnable
      * Use the specified Reader as the source
      * @param in The Stream to take input from
      * @param timeout The time (in ms) to wait for input
-     * @throws IOException if hell breaks loose
      */
     public TimeoutReader(Reader in, int timeout)
     {

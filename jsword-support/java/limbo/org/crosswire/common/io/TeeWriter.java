@@ -41,7 +41,6 @@ public class TeeWriter extends Writer
 
     /**
      * Override write to ask the listed Streams.
-     * @param b The byte to be written, as normal.
      */
     public void write(char[] cbuf, int off, int len) throws IOException
     {

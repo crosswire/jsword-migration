@@ -49,7 +49,6 @@ public class XMLUtil
     /**
      * Display a Document in debug mode to the specified writer
      * @param doc The Document to write
-     * @param out The stream to write to
      */
     public static void logDocument(Document doc)
     {
@@ -60,8 +59,6 @@ public class XMLUtil
 
     /**
      * Display a Document in debug mode to the specified writer
-     * @param doc The Document to write
-     * @param out The stream to write to
      */
     public static void logDocument(Element start)
     {
