@@ -11,12 +11,10 @@
     method="xml"    
     indent="yes"
     encoding="windows-1252"
+    />
+    <!-- Can't have a doctype in jsp!
     doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"
     doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
-    />
-    <!--
-    doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
-    doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
     -->
 
 <xsl:template match="/jsp:root">
