@@ -219,6 +219,60 @@ public class DesktopActions
         da.copy();
     }
 
+    public void doStrongs(ActionEvent ev)
+    {
+        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
+        XSLTProperty.STRONGS_NUMBERS.setState(toggle.isSelected());
+        BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
+        SplitBookDataDisplay da = view.getPassagePane();
+        da.getBookDataDisplay().refresh();
+    }
+    
+    public void doVLine(ActionEvent ev)
+    {
+        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
+        XSLTProperty.START_VERSE_ON_NEWLINE.setState(toggle.isSelected());
+        BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
+        SplitBookDataDisplay da = view.getPassagePane();
+        da.getBookDataDisplay().refresh();
+    }
+    
+    public void doVNum(ActionEvent ev)
+    {
+        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
+        XSLTProperty.VERSE_NUMBERS.setState(toggle.isSelected());
+        BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
+        SplitBookDataDisplay da = view.getPassagePane();
+        da.getBookDataDisplay().refresh();
+    }
+    
+    public void doTinyVNum(ActionEvent ev)
+    {
+        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
+        XSLTProperty.TINY_VERSE_NUMBERS.setState(toggle.isSelected());
+        BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
+        SplitBookDataDisplay da = view.getPassagePane();
+        da.getBookDataDisplay().refresh();
+    }
+    
+    public void doNotes(ActionEvent ev)
+    {
+        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
+        XSLTProperty.NOTES.setState(toggle.isSelected());
+        BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
+        SplitBookDataDisplay da = view.getPassagePane();
+        da.getBookDataDisplay().refresh();
+    }
+    
+    public void doXRef(ActionEvent ev)
+    {
+        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
+        XSLTProperty.XREF.setState(toggle.isSelected());
+        BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
+        SplitBookDataDisplay da = view.getPassagePane();
+        da.getBookDataDisplay().refresh();
+    }
+
     /**
      * View the HTML as interpreted by the current window.
      * This HTML will not return the styling present in the viewer.

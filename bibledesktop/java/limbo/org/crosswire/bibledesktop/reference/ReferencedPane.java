@@ -136,6 +136,14 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     }
 
     /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#refresh()
+     */
+    public void refresh()
+    {
+        throw new UnsupportedOperationException(); //$NON-NLS-1$
+    }
+
+    /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.FocusablePart#getComponent()
      */
     public Component getComponent()

@@ -65,6 +65,11 @@ public interface BookDataDisplay
     public void setBookData(Book book, Key key);
 
     /**
+     * Cause the BookData to be re-displayed.
+     */
+    public void refresh();
+
+    /**
      * The Book Key that we are displaying, or null if we are not displaying
      * anything
      * @return The current key

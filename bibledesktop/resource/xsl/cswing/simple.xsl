@@ -11,11 +11,33 @@
        With the browser we are using span will introduce whitespace,
        but font does not. Therefore we use font as a span.
     -->
-  <xsl:param name="strongs.hebrew.url" select="'dict:'"/>
-  <xsl:param name="strongs.greek.url" select="'dict:'"/>
+  <!-- gdef and hdef refer to hebrew and greek definitions keyed by strongs -->
+  <xsl:param name="greek.def.protocol" select="'gdef:'"/>
+  <xsl:param name="hebrew.def.url" select="'hdef:'"/>
+  <!-- currently these are not used, but they are for morphologic forms -->
+  <xsl:param name="greek.morph.protocol" select="'gmorph:'"/>
+  <xsl:param name="hebrew.morph.protocol" select="'hmorph:'"/>
 
   <!-- Whether to show Strongs or not -->
-  <xsl:param name="strongs" select="'true'"/>
+  <xsl:param name="Strongs" select="'false'"/>
+
+  <!-- Whether to show morphologic forms or not -->
+  <xsl:param name="Morph" select="'false'"/>
+
+  <!-- Whether to start each verse on an new line or not -->
+  <xsl:param name="VLine" select="'false'"/>
+
+  <!-- Whether to show notes or not -->
+  <xsl:param name="Notes" select="'true'"/>
+
+  <!-- Whether to have linking cross references or not -->
+  <xsl:param name="XRef" select="'true'"/>
+
+  <!-- Whether to output verse numbers or not -->
+  <xsl:param name="VNum" select="'true'"/>
+
+  <!-- Whether to output superscript verse numbers or normal size ones -->
+  <xsl:param name="TinyVNum" select="'true'"/>
 
   <!-- The CSS stylesheet to use. The url must be absolute. -->
   <xsl:param name="css"/>
@@ -99,7 +121,7 @@
       <body>
         <!-- If there are notes, output a table with notes in the 2nd column. -->
         <xsl:choose>
-          <xsl:when test="//note">
+          <xsl:when test="$Notes = 'true' and //note">
             <xsl:choose>
               <xsl:when test="$direction != 'rtl'">
 	            <table cols="2" cellpadding="5" cellspacing="5" width="100%">
@@ -181,16 +203,51 @@
 
   <!--=======================================================================-->
   <xsl:template match="verse">
-    <!-- DMS: if the verse is not the first verse of a set of siblings, output two spaces. -->
-    <xsl:if test="preceding-sibling::*[local-name() = 'verse']">
-      <xsl:text> &#160;</xsl:text>
+    <!-- If the verse don't start on their own line and -->
+    <!-- the verse is not the first verse of a set of siblings, -->
+    <!-- output an extra space. -->
+    <xsl:if test="$VLine = 'false' and preceding-sibling::*[local-name() = 'verse']">
+      <xsl:text>&#160;</xsl:text>
     </xsl:if>
     <xsl:variable name="title" select=".//title"/>
     <xsl:if test="string-length($title) > 0">
       <h3><xsl:value-of select="$title"/></h3>
     </xsl:if>
-    <a name="{@osisID}"><sup class="verse"><xsl:value-of select="substring-after(substring-after(@osisID, '.'), '.')"/></sup></a>
-    <xsl:apply-templates/>
+    <!-- Are verse numbers wanted? -->
+    <xsl:if test="$VNum = 'true'">
+      <xsl:variable name="versenum">
+        <xsl:value-of select="substring-after(substring-after(@osisID, '.'), '.')"/>
+      </xsl:variable>
+      <xsl:choose>
+        <!-- create anchors for verses if we allow notes -->
+        <xsl:when test="$TinyVNum = 'true' and $Notes = 'true'">
+      	  <a name="{@osisID}"><sup class="verse"><xsl:value-of select="$versenum"/></sup></a>
+      	</xsl:when>
+        <xsl:when test="$TinyVNum = 'true' and $Notes = 'false'">
+      	  <sup class="verse"><xsl:value-of select="$versenum"/></sup>
+      	</xsl:when>
+        <xsl:when test="$TinyVNum = 'false' and $Notes = 'true'">
+      	  <a name="{@osisID}"><xsl:value-of select="$versenum"/></a>
+      	  <xsl:text> </xsl:text>
+      	</xsl:when>
+      	<xsl:otherwise>
+      	  <xsl:value-of select="$versenum"/>
+      	  <xsl:text> </xsl:text>
+      	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+    <!-- Always output the verse -->
+    <xsl:choose>
+ 	  <xsl:when test="$VLine = 'true'">
+        <xsl:apply-templates/><br/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates/>
+        <!-- Follow the verse with an extra space -->
+        <!-- when they don't start on lines to themselves -->
+        <xsl:text> </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!--=======================================================================-->
@@ -200,14 +257,17 @@
   </xsl:template>
 
   <!--=======================================================================-->
+  <!-- When we encounter a note, we merely output a link to the note. -->
   <xsl:template match="note">
-    <!-- If the preceeding sibling was a note, emit a separator -->
-    <xsl:if test="preceding-sibling::*[local-name() = 'note']">
-      <sup class="note">,&#160;</sup>
+    <xsl:if test="$Notes = 'true'">
+      <!-- If the preceeding sibling was a note, emit a separator -->
+      <xsl:if test="preceding-sibling::*[local-name() = 'note']">
+        <sup class="note">,&#160;</sup>
+      </xsl:if>
+      <a href="#note-{generate-id(.)}">
+        <sup class="note"><xsl:number level="any" from="/" format="a"/></sup>
+      </a>
     </xsl:if>
-    <a href="#note-{generate-id(.)}">
-      <sup class="note"><xsl:number level="any" from="/" format="a"/></sup>
-    </a>
   </xsl:template>
 
   <!--=======================================================================-->
@@ -240,7 +300,7 @@
       <xsl:variable name="siblings" select="../child::node()"/>
       <xsl:variable name="next-position" select="position() + 1"/>
       <xsl:choose>
-        <xsl:when test="$strongs = 'true' and (starts-with(@lemma, 'x-Strongs:') or starts-with(@lemma, 'strong:'))">
+        <xsl:when test="$Strongs = 'true' and (starts-with(@lemma, 'x-Strongs:') or starts-with(@lemma, 'strong:'))">
           <xsl:variable name="orig-lemma" select="substring-after(@lemma, ':')"/>
           <xsl:variable name="strongs-type" select="substring($orig-lemma, 1, 1)"/>
           <xsl:variable name="first-lemma">
@@ -255,10 +315,10 @@
           </xsl:variable>
           <xsl:choose>
             <xsl:when test="$strongs-type = 'H'">
-              <a href="{$strongs.hebrew.url}{$first-lemma}" class="strongs"><xsl:apply-templates/></a>
+              <a href="{$hebrew.def.url}{$first-lemma}" class="strongs"><xsl:apply-templates/></a>
             </xsl:when>
             <xsl:otherwise>
-              <a href="{$strongs.greek.url}{$first-lemma}" class="strongs"><xsl:apply-templates/></a>
+              <a href="{$greek.def.protocol}{$first-lemma}" class="strongs"><xsl:apply-templates/></a>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:when>
@@ -335,7 +395,14 @@
   <!--=======================================================================-->
   <!-- Avoid adding whitespace -->
   <xsl:template match="reference">
-    <a href="bible://{@osisRef}"><xsl:apply-templates/></a>
+    <xsl:choose>
+      <xsl:when test="$XRef = 'true'">
+        <a href="bible://{@osisRef}"><xsl:apply-templates/></a>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <!--=======================================================================-->

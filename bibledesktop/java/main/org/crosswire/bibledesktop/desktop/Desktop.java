@@ -295,6 +295,25 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         menuEdit.setToolTipText(null);
 
         JMenu menuView = new JMenu(actions.getAction(DesktopActions.VIEW));
+        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.STRONGS_NUMBERS.getName()));
+        toggle.setSelected(XSLTProperty.STRONGS_NUMBERS.getDefault());
+        menuView.add(toggle).addMouseListener(barStatus);
+        toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.START_VERSE_ON_NEWLINE.getName()));
+        toggle.setSelected(XSLTProperty.START_VERSE_ON_NEWLINE.getDefault());
+        menuView.add(toggle).addMouseListener(barStatus);
+        toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.VERSE_NUMBERS.getName()));
+        toggle.setSelected(XSLTProperty.VERSE_NUMBERS.getDefault());
+        menuView.add(toggle).addMouseListener(barStatus);
+        toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.TINY_VERSE_NUMBERS.getName()));
+        toggle.setSelected(XSLTProperty.TINY_VERSE_NUMBERS.getDefault());
+        menuView.add(toggle).addMouseListener(barStatus);
+        toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.NOTES.getName()));
+        toggle.setSelected(XSLTProperty.NOTES.getDefault());
+        menuView.add(toggle).addMouseListener(barStatus);
+        toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.XREF.getName()));
+        toggle.setSelected(XSLTProperty.XREF.getDefault());
+        menuView.add(toggle).addMouseListener(barStatus);
+        menuView.addSeparator();
         menuView.add(views.getTdiView()).addMouseListener(barStatus);
         menuView.add(views.getMdiView()).addMouseListener(barStatus);
         //menuView.add(chkViewTbar);
@@ -302,7 +321,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         menuView.add(pnlTbar.getShowToggle()).addMouseListener(barStatus);
         menuView.add(pnlTbar.getTextToggle()).addMouseListener(barStatus);
         menuView.add(pnlTbar.getIconSizeToggle()).addMouseListener(barStatus);
-        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.TOOLTIP_TOGGLE));
+        toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.TOOLTIP_TOGGLE));
         toggle.setSelected(true);
         menuView.add(toggle).addMouseListener(barStatus);
         toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.STATUS_TOGGLE));
@@ -488,6 +507,26 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
             {
                 Key key = reference.getBook().getKey(data);
                 reference.setKey(key);
+            }
+            else if (protocol.equals(GREEK_DEF_PROTOCOL))
+            {
+                // TODO(DM): determine the right Strong's dictionary and switch to it.
+                reference.setWord(data);
+            }
+            else if (protocol.equals(HEBREW_DEF_PROTOCOL))
+            {
+                // TODO(DM): determine the right Strong's dictionary and switch to it.
+                reference.setWord(data);
+            }
+            else if (protocol.equals(GREEK_MORPH_PROTOCOL))
+            {
+                // TODO(DM): determine the right Strong's dictionary and switch to it.
+                reference.setWord(data);
+            }
+            else if (protocol.equals(HEBREW_MORPH_PROTOCOL))
+            {
+                // TODO(DM): determine the right Strong's dictionary and switch to it.
+                reference.setWord(data);
             }
             else if (protocol.equals(DICTIONARY_PROTOCOL))
             {
@@ -740,6 +779,10 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     // Strings for URL protocols
     private static final String BIBLE_PROTOCOL = "bible"; //$NON-NLS-1$
     private static final String DICTIONARY_PROTOCOL = "dict"; //$NON-NLS-1$
+    private static final String GREEK_DEF_PROTOCOL = "gdef"; //$NON-NLS-1$
+    private static final String HEBREW_DEF_PROTOCOL = "hdef"; //$NON-NLS-1$
+    private static final String GREEK_MORPH_PROTOCOL = "gmorph"; //$NON-NLS-1$
+    private static final String HEBREW_MORPH_PROTOCOL = "hmorph"; //$NON-NLS-1$
     private static final String COMMENTARY_PROTOCOL = "comment"; //$NON-NLS-1$
 
     // Empty String

@@ -150,6 +150,14 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
     }
 
     /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#refresh()
+     */
+    public void refresh()
+    {
+        display.refresh();
+    }
+
+    /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.FocusablePart#getComponent()
      */
     public Component getComponent()

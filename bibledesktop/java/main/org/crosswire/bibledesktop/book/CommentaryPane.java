@@ -176,6 +176,14 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
         setKey(key);
     }
 
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#refresh()
+     */
+    public void refresh()
+    {
+        display.refresh();
+    }
+
     /**
      * Accessor for the current passage
      */

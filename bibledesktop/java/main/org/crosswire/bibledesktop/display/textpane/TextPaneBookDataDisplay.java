@@ -15,6 +15,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
+import org.crosswire.bibledesktop.desktop.XSLTProperty;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.URLEvent;
 import org.crosswire.bibledesktop.display.URLEventListener;
@@ -82,6 +83,14 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
         this.book = book;
         this.key = key;
 
+        refresh();
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#refresh()
+     */
+    public void refresh()
+    {
         if (book == null || key == null)
         {
             txtView.setText(""); //$NON-NLS-1$
@@ -110,6 +119,12 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
 
             SAXEventProvider osissep = bdata.getSAXEventProvider();
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
+            htmlsep.setParameter(XSLTProperty.STRONGS_NUMBERS.getName(), Boolean.toString(XSLTProperty.STRONGS_NUMBERS.getState()));
+            htmlsep.setParameter(XSLTProperty.START_VERSE_ON_NEWLINE.getName(), Boolean.toString(XSLTProperty.START_VERSE_ON_NEWLINE.getState()));
+            htmlsep.setParameter(XSLTProperty.VERSE_NUMBERS.getName(), Boolean.toString(XSLTProperty.VERSE_NUMBERS.getState()));
+            htmlsep.setParameter(XSLTProperty.TINY_VERSE_NUMBERS.getName(), Boolean.toString(XSLTProperty.TINY_VERSE_NUMBERS.getState()));
+            htmlsep.setParameter(XSLTProperty.NOTES.getName(), Boolean.toString(XSLTProperty.NOTES.getState()));
+            htmlsep.setParameter(XSLTProperty.XREF.getName(), Boolean.toString(XSLTProperty.XREF.getState()));
             htmlsep.setParameter("direction", direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             String text = XMLUtil.writeToString(htmlsep);
 

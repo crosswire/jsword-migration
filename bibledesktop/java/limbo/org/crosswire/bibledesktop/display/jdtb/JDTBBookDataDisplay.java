@@ -64,6 +64,14 @@ public class JDTBBookDataDisplay implements BookDataDisplay
         this.book = book;
         this.key = key;
 
+        refresh();
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#refresh()
+     */
+    public void refresh()
+    {
         try
         {
             if (book == null && key == null)

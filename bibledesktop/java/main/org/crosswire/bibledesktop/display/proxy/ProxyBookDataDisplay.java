@@ -94,6 +94,14 @@ public class ProxyBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#refresh()
+     */
+    public void refresh()
+    {
+        proxy.refresh();
+    }
+
+    /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     public String toString()

@@ -159,6 +159,20 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#refresh()
+     */
+    public void refresh()
+    {
+        // Now go through all the known tabs and refresh each
+        for (Iterator it = displays.iterator(); it.hasNext(); )
+        {
+            BookDataDisplay bdd = (BookDataDisplay) it.next();
+            bdd.refresh();
+        }
+    }
+
+
+    /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getKey()
      */
     public Key getKey()
