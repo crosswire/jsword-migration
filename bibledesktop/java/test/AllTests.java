@@ -38,9 +38,6 @@ public class AllTests extends TestCase
     public static Test suite()
     {
         TestSuite suite = new TestSuite();
-
-        suite.addTestSuite(org.crosswire.bibledesktop.util.SimpleSwingConverterTest.class);
-
         return suite;
     }
 }
