@@ -250,7 +250,8 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         List bibles = Books.installed().getBookMetaDatas(BookFilters.getBibles());
         if (bibles.size() == 0)
         {
-            int reply = JOptionPane.showConfirmDialog(frame, Msg.NO_BIBLES_MESSAGE, Msg.NO_BIBLES_TITLE.toString(), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            int reply = JOptionPane.showConfirmDialog(frame, Msg.NO_BIBLES_MESSAGE, Msg.NO_BIBLES_TITLE.toString(), JOptionPane.OK_CANCEL_OPTION,
+                            JOptionPane.QUESTION_MESSAGE);
             if (reply == JOptionPane.OK_OPTION)
             {
                 actions.doBooks();
@@ -329,14 +330,14 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.TOOLBAR_TOGGLE));
         toggle.setSelected(true);
         menuView.add(toggle);
-		menuView.add(new JCheckBoxMenuItem(actions.getAction(DesktopActions.TOOLBAR_TEXT)));
-		menuView.add(new JCheckBoxMenuItem(actions.getAction(DesktopActions.TOOLBAR_LARGE)));
-		toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.TOOLTIP_TOGGLE));
+        menuView.add(new JCheckBoxMenuItem(actions.getAction(DesktopActions.TOOLBAR_TEXT)));
+        menuView.add(new JCheckBoxMenuItem(actions.getAction(DesktopActions.TOOLBAR_LARGE)));
+        toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.TOOLTIP_TOGGLE));
         toggle.setSelected(true);
-		menuView.add(toggle);
-		toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.STATUS_TOGGLE));
+        menuView.add(toggle);
+        toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.STATUS_TOGGLE));
         toggle.setSelected(true);
-		menuView.add(toggle);
+        menuView.add(toggle);
         menuView.addSeparator();
         menuView.add(actions.getAction(DesktopActions.VIEW_SOURCE)).addMouseListener(barStatus);
         menuView.setToolTipText(null);
@@ -409,7 +410,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         // And the only other item in that container can be CENTER
         frame.getContentPane().setLayout(new BorderLayout());
         frame.getContentPane().add(pnlTbar, BorderLayout.NORTH);
-        
+
         // Put everything else in its own panel
         corePanel = new JPanel(new BorderLayout());
         corePanel.add(barStatus, BorderLayout.SOUTH);
@@ -774,7 +775,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         getJFrame().pack(); // cause it to auto resize
     }
 
-     /**
+    /**
      * Show or hide the tool bar.
      * @param show boolean
      */
@@ -874,9 +875,9 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
 
         Locale defaultLocale = Locale.getDefault();
         ResourceBundle configResources = ResourceBundle.getBundle(CONFIG_KEY, defaultLocale, new CWClassLoader(Desktop.class));
-        
+
         config.add(xmlconfig, configResources);
-        
+
         try
         {
             config.setProperties(ResourceUtil.getProperties(DESKTOP_KEY));
@@ -891,7 +892,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
             e1.printStackTrace();
             ExceptionPane.showExceptionDialog(null, e1);
         }
-        
+
         config.localToApplication(true);
     }
 
@@ -926,7 +927,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     {
         Desktop.maxWidth = maxWidth;
     }
-     
+
     /**
      * Setup the choices so that the options dialog knows what there is to
      * select from.
@@ -976,7 +977,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         List bmds = Books.installed().getBookMetaDatas(filter);
         List names = new ArrayList();
 
-        for (Iterator it = bmds.iterator(); it.hasNext(); )
+        for (Iterator it = bmds.iterator(); it.hasNext();)
         {
             BookMetaData bmd = (BookMetaData) it.next();
             names.add(bmd.getFullName());
@@ -1034,7 +1035,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
      * The current way the views are laid out
      */
     private LayoutType current = initial;
-    
+
     /**
      * <code>maxHeight</code> of the window
      */

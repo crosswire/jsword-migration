@@ -40,67 +40,67 @@ import org.crosswire.common.swing.CWAction;
 public class ToolBar extends JToolBar
 {
     /**
-	 * ToolBar constructor.
-	 */
-	public ToolBar()
-	{
-	}
+     * ToolBar constructor.
+     */
+    public ToolBar()
+    {
+    }
 
-	/**
-	 * Set the tool tip text for the buttons on the tool bar.
-	 * @param show boolean
-	 */
-	public void showText(boolean show)
-	{
-		Component c;
-		int i = 0;
-		while ((c = getComponentAtIndex(i++)) != null)
-		{
-			if (c instanceof JButton)
-			{
-				JButton button = (JButton) c;
-				if (show)
-				{
-					Action action = button.getAction();
-					button.setText((String)action.getValue(Action.SHORT_DESCRIPTION));
-				}
-				else
-				{
-					button.setText(null);
-				}
-			}
-		}
-	}
+    /**
+     * Set the tool tip text for the buttons on the tool bar.
+     * @param show boolean
+     */
+    public void showText(boolean show)
+    {
+        Component c;
+        int i = 0;
+        while ((c = getComponentAtIndex(i++)) != null)
+        {
+            if (c instanceof JButton)
+            {
+                JButton button = (JButton) c;
+                if (show)
+                {
+                    Action action = button.getAction();
+                    button.setText((String) action.getValue(Action.SHORT_DESCRIPTION));
+                }
+                else
+                {
+                    button.setText(null);
+                }
+            }
+        }
+    }
 
-	/**
-	 * Sets the size of the tool bar button images.
-	 * @param show boolean
-	 */
-	public void showLargeIcons(boolean show)
-	{
-		Component c;
-		int i = 0;
-		while ((c = getComponentAtIndex(i++)) != null)
-		{
-			if (c instanceof JButton)
-			{
-				JButton button = (JButton) c;
-				Action action = button.getAction();
-				if (action instanceof CWAction)
-				{
-					// Clear the button's computed disabled icon
-					// so the button can get it again.
-					button.setDisabledIcon(null);
-					if (show)
-					{
-						button.setIcon((Icon) action.getValue(CWAction.LARGE_ICON));
-					}
-					else
-					{
-						button.setIcon((Icon) action.getValue(Action.SMALL_ICON));
-					}
-				}
-			}
-		}
-	}
+    /**
+     * Sets the size of the tool bar button images.
+     * @param show boolean
+     */
+    public void showLargeIcons(boolean show)
+    {
+        Component c;
+        int i = 0;
+        while ((c = getComponentAtIndex(i++)) != null)
+        {
+            if (c instanceof JButton)
+            {
+                JButton button = (JButton) c;
+                Action action = button.getAction();
+                if (action instanceof CWAction)
+                {
+                    // Clear the button's computed disabled icon
+                    // so the button can get it again.
+                    button.setDisabledIcon(null);
+                    if (show)
+                    {
+                        button.setIcon((Icon) action.getValue(CWAction.LARGE_ICON));
+                    }
+                    else
+                    {
+                        button.setIcon((Icon) action.getValue(Action.SMALL_ICON));
+                    }
+                }
+            }
+        }
+    }
 }
