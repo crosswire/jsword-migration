@@ -183,9 +183,7 @@
       <h3><xsl:value-of select="$title"/></h3>
     </xsl:if>
     <a name="{@osisID}"><sup class="verse"><xsl:value-of select="substring-after(substring-after(@osisID, '.'), '.')"/></sup></a>
-    <font class="verse">
-      <xsl:apply-templates/>
-    </font>
+    <xsl:apply-templates/>
   </xsl:template>
 
   <!--=======================================================================-->
@@ -273,15 +271,6 @@
   <!--=======================================================================-->
   <xsl:template match="seg">
     <xsl:choose>
-      <xsl:when test="@type='font-style: italic;'">
-        <i><xsl:apply-templates/></i>
-      </xsl:when>
-      <xsl:when test="@type='font-weight: bold;'">
-        <b><xsl:apply-templates/></b>
-      </xsl:when>
-      <xsl:when test="@type='text-decoration: underline;'">
-        <u><xsl:apply-templates/></u>
-      </xsl:when>
       <xsl:when test="starts-with(@type, 'color:')">
         <font color="substring-before(substring-after(@type, 'color: '), ';')">
           <xsl:apply-templates/>
@@ -647,8 +636,7 @@
           <xsl:apply-templates/>
         </xsl:when>
         <xsl:when test="@rend = 'underline'">
-          <!-- later -->
-          <xsl:apply-templates/>
+          <u><xsl:apply-templates/></u>
         </xsl:when>
         <xsl:otherwise>
           <xsl:apply-templates/>
