@@ -97,6 +97,9 @@ public class SitePane extends JPanel
         this.add(createSplitPane(left, right), BorderLayout.CENTER);
     }
 
+    /**
+     * 
+     */
     private Component createSplitPane(Component left, Component right)
     {
         JSplitPane split = new JSplitPane();
@@ -110,6 +113,9 @@ public class SitePane extends JPanel
         return split;
     }
     
+    /**
+     * 
+     */
     private Component createAvailablePanel(String labelAcronymn, BookList books)
     {
         JLabel lblAvailable = actions.createJLabel(labelAcronymn);
@@ -126,6 +132,9 @@ public class SitePane extends JPanel
         return panel;
     }
 
+    /**
+     * 
+     */
     private Component createSelectedPanel()
     {
         emptyTableModel = new MapTableModel(null);
@@ -142,6 +151,9 @@ public class SitePane extends JPanel
         return panel;
     }
 
+    /**
+     * 
+     */
     private Component createScrolledTree(BookList books)
     {
         treAvailable = new JTree();
@@ -167,6 +179,9 @@ public class SitePane extends JPanel
         return scroller;
     }
     
+    /**
+     * 
+     */
     private Component createPanelActions()
     {
         JPanel panel = new JPanel();
