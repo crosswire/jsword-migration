@@ -2,15 +2,15 @@
 
   <!-- This build uses the core build targets -->
   <import file="../common/core.xml"/>
+  <property name="dependency"       value="bibledesktop"/>
+  <property name="dependency.jar"   value="../${dependency}/target/ant/jar"/>
+  
+  <import file="../jsword-support/build.xml"/>
 
   <!--=======================================================================-->
-  <property name="source.web" value="${source.root}/web"/>
-  <property name="target.temp" value="${target.root}/temp"/>
-  <property name="target.download" value="${target.root}/download"/> <!-- designed for override -->
-  <property name="target.web" value="${target.root}/web"/> <!-- designed for override -->
-  <property name="support.root" value="../jsword-support"/>
-  <property name="support.notes" value="${support.root}/notes"/>
-  <property name="support.tools" value="${support.root}/tools"/>
+  <property name="source.web"       value="${source.root}/web"/>
+  <property name="target.download"  value="${target.root}/download"/> <!-- designed for override -->
+  <property name="target.web"       value="${target.root}/web"/> <!-- designed for override -->
 
   <!-- things from other projects that will be needed here -->
   <property name="gener.root" value="target/gener"/>
@@ -26,11 +26,7 @@
   <property name="release.dir" value="${localprefix}/release"/>
 
   <!--=======================================================================-->
-  <target name="subprojects">
-  </target>
-
-  <!--=======================================================================-->
-  <target name="web.files" depends="subprojects" description="Copy the file based documentation">
+  <target name="files" description="Copy the file based documentation">
     <mkdir dir="${target.web}"/>
     <style basedir="${source.web}" extension=".html" style="${source.web}/template.xsl" destdir="${target.web}">
       <include name="**/*.html"/>
@@ -61,7 +57,6 @@
       <fileset dir="${target.classes}/resource"/>
       <fileset dir="${source.res}"/>
     </copy>
-    <unzip src="${support.notes}/versions/projectb-ser-av.zip" dest="${target.web}/WEB-INF/classes"/>
     <mkdir dir="${target.web}/WEB-INF/lib"/>
     <copy todir="${target.web}/WEB-INF/lib">
       <fileset dir="${target.web}/jnlp" includes="**/*.jar"/>
@@ -73,301 +68,7 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="test" depends="subprojects" description="Run the standard test suite">
-    <taskdef resource="tasks.properties">
-      <classpath>
-        <fileset dir="${support.tools}/jcoverage104" includes="**/*.jar"/>
-      </classpath>
-    </taskdef>
-    <delete failonerror="false">
-      <fileset dir="${target.temp}/jcoverage"/>
-    </delete>
-    <delete failonerror="false">
-      <fileset dir="${source.root}">
-        <include name="jcoverage.ser"/>
-      </fileset>
-    </delete>
-    <instrument todir="${target.temp}/jcoverage">
-      <fileset dir="${target.classes}/common" includes="**/*.class"/>
-    </instrument>
-    <instrument todir="${target.temp}/jcoverage">
-      <fileset dir="${target.classes}/jsword" includes="**/*.class"/>
-      <!--
-      <ignore regex="org.apache.log4j.*"/>
-      <fileset dir="${target.classes}/swing" includes="**/*.class"/>
-      <fileset dir="${target.classes}/servlet" includes="**/*.class"/>
-      -->
-    </instrument>
-    <mkdir dir="${target.temp}/junit"/>
-    <echo message="JUnit needs jars in ${ant.lib}. See the antlibs task."/>
-    <echo message="Using -Djsword.bible.dir=${basedir}/${target.swingui}/resource"/>
-    <junit fork="yes" haltonfailure="no" printsummary="on" showoutput="yes">
-      <jvmarg value="-Djsword.bible.dir=${basedir}/${target.swingui}/resource"/>
-      <test name="CommonAllTests" todir="${target.temp}/junit"/>
-      <test name="JSwordAllTests" todir="${target.temp}/junit"/>
-      <!--
-      <test name="MapAllTests" todir="${target.temp}/junit"/>
-      -->
-      <formatter type="plain" usefile="false"/>
-      <formatter type="xml"/>
-      <classpath>
-        <fileset dir="${source.jar}" includes="**/*.jar"/>
-        <fileset dir="${support.tools}/jcoverage104" includes="**/*.jar"/>
-        <pathelement path="${target.temp}/jcoverage"/>
-        <!--
-        <pathelement path="${target.classes}/common"/>
-        <pathelement path="${target.classes}/jsword"/>
-        -->
-        <pathelement path="${target.classes}/servlet"/>
-        <pathelement path="${target.classes}/swing"/>
-        <pathelement path="${target.classes}/osis"/>
-        <pathelement path="${target.classes}/commontest"/>
-        <pathelement path="${target.classes}/jswordtest"/>
-        <pathelement path="${target.classes}/servlettest"/>
-        <pathelement path="${target.classes}/swingtest"/>
-        <pathelement path="${target.classes}/resource"/>
-        <pathelement path="${source.res}"/>
-      </classpath>
-    </junit>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="web.testreport" depends="test" description="Compile test report">
-    <mkdir dir="${target.web}/test"/>
-    <junitreport todir="${target.temp}/junit">
-      <fileset dir="${target.temp}/junit">
-        <include name="TEST-*.xml"/>
-      </fileset>
-      <report format="frames" todir="${target.web}/test"/>
-    </junitreport>
-    <mkdir dir="${target.web}/jcoverage"/>
-    <report srcdir="${source.java}/common" destdir="${target.web}/jcoverage"/>
-    <!--
-    <report srcdir="${source.java}/jsword" destdir="${target.web}/jcoverage"/>
-    -->
-  </target>
-
-  <!--=======================================================================-->
-  <target name="web.javadoc" depends="init" description="Create JavaDoc">
-    <mkdir dir="${target.web}/api"/>
-    <javadoc
-        stylesheetfile="${source.etc}/javadoc/stylesheet.css"
-        destdir="${target.web}/api"
-        overview="${source.java}/jsword/overview.html"
-        private="true"
-        author="true"
-        use="true"
-        splitindex="true"
-        version="true">
-      <packageset dir="${source.java}/common" defaultexcludes="yes">
-        <include name="**"/>
-      </packageset>
-      <packageset dir="${gener.root}/osis" defaultexcludes="yes">
-        <include name="**"/>
-      </packageset>
-      <packageset dir="${source.java}/jsword" defaultexcludes="yes">
-        <include name="**"/>
-      </packageset>
-      <packageset dir="${source.java}/servlet" defaultexcludes="yes">
-        <include name="**"/>
-      </packageset>
-      <packageset dir="${source.java}/swing" defaultexcludes="yes">
-        <include name="**"/>
-      </packageset>
-      <footer>Copyright &#168; 2003</footer>
-      <classpath>
-        <fileset dir="${source.jar}" includes="**/*.jar"/>
-      </classpath>
-      <link offline="true" href="http://java.sun.com/j2se/1.4/docs/api/" packagelistLoc="${source.etc}/javadoc"/>
-    </javadoc>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="web.java2html" depends="init" description="HTML versions of the java code">
-    <mkdir dir="${target.web}/java2html"/>
-    <java fork="true" classname="j2h" output="${target.web}/java2html/output.txt">
-      <classpath>
-        <fileset dir="${support.tools}/java2html12" includes="**/*.jar"/>
-      </classpath>
-      <arg value="-js"/>
-      <arg value="${basedir}/${source.java}/common"/>
-      <arg value="-js"/>
-      <arg value="${basedir}/${source.java}/jsword"/>
-      <arg value="-js"/>
-      <arg value="${basedir}/${source.java}/servlet"/>
-      <arg value="-js"/>
-      <arg value="${basedir}/${source.java}/swing"/>
-      <arg value="-d" />
-      <arg value="${target.web}/java2html"/>
-      <arg value="-n"/>
-      <arg value="${ant.project.name}"/>
-      <arg value="-m"/>
-      <arg value="4"/>
-      <arg value="-jd"/>
-      <arg value="${javadoc.jdk130.local}"/>
-      <arg value="${javadoc.jdk130.web}"/>
-    </java>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="web.jdepend" depends="jar">
-    <mkdir dir="${target.temp}/jdepend"/>
-    <mkdir dir="${target.web}/jdepend"/>
-    <echo message="If this fails you might need to run the antlibs task to copy jars to ant/lib:"/>
-    <jdepend format="xml" outputfile="${target.temp}/jdepend/jdepend-report.xml" fork="yes">
-      <classespath>
-        <pathelement path="${target.classes}/common"/>
-        <pathelement path="${target.classes}/jsword"/>
-        <pathelement path="${target.classes}/swing"/>
-        <pathelement path="${target.classes}/servlet"/>
-      </classespath>
-      <classpath>
-        <fileset dir="${source.jar}" includes="**/*.jar"/>
-        <fileset dir="${support.tools}/jdepend26" includes="**/*.jar"/>
-      </classpath>
-    </jdepend>
-    <style
-        basedir="${target.temp}/jdepend"
-        destdir="${target.web}/jdepend"
-        includes="jdepend-report.xml"
-        style="${support.tools}/jdepend26/jdepend.xsl"/>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="web.checkstyle">
-    <mkdir dir="${target.temp}/checkstyle"/>
-    <mkdir dir="${target.web}/checkstyle"/>
-    <taskdef resource="checkstyletask.properties">
-      <classpath>
-        <fileset dir="${support.tools}/checkstyle33" includes="**/*.jar"/>
-      </classpath>
-    </taskdef>
-    <copy file="${support.tools}/checkstyle33/custom.xml" overwrite="true"
-        tofile="${target.temp}/checkstyle/custom.xml">
-      <filterset>
-        <filter token="source.java" value="${basedir}/${source.java}"/>
-        <filter token="target.checkstyle" value="${basedir}/${target.temp}/checkstyle"/>
-      </filterset>
-    </copy>
-    <checkstyle config="${target.temp}/checkstyle/custom.xml" failOnViolation="false">
-      <fileset dir="${source.java}/common" includes="**/*.java"/>
-      <fileset dir="${source.java}/jsword" includes="**/*.java"/>
-      <fileset dir="${source.java}/servlet" includes="**/*.java"/>
-      <fileset dir="${source.java}/swing" includes="**/*.java"/>
-      <formatter type="plain"/>
-      <formatter type="xml" toFile="${target.temp}/checkstyle/checkstyle_errors.xml"/>
-    </checkstyle>
-    <style
-        basedir="${target.temp}/checkstyle"
-        destdir="${target.web}/checkstyle"
-        includes="checkstyle_errors.xml"
-        style="${support.tools}/checkstyle33/checkstyle-noframes.xsl"/>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="web.pmd">
-    <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask">
-      <classpath>
-        <fileset dir="${support.tools}/pmd15" includes="**/*.jar"/>
-      </classpath>
-    </taskdef>
-    <mkdir dir="${target.web}/pmd"/>
-    <pmd rulesetfiles="${basedir}/${support.tools}/pmd15/ruleset.xml" shortFilenames="true">
-      <formatter type="html" toFile="${target.web}/pmd/index.html"/>
-      <fileset dir="${source.java}/common" includes="**/*.java"/>
-      <fileset dir="${source.java}/jsword" includes="**/*.java"/>
-      <fileset dir="${source.java}/servlet" includes="**/*.java"/>
-      <fileset dir="${source.java}/swing" includes="**/*.java"/>
-    </pmd>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="web.cpd">
-    <mkdir dir="${target.web}/cpd"/>
-    <java classname="net.sourceforge.pmd.cpd.CPD" output="${target.web}/cpd/report.txt">
-      <classpath>
-        <fileset dir="${support.tools}/pmd15" includes="**/*.jar"/>
-      </classpath>
-      <arg value="100"/>
-      <arg value="${source.java}"/>
-    </java>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="web.javancss">
-    <echo message="If this fails with a DTM ID exception you might need to upgrade the Xalan in your JDK"/>
-    <echo message="If this fails you might need to run the antlibs task to copy jars to ant/lib:"/>
-    <taskdef name="javancss" classname="javancss.JavancssAntTask">
-      <classpath>
-        <fileset dir="${support.tools}/javancss2141" includes="**/*.jar"/>
-      </classpath>
-    </taskdef>
-    <mkdir dir="${target.temp}/javancss"/>
-    <javancss
-        srcdir="${source.java}"
-        includes="**/*.java"
-        generateReport="true"
-        outputfile="${target.temp}/javancss/javancss_metrics.xml"
-        format="xml"/>
-    <mkdir dir="${target.web}/javancss"/>
-    <style
-        in="${target.temp}/javancss/javancss_metrics.xml"
-        out="${target.web}/javancss/index.html"
-        style="${support.tools}/javancss2141/javancss2html.xsl"/>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="web.findbugs" depends="subprojects">
-    <mkdir dir="${target.web}/findbugs"/>
-    <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
-      <classpath>
-        <fileset dir="${support.tools}/findbugs070" includes="**/*.jar"/>
-      </classpath>
-    </taskdef>
-    <findbugs home="${support.tools}/findbugs070"
-        output="text"
-        outputFile="${target.web}/findbugs/report.txt"
-        reportLevel="low"
-        sort="text"
-        jvmargs="-Xmx512m"
-        >
-      <class location="${target.web}/jnlp/jsword-swing.jar" />
-      <class location="${target.web}/jnlp/jsword.jar"/>
-      <auxClasspath path="${target.web}/jnlp/jsword-osis.jar"/>
-      <auxClasspath path="${target.web}/jnlp/commons-lang-2.0.jar"/>
-      <auxClasspath path="${target.web}/jnlp/commons-net-1.1.0.jar"/>
-      <auxClasspath path="${target.web}/jnlp/jaxb-api.jar"/>
-      <auxClasspath path="${target.web}/jnlp/jaxb-libs.jar"/>
-      <auxClasspath path="${target.web}/jnlp/jaxb-ri.jar"/>
-      <auxClasspath path="${target.web}/jnlp/jdom.jar"/>
-      <auxClasspath path="${target.web}/jnlp/log4j-1.2.7.jar"/>
-      <auxClasspath path="${target.web}/jnlp/lucene-1.3-final.jar"/>
-      <auxClasspath path="${target.web}/jnlp/winlaf-0.4.jar"/>
-      <auxClasspath path="${target.web}/jnlp/tar.jar"/>
-      <auxClasspath path="${target.web}/jnlp/jlfgr-1_0.jar"/>
-      <!--
-        ** The following is needed only for the unused org.crosswire.jsword.view.cli
-        ** It can be removed when cli is removed.
-        -->
-      <auxClasspath path="${source.jar}/bsf23/js.jar"/>
-      <!-- sourcePath is really only needed by the findbugs gui -->
-      <sourcePath>
-        <pathelement path="${source.java}/common"/>
-        <pathelement path="${source.java}/jsword"/>
-        <pathelement path="${source.java}/swing"/>
-        <pathelement path="${source.java}/servlet"/>
-      </sourcePath>
-    </findbugs>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="web.analysis" depends="web.jdepend, web.checkstyle, web.pmd, web.java2html, web.javancss, web.findbugs">
-    <!-- I've taken web.cpd out because it is very slow and not that useful -->
-    <!-- I've taken XXX out because it ran out of memory -->
-  </target>
-
-  <!--=======================================================================-->
-  <target name="web" depends="web.files, web.javadoc, web.testreport, web.analysis" description="All the documentation tasks">
+  <target name="web" depends="files, tools" description="All the documentation tasks">
   </target>
 
   <!--=======================================================================-->
@@ -428,54 +129,10 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="antlibs" description="Copy required jars to ant/lib">
-    <echo message="copy ${basedir}/${source.jar}/junit381/junit.jar to ${ant.home}/lib"/>
-    <copy file="${source.jar}/junit381/junit.jar" todir="${ant.home}/lib"/>
-    <echo message="copy ${basedir}/${support.tools}/jdepend26/jdepend.jar"/>
-    <copy file="${support.tools}/jdepend26/jdepend.jar" todir="${ant.home}/lib"/>
-  </target>
-
-  <!--=======================================================================-->
   <target name="cvsup.extra" description="Extra stuff to do after calling cvsup">
     <chmod perm="755">
       <fileset dir="${source.etc}/build" includes="**/*.sh"/>
     </chmod>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="tomcatinit">
-    <property name="web.path" value="/jsword"/>
-    <property name="url" value="http://localhost:8080/manager"/>
-    <!-- You will need to -Dusername=fred -Dpassword=secret -->
-    <!-- property name="username" value="myusername"/ -->
-    <!-- property name="password" value="mypassword"/ -->
-    <!--
-    <taskdef name="deploy"    classname="org.apache.catalina.ant.DeployTask"/>
-    <taskdef name="install"   classname="org.apache.catalina.ant.InstallTask"/>
-    <taskdef name="list"      classname="org.apache.catalina.ant.ListTask"/>
-    <taskdef name="reload"    classname="org.apache.catalina.ant.ReloadTask"/>
-    <taskdef name="remove"    classname="org.apache.catalina.ant.RemoveTask"/>
-    <taskdef name="resources" classname="org.apache.catalina.ant.ResourcesTask"/>
-    <taskdef name="roles"     classname="org.apache.catalina.ant.RolesTask"/>
-    <taskdef name="start"     classname="org.apache.catalina.ant.StartTask"/>
-    <taskdef name="stop"      classname="org.apache.catalina.ant.StopTask"/>
-    <taskdef name="undeploy"  classname="org.apache.catalina.ant.UndeployTask"/>
-    -->
-  </target>
-
-  <!--=======================================================================-->
-  <target name="install" description="Install web application" depends="tomcatinit, web.files">
-    <install url="${url}" username="${username}" password="${password}" path="${path}" war="file://$basedir}/${target.root}/web"/>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="reload" description="Reload web application" depends="tomcatinit, web.files">
-    <reload url="${url}" username="${username}" password="${password}" path="${path}"/>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="remove" description="Remove web application" depends="tomcatinit">
-    <remove url="${url}" username="${username}" password="${password}" path="${path}"/>
   </target>
 
 </project>

@@ -1,0 +1,76 @@
+<project name="jcoverage" default="jcoverage">
+
+  <target name="jcoverage" description="Run the standard test suite">
+    <taskdef resource="tasks.properties">
+      <classpath>
+        <fileset dir="${support.tools}/jcoverage104" includes="**/*.jar"/>
+      </classpath>
+    </taskdef>
+    <delete failonerror="false">
+      <fileset dir="${target.temp}/jcoverage"/>
+    </delete>
+    <delete failonerror="false">
+      <fileset dir="${source.root}">
+        <include name="jcoverage.ser"/>
+      </fileset>
+    </delete>
+    <instrument todir="${target.temp}/jcoverage">
+      <fileset dir="${target.classes}/common" includes="**/*.class"/>
+    </instrument>
+    <instrument todir="${target.temp}/jcoverage">
+      <fileset dir="${target.classes}/jsword" includes="**/*.class"/>
+      <!--
+      <ignore regex="org.apache.log4j.*"/>
+      <fileset dir="${target.classes}/swing" includes="**/*.class"/>
+      <fileset dir="${target.classes}/servlet" includes="**/*.class"/>
+      -->
+    </instrument>
+    <mkdir dir="${target.temp}/junit"/>
+    <echo message="JUnit needs jars in ${ant.lib}. See the antlibs task."/>
+    <echo message="Using -Djsword.bible.dir=${basedir}/${target.swingui}/resource"/>
+    <junit fork="yes" haltonfailure="no" printsummary="on" showoutput="yes">
+      <jvmarg value="-Djsword.bible.dir=${basedir}/${target.swingui}/resource"/>
+      <test name="CommonAllTests" todir="${target.temp}/junit"/>
+      <test name="JSwordAllTests" todir="${target.temp}/junit"/>
+      <!--
+      <test name="MapAllTests" todir="${target.temp}/junit"/>
+      -->
+      <formatter type="plain" usefile="false"/>
+      <formatter type="xml"/>
+      <classpath>
+        <fileset dir="${source.jar}" includes="**/*.jar"/>
+        <fileset dir="${support.tools}/jcoverage104" includes="**/*.jar"/>
+        <pathelement path="${target.temp}/jcoverage"/>
+        <!--
+        <pathelement path="${target.classes}/common"/>
+        <pathelement path="${target.classes}/jsword"/>
+        -->
+        <pathelement path="${target.classes}/servlet"/>
+        <pathelement path="${target.classes}/swing"/>
+        <pathelement path="${target.classes}/osis"/>
+        <pathelement path="${target.classes}/commontest"/>
+        <pathelement path="${target.classes}/jswordtest"/>
+        <pathelement path="${target.classes}/servlettest"/>
+        <pathelement path="${target.classes}/swingtest"/>
+        <pathelement path="${target.classes}/resource"/>
+        <pathelement path="${source.res}"/>
+      </classpath>
+    </junit>
+  </target>
+
+  <target name="testreport" depends="jcoverage" description="Compile test report">
+    <mkdir dir="${target.web}/test"/>
+    <junitreport todir="${target.temp}/junit">
+      <fileset dir="${target.temp}/junit">
+        <include name="TEST-*.xml"/>
+      </fileset>
+      <report format="frames" todir="${target.web}/test"/>
+    </junitreport>
+    <mkdir dir="${target.web}/jcoverage"/>
+    <report srcdir="${source.java}/common" destdir="${target.web}/jcoverage"/>
+    <!--
+    <report srcdir="${source.java}/jsword" destdir="${target.web}/jcoverage"/>
+    -->
+  </target>
+  
+</project>

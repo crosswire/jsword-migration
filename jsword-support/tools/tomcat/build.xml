@@ -1,0 +1,35 @@
+<project name="tomcat" default="install">
+
+  <target name="tomcatinit">
+    <property name="web.path" value="/jsword"/>
+    <property name="url" value="http://localhost:8080/manager"/>
+    <!-- You will need to -Dusername=fred -Dpassword=secret -->
+    <!-- property name="username" value="myusername"/ -->
+    <!-- property name="password" value="mypassword"/ -->
+    <!--
+    <taskdef name="deploy"    classname="org.apache.catalina.ant.DeployTask"/>
+    <taskdef name="install"   classname="org.apache.catalina.ant.InstallTask"/>
+    <taskdef name="list"      classname="org.apache.catalina.ant.ListTask"/>
+    <taskdef name="reload"    classname="org.apache.catalina.ant.ReloadTask"/>
+    <taskdef name="remove"    classname="org.apache.catalina.ant.RemoveTask"/>
+    <taskdef name="resources" classname="org.apache.catalina.ant.ResourcesTask"/>
+    <taskdef name="roles"     classname="org.apache.catalina.ant.RolesTask"/>
+    <taskdef name="start"     classname="org.apache.catalina.ant.StartTask"/>
+    <taskdef name="stop"      classname="org.apache.catalina.ant.StopTask"/>
+    <taskdef name="undeploy"  classname="org.apache.catalina.ant.UndeployTask"/>
+    -->
+  </target>
+
+  <target name="install" description="Install web application" depends="tomcatinit">
+    <install url="${url}" username="${username}" password="${password}" path="${path}" war="file://$basedir}/${target.root}/web"/>
+  </target>
+
+  <target name="reload" description="Reload web application" depends="tomcatinit">
+    <reload url="${url}" username="${username}" password="${password}" path="${path}"/>
+  </target>
+
+  <target name="remove" description="Remove web application" depends="tomcatinit">
+    <remove url="${url}" username="${username}" password="${password}" path="${path}"/>
+  </target>
+
+</project>

@@ -2,14 +2,14 @@
 
   <!-- This build uses the core build targets -->
   <import file="../common/core.xml"/>
+  <property name="dependency"       value="jsword"/>
+  <property name="dependency.jar"   value="../${dependency}/target/ant/jar"/>
 
   <!--=======================================================================-->
   <property name="gener.root"       value="target/gener"/>
   <property name="target.jnlp"      value="${target.root}/bibledesktop"/>
   <property name="target.installed" value="${target.root}/installed"/>
-  <property name="dependency"       value="jsword"/>
-  <property name="dependency.jar"   value="../${dependency}/target/ant/jar"/>
-	
+
   <!--=======================================================================-->
   <target name="testcompile.extra">
     <mkdir dir="${gener.root}/config"/>
@@ -26,7 +26,7 @@
   <!--=======================================================================-->
   <target name="prepare.extra">
     <copy file="${source.etc}/jnlp/${ant.project.name}.jnlp"
-    	  todir="${target.jnlp}"/>
+        todir="${target.jnlp}"/>
     <copy todir="${target.jnlp}">
       <fileset dir="${source.etc}/bin"/>
     </copy>
@@ -45,18 +45,17 @@
 
   <!--=======================================================================-->
   <target name="jar.extra"
-  	      description="Moves files to correct location for JNLP deploy" >
+      description="Moves files to correct location for JNLP deploy" >
     <mkdir dir="${target.jnlp}"/>
-  	<copy todir="${target.jnlp}">
-  		<fileset dir="${target.jar}"/>
+    <copy todir="${target.jnlp}">
+      <fileset dir="${target.jar}"/>
     </copy>
   </target>
 
-
   <!--=======================================================================-->
   <target name="install"
-  	      depends="jar"
-  	      description="Moves files to correct location for JNLP deploy" >
+      depends="jar"
+      description="Moves files to correct location for JNLP deploy" >
     <mkdir dir="${target.installed}"/>
     <copy todir="${target.installed}" filtering="true">
       <fileset dir="${target.jnlp}">

@@ -1,0 +1,33 @@
+<project name="checkstyle" default="checkstyle">
+
+  <target name="checkstyle">
+    <mkdir dir="${target.temp}/checkstyle"/>
+    <mkdir dir="${target.web}/checkstyle"/>
+    <taskdef resource="checkstyletask.properties">
+      <classpath>
+        <fileset dir="${support.tools}/checkstyle33" includes="**/*.jar"/>
+      </classpath>
+    </taskdef>
+    <copy file="${support.tools}/checkstyle33/custom.xml" overwrite="true"
+        tofile="${target.temp}/checkstyle/custom.xml">
+      <filterset>
+        <filter token="source.java" value="${basedir}/${source.java}"/>
+        <filter token="target.checkstyle" value="${basedir}/${target.temp}/checkstyle"/>
+      </filterset>
+    </copy>
+    <checkstyle config="${target.temp}/checkstyle/custom.xml" failOnViolation="false">
+      <fileset dir="${source.java}/common" includes="**/*.java"/>
+      <fileset dir="${source.java}/jsword" includes="**/*.java"/>
+      <fileset dir="${source.java}/servlet" includes="**/*.java"/>
+      <fileset dir="${source.java}/swing" includes="**/*.java"/>
+      <formatter type="plain"/>
+      <formatter type="xml" toFile="${target.temp}/checkstyle/checkstyle_errors.xml"/>
+    </checkstyle>
+    <style
+        basedir="${target.temp}/checkstyle"
+        destdir="${target.web}/checkstyle"
+        includes="checkstyle_errors.xml"
+        style="${support.tools}/checkstyle33/checkstyle-noframes.xsl"/>
+  </target>
+  
+</project>

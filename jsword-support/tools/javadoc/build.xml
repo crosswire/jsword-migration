@@ -1,0 +1,37 @@
+<project name="javadoc" default="javadoc">
+
+  <target name="javadoc" description="Create JavaDoc">
+    <mkdir dir="${target.web}/api"/>
+    <javadoc
+        stylesheetfile="${source.etc}/javadoc/stylesheet.css"
+        destdir="${target.web}/api"
+        overview="${source.java}/jsword/overview.html"
+        private="true"
+        author="true"
+        use="true"
+        splitindex="true"
+        version="true">
+      <packageset dir="${source.java}/common" defaultexcludes="yes">
+        <include name="**"/>
+      </packageset>
+      <packageset dir="${gener.root}/osis" defaultexcludes="yes">
+        <include name="**"/>
+      </packageset>
+      <packageset dir="${source.java}/jsword" defaultexcludes="yes">
+        <include name="**"/>
+      </packageset>
+      <packageset dir="${source.java}/servlet" defaultexcludes="yes">
+        <include name="**"/>
+      </packageset>
+      <packageset dir="${source.java}/swing" defaultexcludes="yes">
+        <include name="**"/>
+      </packageset>
+      <footer>Copyright &#168; 2003</footer>
+      <classpath>
+        <fileset dir="${source.jar}" includes="**/*.jar"/>
+      </classpath>
+      <link offline="true" href="http://java.sun.com/j2se/1.4/docs/api/" packagelistLoc="${source.etc}/javadoc"/>
+    </javadoc>
+  </target>
+
+</project>

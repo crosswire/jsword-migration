@@ -1,14 +1,27 @@
-<project name="jsword" default="all">
+<project name="jsword-support" default="tools">
 
-  <target name="cvsup" description="cvs update">
-    <cvs cvsRoot=":pserver:joe@cvs.crosswire.org:/cvs/jsword" dest=".">
-      <commandline>
-        <argument value="-q"/>
-        <argument value="update"/>
-        <argument value="-d"/>
-        <argument value="-P"/>
-      </commandline>
-    </cvs>
+  <property name="support.root" value="../jsword-support"/>
+  <property name="support.tools" value="${support.root}/tools"/>
+
+  <import file="${support.tools}/checkstyle33/build.xml"/>
+  <import file="${support.tools}/java2html12/build.xml"/>
+  <import file="${support.tools}/javadoc/build.xml"/>
+  <import file="${support.tools}/javancss2141/build.xml"/>
+  <import file="${support.tools}/jcoverage104/build.xml"/>
+  <import file="${support.tools}/jdepend26/build.xml"/>
+  <import file="${support.tools}/findbugs070/build.xml"/>
+  <import file="${support.tools}/pmd15/build.xml"/>
+  <import file="${support.tools}/tomcat/build.xml"/>
+
+  <target name="tools" depends="jdepend, checkstyle, pmd, jcoverage, java2html, javancss, findbugs">
+    <!-- I've taken cpd out because it is very slow and not that useful -->
+  </target>
+
+  <target name="antlibs" description="Copy required jars to ant/lib">
+    <echo message="copy ${basedir}/${source.jar}/junit381/junit.jar to ${ant.home}/lib"/>
+    <copy file="${source.jar}/junit381/junit.jar" todir="${ant.home}/lib"/>
+    <echo message="copy ${basedir}/${support.tools}/jdepend26/jdepend.jar"/>
+    <copy file="${support.tools}/jdepend26/jdepend.jar" todir="${ant.home}/lib"/>
   </target>
 
 </project>
