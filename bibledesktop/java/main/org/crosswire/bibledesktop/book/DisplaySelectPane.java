@@ -40,7 +40,7 @@ import org.crosswire.jsword.passage.RestrictionType;
 
 /**
  * Passage Selection area.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -102,7 +102,7 @@ public class DisplaySelectPane extends JPanel
     }
 
     /**
-     * 
+     *
      */
     private Component createRadioPanel()
     {
@@ -124,9 +124,9 @@ public class DisplaySelectPane extends JPanel
 
         return pnlRadios;
     }
-    
+
     /**
-     * 
+     *
      */
     private Component createBiblePicker()
     {
@@ -145,7 +145,7 @@ public class DisplaySelectPane extends JPanel
             {
                 if (ev.getStateChange() == ItemEvent.SELECTED)
                 {
-                    changeVersion();                    
+                    changeVersion();
                 }
             }
         });
@@ -153,7 +153,7 @@ public class DisplaySelectPane extends JPanel
     }
 
     /**
-     * 
+     *
      */
     private Component createPassagePanel()
     {
@@ -200,14 +200,6 @@ public class DisplaySelectPane extends JPanel
 
         chkSRestrict = new JCheckBox(actions.getAction(RESTRICT_SEARCH));
         chkSRestrict.setSelected(false);
-        chkSRestrict.addItemListener(new ItemListener()
-        {
-            public void itemStateChanged(ItemEvent ev)
-            {
-                boolean selected = chkSRestrict.isSelected();
-                txtSRestrict.setEnabled(selected);
-            }
-        });
 
         txtSRestrict = new JTextField();
         Action action = actions.getAction(SEARCH_RESTRICTION);
@@ -245,14 +237,6 @@ public class DisplaySelectPane extends JPanel
 
         chkMRestrict = new JCheckBox(actions.getAction(RESTRICT_MATCH));
         chkMRestrict.setSelected(false);
-        chkMRestrict.addItemListener(new ItemListener()
-        {
-            public void itemStateChanged(ItemEvent ev)
-            {
-                boolean selected = chkSRestrict.isSelected();
-                txtSRestrict.setEnabled(selected);
-            }
-        });
 
         JButton goButton = new JButton(actions.getAction(GO_MATCH));
 
@@ -291,7 +275,7 @@ public class DisplaySelectPane extends JPanel
     {
         flipOption(SEARCH);
     }
-    
+
     private void flipOption(String toWhat)
     {
         layCards.show(pnlCards, toWhat);
@@ -303,7 +287,7 @@ public class DisplaySelectPane extends JPanel
     {
         showSelectDialog();
     }
-    
+
     // Go button was clicked
     public void doGoPassage()
     {
@@ -428,6 +412,25 @@ public class DisplaySelectPane extends JPanel
     }
 
     /**
+     * Some on (un)checked the restrict match box
+     */
+    public void doRestrictMatch()
+    {
+        boolean selected = chkMRestrict.isSelected();
+        txtMRestrict.setEnabled(selected);        
+    }
+
+    /**
+     * Some on (un)checked the restrict search box
+     */
+    public void doRestrictSearch()
+    {
+        boolean selected = chkSRestrict.isSelected();
+        txtSRestrict.setEnabled(selected);
+
+    }
+
+    /**
      * Sync the viewed passage with the passage text box
      */
     private void updateDisplay()
@@ -476,7 +479,7 @@ public class DisplaySelectPane extends JPanel
         {
             rdoMatch.setSelected(true);
         }
-        
+
         adjustFocus();
     }
 
@@ -619,7 +622,7 @@ public class DisplaySelectPane extends JPanel
         {
             for (int i = 0; i < listeners.size(); i++)
             {
-                DisplaySelectListener li = (DisplaySelectListener) listeners.get(i); 
+                DisplaySelectListener li = (DisplaySelectListener) listeners.get(i);
                 li.passageSelected(ev);
             }
         }
