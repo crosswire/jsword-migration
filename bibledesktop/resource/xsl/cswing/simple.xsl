@@ -479,14 +479,20 @@
   -->
   
   <!-- Avoid adding whitespace -->
+  <xsl:template match="lg">
+    <div class="lg"><xsl:apply-templates/></div>
+  </xsl:template>
+  
+  <!-- Avoid adding whitespace -->
   <xsl:template match="l">
     <div class="l"><xsl:apply-templates/></div>
   </xsl:template>
   
   <!-- Avoid adding whitespace -->
-  <xsl:template match="lg">
-    <div class="lg"><xsl:apply-templates/></div>
-  </xsl:template>
+  <!-- While a BR is a break, if it is immediately followed by punctuation,
+       indenting this rule can introduce whitespace.
+    -->
+  <xsl:template match="lb"><br/></xsl:template>
   
   <!-- Avoid adding whitespace -->
   <xsl:template match="list">
