@@ -53,12 +53,12 @@ import org.crosswire.common.swing.ExtensionFileFilter;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.util.ResourceUtil;
+import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.passage.BibleInfo;
-import org.crosswire.jsword.util.Project;
 import org.jdom.Document;
 
 /**
@@ -118,7 +118,7 @@ public class Mapper extends JFrame
             vcols[i + 1 + BibleInfo.Section.LETTERS] = new BookVerseColor(i);
         }
 
-        jbInit();
+        init();
 
         if (args.length != 0)
         {
@@ -146,8 +146,8 @@ public class Mapper extends JFrame
             // NOTE: when we tried dynamic laf update, 'this' needed special treatment
             //LookAndFeelUtil.addComponentToUpdate(this);
 
-            Document xmlconfig = Project.instance().getDocument("config");
-            config.add(xmlconfig);
+            Document xmlconfig = XMLUtil.getDocument("config");
+            config.add(xmlconfig, null);
 
             Properties prop = ResourceUtil.getProperties("mapper");
             if (prop != null)
@@ -174,7 +174,7 @@ public class Mapper extends JFrame
     /**
      * Initialize the GUI, and display it.
      */
-    private void jbInit()
+    private void init()
     {
         menu_file.setText("File");
         menu_file.setMnemonic('F');

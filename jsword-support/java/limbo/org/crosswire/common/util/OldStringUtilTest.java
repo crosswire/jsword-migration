@@ -41,24 +41,6 @@ public class OldStringUtilTest extends TestCase
     {
     }
 
-    public void testSetLength() throws Exception
-    {
-        assertEquals(OldStringUtil.setLengthRightPad("12345", 5), "12345"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(OldStringUtil.setLengthRightPad("1234567890", 5), "12345"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(OldStringUtil.setLengthRightPad("123", 5), "123  "); //$NON-NLS-1$ //$NON-NLS-2$
-
-        assertEquals(OldStringUtil.setLengthLeftPad("12345", 5), "12345"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(OldStringUtil.setLengthLeftPad("1234567890", 5), "12345"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(OldStringUtil.setLengthLeftPad("123", 5), "  123"); //$NON-NLS-1$ //$NON-NLS-2$
-    }
-
-    public void testShorten() throws Exception
-    {
-        assertEquals(OldStringUtil.shorten("12345", 5), "12345"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(OldStringUtil.shorten("1234567890", 5), "12..."); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(OldStringUtil.shorten("123", 5), "123"); //$NON-NLS-1$ //$NON-NLS-2$
-    }
-
     public void testGetCapitals() throws Exception
     {
         assertEquals(OldStringUtil.getCapitals("Church of England"), "CE"); //$NON-NLS-1$ //$NON-NLS-2$

@@ -1,6 +1,6 @@
 package org.crosswire.bibledesktop.display;
 
-import org.crosswire.common.util.ResourceUtil;
+import org.crosswire.common.util.ClassUtil;
 
 /**
  * Factory for OSIS renderers.
@@ -42,7 +42,7 @@ public class BookDataDisplayFactory
     {
         try
         {
-            return (BookDataDisplay) ResourceUtil.getImplementation(BookDataDisplay.class);
+            return (BookDataDisplay) ClassUtil.getImplementation(BookDataDisplay.class);
         }
         catch (Exception ex)
         {

@@ -1,7 +1,7 @@
 package org.crosswire.jsword.view.web;
 
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.MissingResourceException;
 
 import javax.xml.transform.TransformerException;
 
@@ -50,7 +50,7 @@ public class SimpleWebConverter implements Converter
             // however for various reasons, now we don't but nothing seems to be broken ...
             return new TransformingSAXEventProvider(xslurl, xmlsep);
         }
-        catch (MalformedURLException ex)
+        catch (MissingResourceException ex)
         {
             throw new TransformerException(ex);
         }

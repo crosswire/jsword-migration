@@ -8,8 +8,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.MissingResourceException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -93,7 +93,7 @@ public class PassageSelectionPane extends JPanel
                 icoBad = new ImageIcon(urlBad);
             }
         }
-        catch (MalformedURLException ex)
+        catch (MissingResourceException ex)
         {
             assert false : ex;
         }

@@ -1,7 +1,5 @@
 package org.crosswire.common.util;
 
-import org.apache.commons.lang.StringUtils;
-
 /**
  * .
  * 
@@ -28,75 +26,6 @@ import org.apache.commons.lang.StringUtils;
  */
 public class OldStringUtil
 {
-
-    /**
-     * Ensure a string is of a fixed length by truncating it or
-     * by adding spaces until it is.
-     * @param str The string to check
-     * @param len The number of characters needed
-     */
-    public static String setLengthRightPad(String str, int len)
-    {
-        int diff = len - str.length();
-
-        if (diff == 0)
-        {
-            return str;
-        }
-
-        if (diff < 0)
-        {
-            return str.substring(0, len);
-        }
-        else
-        {
-            return StringUtils.rightPad(str, len);
-        }
-    }
-
-    /**
-     * Ensure a string is of a fixed length by truncating it or
-     * by adding spaces until it is.
-     * @param str The string to check
-     * @param len The number of characters needed
-     */
-    public static String setLengthLeftPad(String str, int len)
-    {
-        int diff = len - str.length();
-
-        if (diff == 0)
-        {
-            return str;
-        }
-
-        if (diff < 0)
-        {
-            return str.substring(0, len);
-        }
-        else
-        {
-            return StringUtils.leftPad(str, len);
-        }
-    }
-
-    /**
-     * Like setLength() however this method only shortens strings that are too
-     * long, and it shortens them in a human friendly way, currently this is
-     * limited to adding "..." to show that it has been shortened, but we could
-     * implement a fancy remove spaces/vowels algorythm.
-     * @param str The string to check
-     * @param len The number of characters needed
-     */
-    public static String shorten(String str, int len)
-    {
-        if (str.length() <= len)
-        {
-            return str;
-        }
-
-        return str.substring(0, len-3) + "..."; //$NON-NLS-1$
-    }
-
     /**
      * For example getCapitals("Java DataBase Connectivity") = "JDBC" and
      * getCapitals("Church of England") = "CE".

@@ -1,8 +1,8 @@
 package org.crosswire.bibledesktop.util;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.MissingResourceException;
 
 import javax.xml.transform.TransformerException;
 
@@ -92,7 +92,7 @@ public class ConfigurableSwingConverter implements Converter
 
             return tsep;
         }
-        catch (MalformedURLException ex)
+        catch (MissingResourceException ex)
         {
             throw new TransformerException(ex);
         }

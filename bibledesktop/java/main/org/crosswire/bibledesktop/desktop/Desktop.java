@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.swing.ButtonGroup;
@@ -52,9 +54,11 @@ import org.crosswire.common.swing.CatchingThreadGroup;
 import org.crosswire.common.swing.ExceptionPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.swing.LookAndFeelUtil;
+import org.crosswire.common.util.CWClassLoader;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.util.ResourceUtil;
+import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
@@ -781,13 +785,10 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         fillChoiceFactory();
 
         config = new Config(Msg.CONFIG_TITLE.toString());
+        Document xmlconfig = null;
         try
         {
-            Document xmlconfig = Project.instance().getDocument(CONFIG_KEY);
-            config.add(xmlconfig);
-
-            config.setProperties(ResourceUtil.getProperties(DESKTOP_KEY));
-            config.localToApplication(true);
+            xmlconfig = XMLUtil.getDocument(CONFIG_KEY);
         }
         catch (JDOMException e)
         {
@@ -802,6 +803,27 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
             ExceptionPane.showExceptionDialog(null, e);
         }
 
+        Locale defaultLocale = Locale.getDefault();
+        ResourceBundle configResources = ResourceBundle.getBundle(CONFIG_KEY, defaultLocale, new CWClassLoader(Desktop.class));
+        
+        config.add(xmlconfig, configResources);
+        
+        try
+        {
+            config.setProperties(ResourceUtil.getProperties(DESKTOP_KEY));
+        }
+        catch (MalformedURLException e1)
+        {
+            e1.printStackTrace();
+            ExceptionPane.showExceptionDialog(null, e1);
+        }
+        catch (IOException e1)
+        {
+            e1.printStackTrace();
+            ExceptionPane.showExceptionDialog(null, e1);
+        }
+        
+        config.localToApplication(true);
     }
 
     /**

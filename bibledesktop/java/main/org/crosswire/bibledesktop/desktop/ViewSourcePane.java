@@ -47,47 +47,47 @@ public class ViewSourcePane extends JPanel
 {
     /**
      * Construct a ViewSourcePane with some string contents
-     * @param html The HTML contents of the text area
+     * @param orig The original contents of the text area
      * @param osis The OSIS contents of the text area
+     * @param html The HTML contents of the text area
      */
-    public ViewSourcePane(String html, String osis)
+    public ViewSourcePane(String orig, String osis, String html)
     {
-        init();
-
-        txtHtml.setText(html);
-        txtHtml.setCaretPosition(0);
-
-        txtOsis.setText(osis);
-        txtOsis.setCaretPosition(0);
+        init(orig, osis, html);
     }
 
     /**
      * Actually create the GUI
      */
-    private void init()
+    private void init(String orig, String osis, String html)
     {
         actions = new ActionFactory(ViewSourcePane.class, this);
 
-        txtHtml = new JTextArea();
-        txtHtml.setEditable(false);
-        txtHtml.setColumns(80);
-        txtHtml.setRows(24);
-        JPanel pnlHtml = new JPanel(new BorderLayout());
-        pnlHtml.add(new JScrollPane(txtHtml), BorderLayout.CENTER);
-        pnlHtml.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        txtOrig = new JTextArea(orig, 24, 80);
+        txtOrig.setEditable(false);
+        txtOrig.setLineWrap(true);
+        txtOrig.setWrapStyleWord(true);
+        JPanel pnlOrig = new JPanel(new BorderLayout());
+        pnlOrig.add(new JScrollPane(txtOrig), BorderLayout.CENTER);
+        pnlOrig.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        txtOsis = new JTextArea();
+        txtOsis = new JTextArea(osis, 24, 80);
         txtOsis.setEditable(false);
-        txtOsis.setColumns(80);
-        txtOsis.setRows(24);
         JPanel pnlOsis = new JPanel(new BorderLayout());
         pnlOsis.add(new JScrollPane(txtOsis), BorderLayout.CENTER);
         pnlOsis.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        txtHtml = new JTextArea(html, 24, 80);
+        txtHtml.setEditable(false);
+        JPanel pnlHtml = new JPanel(new BorderLayout());
+        pnlHtml.add(new JScrollPane(txtHtml), BorderLayout.CENTER);
+        pnlHtml.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         pnlButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         pnlButtons.add(new JButton(actions.getAction("SourceClip")), null); //$NON-NLS-1$
 
         JTabbedPane tabMain = new JTabbedPane();
+        tabMain.add(pnlOrig, Msg.ORIG.toString());
         tabMain.add(pnlOsis, Msg.OSIS.toString());
         tabMain.add(pnlHtml, Msg.HTML.toString());
 
@@ -138,8 +138,9 @@ public class ViewSourcePane extends JPanel
     /*
      * GUI Components
      */
-    private JTextArea txtHtml;
+    private JTextArea txtOrig;
     private JTextArea txtOsis;
+    private JTextArea txtHtml;
     private JPanel pnlButtons;
     private JDialog frame;
     private ActionFactory actions;

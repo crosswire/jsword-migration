@@ -285,8 +285,11 @@ public class DesktopActions
             else
             {
                 Book book = da.getBook();
-                BookData bdata = book.getData(key);
 
+                String orig = book.getRawData(key);
+
+                BookData bdata = book.getData(key);
+                
                 SAXEventProvider osissep = bdata.getSAXEventProvider();
                 SAXEventProvider htmlsep = converter.convert(osissep);
                 String html = XMLUtil.writeToString(htmlsep);
@@ -294,7 +297,7 @@ public class DesktopActions
                 SerializingContentHandler osis = new SerializingContentHandler(true);
                 osissep.provideSAXEvents(osis);
 
-                ViewSourcePane viewer = new ViewSourcePane(html, osis.toString());
+                ViewSourcePane viewer = new ViewSourcePane(orig, osis.toString(), html);
                 viewer.showInFrame(getDesktop().getJFrame());
             }
         }
