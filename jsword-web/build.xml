@@ -3,7 +3,6 @@
   <import file="../common/core.xml"/>
   <property name="dependency"         value="bibledesktop-web"/>
   <property name="dependency.jar"     value="../${dependency}/target/ant/jar"/>
-  <property name="dependency.install" value="../${dependency}/target/ant/web/nightly"/>
 
   <!--=======================================================================-->
   <property name="source.web"       value="${source.root}/web"/>
@@ -12,10 +11,11 @@
   <property name="jnlp.hostname"    value="localhost:8080"/> <!-- override -->
   <property name="ftp.base"         value="${basedir}/${target.root}/download"/> <!-- override -->
   <property name="ftp.prefix"       value="../download"/> <!-- override -->
+  <property name="jnlp.installed"   value="../${dependency}/target/ant/web/nightly"/> <!-- override -->
 
   <property name="nightly.dir"      value="${ftp.base}/nightly"/>
   <property name="release.dir"      value="${ftp.base}/release"/>
-  <property name="target.web"    value="${webapp.jsword}"/>
+  <property name="target.web"       value="${webapp.jsword}"/>
 
   <!--=======================================================================-->
   <path id="path.alljava">
@@ -168,10 +168,10 @@
     </tar>
     <!-- binary packages -->
     <zip zipfile="${directory}/jsword-${version}-bin.zip">
-      <zipfileset prefix="jsword-${version}" dir="${dependency.install}"/>
+      <zipfileset prefix="jsword-${version}" dir="${jnlp.installed}"/>
     </zip>
     <tar tarfile="${directory}/jsword-${version}-bin.tar.gz" compression="gzip">
-      <tarfileset prefix="jsword-${version}" dir="${dependency.install}"/>
+      <tarfileset prefix="jsword-${version}" dir="${jnlp.installed}"/>
     </tar>
     <!-- documentation packages -->
     <zip zipfile="${directory}/jsword-${version}-doc.zip">
