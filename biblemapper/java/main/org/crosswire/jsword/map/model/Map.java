@@ -17,6 +17,7 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
+import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 /**
@@ -445,9 +446,7 @@ public class Map implements Serializable
     {
         Element root = toXML();
         Document doc = new Document(root);
-        XMLOutputter outputter = new XMLOutputter();
-        outputter.setIndent("  ");
-        outputter.setNewlines(true);
+        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
         outputter.output(doc, out);
     }
 

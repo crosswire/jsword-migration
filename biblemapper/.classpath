@@ -5,5 +5,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="/jsword"/>
 	<classpathentry kind="lib" path="etc/classpath"/>
+	<classpathentry kind="src" path="/common"/>
+	<classpathentry kind="src" path="/bibledesktop"/>
 	<classpathentry kind="output" path="target/eclipse/classes"/>
 </classpath>

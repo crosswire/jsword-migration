@@ -20,6 +20,7 @@ import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.passage.VerseRange;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 /**
@@ -148,9 +149,7 @@ public class CliMapper
 
             PrintWriter xmlout = new PrintWriter(new FileOutputStream("c:\\links.xml"));
             Document doc = new Document(links);
-            XMLOutputter output = new XMLOutputter();
-            output.setNewlines(true);
-            output.setIndent("  ");
+            XMLOutputter output = new XMLOutputter(Format.getPrettyFormat());
             output.output(doc, xmlout);
             xmlout.close();
         }

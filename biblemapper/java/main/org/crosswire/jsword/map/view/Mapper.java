@@ -34,6 +34,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 
+import org.crosswire.bibledesktop.book.BookChooser;
 import org.crosswire.common.config.Config;
 import org.crosswire.common.swing.ExceptionPane;
 import org.crosswire.common.swing.ExtensionFileFilter;
@@ -57,7 +58,6 @@ import org.crosswire.jsword.map.model.Rule;
 import org.crosswire.jsword.map.model.VBAExport;
 import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.util.Project;
-import org.crosswire.jsword.view.swing.book.BookChooser;
 import org.jdom.Document;
 
 /**
