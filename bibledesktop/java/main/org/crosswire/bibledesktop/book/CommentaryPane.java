@@ -50,7 +50,7 @@ import org.crosswire.jsword.passage.Verse;
  */
 public class CommentaryPane extends JPanel implements BookDataDisplay
 {
-	/**
+    /**
      * Simple constructor that uses all the Books
      */
     public CommentaryPane()

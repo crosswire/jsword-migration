@@ -44,7 +44,7 @@ import org.crosswire.jsword.book.Books;
  */
 public class DriversListModel extends AbstractListModel
 {
-	/**
+    /**
      * Basic constructor
      */
     public DriversListModel(boolean includeRo)
@@ -162,7 +162,7 @@ public class DriversListModel extends AbstractListModel
      */
     public static class BibleListCellRenderer extends JLabel implements ListCellRenderer
     {
-		/**
+        /**
          * Constructs a default renderer object for an item in a list.
          */
         public BibleListCellRenderer()

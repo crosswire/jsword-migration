@@ -30,7 +30,7 @@ import org.crosswire.jsword.passage.Key;
  */
 public class KeyTreeModel extends DefaultTreeModel
 {
-	/**
+    /**
      * Simple ctor
      * @param key The root TreeNode
      */

@@ -36,7 +36,7 @@ import org.crosswire.jsword.book.install.InstallManager;
  */
 public class InstallerFactoryComboBoxModel extends AbstractListModel implements ComboBoxModel
 {
-	/**
+    /**
      * Simple ctor
      */
     public InstallerFactoryComboBoxModel(InstallManager imanager)

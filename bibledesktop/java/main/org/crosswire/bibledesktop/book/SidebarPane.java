@@ -34,7 +34,7 @@ import org.crosswire.common.swing.FixedSplitPane;
  */
 public class SidebarPane extends JPanel
 {
-	/**
+    /**
      * Simple ctor
      */
     public SidebarPane()

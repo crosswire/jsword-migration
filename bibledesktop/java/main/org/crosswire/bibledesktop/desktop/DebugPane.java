@@ -54,7 +54,7 @@ import org.crosswire.jsword.util.Project;
  */
 public class DebugPane extends JPanel
 {
-	/**
+    /**
      * Simple ctor
      */
     public DebugPane(Desktop desktop)
@@ -263,7 +263,7 @@ public class DebugPane extends JPanel
      */
     private static final class CustomListCellRenderer extends DefaultListCellRenderer
     {
-		/* (non-Javadoc)
+        /* (non-Javadoc)
          * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
          */
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)

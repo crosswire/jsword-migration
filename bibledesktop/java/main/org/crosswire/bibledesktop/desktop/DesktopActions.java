@@ -227,7 +227,7 @@ public class DesktopActions
         SplitBookDataDisplay da = view.getPassagePane();
         da.getBookDataDisplay().refresh();
     }
-    
+
     public void doVLine(ActionEvent ev)
     {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
@@ -236,7 +236,7 @@ public class DesktopActions
         SplitBookDataDisplay da = view.getPassagePane();
         da.getBookDataDisplay().refresh();
     }
-    
+
     public void doVNum(ActionEvent ev)
     {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
@@ -245,7 +245,7 @@ public class DesktopActions
         SplitBookDataDisplay da = view.getPassagePane();
         da.getBookDataDisplay().refresh();
     }
-    
+
     public void doTinyVNum(ActionEvent ev)
     {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
@@ -254,7 +254,7 @@ public class DesktopActions
         SplitBookDataDisplay da = view.getPassagePane();
         da.getBookDataDisplay().refresh();
     }
-    
+
     public void doNotes(ActionEvent ev)
     {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
@@ -263,7 +263,7 @@ public class DesktopActions
         SplitBookDataDisplay da = view.getPassagePane();
         da.getBookDataDisplay().refresh();
     }
-    
+
     public void doXRef(ActionEvent ev)
     {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();

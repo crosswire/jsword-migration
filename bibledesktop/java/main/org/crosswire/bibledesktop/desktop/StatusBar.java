@@ -51,7 +51,7 @@ import org.crosswire.common.progress.swing.JobsProgressBar;
  */
 public class StatusBar extends JComponent implements MouseListener, URLEventListener
 {
-	/**
+    /**
      * Create a new StatusBar
      */
     public StatusBar()

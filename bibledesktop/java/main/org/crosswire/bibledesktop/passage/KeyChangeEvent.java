@@ -30,7 +30,7 @@ import org.crosswire.jsword.passage.Key;
  */
 public class KeyChangeEvent extends EventObject
 {
-	/**
+    /**
      * For when a key has been changed
      * @param source The thing that started this off
      * @param key The selected Key

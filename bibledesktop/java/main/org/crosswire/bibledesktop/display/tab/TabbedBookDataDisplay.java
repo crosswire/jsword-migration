@@ -388,27 +388,27 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * A list of all the HyperlinkListeners
      */
-    private transient List hyperlis = null;
+    private transient List hyperlis;
 
     /**
      * The passage that we are displaying (in one or more tabs)
      */
-    private Passage key = null;
+    private Passage key;
 
     /**
      * The verses that we have not created tabs for yet
      */
-    private Passage waiting = null;
+    private Passage waiting;
 
     /**
      * The version used for display
      */
-    private Book book = null;
+    private Book book;
 
     /**
      * Are we using tabs?
      */
-    private boolean tabs = false;
+    private boolean tabs;
 
     /**
      * If we are using tabs, this is the main view
@@ -418,7 +418,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * If we are not using tabs, this is the main view
      */
-    private BookDataDisplay pnlView = null;
+    private BookDataDisplay pnlView;
 
     /**
      * A list of all the InnerDisplayPanes so we can control listeners
@@ -428,7 +428,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * Pointer to whichever of the above is currently in use
      */
-    private Component center = null;
+    private Component center;
 
     /**
      * Blank thing for the "More..." button

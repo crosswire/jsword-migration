@@ -105,7 +105,7 @@ import org.jdom.Document;
  */
 public class Desktop extends JFrame implements URLEventListener, ViewEventListener, ViewGenerator
 {
-	/**
+    /**
      * Central start point.
      * @param args The command line arguments
      */
@@ -771,7 +771,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         return config;
     }
 
-    private int refBooks = 0;
+    private int refBooks;
 
     // Strings for the names of property files.
     private static final String SPLASH_PROPS = "splash"; //$NON-NLS-1$

@@ -272,12 +272,12 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
     /**
      * What is currently selected?
      */
-    private Object selected = null;
+    private Object selected;
 
     /**
      * Are we a book, chapter or verse selector
      */
-    protected int level = 0;
+    protected int level;
 
     /**
      * Serialization ID

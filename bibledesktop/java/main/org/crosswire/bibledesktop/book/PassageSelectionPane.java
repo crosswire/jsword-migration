@@ -399,17 +399,17 @@ public class PassageSelectionPane extends JPanel
     /**
      * If escape was pressed we don't want to update the parent
      */
-    protected boolean bailout = false;
+    protected boolean bailout;
 
     /**
      * Prevent us getting in an event cascade loop
      */
-    private boolean changing = false;
+    private boolean changing;
 
     /**
      * The passage we are editing
      */
-    private Passage ref = null;
+    private Passage ref;
 
     /**
      * The ActionFactory holding the actions used by this Component.
@@ -419,13 +419,13 @@ public class PassageSelectionPane extends JPanel
     /*
      * GUI Components
      */
-    private Icon icoGood = null;
-    private Icon icoBad = null;
-    private JTree treAll = null;
-    private JList lstSel = null;
-    private JTextField txtDisplay = null;
-    private JLabel lblMessage = null;
-    protected JDialog dlgMain = null;
+    private Icon icoGood;
+    private Icon icoBad;
+    private JTree treAll;
+    private JList lstSel;
+    private JTextField txtDisplay;
+    private JLabel lblMessage;
+    protected JDialog dlgMain;
 
     /**
      * Serialization ID

@@ -31,7 +31,7 @@ import org.crosswire.jsword.book.BookDriver;
  */
 public class DriversComboBoxModel extends DriversListModel implements ComboBoxModel
 {
-	/**
+    /**
      * Basic Constructor
      */
     public DriversComboBoxModel(boolean includeRo)

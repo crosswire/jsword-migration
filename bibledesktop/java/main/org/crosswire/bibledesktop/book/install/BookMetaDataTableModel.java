@@ -29,7 +29,7 @@ import org.crosswire.jsword.book.BookMetaData;
  */
 public class BookMetaDataTableModel extends MapTableModel
 {
-	/**
+    /**
      * Simple ctor
      */
     public BookMetaDataTableModel()

@@ -68,7 +68,7 @@ import org.crosswire.jsword.book.search.parse.RetainCommandWord;
  */
 public class AdvancedSearchPane extends JPanel implements DocumentListener
 {
-	/**
+    /**
      * This is the default constructor
      */
     public AdvancedSearchPane()
@@ -559,60 +559,60 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     /**
      * If escape was pressed we don't want to update the parent
      */
-    protected boolean bailout = false;
+    protected boolean bailout;
 
     /**
      * The ActionFactory holding the actions used by this Component.
      */
-    private ActionFactory actions = null;
+    private ActionFactory actions;
 
     /**
      * The entries in the restrictions preset
      */
-    private String[] presets = null;
+    private String[] presets;
 
     /**
      * If we are editing the restrict text box, ignore preset updates
      */
-    private boolean editingRestrict = false;
+    private boolean editingRestrict;
 
     /*
      * GUI Components
      */
-    private PassageSelectionPane dlgSelect = null;
-    private JLabel lblPhrase = null;
-    private JLabel lblIncludes = null;
-    private JTextField txtIncludes = null;
-    private JTextField txtPhrase = null;
-    private JLabel lblExcludes = null;
-    private JTextField txtExcludes = null;
-    private JLabel lblHeading = null;
-    private JCheckBox chkRestrict = null;
-    private JLabel lblRestrict = null;
-    private JTextField txtRestrict = null;
-    private JButton btnRestrict = null;
-    private JButton btnGo = null;
-    private JLabel lblPresets = null;
-    private JComboBox cboPresets = null;
-    protected JDialog dlgMain = null;
-//    private JCheckBox chkHebGrk = null;
-//    private JLabel lblHebInc = null;
-//    private JTextField txtHebInc = null;
-//    private JLabel lblHebExc = null;
-//    private JTextField txtHebExc = null;
-//    private JLabel lblGrkInc = null;
-//    private JTextField txtGrkInc = null;
-//    private JLabel lblGrkExc = null;
-//    private JTextField txtGrkExc = null;
-//    private JCheckBox chkTime = null;
-//    private JLabel lblBefore = null;
-//    private JTextField txtBefore = null;
-//    private JLabel lblAfter = null;
-//    private JTextField txtAfter = null;
-    private JLabel lblSummary = null;
-    private JCheckBox chkSummary = null;
-    private JTextArea txtSummary = null;
-    private JScrollPane scrSummary = null;
+    private PassageSelectionPane dlgSelect;
+    private JLabel lblPhrase;
+    private JLabel lblIncludes;
+    private JTextField txtIncludes;
+    private JTextField txtPhrase;
+    private JLabel lblExcludes;
+    private JTextField txtExcludes;
+    private JLabel lblHeading;
+    private JCheckBox chkRestrict;
+    private JLabel lblRestrict;
+    private JTextField txtRestrict;
+    private JButton btnRestrict;
+    private JButton btnGo;
+    private JLabel lblPresets;
+    private JComboBox cboPresets;
+    protected JDialog dlgMain;
+//    private JCheckBox chkHebGrk;
+//    private JLabel lblHebInc;
+//    private JTextField txtHebInc;
+//    private JLabel lblHebExc;
+//    private JTextField txtHebExc;
+//    private JLabel lblGrkInc;
+//    private JTextField txtGrkInc;
+//    private JLabel lblGrkExc;
+//    private JTextField txtGrkExc;
+//    private JCheckBox chkTime;
+//    private JLabel lblBefore;
+//    private JTextField txtBefore;
+//    private JLabel lblAfter;
+//    private JTextField txtAfter;
+    private JLabel lblSummary;
+    private JCheckBox chkSummary;
+    private JTextArea txtSummary;
+    private JScrollPane scrSummary;
 
     /**
      * The log stream

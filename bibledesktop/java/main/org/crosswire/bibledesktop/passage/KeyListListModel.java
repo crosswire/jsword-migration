@@ -31,7 +31,7 @@ import org.crosswire.jsword.passage.Key;
  */
 public class KeyListListModel extends AbstractListModel implements ListModel
 {
-	/**
+    /**
      * Constructor for ListListModel.
      */
     public KeyListListModel(Key keys)

@@ -42,7 +42,7 @@ import org.crosswire.jsword.book.BookType;
  */
 public class BookListCellRenderer extends JLabel implements ListCellRenderer
 {
-	/**
+    /**
      * Constructs a default renderer object for an item in a list.
      */
     public BookListCellRenderer()
@@ -148,7 +148,7 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
     /**
      * border if we do not have focus
      */
-    private static Border noFocus = null;
+    private static Border noFocus;
 
     /**
      * Make sure that book names are not too wide

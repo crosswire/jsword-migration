@@ -57,7 +57,7 @@ import org.crosswire.common.swing.GuiUtil;
  */
 public class Splash extends JWindow
 {
-	/**
+    /**
      * Create a splash window
      */
     public Splash()

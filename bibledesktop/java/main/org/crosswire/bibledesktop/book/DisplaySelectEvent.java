@@ -31,7 +31,7 @@ import org.crosswire.jsword.passage.Key;
  */
 public class DisplaySelectEvent extends EventObject
 {
-	/**
+    /**
      * For when a command has been made
      * @param source The thing that started this off
      * @param key The selected Key

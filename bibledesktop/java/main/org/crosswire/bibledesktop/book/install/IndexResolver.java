@@ -20,7 +20,7 @@ import org.crosswire.jsword.util.IndexDownloader;
 /**
  * A class to prompt the user to download or create a search index and to do
  * carry out the users wishes.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -63,7 +63,7 @@ public class IndexResolver
 
     /**
      * @param parent
-     * 
+     *
      */
     public static void scheduleIndex(BookMetaData bmd, Component parent)
     {
@@ -106,7 +106,7 @@ public class IndexResolver
                 break;
         }
     }
-    
+
     /**
      * Pick an installer
      * @param parent A component to tie dialogs to

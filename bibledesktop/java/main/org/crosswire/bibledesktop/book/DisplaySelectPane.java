@@ -85,6 +85,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     private void initialize()
     {
+        advanced = new AdvancedSearchPane();
+
         title = Msg.UNTITLED.toString(new Integer(base++));
 
         actions = new ActionFactory(DisplaySelectPane.class, this);
@@ -120,7 +122,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         {
             public void actionPerformed(ActionEvent e)
             {
-                JComboBox cbo = (JComboBox)e.getSource();
+                JComboBox cbo = (JComboBox) e.getSource();
                 if (cbo.getSelectedIndex() == -1 && cbo.getItemCount() > 0)
                 {
                     cbo.setSelectedIndex(0);
@@ -205,7 +207,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     }
 
     /**
-     * 
+     *
      */
     public void clear()
     {
@@ -223,7 +225,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     }
 
     /**
-     * 
+     *
      */
     public boolean isClear()
     {
@@ -600,30 +602,30 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
     private static int base = 1;
 
-    private String title = null;
+    private String title;
 
-    private transient List listeners = null;
+    private transient List listeners;
 
-    private QuickHelpDialog dlgHelp = null;
+    private QuickHelpDialog dlgHelp;
 
-    private ActionFactory actions = null;
+    private ActionFactory actions;
 
-    private BookMetaData selected = null;
+    private BookMetaData selected;
 
     /*
      * GUI Components
      */
-    private BooksComboBoxModel mdlBible = null;
-    private PassageSelectionPane dlgSelect = null;
-    private JTextField txtKey = null;
-    private JTextField txtSearch = null;
-    private JCheckBox chkMatch = null;
-    private JButton btnAdvanced = null;
-    private JButton btnSearch = null;
-    private JButton btnKey = null;
-    private JButton btnKeyGo = null;
-    private AdvancedSearchPane advanced = new AdvancedSearchPane();
-    private JButton btnIndex = null;
+    private BooksComboBoxModel mdlBible;
+    private PassageSelectionPane dlgSelect;
+    private JTextField txtKey;
+    private JTextField txtSearch;
+    private JCheckBox chkMatch;
+    private JButton btnAdvanced;
+    private JButton btnSearch;
+    private JButton btnKey;
+    private JButton btnKeyGo;
+    private AdvancedSearchPane advanced;
+    private JButton btnIndex;
 
     /**
      * Serialization ID

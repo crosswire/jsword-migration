@@ -50,7 +50,7 @@ import org.crosswire.jsword.passage.RestrictionType;
  */
 public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChangeListener
 {
-	/**
+    /**
      * Initialize the SplitBookDataDisplay
      */
     public KeySidebar(Book book)

@@ -44,7 +44,7 @@ import org.crosswire.jsword.passage.Key;
  */
 public class SplitBookDataDisplay extends JPanel
 {
-	/**
+    /**
      * Initialize the SplitBookDataDisplay
      */
     public SplitBookDataDisplay(KeySidebar sidebar, BookDataDisplay child)

@@ -180,7 +180,7 @@ public class SitePane extends JPanel
      */
     private Component createSelectedPanel()
     {
-        
+
         JLabel lblSelected = actions.createJLabel(SELECTED_BOOK_LABEL);
         display = new TextPaneBookMetaDataDisplay();
         lblSelected.setLabelFor(display.getComponent());
@@ -226,7 +226,7 @@ public class SitePane extends JPanel
         // return new BooksTreeModel(books);
         BookMetaDataSet bmds = new BookMetaDataSet(books.getBookMetaDatas());
         TreeNode bookRoot = new BookNode("root", bmds, new Object[] { BookMetaData.KEY_TYPE, BookMetaData.KEY_LANGUAGE }, 0); //$NON-NLS-1$
-        return new DefaultTreeModel(bookRoot);  
+        return new DefaultTreeModel(bookRoot);
     }
 
     // provide for backward compatibility
@@ -235,7 +235,7 @@ public class SitePane extends JPanel
         // new way
         if (obj instanceof DefaultMutableTreeNode)
         {
-            obj = ((DefaultMutableTreeNode)obj).getUserObject();
+            obj = ((DefaultMutableTreeNode) obj).getUserObject();
         }
         // Old way
         if (obj instanceof BookMetaData)
@@ -381,7 +381,7 @@ public class SitePane extends JPanel
     {
         treAvailable.setModel(createTreeModel(books));
     }
-    
+
     /**
      * When new books are added we need to relfect the change in this tree.
      */
@@ -426,9 +426,9 @@ public class SitePane extends JPanel
     /*
      * GUI Components
      */
-    private JTree treAvailable = null;
+    private JTree treAvailable;
     private TextPaneBookMetaDataDisplay display;
-    private JLabel lblDesc = null;
+    private JLabel lblDesc;
 
     /**
      * Serialization ID
