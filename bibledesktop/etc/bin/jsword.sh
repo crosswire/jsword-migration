@@ -106,4 +106,4 @@ fi
 # "-Djava.endorsed.dirs=${JSWORD}/lib"
 # -classpath "${JSWORD}/resource"
 # "-Djsword.bible.dir=${JSWORD}/resource"
-"$JAVACMD" -classpath "${LOCALCLASSPATH}" org.crosswire.jsword.view.swing.desktop.Desktop
+"$JAVACMD" -classpath "${LOCALCLASSPATH}" org.crosswire.bibledesktop.desktop.Desktop

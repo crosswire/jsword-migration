@@ -23,7 +23,7 @@ REM -Xmx256M
 REM "-Djava.endorsed.dirs=%JSWORD%\lib"
 REM "-Djsword.bible.dir=%JSWORD%\resource"
 REM -classpath "%JSWORD%\resource"
-"%JAVA_HOME%\bin\java.exe" -classpath "%LOCALCLASSPATH%" org.crosswire.jsword.view.swing.desktop.Desktop
+"%JAVA_HOME%\bin\java.exe" -classpath "%LOCALCLASSPATH%" org.crosswire.bibledesktop.desktop.Desktop
 goto End
 
 :FailedFindJSword

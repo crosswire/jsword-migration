@@ -11,7 +11,7 @@
   <component id="null.contentPane" class="javax.swing.JPanel" name="null.contentPane" parent="null.layeredPane" index="0" title="JSword" />
   <component id="JSplitPane Instance" class="javax.swing.JSplitPane" parent="null.contentPane" index="2" title="JSword" />
   <component id="JSword Root Pane" class="javax.swing.JRootPane" index="0" title="JSword" tag="JSword Root Pane" />
-  <launch classpath="." args="[]" class="org.crosswire.jsword.view.swing.desktop.Desktop" method="main" desc="JSword" />
+  <launch classpath="." args="[]" class="org.crosswire.bibledesktop.desktop.Desktop" method="main" desc="JSword" />
   <sequence>
     <event component="Match" kind="MOUSE_MOVED" type="MouseEvent" y="20" x="11" />
     <event component="Match" kind="MOUSE_MOVED" type="MouseEvent" y="14" x="11" />

@@ -42,7 +42,7 @@
   </option>
 
   <option key="Bibles.Verses Per Tab" type="number">
-  	<introspect class="org.crosswire.jsword.view.swing.display.tab.TabbedDisplayPane" property="PageSize"/>
+  	<introspect class="org.crosswire.bibledesktop.display.tab.TabbedDisplayPane" property="PageSize"/>
     <help>How many verses do you want to display on a page before spilling to tabbed mode.</help>
   </option>
 
@@ -95,7 +95,7 @@
   </option>
 
   <option key="Looks.Initial Layout" type="int-options">
-  	<introspect class="org.crosswire.jsword.view.swing.desktop.Desktop" property="InitialLayoutType"/>
+  	<introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="InitialLayoutType"/>
     <help>Do you want to start in SDI, TDI or MDI view mode</help>
     <alternative number="0" name="Tabbed Document Interface"/>
     <alternative number="1" name="Multiple Document Interface"/>
@@ -108,25 +108,25 @@
   </option>
 
   <option key="Looks.Simple.Stylesheet" type="string-options">
-  	<introspect class="org.crosswire.jsword.view.swing.util.SimpleSwingConverter" property="ResourceName"/>
+  	<introspect class="org.crosswire.bibledesktop.util.SimpleSwingConverter" property="ResourceName"/>
     <help>The style applied to displayed Books when using the simple styler.</help>
     <map name="swing-styles"/>
   </option>
 
   <option key="Looks.Configurable.Stylesheet" type="string-options">
-  	<introspect class="org.crosswire.jsword.view.swing.util.ConfigurableSwingConverter" property="ResourceName"/>
+  	<introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="ResourceName"/>
     <help>The style applied to displayed Books when using the configurable styler.</help>
     <map name="cswing-styles"/>
   </option>
 
   <option key="Looks.Configurable.Font" type="font">
-  	<introspect class="org.crosswire.jsword.view.swing.util.ConfigurableSwingConverter" property="Font"/>
+  	<introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="Font"/>
     <help>The font to be used to display books</help>
   </option>
 
   <!--
   <option key="Looks.Configurable.Font" type="string-options">
-  	<introspect class="org.crosswire.jsword.view.swing.util.ConfigurableSwingConverter" property="RealFont"/>
+  	<introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="RealFont"/>
     <help>The font to be used to display books</help>
     <map name="font-names"/>
   </option>
@@ -167,7 +167,7 @@
   </option>
 
   <option key="Advanced.About Dialog.Include Debug Tab" type="boolean">
-  	<introspect class="org.crosswire.jsword.view.swing.desktop.AboutPane" property="Debugging"/>
+  	<introspect class="org.crosswire.bibledesktop.desktop.AboutPane" property="Debugging"/>
     <help>Is the debug tab visible in the about dialog.</help>
   </option>
 

@@ -43,6 +43,6 @@
     <jar href="jlfgr-1_0.jar"/>
   </resources>
 
-  <application-desc main-class="org.crosswire.jsword.view.swing.desktop.Desktop"/>
+  <application-desc main-class="org.crosswire.bibledesktop.desktop.Desktop"/>
 
 </jnlp>
