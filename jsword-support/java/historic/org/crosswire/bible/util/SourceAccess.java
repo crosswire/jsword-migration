@@ -30,7 +30,7 @@ import com.eireneh.util.*;
 * The copyright to this program is held by it's authors.
 * </font></td></tr></table>
 * @see <a href='http://www.eireneh.com/servlets/Web'>Project B Home</a>
-* @see docs.Licence
+* @see gnu.gpl.Licence
 * @author Joe Walker
 * @version D0.I0.T0
 */

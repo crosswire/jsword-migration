@@ -239,9 +239,9 @@ file.caseSensitive=
 file.exactWordsOnly= 
 file.fileTypes=*
 file.lookIn=All project source files
-file.replaceWith=org.crosswire.jsword	org.crosswire.common.config	org.crosswire.common.swing	org.crosswire.common.resource	org.crosswire.common.util	@see <{docs.Licence}>
+file.replaceWith=org.crosswire.jsword	org.crosswire.common.config	org.crosswire.common.swing	org.crosswire.common.resource	org.crosswire.common.util	@see <{gnu.gpl.Licence}>
 file.scope=All
-file.textToFind=org.crosswire.bible	org.crosswire.config	org.crosswire.swing	org.crosswire.resources	org.crosswire.util	@see <{Licence}>	@see docs.Licence
+file.textToFind=org.crosswire.bible	org.crosswire.config	org.crosswire.swing	org.crosswire.resources	org.crosswire.util	@see <{Licence}>	@see gnu.gpl.Licence
 [addLinked]
 clspath=false
 distance=1
