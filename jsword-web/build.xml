@@ -185,9 +185,15 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="tools" depends="javadoc,java2html,checkstyle,javancss,findbugs,pmd,cpd,jdepend"/>
+  <target name="tools" depends="checkstyle">
+    <!--
+    temporarily removed to make things quicker:
+    javadoc, java2html, javancss, findbugs, pmd, cpd, jdepend
+    -->
+  </target>
 
   <!--=======================================================================-->
-  <target name="test.suite" depends="alltests" description="Run a full test suite"/>
+  <target name="test.suite" depends="alltests" description="Run a full test suite">
+  </target>
 
 </project>
