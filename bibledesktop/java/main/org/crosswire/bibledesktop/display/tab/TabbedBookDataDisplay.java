@@ -154,8 +154,13 @@ public class TabbedBookDataDisplay implements BookDataDisplay
             setCenterComponent(pnlView.getComponent());
         }
 
-        // there was a time when we needed to do pnlMain.repaint();
-        // but we don't seem to have a problem now
+        // Since we changed the contents of the page we need to cause it to repaint
+        center.invalidate();
+        center.validate();
+        center.repaint();
+        pnlMain.invalidate();
+        pnlMain.validate();
+        pnlMain.repaint();
     }
 
     /* (non-Javadoc)
