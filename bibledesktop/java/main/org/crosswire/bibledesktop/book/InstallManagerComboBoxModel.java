@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
+import javax.swing.ComboBoxModel;
 
 import org.crosswire.jsword.book.install.InstallManager;
 import org.crosswire.jsword.book.install.InstallerEvent;
@@ -35,18 +36,35 @@ import org.crosswire.jsword.book.install.InstallerListener;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class InstallManagerListModel extends AbstractListModel
+public class InstallManagerComboBoxModel extends AbstractListModel implements ComboBoxModel
 {
     /**
      * Simple ctor
      */
-    public InstallManagerListModel(InstallManager imanager)
+    public InstallManagerComboBoxModel(InstallManager imanager)
     {
         this.imanager = imanager;
 
         update(null);
+        selection = getElementAt(0);
 
         imanager.addInstallerListener(new CustomInstallerListener());
+    }
+
+    /* (non-Javadoc)
+     * @see javax.swing.ComboBoxModel#getSelectedItem()
+     */
+    public Object getSelectedItem()
+    {
+        return selection;
+    }
+
+    /* (non-Javadoc)
+     * @see javax.swing.ComboBoxModel#setSelectedItem(java.lang.Object)
+     */
+    public void setSelectedItem(Object selection)
+    {
+        this.selection = selection;
     }
 
     /* (non-Javadoc)
@@ -103,6 +121,11 @@ public class InstallManagerListModel extends AbstractListModel
             fireContentsChanged(ev.getSource(), 0, oldmax);
         }
     }
+
+    /**
+     * The currently selected object
+     */
+    private Object selection;
 
     /**
      * A cache of the names in the Install Manager

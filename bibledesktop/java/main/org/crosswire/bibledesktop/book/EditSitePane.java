@@ -90,7 +90,7 @@ public class EditSitePane extends JPanel
     {
         actions = new ActionFactory(EditSitePane.class, this);
 
-        lstSite = new JList(new InstallManagerListModel(imanager));
+        lstSite = new JList(new InstallManagerComboBoxModel(imanager));
         JScrollPane scrSite = new JScrollPane();
         scrSite.add(lstSite, null);
         scrSite.getViewport().add(lstSite, null);

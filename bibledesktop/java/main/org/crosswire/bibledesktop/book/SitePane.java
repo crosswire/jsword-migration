@@ -211,7 +211,7 @@ public class SitePane extends JPanel
         {
             try
             {
-                installer.reloadIndex();
+                installer.reloadBookList();
 
                 treAvailable.setModel(new BooksTreeModel(installer));
             }

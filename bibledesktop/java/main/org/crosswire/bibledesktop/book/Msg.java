@@ -72,6 +72,16 @@ class Msg extends MsgBase
     static final Msg PRESETS = new Msg("AdvancedSearchPane.Presets"); //$NON-NLS-1$
     static final Msg ADVANCED_SELECT_TITLE = new Msg("AdvancedSearchPane.SelectPassageTitle"); //$NON-NLS-1$
 
+    static final Msg HOW_MESSAGE_TITLE = new Msg("IndexResolver.HowMessageTitle"); //$NON-NLS-1$
+    static final Msg HOW_MESSAGE = new Msg("IndexResolver.HowMessage"); //$NON-NLS-1$
+    static final Msg HOW_GENERATE_TITLE = new Msg("IndexResolver.HowGenerateTitle"); //$NON-NLS-1$
+    static final Msg HOW_GENERATE = new Msg("IndexResolver.HowGenerate"); //$NON-NLS-1$
+    static final Msg HOW_SITE_TITLE = new Msg("IndexResolver.HowSiteTitle"); //$NON-NLS-1$
+    static final Msg HOW_SITE = new Msg("IndexResolver.HowSite"); //$NON-NLS-1$
+    static final Msg OPTION_DOWNLOAD = new Msg("IndexResolver.OptionDownload"); //$NON-NLS-1$
+    static final Msg OPTION_GENERATE = new Msg("IndexResolver.OptionGenerate"); //$NON-NLS-1$
+    static final Msg OPTION_CANCEL = new Msg("IndexResolver.OptionCancel"); //$NON-NLS-1$
+
     /**
      * Passthrough ctor
      */

@@ -36,7 +36,6 @@ import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.IndexStatus;
-import org.crosswire.jsword.book.search.IndexManagerFactory;
 import org.crosswire.jsword.book.search.parse.IndexSearcher;
 import org.crosswire.jsword.book.search.parse.PhraseParamWord;
 import org.crosswire.jsword.passage.Key;
@@ -169,7 +168,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         this.add(lblSearch, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));
         this.add(btnIndex, new GridBagConstraints(2, 2, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         this.add(txtSearch, new GridBagConstraints(2, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(chkMatch, new GridBagConstraints(3, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(chkMatch, new GridBagConstraints(3, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         this.add(btnAdvanced, new GridBagConstraints(4, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
         this.add(btnSearch, new GridBagConstraints(5, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 2, 2, 2), 0, 0));
 
@@ -322,14 +321,13 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     public void doIndex()
     {
-        BookMetaData bmd = mdlBible.getSelectedBookMetaData();
-        if (bmd == null)
+        if (selected == null)
         {
             noBookInstalled();
             return;
         }
 
-        IndexManagerFactory.getIndexManager().scheduleIndexCreation(bmd.getBook());
+        IndexResolver.scheduleIndex(selected, this);
         enableComponents();
     }
 
