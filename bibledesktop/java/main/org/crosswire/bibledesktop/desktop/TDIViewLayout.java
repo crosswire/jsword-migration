@@ -40,9 +40,21 @@ public class TDIViewLayout implements ViewLayout
      */
     public TDIViewLayout()
     {
-        tab_main.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
-        // NOTE: when we tried dynamic laf update, tab_main needed special treatment
-        //LookAndFeelUtil.addComponentToUpdate(tab_main);
+    }
+
+    /**
+     * If we do this setup in the ctor then the look and feel settings will be
+     * missed, so we delay it to when this class is used.
+     */
+    private void delayedCreate()
+    {
+        if (tabMain == null)
+        {
+            tabMain = new JTabbedPane();
+            tabMain.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
+            // NOTE: when we tried dynamic laf update, tab_main needed special treatment
+            //LookAndFeelUtil.addComponentToUpdate(tab_main);
+        }
     }
 
     /* (non-Javadoc)
@@ -50,13 +62,15 @@ public class TDIViewLayout implements ViewLayout
      */
     public Component getRootComponent()
     {
+        delayedCreate();
+
         if (views.size() == 1)
         {
             return (Component) views.get(0);
         }
         else
         {
-            return tab_main;
+            return tabMain;
         }
     }
 
@@ -65,6 +79,8 @@ public class TDIViewLayout implements ViewLayout
      */
     public void add(BibleViewPane view)
     {
+        delayedCreate();
+
         switch (views.size())
         {
         case 0:
@@ -76,15 +92,15 @@ public class TDIViewLayout implements ViewLayout
             // (when getRootComponent() is called is a few secs. So we need
             // to construct tab_main properly
             BibleViewPane first = (BibleViewPane) views.get(0); 
-            tab_main.add(first, first.getTitle());
-            tab_main.add(view, view.getTitle());
-            tab_main.setSelectedComponent(view);
+            tabMain.add(first, first.getTitle());
+            tabMain.add(view, view.getTitle());
+            tabMain.setSelectedComponent(view);
             break;
 
         default:
             // So we are well into tabbed mode
-            tab_main.add(view, view.getTitle());
-            tab_main.setSelectedComponent(view);
+            tabMain.add(view, view.getTitle());
+            tabMain.setSelectedComponent(view);
             break;
         }
 
@@ -96,13 +112,15 @@ public class TDIViewLayout implements ViewLayout
      */
     public void remove(BibleViewPane view)
     {
+        delayedCreate();
+
         if (views.size() == 2)
         {
             // remove both tabs, because 0 will be reparented
-            tab_main.removeTabAt(0);
+            tabMain.removeTabAt(0);
         }
 
-        tab_main.remove(view);
+        tabMain.remove(view);
 
         views.remove(view);
     }
@@ -112,10 +130,12 @@ public class TDIViewLayout implements ViewLayout
      */
     public void updateTitle(BibleViewPane view)
     {
+        delayedCreate();
+
         if (views.size() > 1)
         {
-            int index = tab_main.indexOfComponent(view);
-            tab_main.setTitleAt(index, view.getTitle());
+            int index = tabMain.indexOfComponent(view);
+            tabMain.setTitleAt(index, view.getTitle());
         }
     }
 
@@ -124,13 +144,15 @@ public class TDIViewLayout implements ViewLayout
      */
     public BibleViewPane getSelected()
     {
+        delayedCreate();
+
         if (views.size() == 1)
         {
             return (BibleViewPane) views.get(0);
         }
         else
         {
-            return (BibleViewPane) tab_main.getSelectedComponent();
+            return (BibleViewPane) tabMain.getSelectedComponent();
         }
     }
 
@@ -143,5 +165,5 @@ public class TDIViewLayout implements ViewLayout
     /**
      * The tabbed view pane
      */
-    private JTabbedPane tab_main = new JTabbedPane();
+    private JTabbedPane tabMain = null;
 }

@@ -1,4 +1,3 @@
-
 package org.crosswire.bibledesktop.desktop;
 
 import java.awt.Component;
@@ -38,11 +37,25 @@ import org.crosswire.bibledesktop.book.BibleViewPane;
 public class MDIViewLayout implements ViewLayout
 {
     /**
+     * If we do this setup in the ctor then the look and feel settings will be
+     * missed, so we delay it to when this class is used.
+     */
+    private void delayedCreate()
+    {
+        if (mdiMain == null)
+        {
+            mdiMain = new JDesktopPane();
+        }
+    }
+
+    /**
      * What should the desktop add to the parent?
      */
     public Component getRootComponent()
     {
-        return mdi_main;
+        delayedCreate();
+
+        return mdiMain;
     }
 
     /**
@@ -50,12 +63,14 @@ public class MDIViewLayout implements ViewLayout
      */
     public void add(BibleViewPane view)
     {
+        delayedCreate();
+
         String name = view.getTitle();
 
         JInternalFrame iframe = new JInternalFrame(name, true, true, true, true);
         iframe.getContentPane().add(view);
 
-        mdi_main.add(iframe/*, JLayeredPane.PALETTE_LAYER*/);
+        mdiMain.add(iframe/*, JLayeredPane.PALETTE_LAYER*/);
 
         iframe.addInternalFrameListener(new CustomInternalFrameAdapter());
 
@@ -68,6 +83,8 @@ public class MDIViewLayout implements ViewLayout
      */
     public void remove(BibleViewPane view)
     {
+        delayedCreate();
+
         JInternalFrame iframe = (JInternalFrame) SwingUtilities.getAncestorOfClass(JInternalFrame.class, view);
         iframe.dispose();
     }
@@ -77,6 +94,8 @@ public class MDIViewLayout implements ViewLayout
      */
     public void updateTitle(BibleViewPane view)
     {
+        delayedCreate();
+
         JInternalFrame iframe = (JInternalFrame) SwingUtilities.getAncestorOfClass(JInternalFrame.class, view);
         iframe.setTitle(view.getTitle());
     }
@@ -86,14 +105,16 @@ public class MDIViewLayout implements ViewLayout
      */
     public BibleViewPane getSelected()
     {
-        JInternalFrame frame = mdi_main.getSelectedFrame();
+        delayedCreate();
+
+        JInternalFrame frame = mdiMain.getSelectedFrame();
 
         if (frame == null)
         {
             // none of the frames are selected, but things like cut/copy/paste
             // rely on there being a 'current' BibleViewPane so we just use the
             // first one we find, which might be the top one?
-            Component[] comps = mdi_main.getComponents();
+            Component[] comps = mdiMain.getComponents();
             for (int i = 0; i < comps.length; i++)
             {
                 if (comps[i] instanceof JInternalFrame)
@@ -108,7 +129,7 @@ public class MDIViewLayout implements ViewLayout
         return (BibleViewPane) comp;
     }
 
-    private JDesktopPane mdi_main = new JDesktopPane();
+    private JDesktopPane mdiMain = null;
 
     /**
      * So we can tidy things up when a window is closed
