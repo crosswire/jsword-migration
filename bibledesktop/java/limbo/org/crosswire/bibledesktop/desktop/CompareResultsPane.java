@@ -232,11 +232,6 @@ public class CompareResultsPane extends JPanel implements Runnable
         {
             JobManager.addWorkListener(cpl);
 
-            if (checkText != null && checkText.equals("") && alive) //$NON-NLS-1$
-            {
-                ver.checkPassage(checkText, out);
-            }
-
             if (checkRef != null && checkRef.isEmpty() && alive)
             {
                 ver.checkText(checkRef, out);
