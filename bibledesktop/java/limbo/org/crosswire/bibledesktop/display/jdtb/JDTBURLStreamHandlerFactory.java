@@ -38,9 +38,6 @@ public class JDTBURLStreamHandlerFactory implements URLStreamHandlerFactory
         {
             return new JDTBURLStreamHandler();
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 }

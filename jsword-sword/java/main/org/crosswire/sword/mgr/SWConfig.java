@@ -149,6 +149,7 @@ public class SWConfig {
 
     private class Properties extends java.util.Properties {
 
+        private static final long serialVersionUID = 3258126977117533238L;
         private String name = null;
         public String getSectionName() { return name; }
 
@@ -180,18 +181,17 @@ public class SWConfig {
                     // and put it back.
                     ((List)svalue).add( value );
                     return super.put( key, svalue );
-                }else{
-                    // if it's not a list, assume it's
-                    // a String. Create a List collection
-                    // add the current value and the pased
-                    // in value to the list and then put
-                    // the List in the Map associated with
-                    // the key.
-                    List list = new LinkedList();
-                    list.add( svalue );
-                    list.add( value );
-                    return super.put( key, list );
                 }
+                // if it's not a list, assume it's
+                // a String. Create a List collection
+                // add the current value and the pased
+                // in value to the list and then put
+                // the List in the Map associated with
+                // the key.
+                List list = new LinkedList();
+                list.add( svalue );
+                list.add( value );
+                return super.put( key, list );
             }
             // key doesn't already exist so just add
             // it as normal.

@@ -120,10 +120,7 @@ public class DownloadSet implements Comparable
                 return 0;
             }
         }
-        else
-        {
-            return that.setname.compareTo(this.setname);
-        }
+        return that.setname.compareTo(this.setname);
     }
 
     /**

@@ -330,8 +330,7 @@ public class VerseKey extends SWKey
             }
             return (diff == 0) ? abbrevs[target].book : -1;
         }
-        else
-            return -1;
+        return -1;
     }
 
     /**

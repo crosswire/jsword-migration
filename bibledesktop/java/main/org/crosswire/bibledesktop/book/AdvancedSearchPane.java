@@ -262,10 +262,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         {
             return null;
         }
-        else
-        {
-            return txtSummary.getText();
-        }
+        return txtSummary.getText();
     }
 
     /**

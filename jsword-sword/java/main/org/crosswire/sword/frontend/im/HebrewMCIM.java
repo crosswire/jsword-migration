@@ -43,32 +43,31 @@ public class HebrewMCIM extends SWInputMethod {
             retString.append(retVal);
             return retString.toString();
         }
-        else {
-            if (in >= subst.length) {
-                setState(0);
-                retString.append(in);
-                return retString.toString();
-            }
-            retVal = subst[in];
 
-            if (retVal == 0) {
-                setState(0);
-                retString.append(in);
+        if (in >= subst.length) {
+            setState(0);
+            retString.append(in);
+            return retString.toString();
+        }
+        retVal = subst[in];
+
+        if (retVal == 0) {
+            setState(0);
+            retString.append(in);
+            return retString.toString();
+        }
+        if (retVal > 100) {
+            setState(1);
+            retString.append(retVal);
+            return retString.toString();
+        }
+        if (retVal == 50) {  // multiChar
+            setState(1);
+            Integer[] chars = (Integer[])multiChars.get(new Integer(in));
+            if (chars != null) {
+                for (int i = 0; i < chars.length; i++)
+                    retString.append((char)chars[i].intValue());
                 return retString.toString();
-            }
-            if (retVal > 100) {
-                setState(1);
-                retString.append(retVal);
-                return retString.toString();
-            }
-            if (retVal == 50) {  // multiChar
-                setState(1);
-                Integer[] chars = (Integer[])multiChars.get(new Integer(in));
-                if (chars != null) {
-                    for (int i = 0; i < chars.length; i++)
-                        retString.append((char)chars[i].intValue());
-                    return retString.toString();
-                }
             }
         }
         setState(retVal);

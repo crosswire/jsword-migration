@@ -103,10 +103,7 @@ public class KeyTreeNode implements TreeNode
 
             return key.indexOf(that);
         }
-        else
-        {
-            return -1;
-        }
+        return -1;
     }
 
     /**

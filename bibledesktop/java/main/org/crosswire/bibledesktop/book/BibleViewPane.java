@@ -252,10 +252,7 @@ public class BibleViewPane extends JPanel implements Titleable, Clearable, Title
             saved = chooser.getSelectedFile();
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     /**

@@ -321,10 +321,7 @@ public class ReferenceTreeModel implements TreeModel
             {
                 return null;
             }
-            else
-            {
-                retNodes = new TreeNode[depth];
-            }
+            retNodes = new TreeNode[depth];
         }
         else
         {

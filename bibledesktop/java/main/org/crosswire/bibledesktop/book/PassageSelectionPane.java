@@ -318,10 +318,7 @@ public class PassageSelectionPane extends JPanel
         {
             return null;
         }
-        else
-        {
-            return txtDisplay.getText();
-        }
+        return txtDisplay.getText();
     }
 
     /**

@@ -125,8 +125,7 @@ public class SWKey implements Cloneable, Comparable
     {
         if (ikey instanceof SWKey)
             return toString().compareTo(ikey.toString());
-        else
-            return -1;
+        return -1;
     }
 
     /**

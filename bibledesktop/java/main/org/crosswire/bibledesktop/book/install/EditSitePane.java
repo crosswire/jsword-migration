@@ -79,7 +79,6 @@ public class EditSitePane extends JPanel
         init();
         setState(STATE_DISPLAY, null);
         select();
-//        setPreferredSize(new Dimension(480, 320));
     }
 
     /**

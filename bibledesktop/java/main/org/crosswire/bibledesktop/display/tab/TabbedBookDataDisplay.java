@@ -317,10 +317,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         {
             return (BookDataDisplay) tabMain.getSelectedComponent();
         }
-        else
-        {
-            return pnlView;
-        }
+        return pnlView;
     }
 
     /**
