@@ -1,0 +1,32 @@
+package id74ec37li4p0c37mqphj;
+
+/**
+@version 2.0
+@physicalPackage
+@__modelType diagram 
+*/
+class diagram {
+/**
+@__ref <oiref:java#Class#org.crosswire.jsword.view.awt.Display:oiref><oihard>
+@__modelType reference 
+*/
+class reference {
+}}
+/**
+@__tags
+@shapeType ClassDiagram 
+@backgroundColor 204,255,255
+*/
+class __tags {
+}
+/**
+@__options 
+*/
+class __options {
+}
+/**
+@__positions 
+<oigroup:<oiref:java#Class#org.crosswire.bible.view.awt.Display:oiref>=40,30,177,379,1:oigroup>
+*/
+class __positions {
+}

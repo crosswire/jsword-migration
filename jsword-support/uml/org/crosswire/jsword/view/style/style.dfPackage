@@ -1,0 +1,33 @@
+package id2gax8d0mi2vggd0mjslmj;
+
+/**
+@version 2.0
+@physicalPackage
+@__modelType diagram 
+*/
+class diagram {
+/**
+@__ref <oiref:java#Class#org.crosswire.jsword.view.style.Style:oiref><oihard>
+@__modelType reference 
+*/
+class reference {
+}/**
+@__ref <oiref:java#Class#org.crosswire.jsword.view.style.TestStyle:oiref><oihard>
+@__modelType reference 
+*/
+class reference578 {
+}}/**
+@__tags
+@shapeType ClassDiagram
+@backgroundColor 204,255,255 
+*/
+class __tags {
+}/**
+@__options 
+*/
+class __options {
+}/**
+@__positions 
+*/
+class __positions {
+}

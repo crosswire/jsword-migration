@@ -1,0 +1,43 @@
+package id6sxad0pausd0d0pb00g5;
+
+/**
+@version 2.0
+@physicalPackage
+@__modelType diagram 
+*/
+class diagram {
+/**
+@__ref <oiref:java#Class#docs.future.translation.Strongs:oiref><oihard>
+@__modelType reference*/
+class reference {
+}/**
+@__ref <oiref:java#Class#docs.future.translation.TestStrongs:oiref><oihard>
+@__modelType reference 
+*/
+class reference34 {
+}/**
+@__ref <oiref:java#Class#docs.future.translation.Translation:oiref><oihard>
+@__modelType reference*/
+class reference35 {
+}/**
+@__ref <oiref:java#Class#docs.future.translation.StudyBible:oiref><oihard>
+@__modelType reference 
+*/
+class reference41 {
+}}/**
+@__tags
+@shapeType ClassDiagram 
+*/
+class __tags {
+}/**
+@__options 
+*/
+class __options {
+}/**
+@__positions <oigroup:<oiref:java#Class#docs.future.translation.Strongs:oiref>=40,30,144,331,1:oigroup>
+<oigroup:<oiref:java#Class#docs.future.translation.TestStrongs:oiref>=430,30,158,146,1:oigroup>
+<oigroup:<oiref:java#Class#docs.future.translation.StudyBible:oiref>=360,220,192,114,1:oigroup>
+<oigroup:<oiref:java#Class#docs.future.translation.Translation:oiref>=210,30,90,98,1:oigroup>
+*/
+class __positions {
+}
