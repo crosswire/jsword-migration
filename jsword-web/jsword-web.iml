@@ -44,9 +44,9 @@
       <attribute name="URI" value="/WEB-INF/lib/activation.jar" />
     </containerElement>
     <containerElement type="library" level="module">
-      <url>jar://$MODULE_DIR$/../common/jar/jdom-1.0/jdom.jar!/</url>
+      <url>jar://$MODULE_DIR$/../common/jar/jdom-1.0/jdom-1.0.jar!/</url>
       <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib/jdom.jar" />
+      <attribute name="URI" value="/WEB-INF/lib/jdom-1.0.jar" />
     </containerElement>
     <containerElement type="library" level="module">
       <url>jar://$MODULE_DIR$/../common/jar/junit-3.8.1/junit.jar!/</url>
