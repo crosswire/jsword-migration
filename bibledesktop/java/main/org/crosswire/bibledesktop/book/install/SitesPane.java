@@ -1,4 +1,4 @@
-package org.crosswire.bibledesktop.book;
+package org.crosswire.bibledesktop.book.install;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

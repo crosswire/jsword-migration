@@ -1,4 +1,4 @@
-package org.crosswire.bibledesktop.book;
+package org.crosswire.bibledesktop.book.install;
 
 import org.crosswire.common.swing.MapTableModel;
 import org.crosswire.jsword.book.BookMetaData;

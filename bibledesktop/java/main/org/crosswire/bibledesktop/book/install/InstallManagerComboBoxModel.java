@@ -1,4 +1,4 @@
-package org.crosswire.bibledesktop.book;
+package org.crosswire.bibledesktop.book.install;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.crosswire.bibledesktop.book.install.IndexResolver;
 import org.crosswire.bibledesktop.passage.KeyChangeEvent;
 import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.common.swing.ActionFactory;

@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ToolTipManager;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
-import org.crosswire.bibledesktop.book.SitesPane;
+import org.crosswire.bibledesktop.book.install.SitesPane;
 import org.crosswire.bibledesktop.display.splitlist.SplitBookDataDisplay;
 import org.crosswire.common.config.swing.ConfigEditorFactory;
 import org.crosswire.common.swing.ActionFactory;
