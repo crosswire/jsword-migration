@@ -121,7 +121,8 @@ public class IndexResolver
         if (installers.size() == 1)
         {
             Iterator it = installers.values().iterator();
-            assert it.hasNext();
+            boolean hasNext = it.hasNext();
+            assert hasNext;
             installer = (Installer) it.next();
         }
         else
