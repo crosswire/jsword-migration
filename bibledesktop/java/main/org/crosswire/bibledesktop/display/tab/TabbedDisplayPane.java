@@ -105,40 +105,32 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
     {
         this.whole = ref;
 
-        try
+        tabMain.removeAll();
+        displays.clear();
+        displays.add(pnlView);
+
+        // Do we need a tabbed view
+        tabs = (ref != null && ref.countVerses() > pagesize);
+        if (tabs)
         {
-            // Tabbed view or not we should clear out the old tabs
-            tabMain.removeAll();
-            displays.clear();
-            displays.add(pnlView);
+            // Calc the verses to display in this tab
+            Passage cut = (Passage) whole.clone();
+            waiting = cut.trimVerses(pagesize);
 
-            // Do we need a tabbed view
-            tabs = (ref != null && ref.countVerses() > pagesize);
-            if (tabs)
-            {
-                // Calc the verses to display in this tab
-                Passage cut = (Passage) whole.clone();
-                waiting = cut.trimVerses(pagesize);
+            // Create the tab
+            BookDataDisplay pnlNew = createInnerDisplayPane();
+            setDisplay(pnlNew, cut);
 
-                // Create the tab
-                BookDataDisplay pnlNew = createInnerDisplayPane();
-                setDisplay(pnlNew, cut);
+            Component display = pnlNew.getComponent();
+            tabMain.add(shortenName(cut.getName()), display);
+            tabMain.add(Msg.MORE.toString(), pnlMore);
 
-                Component display = pnlNew.getComponent();
-                tabMain.add(display, shortenName(cut.getName()));
-                tabMain.add(pnlMore, Msg.MORE);
-
-                setCenterComponent(tabMain);
-            }
-            else
-            {
-                setDisplay(pnlView, ref);
-                setCenterComponent(pnlView.getComponent());
-            }
+            setCenterComponent(tabMain);
         }
-        catch (CloneNotSupportedException ex)
+        else
         {
-            assert false : ex;
+            setDisplay(pnlView, ref);
+            setCenterComponent(pnlView.getComponent());
         }
 
         this.repaint();
@@ -201,12 +193,12 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
             setDisplay(pnlNew, cut);
 
             Component display = pnlNew.getComponent();
-            tabMain.add(display, shortenName(cut.getName()));
+            tabMain.add(shortenName(cut.getName()), display);
 
             // Do we need a new more tab
             if (waiting != null)
             {
-                tabMain.add(pnlMore, Msg.MORE);
+                tabMain.add(Msg.MORE.toString(), pnlMore);
             }
 
             // Select the real new tab in place of any more tabs
@@ -295,7 +287,7 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#copy()
+     * @see org.crosswire.jsword.view.swing.book.FocusablePart#copy()
      */
     public void copy()
     {
@@ -303,7 +295,7 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#addHyperlinkListener(javax.swing.event.HyperlinkListener)
+     * @see org.crosswire.jsword.view.swing.book.FocusablePart#addHyperlinkListener(javax.swing.event.HyperlinkListener)
      */
     public synchronized void addHyperlinkListener(HyperlinkListener li)
     {
@@ -335,7 +327,7 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
+     * @see org.crosswire.jsword.view.swing.book.FocusablePart#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
      */
     public synchronized void removeHyperlinkListener(HyperlinkListener li)
     {
@@ -411,7 +403,7 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#getHTMLSource()
+     * @see org.crosswire.jsword.view.swing.book.FocusablePart#getHTMLSource()
      */
     public String getHTMLSource()
     {
@@ -419,7 +411,7 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#getKey()
+     * @see org.crosswire.jsword.view.swing.book.FocusablePart#getKey()
      */
     public Key getKey()
     {
@@ -427,7 +419,7 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#getOSISSource()
+     * @see org.crosswire.jsword.view.swing.book.FocusablePart#getOSISSource()
      */
     public String getOSISSource()
     {

@@ -2,8 +2,8 @@ package org.crosswire.bibledesktop.book;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -17,6 +17,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -66,15 +67,40 @@ import org.crosswire.jsword.passage.PassageTally;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class DisplaySelectPane extends JPanel
+public class DisplaySelectPane extends JPanel implements ActionListener
 {
+    // Enumeration of all the keys to known actions
+    public static final String PASSAGE_OPTIONS = "PassageOption"; //$NON-NLS-1$
+    public static final String MATCH_OPTIONS = "MatchOption"; //$NON-NLS-1$
+    public static final String SEARCH_OPTIONS = "SearchOption"; //$NON-NLS-1$
+    
+    // For the Passage card
+    public static final String VIEW_LABEL = "ViewLabel"; //$NON-NLS-1$
+    public static final String PASSAGE_FIELD = "PassageAction"; //$NON-NLS-1$
+    public static final String MORE = "More"; //$NON-NLS-1$
+    public static final String GO_PASSAGE = "GoPassage"; //$NON-NLS-1$
+    
+    // for the Search card
+    public static final String SEARCH_LABEL = "SearchLabel"; //$NON-NLS-1$
+    public static final String RESTRICT_SEARCH = "RestrictSearch"; //$NON-NLS-1$
+    public static final String GO_SEARCH = "GoSearch"; //$NON-NLS-1$
+    private static final String SEARCH_FIELD = "SearchAction"; //$NON-NLS-1$
+    private static final String SEARCH_RESTRICTION = "SearchEverywhere"; //$NON-NLS-1$
+    
+    // for the Match card
+    public static final String MATCH_LABEL = "MatchLabel"; //$NON-NLS-1$
+    public static final String RESTRICT_MATCH = "RestrictMatch"; //$NON-NLS-1$
+    public static final String GO_MATCH = "GoMatch"; //$NON-NLS-1$
+    private static final String MATCH_FIELD = "MatchAction"; //$NON-NLS-1$
+    private static final String MATCH_RESTRICTION = "MatchAnywhere"; //$NON-NLS-1$
+    
+    public static final String EMPTY_STRING = ""; //$NON-NLS-1$
+    
     /**
      * General constructor
      */
     public DisplaySelectPane()
     {
-        // search() and version() rely on this returning only Bibles
-        mdlVersn = new BooksComboBoxModel(BookFilters.getBibles());
         initialize();
     }
 
@@ -83,39 +109,65 @@ public class DisplaySelectPane extends JPanel
      */
     private void initialize()
     {
+        title = Msg.UNTITLED.toString(new Integer(base++));
+        
+        actions = BookActionFactory.instance();
+        actions.addActionListener(this);
+        
+        // Create a way for selecting how passages are found
+        JPanel pnlSelect = new JPanel(new BorderLayout());
+
+        // Layout the card picker and the Bible picker side by side
+        pnlSelect.add(createRadioPanel(), BorderLayout.LINE_START);
+        pnlSelect.add(createBiblePicker(), BorderLayout.LINE_END);
+
+        // Create a deck of "cards" for the different ways of finding passages
+        layCards = new CardLayout();
+        pnlCards = new JPanel(layCards);
+
+        pnlCards.add(createPassagePanel(), PASSAGE);
+        pnlCards.add(createSearchPanel(), SEARCH);
+        pnlCards.add(createMatchPanel(), MATCH);
+
+        this.setLayout(new BorderLayout());
+        this.add(pnlSelect, BorderLayout.PAGE_START);
+        this.add(pnlCards, BorderLayout.CENTER);
+
+    }
+
+    /**
+     * 
+     */
+    private Component createRadioPanel()
+    {
+        // These buttons control which "card" in the deck is shown
+        rdoPassg = new JRadioButton(actions.getAction(PASSAGE_OPTIONS));
+        rdoMatch = new JRadioButton(actions.getAction(MATCH_OPTIONS));
+        rdoSearch = new JRadioButton(actions.getAction(SEARCH_OPTIONS));
+
+        ButtonGroup grpType = new ButtonGroup();
+        grpType.add(rdoPassg);
+        grpType.add(rdoSearch);
+        grpType.add(rdoMatch);
+
+        JPanel pnlRadios = new JPanel();
+        pnlRadios.add(rdoPassg, null);
+        pnlRadios.add(rdoSearch, null);
+        pnlRadios.add(rdoMatch, null);
         rdoPassg.setSelected(true);
-        rdoPassg.setText("Passage Lookup");
-        rdoPassg.setMnemonic('P');
-        rdoPassg.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                layCards.show(pnlCards, PASSAGE);
-                adjustFocus();
-            }
-        });
-        rdoMatch.setText("Match");
-        rdoMatch.setMnemonic('M');
-        rdoMatch.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                layCards.show(pnlCards, MATCH);
-                adjustFocus();
-            }
-        });
-        rdoSearch.setMnemonic('S');
-        rdoSearch.setText("Search");
-        rdoSearch.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                layCards.show(pnlCards, SEARCH);
-                adjustFocus();
-            }
-        });
-        pnlSelect.setLayout(new FlowLayout(FlowLayout.LEFT));
-        cboVersn.setModel(mdlVersn);
+
+        return pnlRadios;
+    }
+    
+    /**
+     * 
+     */
+    private Component createBiblePicker()
+    {
+        // Create the Bible picker
+        // search() and version() rely on this returning only Bibles
+        mdlVersn = new BooksComboBoxModel(BookFilters.getBibles());
+        JComboBox cboVersn = new JComboBox(mdlVersn);
         cboVersn.setRenderer(new BookListCellRenderer());
         cboVersn.setPrototypeDisplayValue(BookListCellRenderer.PROTOTYPE_BOOK_NAME);
         Dimension min = cboVersn.getMinimumSize();
@@ -128,29 +180,18 @@ public class DisplaySelectPane extends JPanel
                 changeVersion();
             }
         });
-        pnlRadios.add(rdoPassg, null);
-        pnlRadios.add(rdoSearch, null);
-        pnlRadios.add(rdoMatch, null);
-        pnlVersn.setLayout(new BorderLayout());
-        pnlVersn.add(cboVersn, BorderLayout.SOUTH);
-        pnlSelect.setLayout(new BorderLayout());
-        pnlSelect.add(pnlRadios, BorderLayout.WEST);
-        pnlSelect.add(pnlVersn, BorderLayout.EAST);
-        grpType.add(rdoPassg);
-        grpType.add(rdoSearch);
-        grpType.add(rdoMatch);
+        return cboVersn;
+    }
 
-        lblPassg.setDisplayedMnemonic('W');
-        lblPassg.setText("View:");
-        pnlPassg.setLayout(new GridBagLayout());
-        txtPassg.setToolTipText("Enter a passage to display. Press CTRL+ENTER or press the ... button for a Passage selection window.");
-        txtPassg.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                doPassageAction();
-            }
-        });
+    /**
+     * 
+     */
+    private Component createPassagePanel()
+    {
+        JLabel label = actions.createJLabel(VIEW_LABEL);
+
+        txtPassg = new JTextField();
+        txtPassg.setAction(actions.getAction(PASSAGE_FIELD));
         txtPassg.addKeyListener(new KeyAdapter()
         {
             public void keyTyped(KeyEvent ev)
@@ -161,45 +202,35 @@ public class DisplaySelectPane extends JPanel
                 }
             }
         });
-        btnDialg.setText("...");
+
+        JButton btnDialg = new JButton(actions.getAction(MORE));
         btnDialg.setBorder(BorderFactory.createCompoundBorder(txtPassg.getBorder(), btnDialg.getBorder()));
-        btnDialg.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                showSelectDialog();
-            }
-        });
-        btnPassg.setText("Go");
-        btnPassg.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                doPassageAction();
-            }
-        });
 
-        pnlPassg.add(lblPassg, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.VERTICAL, new Insets(5, 5, 0, 2), 0, 0));
-        pnlPassg.add(txtPassg, new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 2, 2, -1), 0, 0));
-        pnlPassg.add(btnDialg, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.VERTICAL, new Insets(5, -1, 0, 2), 0, 0));
-        pnlPassg.add(btnPassg, new GridBagConstraints(0, 1, 3, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 20, 5, 20), 0, 0));
+        JButton btnPassg = new JButton(actions.getAction(GO_PASSAGE));
 
-        pnlSearch.setLayout(new GridBagLayout());
-        lblSearch.setDisplayedMnemonic('S');
-        lblSearch.setLabelFor(txtSearch);
-        lblSearch.setText("Search:");
-        txtSearch.setText("");
-        txtSearch.setColumns(20);
-        txtSearch.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                doSearchAction();
-            }
-        });
+        JPanel panel = new JPanel(new GridBagLayout());
+
+        panel.add(label, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.VERTICAL, new Insets(5, 5, 0, 2), 0, 0));
+        panel.add(txtPassg, new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 2, 2, -1), 0, 0));
+        panel.add(btnDialg, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.VERTICAL, new Insets(5, -1, 0, 2), 0, 0));
+        panel.add(btnPassg, new GridBagConstraints(0, 1, 3, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 20, 5, 20), 0, 0));
+
+        return panel;
+    }
+
+    /**
+     *
+     */
+    private Component createSearchPanel()
+    {
+        txtSearch = new JTextField();
+        txtSearch.setAction(actions.getAction(SEARCH_FIELD));
+
+        JLabel label = actions.createJLabel(SEARCH_LABEL);
+        label.setLabelFor(txtSearch);
+
+        chkSRestrict = new JCheckBox(actions.getAction(RESTRICT_SEARCH));
         chkSRestrict.setSelected(false);
-        chkSRestrict.setMnemonic('R');
-        chkSRestrict.setText("Restrict to:");
         chkSRestrict.addChangeListener(new ChangeListener()
         {
             public void stateChanged(ChangeEvent ev)
@@ -208,83 +239,138 @@ public class DisplaySelectPane extends JPanel
                 txtSRestrict.setEnabled(selected);
             }
         });
-        txtSRestrict.setEnabled(false);
-        txtSRestrict.setText("Gen-Rev");
-        txtSRestrict.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                doSearchAction();
-            }
-        });
-        btnSearch.setText("Go");
-        btnSearch.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                doSearchAction();
-            }
-        });
 
-        pnlSearch.add(lblSearch, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 5, 0, 0), 0, 0));
-        pnlSearch.add(txtSearch, new GridBagConstraints(1, 0, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 2, 2, 5), 0, 0));
-        pnlSearch.add(chkSRestrict, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 5, 5, 2), 0, 0));
-        pnlSearch.add(txtSRestrict, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 5, 2), 0, 0));
-        pnlSearch.add(btnSearch, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(5, 20, 5, 20), 0, 0));
+        txtSRestrict = new JTextField();
+        Action action = actions.getAction(SEARCH_RESTRICTION);
+        txtSRestrict.setAction(action);
+        txtSRestrict.setText(action.getValue(Action.NAME).toString());
 
-        pnlMatch.setLayout(new GridBagLayout());
-        lblMatch.setDisplayedMnemonic('V');
-        lblMatch.setLabelFor(txtMatch);
-        lblMatch.setText("Find Verses Like:");
-        txtMatch.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                doMatchAction();
-            }
-        });
-        chkMRestrict.setText("Restrict to:");
-        chkMRestrict.setMnemonic('R');
+        JButton goButton = new JButton(actions.getAction(GO_SEARCH));
+
+        JPanel panel = new JPanel(new GridBagLayout());
+
+        panel.add(label,    new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 5, 2, 2), 0, 0));
+        panel.add(txtSearch, new GridBagConstraints(1, 0, 2, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 2, 2, 5), 0, 0));
+        panel.add(chkSRestrict, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 5, 5, 2), 0, 0));
+        panel.add(txtSRestrict, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 5, 2), 0, 0));
+        panel.add(goButton, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 20, 5, 20), 0, 0));
+
+        return panel;
+    }
+
+    /**
+     *
+     */
+    private Component createMatchPanel()
+    {
+        txtMatch = new JTextField();
+        txtMatch.setAction(actions.getAction(MATCH_FIELD));
+
+        JLabel label = actions.createJLabel(MATCH_LABEL);
+        label.setLabelFor(txtMatch);
+
+        txtMRestrict = new JTextField();
+        Action action = actions.getAction(MATCH_RESTRICTION);
+        txtMRestrict.setAction(action);
+        txtMRestrict.setText(action.getValue(Action.NAME).toString());
+
+        chkMRestrict = new JCheckBox(actions.getAction(RESTRICT_MATCH));
+        chkMRestrict.setSelected(false);
         chkMRestrict.addChangeListener(new ChangeListener()
         {
             public void stateChanged(ChangeEvent ev)
             {
-                boolean selected = chkMRestrict.isSelected();
-                txtMRestrict.setEnabled(selected);
-            }
-        });
-        txtMRestrict.setText("Gen-Rev");
-        txtMRestrict.setEnabled(false);
-        txtMRestrict.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                doMatchAction();
-            }
-        });
-        btnMatch.setText("Go");
-        btnMatch.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                doMatchAction();
+                boolean selected = chkSRestrict.isSelected();
+                txtSRestrict.setEnabled(selected);
             }
         });
 
-        pnlMatch.add(lblMatch, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 5, 2, 2), 0, 0));
-        pnlMatch.add(txtMatch, new GridBagConstraints(1, 0, 2, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 2, 2, 5), 0, 0));
-        pnlMatch.add(chkMRestrict, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 5, 5, 2), 0, 0));
-        pnlMatch.add(txtMRestrict, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 5, 2), 0, 0));
-        pnlMatch.add(btnMatch, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 20, 5, 20), 0, 0));
+        JButton goButton = new JButton(actions.getAction(GO_MATCH));
 
-        pnlCards.setLayout(layCards);
-        pnlCards.add(pnlPassg, PASSAGE);
-        pnlCards.add(pnlSearch, SEARCH);
-        pnlCards.add(pnlMatch, MATCH);
+        JPanel panel = new JPanel(new GridBagLayout());
 
-        this.setLayout(new BorderLayout());
-        this.add(pnlSelect, BorderLayout.NORTH);
-        this.add(pnlCards, BorderLayout.CENTER);
+        panel.add(label, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 5, 2, 2), 0, 0));
+        panel.add(txtMatch, new GridBagConstraints(1, 0, 2, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 2, 2, 5), 0, 0));
+        panel.add(chkMRestrict, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 5, 5, 2), 0, 0));
+        panel.add(txtMRestrict, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 5, 2), 0, 0));
+        panel.add(goButton, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 20, 5, 20), 0, 0));
+
+        return panel;
+    }
+
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e)
+    {
+        actions.actionPerformed(e, this);
+    }
+
+    // The following are behaviors associated with the actions executed by actionPerformed
+    protected void doPassageOption()
+    {
+        flipOption(PASSAGE);
+    }
+
+    protected void doMatchOption()
+    {
+        flipOption(MATCH);
+    }
+
+    protected void doSearchOption()
+    {
+        flipOption(SEARCH);
+    }
+    
+    private void flipOption(String toWhat)
+    {
+        layCards.show(pnlCards, toWhat);
+        adjustFocus();
+    }
+
+    // More (...) button was clicked
+    protected void doMore()
+    {
+        showSelectDialog();
+    }
+    
+    // Go button was clicked
+    protected void doGoPassage()
+    {
+        doPassageAction();
+    }
+
+    // Go button was clicked
+    protected void doGoSearch()
+    {
+        doSearchAction();
+    }
+
+    // Enter was hit in txtSRestrict
+    protected void doSearchEverywhere()
+    {
+        doSearchAction();
+    }
+
+    // Go button was clicked
+    protected void doGoMatch()
+    {
+        doMatchAction();
+    }
+
+    // Enter was hit in txtMRestrict
+    protected void doMatchAnywhere()
+    {
+        doMatchAction();
+    }
+
+    /**
+     * Someone pressed return in the passage area
+     */
+    protected void doPassageAction()
+    {
+        setDefaultName(txtPassg.getText());
+        updateDisplay();
     }
 
     /**
@@ -325,7 +411,7 @@ public class DisplaySelectPane extends JPanel
     }
 
     /**
-     * Someone pressed return in the search area
+     * Someone pressed return in the match area
      */
     protected void doMatchAction()
     {
@@ -370,15 +456,6 @@ public class DisplaySelectPane extends JPanel
     }
 
     /**
-     * Someone pressed return in the passage area
-     */
-    protected void doPassageAction()
-    {
-        setDefaultName(txtPassg.getText());
-        updateDisplay();
-    }
-
-    /**
      * Sync the viewed passage with the passage text box
      */
     private void updateDisplay()
@@ -392,14 +469,14 @@ public class DisplaySelectPane extends JPanel
 
         try
         {
-        	Book bible = bmd.getBook();
+            Book bible = bmd.getBook();
             Passage ref = getPassage();
 
             fireCommandMade(new DisplaySelectEvent(this, ref, bible));
         }
         catch (NoSuchVerseException ex)
         {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error finding verse", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), Msg.BAD_VERSE.toString(), JOptionPane.ERROR_MESSAGE);
         }
         catch (Exception ex)
         {
@@ -426,10 +503,6 @@ public class DisplaySelectPane extends JPanel
         else if (action == MATCH)
         {
             rdoMatch.setSelected(true);
-        }
-        else
-        {
-            throw new IllegalArgumentException("action is not PASSAGE, SEARCH or MATCH");
         }
         
         adjustFocus();
@@ -503,7 +576,7 @@ public class DisplaySelectPane extends JPanel
 
         try
         {
-        	Book book = bmd.getBook();
+            Book book = bmd.getBook();
             Passage ref = getPassage();
 
             fireVersionChanged(new DisplaySelectEvent(this, ref, book));
@@ -519,7 +592,8 @@ public class DisplaySelectPane extends JPanel
      */
     private void noBookInstalled()
     {
-        JOptionPane.showMessageDialog(this, "No Bible is installed", "No Bible is installed", JOptionPane.WARNING_MESSAGE);
+        String noBible = Msg.NO_INSTALLED_BIBLE.toString();
+        JOptionPane.showMessageDialog(this, noBible, noBible, JOptionPane.WARNING_MESSAGE);
     }
 
     /**
@@ -527,7 +601,11 @@ public class DisplaySelectPane extends JPanel
      */
     protected void showSelectDialog()
     {
-        String passg = dlgSelect.showInDialog(this, "Select Passage", true, txtPassg.getText());
+        if (dlgSelect == null)
+        {
+            dlgSelect = new PassageSelectionPane();
+        }
+        String passg = dlgSelect.showInDialog(this, Msg.SELECT_PASSAGE_TITLE.toString(), true, txtPassg.getText());
         txtPassg.setText(passg);
         doPassageAction();
     }
@@ -596,43 +674,30 @@ public class DisplaySelectPane extends JPanel
         }
     }
 
-    public static final String PASSAGE = "p"; //$NON-NLS-1$
-    public static final String SEARCH = "s"; //$NON-NLS-1$
-    public static final String MATCH = "m"; //$NON-NLS-1$
+    private static final String PASSAGE = "p"; //$NON-NLS-1$
+    private static final String SEARCH = "s"; //$NON-NLS-1$
+    private static final String MATCH = "m"; //$NON-NLS-1$
 
     private static int base = 1;
 
-    private String title = "Untitled " + (base++);
+    private String title;
 
     private transient List listeners;
 
-    private BooksComboBoxModel mdlVersn = null;
-    private PassageSelectionPane dlgSelect = new PassageSelectionPane();
-    private JLabel lblPassg = new JLabel();
-    private JPanel pnlPassg = new JPanel();
-    private JTextField txtPassg = new JTextField();
-    private JComboBox cboVersn = new JComboBox();
-    private JButton btnDialg = new JButton();
-    private JPanel pnlSearch = new JPanel();
-    private JPanel pnlMatch = new JPanel();
-    private JLabel lblSearch = new JLabel();
-    private JTextField txtSearch = new JTextField();
-    protected JCheckBox chkSRestrict = new JCheckBox();
-    protected JTextField txtSRestrict = new JTextField();
-    private JButton btnSearch = new JButton();
-    private JLabel lblMatch = new JLabel();
-    private JTextField txtMatch = new JTextField();
-    private JButton btnMatch = new JButton();
-    private JButton btnPassg = new JButton();
-    protected JCheckBox chkMRestrict = new JCheckBox();
-    protected JTextField txtMRestrict = new JTextField();
-    private JPanel pnlSelect = new JPanel();
-    private JPanel pnlRadios = new JPanel();
-    private JPanel pnlVersn = new JPanel();
-    private ButtonGroup grpType = new ButtonGroup();
-    private JRadioButton rdoMatch = new JRadioButton();
-    private JRadioButton rdoSearch = new JRadioButton();
-    private JRadioButton rdoPassg = new JRadioButton();
-    protected JPanel pnlCards = new JPanel();
-    protected CardLayout layCards = new CardLayout();
+    private BooksComboBoxModel mdlVersn;
+    private PassageSelectionPane dlgSelect;
+    private JTextField txtPassg;
+    private JTextField txtSearch;
+    protected JCheckBox chkSRestrict;
+    protected JTextField txtSRestrict;
+    private JTextField txtMatch;
+    protected JCheckBox chkMRestrict;
+    protected JTextField txtMRestrict;
+    private JRadioButton rdoMatch;
+    private JRadioButton rdoSearch;
+    private JRadioButton rdoPassg;
+    private JPanel pnlCards;
+    private CardLayout layCards;
+
+    private BookActionFactory actions;
 }

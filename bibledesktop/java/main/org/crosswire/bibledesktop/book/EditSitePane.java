@@ -13,7 +13,6 @@ import java.awt.event.KeyEvent;
 import java.beans.IntrospectionException;
 
 import javax.swing.BorderFactory;
-import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -27,7 +26,6 @@ import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
@@ -65,18 +63,26 @@ import org.crosswire.jsword.book.install.InstallerFactory;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class EditSitePane extends JPanel
+public class EditSitePane extends JPanel implements ActionListener
 {
+    private static final String ADD = "Add"; //$NON-NLS-1$
+    private static final String EDIT = "Edit"; //$NON-NLS-1$
+    private static final String DELETE = "Delete"; //$NON-NLS-1$
+    private static final String NAME = "Name"; //$NON-NLS-1$
+    private static final String TYPE = "Type"; //$NON-NLS-1$
+    private static final String RESET = "Reset"; //$NON-NLS-1$
+    private static final String SAVE = "Save"; //$NON-NLS-1$
+    private static final String CLOSE = "Close"; //$NON-NLS-1$
+    private static final String EMPTY_STRING = ""; //$NON-NLS-1$
+    private static final String BLANK_STRING = " "; //$NON-NLS-1$
+
     /**
      * This is the default constructor
      */
     public EditSitePane(InstallManager imanager)
     {
         this.imanager = imanager;
-
-        mdlSite = new InstallManagerListModel(imanager);
-        mdlType = new InstallerFactoryComboBoxModel(imanager);
-
+        userInitiated = true;
         initialize();
         setState(STATE_DISPLAY, null);
         select();
@@ -87,9 +93,13 @@ public class EditSitePane extends JPanel
      */
     private void initialize()
     {
+        actions = BookActionFactory.instance();
+        actions.addActionListener(this);
+
+        lstSite = new JList(new InstallManagerListModel(imanager));
+        JScrollPane scrSite = new JScrollPane();
         scrSite.add(lstSite, null);
         scrSite.getViewport().add(lstSite, null);
-        lstSite.setModel(mdlSite);
         lstSite.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         lstSite.addListSelectionListener(new ListSelectionListener()
         {
@@ -99,47 +109,21 @@ public class EditSitePane extends JPanel
             }
         });
 
-        btnAdd.setText("Add");
-        btnAdd.setMnemonic('A');
-        btnAdd.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                add();
-            }
-        });
+        JButton btnAdd = new JButton(actions.getAction(ADD));
+        JButton btnEdit = new JButton(actions.getAction(EDIT));
+        JButton btnDelete = new JButton(actions.getAction(DELETE));
 
-        btnEdit.setText("Edit");
-        btnEdit.setMnemonic('E');
-        btnEdit.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                edit();
-            }
-        });
-
-        btnDelete.setText("Delete");
-        btnDelete.setMnemonic('D');
-        btnDelete.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                delete();
-            }
-        });
-
+        JPanel pnlBtn1 = new JPanel();
         pnlBtn1.add(btnAdd, null);
         pnlBtn1.add(btnEdit, null);
         pnlBtn1.add(btnDelete, null);
 
+        JPanel pnlSite = new JPanel();
         pnlSite.setLayout(new BorderLayout());
         pnlSite.add(scrSite, BorderLayout.CENTER);
         pnlSite.add(pnlBtn1, BorderLayout.SOUTH);
 
-        lblName.setText("Name:");
-        lblName.setDisplayedMnemonic('N');
-        lblName.setLabelFor(txtName);
+        txtName = new JTextField();
         txtName.setColumns(10);
         txtName.getDocument().addDocumentListener(new DocumentListener()
         {
@@ -159,11 +143,11 @@ public class EditSitePane extends JPanel
             }
         });
 
-        lblType.setText("Type:");
-        lblType.setDisplayedMnemonic('Y');
-        lblType.setLabelFor(cboType);
+        JLabel lblName = actions.createJLabel(NAME);
+        lblName.setLabelFor(txtName);
+
+        cboType = new JComboBox(new InstallerFactoryComboBoxModel(imanager));
         cboType.setEditable(false);
-        cboType.setModel(mdlType);
         cboType.setSelectedIndex(0);
         cboType.addActionListener(new ActionListener()
         {
@@ -173,41 +157,33 @@ public class EditSitePane extends JPanel
             }
         });
 
-        lblMesg.setText(" "); //$NON-NLS-1$
+        JLabel lblType = actions.createJLabel(TYPE);
+        lblType.setLabelFor(cboType);
 
-        btnReset.setText("Cancel");
-        btnReset.setMnemonic('C');
-        btnReset.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                reset();
-            }
-        });
+        lblMesg = new JLabel();
+        lblMesg.setText(BLANK_STRING);
 
-        btnSave.setText("Save");
-        btnSave.setMnemonic('V');
-        btnSave.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                save();
-            }
-        });
+        JButton btnReset = new JButton(actions.getAction(RESET));
 
+        JButton btnSave = new JButton(actions.getAction(SAVE));
+
+        JPanel pnlBtn2 = new JPanel();
         pnlBtn2.add(btnSave, null);
         pnlBtn2.add(btnReset, null);
 
+        pnlBean = new BeanPanel();
+        JPanel pnlMain = new JPanel();
         pnlMain.setLayout(new GridBagLayout());
         pnlMain.add(lblMesg, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
         pnlMain.add(lblName, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
         pnlMain.add(txtName, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
         pnlMain.add(lblType, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
         pnlMain.add(cboType, new GridBagConstraints(1, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
-        pnlMain.add(sepLine, new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
+        pnlMain.add(new JSeparator(), new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
         pnlMain.add(pnlBean, new GridBagConstraints(0, 4, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         pnlMain.add(pnlBtn2, new GridBagConstraints(0, 5, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
+        JSplitPane sptMain = new JSplitPane();
         sptMain.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         sptMain.setResizeWeight(0.0);
         sptMain.add(pnlSite, JSplitPane.LEFT);
@@ -216,16 +192,9 @@ public class EditSitePane extends JPanel
         this.setLayout(new BorderLayout());
         this.add(sptMain, BorderLayout.CENTER);
 
-        btnClose.setText("OK");
-        btnClose.setMnemonic('O');
-        btnClose.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                close();
-            }
-        });
+        btnClose = new JButton(actions.getAction(CLOSE));
 
+        pnlAction = new JPanel();
         pnlAction.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         pnlAction.setLayout(new FlowLayout(FlowLayout.RIGHT));
         pnlAction.add(btnClose, null);
@@ -243,7 +212,7 @@ public class EditSitePane extends JPanel
         {
             public void actionPerformed(ActionEvent ev)
             {
-                close();
+                doClose();
             }
         };
 
@@ -258,7 +227,7 @@ public class EditSitePane extends JPanel
         dlgMain.getRootPane().setDefaultButton(btnClose);
         dlgMain.getRootPane().registerKeyboardAction(closer, esc, JComponent.WHEN_IN_FOCUSED_WINDOW);
         dlgMain.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        dlgMain.setTitle("Edit Update Sites");
+        dlgMain.setTitle(Msg.EDIT_SITE_TITLE.toString());
         dlgMain.setModal(true);
 
         GuiUtil.restrainedPack(dlgMain, 0.5f, 0.75f);
@@ -266,10 +235,18 @@ public class EditSitePane extends JPanel
         dlgMain.setVisible(true);
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e)
+    {
+        actions.actionPerformed(e, this);
+    }
+
     /**
      * Close the window, and save the install manager state
      */
-    protected void close()
+    protected void doClose()
     {
         imanager.save();
         dlgMain.dispose();
@@ -286,17 +263,17 @@ public class EditSitePane extends JPanel
     
             if (name.length() == 0)
             {
-                setState(STATE_EDIT_ERROR, "Missing site name");
+                setState(STATE_EDIT_ERROR, Msg.MISSING_SITE.toString());
                 return;
             }
     
             if (imanager.getInstaller(name) != null)
             {
-                setState(STATE_EDIT_ERROR, "Duplicate site name");
+                setState(STATE_EDIT_ERROR, Msg.DUPLICATE_SITE.toString());
                 return;
             }
     
-            setState(STATE_EDIT_OK, ""); //$NON-NLS-1$
+            setState(STATE_EDIT_OK, EMPTY_STRING);
         }
     }
 
@@ -323,12 +300,12 @@ public class EditSitePane extends JPanel
         String name = (String) lstSite.getSelectedValue();
         if (name == null)
         {
-            btnEdit.setEnabled(false);
+            actions.getAction(EDIT).setEnabled(false);
             clear();
         }
         else
         {
-            btnEdit.setEnabled(true);
+            actions.getAction(EDIT).setEnabled(true);
 
             Installer installer = imanager.getInstaller(name);
             display(name, installer);
@@ -343,7 +320,7 @@ public class EditSitePane extends JPanel
     /**
      * Add a new installer to the list
      */
-    protected void add()
+    protected void doAdd()
     {
         newType();
 
@@ -362,12 +339,12 @@ public class EditSitePane extends JPanel
     /**
      * Move the selected installer to the installer edit panel
      */
-    protected void edit()
+    protected void doEdit()
     {
         String name = (String) lstSite.getSelectedValue();
         if (name == null)
         {
-            JOptionPane.showMessageDialog(this, "No selected site to edit", "No Site", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Msg.NO_SELECTED_SITE.toString(), Msg.NO_SITE.toString(), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
@@ -385,7 +362,7 @@ public class EditSitePane extends JPanel
     /**
      * Delete the selected installer from the list (on the left hand side)
      */
-    protected void delete()
+    protected void doDelete()
     {
         String name = (String) lstSite.getSelectedValue();
         if (name == null)
@@ -393,7 +370,7 @@ public class EditSitePane extends JPanel
             return;
         }
 
-        if (JOptionPane.showConfirmDialog(this, "Are you sure you want to delete "+name, "Delete site?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+        if (JOptionPane.showConfirmDialog(this, Msg.CONFIRM_DELETE_SITE.toString(name), Msg.DELETE_SITE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
         {
             imanager.removeInstaller(name);
         }
@@ -405,7 +382,7 @@ public class EditSitePane extends JPanel
     /**
      * End editing the current installer
      */
-    protected void reset()
+    protected void doReset()
     {
         if (editName != null)
         {
@@ -416,14 +393,14 @@ public class EditSitePane extends JPanel
         editName = null;
         editInstaller = null;
 
-        setState(STATE_DISPLAY, ""); //$NON-NLS-1$
+        setState(STATE_DISPLAY, EMPTY_STRING);
         select();
     }
 
     /**
      * Save the current installer to the list of installers
      */
-    protected void save()
+    protected void doSave()
     {
         String name = txtName.getText();
         Installer installer = (Installer) pnlBean.getBean();
@@ -433,7 +410,7 @@ public class EditSitePane extends JPanel
         editName = null;
         editInstaller = null;
 
-        setState(STATE_DISPLAY, ""); //$NON-NLS-1$
+        setState(STATE_DISPLAY, EMPTY_STRING);
         select();
     }
 
@@ -445,15 +422,15 @@ public class EditSitePane extends JPanel
         switch (state)
         {
         case STATE_DISPLAY:
-            btnAdd.setEnabled(true);
-            btnDelete.setEnabled(true);
-            btnEdit.setEnabled(true);
+            actions.getAction(ADD).setEnabled(true);
+            actions.getAction(DELETE).setEnabled(true);
+            actions.getAction(EDIT).setEnabled(true);
             lstSite.setEnabled(true);
 
-            btnReset.setEnabled(false);
-            btnSave.setEnabled(false);
-
-            btnClose.setEnabled(true);
+            actions.getAction(RESET).setEnabled(false);
+            actions.getAction(SAVE).setEnabled(false);
+            
+            actions.getAction(CLOSE).setEnabled(true);
 
             txtName.setEditable(false);
             cboType.setEnabled(false);
@@ -464,16 +441,16 @@ public class EditSitePane extends JPanel
 
         case STATE_EDIT_OK:
         case STATE_EDIT_ERROR:
-            btnAdd.setEnabled(false);
-            btnDelete.setEnabled(false);
-            btnEdit.setEnabled(false);
+            actions.getAction(ADD).setEnabled(false);
+            actions.getAction(DELETE).setEnabled(false);
+            actions.getAction(EDIT).setEnabled(false);
             lstSite.setEnabled(false);
 
-            btnReset.setEnabled(true);
-            btnSave.setEnabled(state == STATE_EDIT_OK);
+            actions.getAction(RESET).setEnabled(true);
+            actions.getAction(SAVE).setEnabled(state == STATE_EDIT_OK);
             pnlBean.setEditable(true);
 
-            btnClose.setEnabled(false);
+            actions.getAction(CLOSE).setEnabled(false);
 
             txtName.setEditable(true);
             cboType.setEnabled(true);
@@ -488,7 +465,7 @@ public class EditSitePane extends JPanel
 
         if (message == null || message.trim().length() == 0)
         {
-            lblMesg.setText(" "); //$NON-NLS-1$
+            lblMesg.setText(BLANK_STRING);
         }
         else
         {
@@ -518,7 +495,7 @@ public class EditSitePane extends JPanel
     {
         try
         {
-            txtName.setText(""); //$NON-NLS-1$
+            txtName.setText(EMPTY_STRING);
             pnlBean.setBean(null);
         }
         catch (IntrospectionException ex)
@@ -565,7 +542,7 @@ public class EditSitePane extends JPanel
     /**
      * The model that we are providing a view/controller for
      */
-    private InstallManager imanager = null;
+    private InstallManager imanager;
 
     /**
      * If we are editing an installer, we need to know it's original name
@@ -583,47 +560,34 @@ public class EditSitePane extends JPanel
      * Edits to the type combo box mean different things depending on
      * whether it was triggered by the user or the application.
      */
-    private boolean userInitiated = true;
+    private boolean userInitiated;
 
+    /*
+     * The ActionFactory holding the actions used by this
+     * EditSite.
+     */
+    private BookActionFactory actions;
+    
     /*
      * GUI Components for the list of sites
      */
-    private JScrollPane scrSite = new JScrollPane();
-    private JList lstSite = new JList();
-    private JPanel pnlSite = new JPanel();
-    private JButton btnAdd = new JButton();
-    private JButton btnEdit = new JButton();
-    private JButton btnDelete = new JButton();
-    private JPanel pnlBtn1 = new JPanel();
-    private ListModel mdlSite = null;
+    private JList lstSite;
 
     /*
      * GUI Components for the site view/edit area
      */
-    private JLabel lblMesg = new JLabel();
-    private JSeparator sepLine = new JSeparator();
-    private JLabel lblName = new JLabel();
-    private JTextField txtName = new JTextField();
-    private JLabel lblType = new JLabel();
-    private JComboBox cboType = new JComboBox();
-    private BeanPanel pnlBean = new BeanPanel();
-    private ComboBoxModel mdlType = null;
-
-    /*
-     * GUI Components that bind the above together
-     */
-    private JSplitPane sptMain = new JSplitPane();
-    private JPanel pnlMain = new JPanel();
-    private JButton btnReset = new JButton();
-    private JButton btnSave = new JButton();
-    private JPanel pnlBtn2 = new JPanel();
+    private JLabel lblMesg;
+    private JTextField txtName;
+    private JComboBox cboType;
+    private BeanPanel pnlBean;
 
     /*
      * Components for the dialog box including the button bar at the bottom.
      * These are separaed in this way in case this component is reused in a
      * larger context.
      */
-    protected JDialog dlgMain = null;
-    private JButton btnClose = new JButton();
-    private JPanel pnlAction = new JPanel();
+    protected JDialog dlgMain;
+    private JButton btnClose;
+    private JPanel pnlAction;
 }
+

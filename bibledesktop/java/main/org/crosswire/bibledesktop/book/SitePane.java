@@ -16,14 +16,14 @@ import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 
 import org.crosswire.common.swing.MapTableModel;
 import org.crosswire.common.swing.MapTable;
 import org.crosswire.common.util.Reporter;
+import org.crosswire.jsword.book.BookList;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.install.InstallException;
@@ -54,85 +54,107 @@ import org.crosswire.jsword.book.install.Installer;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class SitePane extends JPanel
+public class SitePane extends JPanel implements ActionListener
 {
+    private static final String INSTALLED_BOOKS_LABEL = "InstalledBooksLabel"; //$NON-NLS-1$
+    private static final String AVAILABLE_BOOKS_LABEL = "AvailableBooksLabel"; //$NON-NLS-1$
+    private static final String SELECTED_BOOK_LABEL = "SelectedBookLabel"; //$NON-NLS-1$
+    private static final String REFRESH = "Refresh"; //$NON-NLS-1$
+    private static final String INSTALL = "Install"; //$NON-NLS-1$
+    //private static final String DELETE = "Delete"; //$NON-NLS-1$
+
     /**
      * For local installations
      */
     public SitePane()
     {
-        this.installer = null;
-
-        initialize();
-
-        //pnlActions.add(btnDelete);
-        lblAvailable.setLabelFor(treAvailable);
-        lblAvailable.setText("Installed Books:");
-        lblAvailable.setDisplayedMnemonic('B');
-
-        TreeModel model = new BooksTreeModel(Books.installed());
-        treAvailable.setModel(model);
+        this(null, INSTALLED_BOOKS_LABEL);
     }
 
     /**
      * For remote installations
      */
-    public SitePane(Installer installer)
+    public SitePane(Installer bookListInstaller)
     {
-        this.installer = installer;
+        this(bookListInstaller, AVAILABLE_BOOKS_LABEL);
+    }
 
-        initialize();
+    private SitePane(Installer bookListInstaller, String labelAcronymn)
+    {
+        installer = bookListInstaller;
+        
+        actions = BookActionFactory.instance();
+        actions.addActionListener(this);
 
-        pnlActions.add(btnInstall);
-        pnlActions.add(btnRefresh);
-        lblAvailable.setLabelFor(treAvailable);
-        lblAvailable.setText("Available Books:");
-        lblAvailable.setDisplayedMnemonic('B');
-
-        TreeModel model = new BooksTreeModel(installer);
-        treAvailable.setModel(model);
+        BookList bl = installer;
+        if (installer == null)
+        {
+            bl = Books.installed();
+        }
+        initialize(labelAcronymn, bl);        
     }
 
     /**
      * Build the GUI components
      */
-    private void initialize()
+    private void initialize(String labelAcronymn, BookList books)
     {
-        /*
-        btnDelete.setMnemonic('D');
-        btnDelete.setText("Delete");
-        btnDelete.setEnabled(false);
-        btnDelete.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                delete();
-            }
-        });
-        */
-        btnInstall.setMnemonic('I');
-        btnInstall.setText("Install");
-        btnInstall.setEnabled(false);
-        btnInstall.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                install();
-            }
-        });
-        btnRefresh.setMnemonic('R');
-        btnRefresh.setText("Refresh List");
-        btnRefresh.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                refresh();
-            }
-        });
-        pnlAvailable.setLayout(new BorderLayout());
-        pnlAvailable.add(lblAvailable, BorderLayout.NORTH);
-        pnlAvailable.add(scrAvailable, BorderLayout.CENTER);
-        pnlAvailable.add(pnlActions, BorderLayout.SOUTH);
+        Component left = createAvailablePanel(labelAcronymn, books);
+        Component right = createSelectedPanel();
+        this.setLayout(new BorderLayout());
+        this.add(createSplitPane(left, right), BorderLayout.CENTER);
+    }
+
+    private Component createSplitPane(Component left, Component right)
+    {
+        JSplitPane split = new JSplitPane();
+        split.setResizeWeight(0.5);
+        split.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+        split.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        split.setDividerSize(10);
+        split.setDividerLocation(200);
+        split.add(left, JSplitPane.LEFT);
+        split.add(right, JSplitPane.RIGHT);
+        return split;
+    }
+    
+    private Component createAvailablePanel(String labelAcronymn, BookList books)
+    {
+        JLabel lblAvailable = actions.createJLabel(labelAcronymn);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.add(lblAvailable, BorderLayout.PAGE_START);
+        panel.add(createScrolledTree(books), BorderLayout.CENTER);
+        panel.add(createPanelActions(), BorderLayout.PAGE_END);
+
+        // Tie the label's mnemonic to the tree
+        lblAvailable.setLabelFor(treAvailable);
+
+        return panel;
+    }
+
+    private Component createSelectedPanel()
+    {
+        emptyTableModel = new MapTableModel(null);
+        tblSelected = new MapTable(emptyTableModel);
+        JLabel lblSelected = actions.createJLabel(SELECTED_BOOK_LABEL);
+        lblSelected.setLabelFor(tblSelected);
+    
+        JScrollPane scrSelected = new JScrollPane();
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.add(lblSelected, BorderLayout.PAGE_START);
+        panel.add(scrSelected, BorderLayout.CENTER);
+        scrSelected.getViewport().add(tblSelected);
+        return panel;
+    }
+
+    private Component createScrolledTree(BookList books)
+    {
+        treAvailable = new JTree();
+        treAvailable.setModel(new BooksTreeModel(books));
+        treAvailable.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         treAvailable.setCellEditor(null);
         treAvailable.setRootVisible(false);
         treAvailable.setShowsRootHandles(true);
@@ -144,41 +166,49 @@ public class SitePane extends JPanel
                 selected();
             }
         });
-        scrAvailable.getViewport().add(treAvailable);
-        scrAvailable.setPreferredSize(new Dimension(200, 400));
+    
+        JScrollPane scroller = new JScrollPane();
+    
+        scroller.getViewport().add(treAvailable);
+        scroller.setPreferredSize(new Dimension(300, 400));
+    
+        return scroller;
+    }
+    
+    private Component createPanelActions()
+    {
+        JPanel panel = new JPanel();
+        if (installer != null)
+        {
+            panel.add(new JButton(actions.getAction(INSTALL)));
+            panel.add(new JButton(actions.getAction(REFRESH)));
+        }
+//        else
+//        {
+//            pnlActions.add(new JButton(actions.getAction(DELETE)));
+//        }
+        return panel;
+    }
 
-        lblSelected.setDisplayedMnemonic('S');
-        lblSelected.setLabelFor(tblSelected);
-        lblSelected.setText("Selected Book:");
-        pnlSelected.setLayout(new BorderLayout());
-        pnlSelected.add(scrSelected, BorderLayout.CENTER);
-        pnlSelected.add(lblSelected, BorderLayout.NORTH);
-        scrSelected.getViewport().add(tblSelected);
-        scrAvailable.setPreferredSize(new Dimension(300, 400));
-
-        sptMain.setResizeWeight(0.5);
-        sptMain.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-        sptMain.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        sptMain.setDividerSize(10);
-        sptMain.setDividerLocation(200);
-        sptMain.add(pnlAvailable, JSplitPane.LEFT);
-        sptMain.add(pnlSelected, JSplitPane.RIGHT);
-
-        this.setLayout(new BorderLayout());
-        this.add(sptMain, BorderLayout.CENTER);
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e)
+    {
+        actions.actionPerformed(e, this);
     }
 
     /**
      * Delete the current book
      */
-    protected void delete()
+    protected void doDelete()
     {
     }
 
     /**
      * Reload and redisplay the list of books
      */
-    protected void refresh()
+    protected void doRefresh()
     {
         if (installer != null)
         {
@@ -186,8 +216,7 @@ public class SitePane extends JPanel
             {
                 installer.reloadIndex();
 
-                TreeModel model = new BooksTreeModel(installer);
-                treAvailable.setModel(model);
+                treAvailable.setModel(new BooksTreeModel(installer));
             }
             catch (InstallException ex)
             {
@@ -199,7 +228,7 @@ public class SitePane extends JPanel
     /**
      * Kick off the installer
      */
-    protected void install()
+    protected void doInstall()
     {
         if (installer != null)
         {
@@ -222,54 +251,29 @@ public class SitePane extends JPanel
     }
 
     /**
-     * Something has been selected in the tree
+     * Something has been (un)selected in the tree
      */
     protected void selected()
     {
         TreePath path = treAvailable.getSelectionPath();
 
-        // btnDelete.setEnabled(path != null);
-        btnInstall.setEnabled(path != null);
-
+        boolean bookSelected = false;
+        MapTableModel mtm = emptyTableModel;
         if (path != null)
         {
             Object last = path.getLastPathComponent();
 
             if (last instanceof BookMetaData)
             {
-                BookMetaData bmd = (BookMetaData) last;
-                tblSelected.setModel(new BookMetaDataTableModel(bmd));
-            }
-            else if (last instanceof DefaultMutableTreeNode && installer != null)
-            {
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode) last;
-                BookMetaData bmd = (BookMetaData) node.getUserObject();
-
-                tblSelected.setModel(new MapTableModel(bmd.getProperties()));
-            }
-            else
-            {
-                tblSelected.setModel(new MapTableModel(null));
+                mtm = new BookMetaDataTableModel((BookMetaData) last);
+                bookSelected = true;
             }
         }
+        tblSelected.setModel(mtm);
+        
+        //actions.getAction(DELETE).setEnabled(bookSelected);
+        actions.getAction(INSTALL).setEnabled(bookSelected);
     }
-
-    /*
-     * Convert an Installer index list into a Tree model
-     *
-    private TreeModel getTreeModel(List entries)
-    {
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Modules");
-        for (Iterator it = entries.iterator(); it.hasNext(); )
-        {
-            BookMetaData bmd = (BookMetaData) it.next();
-            root.add(new DefaultMutableTreeNode(bmd));
-        }
-
-        DefaultTreeModel dtm = new DefaultTreeModel(root);
-        return dtm;
-    }
-    */
 
     /**
      * Display the BookMetaData as something better than toString()
@@ -288,10 +292,6 @@ public class SitePane extends JPanel
                 BookMetaData bmd = (BookMetaData) value;
                 setText(bmd.getFullName());
             }
-            else if (value instanceof String)
-            {
-                setText((String) value);
-            }
 
             return this;
         }
@@ -302,20 +302,16 @@ public class SitePane extends JPanel
      */
     protected Installer installer;
 
+    /**
+     * actions are held by this ActionFactory
+     */
+    private BookActionFactory actions;
+    
     /*
      * GUI Components
      */
-    private JScrollPane scrSelected = new JScrollPane();
-    private JLabel lblAvailable = new JLabel();
-    private JScrollPane scrAvailable = new JScrollPane();
-    private JSplitPane sptMain = new JSplitPane();
-    private JButton btnInstall = new JButton();
-    private JButton btnRefresh = new JButton();
-    //private JButton btnDelete = new JButton();
-    private JPanel pnlActions = new JPanel();
-    private JLabel lblSelected = new JLabel();
-    private JTree treAvailable = new JTree();
-    private JPanel pnlSelected = new JPanel();
-    private JPanel pnlAvailable = new JPanel();
-    private JTable tblSelected = new MapTable();
+    private JTree treAvailable;
+    private JTable tblSelected;
+    private MapTableModel emptyTableModel;
 }
+

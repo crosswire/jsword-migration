@@ -52,8 +52,11 @@ import org.crosswire.jsword.book.install.InstallerListener;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class SitesPane extends JPanel
+public class SitesPane extends JPanel implements ActionListener
 {
+    private static final String CLOSE = "SitesClose"; //$NON-NLS-1$
+    private static final String EDIT_SITE = "ManageSites"; //$NON-NLS-1$
+
     /**
      * Simple ctor
      */
@@ -77,7 +80,7 @@ public class SitesPane extends JPanel
                 String name = imanager.getInstallerNameForInstaller(installer);
 
                 SitePane site = new SitePane(installer);
-                tabMain.add(site, name);
+                tabMain.add(name, site);
             }
 
             /* (non-Javadoc)
@@ -102,15 +105,17 @@ public class SitesPane extends JPanel
      */
     protected void addAllInstallers()
     {
-        tabMain.add(steLocal, "Local");
+        // Add the panel for the locally installed books
+        tabMain.add(Msg.LOCAL_BOOKS.toString(), new SitePane());
 
+        // Now add panels for book installation sites
         for (Iterator it = installers.keySet().iterator(); it.hasNext(); )
         {
             String name = (String) it.next();
             Installer installer = (Installer) installers.get(name); 
 
             SitePane site = new SitePane(installer);
-            tabMain.add(site, name);
+            tabMain.add(name, site);
         }
     }
 
@@ -127,39 +132,36 @@ public class SitesPane extends JPanel
      */
     private void initialize()
     {
-        btnOK.setMnemonic('O');
-        btnOK.setText("OK");
-        btnOK.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                close();
-            }
-        });
+        actions = BookActionFactory.instance();
+        actions.addActionListener(this);
 
-        btnAdd.setMnemonic('S');
-        btnAdd.setText("Edit Site ...");
-        btnAdd.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                addSite();
-            }
-        });
+        JButton btnOK = new JButton(actions.getAction(CLOSE));
 
+        JButton btnAdd = new JButton(actions.getAction(EDIT_SITE));
+
+        pnlButtons = new JPanel();
         pnlButtons.setLayout(new FlowLayout(FlowLayout.RIGHT));
         pnlButtons.add(btnAdd, null);
         pnlButtons.add(btnOK);
 
+        tabMain = new JTabbedPane();
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         this.add(tabMain, BorderLayout.CENTER);
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e)
+    {
+        actions.actionPerformed(e, this);
+    }
+
     /**
      * Add a site to the list of install sources.
      */
-    protected void addSite()
+    protected void doManageSites()
     {
         EditSitePane edit = new EditSitePane(imanager);
         edit.showInDialog(this);
@@ -168,7 +170,7 @@ public class SitesPane extends JPanel
     /**
      * We are done, close the window
      */
-    protected void close()
+    protected void doSitesClose()
     {
         if (dlgMain != null)
         {
@@ -184,14 +186,14 @@ public class SitesPane extends JPanel
         dlgMain = new JDialog(JOptionPane.getFrameForComponent(parent));
         dlgMain.getContentPane().setLayout(new BorderLayout());
         dlgMain.getContentPane().add(this, BorderLayout.CENTER);
-        dlgMain.getContentPane().add(pnlButtons, BorderLayout.SOUTH);
-        dlgMain.setTitle("Available Books");
+        dlgMain.getContentPane().add(createButtons(), BorderLayout.SOUTH);
+        dlgMain.setTitle(Msg.AVAILABLE_BOOKS.toString());
         dlgMain.setModal(true);
         dlgMain.addWindowListener(new WindowAdapter()
         {
             public void windowClosed(WindowEvent ev)
             {
-                close();
+                doSitesClose();
             }
         });
         dlgMain.pack();
@@ -199,6 +201,22 @@ public class SitesPane extends JPanel
         dlgMain.setVisible(true);
     }
 
+    private Component createButtons()
+    {
+        if (pnlButtons == null)
+        {
+            JButton btnOK = new JButton(actions.getAction(CLOSE));
+    
+            JButton btnAdd = new JButton(actions.getAction(EDIT_SITE));
+    
+            pnlButtons = new JPanel();
+            pnlButtons.setLayout(new FlowLayout(FlowLayout.RIGHT));
+            pnlButtons.add(btnAdd, null);
+            pnlButtons.add(btnOK);
+        }
+        return pnlButtons;
+
+    }
     /**
      * The known installers fetched from InstallManager
      */
@@ -209,13 +227,12 @@ public class SitesPane extends JPanel
      */
     protected InstallManager imanager;
 
+    private BookActionFactory actions;
+
     /*
      * GUI Components
      */
-    private JDialog dlgMain = null;
-    private JPanel pnlButtons = new JPanel();
-    private JButton btnOK = new JButton();
-    protected JTabbedPane tabMain = new JTabbedPane();
-    private JButton btnAdd = new JButton();
-    private SitePane steLocal = new SitePane();
+    private JDialog dlgMain;
+    private JPanel pnlButtons;
+    protected JTabbedPane tabMain;
 }

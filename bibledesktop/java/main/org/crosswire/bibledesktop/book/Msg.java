@@ -41,6 +41,25 @@ class Msg extends MsgBase
     static final Msg CHOOSER_OK = new Msg("OK"); //$NON-NLS-1$
     static final Msg CHOOSER_TITLE = new Msg("Select a Bible"); //$NON-NLS-1$
 
+    static final Msg BAD_VERSE = new Msg("Error finding verse"); //$NON-NLS-1$
+    static final Msg NO_INSTALLED_BIBLE = new Msg("No Bible is installed"); //$NON-NLS-1$
+    static final Msg SELECT_PASSAGE_TITLE = new Msg("Select Passage"); //$NON-NLS-1$
+    static final Msg UNTITLED = new Msg("Untitled {0}"); //$NON-NLS-1$
+
+    static final Msg AVAILABLE_BOOKS = new Msg("Available Books"); //$NON-NLS-1$
+    static final Msg LOCAL_BOOKS = new Msg("Local"); //$NON-NLS-1$
+
+    static final Msg EDIT_SITE_TITLE = new Msg("Edit Update Sites"); //$NON-NLS-1$
+    static final Msg MISSING_SITE = new Msg("Missing site name"); //$NON-NLS-1$
+    static final Msg DUPLICATE_SITE = new Msg("Duplicate site name"); //$NON-NLS-1$
+    static final Msg NO_SELECTED_SITE = new Msg("No selected site to edit"); //$NON-NLS-1$
+    static final Msg NO_SITE = new Msg("No Site"); //$NON-NLS-1$
+    static final Msg CONFIRM_DELETE_SITE = new Msg("Are you sure you want to delete {0}"); //$NON-NLS-1$
+    static final Msg DELETE_SITE = new Msg("Delete Site?"); //$NON-NLS-1$
+
+    static final Msg ERROR = new Msg("Error: {0}"); //$NON-NLS-1$
+    static final Msg SUMMARY = new Msg("Summary: {0}"); //$NON-NLS-1$
+
     /**
      * Passthrough ctor
      */

@@ -1,4 +1,3 @@
-
 package org.crosswire.bibledesktop.book;
 
 import java.awt.BorderLayout;
@@ -72,8 +71,15 @@ import org.crosswire.jsword.passage.VerseRange;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class PassageSelectionPane extends JPanel
+public class PassageSelectionPane extends JPanel implements ActionListener
 {
+    private static final String BIBLE_TREE = "BibleTree"; //$NON-NLS-1$
+    private static final String ADD = "AddVerse"; //$NON-NLS-1$
+    private static final String DELETE = "DeleteVerse"; //$NON-NLS-1$
+    private static final String SELECTED_VERSES = "SelectedVerses"; //$NON-NLS-1$
+    private static final String VERSES = "Verses"; //$NON-NLS-1$
+    private static final String DONE = "Done"; //$NON-NLS-1$
+
     /**
      * Constructor for PassageSelectionPane.
      */
@@ -98,18 +104,37 @@ public class PassageSelectionPane extends JPanel
             assert false : ex;
         }
 
-        jbInit();
+        initialize();
     }
 
     /**
      * GUI init
      */
-    private void jbInit()
+    private void initialize()
     {
-        lbl_all.setDisplayedMnemonic('T');
-        lbl_all.setLabelFor(tre_all);
-        lbl_all.setText("Bible Tree:");
-        scr_all.getViewport().add(tre_all, null);
+        actions = BookActionFactory.instance();
+        actions.addActionListener(this);
+        
+        JLabel lbl_all = actions.createJLabel(BIBLE_TREE);
+        JLabel lbl_sel = actions.createJLabel(SELECTED_VERSES);
+
+        this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        this.setLayout(new GridBagLayout());
+        this.add(lbl_all, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 10, 5, 5), 0, 0));
+        this.add(createScrolledTree(lbl_all), new GridBagConstraints(0, 1, 1, 4, 0.5, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 10, 10, 2), 0, 0));
+        this.add(new JPanel(), new GridBagConstraints(1, 1, 1, 1, 0.0, 0.5, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(new JButton(actions.getAction(DELETE)), new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
+        this.add(new JButton(actions.getAction(ADD)), new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
+        this.add(new JPanel(), new GridBagConstraints(1, 4, 1, 1, 0.0, 0.5, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(lbl_sel, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 5, 5, 10), 0, 0));
+        this.add(createScrolledList(lbl_sel), new GridBagConstraints(2, 1, 1, 4, 0.5, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 2, 10, 10), 0, 0));
+        this.add(createMessageLabel(), new GridBagConstraints(0, 5, 3, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 10, 5, 10), 0, 0));
+        this.add(createDisplayPanel(), new GridBagConstraints(0, 6, 3, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 10, 0, 10), 0, 0));
+    }
+
+    private Component createScrolledTree(JLabel label)
+    {
+        tre_all = new JTree();
         tre_all.setModel(new WholeBibleTreeModel());
         tre_all.setShowsRootHandles(true);
         tre_all.setRootVisible(false);
@@ -120,30 +145,15 @@ public class PassageSelectionPane extends JPanel
                 treeSelected();
             }
         });
+    
+        label.setLabelFor(tre_all);
+    
+        return new JScrollPane(tre_all);
+    }
 
-        btn_add.setText("Add");
-        btn_add.setMnemonic('A');
-        btn_add.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                addTreeToCurrent();
-            }
-        });
-        btn_del.setText("Delete");
-        btn_del.setMnemonic('D');
-        btn_del.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                deleteFromCurrent();
-            }
-        });
-
-        lbl_sel.setDisplayedMnemonic('S');
-        lbl_sel.setLabelFor(lst_sel);
-        lbl_sel.setText("Selected Verses:");
-        scr_sel.getViewport().add(lst_sel, null);
+    private Component createScrolledList(JLabel label)
+    {
+        lst_sel = new JList();
         lst_sel.addListSelectionListener(new ListSelectionListener()
         {
             public void valueChanged(ListSelectionEvent ev)
@@ -151,29 +161,32 @@ public class PassageSelectionPane extends JPanel
                 listSelected();
             }
         });
-
-        lbl_display.setDisplayedMnemonic('V');
-        lbl_display.setLabelFor(txt_display);
-        lbl_display.setText("Verses: ");
-        txt_display.getDocument().addDocumentListener(new CustomDocumentEvent());
-        pnl_display.setLayout(new BorderLayout());
-        pnl_display.add(txt_display, BorderLayout.CENTER);
-        pnl_display.add(lbl_display, BorderLayout.WEST);
-
-        this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        this.setLayout(new GridBagLayout());
-        this.add(lbl_all, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 10, 5, 5), 0, 0));
-        this.add(scr_all, new GridBagConstraints(0, 1, 1, 4, 0.5, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 10, 10, 2), 0, 0));
-        this.add(pnl_space1, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.5, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(btn_del, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
-        this.add(btn_add, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
-        this.add(pnl_space2, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.5, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(lbl_sel, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 5, 5, 10), 0, 0));
-        this.add(scr_sel, new GridBagConstraints(2, 1, 1, 4, 0.5, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 2, 10, 10), 0, 0));
-        this.add(lbl_message, new GridBagConstraints(0, 5, 3, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 10, 5, 10), 0, 0));
-        this.add(pnl_display, new GridBagConstraints(0, 6, 3, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 10, 0, 10), 0, 0));
+        
+        label.setLabelFor(lst_sel);
+        
+        return new JScrollPane(lst_sel);
     }
 
+    private Component createDisplayPanel()
+    {
+        txt_display = new JTextField();
+        txt_display.getDocument().addDocumentListener(new CustomDocumentEvent());
+
+        JLabel lbl_display = actions.createJLabel(VERSES);
+        lbl_display.setLabelFor(txt_display);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.add(txt_display, BorderLayout.CENTER);
+        panel.add(lbl_display, BorderLayout.WEST);
+        return panel;
+    }
+    private Component createMessageLabel()
+    {
+        lbl_message = new JLabel();
+        
+        return lbl_message;
+    }
     /**
      * Called whenever the passage changes to update the text box.
      */
@@ -228,8 +241,8 @@ public class PassageSelectionPane extends JPanel
     {
         lst_sel.setEnabled(valid);
         tre_all.setEnabled(valid);
-        btn_add.setEnabled(valid);
-        btn_del.setEnabled(valid);
+        actions.getAction(ADD).setEnabled(valid);
+        actions.getAction(DELETE).setEnabled(valid);
     }
 
     /**
@@ -238,7 +251,7 @@ public class PassageSelectionPane extends JPanel
      */
     private void updateMessage(NoSuchVerseException ex)
     {
-        lbl_message.setText("Error: "+ex.getMessage());
+        lbl_message.setText(Msg.ERROR.toString(ex.getMessage()));
         lbl_message.setIcon(ico_bad);
     }
 
@@ -247,7 +260,7 @@ public class PassageSelectionPane extends JPanel
      */
     private void updateMessageSummary()
     {
-        lbl_message.setText("Summary: "+ref.getOverview());
+        lbl_message.setText(Msg.SUMMARY.toString(ref.getOverview()));
         lbl_message.setIcon(ico_good);
     }
 
@@ -279,21 +292,12 @@ public class PassageSelectionPane extends JPanel
         treeSelected();
         listSelected();
 
-        final JDialog dlg_main = new JDialog(JOptionPane.getFrameForComponent(parent));
-        JButton btn_go = new JButton();
+        dlg_main = new JDialog(JOptionPane.getFrameForComponent(parent));
         JPanel pnl_action = new JPanel();
         KeyStroke esc = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
         bailout = true;
 
-        btn_go.setText("Done");
-        btn_go.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                bailout = false;
-                dlg_main.dispose();
-            }
-        });
+        JButton btn_go = new JButton(actions.getAction(DONE));
 
         pnl_action.setLayout(new BorderLayout());
         pnl_action.setBorder(BorderFactory.createEmptyBorder(5, 5, 15, 20));
@@ -330,10 +334,18 @@ public class PassageSelectionPane extends JPanel
         }
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e)
+    {
+        actions.actionPerformed(e, this);
+    }
+
     /**
      * Add from the tree to the list
      */
-    protected void addTreeToCurrent()
+    protected void doAddVerse()
     {
         TreePath[] selected = tre_all.getSelectionPaths();
         if (selected != null)
@@ -350,7 +362,7 @@ public class PassageSelectionPane extends JPanel
     /**
      * Remove the selected items from the list
      */
-    protected void deleteFromCurrent()
+    protected void doDeleteVerse()
     {
         Object[] selected = lst_sel.getSelectedValues();
         if (selected != null)
@@ -363,13 +375,19 @@ public class PassageSelectionPane extends JPanel
         }
     }
 
+    public void doDone()
+    {
+        bailout = false;
+        dlg_main.dispose();
+    }
+
     /**
      * The tree selection has changed
      */
     protected void treeSelected()
     {
         TreePath[] selected = tre_all.getSelectionPaths();
-        btn_add.setEnabled(selected != null && selected.length > 0);
+        actions.getAction(ADD).setEnabled(selected != null && selected.length > 0);
     }
 
     /**
@@ -378,18 +396,18 @@ public class PassageSelectionPane extends JPanel
     protected void listSelected()
     {
         Object[] selected = lst_sel.getSelectedValues();
-        btn_del.setEnabled(selected != null && selected.length > 0);
+        actions.getAction(DELETE).setEnabled(selected != null && selected.length > 0);
     }
 
     /**
      * If escape was pressed we don't want to update the parent
      */
-    protected boolean bailout = false;
+    protected boolean bailout;
     
     /**
      * Prevent us getting in an event cascade loop
      */
-    private boolean changing = false;
+    private boolean changing;
 
     /**
      * The psaage we are editing
@@ -397,25 +415,22 @@ public class PassageSelectionPane extends JPanel
     private Passage ref;
 
     /*
+     * The ActionFactory holding the actions used by this
+     * EditSite.
+     */
+    private BookActionFactory actions;
+    
+    /*
      * GUI Components
      */
     private Icon ico_good;
     private Icon ico_bad;
-    private JScrollPane scr_all = new JScrollPane();
-    private JScrollPane scr_sel = new JScrollPane();
-    private JLabel lbl_all = new JLabel();
-    private JLabel lbl_sel = new JLabel();
-    private JButton btn_del = new JButton();
-    private JButton btn_add = new JButton();
-    private JTree tre_all = new JTree();
-    private JList lst_sel = new JList();
-    private JPanel pnl_space1 = new JPanel();
-    private JPanel pnl_space2 = new JPanel();
-    private JPanel pnl_display = new JPanel();
-    private JLabel lbl_display = new JLabel();
-    private JTextField txt_display = new JTextField();
-    private JLabel lbl_message = new JLabel();
-
+    private JTree tre_all;
+    private JList lst_sel;
+    private JTextField txt_display;
+    private JLabel lbl_message;
+    protected JDialog dlg_main;
+    
     /**
      * Update the list whenever the textbox changes
      */

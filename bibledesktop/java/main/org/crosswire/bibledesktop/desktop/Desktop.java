@@ -125,6 +125,17 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     // Empty String
     private static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
+    // Various other strings used as keys
+    private static final String CONFIG_KEY = "config"; //$NON-NLS-1$
+    private static final String DESKTOP_KEY = "desktop"; //$NON-NLS-1$
+    private static final String READINGS_KEY = "readings"; //$NON-NLS-1$
+    private static final String CONV_KEY = "converters"; //$NON-NLS-1$
+    private static final String SWING_KEY = "swing-styles"; //$NON-NLS-1$
+    private static final String CSWING_KEY = "cswing-styles"; //$NON-NLS-1$
+    private static final String BIBLE_KEY = "biblenames"; //$NON-NLS-1$
+    private static final String COMMENTARY_KEY = "commentarynames"; //$NON-NLS-1$
+    private static final String DICTIONARY_KEY = "dictionarynames"; //$NON-NLS-1$
+
     /**
      * Central start point.
      * @param args The command line arguments
@@ -741,7 +752,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.TitleChangedListener#titleChanged(org.crosswire.bibledesktop.book.TitleChangedEvent)
+     * @see org.crosswire.jsword.view.swing.book.TitleChangedListener#titleChanged(org.crosswire.jsword.view.swing.book.TitleChangedEvent)
      */
     public void titleChanged(TitleChangedEvent ev)
     {
@@ -830,11 +841,11 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     {
         fillChoiceFactory();
 
-        config = new Config("Desktop Options");
-        Document xmlconfig = Project.instance().getDocument("config");
+        config = new Config(Msg.CONFIG_TITLE.toString());
+        Document xmlconfig = Project.instance().getDocument(CONFIG_KEY);
         config.add(xmlconfig);
 
-        config.setProperties(Project.instance().getProperties("desktop"));
+        config.setProperties(Project.instance().getProperties(DESKTOP_KEY));
         config.localToApplication(true);
     }
 
@@ -847,23 +858,23 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         refreshBooks();
 
         // Create the array of readings sets
-        ChoiceFactory.getDataMap().put("readings", ReadingsBookDriver.getInstalledReadingsSets());
+        ChoiceFactory.getDataMap().put(READINGS_KEY, ReadingsBookDriver.getInstalledReadingsSets());
 
         // And the array of allowed osis>html converters
         Map converters = ConverterFactory.getKnownConverters();
         Set keys = converters.keySet();
         String[] names = (String[]) keys.toArray(new String[keys.size()]);
-        ChoiceFactory.getDataMap().put("converters", names);
+        ChoiceFactory.getDataMap().put(CONV_KEY, names);
 
         // The choice of simple XSL stylesheets
         SimpleSwingConverter sstyle = new SimpleSwingConverter();
         String[] sstyles = sstyle.getStyles();
-        ChoiceFactory.getDataMap().put("swing-styles", sstyles);
+        ChoiceFactory.getDataMap().put(SWING_KEY, sstyles);
 
         // The choice of configurable XSL stylesheets
         ConfigurableSwingConverter cstyle = new ConfigurableSwingConverter();
         String[] cstyles = cstyle.getStyles();
-        ChoiceFactory.getDataMap().put("cswing-styles", cstyles);
+        ChoiceFactory.getDataMap().put(CSWING_KEY, cstyles);
     }
 
     /**
@@ -873,15 +884,15 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     {
         // Create the array of Bibles
         String[] bnames = getFullNameArray(BookFilters.getBibles());
-        ChoiceFactory.getDataMap().put("biblenames", bnames);
+        ChoiceFactory.getDataMap().put(BIBLE_KEY, bnames);
 
         // Create the array of Commentaries
         String[] cnames = getFullNameArray(BookFilters.getCommentaries());
-        ChoiceFactory.getDataMap().put("commentarynames", cnames);
+        ChoiceFactory.getDataMap().put(COMMENTARY_KEY, cnames);
 
         // Create the array of Dictionaries
         String[] dnames = getFullNameArray(BookFilters.getDictionaries());
-        ChoiceFactory.getDataMap().put("dictionarynames", dnames);
+        ChoiceFactory.getDataMap().put(DICTIONARY_KEY, dnames);
     }
 
     /**
