@@ -11,8 +11,10 @@ import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
 import org.crosswire.common.xml.XMLUtil;
+import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookException;
+import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.util.ConverterFactory;
 
 /**
@@ -50,20 +52,25 @@ public class TextPaneBookDataDisplay implements BookDataDisplay
         txtView.setEditorKit(new HTMLEditorKit());
     }
 
-    /**
-     * @param data
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
      */
-    public void setBookData(BookData data) throws BookException
+    public void setBookData(Book book, Key key) throws BookException
     {
+        this.book = book;
+        this.key = key;
+
+        BookData bdata = book.getData(key);
+
         try
         {
-            if (data == null)
+            if (bdata == null)
             {
                 txtView.setText(""); //$NON-NLS-1$
                 return;
             }
 
-            SAXEventProvider osissep = data.getSAXEventProvider();
+            SAXEventProvider osissep = bdata.getSAXEventProvider();
             SAXEventProvider htmlsep = converter.convert(osissep);
             String text = XMLUtil.writeToString(htmlsep);
 
@@ -124,13 +131,31 @@ public class TextPaneBookDataDisplay implements BookDataDisplay
         txtView.addMouseListener(li);
     }
 
-    /**
-     * TODO: get rid of this method
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getKey()
      */
-    public String getHTMLSource()
+    public Key getKey()
     {
-        return txtView.getText();
+        return key;
     }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBook()
+     */
+    public Book getBook()
+    {
+        return book;
+    }
+
+    /**
+     * The current book
+     */
+    private Book book;
+
+    /**
+     * The current key
+     */
+    private Key key;
 
     /**
      * To convert OSIS to HTML

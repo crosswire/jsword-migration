@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import javax.swing.JScrollPane;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
-import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
 import org.crosswire.bibledesktop.display.proxy.ProxyBookDataDisplay;
 
 /**
@@ -38,9 +37,9 @@ public class ScrolledBookDataDisplay extends ProxyBookDataDisplay implements Boo
     /**
      * Simple Constructor
      */
-    public ScrolledBookDataDisplay()
+    public ScrolledBookDataDisplay(BookDataDisplay child)
     {
-        super(BookDataDisplayFactory.createBookDataDisplay());
+        super(child);
 
         scrView.getViewport().setPreferredSize(new Dimension(500, 400));
         scrView.getViewport().add(getProxy().getComponent(), null);

@@ -1,6 +1,7 @@
 package org.crosswire.bibledesktop.book;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,22 +9,21 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.event.HyperlinkListener;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
-import org.crosswire.bibledesktop.display.FocusablePart;
+import org.crosswire.bibledesktop.display.scrolled.ScrolledBookDataDisplay;
 import org.crosswire.common.util.Reporter;
-import org.crosswire.common.xml.SAXEventProvider;
-import org.crosswire.common.xml.SerializingContentHandler;
-import org.crosswire.jsword.book.BookData;
+import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageFactory;
+import org.crosswire.jsword.passage.PassageUtil;
 import org.crosswire.jsword.passage.Verse;
 
 /**
@@ -51,7 +51,7 @@ import org.crosswire.jsword.passage.Verse;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class CommentaryPane extends JPanel implements FocusablePart
+public class CommentaryPane extends JPanel implements BookDataDisplay
 {
     /**
      * Simple constructor that uses all the Books
@@ -74,23 +74,23 @@ public class CommentaryPane extends JPanel implements FocusablePart
             }
         });
 
-        set.setBookComboBox(cbobooks);
-        set.setChapterComboBox(cbochaps);
-        set.setVerseComboBox(cboverse);
+        set.setBookComboBox(cboBooks);
+        set.setChapterComboBox(cboChaps);
+        set.setVerseComboBox(cboVerse);
 
-        cbobooks.setToolTipText(Msg.SELECT_BOOK.toString());
-        cbochaps.setToolTipText(Msg.SELECT_CHAPTER.toString());
-        cboverse.setToolTipText(Msg.SELECT_VERSE.toString());
+        cboBooks.setToolTipText(Msg.SELECT_BOOK.toString());
+        cboChaps.setToolTipText(Msg.SELECT_CHAPTER.toString());
+        cboVerse.setToolTipText(Msg.SELECT_VERSE.toString());
 
-        pnlselect.setLayout(new FlowLayout());
-        pnlselect.add(cbobooks, null);
-        pnlselect.add(cbochaps, null);
-        pnlselect.add(cboverse, null);
+        pnlSelect.setLayout(new FlowLayout());
+        pnlSelect.add(cboBooks, null);
+        pnlSelect.add(cboChaps, null);
+        pnlSelect.add(cboVerse, null);
 
-        cbocomments.setModel(mdlcomments);
-        cbocomments.setRenderer(new BookListCellRenderer());
-        cbocomments.setPrototypeDisplayValue(BookListCellRenderer.PROTOTYPE_BOOK_NAME);
-        cbocomments.addActionListener(new ActionListener()
+        cboComments.setModel(mdlcomments);
+        cboComments.setRenderer(new BookListCellRenderer());
+        cboComments.setPrototypeDisplayValue(BookListCellRenderer.PROTOTYPE_BOOK_NAME);
+        cboComments.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent ev)
             {
@@ -98,16 +98,22 @@ public class CommentaryPane extends JPanel implements FocusablePart
             }
         });
 
-        pnltop.setLayout(new BorderLayout());
-        pnltop.add(pnlselect, BorderLayout.NORTH);
-        pnltop.add(cbocomments, BorderLayout.SOUTH);
-
-        scrdisplay.getViewport().add(txtdisplay.getComponent(), null);
+        pnlTop.setLayout(new BorderLayout());
+        pnlTop.add(pnlSelect, BorderLayout.NORTH);
+        pnlTop.add(cboComments, BorderLayout.SOUTH);
 
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        this.add(pnltop, BorderLayout.NORTH);
-        this.add(scrdisplay, BorderLayout.CENTER);
+        this.add(pnlTop, BorderLayout.NORTH);
+        this.add(display.getComponent(), BorderLayout.CENTER);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.FocusablePart#getComponent()
+     */
+    public Component getComponent()
+    {
+        return this;
     }
 
     /**
@@ -115,7 +121,7 @@ public class CommentaryPane extends JPanel implements FocusablePart
      */
     protected void updateDisplay()
     {
-        BookMetaData bmd = (BookMetaData) cbocomments.getSelectedItem();
+        BookMetaData bmd = (BookMetaData) cboComments.getSelectedItem();
         if (bmd == null)
         {
             return;
@@ -127,8 +133,7 @@ public class CommentaryPane extends JPanel implements FocusablePart
             ref = PassageFactory.createPassage();
             ref.add(verse);
 
-            BookData bdata = bmd.getBook().getData(ref);
-            txtdisplay.setBookData(bdata);
+            display.setBookData(bmd.getBook(), ref);
         }
         catch (Exception ex)
         {
@@ -141,45 +146,7 @@ public class CommentaryPane extends JPanel implements FocusablePart
      */
     public void copy()
     {
-        txtdisplay.copy();
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#getOSISSource()
-     */
-    public String getOSISSource()
-    {
-        BookMetaData bmd = (BookMetaData) cbocomments.getSelectedItem();
-
-        if (ref == null || bmd == null)
-        {
-            return ""; //$NON-NLS-1$
-        }
-
-        try
-        {
-
-            BookData bdata = bmd.getBook().getData(ref);
-            SAXEventProvider provider = bdata.getSAXEventProvider();
-
-            SerializingContentHandler handler = new SerializingContentHandler(true);
-            provider.provideSAXEvents(handler);
-
-            return handler.toString();
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(this, ex);
-            return ""; //$NON-NLS-1$
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#getHTMLSource()
-     */
-    public String getHTMLSource()
-    {
-        return txtdisplay.getHTMLSource();
+        display.copy();
     }
 
     /* (non-Javadoc)
@@ -190,12 +157,30 @@ public class CommentaryPane extends JPanel implements FocusablePart
         return ref;
     }
 
-    /**
-     * Accessor for the current passage
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.FocusablePart#getBook()
      */
-    public Passage getPassage()
+    public Book getBook()
     {
-        return ref;
+        BookMetaData bmd = (BookMetaData) cboComments.getSelectedItem();
+        if (bmd == null)
+        {
+            return null;
+        }
+
+        return bmd.getBook();
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
+     */
+    public void setBookData(Book book, Key key) throws BookException
+    {
+        BookMetaData bmd = book.getBookMetaData();
+        cboComments.setSelectedItem(bmd);
+
+        Passage newref = PassageUtil.getPassage(key);
+        setPassage(newref);
     }
 
     /**
@@ -217,7 +202,7 @@ public class CommentaryPane extends JPanel implements FocusablePart
      */
     public void addHyperlinkListener(HyperlinkListener li)
     {
-        txtdisplay.addHyperlinkListener(li);
+        display.addHyperlinkListener(li);
     }
 
     /* (non-Javadoc)
@@ -225,7 +210,7 @@ public class CommentaryPane extends JPanel implements FocusablePart
      */
     public void removeHyperlinkListener(HyperlinkListener li)
     {
-        txtdisplay.removeHyperlinkListener(li);
+        display.removeHyperlinkListener(li);
     }
 
     /**
@@ -239,20 +224,19 @@ public class CommentaryPane extends JPanel implements FocusablePart
     private BookFilter filter = BookFilters.getCommentaries();
 
     /**
-     * The display of OSIS data
+     * The BookData display component
      */
-    private BookDataDisplay txtdisplay = BookDataDisplayFactory.createBookDataDisplay();
+    private BookDataDisplay display = new ScrolledBookDataDisplay(BookDataDisplayFactory.createBookDataDisplay());
 
     /*
      * GUI components
      */
     private BooksComboBoxModel mdlcomments = new BooksComboBoxModel(filter);
     protected BibleComboBoxModelSet set = new BibleComboBoxModelSet();
-    protected JComboBox cbocomments = new JComboBox();
-    private JComboBox cbobooks = new JComboBox();
-    private JComboBox cbochaps = new JComboBox();
-    private JComboBox cboverse = new JComboBox();
-    private JPanel pnlselect = new JPanel();
-    private JPanel pnltop = new JPanel();
-    private JScrollPane scrdisplay = new JScrollPane();
+    protected JComboBox cboComments = new JComboBox();
+    private JComboBox cboBooks = new JComboBox();
+    private JComboBox cboChaps = new JComboBox();
+    private JComboBox cboVerse = new JComboBox();
+    private JPanel pnlSelect = new JPanel();
+    private JPanel pnlTop = new JPanel();
 }

@@ -2,7 +2,6 @@ package org.crosswire.bibledesktop.display.tab;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,16 +14,14 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.HyperlinkListener;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
-import org.crosswire.bibledesktop.display.FocusablePart;
+import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
 import org.crosswire.bibledesktop.display.scrolled.ScrolledBookDataDisplay;
 import org.crosswire.common.util.Reporter;
-import org.crosswire.common.xml.SAXEventProvider;
-import org.crosswire.common.xml.SerializingContentHandler;
 import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
+import org.crosswire.jsword.passage.PassageUtil;
 
 /**
  * An inner component of Passage pane that can't show the list.
@@ -50,7 +47,7 @@ import org.crosswire.jsword.passage.Passage;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class TabbedDisplayPane extends JPanel implements FocusablePart
+public class TabbedDisplayPane extends JPanel implements BookDataDisplay
 {
     /**
      * Simple Constructor
@@ -59,7 +56,7 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
     {
         pnlView = createInnerDisplayPane();
 
-        initialize();
+        init();
 
         center = pnlView.getComponent();
         this.add(center, BorderLayout.CENTER);
@@ -73,10 +70,18 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
         //LookAndFeelUtil.addComponentToUpdate(tabMain);
     }
 
-    /**
-     * Gui creation
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.FocusablePart#getComponent()
      */
-    private void initialize()
+    public Component getComponent()
+    {
+        return this;
+    }
+
+    /**
+     * GUI creation
+     */
+    private void init()
     {
         tabMain.setTabPlacement(SwingConstants.BOTTOM);
         tabMain.addChangeListener(new ChangeListener()
@@ -90,12 +95,21 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
         this.setLayout(new BorderLayout());
     }
 
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
+     */
+    public void setBookData(Book book, Key key) throws BookException
+    {
+        setBook(book);
+        setPassage(PassageUtil.getPassage(key));
+    }
+
     /**
      * Set the version used for lookup
      */
-    public synchronized void setBook(Book version)
+    public synchronized void setBook(Book book)
     {
-        this.book = version;
+        this.book = book;
     }
 
     /**
@@ -136,6 +150,14 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
         this.repaint();
     }
 
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.FocusablePart#getBook()
+     */
+    public Book getBook()
+    {
+        return book;
+    }
+
     /**
      * @param display
      * @param cut
@@ -145,12 +167,11 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
     {
         if (cut == null || book == null)
         {
-            display.setBookData(null);
+            display.setBookData(null, null);
         }
         else
         {
-            BookData data = book.getData(cut);
-            display.setBookData(data);
+            display.setBookData(book, cut);
         }
     }
 
@@ -230,7 +251,7 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
      */
     private synchronized BookDataDisplay createInnerDisplayPane()
     {
-        BookDataDisplay idp = new ScrolledBookDataDisplay();
+        BookDataDisplay idp = new ScrolledBookDataDisplay(BookDataDisplayFactory.createBookDataDisplay());
         displays.add(idp);
 
         // Add all the known listeners to this new BookDataDisplay
@@ -240,14 +261,6 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
             {
                 HyperlinkListener li = (HyperlinkListener) it.next();
                 idp.addHyperlinkListener(li);
-            }
-        }
-        if (mouselis != null)
-        {
-            for (Iterator it = mouselis.iterator(); it.hasNext();)
-            {
-                MouseListener li = (MouseListener) it.next();
-                idp.addMouseListener(li);
             }
         }
 
@@ -348,100 +361,12 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
         }
     }
 
-    /**
-     * Forward the mouse listener to our child components
-     */
-    public synchronized void addMouseListener(MouseListener li)
-    {
-        // First add to our list of listeners so when we get more event syncs
-        // we can add this new listener to the new sync
-        List temp = new ArrayList();
-        if (mouselis == null)
-        {
-            temp.add(li);
-            mouselis = temp;
-        }
-        else
-        {
-            temp.addAll(mouselis);
-
-            if (!temp.contains(li))
-            {
-                temp.add(li);
-                mouselis = temp;
-            }
-        }
-
-        // Now go through all the known syncs and add this one in
-        for (Iterator it = displays.iterator(); it.hasNext();)
-        {
-            BookDataDisplay idp = (BookDataDisplay) it.next();
-            idp.addMouseListener(li);
-        }
-    }
-
-    /**
-     * Forward the mouse listener to our child components
-     */
-    public synchronized void removeMouseListener(MouseListener li)
-    {
-        // First remove from the list of listeners
-        if (mouselis != null && mouselis.contains(li))
-        {
-            List temp = new ArrayList();
-            temp.addAll(mouselis);
-            temp.remove(li);
-            mouselis = temp;
-        }
-        
-        // Now remove from all the known syncs
-        for (Iterator it = displays.iterator(); it.hasNext();)
-        {
-            BookDataDisplay idp = (BookDataDisplay) it.next();
-            idp.removeMouseListener(li);
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#getHTMLSource()
-     */
-    public String getHTMLSource()
-    {
-        return getInnerDisplayPane().getHTMLSource();
-    }
-
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.FocusablePart#getKey()
      */
     public Key getKey()
     {
         return whole;
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#getOSISSource()
-     */
-    public String getOSISSource()
-    {
-        if (whole == null || book == null)
-        {
-            return ""; //$NON-NLS-1$
-        }
-
-        try
-        {
-            BookData data = book.getData(whole);
-            SAXEventProvider provider = data.getSAXEventProvider();
-            SerializingContentHandler handler = new SerializingContentHandler(true);
-            provider.provideSAXEvents(handler);
-
-            return handler.toString();
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(this, ex);
-            return ""; //$NON-NLS-1$
-        }
     }
 
     /**
@@ -454,11 +379,6 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
      * A list of all the HyperlinkListeners
      */
     private transient List hyperlis;
-
-    /**
-     * A list of all the MouseListeners
-     */
-    private transient List mouselis;
 
     /**
      * The passage that we are displaying (in one or more tabs)

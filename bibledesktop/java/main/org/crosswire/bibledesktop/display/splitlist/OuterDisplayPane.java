@@ -1,6 +1,7 @@
 package org.crosswire.bibledesktop.display.splitlist;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.util.List;
 
 import javax.swing.JList;
@@ -15,13 +16,14 @@ import org.crosswire.bibledesktop.book.BibleViewPane;
 import org.crosswire.bibledesktop.book.DisplaySelectEvent;
 import org.crosswire.bibledesktop.book.DisplaySelectListener;
 import org.crosswire.bibledesktop.book.DisplaySelectPane;
-import org.crosswire.bibledesktop.display.FocusablePart;
+import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.tab.TabbedDisplayPane;
 import org.crosswire.bibledesktop.passage.PassageGuiUtil;
 import org.crosswire.bibledesktop.passage.PassageListModel;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Books;
@@ -55,7 +57,7 @@ import org.crosswire.jsword.passage.VerseRange;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class OuterDisplayPane extends JPanel implements FocusablePart
+public class OuterDisplayPane extends JPanel implements BookDataDisplay
 {
     /**
      * Initialize the OuterDisplayPane
@@ -71,7 +73,7 @@ public class OuterDisplayPane extends JPanel implements FocusablePart
                 txtPassg.setBook(book);
             }
 
-            initialize();
+            init();
         }
         catch (Exception ex)
         {
@@ -82,7 +84,7 @@ public class OuterDisplayPane extends JPanel implements FocusablePart
     /**
      * Create the GUI
      */
-    private void initialize()
+    private void init()
     {
         mdlPassg.setMode(PassageListModel.LIST_RANGES);
         mdlPassg.setRestriction(PassageConstants.RESTRICT_CHAPTER);
@@ -106,6 +108,22 @@ public class OuterDisplayPane extends JPanel implements FocusablePart
 
         this.setLayout(new BorderLayout());
         this.add(sptPassg, BorderLayout.CENTER);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
+     */
+    public void setBookData(Book book, Key key) throws BookException
+    {
+        throw new NullPointerException("not implemented"); //$NON-NLS-1$
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.FocusablePart#getComponent()
+     */
+    public Component getComponent()
+    {
+        return this;
     }
 
     /**
@@ -140,6 +158,14 @@ public class OuterDisplayPane extends JPanel implements FocusablePart
     public Passage getPassage()
     {
         return mdlPassg.getPassage();
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.FocusablePart#getBook()
+     */
+    public Book getBook()
+    {
+        return txtPassg.getBook();
     }
 
     /**
@@ -177,22 +203,6 @@ public class OuterDisplayPane extends JPanel implements FocusablePart
     public void removeHyperlinkListener(HyperlinkListener li)
     {
         txtPassg.removeHyperlinkListener(li);
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#getOSISSource()
-     */
-    public String getOSISSource()
-    {
-        return txtPassg.getOSISSource();
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#getHTMLSource()
-     */
-    public String getHTMLSource()
-    {
-        return txtPassg.getHTMLSource();
     }
 
     /* (non-Javadoc)

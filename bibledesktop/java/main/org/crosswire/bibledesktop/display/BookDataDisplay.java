@@ -1,12 +1,12 @@
 package org.crosswire.bibledesktop.display;
 
 import java.awt.Component;
-import java.awt.event.MouseListener;
 
 import javax.swing.event.HyperlinkListener;
 
-import org.crosswire.jsword.book.BookData;
+import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookException;
+import org.crosswire.jsword.passage.Key;
 
 /**
  * An interface for all components that can display BookData.
@@ -35,10 +35,21 @@ import org.crosswire.jsword.book.BookException;
 public interface BookDataDisplay
 {
     /**
-     * Set the BookData to be displayed
-     * @param data The new BookData
+     * Copy the selection to the clipboard
      */
-    public void setBookData(BookData data) throws BookException;
+    public void copy();
+
+    /**
+     * Add a listener for when someone clicks on a browser 'link'
+     * @param li The listener to add
+     */
+    public void addHyperlinkListener(HyperlinkListener li);
+
+    /**
+     * Remove a listener for when someone clicks on a browser 'link'
+     * @param li The listener to remove
+     */
+    public void removeHyperlinkListener(HyperlinkListener li);
 
     /**
      * Accessor for the Swing component
@@ -46,32 +57,27 @@ public interface BookDataDisplay
     public Component getComponent();
 
     /**
-     *
+     * Set the BookData to be displayed.
+     * The data to be displayed is specified as a book and key rather than the
+     * more obvious BookData (the result of reading a book using a key)
+     * since some displays may wish so split up the display and only look up
+     * smaller sections at a time.
+     * @param book The Book to read data from
+     * @param key The key to read from the given book
      */
-    public void copy();
+    public void setBookData(Book book, Key key) throws BookException;
 
     /**
-     *
+     * The Book Key that we are displaying, or null if we are not displaying
+     * anything
+     * @return The current key
      */
-    public void addHyperlinkListener(HyperlinkListener li);
+    public Key getKey();
 
     /**
-     * 
+     * Accessor for the Book used in the current display, or null if we are not
+     * displaying anything.
+     * @return The current book
      */
-    public void removeHyperlinkListener(HyperlinkListener li);
-
-    /**
-     * Forward the mouse listener to our child components
-     */
-    public void removeMouseListener(MouseListener li);
-
-    /**
-     * Forward the mouse listener to our child components
-     */
-    public void addMouseListener(MouseListener li);
-
-    /**
-     * TODO: get rid of this method
-     */
-    public String getHTMLSource();
+    public Book getBook();
 }

@@ -1,13 +1,13 @@
 package org.crosswire.bibledesktop.display.proxy;
 
 import java.awt.Component;
-import java.awt.event.MouseListener;
 
 import javax.swing.event.HyperlinkListener;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
-import org.crosswire.jsword.book.BookData;
+import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookException;
+import org.crosswire.jsword.passage.Key;
 
 /**
  * An implementation of BookDataDisplay that simply proxies all requests to an
@@ -50,7 +50,7 @@ public class ProxyBookDataDisplay implements BookDataDisplay
      * Accessor for the proxy
      * @return Returns the proxy.
      */
-    public BookDataDisplay getProxy()
+    protected BookDataDisplay getProxy()
     {
         return proxy;
     }
@@ -64,11 +64,11 @@ public class ProxyBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addMouseListener(java.awt.event.MouseListener)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
      */
-    public void addMouseListener(MouseListener li)
+    public void removeHyperlinkListener(HyperlinkListener li)
     {
-        proxy.addMouseListener(li);
+        proxy.removeHyperlinkListener(li);
     }
 
     /* (non-Javadoc)
@@ -88,35 +88,11 @@ public class ProxyBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getHTMLSource()
-     */
-    public String getHTMLSource()
-    {
-        return proxy.getHTMLSource();
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
-     */
-    public void removeHyperlinkListener(HyperlinkListener li)
-    {
-        proxy.removeHyperlinkListener(li);
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeMouseListener(java.awt.event.MouseListener)
-     */
-    public void removeMouseListener(MouseListener li)
-    {
-        proxy.removeMouseListener(li);
-    }
-
-    /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.BookData)
      */
-    public void setBookData(BookData data) throws BookException
+    public void setBookData(Book book, Key key) throws BookException
     {
-        proxy.setBookData(data);
+        proxy.setBookData(book, key);
     }
 
     /* (non-Javadoc)
@@ -125,6 +101,22 @@ public class ProxyBookDataDisplay implements BookDataDisplay
     public String toString()
     {
         return proxy.toString();
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getKey()
+     */
+    public Key getKey()
+    {
+        return getProxy().getKey();
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBook()
+     */
+    public Book getBook()
+    {
+        return getProxy().getBook();
     }
 
     /**

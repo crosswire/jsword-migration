@@ -74,31 +74,43 @@
         </xsl:if>
         <style type="text/css">
           BODY
-		  {
-		  	<xsl:value-of select="$fontspec" />
-		  }
+          {
+            <xsl:value-of select="$fontspec" />
+          }
           A
-		  {
-		  	text-decoration: none;
-		  }
+          {
+            text-decoration: none;
+          }
           A.strongs
-		  {
-		  	color: black;
-		  	text-decoration: none;
-		  }
+          {
+            color: black;
+            text-decoration: none;
+          }
           SUP.verse
           {
-          	font-size: 75%;
-          	color: gray;
+            font-size: 75%;
+            color: gray;
           }
           SUP.note
           {
-          	font-size: 75%;
-          	color: green;
+            font-size: 75%;
+            color: green;
           }
           FONT.verse
           {
-          	font-size: 125%;
+            font-size: 125%;
+          }
+          passageTitle
+          {
+            font-size: 125%;
+            color: red;
+            font-weight: bold;
+          }
+          sectionTitle
+          {
+            font-size: 125%;
+            color: blue;
+            font-weight: bold;
           }
         </style>
       </head>
@@ -165,7 +177,7 @@
     </xsl:if>
     <xsl:if test="@osisID">
       <a href="{@osisID}">
-      <xsl:apply-templates/>
+        <xsl:apply-templates/>
       </a>
       <!-- DMS: reading references need a following space -->
       <xsl:text> </xsl:text>
@@ -221,9 +233,7 @@
 
   <!--=======================================================================-->
   <xsl:template match="p">
-    <p>
-      <xsl:apply-templates/>
-    </p>
+    <p><xsl:apply-templates/></p>
   </xsl:template>
   
   <!--=======================================================================-->
@@ -273,19 +283,13 @@
   <xsl:template match="seg">
     <xsl:choose>
       <xsl:when test="@type='font-style: italic;'">
-        <i>
-          <xsl:apply-templates/>
-        </i>
+        <i><xsl:apply-templates/></i>
       </xsl:when>
       <xsl:when test="@type='font-weight: bold;'">
-        <b>
-          <xsl:apply-templates/>
-        </b>
+        <b><xsl:apply-templates/></b>
       </xsl:when>
       <xsl:when test="@type='text-decoration: underline;'">
-        <u>
-          <xsl:apply-templates/>
-        </u>
+        <u><xsl:apply-templates/></u>
       </xsl:when>
       <xsl:when test="starts-with(@type, 'color:')">
         <font color="substring-before(substring-after(@type, 'color: '), ';')">
@@ -298,9 +302,7 @@
         </font>
       </xsl:when>
       <xsl:otherwise>
-        <p>
-          <xsl:apply-templates/>
-        </p>
+        <p><xsl:apply-templates/></p>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -332,12 +334,19 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
   <!--=======================================================================-->
   <xsl:template match="title">
-    <b>
+    <div class="passageTitle">
       <xsl:apply-templates/>
-    </b><br/>
+    </div>
+  </xsl:template>
+
+  <!--=======================================================================-->
+  <xsl:template match="title[@type='section']">
+    <div class="sectionTitle">
+      <xsl:apply-templates/>
+    </div>
   </xsl:template>
 
   <!--=======================================================================-->

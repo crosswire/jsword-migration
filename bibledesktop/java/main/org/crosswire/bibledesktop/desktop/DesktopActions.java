@@ -14,9 +14,8 @@ import javax.swing.JOptionPane;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
 import org.crosswire.bibledesktop.book.SitesPane;
-import org.crosswire.bibledesktop.display.FocusablePart;
+import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.splitlist.OuterDisplayPane;
-import org.crosswire.bibledesktop.util.SimpleSwingConverter;
 import org.crosswire.common.config.swing.ConfigEditorFactory;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWAction;
@@ -25,14 +24,17 @@ import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
-import org.crosswire.common.xml.StringSAXEventProvider;
+import org.crosswire.common.xml.SerializingContentHandler;
 import org.crosswire.common.xml.XMLUtil;
+import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.BooksEvent;
 import org.crosswire.jsword.book.BooksListener;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageConstants;
+import org.crosswire.jsword.util.ConverterFactory;
 import org.crosswire.jsword.util.Project;
 
 /**
@@ -86,7 +88,6 @@ public class DesktopActions implements ActionListener
     public static final String PASTE = "Paste"; //$NON-NLS-1$
     public static final String TAB_MODE = "TabMode"; //$NON-NLS-1$
     public static final String WINDOW_MODE = "WindowMode"; //$NON-NLS-1$
-    public static final String VIEW_GHTML = "ViewGHTML"; //$NON-NLS-1$
     public static final String VIEW_HTML = "ViewHTML"; //$NON-NLS-1$
     public static final String VIEW_OSIS = "ViewOSIS"; //$NON-NLS-1$
     public static final String BLUR1 = "Blur1"; //$NON-NLS-1$
@@ -105,12 +106,12 @@ public class DesktopActions implements ActionListener
 
     /**
      * Create the actions for the desktop
-     * @param d the desktop for which these actions apply
+     * @param desktop the desktop for which these actions apply
      */
-    public DesktopActions(Desktop d)
+    public DesktopActions(Desktop desktop)
     {
-        desktop = d;
-        simplestyle = new SimpleSwingConverter();
+        this.desktop = desktop;
+
         actions = DesktopActionFactory.instance();
         actions.addActionListener(this);
     }
@@ -128,9 +129,9 @@ public class DesktopActions implements ActionListener
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
-    public void actionPerformed(ActionEvent e)
+    public void actionPerformed(ActionEvent ev)
     {
-        String action = e.getActionCommand();
+        String action = ev.getActionCommand();
 
         assert action != null;
         assert action.length() != 0;
@@ -335,7 +336,7 @@ public class DesktopActions implements ActionListener
      */
     protected void doCopy()
     {
-        FocusablePart da = getDesktop().getDisplayArea();
+        BookDataDisplay da = getDesktop().getDisplayArea();
         da.copy();
     }
 
@@ -364,33 +365,6 @@ public class DesktopActions implements ActionListener
     }
 
     /**
-     * View the generated HTML source to the current window.
-     */
-    protected void doViewGHTML()
-    {
-        // BUG: Fix this as it is not the same as what is supplied
-        // to the viewer. And it looks terrible.
-        try
-        {
-            FocusablePart da = getDesktop().getDisplayArea();
-            String osis = da.getOSISSource();
-            String html = null;
-            if (osis != null && osis.length() > 0)
-            {
-                SAXEventProvider osissep = new StringSAXEventProvider(osis);
-                SAXEventProvider htmlsep = simplestyle.convert(osissep);
-                html = XMLUtil.writeToString(htmlsep);
-            }
-
-            showTextViewer(da.getKey(), Msg.GHTML.toString(), html);
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(getDesktop().getJFrame(), ex);
-        }
-    }
-
-    /**
      * View the HTML as interpreted by the current window.
      * This HTML will not return the styling present in the viewer.
      * That is all class="" are stripped out.
@@ -400,8 +374,17 @@ public class DesktopActions implements ActionListener
     {
         try
         {
-            FocusablePart da = getDesktop().getDisplayArea();
-            showTextViewer(da.getKey(), Msg.HTML.toString(), da.getHTMLSource());
+            BookDataDisplay da = getDesktop().getDisplayArea();
+            Book book = da.getBook();
+            Key key = da.getKey();
+
+            BookData bdata = book.getData(key);
+
+            SAXEventProvider osissep = bdata.getSAXEventProvider();
+            SAXEventProvider htmlsep = converter.convert(osissep);
+            String text = XMLUtil.writeToString(htmlsep);
+
+            showTextViewer(da.getKey(), Msg.OSIS.toString(), text);
         }
         catch (Exception ex)
         {
@@ -416,8 +399,17 @@ public class DesktopActions implements ActionListener
     {
         try
         {
-            FocusablePart da = getDesktop().getDisplayArea();
-            showTextViewer(da.getKey(), Msg.OSIS.toString(), da.getOSISSource());
+            BookDataDisplay da = getDesktop().getDisplayArea();
+            Book book = da.getBook();
+            Key key = da.getKey();
+
+            BookData bdata = book.getData(key);
+            SAXEventProvider provider = bdata.getSAXEventProvider();
+
+            SerializingContentHandler handler = new SerializingContentHandler(true);
+            provider.provideSAXEvents(handler);
+
+            showTextViewer(da.getKey(), Msg.OSIS.toString(), handler.toString());
         }
         catch (Exception ex)
         {
@@ -592,9 +584,9 @@ public class DesktopActions implements ActionListener
     private ActionFactory actions;
 
     /**
-     * The simple stylizer for converting OSIS to HTML
+     * To convert OSIS to HTML
      */
-    private Converter simplestyle;
+    private Converter converter = ConverterFactory.getConverter();
 
     /**
      * The About window

@@ -41,7 +41,7 @@ import org.crosswire.bibledesktop.book.BibleViewPane;
 import org.crosswire.bibledesktop.book.SidebarPane;
 import org.crosswire.bibledesktop.book.TitleChangedEvent;
 import org.crosswire.bibledesktop.book.TitleChangedListener;
-import org.crosswire.bibledesktop.display.FocusablePart;
+import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.bibledesktop.util.SimpleSwingConverter;
 import org.crosswire.common.config.ChoiceFactory;
@@ -220,7 +220,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         {
             public void propertyChange(PropertyChangeEvent ev)
             {
-                FocusablePart da = recurseDisplayArea();
+                BookDataDisplay da = recurseDisplayArea();
                 if (da != null)
                 {
                     last = da;
@@ -313,7 +313,6 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         menuView.add(rdoViewMdi);
         //menuView.add(chkViewTbar);
         menuView.addSeparator();
-        menuView.add(actions.getAction(DesktopActions.VIEW_GHTML)).addMouseListener(barStatus);
         menuView.add(actions.getAction(DesktopActions.VIEW_HTML)).addMouseListener(barStatus);
         menuView.add(actions.getAction(DesktopActions.VIEW_OSIS)).addMouseListener(barStatus);
 
@@ -449,9 +448,9 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     /**
      * Find the currently highlighted FocusablePart
      */
-    public FocusablePart getDisplayArea()
+    public BookDataDisplay getDisplayArea()
     {
-        FocusablePart da = recurseDisplayArea();
+        BookDataDisplay da = recurseDisplayArea();
         if (da != null)
         {
             return da;
@@ -464,7 +463,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
      * Get the currently selected component and the walk up the component tree
      * trying to find a component that implements FocusablePart
      */
-    protected FocusablePart recurseDisplayArea()
+    protected BookDataDisplay recurseDisplayArea()
     {
         Component comp = KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
 
@@ -472,9 +471,9 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         // to find something that we recognize.
         while (comp != null)
         {
-            if (comp instanceof FocusablePart)
+            if (comp instanceof BookDataDisplay)
             {
-                return (FocusablePart) comp;
+                return (BookDataDisplay) comp;
             }
         
             comp = comp.getParent();
@@ -982,9 +981,9 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     private boolean viewTool = true;
 
     /**
-     * The last selected FocusablePart
+     * The last selected BookDataDisplay
      */
-    protected FocusablePart last;
+    protected BookDataDisplay last;
 
     /**
      * The log stream

@@ -9,14 +9,26 @@ objects.
 
 <p>
 There are several implementation of this interface in sub-packages.
+<li>textpane - A simple unscrolled implementation that uses a JDK HTML widget.
+<li>proxy - A handy base class to simplify adding features to another
+    implementation of BookDataDisplay
+<li>scrolled - Builds on proxy to scroll child BookDataDisplays. Generally the
+    child will be a textpane implementation.
+<li>tab - Splits a display into a number of tabs so arbitarily large pasasges
+    can be viewed without scrolling or memory problems.
+<li>splitlist - presents the parts of a passage as a list from which individual
+    keys can be selected for viewing.
 </p>
 
-- work using OSIS input
-- be easily understood for the developer (which fairly much means HTML)
-- work over webstart
-- be freely re-distributable
-- allow some DHTML like flexibility
-
+<p>
+We have spent some time investigating alternatives to the JDK HTML widget.
+The requirements were:
+<li>work using OSIS input
+<li>be easily understood for the developer (which fairly much means HTML)
+<li>work over webstart
+<li>be freely re-distributable
+<li>allow some DHTML like flexibility
+</p>
 
 <p>
 <b>JRex (Embed Mozilla)</b><br/>

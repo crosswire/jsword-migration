@@ -1,6 +1,7 @@
 package org.crosswire.bibledesktop.book;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 
 import javax.swing.BorderFactory;
 import javax.swing.JList;
@@ -14,13 +15,10 @@ import javax.swing.event.ListSelectionListener;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
-import org.crosswire.bibledesktop.display.FocusablePart;
 import org.crosswire.bibledesktop.passage.KeyListListModel;
 import org.crosswire.common.util.Reporter;
-import org.crosswire.common.xml.SAXEventProvider;
-import org.crosswire.common.xml.SerializingContentHandler;
 import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookData;
+import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
@@ -52,20 +50,20 @@ import org.crosswire.jsword.passage.NoSuchKeyException;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class DictionaryPane extends JPanel implements FocusablePart
+public class DictionaryPane extends JPanel implements BookDataDisplay
 {
     /**
      * Setup the GUI 
      */
     public DictionaryPane()
     {
-        jbInit();
+        init();
     }
 
     /**
      * GUI initialiser
      */
-    private void jbInit()
+    private void init()
     {
         lstdicts.setVisibleRowCount(4);
         lstdicts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -103,47 +101,27 @@ public class DictionaryPane extends JPanel implements FocusablePart
     }
 
     /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
+     */
+    public void setBookData(Book book, Key key) throws BookException
+    {
+        throw new NullPointerException("not implemented"); //$NON-NLS-1$
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.FocusablePart#getComponent()
+     */
+    public Component getComponent()
+    {
+        return this;
+    }
+
+    /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.FocusablePart#copy()
      */
     public void copy()
     {
         txtdisplay.copy();
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#getOSISSource()
-     */
-    public String getOSISSource()
-    {
-        try
-        {
-            Key key = (Key) lstentries.getSelectedValue();
-            if (key == null)
-            {
-                return ""; //$NON-NLS-1$
-            }
-
-            BookData bdata = dict.getData(key);
-            SAXEventProvider provider = bdata.getSAXEventProvider();
-
-            SerializingContentHandler handler = new SerializingContentHandler(true);
-            provider.provideSAXEvents(handler);
-
-            return handler.toString();
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(this, ex);
-            return ""; //$NON-NLS-1$
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#getHTMLSource()
-     */
-    public String getHTMLSource()
-    {
-        return txtdisplay.getHTMLSource();
     }
 
     /* (non-Javadoc)
@@ -168,6 +146,14 @@ public class DictionaryPane extends JPanel implements FocusablePart
     public void removeHyperlinkListener(HyperlinkListener li)
     {
         txtdisplay.removeHyperlinkListener(li);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.FocusablePart#getBook()
+     */
+    public Book getBook()
+    {
+        return dict;
     }
 
     /**
@@ -242,8 +228,7 @@ public class DictionaryPane extends JPanel implements FocusablePart
             Key key = (Key) lstentries.getSelectedValue();
             if (key != null)
             {
-                BookData bdata = dict.getData(key);
-                txtdisplay.setBookData(bdata);
+                txtdisplay.setBookData(dict, key);
             }
         }
         catch (Exception ex)

@@ -18,7 +18,6 @@ import org.crosswire.bibledesktop.passage.PassageGuiUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.KeyList;
@@ -94,26 +93,23 @@ public class SplitBookDataDisplay extends ProxyBookDataDisplay implements BookDa
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.BookData)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
      */
-    public void setBookData(BookData data) throws BookException
+    public void setBookData(Book book, Key key) throws BookException
     {
-        this.data = data;
-        model = new KeyTreeModel(data.getKey());
-
-        super.setBookData(data);
+        this.book = book;
+        model = new KeyTreeModel(key);
+        super.setBookData(book, key);
     }
-    
+
     /**
      * Delete the selected verses
      */
     public void deleteSelected() throws BookException
     {
         PassageGuiUtil.deleteSelectedVersesFromTree(tree);
-
         Key updated = model.getKey();
-        Book book = data.getBook();
-        setBookData(book.getData(updated));
+        setBookData(book, updated);
     }
 
     /**
@@ -127,20 +123,19 @@ public class SplitBookDataDisplay extends ProxyBookDataDisplay implements BookDa
 
             if (selected.size() == 0)
             {
-                setBookData(null);
+                setBookData(null, null);
             }
             /*
-            else if (selected.size() == 1)
-            {
-                Book book = data.getBook();
-                KeyList context = selected.getContext();
-                setBookData(book.getData(context));
-            }
-            */
+             else if (selected.size() == 1)
+             {
+             Book book = data.getBook();
+             KeyList context = selected.getContext();
+             setBookData(book.getData(context));
+             }
+             */
             else
             {
-                Book book = data.getBook();
-                setBookData(book.getData(selected));
+                setBookData(book, selected);
             }
         }
         catch (Exception ex)
@@ -150,9 +145,9 @@ public class SplitBookDataDisplay extends ProxyBookDataDisplay implements BookDa
     }
 
     /**
-     * What are we currently viewing?
+     * What book are we currently viewing?
      */
-    private BookData data = null;
+    private Book book = null;
 
     /**
      * The log stream

@@ -58,10 +58,9 @@ public class Msg extends MsgBase
     static final Msg NO_HELP = new Msg("DesktopActions.NoHelp"); //$NON-NLS-1$
     static final Msg NOT_IMPLEMENTED = new Msg("DesktopActions.NotImplemented"); //$NON-NLS-1$
     static final Msg NO_PASSAGE = new Msg("DesktopActions.NoPassage"); //$NON-NLS-1$
-    public static final Msg DEBUG_METHOD = new Msg("Method: "); //$NON-NLS-1$
+    static final Msg DEBUG_METHOD = new Msg("Method: "); //$NON-NLS-1$
     static final Msg SOURCE_MISSING = new Msg("DesktopActions.SourceMissing"); //$NON-NLS-1$
-    public static final Msg DEBUG_GO = new Msg("GO"); //$NON-NLS-1$
-    static final Msg GHTML = new Msg("DesktopActions.GHTML"); //$NON-NLS-1$
+    static final Msg DEBUG_GO = new Msg("GO"); //$NON-NLS-1$
     static final Msg HTML = new Msg("DesktopActions.HTML"); //$NON-NLS-1$
     static final Msg OSIS = new Msg("DesktopActions.OSIS"); //$NON-NLS-1$
     static final Msg SOURCE_FOUND = new Msg("DesktopActions.SourceFound"); //$NON-NLS-1$
@@ -85,7 +84,7 @@ public class Msg extends MsgBase
     static final Msg COMPARE_DIALOG = new Msg("Bible Compare"); //$NON-NLS-1$
     static final Msg COMPARE_IDENT_QUESTION = new Msg("You are attempting to compare 2 Books that are identical.\nDo you want to continue?"); //$NON-NLS-1$
     static final Msg COMPARE_IDENT_TITLE = new Msg("Compare Identical Books?"); //$NON-NLS-1$
-    public static final Msg DEBUG_VIEWS = new Msg("Views:"); //$NON-NLS-1$
+    static final Msg DEBUG_VIEWS = new Msg("Views:"); //$NON-NLS-1$
     static final Msg COMPARE_WORDS = new Msg("Words:  "); //$NON-NLS-1$
     static final Msg COMPARE_GO = new Msg("Compare"); //$NON-NLS-1$
     static final Msg COMPARE_USING = new Msg("Compare Using"); //$NON-NLS-1$
@@ -102,7 +101,7 @@ public class Msg extends MsgBase
     static final Msg RESULTS_COMPARING = new Msg("Comparing:"); //$NON-NLS-1$
     static final Msg RESULTS_PASSAGE = new Msg("Passage"); //$NON-NLS-1$
     static final Msg RESULTS_WORDS = new Msg("Word"); //$NON-NLS-1$
-    protected static final Msg DEBUG_STEPS = new Msg("Step {0}/{1}"); //$NON-NLS-1$
+    static final Msg DEBUG_STEPS = new Msg("Step {0}/{1}"); //$NON-NLS-1$
     static final Msg RESULTS_STOP = new Msg("Stop"); //$NON-NLS-1$
 
     /**

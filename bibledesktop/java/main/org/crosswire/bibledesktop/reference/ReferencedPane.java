@@ -1,6 +1,7 @@
 package org.crosswire.bibledesktop.reference;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,13 +25,10 @@ import org.crosswire.bibledesktop.book.BookListCellRenderer;
 import org.crosswire.bibledesktop.book.BooksComboBoxModel;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
-import org.crosswire.bibledesktop.display.FocusablePart;
 import org.crosswire.bibledesktop.passage.KeyTreeNode;
 import org.crosswire.common.util.Reporter;
-import org.crosswire.common.xml.SAXEventProvider;
-import org.crosswire.common.xml.SerializingContentHandler;
 import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookData;
+import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
@@ -62,7 +60,7 @@ import org.crosswire.jsword.passage.NoSuchKeyException;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class ReferencedPane extends JPanel implements FocusablePart
+public class ReferencedPane extends JPanel implements BookDataDisplay
 {
     /**
      * Simple ctor
@@ -70,7 +68,7 @@ public class ReferencedPane extends JPanel implements FocusablePart
     public ReferencedPane()
     {
         filter = BookFilters.getAll();
-        jbInit();
+        init();
     }
 
     /**
@@ -79,13 +77,13 @@ public class ReferencedPane extends JPanel implements FocusablePart
     public ReferencedPane(BookFilter filter)
     {
         this.filter = filter;
-        jbInit();
+        init();
     }
 
     /**
      * GUI initialiser
      */
-    private void jbInit()
+    private void init()
     {
         mdlBooks.setFilter(filter);
         tblBooks.setVisibleRowCount(4);
@@ -127,47 +125,27 @@ public class ReferencedPane extends JPanel implements FocusablePart
     }
 
     /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
+     */
+    public void setBookData(Book book, Key key) throws BookException
+    {
+        throw new NullPointerException("not implemented"); //$NON-NLS-1$
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.FocusablePart#getComponent()
+     */
+    public Component getComponent()
+    {
+        return this;
+    }
+
+    /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.FocusablePart#copy()
      */
     public void copy()
     {
         txtDisplay.copy();
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#getOSISSource()
-     */
-    public String getOSISSource()
-    {
-        try
-        {
-            Key key = getKey();
-            if (key == null)
-            {
-                return ""; //$NON-NLS-1$
-            }
-
-            BookData bdata = book.getData(key);
-            SAXEventProvider provider = bdata.getSAXEventProvider();
-
-            SerializingContentHandler handler = new SerializingContentHandler(true);
-            provider.provideSAXEvents(handler);
-
-            return handler.toString();
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(this, ex);
-            return ""; //$NON-NLS-1$
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#getHTMLSource()
-     */
-    public String getHTMLSource()
-    {
-        return txtDisplay.getHTMLSource();
     }
 
     /* (non-Javadoc)
@@ -184,6 +162,14 @@ public class ReferencedPane extends JPanel implements FocusablePart
         KeyTreeNode keytn = (KeyTreeNode) path.getLastPathComponent();
         Key key = keytn.getKey();
         return key;
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.FocusablePart#getBook()
+     */
+    public Book getBook()
+    {
+        return book;
     }
 
     /* (non-Javadoc)
@@ -285,8 +271,7 @@ public class ReferencedPane extends JPanel implements FocusablePart
             Key key = getKey();
             if (key != null)
             {
-                BookData bdata = book.getData(key);
-                txtDisplay.setBookData(bdata);
+                txtDisplay.setBookData(book, key);
             }
         }
         catch (Exception ex)

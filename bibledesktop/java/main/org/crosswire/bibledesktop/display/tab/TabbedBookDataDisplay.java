@@ -2,7 +2,6 @@ package org.crosswire.bibledesktop.display.tab;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,11 +14,12 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.HyperlinkListener;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
+import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
 import org.crosswire.bibledesktop.display.scrolled.ScrolledBookDataDisplay;
 import org.crosswire.common.util.Reporter;
-import org.crosswire.jsword.book.BookData;
+import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookException;
-import org.crosswire.jsword.book.OSISUtil;
+import org.crosswire.jsword.passage.Key;
 
 /**
  * An inner component of Passage pane that can't show the list.
@@ -59,7 +59,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     {
         pnlView = createInnerDisplayPane();
 
-        initialize();
+        init();
 
         // NOTE: when we tried dynamic laf update, these needed special treatment
         // There are times when tab_main or pnl_view are not in visible or
@@ -71,9 +71,9 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /**
-     * Gui creation
+     * GUI creation
      */
-    private void initialize()
+    private void init()
     {
         tabMain.setTabPlacement(SwingConstants.BOTTOM);
         tabMain.addChangeListener(new ChangeListener()
@@ -90,38 +90,41 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.BookData)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
      */
-    public void setBookData(BookData data) throws BookException
+    public void setBookData(Book book, Key key) throws BookException
     {
+        this.book = book;
+        this.key = key;
+
         // Tabbed view or not we should clear out the old tabs
         tabMain.removeAll();
         displays.clear();
         displays.add(pnlView);
 
-        datas = null; // OSISUtil.pagenate(data, pagesize * 10);
-        tabs = (datas.size() > 1);
+        keys = null; // OSISUtil.pagenate(key, pagesize * 10);
+        tabs = (keys.size() > 1);
         if (tabs)
         {
-            BookData first = (BookData) datas.get(0);
+            Key first = (Key) keys.get(0);
 
             // Create the first tab
             BookDataDisplay pnlNew = createInnerDisplayPane();
-            pnlNew.setBookData(first);
+            pnlNew.setBookData(book, first);
 
             Component display = pnlNew.getComponent();
 
-            tabMain.add(OSISUtil.getTitle(first, TITLE_LENGTH), display);
+            tabMain.add(getTabName(first), display);
             tabMain.add(Msg.MORE.toString(), pnlMore);
 
             setCenterComponent(tabMain);
         }
         else
         {
-            OSISUtil.getTitle(data, 25);
+            getTabName(key);
 
             // Setup the front tab
-            pnlView.setBookData(data);
+            pnlView.setBookData(book, key);
 
             setCenterComponent(pnlView.getComponent());
         }
@@ -214,65 +217,19 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addMouseListener(java.awt.event.MouseListener)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getKey()
      */
-    public synchronized void addMouseListener(MouseListener li)
+    public Key getKey()
     {
-        // First add to our list of listeners so when we get more event syncs
-        // we can add this new listener to the new sync
-        List temp = new ArrayList();
-        if (mouselis == null)
-        {
-            temp.add(li);
-            mouselis = temp;
-        }
-        else
-        {
-            temp.addAll(mouselis);
-
-            if (!temp.contains(li))
-            {
-                temp.add(li);
-                mouselis = temp;
-            }
-        }
-
-        // Now go through all the known syncs and add this one in
-        for (Iterator it = displays.iterator(); it.hasNext();)
-        {
-            BookDataDisplay idp = (BookDataDisplay) it.next();
-            idp.addMouseListener(li);
-        }
+        return key;
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeMouseListener(java.awt.event.MouseListener)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBook()
      */
-    public synchronized void removeMouseListener(MouseListener li)
+    public Book getBook()
     {
-        // First remove from the list of listeners
-        if (mouselis != null && mouselis.contains(li))
-        {
-            List temp = new ArrayList();
-            temp.addAll(mouselis);
-            temp.remove(li);
-            mouselis = temp;
-        }
-        
-        // Now remove from all the known syncs
-        for (Iterator it = displays.iterator(); it.hasNext();)
-        {
-            BookDataDisplay idp = (BookDataDisplay) it.next();
-            idp.removeMouseListener(li);
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getHTMLSource()
-     */
-    public String getHTMLSource()
-    {
-        return getInnerDisplayPane().getHTMLSource();
+        return book;
     }
 
     /**
@@ -293,16 +250,16 @@ public class TabbedBookDataDisplay implements BookDataDisplay
 
             // What do we display next
             int countTabs = tabMain.getTabCount();
-            BookData next = (BookData) datas.get(countTabs);
+            Key next = (Key) keys.get(countTabs);
 
             // Create a new tab
             BookDataDisplay pnlNew = createInnerDisplayPane();
-            pnlNew.setBookData(next);
+            pnlNew.setBookData(book, next);
             Component display = pnlNew.getComponent();
-            tabMain.add(OSISUtil.getTitle(next, TITLE_LENGTH), display);
+            tabMain.add(getTabName(next), display);
 
             // Do we need a new more tab
-            if (countTabs >= datas.size())
+            if (countTabs >= keys.size())
             {
                 tabMain.add(Msg.MORE.toString(), pnlMore);
             }
@@ -336,7 +293,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
      */
     private synchronized BookDataDisplay createInnerDisplayPane()
     {
-        BookDataDisplay display = new ScrolledBookDataDisplay();
+        BookDataDisplay display = new ScrolledBookDataDisplay(BookDataDisplayFactory.createBookDataDisplay());
         displays.add(display);
 
         // Add all the known listeners to this new BookDataDisplay
@@ -346,15 +303,6 @@ public class TabbedBookDataDisplay implements BookDataDisplay
             {
                 HyperlinkListener li = (HyperlinkListener) it.next();
                 display.addHyperlinkListener(li);
-            }
-        }
-
-        if (mouselis != null)
-        {
-            for (Iterator it = mouselis.iterator(); it.hasNext();)
-            {
-                MouseListener li = (MouseListener) it.next();
-                display.addMouseListener(li);
             }
         }
 
@@ -378,6 +326,23 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /**
+     * Ensure that the tab names are not too long - 25 chars max
+     * @param key The key to get a short name from
+     * @return The first 9 chars followed by ... followed by the last 9
+     */
+    private static String getTabName(Key key)
+    {
+        String tabname = key.getName();
+        int len = tabname.length();
+        if (len > TITLE_LENGTH)
+        {
+            tabname = tabname.substring(0, 9) + " ... " + tabname.substring(len - 9, len); //$NON-NLS-1$
+        }
+
+        return tabname;
+    }
+
+    /**
      * How many verses on a tab.
      * Should this be a static?
      */
@@ -389,14 +354,19 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     private transient List hyperlis;
 
     /**
-     * A list of all the MouseListeners
-     */
-    private transient List mouselis;
-
-    /**
      * Are we using tabs?
      */
     private boolean tabs = false;
+
+    /**
+     * The book that the current passage comes from
+     */
+    private Book book = null;
+
+    /**
+     * The current key
+     */
+    private Key key = null;
 
     /**
      * If we are using tabs, this is the main view
@@ -414,9 +384,9 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     private List displays = new ArrayList();
 
     /**
-     * The set of BookDatas for each tab
+     * The set of Keys for each tab
      */
-    private List datas = null;
+    private List keys = null;
 
     /**
      * Pointer to whichever of the above is currently in use
