@@ -2,7 +2,10 @@ package org.crosswire.bibledesktop.desktop;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.KeyboardFocusManager;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -23,6 +26,8 @@ import java.util.Set;
 
 import javax.swing.ButtonGroup;
 import javax.swing.FocusManager;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -31,7 +36,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
-import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
@@ -223,6 +228,23 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
 
         frame.pack();
 
+        // Nearly fill up the screen with BibleDesktop, but no larger than 1280x960
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+        // Allow an extra 50x100 for window decoration.
+        if (screenSize.width - maxWidth < 50)
+        {
+            maxWidth = screenSize.width - 50;
+        }
+
+        if (screenSize.height - maxHeight < 100)
+        {
+            maxHeight = screenSize.height - 100;
+        }
+
+        final JComponent contentPane = (JComponent) frame.getContentPane();
+        contentPane.setPreferredSize(new Dimension(maxWidth, maxHeight));
+
         // News users probably wont have any Bibles installedso we give them a
         // hand getting to the installation diallog.
         List bibles = Books.installed().getBookMetaDatas(BookFilters.getBibles());
@@ -255,8 +277,8 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         rdoViewTdi = new JRadioButtonMenuItem(actions.getAction(DesktopActions.TAB_MODE));
         rdoViewMdi = new JRadioButtonMenuItem(actions.getAction(DesktopActions.WINDOW_MODE));
 
-        pnlTbar = new JToolBar();
         barStatus = new StatusBar();
+        pnlTbar = new ToolBar();
         //barSide = new SidebarPane();
         //barBook = new ReferencedPane();
         reference = new DictionaryPane();
@@ -304,6 +326,18 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         menuView.add(rdoViewMdi);
         //menuView.add(chkViewTbar);
         menuView.addSeparator();
+        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.TOOLBAR_TOGGLE));
+        toggle.setSelected(true);
+        menuView.add(toggle);
+		menuView.add(new JCheckBoxMenuItem(actions.getAction(DesktopActions.TOOLBAR_TEXT)));
+		menuView.add(new JCheckBoxMenuItem(actions.getAction(DesktopActions.TOOLBAR_LARGE)));
+		toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.TOOLTIP_TOGGLE));
+        toggle.setSelected(true);
+		menuView.add(toggle);
+		toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.STATUS_TOGGLE));
+        toggle.setSelected(true);
+		menuView.add(toggle);
+        menuView.addSeparator();
         menuView.add(actions.getAction(DesktopActions.VIEW_SOURCE)).addMouseListener(barStatus);
         menuView.setToolTipText(null);
 
@@ -330,7 +364,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         barMenu.add(menuHelp);
 
         pnlTbar.setRollover(true);
-        pnlTbar.setFloatable(false);
+        pnlTbar.setFloatable(true);
 
         pnlTbar.add(actions.getAction(DesktopActions.NEW_WINDOW)).addMouseListener(barStatus);
         pnlTbar.add(actions.getAction(DesktopActions.OPEN)).addMouseListener(barStatus);
@@ -368,11 +402,19 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
                 actions.getAction(DesktopActions.EXIT).actionPerformed(new ActionEvent(this, 0, EMPTY_STRING));
             }
         });
+
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        // The toolbar needs to be in the outermost container, on the border
+        // And the only other item in that container can be CENTER
         frame.getContentPane().setLayout(new BorderLayout());
         frame.getContentPane().add(pnlTbar, BorderLayout.NORTH);
-        frame.getContentPane().add(barStatus, BorderLayout.SOUTH);
-        frame.getContentPane().add(sptBooks, BorderLayout.CENTER);
+        
+        // Put everything else in its own panel
+        corePanel = new JPanel(new BorderLayout());
+        corePanel.add(barStatus, BorderLayout.SOUTH);
+        corePanel.add(sptBooks, BorderLayout.CENTER);
+        frame.getContentPane().add(corePanel, BorderLayout.CENTER);
         frame.setJMenuBar(barMenu);
 
         frame.setEnabled(true);
@@ -716,41 +758,65 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     }
 
     /**
-     * Returns the view_status.
-     * @return boolean
+     * Show or hide the status bar.
+     * @param show boolean
      */
-    public boolean isStatusBarVisible()
+    public void showStatusBar(boolean show)
     {
-        return viewStatus;
+        if (show)
+        {
+            corePanel.add(barStatus, BorderLayout.SOUTH);
+        }
+        else
+        {
+            corePanel.remove(barStatus);
+        }
+        getJFrame().pack(); // cause it to auto resize
+    }
+
+     /**
+     * Show or hide the tool bar.
+     * @param show boolean
+     */
+    public void showToolBar(boolean show)
+    {
+        Container contentPane = getJFrame().getContentPane();
+        if (show)
+        {
+            // Honor the previous orientation
+            // Don't know how to honor the last location
+            if (pnlTbar.getOrientation() == SwingConstants.HORIZONTAL)
+            {
+                contentPane.add(pnlTbar, BorderLayout.NORTH);
+            }
+            else
+            {
+                contentPane.add(pnlTbar, BorderLayout.WEST);
+            }
+        }
+        else
+        {
+            contentPane.remove(pnlTbar);
+        }
+        getJFrame().pack(); // cause it to auto resize
     }
 
     /**
-     * Sets the view_status.
-     * @param view_status The view_status to set
+     * Show or hide the tool bar text.
+     * @param show boolean
      */
-    public void setStatusBarVisible(boolean view_status)
+    public void showToolBarText(boolean show)
     {
-        barStatus.setVisible(true);
-        this.viewStatus = view_status;
+        pnlTbar.showText(show);
     }
 
     /**
-     * Returns the view_tool.
-     * @return boolean
+     * Show large or small tool bar icons.
+     * @param show boolean
      */
-    public boolean isToolbarVisible()
+    public void showToolBarLargeIcons(boolean show)
     {
-        return viewTool;
-    }
-
-    /**
-     * Sets the view_tool.
-     * @param view_tool The view_tool to set
-     */
-    public void setToolbarVisible(boolean view_tool)
-    {
-        pnlTbar.setVisible(true);
-        this.viewTool = view_tool;
+        pnlTbar.showLargeIcons(show);
     }
 
     /**
@@ -829,6 +895,38 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         config.localToApplication(true);
     }
 
+    /**
+     * @param maxHeight The maxHeight to set.
+     */
+    public static void setMaxHeight(int maxHeight)
+    {
+        Desktop.maxHeight = maxHeight;
+    }
+
+    /**
+     * @return Returns the maxHeight.
+     */
+    public static int getMaxHeight()
+    {
+        return maxHeight;
+    }
+
+    /**
+     * @return Returns the maxWidth.
+     */
+    public static int getMaxWidth()
+    {
+        return maxWidth;
+    }
+
+    /**
+     * @param maxWidth The maxWidth to set.
+     */
+    public static void setMaxWidth(int maxWidth)
+    {
+        Desktop.maxWidth = maxWidth;
+    }
+     
     /**
      * Setup the choices so that the options dialog knows what there is to
      * select from.
@@ -936,21 +1034,21 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
      * The current way the views are laid out
      */
     private LayoutType current = initial;
+    
+    /**
+     * <code>maxHeight</code> of the window
+     */
+    private static int maxHeight = 1024;
+
+    /**
+     * <code>maxWidth</code> of the window
+     */
+    private static int maxWidth = 2048;
 
     /**
      * The list of BibleViewPanes being viewed in tdi and mdi workspaces
      */
     private List views = new ArrayList();
-
-    /**
-     * is the status bar visible
-     */
-    private boolean viewStatus = true;
-
-    /**
-     * is the toolbar visible
-     */
-    private boolean viewTool = true;
 
     /**
      * The last selected BookDataDisplay
@@ -971,7 +1069,8 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     private JRadioButtonMenuItem rdoViewMdi;
 
     private JFrame frame;
-    private JToolBar pnlTbar;
+    private JPanel corePanel;
+    private ToolBar pnlTbar;
     private StatusBar barStatus;
     //private SidebarPane barSide;
     //private ReferencedPane barBook = null;

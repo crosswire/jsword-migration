@@ -2,7 +2,6 @@ package org.crosswire.bibledesktop.book;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -19,6 +18,7 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.swing.MapTable;
 import org.crosswire.common.swing.MapTableModel;
 import org.crosswire.common.util.Reporter;
@@ -83,7 +83,7 @@ public class SitePane extends JPanel
             bl = Books.installed();
         }
 
-        initialize(labelAcronymn, bl);        
+        initialize(labelAcronymn, bl);
     }
 
     /**
@@ -102,17 +102,16 @@ public class SitePane extends JPanel
      */
     private Component createSplitPane(Component left, Component right)
     {
-        JSplitPane split = new JSplitPane();
+        JSplitPane split = new FixedSplitPane();
         split.setResizeWeight(0.5);
         split.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         split.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         split.setDividerSize(10);
-        split.setDividerLocation(200);
         split.add(left, JSplitPane.LEFT);
         split.add(right, JSplitPane.RIGHT);
         return split;
     }
-    
+
     /**
      * 
      */
@@ -141,7 +140,7 @@ public class SitePane extends JPanel
         tblSelected = new MapTable(emptyTableModel);
         JLabel lblSelected = actions.createJLabel(SELECTED_BOOK_LABEL);
         lblSelected.setLabelFor(tblSelected);
-    
+
         JScrollPane scrSelected = new JScrollPane();
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -170,15 +169,13 @@ public class SitePane extends JPanel
                 selected();
             }
         });
-    
+
         JScrollPane scroller = new JScrollPane();
-    
         scroller.getViewport().add(treAvailable);
-        scroller.setPreferredSize(new Dimension(300, 400));
-    
+
         return scroller;
     }
-    
+
     /**
      * 
      */
@@ -269,7 +266,7 @@ public class SitePane extends JPanel
             }
         }
         tblSelected.setModel(mtm);
-        
+
         //actions.getAction(DELETE).setEnabled(bookSelected);
         actions.getAction(INSTALL).setEnabled(bookSelected);
     }
@@ -312,7 +309,7 @@ public class SitePane extends JPanel
      * actions are held by this ActionFactory
      */
     private ActionFactory actions;
-    
+
     /*
      * GUI Components
      */

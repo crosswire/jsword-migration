@@ -1,11 +1,14 @@
 package org.crosswire.bibledesktop.desktop;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
 
 import javax.swing.Action;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.ToolTipManager;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
 import org.crosswire.bibledesktop.book.SitesPane;
@@ -263,7 +266,7 @@ public class DesktopActions
      */
     public void doWindowMode()
     {
-        getDesktop().setLayoutType(LayoutType.TDI);
+        getDesktop().setLayoutType(LayoutType.MDI);
     }
 
     /**
@@ -373,6 +376,51 @@ public class DesktopActions
         atp.showInDialog(getDesktop().getJFrame());
     }
 
+    /**
+     * Show or hide the tool bar.
+     */
+    public void doToolBarToggle(ActionEvent ev)
+    {
+        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
+        desktop.showToolBar(toggle.isSelected());
+    }
+
+    /**
+     * Show or hide the tool bar text.
+     */
+    public void doToolBarText(ActionEvent ev)
+    {
+        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
+        desktop.showToolBarText(toggle.isSelected());
+    }
+
+    /**
+     * Show large or small tool bar icons.
+     */
+    public void doToolBarLarge(ActionEvent ev)
+    {
+        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
+        desktop.showToolBarLargeIcons(toggle.isSelected());
+    }
+
+    /**
+     * Show large or small tool bar icons.
+     */
+    public void doToolTipToggle(ActionEvent ev)
+    {
+        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
+        ToolTipManager.sharedInstance().setEnabled(toggle.isSelected());
+    }
+
+    /**
+     * Show large or small tool bar icons.
+     */
+    public void doStatusToggle(ActionEvent ev)
+    {
+        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
+        desktop.showStatusBar(toggle.isSelected());
+    }
+
     // Enumeration of all the keys to known actions
     static final String FILE = "File"; //$NON-NLS-1$
     static final String EDIT = "Edit"; //$NON-NLS-1$
@@ -390,6 +438,11 @@ public class DesktopActions
     static final String COPY = "Copy"; //$NON-NLS-1$
     static final String TAB_MODE = "TabMode"; //$NON-NLS-1$
     static final String WINDOW_MODE = "WindowMode"; //$NON-NLS-1$
+    static final String TOOLBAR_TOGGLE = "ToolBarToggle"; //$NON-NLS-1$
+    static final String TOOLBAR_TEXT = "ToolBarText"; //$NON-NLS-1$
+    static final String TOOLBAR_LARGE = "ToolBarLarge"; //$NON-NLS-1$
+    static final String TOOLTIP_TOGGLE = "ToolTipToggle"; //$NON-NLS-1$
+    static final String STATUS_TOGGLE = "StatusToggle"; //$NON-NLS-1$
     static final String VIEW_SOURCE = "ViewSource"; //$NON-NLS-1$
     static final String BOOKS = "Books"; //$NON-NLS-1$
     static final String OPTIONS = "Options"; //$NON-NLS-1$

@@ -101,6 +101,14 @@
     <alternative number="1"/>
   </option>
 
+  <option key="Application.MaxWidth" type="number">
+    <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="MaxWidth"/>
+  </option>
+
+  <option key="Application.MaxHeight" type="number">
+    <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="MaxHeight"/>
+  </option>
+
   <option key="BibleDisplay.Converter" type="string-options">
     <introspect class="org.crosswire.jsword.util.ConverterFactory" property="CurrentConverterName"/>
     <map name="converters"/>
