@@ -42,8 +42,7 @@ public class AntiGravityRuleTest extends TestCase
         super.tearDown();
     }
 
-    public void testAddDistanceToTotals() throws Exception
-    {
+    public void testAddDistanceToTotals() {
         float[] totals = new float[] { 0.0F, 0.0F };
         float[] that = null;
         float[] us = null;
@@ -81,8 +80,7 @@ public class AntiGravityRuleTest extends TestCase
         assertEquals(totals[1], -0.007497886F, 0.005F);
     }
 
-    public void testGetNewDist() throws Exception
-    {
+    public void testGetNewDist() {
         //*
         for (float i=-1f; i<1f; i=i+0.01f)
         {

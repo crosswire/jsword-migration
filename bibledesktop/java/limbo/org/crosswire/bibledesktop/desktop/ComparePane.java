@@ -59,7 +59,7 @@ import org.crosswire.jsword.passage.Key;
  */
 public class ComparePane extends EirPanel
 {
-    /**
+	/**
      * Basic Constructor
      */
     public ComparePane()
@@ -207,4 +207,9 @@ public class ComparePane extends EirPanel
     private JComboBox cboBible2 = new JComboBox();
     private JPanel pnlButtons = new JPanel();
     private JButton btnGo = new JButton();
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3904678297190478129L;
 }

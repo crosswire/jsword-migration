@@ -27,7 +27,7 @@ import org.crosswire.jsword.book.BookMetaData;
  * Allows various maintenance procedures to be done on Bibles like
  * deletion, renaming, and viewing the notes that are associated with the
  * generation of a version.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -51,7 +51,7 @@ import org.crosswire.jsword.book.BookMetaData;
  */
 public class MaintenancePane extends EirPanel
 {
-    // I18N: This class has not been internationalized, because it is not used.
+	// I18N: This class has not been internationalized, because it is not used.
     /**
      * Create a new BibleMaintenance Panel
      */
@@ -64,7 +64,7 @@ public class MaintenancePane extends EirPanel
     /**
      * Ensure that the buttons are enabled correctly
      */
-    protected void updateButtons()
+    protected final void updateButtons()
     {
         boolean selected = (lst_versions.getSelectedIndex() != -1);
         btn_remove.setEnabled(selected);
@@ -213,4 +213,9 @@ public class MaintenancePane extends EirPanel
      * Layout for the button bar
      */
     private FlowLayout lay_buttons = new FlowLayout();
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3257284721162663473L;
 }

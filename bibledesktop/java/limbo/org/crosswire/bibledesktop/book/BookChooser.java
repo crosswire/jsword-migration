@@ -50,7 +50,7 @@ import org.crosswire.jsword.book.BookMetaData;
  */
 public class BookChooser extends JPanel
 {
-    /**
+	/**
      * Basic constructor
      */
     public BookChooser()
@@ -248,4 +248,9 @@ public class BookChooser extends JPanel
     private JPanel pnlButtons = new JPanel();
     private JButton btnOk = new JButton();
     private JButton btnCancel = new JButton();
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3258689918547998773L;
 }

@@ -87,7 +87,7 @@ import org.jdom.Document;
  */
 public class Mapper extends JFrame
 {
-    /**
+	/**
     * Central start point.
     * @param args The command line arguments
     */
@@ -1123,6 +1123,11 @@ public class Mapper extends JFrame
     private JMenuItem item_ldeser = new JMenuItem();
     private JMenuItem item_lser = new JMenuItem();
     private JMenuItem item_pick = new JMenuItem();
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 4120849979792371762L;
 
     /**
      * A Layout Thread Runnable

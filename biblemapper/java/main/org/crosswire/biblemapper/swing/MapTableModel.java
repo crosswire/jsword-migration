@@ -40,7 +40,7 @@ import org.crosswire.jsword.passage.VerseRange;
  */
 public class MapTableModel extends AbstractTableModel
 {
-    /**
+	/**
      * Basic constructor
      */
     public MapTableModel(Map map)
@@ -63,7 +63,9 @@ public class MapTableModel extends AbstractTableModel
     public void setMap(Map map)
     {
         if (map != null)
+        {
             map.removeMapListener(cml);
+        }
 
         this.map = map;
 
@@ -257,17 +259,30 @@ public class MapTableModel extends AbstractTableModel
         }
     }
 
-    /** The map that we are viewing */
+    /**
+     * The map that we are viewing
+     */
     private Map map;
 
-    /** The number of rows */
+    /**
+     * The number of rows
+     */
     private static int cib = BibleInfo.chaptersInBible();
 
-    /** The number of columns */
+    /**
+     * The number of columns
+     */
     private static int cols;
 
-    /** The map listener */
+    /**
+     * The map listener
+     */
     private CustomMapListener cml = new CustomMapListener();
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3906649695802963768L;
 
     /**
      * Sync the map and the table
@@ -290,6 +305,7 @@ public class MapTableModel extends AbstractTableModel
                         mapChanged(ev);
                     }
                 });
+
                 return;
             }
 
@@ -324,6 +340,7 @@ public class MapTableModel extends AbstractTableModel
                         mapRewritten(ev);
                     }
                 });
+
                 return;
             }
 

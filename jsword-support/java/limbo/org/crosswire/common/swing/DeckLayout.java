@@ -1,13 +1,14 @@
 package org.crosswire.common.swing;
 
-import java.awt.Insets;
-import java.awt.Dimension;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.LayoutManager2;
 import java.io.Serializable;
-import java.util.Hashtable;
-import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
 * DeckLayout is very similar to the awt CardLayout, except the
@@ -45,25 +46,36 @@ import java.util.Enumeration;
 */
 public class DeckLayout extends AbstractLayout implements LayoutManager2, Serializable
 {
-    protected Hashtable tab = new Hashtable();
-    protected int count = 0;
-    protected boolean wrap = false;
-
+    /**
+     * 
+     */
     public DeckLayout()
     {
         this(0, 0, false);
     }
 
+    /**
+     * @param wrap
+     */
     public DeckLayout(boolean wrap)
     {
         this(0, 0, wrap);
     }
 
+    /**
+     * @param hgap
+     * @param vgap
+     */
     public DeckLayout(int hgap, int vgap)
     {
         this(hgap, vgap, false);
     }
 
+    /**
+     * @param hgap
+     * @param vgap
+     * @param wrap
+     */
     public DeckLayout(int hgap, int vgap, boolean wrap)
     {
         super(hgap, vgap);
@@ -71,15 +83,15 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
     }
 
     /**
-    * Adds the specified component to this deck layout's internal
-    * table, by name. The object specified by constraints must be
-    * a string. The deck layout stores this string as a key-value
-    * pair that can be used for random access to a particular card.
-    * By calling the show method, an application can display the
-    * component with the specified name.
-    * @param comp The component to be added.
-    * @param constraints A name that identifies the component
-    */
+     * Adds the specified component to this deck layout's internal
+     * table, by name. The object specified by constraints must be
+     * a string. The deck layout stores this string as a key-value
+     * pair that can be used for random access to a particular card.
+     * By calling the show method, an application can display the
+     * component with the specified name.
+     * @param comp The component to be added.
+     * @param constraints A name that identifies the component
+     */
     public void addLayoutComponent(Component comp, Object constraints)
     {
         if (constraints instanceof String || constraints == null)
@@ -93,15 +105,15 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
     }
 
     /**
-    * Removes the specified component from the layout.
-    * @param comp The component to be removed.
-    */
+     * Removes the specified component from the layout.
+     * @param comp The component to be removed.
+     */
     public void removeLayoutComponent(Component comp)
     {
-        Enumeration enum = tab.keys();
-        while(enum.hasMoreElements())
+        Iterator it = tab.keySet().iterator();
+        while(it.hasNext())
         {
-            String key = (String)enum.nextElement();
+            String key = (String) it.next();
             if (tab.get(key) == comp)
             {
                 tab.remove(key);
@@ -112,10 +124,10 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
     }
 
     /**
-    * Calculates the preferred size for the specified panel.
-    * @param parent The name of the parent container
-    * @return minimum dimensions required to lay out the components.
-    */
+     * Calculates the preferred size for the specified panel.
+     * @param parent The name of the parent container
+     * @return minimum dimensions required to lay out the components.
+     */
     public Dimension preferredLayoutSize(Container parent)
     {
         Insets insets = parent.getInsets();
@@ -142,10 +154,10 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
     }
 
     /**
-    * Calculates the minimum size for the specified panel.
-    * @param parent The name of the parent container
-    * @return minimum dimensions required to lay out the components.
-    */
+     * Calculates the minimum size for the specified panel.
+     * @param parent The name of the parent container
+     * @return minimum dimensions required to lay out the components.
+     */
     public Dimension minimumLayoutSize(Container parent)
     {
         Insets insets = parent.getInsets();
@@ -172,12 +184,12 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
     }
 
     /**
-    * Lays out the specified container using this deck layout.
-    * Each component in the parent container is reshaped to be
-    * the same size as the container, minus insets, horizontal
-    * and vertical gaps.
-    * @param parent The name of the parent container
-    */
+     * Lays out the specified container using this deck layout.
+     * Each component in the parent container is reshaped to be
+     * the same size as the container, minus insets, horizontal
+     * and vertical gaps.
+     * @param parent The name of the parent container
+     */
     public void layoutContainer(Container parent)
     {
         Insets insets = parent.getInsets();
@@ -195,9 +207,9 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
     }
 
     /**
-    * Make sure that the Container really has this layout installed,
-    * to avoid serious problems.
-    */
+     * Make sure that the Container really has this layout installed,
+     * to avoid serious problems.
+     */
     private void checkLayout(Container parent)
     {
         if (parent.getLayout() != this)
@@ -207,13 +219,13 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
     }
 
     /**
-    * Enable or disable the specified component and all its children.
-    * This makes focus traversal function properly. The side effect
-    * is that all children are enabled or disabled and specific
-    * contexts are not maintained. You can get around this by
-    * intercepting setEnabled in your component to restore state
-    * if this is important in your context.
-    */
+     * Enable or disable the specified component and all its children.
+     * This makes focus traversal function properly. The side effect
+     * is that all children are enabled or disabled and specific
+     * contexts are not maintained. You can get around this by
+     * intercepting setEnabled in your component to restore state
+     * if this is important in your context.
+     */
     private void setActive(Component comp, boolean enabled)
     {
         comp.setVisible(enabled);
@@ -230,9 +242,9 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
     }
 
     /**
-    * Flips to the first card of the container.
-    * @param parent The name of the parent container
-    */
+     * Flips to the first card of the container.
+     * @param parent The name of the parent container
+     */
     public void first(Container parent)
     {
         synchronized (parent.getTreeLock())
@@ -255,12 +267,12 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
     }
 
     /**
-    * Flips to the next card of the specified container. If the
-    * currently visible card is the last one, this method flips
-    * to the first card in the layout.
-    * @param parent The name of the parent container
-    * @return Index of the selected component
-    */
+     * Flips to the next card of the specified container. If the
+     * currently visible card is the last one, this method flips
+     * to the first card in the layout.
+     * @param parent The name of the parent container
+     * @return Index of the selected component
+     */
     public int next(Container parent)
     {
         synchronized (parent.getTreeLock())
@@ -286,12 +298,12 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
     }
 
     /**
-    * Flips to the previous card of the specified container. If the
-    * currently visible card is the first one, this method flips to
-    * the last card in the layout.
-    * @param parent The name of the parent container
-    * @return Index of the selected component
-    */
+     * Flips to the previous card of the specified container. If the
+     * currently visible card is the first one, this method flips to
+     * the last card in the layout.
+     * @param parent The name of the parent container
+     * @return Index of the selected component
+     */
     public int previous(Container parent)
     {
         synchronized (parent.getTreeLock())
@@ -317,9 +329,9 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
     }
 
     /**
-    * Flips to the last card of the container.
-    * @param parent The name of the parent container
-    */
+     * Flips to the last card of the container.
+     * @param parent The name of the parent container
+     */
     public void last(Container parent)
     {
         synchronized (parent.getTreeLock())
@@ -342,11 +354,11 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
     }
 
     /**
-    * Flips to the component that was added to this layout using
-    * the specified name. If no such component exists, nothing happens.
-    * @param parent The name of the parent container in which to do the layout.
-    * @param name The component name.
-    */
+     * Flips to the component that was added to this layout using
+     * the specified name. If no such component exists, nothing happens.
+     * @param parent The name of the parent container in which to do the layout.
+     * @param name The component name.
+     */
     public void show(Container parent, String name)
     {
         synchronized (parent.getTreeLock())
@@ -372,11 +384,11 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
     }
 
     /**
-    * Flips to the component at the numbered position. If no such
-    * component exists, nothing happens.
-    * @param parent The name of the parent container in which to do the layout.
-    * @param index The index (between 0 and component count - 1)
-    */
+     * Flips to the component at the numbered position. If no such
+     * component exists, nothing happens.
+     * @param parent The name of the parent container in which to do the layout.
+     * @param index The index (between 0 and component count - 1)
+     */
     public void show(Container parent, int index)
     {
         synchronized (parent.getTreeLock())
@@ -401,28 +413,43 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
         }
     }
 
+    /**
+     * @param name
+     * @return
+     */
     public Component getComponent(String name)
     {
         return (Component) tab.get(name);
     }
 
+    /**
+     * @param parent
+     * @param index
+     * @return
+     */
     public String getName(Container parent, int index)
     {
         Component comp = parent.getComponent(index);
-        Enumeration keys = tab.keys();
-        Enumeration enum = tab.elements();
-        String key;
 
-        while (enum.hasMoreElements())
+        Iterator it = tab.keySet().iterator();
+        while (it.hasNext())
         {
-            key = (String) keys.nextElement();
-            if (comp == enum.nextElement())
+            String key = (String) it.next();
+            Object val = tab.get(key);
+            if (comp == val)
+            {
                 return key;
+            }
         }
 
         return null;
     }
 
+    /**
+     * @param parent
+     * @param name
+     * @return
+     */
     public int getIndex(Container parent, String name)
     {
         Component comp = getComponent(name);
@@ -434,4 +461,13 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
 
         return -1;
     }
+
+    protected Map tab = new HashMap();
+    protected int count = 0;
+    protected boolean wrap = false;
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3256444715787105330L;
 }

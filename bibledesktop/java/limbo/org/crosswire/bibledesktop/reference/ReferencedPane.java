@@ -60,7 +60,7 @@ import org.crosswire.jsword.passage.NoSuchKeyException;
  */
 public class ReferencedPane extends JPanel implements BookDataDisplay
 {
-    /**
+	/**
      * Simple ctor
      */
     public ReferencedPane()
@@ -299,4 +299,9 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     private JScrollPane scrEntries = new JScrollPane();
     private JScrollPane scrDisplay =new JScrollPane();
     private JTree treEntries = new JTree();
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3546078077383031089L;
 }

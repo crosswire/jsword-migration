@@ -1,4 +1,3 @@
-
 package org.crosswire.biblemapper.swing;
 
 import javax.swing.BoxLayout;
@@ -35,18 +34,18 @@ import org.crosswire.common.swing.GuiUtil;
  */
 public class RulesPane extends JPanel
 {
-    /**
+	/**
      * Basic Constructor
      */
     public RulesPane(Rule[] rules)
     {
-        add(pnl_main);
+        add(pnlMain);
 
-        pnl_main.setLayout(new BoxLayout(pnl_main, BoxLayout.Y_AXIS));
+        pnlMain.setLayout(new BoxLayout(pnlMain, BoxLayout.Y_AXIS));
 
         for (int i=0; i<rules.length; i++)
         {
-            pnl_main.add(new RuleSlider(rules[i]));
+            pnlMain.add(new RuleSlider(rules[i]));
         }
     }
 
@@ -56,15 +55,20 @@ public class RulesPane extends JPanel
      */
     public void setRules(Rule[] rules)
     {
-        pnl_main.removeAll();
+        pnlMain.removeAll();
 
         for (int i=0; i<rules.length; i++)
         {
-            pnl_main.add(new RuleSlider(rules[i]));
+            pnlMain.add(new RuleSlider(rules[i]));
         }
 
         GuiUtil.restrainedRePack(GuiUtil.getWindow(this));
     }
     
-    private JPanel pnl_main = new JPanel();
+    private JPanel pnlMain = new JPanel();
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3906651911955626041L;
 }

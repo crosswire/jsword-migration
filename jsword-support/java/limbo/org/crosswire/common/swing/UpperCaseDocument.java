@@ -1,4 +1,3 @@
-
 package org.crosswire.common.swing;
 
 import javax.swing.text.AttributeSet;
@@ -33,10 +32,9 @@ import javax.swing.text.PlainDocument;
  */
 public class UpperCaseDocument extends PlainDocument
 {
-    // DEAD(DM): This class is not used. Find a use for it or delete it.
     /**
-    * Override insertString to force upper case
-    */
+     * Override insertString to force upper case
+     */
     public void insertString(int offs, String str, AttributeSet att) throws BadLocationException
     {
         if (str == null) return;
@@ -49,4 +47,9 @@ public class UpperCaseDocument extends PlainDocument
 
         super.insertString(offs, new String(upper), att);
     }
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 4051324548165284660L;
 }

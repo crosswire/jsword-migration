@@ -48,7 +48,7 @@ import org.crosswire.jsword.book.basic.Verifier;
  * MaintenancePane maint = new MaintenancePane();
  * maint.showInDialog(getComponent());
  * </pre>
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -72,7 +72,7 @@ import org.crosswire.jsword.book.basic.Verifier;
  */
 public class GeneratorPane extends EirPanel
 {
-    // I18N: This class has not been internationalized, because it is not used.
+	// I18N: This class has not been internationalized, because it is not used.
     /**
      * Construct a Bible Generator tool, this simply calls jbInit
      */
@@ -86,59 +86,59 @@ public class GeneratorPane extends EirPanel
      */
     private void init()
     {
-        cbo_source.setModel(mdl_source);
-        cbo_source.setRenderer(new BookListCellRenderer());
-        lbl_source.setText("  Source Bible: "); //$NON-NLS-1$
-        pnl_source.setLayout(new BorderLayout());
-        pnl_source.setBorder(BorderFactory.createTitledBorder("Source")); //$NON-NLS-1$
-        pnl_source.add(lbl_source, BorderLayout.WEST);
-        pnl_source.add(cbo_source, BorderLayout.CENTER);
+        cboSource.setModel(mdlSource);
+        cboSource.setRenderer(new BookListCellRenderer());
+        lblSource.setText("  Source Bible: "); //$NON-NLS-1$
+        pnlSource.setLayout(new BorderLayout());
+        pnlSource.setBorder(BorderFactory.createTitledBorder("Source")); //$NON-NLS-1$
+        pnlSource.add(lblSource, BorderLayout.WEST);
+        pnlSource.add(cboSource, BorderLayout.CENTER);
 
-        lbl_name.setText("New Name:"); //$NON-NLS-1$
-        lbl_driver.setText("Driver Class:"); //$NON-NLS-1$
+        lblName.setText("New Name:"); //$NON-NLS-1$
+        lblDriver.setText("Driver Class:"); //$NON-NLS-1$
 
-        cbo_driver.setModel(mdl_driver);
-        pnl_dest.setLayout(lay_dest);
-        pnl_dest.setBorder(BorderFactory.createTitledBorder("Destination")); //$NON-NLS-1$
+        cboDriver.setModel(mdlDriver);
+        pnlDest.setLayout(layDest);
+        pnlDest.setBorder(BorderFactory.createTitledBorder("Destination")); //$NON-NLS-1$
 
-        pnl_dest.add(lbl_name, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 5), 0, 0));
-        pnl_dest.add(lbl_driver, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0));
-        pnl_dest.add(cbo_driver, new GridBagConstraints(1, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 5), 0, 0));
+        pnlDest.add(lblName, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 5), 0, 0));
+        pnlDest.add(lblDriver, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0));
+        pnlDest.add(cboDriver, new GridBagConstraints(1, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 5), 0, 0));
 
-        bar_prog.setBorderPainted(true);
-        bar_prog.setMaximum(100);
-        bar_prog.setString(""); //$NON-NLS-1$
-        bar_prog.setStringPainted(true);
-        pnl_prog.setLayout(new BorderLayout());
-        pnl_prog.setBorder(BorderFactory.createTitledBorder("Progress")); //$NON-NLS-1$
-        pnl_prog.add(bar_prog, BorderLayout.CENTER);
+        barProg.setBorderPainted(true);
+        barProg.setMaximum(100);
+        barProg.setString(""); //$NON-NLS-1$
+        barProg.setStringPainted(true);
+        pnlProg.setLayout(new BorderLayout());
+        pnlProg.setBorder(BorderFactory.createTitledBorder("Progress")); //$NON-NLS-1$
+        pnlProg.add(barProg, BorderLayout.CENTER);
 
-        box_main = Box.createVerticalBox();
-        box_main.add(pnl_source, null);
-        box_main.add(pnl_dest, null);
+        boxMain = Box.createVerticalBox();
+        boxMain.add(pnlSource, null);
+        boxMain.add(pnlDest, null);
 
-        btn_generate.addActionListener(new ActionListener()
+        btnGenerate.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent ev)
             {
                 generate();
             }
         });
-        btn_generate.setText("Generate"); //$NON-NLS-1$
-        btn_generate.setMnemonic('G');
+        btnGenerate.setText("Generate"); //$NON-NLS-1$
+        btnGenerate.setMnemonic('G');
 
-        chk_verify.setText("Verify After Generation"); //$NON-NLS-1$
-        chk_verify.setMnemonic('V');
-        chk_verify.setSelected(false);
-        lay_buttons.setAlignment(FlowLayout.RIGHT);
-        pnl_buttons.setLayout(lay_buttons);
-        pnl_buttons.add(chk_verify, null);
-        pnl_buttons.add(btn_generate, null);
+        chkVerify.setText("Verify After Generation"); //$NON-NLS-1$
+        chkVerify.setMnemonic('V');
+        chkVerify.setSelected(false);
+        layButtons.setAlignment(FlowLayout.RIGHT);
+        pnlButtons.setLayout(layButtons);
+        pnlButtons.add(chkVerify, null);
+        pnlButtons.add(btnGenerate, null);
 
         this.setLayout(new BorderLayout());
-        this.add(box_main, BorderLayout.NORTH);
-        this.add(pnl_prog, BorderLayout.CENTER);
-        this.add(pnl_buttons, BorderLayout.SOUTH);
+        this.add(boxMain, BorderLayout.NORTH);
+        this.add(pnlProg, BorderLayout.CENTER);
+        this.add(pnlButtons, BorderLayout.SOUTH);
     }
 
     /**
@@ -157,16 +157,16 @@ public class GeneratorPane extends EirPanel
     {
         final JDialog frame = new JDialog(parent, "Bible Generator"); //$NON-NLS-1$
 
-        btn_close = new JButton("Close"); //$NON-NLS-1$
-        btn_close.setMnemonic('C');
-        btn_close.addActionListener(new ActionListener() {
+        btnClose = new JButton("Close"); //$NON-NLS-1$
+        btnClose.setMnemonic('C');
+        btnClose.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev)
             {
                 frame.setVisible(false);
                 frame.dispose();
             }
         });
-        pnl_buttons.add(btn_close, null);
+        pnlButtons.add(btnClose, null);
 
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
 
@@ -196,107 +196,112 @@ public class GeneratorPane extends EirPanel
         work.start();
         work.setPriority(Thread.MIN_PRIORITY);
     }
-    
+
     /**
      * Holder for the source and destination area
      */
-    private Box box_main;
-    
+    private Box boxMain;
+
     /**
      * The Source area
      */
-    private JPanel pnl_source = new JPanel();
-    
+    private JPanel pnlSource = new JPanel();
+
     /**
      * The destination area
      */
-    private JPanel pnl_dest = new JPanel();
-    
+    private JPanel pnlDest = new JPanel();
+
     /**
      * The source book label
      */
-    private JLabel lbl_source = new JLabel();
-    
+    private JLabel lblSource = new JLabel();
+
     /**
      * The source picker
      */
-    protected JComboBox cbo_source = new JComboBox();
+    protected JComboBox cboSource = new JComboBox();
 
     /**
      * The model for the sources.
      * Bibles are required in GeneratorRunnable.run()
      */
-    protected BooksComboBoxModel mdl_source = new BooksComboBoxModel(BookFilters.getBibles());
+    protected BooksComboBoxModel mdlSource = new BooksComboBoxModel(BookFilters.getBibles());
 
     /**
      * Layout for the destination panel
      */
-    private GridBagLayout lay_dest = new GridBagLayout();
+    private GridBagLayout layDest = new GridBagLayout();
 
     /**
      * The new version name label
      */
-    private JLabel lbl_name = new JLabel();
+    private JLabel lblName = new JLabel();
 
     /**
      * Label for the new name class
      */
-    private JLabel lbl_driver = new JLabel();
+    private JLabel lblDriver = new JLabel();
 
     /**
      * Input field for the name class
      */
-    protected JComboBox cbo_driver = new JComboBox();
+    protected JComboBox cboDriver = new JComboBox();
 
     /**
      * The model for the drivers
      */
-    protected DriversComboBoxModel mdl_driver = new DriversComboBoxModel(false);
+    protected DriversComboBoxModel mdlDriver = new DriversComboBoxModel(false);
 
     /**
      * The progress area
      */
-    private JPanel pnl_prog = new JPanel();
+    private JPanel pnlProg = new JPanel();
 
     /**
      * The progress bar
      */
-    protected JProgressBar bar_prog = new JProgressBar();
+    protected JProgressBar barProg = new JProgressBar();
 
     /**
      * The button bar
      */
-    private JPanel pnl_buttons = new JPanel();
+    private JPanel pnlButtons = new JPanel();
 
     /**
      * Layout for the button bar
      */
-    private FlowLayout lay_buttons = new FlowLayout();
+    private FlowLayout layButtons = new FlowLayout();
 
     /**
      * The generate button
      */
-    protected JButton btn_generate = new JButton();
+    protected JButton btnGenerate = new JButton();
 
     /**
      * The close button, only used if we are in our own Frame
      */
-    protected JButton btn_close = null;
+    protected JButton btnClose = null;
 
     /**
      * The verify checkbox
      */
-    protected JCheckBox chk_verify = new JCheckBox();
+    protected JCheckBox chkVerify = new JCheckBox();
 
     /**
      * Work in progress
      */
-    protected Thread work;
+    protected Thread work =  null;
 
     /**
      * The progress listener
      */
     protected CustomProgressListener cpl = new CustomProgressListener();
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3979270239726743601L;
 
     /**
      * A class to be run in a Thread to do the real work of generating the
@@ -311,11 +316,11 @@ public class GeneratorPane extends EirPanel
             {
                 public void run()
                 {
-                    cbo_source.setEnabled(false);
-                    cbo_driver.setEnabled(false);
-                    btn_generate.setEnabled(false);
-                    chk_verify.setEnabled(false);
-                    btn_close.setText("Cancel"); //$NON-NLS-1$
+                    cboSource.setEnabled(false);
+                    cboDriver.setEnabled(false);
+                    btnGenerate.setEnabled(false);
+                    chkVerify.setEnabled(false);
+                    btnClose.setText("Cancel"); //$NON-NLS-1$
                 }
             });
 
@@ -323,17 +328,17 @@ public class GeneratorPane extends EirPanel
             {
                 // Get the values
                 // This cast is safe because the ctor filers for Bibles
-                Book source = mdl_source.getSelectedBookMetaData().getBook();
-                BookDriver dest_driver = mdl_driver.getSelectedDriver();
+                Book source = mdlSource.getSelectedBookMetaData().getBook();
+                BookDriver destDriver = mdlDriver.getSelectedDriver();
 
                 // The real work
                 // This cast is safe because we passed in a Bible
-                Book dest_version = dest_driver.create(source);
+                Book destVersion = destDriver.create(source);
 
                 // Check
-                if (chk_verify.isEnabled())
+                if (chkVerify.isEnabled())
                 {
-                    Verifier ver = new Verifier(source, dest_version);
+                    Verifier ver = new Verifier(source, destVersion);
 
                     CompareResultsPane results = new CompareResultsPane(ver);
                     results.setCheckText(""); //$NON-NLS-1$
@@ -358,11 +363,11 @@ public class GeneratorPane extends EirPanel
             {
                 public void run()
                 {
-                    cbo_source.setEnabled(true);
-                    cbo_driver.setEnabled(true);
-                    btn_generate.setEnabled(true);
-                    chk_verify.setEnabled(true);
-                    btn_close.setText("Close"); //$NON-NLS-1$
+                    cboSource.setEnabled(true);
+                    cboDriver.setEnabled(true);
+                    btnGenerate.setEnabled(true);
+                    chkVerify.setEnabled(true);
+                    btnClose.setText("Close"); //$NON-NLS-1$
                 }
             });
         }
@@ -384,8 +389,8 @@ public class GeneratorPane extends EirPanel
                 {
                     Job job = ev.getJob();
                     int percent = job.getPercent();
-                    bar_prog.setString(job.getStateDescription() + ": (" + percent + "%)"); //$NON-NLS-1$  //$NON-NLS-2$
-                    bar_prog.setValue(percent);
+                    barProg.setString(job.getStateDescription() + ": (" + percent + "%)"); //$NON-NLS-1$  //$NON-NLS-2$
+                    barProg.setValue(percent);
                 }
             });
         }

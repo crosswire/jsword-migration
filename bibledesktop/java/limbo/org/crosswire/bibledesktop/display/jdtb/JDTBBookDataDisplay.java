@@ -156,12 +156,12 @@ public class JDTBBookDataDisplay implements BookDataDisplay
     /**
      * The current book
      */
-    private Book book;
+    private Book book = null;
 
     /**
      * The current key
      */
-    private Key key;
+    private Key key =  null;
 
     /**
      * The display component

@@ -28,7 +28,10 @@ import javax.swing.text.PlainDocument;
 */
 public class MoneyDocument extends PlainDocument
 {
-    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException
+	/* (non-Javadoc)
+	 * @see javax.swing.text.Document#insertString(int, java.lang.String, javax.swing.text.AttributeSet)
+	 */
+	public void insertString(int offs, String str, AttributeSet a) throws BadLocationException
     {
         if (str == null) return;
 
@@ -61,4 +64,9 @@ public class MoneyDocument extends PlainDocument
         }
         */
     }
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3256722887951071028L;
 }

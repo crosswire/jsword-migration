@@ -35,7 +35,7 @@ import org.crosswire.jsword.passage.Key;
 /**
  * This displays the results of a comparision that occurs in a separate
  * thread.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -59,7 +59,7 @@ import org.crosswire.jsword.passage.Key;
  */
 public class CompareResultsPane extends JPanel implements Runnable
 {
-    /**
+	/**
      * Basic Constructor
      */
     public CompareResultsPane(Verifier ver)
@@ -169,9 +169,9 @@ public class CompareResultsPane extends JPanel implements Runnable
      * The text that we will check, null for no check, we apply startsWith
      * to the given word before we run the check.
      */
-    public void setCheckText(String check_text)
+    public void setCheckText(String checkText)
     {
-        this.checkText = check_text;
+        this.checkText = checkText;
         setTitles();
     }
 
@@ -196,7 +196,7 @@ public class CompareResultsPane extends JPanel implements Runnable
         String compare = "<html><b>" + Msg.RESULTS_COMPARING + "</b> "; //$NON-NLS-1$ //$NON-NLS-2$
         if (checkRef != null)
         {
-            compare += Msg.RESULTS_PASSAGE + "=" + checkRef + " "; //$NON-NLS-1$ //$NON-NLS-2$
+            compare += Msg.RESULTS_PASSAGE + "=" + checkRef + ' '; //$NON-NLS-1$
         }
 
         if (checkText != null)
@@ -309,6 +309,11 @@ public class CompareResultsPane extends JPanel implements Runnable
     protected JButton btnStop = new JButton();
     private JButton btnClose = null;
     private JLabel lblBible2 = new JLabel();
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3257845467781085240L;
 
     /**
      * Report progress changes to the screen

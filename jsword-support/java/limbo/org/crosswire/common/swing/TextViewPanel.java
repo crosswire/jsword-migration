@@ -58,7 +58,7 @@ import org.crosswire.common.util.StringUtil;
  */
 public class TextViewPanel extends JPanel
 {
-    /**
+	/**
      * Construct a TextViewPanel by calling jbInit()
      */
     public TextViewPanel()
@@ -137,27 +137,27 @@ public class TextViewPanel extends JPanel
      */
     private void jbInit()
     {
-        scr_text.getViewport().add(txt_text, null);
-        txt_text.setEditable(false);
-        txt_text.setColumns(80);
-        txt_text.setRows(24);
+        scrText.getViewport().add(txtText, null);
+        txtText.setEditable(false);
+        txtText.setColumns(80);
+        txtText.setRows(24);
 
-        btn_clipboard.addActionListener(new ActionListener()
+        btnClipboard.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent ev)
             {
                 clipboard();
             }
         });
-        btn_clipboard.setText("Copy"); //$NON-NLS-1$
+        btnClipboard.setText("Copy"); //$NON-NLS-1$
 
-        lay_buttons.setAlignment(FlowLayout.RIGHT);
-        pnl_buttons.setLayout(lay_buttons);
-        pnl_buttons.add(btn_clipboard, null);
+        layButtons.setAlignment(FlowLayout.RIGHT);
+        pnlButtons.setLayout(layButtons);
+        pnlButtons.add(btnClipboard, null);
 
         this.setLayout(new BorderLayout());
-        this.add(scr_text, BorderLayout.CENTER);
-        this.add(pnl_buttons, BorderLayout.SOUTH);
+        this.add(scrText, BorderLayout.CENTER);
+        this.add(pnlButtons, BorderLayout.SOUTH);
     }
 
     /**
@@ -167,9 +167,9 @@ public class TextViewPanel extends JPanel
     {
         frame = new JDialog(parent, "Text Viewer"); //$NON-NLS-1$
 
-        btn_close = new JButton(Msg.CLOSE.toString());
-        btn_close.setMnemonic(Msg.CLOSE.toString().charAt(0));
-        btn_close.addActionListener(new ActionListener()
+        btnClose = new JButton(Msg.CLOSE.toString());
+        btnClose.setMnemonic(Msg.CLOSE.toString().charAt(0));
+        btnClose.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent ev)
             {
@@ -177,7 +177,7 @@ public class TextViewPanel extends JPanel
                 frame.dispose();
             }
         });
-        pnl_buttons.add(btn_close, null);
+        pnlButtons.add(btnClose, null);
 
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
 
@@ -205,16 +205,16 @@ public class TextViewPanel extends JPanel
      */
     public void setHeader(String new_header)
     {
-        String old_header = lbl_main.getText();
-        lbl_main.setText(new_header);
+        String old_header = lblMain.getText();
+        lblMain.setText(new_header);
 
         if (new_header != null)
         {
-            this.add(lbl_main, BorderLayout.NORTH);
+            this.add(lblMain, BorderLayout.NORTH);
         }
         else
         {
-            this.remove(lbl_main);
+            this.remove(lblMain);
         }
 
         listeners.firePropertyChange("header", old_header, new_header); //$NON-NLS-1$
@@ -226,7 +226,7 @@ public class TextViewPanel extends JPanel
      */
     public String getHeader()
     {
-        return lbl_main.getText();
+        return lblMain.getText();
     }
 
     /**
@@ -234,7 +234,7 @@ public class TextViewPanel extends JPanel
      */
     public void setEditable(boolean editable)
     {
-        txt_text.setEditable(editable);
+        txtText.setEditable(editable);
     }
 
     /**
@@ -242,7 +242,7 @@ public class TextViewPanel extends JPanel
      */
     public boolean isEditable()
     {
-        return txt_text.isEditable();
+        return txtText.isEditable();
     }
 
     /**
@@ -251,9 +251,9 @@ public class TextViewPanel extends JPanel
      */
     public void setText(String new_text)
     {
-        String old_text = txt_text.getText();
-        txt_text.setText(new_text);
-        txt_text.setCaretPosition(0);
+        String old_text = txtText.getText();
+        txtText.setText(new_text);
+        txtText.setCaretPosition(0);
 
         if (frame != null)
         {
@@ -327,7 +327,7 @@ public class TextViewPanel extends JPanel
      */
     public String getText()
     {
-        return txt_text.getText();
+        return txtText.getText();
     }
 
     /**
@@ -353,37 +353,37 @@ public class TextViewPanel extends JPanel
     /**
      * Optional header label
      */
-    private JLabel lbl_main = new JLabel();
+    private JLabel lblMain = new JLabel();
 
     /**
      * Scroller for the text area
      */
-    private JScrollPane scr_text = new JScrollPane();
+    private JScrollPane scrText = new JScrollPane();
 
     /**
      * The main text area
      */
-    private JTextArea txt_text = new JTextArea();
+    private JTextArea txtText = new JTextArea();
 
     /**
      * The button bar
      */
-    private JPanel pnl_buttons = new JPanel();
+    private JPanel pnlButtons = new JPanel();
 
     /**
      * Button bar layout
      */
-    private FlowLayout lay_buttons = new FlowLayout();
+    private FlowLayout layButtons = new FlowLayout();
 
     /**
      * Copy text to clipboard button
      */
-    private JButton btn_clipboard = new JButton();
+    private JButton btnClipboard = new JButton();
 
     /**
      * Close button
      */
-    private JButton btn_close = null;
+    private JButton btnClose = null;
 
     /**
      * The frame that we are displayed in
@@ -394,4 +394,9 @@ public class TextViewPanel extends JPanel
      * Property change listener collection
      */
     private transient PropertyChangeSupport listeners = new PropertyChangeSupport(this);
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3616727167011206964L;
 }

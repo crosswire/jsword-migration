@@ -41,54 +41,58 @@ import org.crosswire.common.util.Logger;
  */
 public class RuleSlider extends JPanel
 {
-    /**
+	/**
      * Basic constructor
      */
     public RuleSlider(Rule rule)
     {
         this.rule = rule;
 
-        jbInit();
+        init();
 
         String fullname = rule.getClass().getName();
         int last_dot = fullname.lastIndexOf('.');
-        if (last_dot == -1) last_dot = 0;
-        title = fullname.substring(last_dot+1);
-        bdr_rule.setTitle(title);
+        if (last_dot == -1)
+        {
+            last_dot = 0;
+        }
 
-        sdr_rule.setValue(rule.getScale());
-        txt_rule.setText(""+rule.getScale());
+        title = fullname.substring(last_dot+1);
+        bdrRule.setTitle(title);
+
+        sdrRule.setValue(rule.getScale());
+        txtRule.setText(""+rule.getScale());
     }
 
     /**
      * Create the GUI
      */
-    private void jbInit()
+    private void init()
     {
-        bdr_rule = BorderFactory.createTitledBorder("Rule");
+        bdrRule = BorderFactory.createTitledBorder("Rule");
 
-        sdr_rule.addChangeListener(new ChangeListener()
+        sdrRule.addChangeListener(new ChangeListener()
         {
             public void stateChanged(ChangeEvent ev)
             {
                 changed();
             }
         });
-        sdr_rule.setPaintLabels(true);
-        sdr_rule.setPaintTicks(true);
-        sdr_rule.setMinorTickSpacing(16);
-        sdr_rule.setMajorTickSpacing(32);
-        sdr_rule.setMaximum(256);
-        sdr_rule.setOrientation(SwingConstants.HORIZONTAL);
-        sdr_rule.setValue(0);
+        sdrRule.setPaintLabels(true);
+        sdrRule.setPaintTicks(true);
+        sdrRule.setMinorTickSpacing(16);
+        sdrRule.setMajorTickSpacing(32);
+        sdrRule.setMaximum(256);
+        sdrRule.setOrientation(SwingConstants.HORIZONTAL);
+        sdrRule.setValue(0);
 
-        txt_rule.setText("256");
-        txt_rule.setEditable(false);
+        txtRule.setText("256");
+        txtRule.setEditable(false);
 
         this.setLayout(new BorderLayout());
-        this.setBorder(bdr_rule);
-        this.add(sdr_rule, BorderLayout.CENTER);
-        this.add(txt_rule, BorderLayout.EAST);
+        this.setBorder(bdrRule);
+        this.add(sdrRule, BorderLayout.CENTER);
+        this.add(txtRule, BorderLayout.EAST);
     }
 
     /**
@@ -96,27 +100,37 @@ public class RuleSlider extends JPanel
      */
     protected void changed()
     {
-        rule.setScale(sdr_rule.getValue());
+        rule.setScale(sdrRule.getValue());
 
         int check = rule.getScale();
-        if (check != sdr_rule.getValue())
-            sdr_rule.setValue(check);
+        if (check != sdrRule.getValue())
+        {
+            sdrRule.setValue(check);
+        }
 
-        txt_rule.setText(""+check);
+        txtRule.setText(""+check);
 
         log.info(title+": "+check);
     }
 
-    /** The rule that we notify of any changes */
+    /**
+     * The rule that we notify of any changes
+     */
     private Rule rule;
 
     /* GUI Components */
-    private JSlider sdr_rule = new JSlider();
-    private JTextField txt_rule = new JTextField(3);
+    private JSlider sdrRule = new JSlider();
+    private JTextField txtRule = new JTextField(3);
     private String title = "-";
+    private TitledBorder bdrRule;
 
-    private TitledBorder bdr_rule;
-
-    /** The log stream */
+    /**
+     * The log stream
+     */
     private static final Logger log = Logger.getLogger(RuleSlider.class);
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3544953268381038132L;
 }

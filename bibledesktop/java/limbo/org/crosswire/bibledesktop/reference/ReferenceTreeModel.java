@@ -10,7 +10,7 @@ import javax.swing.tree.TreePath;
 
 /**
  * A TreeModel for the ReferencePane.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -59,7 +59,7 @@ public class ReferenceTreeModel implements TreeModel
         {
             return -1;
         }
-        
+
         TreeNode parentNode = (TreeNode) parent;
         TreeNode childNode = (TreeNode) child;
 
@@ -286,7 +286,7 @@ public class ReferenceTreeModel implements TreeModel
      * where the original node is the last element in the returned array.
      * The length of the returned array gives the node's depth in the
      * tree.
-     * 
+     *
      * @param aNode the TreeNode to get the path for
      */
     public TreeNode[] getPathToRoot(TreeNode aNode)
@@ -299,12 +299,12 @@ public class ReferenceTreeModel implements TreeModel
      * where the original node is the last element in the returned array.
      * The length of the returned array gives the node's depth in the
      * tree.
-     * 
+     *
      * @param aNode  the TreeNode to get the path for
      * @param depth  an int giving the number of steps already taken towards
      *        the root (on recursive calls), used to size the returned array
      * @return an array of TreeNodes giving the path from the root to the
-     *         specified node 
+     *         specified node
      */
     protected TreeNode[] getPathToRoot(TreeNode aNode, int depth)
     {
@@ -345,27 +345,27 @@ public class ReferenceTreeModel implements TreeModel
     /**
      * Adds a listener for the TreeModelEvent posted after the tree changes.
      * @see ReferenceTreeModel#removeTreeModelListener(TreeModelListener)
-     * @param l the listener to add
+     * @param li the listener to add
      */
-    public void addTreeModelListener(TreeModelListener l)
+    public void addTreeModelListener(TreeModelListener li)
     {
-        listenerList.add(TreeModelListener.class, l);
+        listenerList.add(TreeModelListener.class, li);
     }
 
     /**
      * Removes a listener previously added with <B>addTreeModelListener()</B>.
      * @see ReferenceTreeModel#addTreeModelListener(TreeModelListener)
-     * @param l the listener to remove
+     * @param li the listener to remove
      */
-    public void removeTreeModelListener(TreeModelListener l)
+    public void removeTreeModelListener(TreeModelListener li)
     {
-        listenerList.remove(TreeModelListener.class, l);
+        listenerList.remove(TreeModelListener.class, li);
     }
 
     /**
      * Notifies all listeners that have registered interest for
-     * notification on this event type.  The event instance 
-     * is lazily created using the parameters passed into 
+     * notification on this event type.  The event instance
+     * is lazily created using the parameters passed into
      * the fire method.
      *
      * @param source the node being changed
@@ -398,8 +398,8 @@ public class ReferenceTreeModel implements TreeModel
 
     /**
      * Notifies all listeners that have registered interest for
-     * notification on this event type.  The event instance 
-     * is lazily created using the parameters passed into 
+     * notification on this event type.  The event instance
+     * is lazily created using the parameters passed into
      * the fire method.
      *
      * @param source the node where new elements are being inserted
@@ -432,8 +432,8 @@ public class ReferenceTreeModel implements TreeModel
 
     /**
      * Notifies all listeners that have registered interest for
-     * notification on this event type.  The event instance 
-     * is lazily created using the parameters passed into 
+     * notification on this event type.  The event instance
+     * is lazily created using the parameters passed into
      * the fire method.
      *
      * @param source the node where elements are being removed
@@ -466,8 +466,8 @@ public class ReferenceTreeModel implements TreeModel
 
     /**
      * Notifies all listeners that have registered interest for
-     * notification on this event type.  The event instance 
-     * is lazily created using the parameters passed into 
+     * notification on this event type.  The event instance
+     * is lazily created using the parameters passed into
      * the fire method.
      *
      * @param source the node where the tree model has changed
@@ -500,8 +500,8 @@ public class ReferenceTreeModel implements TreeModel
 
     /*
      * Notifies all listeners that have registered interest for
-     * notification on this event type.  The event instance 
-     * is lazily created using the parameters passed into 
+     * notification on this event type.  The event instance
+     * is lazily created using the parameters passed into
      * the fire method.
      *
      * @param source the node where the tree model has changed
@@ -539,14 +539,14 @@ public class ReferenceTreeModel implements TreeModel
 
     /**
      * Determines how the <code>isLeaf</code> method figures
-     * out if a node is a leaf node. If true, a node is a leaf 
-     * node if it does not allow children. (If it allows 
+     * out if a node is a leaf node. If true, a node is a leaf
+     * node if it does not allow children. (If it allows
      * children, it is not a leaf node, even if no children
      * are present.) That lets you distinguish between <i>folder</i>
      * nodes and <i>file</i> nodes in a file system, for example.
      * <p>
-     * If this value is false, then any node which has no 
-     * children is a leaf node, and any node may acquire 
+     * If this value is false, then any node which has no
+     * children is a leaf node, and any node may acquire
      * children.
      */
     protected boolean asksAllowsChildren;

@@ -1,4 +1,3 @@
-
 package org.crosswire.biblemapper.model;
 
 import java.util.EventObject;
@@ -32,7 +31,7 @@ import org.crosswire.jsword.passage.NoSuchVerseException;
  */
 public class MapEvent extends EventObject
 {
-    /**
+	/**
      * Initialize a MapEvent
      * @param source The map that started this off
      */
@@ -86,9 +85,18 @@ public class MapEvent extends EventObject
         return chapter;
     }
 
-    /** The book number */
+    /**
+     * The book number
+     */
     private int book;
 
-    /** The chapter number */
+    /**
+     * The chapter number
+     */
     private int chapter;
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3258129146210301749L;
 }

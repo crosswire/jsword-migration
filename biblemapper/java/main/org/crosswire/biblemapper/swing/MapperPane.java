@@ -42,7 +42,7 @@ import org.crosswire.jsword.passage.NoSuchVerseException;
  */
 public class MapperPane extends JPanel implements Scrollable
 {
-    /**
+	/**
      * Basic Constructor
      */
     public MapperPane(Map map)
@@ -378,6 +378,11 @@ public class MapperPane extends JPanel implements Scrollable
      * The VerseColorizer
      */
     private VerseColor versecolor = new RainbowVerseColor();
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3833180350343296569L;
 
     /**
      * Sync the map and the table
