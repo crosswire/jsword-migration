@@ -50,8 +50,6 @@ public class Msg extends MsgBase
     // Strings for the startup job
     static final Msg STARTUP_TITLE = new Msg("Desktop.StartupTitle"); //$NON-NLS-1$
     static final Msg STARTUP_CONFIG = new Msg("Desktop.StartupConfig"); //$NON-NLS-1$
-    static final Msg STARTUP_LOAD_CONFIG = new Msg("Desktop.StartupLoadConfig"); //$NON-NLS-1$
-    static final Msg STARTUP_LOAD_SETTINGS = new Msg("Desktop.StartupLoadSettings"); //$NON-NLS-1$
     static final Msg STARTUP_GENERATE = new Msg("Desktop.StartupGenerate"); //$NON-NLS-1$
     static final Msg STARTUP_GENERAL_CONFIG = new Msg("Desktop.StartupGeneral"); //$NON-NLS-1$
 
@@ -62,7 +60,6 @@ public class Msg extends MsgBase
     static final Msg SOURCE_MISSING = new Msg("DesktopActions.SourceMissing"); //$NON-NLS-1$
     static final Msg OSIS = new Msg("DesktopActions.OSIS"); //$NON-NLS-1$
     static final Msg HTML = new Msg("DesktopActions.HTML"); //$NON-NLS-1$
-    static final Msg NO_SOURCE = new Msg("DesktopActions.NoSourceFound"); //$NON-NLS-1$
 
     // Strings for AboutPane and Splash
     // The splash image is of an English version of the application
@@ -80,36 +77,43 @@ public class Msg extends MsgBase
     static final Msg CONFIG_TITLE = new Msg("OptionsAction.ConfigTitle"); //$NON-NLS-1$
 
     // Strings for ComparePane
-    static final Msg COMPARE_DIALOG = new Msg("Compare.DIALOG"); //$NON-NLS-1$
-    static final Msg COMPARE_IDENT_QUESTION = new Msg("Compare.IDENT_QUESTION"); //$NON-NLS-1$
-    static final Msg COMPARE_IDENT_TITLE = new Msg("Compare.IDENT_TITLE"); //$NON-NLS-1$
-    static final Msg COMPARE_WORDS = new Msg("Compare.WORDS"); //$NON-NLS-1$
-    static final Msg COMPARE_GO = new Msg("Compare.GO"); //$NON-NLS-1$
-    static final Msg COMPARE_USING = new Msg("Compare.USING"); //$NON-NLS-1$
-    static final Msg COMPARE_WORDS_TIP = new Msg("Compare.WORDS_TIP"); //$NON-NLS-1$
-    static final Msg COMPARE_TITLE = new Msg("Compare.TITLE"); //$NON-NLS-1$
-    static final Msg COMPARE_VERSES = new Msg("Compare.VERSES"); //$NON-NLS-1$
+    static final Msg COMPARE_DIALOG = new Msg("ComparePane.Dialog"); //$NON-NLS-1$
+    static final Msg COMPARE_IDENT_QUESTION = new Msg("ComparePane.IdentQuestion"); //$NON-NLS-1$
+    static final Msg COMPARE_IDENT_TITLE = new Msg("ComparePane.IdentTitle"); //$NON-NLS-1$
+    static final Msg COMPARE_WORDS = new Msg("ComparePane.Words"); //$NON-NLS-1$
+    // I18N: migrate this to an ActionFactory
+    static final Msg COMPARE_GO = new Msg("ComparePane.Go"); //$NON-NLS-1$
+    static final Msg COMPARE_USING = new Msg("ComparePane.Using"); //$NON-NLS-1$
+    static final Msg COMPARE_WORDS_TIP = new Msg("ComparePane.WordsTip"); //$NON-NLS-1$
+    static final Msg COMPARE_TITLE = new Msg("ComparePane.Title"); //$NON-NLS-1$
+    static final Msg COMPARE_VERSES = new Msg("ComparePane.Verses"); //$NON-NLS-1$
 
     // Strings for CompareResultsPane
-    static final Msg RESULTS_TITLE = new Msg("Results.TITLE"); //$NON-NLS-1$
-    static final Msg RESULTS_START = new Msg("Results.START"); //$NON-NLS-1$
-    static final Msg RESULTS_CLOSE = new Msg("Results.CLOSE"); //$NON-NLS-1$
-    static final Msg RESULTS_DIALOG = new Msg("Results.DIALOG"); //$NON-NLS-1$
-    static final Msg RESULTS_BOOKS = new Msg("Results.BOOKS"); //$NON-NLS-1$
-    static final Msg RESULTS_COMPARING = new Msg("Results.COMPARING"); //$NON-NLS-1$
-    static final Msg RESULTS_PASSAGE = new Msg("Results.PASSAGE"); //$NON-NLS-1$
-    static final Msg RESULTS_WORDS = new Msg("Results.WORDS"); //$NON-NLS-1$
-    static final Msg RESULTS_STOP = new Msg("RESULTS_STOP"); //$NON-NLS-1$
+    static final Msg RESULTS_TITLE = new Msg("CompareResultsPane.Title"); //$NON-NLS-1$
+    // I18N: migrate this to an ActionFactory
+    static final Msg RESULTS_START = new Msg("CompareResultsPane.Start"); //$NON-NLS-1$
+    // I18N: migrate this to an ActionFactory
+    static final Msg RESULTS_CLOSE = new Msg("CompareResultsPane.Close"); //$NON-NLS-1$
+    static final Msg RESULTS_DIALOG = new Msg("CompareResultsPane.Dialog"); //$NON-NLS-1$
+    static final Msg RESULTS_BOOKS = new Msg("CompareResultsPane.Books"); //$NON-NLS-1$
+    static final Msg RESULTS_COMPARING = new Msg("CompareResultsPane.Comparing"); //$NON-NLS-1$
+    static final Msg RESULTS_PASSAGE = new Msg("CompareResultsPane.Passage"); //$NON-NLS-1$
+    static final Msg RESULTS_WORDS = new Msg("CompareResultsPane.Words"); //$NON-NLS-1$
+    // I18N: migrate this to an ActionFactory
+    static final Msg RESULTS_STOP = new Msg("CompareResultsPane.ResultsStop"); //$NON-NLS-1$
 
     // Strings for DebugPane
-    static final Msg DEBUG_STEPS = new Msg("Debug.STEPS"); //$NON-NLS-1$
-    static final Msg DEBUG_VIEWS = new Msg("Debug.VIEWS"); //$NON-NLS-1$
-    static final Msg DEBUG_GO = new Msg("Debug.GO"); //$NON-NLS-1$
-    static final Msg DEBUG_METHOD = new Msg("Debug.METHOD"); //$NON-NLS-1$
+    static final Msg DEBUG_STEPS = new Msg("DebugPane.Steps"); //$NON-NLS-1$
+    static final Msg DEBUG_VIEWS = new Msg("DebugPane.Views"); //$NON-NLS-1$
+    // I18N: migrate this to an ActionFactory
+    static final Msg DEBUG_GO = new Msg("DebugPane.Go"); //$NON-NLS-1$
+    static final Msg DEBUG_METHOD = new Msg("DebugPane.Method"); //$NON-NLS-1$
 
-    static final Msg COPY_TO_CLIP = new Msg("COPY_TO_CLIP"); //$NON-NLS-1$
-    static final Msg CLOSE = new Msg("CLOSE"); //$NON-NLS-1$
-    static final Msg TEXT_VIEWER = new Msg("TEXT_VIEWER"); //$NON-NLS-1$
+    // I18N: migrate this to an ActionFactory
+    static final Msg COPY_TO_CLIP = new Msg("ViewSourcePane.CopyToClipboard"); //$NON-NLS-1$
+    // I18N: migrate this to an ActionFactory
+    static final Msg CLOSE = new Msg("ViewSourcePane.Close"); //$NON-NLS-1$
+    static final Msg TEXT_VIEWER = new Msg("ViewSourcePane.TextViewer"); //$NON-NLS-1$
 
     /**
      * Passthrough ctor
