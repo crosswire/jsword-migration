@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.crosswire.bibledesktop.book.parse.AdvancedSearchPane;
 import org.crosswire.bibledesktop.passage.KeyChangeEvent;
 import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.common.swing.ActionFactory;
@@ -103,8 +104,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
                 }
             }
         });
-        JLabel lblBible = new JLabel();
-        lblBible.setText(Msg.SELECT_BIBLE.toString());
+        JLabel lblBible = actions.createJLabel(BIBLE);
         lblBible.setLabelFor(cboBible);
 
         JButton btnMenu = new JButton();
@@ -147,15 +147,10 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         btnHelp.setText(null);
         dlgHelp = new QuickHelpDialog(GuiUtil.getFrame(this), Msg.HELP_TITLE.toString(), Msg.HELP_TEXT.toString());
 
-        JButton btnAdvanced = new JButton();
-        btnAdvanced.setText(Msg.SELECT_ADVANCED.toString());
-        btnAdvanced.setMnemonic(KeyEvent.VK_V);
-        btnAdvanced.setBorderPainted(true);
-        btnAdvanced.setIcon(ICON_SEARCH);
+        JButton btnAdvanced = new JButton(actions.getAction(ADVANCED));
         btnAdvanced.setBorderPainted(false);
 
-        chkMatch = new JCheckBox();
-        chkMatch.setText(Msg.SELECT_MATCH.toString());
+        chkMatch = new JCheckBox(actions.getAction(MATCH));
 
         this.setLayout(new GridBagLayout());
         this.add(pnlBible, new GridBagConstraints(0, 0, 6, 1, 1.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
@@ -283,6 +278,28 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     }
 
     /**
+     * Someone has clicked on the advanced search button
+     */
+    public void doAdvanced()
+    {
+        String reply = advanced.showInDialog(this, Msg.ADVANCED_TITLE.toString(), true, txtSearch.getText());
+        if (reply != null)
+        {
+            txtSearch.setText(reply);
+        }
+    }
+
+    /**
+     * Match is an action, but we don't need to do anything because match is
+     * only used when search is clicked. But ActionFactory will complain if we
+     * leave it out.
+     */
+    public void doMatch()
+    {
+        // Do nothing
+    }
+
+    /**
      * Someone clicked help
      */
     public void doHelpAction()
@@ -399,9 +416,13 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         {
             dlgSelect = new PassageSelectionPane();
         }
+
         String passg = dlgSelect.showInDialog(this, Msg.SELECT_PASSAGE_TITLE.toString(), true, txtKey.getText());
-        txtKey.setText(passg);
-        doPassageAction();
+        if (passg != null)
+        {
+            txtKey.setText(passg);
+            doPassageAction();
+        }
     }
 
     /* (non-Javadoc)
@@ -486,8 +507,9 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     private static final String SEARCH_LABEL = "SearchLabel"; //$NON-NLS-1$
     private static final String GO_SEARCH = "GoSearch"; //$NON-NLS-1$
     private static final String SEARCH_FIELD = "SearchAction"; //$NON-NLS-1$
-
-    private static final ImageIcon ICON_SEARCH = GuiUtil.getIcon("toolbarButtonGraphics/general/Find16.gif"); //$NON-NLS-1$
+    private static final String ADVANCED = "Advanced"; //$NON-NLS-1$
+    private static final String MATCH = "Match"; //$NON-NLS-1$
+    private static final String BIBLE = "Bible"; //$NON-NLS-1$
 
     private static final ImageIcon ICON_SELECT = GuiUtil.getIcon("toolbarButtonGraphics/general/Edit16.gif"); //$NON-NLS-1$
 
@@ -512,6 +534,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     private JTextField txtSearch = null;
 
     private JCheckBox chkMatch = null;
+
+    private AdvancedSearchPane advanced = new AdvancedSearchPane();
 
     /**
      * SERIALUID(dms): A placeholder for the ultimate version id.

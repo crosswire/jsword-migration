@@ -47,9 +47,9 @@ class Msg extends MsgBase
     static final Msg SELECT_PASSAGE_TITLE = new Msg("DisplaySelectPane.SelectPassageTitle"); //$NON-NLS-1$
     static final Msg CLEAR = new Msg("DisplaySelectPane.Clear"); //$NON-NLS-1$
     static final Msg UNTITLED = new Msg("DisplaySelectPane.Untitled"); //$NON-NLS-1$
-    static final Msg SELECT_BIBLE = new Msg("DisplaySelectPane.Bible"); //$NON-NLS-1$
-    static final Msg SELECT_ADVANCED = new Msg("DisplaySelectPane.Advanced"); //$NON-NLS-1$
-    static final Msg SELECT_MATCH = new Msg("DisplaySelectPane.Match"); //$NON-NLS-1$
+    static final Msg ADVANCED_TITLE = new Msg("DisplaySelectPane.AdvancedTitle"); //$NON-NLS-1$
+    static final Msg HELP_TEXT = new Msg("DisplaySelectPane.HelpText"); //$NON-NLS-1$
+    static final Msg HELP_TITLE = new Msg("DisplaySelectPane.HelpTitle"); //$NON-NLS-1$
 
     static final Msg AVAILABLE_BOOKS = new Msg("SitesPane.AvailableBooks"); //$NON-NLS-1$
     static final Msg LOCAL_BOOKS = new Msg("SitesPane.Local"); //$NON-NLS-1$
@@ -68,17 +68,6 @@ class Msg extends MsgBase
 
     static final Msg ERROR = new Msg("PassageSelectionPane.Error"); //$NON-NLS-1$
     static final Msg SUMMARY = new Msg("PassageSelectionPane.Summary"); //$NON-NLS-1$
-
-    static final Msg SEARCH_PHRASE = new Msg("AdvancedSearchPane.Phrase"); //$NON-NLS-1$
-    static final Msg SEARCH_GO = new Msg("AdvancedSearchPane.Go"); //$NON-NLS-1$
-    static final Msg SEARCH_SELECT = new Msg("AdvancedSearchPane.Select"); //$NON-NLS-1$
-    static final Msg SEARCH_RESTRICT = new Msg("AdvancedSearchPane.Restrict"); //$NON-NLS-1$
-    static final Msg SEARCH_HEADING = new Msg("AdvancedSearchPane.Heading"); //$NON-NLS-1$
-    static final Msg SEARCH_EXCLUDES = new Msg("AdvancedSearchPane.Excludes"); //$NON-NLS-1$
-    static final Msg SEARCH_INCLUDES = new Msg("AdvancedSearchPane.Includes"); //$NON-NLS-1$
-
-    static final Msg HELP_TEXT = new Msg("DisplaySelectPane.HelpText"); //$NON-NLS-1$
-    static final Msg HELP_TITLE = new Msg("DisplaySelectPane.HelpTitle"); //$NON-NLS-1$
 
     /**
      * Passthrough ctor

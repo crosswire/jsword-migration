@@ -282,15 +282,15 @@ public class PassageSelectionPane extends JPanel
         listSelected();
 
         dlgMain = new JDialog(JOptionPane.getFrameForComponent(parent));
-        JPanel pnl_action = new JPanel();
+        JPanel pnlAction = new JPanel();
         KeyStroke esc = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
         bailout = true;
 
-        JButton btn_go = new JButton(actions.getAction(DONE));
+        JButton btnGo = new JButton(actions.getAction(DONE));
 
-        pnl_action.setLayout(new BorderLayout());
-        pnl_action.setBorder(BorderFactory.createEmptyBorder(5, 5, 15, 20));
-        pnl_action.add(btn_go, BorderLayout.EAST);
+        pnlAction.setLayout(new BorderLayout());
+        pnlAction.setBorder(BorderFactory.createEmptyBorder(5, 5, 15, 20));
+        pnlAction.add(btnGo, BorderLayout.EAST);
 
         ActionListener closer = new ActionListener()
         {
@@ -302,8 +302,8 @@ public class PassageSelectionPane extends JPanel
 
         dlgMain.getContentPane().setLayout(new BorderLayout());
         dlgMain.getContentPane().add(this, BorderLayout.CENTER);
-        dlgMain.getContentPane().add(pnl_action, BorderLayout.SOUTH);
-        dlgMain.getRootPane().setDefaultButton(btn_go);
+        dlgMain.getContentPane().add(pnlAction, BorderLayout.SOUTH);
+        dlgMain.getRootPane().setDefaultButton(btnGo);
         dlgMain.getRootPane().registerKeyboardAction(closer, esc, JComponent.WHEN_IN_FOCUSED_WINDOW);
         dlgMain.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         dlgMain.setTitle(title);
@@ -356,6 +356,9 @@ public class PassageSelectionPane extends JPanel
         }
     }
 
+    /**
+     * Someone clicked on OK
+     */
     public void doDone()
     {
         bailout = false;
@@ -407,9 +410,8 @@ public class PassageSelectionPane extends JPanel
      */
     private Passage ref;
 
-    /*
-     * The ActionFactory holding the actions used by this
-     * EditSite.
+    /**
+     * The ActionFactory holding the actions used by this Component.
      */
     private ActionFactory actions;
 

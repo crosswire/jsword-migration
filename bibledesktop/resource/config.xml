@@ -61,6 +61,10 @@
     <map name="cswing-styles"/>
   </option>
 
+  <option key="BibleDisplay.AntiAliasDisplay" type="boolean">
+    <introspect class="org.crosswire.common.swing.AntiAliasedTextPane" property="AntiAliasing"/>
+  </option>
+
   <option key="BibleDisplay.VersesPerTab" type="number">
     <introspect class="org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay" property="PageSize"/>
   </option>

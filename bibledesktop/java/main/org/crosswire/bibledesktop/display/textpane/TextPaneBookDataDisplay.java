@@ -2,9 +2,6 @@ package org.crosswire.bibledesktop.display.textpane;
 
 import java.awt.Component;
 import java.awt.ComponentOrientation;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.event.MouseListener;
 import java.net.MalformedURLException;
 import java.text.MessageFormat;
@@ -21,6 +18,7 @@ import javax.swing.text.html.HTMLEditorKit;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.URLEvent;
 import org.crosswire.bibledesktop.display.URLEventListener;
+import org.crosswire.common.swing.AntiAliasedTextPane;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.xml.Converter;
@@ -410,21 +408,4 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
      * The listeners for handling urls
      */
     private EventListenerList listenerList = new EventListenerList();
-
-    /**
-     * 
-     */
-    public class AntiAliasedTextPane extends JTextPane
-    {
-        /* (non-Javadoc)
-         * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
-         */
-        public void paintComponent(Graphics g)
-        {
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-            g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-            super.paintComponent(g2);
-        }
-    }
 }
