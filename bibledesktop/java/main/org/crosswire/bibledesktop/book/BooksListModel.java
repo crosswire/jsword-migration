@@ -214,7 +214,7 @@ public class BooksListModel extends AbstractListModel
     private static Logger log = Logger.getLogger(BooksListModel.class);
 
     /**
-     * SERIALUID(dms): A placeholder for the ultimate version id.
+     * Serialization ID
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3257568408165036595L;
 }

@@ -592,7 +592,7 @@ public class EditSitePane extends JPanel
     private JPanel pnlAction;
 
     /**
-     * SERIALUID(dms): A placeholder for the ultimate version id.
+     * Serialization ID
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3256446910616057650L;
 }

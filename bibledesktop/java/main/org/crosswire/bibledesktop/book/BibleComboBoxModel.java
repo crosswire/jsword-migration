@@ -280,7 +280,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
     protected int level = 0;
 
     /**
-     * SERIALUID(dms): A placeholder for the ultimate version id.
+     * Serialization ID
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3616449020667442997L;
 }

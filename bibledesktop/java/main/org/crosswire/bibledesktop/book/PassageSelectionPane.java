@@ -427,9 +427,9 @@ public class PassageSelectionPane extends JPanel
     protected JDialog dlgMain = null;
 
     /**
-     * SERIALUID(dms): A placeholder for the ultimate version id.
+     * Serialization ID
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3546920298944673072L;
 
     /**
      * Update the list whenever the textbox changes

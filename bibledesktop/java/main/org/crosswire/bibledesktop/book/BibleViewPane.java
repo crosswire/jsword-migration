@@ -376,9 +376,9 @@ public class BibleViewPane extends JPanel implements Titleable, Clearable
     protected static final Logger log = Logger.getLogger(BibleViewPane.class);
 
     /**
-     * SERIALUID(dms): A placeholder for the ultimate version id.
+     * Serialization ID
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3258415036346282038L;
 
     /**
      * Filter out verse lists

@@ -242,7 +242,7 @@ public class PassageListModel extends AbstractListModel implements PassageListen
     private RestrictionType restrict;
 
     /**
-     * SERIALUID(dms): A placeholder for the ultimate version id.
+     * Serialization ID
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3761692273179964725L;
 }

@@ -131,7 +131,7 @@ public class PassageListCellRenderer implements ListCellRenderer, Serializable
     private Map hash = new HashMap();
 
     /**
-     * SERIALUID(dms): A placeholder for the ultimate version id.
+     * Serialization ID
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3978423624430270256L;
 }

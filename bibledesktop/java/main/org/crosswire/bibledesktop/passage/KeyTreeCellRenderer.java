@@ -62,7 +62,7 @@ public class KeyTreeCellRenderer extends DefaultTreeCellRenderer
     private static Logger log = Logger.getLogger(KeyTreeCellRenderer.class);
 
     /**
-     * SERIALUID(dms): A placeholder for the ultimate version id.
+     * Serialization ID
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3545232531516765241L;
 }
