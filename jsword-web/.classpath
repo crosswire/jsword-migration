@@ -7,6 +7,7 @@
 	<classpathentry kind="src" path="/bibledesktop"/>
 	<classpathentry kind="src" path="java/main"/>
 	<classpathentry kind="src" path="java/test"/>
+	<classpathentry kind="src" path="java/limbo"/>
 	<classpathentry exported="true" kind="lib" path="resource"/>
 	<classpathentry kind="output" path="target/eclipse/classes"/>
 </classpath>
