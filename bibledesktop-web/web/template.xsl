@@ -11,11 +11,9 @@
     method="xml"
     indent="yes"
     encoding="windows-1252"
+    doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"
+    doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
     />
-    <!--
-    doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
-    doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
-    -->
 
 <xsl:template match="/jsp:root">
   <jsp:root version="1.2">
@@ -25,11 +23,11 @@
 
 <xsl:template match="html:html">
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <link rel="stylesheet" type="text/css" href="sword.css"/>
     <xsl:copy-of select="html:head/*"/>
-    <script language="javascript">
+    <script type="text/javascript">
       <![CDATA[
       var thispage = location.href.substring(location.href.lastIndexOf("/")+1);
       function writeLink(parentName, dest, title)
@@ -71,7 +69,7 @@
     <xsl:copy-of select="html:body/*"/>
 
     <div id="side">
-      <script language="javascript">
+      <script type="text/javascript">
         <![CDATA[
         writeLink("side", "index.html", "Home");
         writeLink("side", "download.html", "Download");
