@@ -1,4 +1,3 @@
-
 package org.crosswire.bibledesktop.passage;
 
 import javax.swing.AbstractListModel;
@@ -94,7 +93,7 @@ public class PassageListModel extends AbstractListModel implements PassageListen
     {
         if (mode != LIST_VERSES && mode != LIST_RANGES)
         {
-            throw new IllegalArgumentException(""+mode); //$NON-NLS-1$
+            throw new IllegalArgumentException("" + mode); //$NON-NLS-1$
         }
 
         this.mode = mode;
@@ -213,6 +212,8 @@ public class PassageListModel extends AbstractListModel implements PassageListen
      */
     public void setPassage(Passage ref)
     {
+        int size = getSize();
+
         if (this.ref != null)
         {
             this.ref.removePassageListener(this);
@@ -225,7 +226,7 @@ public class PassageListModel extends AbstractListModel implements PassageListen
         }
 
         this.ref = ref;
-        fireContentsChanged(this, 0, getSize());
+        fireContentsChanged(this, 0, size);
     }
 
     /**
