@@ -5,14 +5,14 @@
 
 <module name="Checker">
 
-  <!-- property name="basedir" value="T:\share\joe\jsword\java\"/ -->
+  <property name="basedir" value="@source.java@"/>
 
   <!-- enforce package documentation -->
   <module name="PackageHtml"/>
 
   <module name="TreeWalker">
 
-    <!-- property name="cacheFile" value="T:\share\joe\jsword\target\ant\temp\checkstyle\cachefile.dat"/ -->
+    <property name="cacheFile" value="@target.checkstyle@/cachefile.dat"/>
 
     <!-- JavaDoc checks -->
     <module name="IllegalImport"/>
