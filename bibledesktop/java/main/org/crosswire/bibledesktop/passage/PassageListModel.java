@@ -91,10 +91,8 @@ public class PassageListModel extends AbstractListModel implements PassageListen
      */
     public void setMode(int mode)
     {
-        if (mode != LIST_VERSES && mode != LIST_RANGES)
-        {
-            throw new IllegalArgumentException("" + mode); //$NON-NLS-1$
-        }
+        // TODO (DM): convert list mode to an Enum
+        assert (mode == LIST_VERSES || mode == LIST_RANGES);
 
         this.mode = mode;
     }
@@ -134,19 +132,7 @@ public class PassageListModel extends AbstractListModel implements PassageListen
      */
     public int getSize()
     {
-        if (ref == null)
-        {
-            return 0;
-        }
-
-        if (mode == LIST_RANGES)
-        {
-            return ref.countRanges(restrict);
-        }
-        else
-        {
-            return ref.countVerses();
-        }
+        return size;
     }
 
     /**
@@ -178,7 +164,9 @@ public class PassageListModel extends AbstractListModel implements PassageListen
      */
     public void versesAdded(PassageEvent ev)
     {
-        fireContentsChanged(ev.getSource(), 0, getSize());
+        fireIntervalRemoved(this, 0, size);
+        fireIntervalAdded(this, 0, getSize());
+
         // it would be good to be able to do something like:
         // fireIntervalAdded(ev.getSource(), ev.getLowerIndex(), ev.getUpperIndex());
     }
@@ -190,7 +178,9 @@ public class PassageListModel extends AbstractListModel implements PassageListen
      */
     public void versesRemoved(PassageEvent ev)
     {
-        fireContentsChanged(ev.getSource(), 0, getSize());
+        fireIntervalRemoved(this, 0, size);
+        fireIntervalAdded(this, 0, getSize());
+
         // it would be good to be able to do something like:
         // fireIntervalRemoved(ev.getSource(), ev.getLowerIndex(), ev.getUpperIndex());
     }
@@ -202,7 +192,9 @@ public class PassageListModel extends AbstractListModel implements PassageListen
      */
     public void versesChanged(PassageEvent ev)
     {
-        fireContentsChanged(ev.getSource(), 0, getSize());
+        fireIntervalRemoved(this, 0, size);
+        fireIntervalAdded(this, 0, getSize());
+
         // it would be good to be able to do something like:
         // fireContentsChanged(ev.getSource(), ev.getLowerIndex(), ev.getUpperIndex());
     }
@@ -212,21 +204,35 @@ public class PassageListModel extends AbstractListModel implements PassageListen
      */
     public void setPassage(Passage ref)
     {
-        int size = getSize();
+        fireIntervalRemoved(this, 0, size);
 
         if (this.ref != null)
         {
             this.ref.removePassageListener(this);
         }
 
+        this.ref = ref;
+
         if (ref != null)
         {
             ref.optimizeReads();
             ref.addPassageListener(this);
+
+            if (mode == LIST_RANGES)
+            {
+                size = ref.countRanges(restrict);
+            }
+            else
+            {
+                size = ref.countVerses();
+            }
+        }
+        else
+        {
+            size = 0;
         }
 
-        this.ref = ref;
-        fireContentsChanged(this, 0, size);
+        fireIntervalAdded(this, 0, getSize());
     }
 
     /**
@@ -251,6 +257,12 @@ public class PassageListModel extends AbstractListModel implements PassageListen
      * The Passage that we are modelling
      */
     private Passage ref;
+
+    /**
+     * We need to cache the passage size because we need to report on changed
+     * ranges, when informed by the passage that has already changed
+     */
+    private int size = 0;
 
     /**
      * Are we modelling in groups or individually

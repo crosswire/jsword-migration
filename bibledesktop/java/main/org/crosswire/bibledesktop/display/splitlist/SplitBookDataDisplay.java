@@ -21,11 +21,10 @@ import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.passage.KeyList;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageConstants;
-import org.crosswire.jsword.passage.PassageFactory;
 import org.crosswire.jsword.passage.PassageUtil;
 import org.crosswire.jsword.passage.VerseRange;
 
@@ -82,10 +81,11 @@ public class SplitBookDataDisplay implements BookDataDisplay
         */
 
         //*
+        model = new PassageListModel();
         model.setMode(PassageListModel.LIST_RANGES);
         model.setRestriction(PassageConstants.RESTRICT_CHAPTER);
 
-        list.setModel(model);
+        list = new JList(model);
         list.addListSelectionListener(new ListSelectionListener()
         {
             public void valueChanged(ListSelectionEvent ev)
@@ -112,16 +112,14 @@ public class SplitBookDataDisplay implements BookDataDisplay
         JButton blur5 = new JButton(actBlur5);
         blur5.setText(null);
 
-        JPanel mutate = new JPanel();
-        mutate.setLayout(new FlowLayout());
+        JPanel mutate = new JPanel(new FlowLayout());
         mutate.add(delete);
         mutate.add(blur1);
         mutate.add(blur5);
 
-        JPanel data = new JPanel();
-        data.setLayout(new BorderLayout());
-        data.add(scroll, BorderLayout.CENTER);
+        JPanel data = new JPanel(new BorderLayout());
         data.add(mutate, BorderLayout.NORTH);
+        data.add(scroll, BorderLayout.CENTER);
 
         JSplitPane split = new JSplitPane();
         split.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
@@ -130,7 +128,7 @@ public class SplitBookDataDisplay implements BookDataDisplay
         split.setOneTouchExpandable(true);
         split.setDividerLocation(0.0D);
 
-        main.setLayout(new BorderLayout());
+        main = new JPanel(new BorderLayout());
         main.add(split, BorderLayout.CENTER);
     }
 
@@ -159,21 +157,14 @@ public class SplitBookDataDisplay implements BookDataDisplay
      */
     private void doBlur(int amount)
     {
-        try
+        Passage ref = PassageUtil.getPassage(key);
+        
+        if (ref != null)
         {
-            Passage ref = PassageUtil.getPassage(key);
-
-            if (ref != null)
-            {
-                ref.blur(amount, PassageConstants.RESTRICT_CHAPTER);
-                setBookData(book, ref);
-
-                updateParents();
-            }
-        }
-        catch (BookException ex)
-        {
-            Reporter.informUser(this, ex);
+            ref.blur(amount, PassageConstants.RESTRICT_CHAPTER);
+            setBookData(book, ref);
+            
+            updateParents();
         }
     }
 
@@ -182,29 +173,18 @@ public class SplitBookDataDisplay implements BookDataDisplay
      */
     public void doDeleteSelected()
     {
-        try
-        {
-            /*
-            PassageGuiUtil.deleteSelectedVersesFromTree(tree);
-            Key updated = model.getKey();
-            setBookData(book, updated);
-            Passage ref = PassageUtil.getPassage(updated);
-            */
+        /*
+        PassageGuiUtil.deleteSelectedVersesFromTree(tree);
+        Key updated = model.getKey();
+        setBookData(book, updated);
+        Passage ref = PassageUtil.getPassage(updated);
+        */
 
-            PassageGuiUtil.deleteSelectedVersesFromList(list);
+        PassageGuiUtil.deleteSelectedVersesFromList(list);
 
-            // Update the text box
-            Passage ref = model.getPassage();
-            key = ref;
+        setBookData(book, model.getPassage());
 
-            setBookData(book, ref);
-
-            updateParents();
-        }
-        catch (BookException ex)
-        {
-            Reporter.informUser(this, ex);
-        }
+        updateParents();
     }
 
     /**
@@ -229,14 +209,31 @@ public class SplitBookDataDisplay implements BookDataDisplay
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
      */
-    public void setBookData(Book book, Key key) throws BookException
+    public void setBookData(Book book, Key key)
     {
+        boolean keyChanged = this.key == null || ! this.key.equals(key);
+        boolean bookChanged = this.book == null || ! this.book.equals(book);
+ 
         this.book = book;
         this.key = key;
 
         //model = new KeyTreeModel(key);
-        model.setPassage(PassageUtil.getPassage(key));
-        child.setBookData(book, key);
+        // Only set the passage if it has changed
+        if (keyChanged)
+        {
+            log.debug("new passage chosen: " + key.getName()); //$NON-NLS-1$
+            model.setPassage(PassageUtil.getPassage(key));
+        }
+        
+        if (bookChanged || keyChanged)
+        {
+            if (bookChanged)
+            {
+                log.debug("new bible chosen: " + book); //$NON-NLS-1$
+            }
+            child.setBookData(book, key);
+        }
+
         setActive();
     }
 
@@ -297,19 +294,27 @@ public class SplitBookDataDisplay implements BookDataDisplay
             }
             else
             {
-                Passage ref = PassageFactory.createPassage();
+                KeyList selectedKey = book.createEmptyKeyList();
                 for (int i=0; i<selected.length; i++)
                 {
-                    ref.add((VerseRange) selected[i]);
+                    selectedKey.add((VerseRange) selected[i]);
                 }
 
                 // if there was a single selection then show the whole chapter
                 if (selected.length == 1)
                 {
-                    ref.blur(1000, PassageConstants.RESTRICT_CHAPTER);
+                    if (selectedKey instanceof Passage)
+                    {
+                        Passage ref = (Passage) selectedKey;
+                        ref.blur(1000, PassageConstants.RESTRICT_CHAPTER);
+                    }
+                    else
+                    {
+                        selectedKey.blur(5);
+                    }
                 }
 
-                local = ref;
+                local = selectedKey;
             }
 
             child.setBookData(book, local);
@@ -342,12 +347,12 @@ public class SplitBookDataDisplay implements BookDataDisplay
     /**
      * The whole passage that we are viewing
      */
-    private Key key = null;
+    private Key key;
 
     /**
      * What book are we currently viewing?
      */
-    private Book book = null;
+    private Book book;
 
     /**
      * The log stream
@@ -357,13 +362,13 @@ public class SplitBookDataDisplay implements BookDataDisplay
     /*
      * GUI Components
      */
-    private JPanel main = new JPanel();
-    private BookDataDisplay child = null;
-    private JList list = new JList();
-    private PassageListModel model = new PassageListModel();
-    private Action actDelete = null;
-    private Action actBlur1 = null;
-    private Action actBlur5 = null;
+    private JPanel main;
+    private BookDataDisplay child;
+    private JList list;
+    private PassageListModel model;
+    private Action actDelete;
+    private Action actBlur1;
+    private Action actBlur5;
     /*
     private JTree tree = new JTree();
     private KeyTreeModel model = null;

@@ -16,13 +16,11 @@ import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
 import org.crosswire.bibledesktop.display.scrolled.ScrolledBookDataDisplay;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
-import org.crosswire.jsword.passage.PassageFactory;
 import org.crosswire.jsword.passage.PassageUtil;
 import org.crosswire.jsword.passage.Verse;
 
@@ -130,10 +128,7 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
         try
         {
             Verse verse = set.getVerse();
-            ref = PassageFactory.createPassage();
-            ref.add(verse);
-
-            display.setBookData(bmd.getBook(), ref);
+            display.setBookData(bmd.getBook(), verse);
         }
         catch (Exception ex)
         {
@@ -174,7 +169,7 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
      */
-    public void setBookData(Book book, Key key) throws BookException
+    public void setBookData(Book book, Key key)
     {
         BookMetaData bmd = book.getBookMetaData();
         cboComments.setSelectedItem(bmd);

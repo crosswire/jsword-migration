@@ -9,6 +9,7 @@ import javax.swing.event.HyperlinkListener;
 import javax.swing.text.html.HTMLEditorKit;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
+import org.crosswire.common.util.Reporter;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
 import org.crosswire.common.xml.TransformingSAXEventProvider;
@@ -60,7 +61,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
      */
-    public void setBookData(Book book, Key key) throws BookException
+    public void setBookData(Book book, Key key)
     {
         this.book = book;
         this.key = key;
@@ -76,7 +77,15 @@ public class TextPaneBookDataDisplay implements BookDataDisplay
         boolean direction = bmd.isLeftToRight();
         txtView.applyComponentOrientation(direction ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
 
-        BookData bdata = book.getData(key);
+        BookData bdata = null;
+        try
+        {
+            bdata = book.getData(key);
+        }
+        catch (BookException e)
+        {
+            Reporter.informUser(this, e);
+        }
 
         try
         {
@@ -96,7 +105,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay
         }
         catch (Exception ex)
         {
-            throw new BookException(Msg.TRANSFORM_FAIL, ex);
+            Reporter.informUser(this, ex);
         }
     }
 

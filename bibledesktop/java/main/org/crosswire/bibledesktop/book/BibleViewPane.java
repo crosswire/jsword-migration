@@ -22,11 +22,10 @@ import org.crosswire.bibledesktop.display.splitlist.SplitBookDataDisplay;
 import org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
-import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Passage;
-import org.crosswire.jsword.passage.PassageFactory;
+import org.crosswire.jsword.passage.PassageUtil;
 
 /**
  * A quick Swing Bible display pane.
@@ -78,20 +77,7 @@ public class BibleViewPane extends JPanel
              */
             public void passageSelected(DisplaySelectEvent ev)
             {
-                if (saved == null)
-                {
-                    fireTitleChanged(new TitleChangedEvent(BibleViewPane.this, getTitle()));
-                }
-
-                try
-                {
-                    log.debug("new bible chosen: "+ev.getBook()); //$NON-NLS-1$
-                    pnlPassg.setBookData(ev.getBook(), ev.getPassage());
-                }
-                catch (BookException ex)
-                {
-                    Reporter.informUser(BibleViewPane.this, ex);
-                }
+                setKey(ev.getKey());
             }
 
             /* (non-Javadoc)
@@ -99,8 +85,7 @@ public class BibleViewPane extends JPanel
              */
             public void bookChosen(DisplaySelectEvent ev)
             {
-                log.debug("new passage chosen: "+ev.getPassage().getName()); //$NON-NLS-1$
-                setPassage(ev.getPassage());
+                pnlPassg.setBookData(ev.getBook(), ev.getKey());
             }
         });
 
@@ -221,9 +206,9 @@ public class BibleViewPane extends JPanel
             }
 
             Reader in = new FileReader(saved);
-            Passage ref = PassageFactory.createPassage();
-            ref.readDescription(in);
-            setPassage(ref);
+            Passage ref = PassageUtil.readPassage(in);
+            setKey(ref);
+            in.close();
         }
     }
 
@@ -265,16 +250,13 @@ public class BibleViewPane extends JPanel
     /**
      * Accessor for the current passage
      */
-    public void setPassage(Passage ref)
+    public void setKey(Key key)
     {
-        try
+        pnlSelect.setPassageLabel(key.getName());
+        pnlPassg.setBookData(pnlSelect.getBook(), key);
+        if (saved == null)
         {
-            pnlSelect.setPassage(ref);
-            pnlPassg.setBookData(pnlSelect.getBook(), ref);
-        }
-        catch (BookException ex)
-        {
-            Reporter.informUser(this, ex);
+            fireTitleChanged(new TitleChangedEvent(BibleViewPane.this, getTitle()));
         }
     }
 

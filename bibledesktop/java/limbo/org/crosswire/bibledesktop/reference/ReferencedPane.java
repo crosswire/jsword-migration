@@ -28,7 +28,6 @@ import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
 import org.crosswire.bibledesktop.passage.KeyTreeNode;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
@@ -127,9 +126,9 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
      */
-    public void setBookData(Book book, Key key) throws BookException
+    public void setBookData(Book book, Key key)
     {
-        throw new NullPointerException("not implemented"); //$NON-NLS-1$
+        throw new UnsupportedOperationException(); //$NON-NLS-1$
     }
 
     /* (non-Javadoc)

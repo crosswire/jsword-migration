@@ -15,8 +15,6 @@ import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
-import org.crosswire.jsword.passage.Passage;
-import org.crosswire.jsword.passage.PassageFactory;
 import org.crosswire.jsword.passage.VerseRange;
 
 /**
@@ -83,11 +81,9 @@ public class PassageListCellRenderer implements ListCellRenderer, Serializable
                 VerseRange range = (VerseRange) value;
                 String text = (String) hash.get(range);
 
-                Passage ref = PassageFactory.createPassage();
-                ref.add(range);
                 if (text == null)
                 {
-                    BookData bdata = bible.getData(ref);
+                    BookData bdata = bible.getData(range);
                     String simple = bdata.getPlainText();
                     text = "<html><b>"+range.getName()+"</b> "+simple; //$NON-NLS-1$ //$NON-NLS-2$
                     hash.put(range, text);

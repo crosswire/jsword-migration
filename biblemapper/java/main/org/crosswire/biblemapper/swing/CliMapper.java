@@ -13,8 +13,6 @@ import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.Search;
 import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
-import org.crosswire.jsword.passage.Passage;
-import org.crosswire.jsword.passage.PassageFactory;
 import org.crosswire.jsword.passage.PassageTally;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.passage.VerseRange;
@@ -99,10 +97,7 @@ public class CliMapper
                     for (int v=1; v<=BibleInfo.versesInChapter(b, c); v++)
                     {
                         Verse find = new Verse(b, c, v);
-                        Passage ref = PassageFactory.createPassage();
-                        ref.add(find);
-
-                        BookData bdata = book.getData(ref);
+                        BookData bdata = book.getData(find);
                         String text = bdata.getPlainText();
                         PassageTally temp = (PassageTally) book.find(new Search(text, true));
                         temp.setOrdering(PassageTally.ORDER_TALLY);

@@ -6,7 +6,6 @@ import javax.swing.event.HyperlinkListener;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.passage.Key;
 
 /**
@@ -90,7 +89,7 @@ public class ProxyBookDataDisplay implements BookDataDisplay
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.BookData)
      */
-    public void setBookData(Book book, Key key) throws BookException
+    public void setBookData(Book book, Key key)
     {
         proxy.setBookData(book, key);
     }

@@ -5,7 +5,6 @@ import java.awt.Component;
 import javax.swing.event.HyperlinkListener;
 
 import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.passage.Key;
 
 /**
@@ -65,7 +64,7 @@ public interface BookDataDisplay
      * @param book The Book to read data from
      * @param key The key to read from the given book
      */
-    public void setBookData(Book book, Key key) throws BookException;
+    public void setBookData(Book book, Key key);
 
     /**
      * The Book Key that we are displaying, or null if we are not displaying

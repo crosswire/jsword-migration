@@ -35,9 +35,7 @@ import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Search;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchVerseException;
-import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageConstants;
-import org.crosswire.jsword.passage.PassageFactory;
 import org.crosswire.jsword.passage.PassageTally;
 
 /**
@@ -145,7 +143,10 @@ public class DisplaySelectPane extends JPanel
         {
             public void itemStateChanged(ItemEvent ev)
             {
-                changeVersion();
+                if (ev.getStateChange() == ItemEvent.SELECTED)
+                {
+                    changeVersion();                    
+                }
             }
         });
         return cboVersn;
@@ -357,14 +358,15 @@ public class DisplaySelectPane extends JPanel
         try
         {
             String param = txtSearch.getText();
+            Book book = bmd.getBook();
+
             Search search = new Search(param, false);
             if (chkSRestrict.isSelected())
             {
-                Passage restrict = PassageFactory.createPassage(txtSRestrict.getText());
+                Key restrict = book.getKey(txtSRestrict.getText());
                 search.setRestriction(restrict);
             }
 
-            Book book = bmd.getBook();
             Key key = book.find(search);
 
             txtPassg.setText(key.getName());
@@ -394,15 +396,16 @@ public class DisplaySelectPane extends JPanel
         try
         {
             String param = txtMatch.getText();
+            Book book = bmd.getBook();
+
             Search search = new Search(param, true);
             if (chkMRestrict.isSelected())
             {
-                Passage restrict = PassageFactory.createPassage(txtMRestrict.getText());
+                Key restrict = book.getKey(txtMRestrict.getText());
                 search.setRestriction(restrict);
             }
 
-            Book version = bmd.getBook();
-            Key key = version.find(search);
+            Key key = book.find(search);
 
             // we get PassageTallys for best match searches
             if (key instanceof PassageTally)
@@ -438,10 +441,10 @@ public class DisplaySelectPane extends JPanel
 
         try
         {
-            Book bible = bmd.getBook();
-            Passage ref = getPassage();
+            Book book = bmd.getBook();
+            Key key = book.getKey(txtPassg.getText());
 
-            fireCommandMade(new DisplaySelectEvent(this, ref, bible));
+            fireCommandMade(new DisplaySelectEvent(this, key, book));
         }
         catch (NoSuchVerseException ex)
         {
@@ -515,20 +518,14 @@ public class DisplaySelectPane extends JPanel
     /**
      * The passage string, post parsing
      */
-    public Passage getPassage() throws NoSuchVerseException
+    public void setPassageLabel(String text)
     {
-        String param = txtPassg.getText();
-        return PassageFactory.createPassage(param);
-    }
-
-    /**
-     * The passage string, post parsing
-     */
-    public void setPassage(Passage ref)
-    {
-        txtPassg.setText(ref.getName());
-
-        doPassageAction();
+        String passage = txtPassg.getText();
+        if (!passage.equals(text))
+        {
+            txtPassg.setText(text);
+            setDefaultName(text);
+        }
     }
 
     /**
@@ -546,9 +543,9 @@ public class DisplaySelectPane extends JPanel
         try
         {
             Book book = bmd.getBook();
-            Passage ref = getPassage();
+            Key key = book.getKey(txtPassg.getText());
 
-            fireVersionChanged(new DisplaySelectEvent(this, ref, book));
+            fireVersionChanged(new DisplaySelectEvent(this, key, book));
         }
         catch (Exception ex)
         {

@@ -30,7 +30,7 @@ import org.crosswire.common.swing.DocumentWriter;
 import org.crosswire.common.swing.ExceptionPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.book.basic.Verifier;
-import org.crosswire.jsword.passage.Passage;
+import org.crosswire.jsword.passage.KeyList;
 
 /**
  * This displays the results of a comparision that occurs in a separate
@@ -66,13 +66,13 @@ public class CompareResultsPane extends JPanel implements Runnable
     public CompareResultsPane(Verifier ver)
     {
         this.ver = ver;
-        jbInit();
+        init();
     }
 
     /**
      * Create the GUI
      */
-    private void jbInit()
+    private void init()
     {
         setTitles();
         boxBibles = Box.createVerticalBox();
@@ -179,9 +179,9 @@ public class CompareResultsPane extends JPanel implements Runnable
     /**
      * The Passage that we will check, null for no check.
      */
-    public void setCheckPassages(Passage check_ref)
+    public void setCheckPassages(KeyList checkRef)
     {
-        this.checkRef = check_ref;
+        this.checkRef = checkRef;
         setTitles();
     }
 
@@ -282,7 +282,7 @@ public class CompareResultsPane extends JPanel implements Runnable
     /**
      * The passage to check
      */
-    private Passage checkRef = null;
+    private KeyList checkRef = null;
 
     /**
      * The Bible verifier

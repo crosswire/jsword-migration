@@ -588,10 +588,8 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
      */
     public static void setInitialLayoutType(int initial)
     {
-        if (initial != LAYOUT_TYPE_TDI && initial != LAYOUT_TYPE_MDI)
-        {
-            throw new IllegalArgumentException();
-        }
+        // TODO (DM): convert layout type to an Enum
+        assert (initial == LAYOUT_TYPE_TDI || initial == LAYOUT_TYPE_MDI);
 
         Desktop.initial = initial;
     }
@@ -682,7 +680,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
 
                 addBibleViewPane(view);
 
-                view.setPassage(ref);
+                view.setKey(ref);
             }
             catch (NoSuchVerseException ex)
             {

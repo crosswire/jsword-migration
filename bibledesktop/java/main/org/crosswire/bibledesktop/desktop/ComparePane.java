@@ -25,7 +25,8 @@ import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.basic.Verifier;
-import org.crosswire.jsword.passage.Passage;
+import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.passage.KeyList;
 import org.crosswire.jsword.passage.PassageFactory;
 
 /**
@@ -74,53 +75,53 @@ public class ComparePane extends EirPanel
      */
     private void jbInit()
     {
-        cbo_bible1.setModel(mdl_bibles1);
-        cbo_bible1.setRenderer(new BookListCellRenderer());
-        cbo_bible2.setModel(mdl_bibles2);
-        cbo_bible2.setRenderer(new BookListCellRenderer());
-        pnl_bibles.setLayout(new BoxLayout(pnl_bibles, BoxLayout.Y_AXIS));
-        pnl_bibles.setAlignmentX((float) 0.5);
-        pnl_bibles.setBorder(new TitledBorder(Msg.COMPARE_TITLE.toString()));
-        btn_go.addActionListener(new ActionListener()
+        cboBible1.setModel(mdlBibles1);
+        cboBible1.setRenderer(new BookListCellRenderer());
+        cboBible2.setModel(mdlBibles2);
+        cboBible2.setRenderer(new BookListCellRenderer());
+        pnlBibles.setLayout(new BoxLayout(pnlBibles, BoxLayout.Y_AXIS));
+        pnlBibles.setAlignmentX((float) 0.5);
+        pnlBibles.setBorder(new TitledBorder(Msg.COMPARE_TITLE.toString()));
+        btnGo.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent ev)
             {
                 compare();
             }
         });
-        pnl_bibles.add(cbo_bible1, null);
-        pnl_bibles.add(Box.createVerticalStrut(5), null);
-        pnl_bibles.add(cbo_bible2, null);
+        pnlBibles.add(cboBible1, null);
+        pnlBibles.add(Box.createVerticalStrut(5), null);
+        pnlBibles.add(cboBible2, null);
 
-        txt_verses.setText(PassageFactory.getWholeBiblePassage().toString());
-        lbl_verses.setText(Msg.COMPARE_VERSES.toString());
-        lbl_verses.setLabelFor(txt_verses);
-        pnl_verses.setLayout(new BorderLayout());
-        pnl_verses.add(lbl_verses, BorderLayout.WEST);
-        pnl_verses.add(txt_verses, BorderLayout.CENTER);
-        txt_words.setToolTipText(Msg.COMPARE_WORDS_TIP.toString());
-        lbl_words.setText(Msg.COMPARE_WORDS.toString());
-        lbl_words.setLabelFor(txt_words);
-        pnl_words.setLayout(new BorderLayout());
-        pnl_words.add(lbl_words, BorderLayout.WEST);
-        pnl_words.add(txt_words, BorderLayout.CENTER);
-        pnl_using.setBorder(new TitledBorder(Msg.COMPARE_USING.toString()));
-        pnl_using.setLayout(new BoxLayout(pnl_using, BoxLayout.Y_AXIS));
-        pnl_using.add(pnl_verses, null);
-        pnl_using.add(pnl_words, null);
+        txtVerses.setText(PassageFactory.getWholeBiblePassage().toString());
+        lblVerses.setText(Msg.COMPARE_VERSES.toString());
+        lblVerses.setLabelFor(txtVerses);
+        pnlVerses.setLayout(new BorderLayout());
+        pnlVerses.add(lblVerses, BorderLayout.WEST);
+        pnlVerses.add(txtVerses, BorderLayout.CENTER);
+        txtWords.setToolTipText(Msg.COMPARE_WORDS_TIP.toString());
+        lblWords.setText(Msg.COMPARE_WORDS.toString());
+        lblWords.setLabelFor(txtWords);
+        pnlWords.setLayout(new BorderLayout());
+        pnlWords.add(lblWords, BorderLayout.WEST);
+        pnlWords.add(txtWords, BorderLayout.CENTER);
+        pnlUsing.setBorder(new TitledBorder(Msg.COMPARE_USING.toString()));
+        pnlUsing.setLayout(new BoxLayout(pnlUsing, BoxLayout.Y_AXIS));
+        pnlUsing.add(pnlVerses, null);
+        pnlUsing.add(pnlWords, null);
 
         // I18N: Migrate this to an ActionFactory
-        btn_go.setText(Msg.COMPARE_GO.toString());
-        pnl_buttons.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        pnl_buttons.add(btn_go, null);
+        btnGo.setText(Msg.COMPARE_GO.toString());
+        pnlButtons.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        pnlButtons.add(btnGo, null);
 
-        box_top = Box.createVerticalBox();
-        box_top.add(pnl_bibles, null);
-        box_top.add(pnl_using, null);
-        box_top.add(pnl_buttons, null);
+        boxTop = Box.createVerticalBox();
+        boxTop.add(pnlBibles, null);
+        boxTop.add(pnlUsing, null);
+        boxTop.add(pnlButtons, null);
 
         this.setLayout(new BorderLayout());
-        this.add(box_top, BorderLayout.NORTH);
+        this.add(boxTop, BorderLayout.NORTH);
     }
 
     /**
@@ -136,15 +137,12 @@ public class ComparePane extends EirPanel
      */
     protected void compare()
     {
-        BookMetaData bmd1 = mdl_bibles1.getSelectedBookMetaData(); 
-        BookMetaData bmd2 = mdl_bibles2.getSelectedBookMetaData(); 
+        BookMetaData bmd1 = mdlBibles1.getSelectedBookMetaData();
+        BookMetaData bmd2 = mdlBibles2.getSelectedBookMetaData();
 
         if (bmd1.equals(bmd2))
         {
-            if (JOptionPane.showConfirmDialog(this,
-                Msg.COMPARE_IDENT_QUESTION.toString(),
-                Msg.COMPARE_IDENT_TITLE.toString(),
-                JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
+            if (JOptionPane.showConfirmDialog(this, Msg.COMPARE_IDENT_QUESTION.toString(), Msg.COMPARE_IDENT_TITLE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
             {
                 return;
             }
@@ -152,13 +150,16 @@ public class ComparePane extends EirPanel
 
         try
         {
-            // These casts are safe because we have asked for Bibles below
-            Book bible1 = bmd1.getBook();
-            Book bible2 = bmd2.getBook();
-    
-            String words = txt_words.getText();
-            String ref_text = txt_verses.getText();
-            Passage ref = PassageFactory.createPassage(ref_text);
+            Book book1 = bmd1.getBook();
+            Book book2 = bmd2.getBook();
+
+            String words = txtWords.getText();
+            String refText = txtVerses.getText();
+
+            // Is this right?
+            Key key = book1.getKey(refText);
+            KeyList keylist = book1.createEmptyKeyList();
+            keylist.add(key);
 
             words = words.trim();
             if (words.equals("*")) //$NON-NLS-1$
@@ -170,11 +171,11 @@ public class ComparePane extends EirPanel
                 words = null;
             }
 
-            Verifier ver = new Verifier(bible1, bible2);
+            Verifier ver = new Verifier(book1, book2);
 
             CompareResultsPane results = new CompareResultsPane(ver);
             results.setCheckText(words);
-            results.setCheckPassages(ref);
+            results.setCheckPassages(keylist);
             results.showInFrame(GuiUtil.getFrame(this));
             results.startStop();
         }
@@ -188,26 +189,26 @@ public class ComparePane extends EirPanel
      * The first Bible selection combo.
      * We cast to Bible in compare() so we need to filter
      */
-    private BooksComboBoxModel mdl_bibles1 = new BooksComboBoxModel(BookFilters.getBibles());
+    private BooksComboBoxModel mdlBibles1 = new BooksComboBoxModel(BookFilters.getBibles());
 
     /**
      * The second Bible selection combo
      * We cast to Bible in compare() so we need to filter
      */
-    private BooksComboBoxModel mdl_bibles2 = new BooksComboBoxModel(BookFilters.getBibles());
+    private BooksComboBoxModel mdlBibles2 = new BooksComboBoxModel(BookFilters.getBibles());
 
     /* GUI Components */
-    private Box box_top;
-    private JPanel pnl_bibles = new JPanel();
-    private JPanel pnl_using = new JPanel();
-    private JPanel pnl_verses = new JPanel();
-    private JLabel lbl_verses = new JLabel();
-    private JTextField txt_verses = new JTextField();
-    private JPanel pnl_words = new JPanel();
-    private JLabel lbl_words = new JLabel();
-    private JTextField txt_words = new JTextField();
-    private JComboBox cbo_bible1 = new JComboBox();
-    private JComboBox cbo_bible2 = new JComboBox();
-    private JPanel pnl_buttons = new JPanel();
-    private JButton btn_go = new JButton();
+    private Box boxTop;
+    private JPanel pnlBibles = new JPanel();
+    private JPanel pnlUsing = new JPanel();
+    private JPanel pnlVerses = new JPanel();
+    private JLabel lblVerses = new JLabel();
+    private JTextField txtVerses = new JTextField();
+    private JPanel pnlWords = new JPanel();
+    private JLabel lblWords = new JLabel();
+    private JTextField txtWords = new JTextField();
+    private JComboBox cboBible1 = new JComboBox();
+    private JComboBox cboBible2 = new JComboBox();
+    private JPanel pnlButtons = new JPanel();
+    private JButton btnGo = new JButton();
 }

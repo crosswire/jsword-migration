@@ -1,10 +1,9 @@
-
 package org.crosswire.bibledesktop.book;
 
 import java.util.EventObject;
 
 import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.passage.Passage;
+import org.crosswire.jsword.passage.Key;
 
 /**
  * A DisplaySelectEvent happens whenever a user makes a command.
@@ -35,12 +34,14 @@ public class DisplaySelectEvent extends EventObject
     /**
      * For when a command has been made
      * @param source The thing that started this off
+     * @param key The selected Key
+     * @param book The selected book
      */
-    public DisplaySelectEvent(Object source, Passage ref, Book book)
+    public DisplaySelectEvent(Object source, Key key, Book book)
     {
         super(source);
 
-        this.ref = ref;
+        this.key = key;
         this.book = book;
     }
 
@@ -48,9 +49,9 @@ public class DisplaySelectEvent extends EventObject
      * Get the type of command
      * @return The type of command
      */
-    public Passage getPassage()
+    public Key getKey()
     {
-        return ref;
+        return key;
     }
 
     /**
@@ -65,7 +66,7 @@ public class DisplaySelectEvent extends EventObject
     /**
      * The new passage
      */
-    private Passage ref = null;
+    private Key key = null;
 
     /**
      * The new Book
