@@ -18,4 +18,9 @@
         style="${support.tools}/jdepend26/jdepend.xsl"/>
   </target>
 
+  <target name="antlibs" description="Copy required jars to ant/lib">
+    <echo message="copy ${basedir}/${support.tools}/jdepend26/jdepend.jar"/>
+    <copy file="${support.tools}/jdepend26/jdepend.jar" todir="${ant.home}/lib"/>
+  </target>
+
 </project>
