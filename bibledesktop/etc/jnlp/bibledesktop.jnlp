@@ -10,8 +10,8 @@
     <description>Bible Desktop - Bible Study Software based on the Sword project</description>
     <description kind="short">Bible Desktop is a Bible study package available over the internet</description>
     <description kind="tooltip">Bible Desktop Application</description>
-    <icon href="icon.gif"/>
-    <icon kind="splash" href="splash.gif"/>    
+    <icon href="icon32.png"/>
+    <icon kind="splash" href="icon64.png"/>    
     <offline-allowed/>
   </information>
 

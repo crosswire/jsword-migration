@@ -19,7 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 
 import org.crosswire.common.progress.Job;
 import org.crosswire.common.progress.JobManager;
@@ -83,11 +82,12 @@ public class Splash extends JWindow
         }
 
         JLabel lblPicture = new JLabel();
-        lblPicture.setBackground(Color.BLACK);
+        lblPicture.setBackground(Color.WHITE);
         lblPicture.setOpaque(true);
         lblPicture.setIcon(icon);
-        lblPicture.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
+        lblPicture.setBorder(null);
 
+        /*
         JLabel lblText = new JLabel();
         lblText.setFont(new Font(SPLASH_FONT, Font.BOLD, 48));
         lblText.setForeground(new Color(0x99, 0x66, 0xAA));
@@ -95,25 +95,28 @@ public class Splash extends JWindow
         lblText.setVerticalAlignment(SwingConstants.BOTTOM);
         lblText.setHorizontalAlignment(SwingConstants.RIGHT);
         lblText.setText(Msg.SPLASH_TITLE.toString());
+        */
 
         JPanel pnlDisplay = new JPanel();
         pnlDisplay.setLayout(new GridBagLayout());
-        pnlDisplay.add(lblText, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 10), 0, 0));
+        //pnlDisplay.add(lblText, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 10), 0, 0));
         pnlDisplay.add(lblPicture, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 
         JLabel lblInfo = new JLabel();
-        lblInfo.setBackground(Color.black);
+        lblInfo.setBorder(null);
         lblInfo.setFont(new Font(SPLASH_FONT, 1, 14));
-        lblInfo.setForeground(UIManager.getColor(THUMB_COLOR));
-        lblInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
+        lblInfo.setForeground(Color.BLACK);
+        lblInfo.setBackground(Color.WHITE);
+        //lblInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
         lblInfo.setHorizontalAlignment(SwingConstants.RIGHT);
         lblInfo.setText(Msg.getVersionInfo());
-        lblInfo.setOpaque(false);
+        lblInfo.setOpaque(true);
 
         JPanel pnlInfo = new JPanel();
         JobsProgressBar pnlJobs = new JobsProgressBar(false);
         pnlInfo.setLayout(new BorderLayout(5, 0));
-        pnlInfo.setBackground(Color.black);
+        pnlInfo.setBackground(Color.WHITE);
+        pnlInfo.setOpaque(true);
         pnlInfo.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
         pnlInfo.add(lblInfo, BorderLayout.CENTER);
         pnlInfo.add(pnlJobs, BorderLayout.SOUTH);
@@ -153,7 +156,6 @@ public class Splash extends JWindow
     private CustomWorkListener listener = new CustomWorkListener();
 
     private static final String SPLASH_FONT = "SanSerif"; //$NON-NLS-1$
-    private static final String THUMB_COLOR = "ScrollBar.thumbHighlight"; //$NON-NLS-1$
 
     /**
      * Pack the frame if we get new jobs that could shunt things around
