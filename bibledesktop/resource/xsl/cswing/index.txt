@@ -1,1 +1,3 @@
 simple.xsl
+cutandpaste.xsl
+cutandpaste2.xsl
