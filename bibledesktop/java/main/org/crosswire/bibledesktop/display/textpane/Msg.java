@@ -28,7 +28,7 @@ import org.crosswire.common.util.MsgBase;
  */
 class Msg extends MsgBase
 {
-    static final Msg TRANSFORM_FAIL = new Msg("Transformation failure"); //$NON-NLS-1$
+    static final Msg TRANSFORM_FAIL = new Msg("TextPaneBookDataDisplay.TransformationFailure"); //$NON-NLS-1$
 
     /**
      * Passthrough ctor

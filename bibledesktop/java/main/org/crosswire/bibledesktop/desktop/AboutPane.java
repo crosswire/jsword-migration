@@ -25,7 +25,6 @@ import org.crosswire.common.progress.swing.JobsViewPane;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.ExceptionShelf;
 import org.crosswire.common.swing.MapTableModel;
-import org.crosswire.jsword.util.Project;
 
 /**
  * AboutPane is a window that contains various advanced user tools in
@@ -87,7 +86,7 @@ public class AboutPane
         lbl_info.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
         lbl_info.setOpaque(true);
         lbl_info.setHorizontalAlignment(SwingConstants.RIGHT);
-        lbl_info.setText(Msg.VERSION_TITLE.toString(Project.instance().getVersion()));
+        lbl_info.setText(Msg.getVersionInfo());
 
         JTabbedPane tab_main = new JTabbedPane();
         
@@ -109,7 +108,7 @@ public class AboutPane
         pnl_splash.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         pnl_splash.add(lbl_picture, BorderLayout.CENTER);
         pnl_splash.add(lbl_info, BorderLayout.SOUTH);
-        tab_main.add(pnl_splash, Project.instance().getName());
+        tab_main.add(pnl_splash, Msg.getApplicationTitle());
 
         if (advanced)
         {
@@ -170,7 +169,7 @@ public class AboutPane
     {
         dlg_main = new JDialog(JOptionPane.getFrameForComponent(parent));
         dlg_main.getContentPane().add(pnl_main);
-        dlg_main.setTitle(Msg.ABOUT_TITLE.toString(Project.instance().getName()));
+        dlg_main.setTitle(Msg.getAboutInfo());
         dlg_main.setModal(true);
         dlg_main.addWindowListener(new WindowAdapter()
         {

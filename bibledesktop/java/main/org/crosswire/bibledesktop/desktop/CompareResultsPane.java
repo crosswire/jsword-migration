@@ -59,6 +59,7 @@ import org.crosswire.jsword.passage.Passage;
  */
 public class CompareResultsPane extends JPanel implements Runnable
 {
+    // DEAD(DM): This class is not used. Find a use for it or delete it.
     /**
      * Basic Constructor
      */

@@ -51,6 +51,7 @@ import org.crosswire.jsword.book.BookMetaData;
  */
 public class BookChooser extends JPanel
 {
+    // DEAD(DM): This class is not used. Find a use for it or delete it.
     /**
      * Basic constructor
      */
@@ -88,6 +89,7 @@ public class BookChooser extends JPanel
             }
         });
 
+        // TODO: i18n
         btn_ok.setText(Msg.CHOOSER_OK.toString());
         btn_ok.setMnemonic(Msg.CHOOSER_OK.toString().charAt(0));
         btn_ok.addActionListener(new ActionListener()

@@ -1,0 +1,241 @@
+<project name="bibledesktop" default="all">
+
+  <!--=======================================================================-->
+  <!--
+  When you first check files out of CVS you should run ant using the all target
+  to generate all the source files required for tools like eclipse.
+  -->
+
+  <!--=======================================================================-->
+  <property name="source.root" value="."/>
+  <property name="source.etc" value="${source.root}/etc"/>
+  <property name="source.jar" value="${source.root}/jar"/>
+  <property name="source.java" value="${source.root}/java"/>
+  <property name="source.res" value="${source.root}/resource"/>
+  <property name="target.root" value="target/ant"/>
+  <property name="target.temp" value="${target.root}/temp"/>
+  <property name="target.classes" value="${target.temp}/classes"/>
+  <property name="target.jar" value="${target.temp}/jar"/>
+  <property name="target.swingui" value="${target.root}/swingui/jsword"/>
+
+  <property name="jnlp.alias" value="test builds"/>
+  <property name="jnlp.password" value="p455w0rd"/>
+
+  <!--=======================================================================-->
+  <patternset id="java.non.compile">
+    <include name="**/*.properties"/>
+    <include name="**/*.gif"/>
+    <include name="**/*.jpg"/>
+    <include name="**/*.png"/>
+    <include name="**/*.ser"/>
+  </patternset>
+  <property name="java.non.compile" value="**/*.properties,**/*.gif,**/*.jpg,**/*.png,**/*.ser"/>
+
+  <!--=======================================================================-->
+  <target name="init" description="Prepare for other tasks">
+    <tstamp/>
+    <echo message="Building to: ${target.root}"/>
+  </target>
+
+  <!--=======================================================================-->
+  <target name="check.config">
+    <mkdir dir="${gener.root}/config"/>
+    <style
+        in="${source.res}/config.xml"
+        out="${gener.root}/config/ConfigTest.java"
+        style="${source.etc}/config-test.xsl"/>
+    <mkdir dir="${target.classes}/config"/>
+  </target>
+
+  <!--=======================================================================-->
+  <target name="compile" depends="check.config" description="Validate source syntax">
+    <mkdir dir="${target.classes}/resource"/>
+    <antcall target="compile.section"><param name="section" value="main"/></antcall>
+    <antcall target="compile.section"><param name="section" value="test"/></antcall>
+    <javac debug="on" includes="**/*.java" destdir="${target.classes}/config">
+      <src path="${gener.root}/config"/>
+      <classpath>
+        <dirset dir="${target.classes}"/>
+        <fileset dir="${source.jar}" includes="**/*.jar"/>
+      </classpath>
+    </javac>
+  </target>
+
+  <!--=======================================================================-->
+  <target name="compile.section">
+    <echo message="Compiling ${source.java}/${section}"/>
+    <mkdir dir="${target.classes}/${section}"/>
+    <javac debug="on" includes="**/*.java" destdir="${target.classes}/${section}" source="1.4">
+      <src path="${source.java}/${section}"/>
+      <classpath>
+        <dirset dir="${target.classes}"/>
+        <fileset dir="${source.jar}" includes="**/*.jar"/>
+      </classpath>
+    </javac>
+    <copy todir="${target.classes}/resource">
+      <fileset dir="${source.java}/${section}">
+        <patternset refid="java.non.compile"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <!--=======================================================================-->
+  <target name="jar" depends="compile, jar.check" unless="jar.uptodate" description="create the jar files">
+    <mkdir dir="${target.jar}"/>
+    <jar jarfile="${target.jar}/jsword-swing.jar">
+      <fileset dir="${target.classes}/swing"/>
+      <fileset dir="${target.classes}/resource"/>
+      <fileset dir="${source.res}"/>
+    </jar>
+  </target>
+  <target name="jar.check" description="Check to see that the gui jar file is up to date">
+    <uptodate property="jar.uptodate" targetfile="${target.jar}/jsword-swing.jar">
+      <srcfiles dir="${target.classes}/swing"/>
+    </uptodate>
+  </target>
+
+  <!--=======================================================================-->
+  <target name="jnlp" description="moves files to correct location for JNLP deploy" depends="jar, jnlp.keygen">
+  <!-- consider making smaller class files with: http://sadun-util.sourceforge.net/pack.html -->
+    <mkdir dir="${target.web}/jnlp"/>
+    <copy todir="${target.web}/jnlp" file="${source.etc}/jnlp/${ant.project.name}.jnlp" filtering="true">
+      <filterset>
+        <filter token="HOSTNAME" value="${jnlp.hostname}"/>
+        <filter token="WEBAPP" value="${ant.project.name}"/>
+      </filterset>
+    </copy>
+    <jnlp.sign jar="jsword.jar" dir="${target.jar}"/>
+    <jnlp.sign jar="jsword-swing.jar" dir="${target.jar}"/>
+    <jnlp.sign jar="resource.jar" dir="${target.jar}"/>
+    <jnlp.sign jar="jsword-osis.jar" dir="${target.jar}"/>
+    <jnlp.sign jar="commons-lang-2.0.jar" dir="${source.jar}/lang200"/>
+    <jnlp.sign jar="commons-net-1.1.0.jar" dir="${source.jar}/net110"/>
+    <jnlp.sign jar="jaxb-api.jar" dir="${source.jar}/jaxb10"/>
+    <jnlp.sign jar="jaxb-libs.jar" dir="${source.jar}/jaxb10"/>
+    <jnlp.sign jar="jaxb-ri.jar" dir="${source.jar}/jaxb10"/>
+    <jnlp.sign jar="jdom.jar" dir="${source.jar}/jdom09"/>
+    <jnlp.sign jar="log4j-1.2.7.jar" dir="${source.jar}/log4j127"/>
+    <jnlp.sign jar="lucene-1.3-final.jar" dir="${source.jar}/lucene13"/>
+    <jnlp.sign jar="tar.jar" dir="${source.jar}/jtar25"/>
+    <jnlp.sign jar="winlaf-0.4.jar" dir="${source.jar}/winlaf04"/>
+    <jnlp.sign jar="jlfgr-1_0.jar" dir="${source.jar}/jlfgr10"/>
+  </target>
+
+  <!--=======================================================================-->
+  <macrodef name="jnlp.sign" description="Signs the jar files for jnlp">
+    <attribute name="jar"/>
+    <attribute name="dir"/>
+    <sequential>
+      <antcall target="jnlp.section">
+        <param name="jar" value="@{jar}"/>
+        <param name="dir" value="@{dir}"/>
+      </antcall>
+    </sequential>
+  </macrodef>
+  <target name="jnlp.section" description="Signs the jar files for jnlp" unless="jnlp.section.uptodate.${jar}" depends="jnlp.section.check">
+    <echo message="JNLP prepare: ${jar}"/>
+    <copy todir="${target.web}/jnlp" file="${dir}/${jar}"/>
+    <signjar storepass="${jnlp.password}" alias="${jnlp.alias}" keystore="${basedir}/${ant.project.name}.keystore" keypass="${jnlp.password}" jar="${target.web}/jnlp/${jar}"/>
+  </target>
+  <target name="jnlp.section.check" description="Check to see that the signed jars are up to date">
+    <uptodate property="jnlp.section.uptodate.${jar}" srcfile="${dir}/${jar}" targetfile="${target.web}/jnlp/${jar}"/>
+  </target>
+
+  <!--=======================================================================-->
+  <target name="swingui" depends="jnlp" description="Build a ready to ship/test app">
+    <mkdir dir="${target.swingui}"/>
+    <copy todir="${target.swingui}">
+      <fileset dir="${source.etc}/bin"/>
+      <fileset dir="${target.web}/jnlp" includes="**/*.jar"/>
+    </copy>
+    <chmod perm="a+x">
+      <fileset dir="${target.swingui}">
+        <include name="**/*.sh"/>
+      </fileset>
+    </chmod>
+    <fixcrlf srcdir="${target.swingui}" eol="lf">
+      <include name="**/*.sh"/>
+    </fixcrlf>
+    <fixcrlf srcdir="${target.swingui}" eol="crlf">
+      <include name="**/*.bat"/>
+    </fixcrlf>
+  </target>
+
+  <!--=======================================================================-->
+  <target name="jnlp.keygen" description="Generates a key for use in signing the JARs" unless="jnlp.keygen.uptodate" depends="init, jnlp.keygen.check">
+    <echo message="Generating keystore for webstart testing"/>
+    <genkey alias="${jnlp.alias}" storepass="${jnlp.password}" keystore="${basedir}/${ant.project.name}.keystore">
+      <dname>
+        <param name="CN" value="JSword Project"/>
+        <param name="OU" value="Test Builds"/>
+        <param name="O" value="Crosswire.org"/>
+        <param name="C" value="UK" />
+      </dname>
+    </genkey>
+  </target>
+  <target name="jnlp.keygen.check" description="Check the keystore is there">
+    <available property="jnlp.keygen.uptodate" file="${basedir}/${ant.project.name}.keystore"/>
+  </target>
+
+  <!--=======================================================================-->
+  <target name="exec" depends="compile" description="Run the project using Ant">
+    <java classname="org.crosswire.bibledesktop.desktop.Desktop" fork="true">
+      <assertions enablesystemassertions="true">
+        <enable/>
+      </assertions>
+      <!--
+      org.crosswire.jsword.bibledesktop.Desktop
+      org.crosswire.jsword.book.ReadEverything
+      abbot.editor.Costello
+      org.acm.seguin.tools.install.PrettyPrinterConfigGUI
+      -->
+      <sysproperty key="jsword.bible.dir" value="${source.res}"/>
+      <jvmarg value="-Xmx512m"/>
+      <!-- ${basedir}/${target.swingui}/resource -->
+      <classpath>
+        <fileset dir="${source.jar}/jdom09" includes="**/*.jar"/>
+        <fileset dir="${source.jar}/log4j127" includes="**/*.jar"/>
+        <fileset dir="${source.jar}/lang200" includes="**/*.jar"/>
+        <fileset dir="${source.jar}/jaxb10endorsed" includes="**/*.jar"/>
+        <fileset dir="${source.jar}/jaxb10">
+          <include name="jaxb-api.jar"/>
+          <include name="jaxb-ri.jar"/>
+          <include name="jaxb-libs.jar"/>
+        </fileset>
+        <pathelement path="${target.classes}/common"/>
+        <pathelement path="${target.classes}/jsword"/>
+        <pathelement path="${target.classes}/servlet"/>
+        <pathelement path="${target.classes}/swing"/>
+        <pathelement path="${target.classes}/osis"/>
+        <pathelement path="${target.classes}/resource"/>
+        <pathelement path="${target.classes}/jswordtest"/>
+        <pathelement path="${source.res}"/>
+      </classpath>
+    </java>
+  </target>
+
+  <!--=======================================================================-->
+  <target name="all" depends="clean, swingui" description="Run a full clean/build/deploy/test cycle">
+  </target>
+
+  <!--=======================================================================-->
+  <target name="clean" depends="init" description="Remove the target directory">
+    <delete dir="${target.root}"/>
+  </target>
+
+  <!--=======================================================================-->
+  <target name="cvsup" description="cvs update">
+    <cvs cvsRoot=":pserver:joe@cvs.crosswire.org:/cvs/jsword" dest=".">
+      <commandline>
+        <argument value="-q"/>
+        <argument value="update"/>
+        <argument value="-d"/>
+        <argument value="-P"/>
+      </commandline>
+    </cvs>
+    <chmod perm="755">
+      <fileset dir="${source.etc}/build" includes="**/*.sh"/>
+    </chmod>
+  </target>
+
+</project>

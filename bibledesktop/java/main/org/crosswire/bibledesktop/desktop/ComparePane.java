@@ -60,6 +60,7 @@ import org.crosswire.jsword.passage.PassageFactory;
  */
 public class ComparePane extends EirPanel
 {
+    // DEAD(DM): This class is not used. Find a use for it or delete it.
     /**
      * Basic Constructor
      */

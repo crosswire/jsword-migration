@@ -54,22 +54,13 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="generate" depends="osis, check.config" description="Generate/update source files">
+  <target name="subprojects">
   </target>
 
   <!--=======================================================================-->
-  <target name="compile" depends="osis, generate" description="Validate source syntax">
+  <target name="compile" description="Validate source syntax">
     <mkdir dir="${target.classes}/resource"/>
-    <antcall target="compile.section"><param name="section" value="common"/></antcall>
-    <antcall target="compile.section"><param name="section" value="jsword"/></antcall>
-    <antcall target="compile.section"><param name="section" value="servlet"/></antcall>
-    <antcall target="compile.section"><param name="section" value="swing"/></antcall>
-    <antcall target="compile.section"><param name="section" value="sword"/></antcall>
-    <antcall target="compile.section"><param name="section" value="commontest"/></antcall>
-    <antcall target="compile.section"><param name="section" value="jswordtest"/></antcall>
-    <antcall target="compile.section"><param name="section" value="servlettest"/></antcall>
-    <antcall target="compile.section"><param name="section" value="swingtest"/></antcall>
-    <antcall target="compile.section"><param name="section" value="swordtest"/></antcall>
+    <antcall target="compile.section"><param name="section" value="main"/></antcall>
     <javac debug="on" includes="**/*.java" destdir="${target.classes}/config">
       <src path="${gener.root}/config"/>
       <classpath>
@@ -98,26 +89,20 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="jar" depends="compile, jar.dir, jar.api, jar.swing, jar.servlet, jar.resource" description="create the jar files">
-  </target>
-
-  <target name="jar.dir" description="Create the directory for jars">
+  <target name="jar" unless="jar.servlet.uptodate" depends="compile, jar.check" description="Create a servlet jar file">
     <mkdir dir="${target.jar}"/>
-  </target>
-
-  <target name="jar.servlet" unless="jar.servlet.uptodate" depends="jar.servlet.check" description="Create a servlet jar file">
     <jar jarfile="${target.jar}/jsword-servlet.jar">
       <fileset dir="${target.classes}/servlet"/>
     </jar>
   </target>
-  <target name="jar.servlet.check" description="Check to see that the servlet jar file is up to date">
-    <uptodate property="jar.servlet.uptodate" targetfile="${target.jar}/jsword-servlet.jar">
+  <target name="jar.check" description="Check to see that the servlet jar file is up to date">
+    <uptodate property="jar.uptodate" targetfile="${target.jar}/jsword-servlet.jar">
       <srcfiles dir="${target.classes}/servlet"/>
     </uptodate>
   </target>
 
   <!--=======================================================================-->
-  <target name="web.files" depends="jnlp" description="Copy the file based documentation">
+  <target name="web.files" depends="subprojects" description="Copy the file based documentation">
     <mkdir dir="${target.web}"/>
     <style basedir="${source.web}" extension=".html" style="${source.web}/template.xsl" destdir="${target.web}">
       <include name="**/*.html"/>
@@ -160,7 +145,7 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="test" depends="swingui" description="Run the standard test suite">
+  <target name="test" depends="subprojects" description="Run the standard test suite">
     <taskdef resource="tasks.properties">
       <classpath>
         <fileset dir="${support.tools}/jcoverage104" includes="**/*.jar"/>
@@ -404,7 +389,7 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="web.findbugs" depends="jnlp">
+  <target name="web.findbugs" depends="subprojects">
     <mkdir dir="${target.web}/findbugs"/>
     <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
       <classpath>
@@ -454,7 +439,7 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="web" depends="web.files, jnlp, web.javadoc, web.testreport, web.analysis" description="All the documentation tasks">
+  <target name="web" depends="web.files, web.javadoc, web.testreport, web.analysis" description="All the documentation tasks">
   </target>
 
   <!--=======================================================================-->
@@ -477,7 +462,7 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="release.version" depends="swingui, ser-av">
+  <target name="release.version" depends="web">
     <echo message="Building release ${version} to ${directory}"/>
     <!-- source packages -->
     <mkdir dir="${directory}"/>
@@ -553,7 +538,7 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="all" depends="clean, swingui" description="Run a full clean/build/deploy/test cycle">
+  <target name="all" depends="clean, web" description="Run a full clean/build/deploy/test cycle">
   </target>
 
   <!--=======================================================================-->
@@ -612,7 +597,7 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="install" description="Install web application" depends="tomcatinit, jnlp, web.files">
+  <target name="install" description="Install web application" depends="tomcatinit, web.files">
     <install url="${url}" username="${username}" password="${password}" path="${path}" war="file://$basedir}/${target.root}/web"/>
   </target>
 

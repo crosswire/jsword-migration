@@ -28,7 +28,7 @@ import org.crosswire.common.util.MsgBase;
  */
 public class Msg extends MsgBase
 {
-    static final Msg NO_PARENT = new Msg("Node does not have a parent."); //$NON-NLS-1$
+    static final Msg NO_PARENT = new Msg("ReferenceTreeModel.NoParent"); //$NON-NLS-1$
 
     /**
      * Passthrough ctor

@@ -28,37 +28,37 @@ import org.crosswire.common.util.MsgBase;
  */
 class Msg extends MsgBase
 {
-    static final Msg EMPTY_FILE = new Msg("File {0} is empty"); //$NON-NLS-1$
-    static final Msg VERSE_LIST_DESC = new Msg("Verse Lists ({0})"); //$NON-NLS-1$
-    static final Msg ERROR_READING = new Msg("Error reading value: {0}"); //$NON-NLS-1$
-    static final Msg BOOKS = new Msg("Books"); //$NON-NLS-1$
-    static final Msg SELECT_BOOK = new Msg("Select a book"); //$NON-NLS-1$
-    static final Msg SELECT_CHAPTER = new Msg("Select a chapter"); //$NON-NLS-1$
-    static final Msg SELECT_VERSE = new Msg("Select a verse"); //$NON-NLS-1$
-    static final Msg NONE = new Msg("None"); //$NON-NLS-1$
+    static final Msg EMPTY_FILE = new Msg("BibleViewPane.EmptyFile"); //$NON-NLS-1$
+    static final Msg VERSE_LIST_DESC = new Msg("BibleViewPane.VerseListDesc"); //$NON-NLS-1$
+    static final Msg ERROR_READING = new Msg("BibleViewPane.ErrorReading"); //$NON-NLS-1$
+    static final Msg BOOKS = new Msg("BibleViewPane.Books"); //$NON-NLS-1$
+    static final Msg SELECT_BOOK = new Msg("BibleViewPane.SelectBook"); //$NON-NLS-1$
+    static final Msg SELECT_CHAPTER = new Msg("BibleViewPane.SelectChapter"); //$NON-NLS-1$
+    static final Msg SELECT_VERSE = new Msg("BibleViewPane.SelectVerse"); //$NON-NLS-1$
+    static final Msg NONE = new Msg("BibleViewPane.None"); //$NON-NLS-1$
 
-    static final Msg CHOOSER_CANCEL = new Msg("Cancel"); //$NON-NLS-1$
-    static final Msg CHOOSER_OK = new Msg("OK"); //$NON-NLS-1$
-    static final Msg CHOOSER_TITLE = new Msg("Select a Bible"); //$NON-NLS-1$
+    static final Msg CHOOSER_CANCEL = new Msg("Chooser.Cancel"); //$NON-NLS-1$
+    static final Msg CHOOSER_OK = new Msg("Chooser.OK"); //$NON-NLS-1$
+    static final Msg CHOOSER_TITLE = new Msg("Chooser.Select a Bible"); //$NON-NLS-1$
 
-    static final Msg BAD_VERSE = new Msg("Error finding verse"); //$NON-NLS-1$
-    static final Msg NO_INSTALLED_BIBLE = new Msg("No Bible is installed"); //$NON-NLS-1$
-    static final Msg SELECT_PASSAGE_TITLE = new Msg("Select Passage"); //$NON-NLS-1$
-    static final Msg UNTITLED = new Msg("Untitled {0}"); //$NON-NLS-1$
+    static final Msg BAD_VERSE = new Msg("DisplaySelectPane.BadVerse"); //$NON-NLS-1$
+    static final Msg NO_INSTALLED_BIBLE = new Msg("DisplaySelectPane.NoInstalledBible"); //$NON-NLS-1$
+    static final Msg SELECT_PASSAGE_TITLE = new Msg("DisplaySelectPane.SelectPassageTitle"); //$NON-NLS-1$
+    static final Msg UNTITLED = new Msg("DisplaySelectPane.Untitled"); //$NON-NLS-1$
 
-    static final Msg AVAILABLE_BOOKS = new Msg("Available Books"); //$NON-NLS-1$
-    static final Msg LOCAL_BOOKS = new Msg("Local"); //$NON-NLS-1$
+    static final Msg AVAILABLE_BOOKS = new Msg("SitesPane.AvailableBooks"); //$NON-NLS-1$
+    static final Msg LOCAL_BOOKS = new Msg("SitesPane.Local"); //$NON-NLS-1$
 
-    static final Msg EDIT_SITE_TITLE = new Msg("Edit Update Sites"); //$NON-NLS-1$
-    static final Msg MISSING_SITE = new Msg("Missing site name"); //$NON-NLS-1$
-    static final Msg DUPLICATE_SITE = new Msg("Duplicate site name"); //$NON-NLS-1$
-    static final Msg NO_SELECTED_SITE = new Msg("No selected site to edit"); //$NON-NLS-1$
-    static final Msg NO_SITE = new Msg("No Site"); //$NON-NLS-1$
-    static final Msg CONFIRM_DELETE_SITE = new Msg("Are you sure you want to delete {0}"); //$NON-NLS-1$
-    static final Msg DELETE_SITE = new Msg("Delete Site?"); //$NON-NLS-1$
+    static final Msg EDIT_SITE_TITLE = new Msg("EditSitePane.EditSitesTitle"); //$NON-NLS-1$
+    static final Msg MISSING_SITE = new Msg("EditSitePane.MissingSite"); //$NON-NLS-1$
+    static final Msg DUPLICATE_SITE = new Msg("EditSitePane.DuplicateSite"); //$NON-NLS-1$
+    static final Msg NO_SELECTED_SITE = new Msg("EditSitePane.NoSelectedSite"); //$NON-NLS-1$
+    static final Msg NO_SITE = new Msg("EditSitePane.NoSite"); //$NON-NLS-1$
+    static final Msg CONFIRM_DELETE_SITE = new Msg("EditSitePane.ConfirmDeleteSite"); //$NON-NLS-1$
+    static final Msg DELETE_SITE = new Msg("EditSitePane.DeleteSite"); //$NON-NLS-1$
 
-    static final Msg ERROR = new Msg("Error: {0}"); //$NON-NLS-1$
-    static final Msg SUMMARY = new Msg("Summary: {0}"); //$NON-NLS-1$
+    static final Msg ERROR = new Msg("PassageSelectionPane.Error"); //$NON-NLS-1$
+    static final Msg SUMMARY = new Msg("PassageSelectionPane.Summary"); //$NON-NLS-1$
 
     /**
      * Passthrough ctor

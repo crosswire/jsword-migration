@@ -29,6 +29,13 @@ import org.crosswire.common.util.MsgBase;
 public class Msg extends MsgBase
 {
     // Strings used by Desktop
+    // String for the title and version
+    static final Msg APP_TITLE = new Msg("Desktop.Title"); //$NON-NLS-1$
+    static final Msg APP_VERSION = new Msg("Desktop.Version"); //$NON-NLS-1$
+    static final Msg VERSION_TITLE = new Msg("Desktop.VersionTitle"); //$NON-NLS-1$
+    static final Msg VERSION_APP_TITLE = new Msg("Desktop.VersionAppTitle"); //$NON-NLS-1$
+    
+    // Strings for hyperlink urls
     static final Msg UNKNOWN_PROTOCOL = new Msg("Desktop.UnknownProtocol"); //$NON-NLS-1$
     static final Msg BAD_PROTOCOL_URL = new Msg("Desktop.BadProtocolUrl"); //$NON-NLS-1$
 
@@ -62,7 +69,6 @@ public class Msg extends MsgBase
     // Strings for AboutPane and Splash
     // The splash image is of an English version of the application
     static final Msg SPLASH_IMAGE = new Msg("Splash.SplashImage"); //$NON-NLS-1$
-    static final Msg VERSION_TITLE = new Msg("Splash.VersionTitle"); //$NON-NLS-1$
     static final Msg ABOUT_TITLE = new Msg("AboutPane.AboutTitle"); //$NON-NLS-1$
     static final Msg TASK_TAB_TITLE = new Msg("AboutPane.TaskTabTitle"); //$NON-NLS-1$
     static final Msg ERROR_TAB_TITLE = new Msg("AboutPane.ErrorTabTitle"); //$NON-NLS-1$
@@ -105,5 +111,45 @@ public class Msg extends MsgBase
     private Msg(String name)
     {
         super(name);
+    }
+    
+    /*
+     * get the title of the application
+     * @return the title of the application
+     */
+    public static String getApplicationTitle()
+    {
+        return Msg.APP_TITLE.toString();
+    }
+
+    /**
+     * get a version string of the form "Version: 1.0"
+     * @return the version string
+     */
+    public static String getVersionInfo()
+    {
+        String version = Msg.APP_VERSION.toString();
+        return Msg.VERSION_TITLE.toString(version);
+    }
+
+    /**
+     * get a title of the form "App Name v1.0"
+     * @return a versioned title
+     */
+    public static String getVersionedApplicationTitle()
+    {
+        String title = Msg.APP_TITLE.toString();
+        String version = Msg.APP_VERSION.toString();
+        Object [] params = { title, version };
+        return Msg.VERSION_APP_TITLE.toString(params);
+    }
+
+    /**
+     * get an About string of the form "About App Name"
+     * @return Info for "About"
+     */
+    public static String getAboutInfo()
+    {
+        return Msg.ABOUT_TITLE.toString(getApplicationTitle());
     }
 }

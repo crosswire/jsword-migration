@@ -17,7 +17,6 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
 import org.crosswire.common.progress.swing.JobsProgressBar;
-import org.crosswire.jsword.util.Project;
 
 /**
  * The status bar provides useful info to the user as to the current
@@ -57,13 +56,13 @@ public class StatusBar extends JComponent implements MouseListener, HyperlinkLis
      */
     public StatusBar()
     {
-        jbInit();
+        initialize();
     }
 
     /**
      * Init the GUI
      */
-    private void jbInit()
+    private void initialize()
     {
         lbl_message.setBorder(BorderFactory.createEtchedBorder());
         lbl_message.setText(Msg.STATUS_DEFAULT.toString());
@@ -79,7 +78,7 @@ public class StatusBar extends JComponent implements MouseListener, HyperlinkLis
         */
 
         lbl_name.setBorder(BorderFactory.createEtchedBorder());
-        lbl_name.setText(" "+Project.instance().getName()+" v"+Project.instance().getVersion()+" "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        lbl_name.setText(' '+Msg.getVersionedApplicationTitle()+' ');
 
         this.setBorder(BorderFactory.createLoweredBevelBorder());
         this.setLayout(new GridBagLayout());

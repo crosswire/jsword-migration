@@ -287,7 +287,7 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.view.swing.book.FocusablePart#copy()
+     * @see org.crosswire.bibledesktop.book.FocusablePart#copy()
      */
     public void copy()
     {
@@ -295,7 +295,7 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.view.swing.book.FocusablePart#addHyperlinkListener(javax.swing.event.HyperlinkListener)
+     * @see org.crosswire.bibledesktop.book.FocusablePart#addHyperlinkListener(javax.swing.event.HyperlinkListener)
      */
     public synchronized void addHyperlinkListener(HyperlinkListener li)
     {
@@ -327,7 +327,7 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.view.swing.book.FocusablePart#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
+     * @see org.crosswire.bibledesktop.book.FocusablePart#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
      */
     public synchronized void removeHyperlinkListener(HyperlinkListener li)
     {
@@ -403,7 +403,7 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.view.swing.book.FocusablePart#getHTMLSource()
+     * @see org.crosswire.bibledesktop.book.FocusablePart#getHTMLSource()
      */
     public String getHTMLSource()
     {
@@ -411,7 +411,7 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.view.swing.book.FocusablePart#getKey()
+     * @see org.crosswire.bibledesktop.book.FocusablePart#getKey()
      */
     public Key getKey()
     {
@@ -419,7 +419,7 @@ public class TabbedDisplayPane extends JPanel implements FocusablePart
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.view.swing.book.FocusablePart#getOSISSource()
+     * @see org.crosswire.bibledesktop.book.FocusablePart#getOSISSource()
      */
     public String getOSISSource()
     {

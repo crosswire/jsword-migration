@@ -90,7 +90,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.view.swing.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.BookData)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.BookData)
      */
     public void setBookData(BookData data) throws BookException
     {
@@ -144,7 +144,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.view.swing.display.BookDataDisplay#getComponent()
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getComponent()
      */
     public Component getComponent()
     {
@@ -152,7 +152,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.view.swing.book.FocusablePart#copy()
+     * @see org.crosswire.bibledesktop.book.FocusablePart#copy()
      */
     public void copy()
     {
@@ -160,7 +160,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.view.swing.display.BookDataDisplay#addHyperlinkListener(javax.swing.event.HyperlinkListener)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addHyperlinkListener(javax.swing.event.HyperlinkListener)
      */
     public synchronized void addHyperlinkListener(HyperlinkListener li)
     {
@@ -192,7 +192,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.view.swing.display.BookDataDisplay#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
      */
     public synchronized void removeHyperlinkListener(HyperlinkListener li)
     {
@@ -214,7 +214,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.view.swing.display.BookDataDisplay#addMouseListener(java.awt.event.MouseListener)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addMouseListener(java.awt.event.MouseListener)
      */
     public synchronized void addMouseListener(MouseListener li)
     {
@@ -246,7 +246,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.view.swing.display.BookDataDisplay#removeMouseListener(java.awt.event.MouseListener)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeMouseListener(java.awt.event.MouseListener)
      */
     public synchronized void removeMouseListener(MouseListener li)
     {
@@ -268,7 +268,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.view.swing.display.BookDataDisplay#getHTMLSource()
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getHTMLSource()
      */
     public String getHTMLSource()
     {

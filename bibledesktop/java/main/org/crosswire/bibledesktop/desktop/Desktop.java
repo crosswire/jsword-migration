@@ -48,12 +48,12 @@ import org.crosswire.common.config.ChoiceFactory;
 import org.crosswire.common.config.Config;
 import org.crosswire.common.progress.Job;
 import org.crosswire.common.progress.JobManager;
-import org.crosswire.common.swing.BackportUtil;
 import org.crosswire.common.swing.ExceptionPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.swing.LookAndFeelUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
+import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
 import org.crosswire.jsword.book.Book;
@@ -164,7 +164,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     /**
      * Construct a Desktop.
      */
-    public Desktop() throws IOException, JDOMException
+    public Desktop()
     {
         // Calling Project.instance() will set up the project's home directory
         //     ~/.jsword
@@ -384,7 +384,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         frame.setJMenuBar(barMenu);
 
         frame.setEnabled(true);
-        frame.setTitle(Project.instance().getName());
+        frame.setTitle(Msg.getApplicationTitle());
     }
 
     /**
@@ -614,7 +614,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
                     }
                     Object [] msg = { url };
                     log.debug(MessageFormat.format(SCROLL_TO_URL, msg));
-                    BackportUtil.scrollToReference(url, pane);
+                    pane.scrollToReference(url);
                 }
                 else
                 {
@@ -752,7 +752,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.view.swing.book.TitleChangedListener#titleChanged(org.crosswire.jsword.view.swing.book.TitleChangedEvent)
+     * @see org.crosswire.bibledesktop.book.TitleChangedListener#titleChanged(org.crosswire.bibledesktop.book.TitleChangedEvent)
      */
     public void titleChanged(TitleChangedEvent ev)
     {
@@ -837,16 +837,32 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     /**
      * Load the config.xml file
      */
-    public void generateConfig() throws IOException, JDOMException
+    public void generateConfig()
     {
         fillChoiceFactory();
 
         config = new Config(Msg.CONFIG_TITLE.toString());
-        Document xmlconfig = Project.instance().getDocument(CONFIG_KEY);
-        config.add(xmlconfig);
+        try
+        {
+            Document xmlconfig = Project.instance().getDocument(CONFIG_KEY);
+            config.add(xmlconfig);
 
-        config.setProperties(Project.instance().getProperties(DESKTOP_KEY));
-        config.localToApplication(true);
+            config.setProperties(ResourceUtil.getProperties(DESKTOP_KEY));
+            config.localToApplication(true);
+        }
+        catch (JDOMException e)
+        {
+            // Something went wrong before we've managed to get on our feet.
+            // so we want the best possible shot at working out what failed.
+            e.printStackTrace();
+            ExceptionPane.showExceptionDialog(null, e);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            ExceptionPane.showExceptionDialog(null, e);
+        }
+
     }
 
     /**
@@ -923,7 +939,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     /**
      * The configuration engine
      */
-    private Config config = null;
+    private Config config;
 
     /**
      * Tabbed document interface

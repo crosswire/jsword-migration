@@ -22,7 +22,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import org.crosswire.common.progress.swing.JobsProgressBar;
-import org.crosswire.jsword.util.Project;
 
 /**
  * A Simple splash screen.
@@ -95,7 +94,7 @@ public class Splash extends JWindow
         lbl_info.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
         lbl_info.setOpaque(true);
         lbl_info.setHorizontalAlignment(SwingConstants.RIGHT);
-        lbl_info.setText(Msg.VERSION_TITLE.toString(Project.instance().getVersion()));
+        lbl_info.setText(Msg.getVersionInfo());
 
         JPanel pnl_info = new JPanel();
         JobsProgressBar pnl_jobs = new JobsProgressBar(false);

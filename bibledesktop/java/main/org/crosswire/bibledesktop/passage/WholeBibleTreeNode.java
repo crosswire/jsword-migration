@@ -162,7 +162,7 @@ public class WholeBibleTreeNode implements TreeNode
                 return Integer.toString(range.getStart().getVerse());
 
             default:
-                return Msg.Error.toString();
+                return Msg.ERROR.toString();
             }
         }
         catch (NoSuchVerseException ex)
