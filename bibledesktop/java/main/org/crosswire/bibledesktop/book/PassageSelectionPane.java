@@ -116,6 +116,7 @@ public class PassageSelectionPane extends JPanel
         treAll.setModel(new WholeBibleTreeModel());
         treAll.setShowsRootHandles(true);
         treAll.setRootVisible(false);
+        treAll.putClientProperty("JTree.lineStyle", "Angled");  //$NON-NLS-1$//$NON-NLS-2$
         treAll.addTreeSelectionListener(new TreeSelectionListener()
         {
             public void valueChanged(TreeSelectionEvent ev)
