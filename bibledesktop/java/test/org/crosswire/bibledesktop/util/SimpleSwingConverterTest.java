@@ -1,4 +1,4 @@
-package org.crosswire.jsword.view.swing.util;
+package org.crosswire.bibledesktop.util;
 
 import junit.framework.TestCase;
 

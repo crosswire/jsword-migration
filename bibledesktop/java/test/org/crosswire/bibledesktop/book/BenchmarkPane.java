@@ -1,5 +1,5 @@
 
-package org.crosswire.jsword.view.swing.book;
+package org.crosswire.bibledesktop.book;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

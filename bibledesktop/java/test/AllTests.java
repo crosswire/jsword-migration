@@ -28,9 +28,9 @@ import junit.framework.TestSuite;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class SwingAllTests extends TestCase
+public class AllTests extends TestCase
 {
-    public SwingAllTests(String s)
+    public AllTests(String s)
     {
         super(s);
     }
@@ -39,7 +39,7 @@ public class SwingAllTests extends TestCase
     {
         TestSuite suite = new TestSuite();
 
-        suite.addTestSuite(org.crosswire.jsword.view.swing.util.SimpleSwingConverterTest.class);
+        suite.addTestSuite(org.crosswire.bibledesktop.util.SimpleSwingConverterTest.class);
 
         return suite;
     }
