@@ -9,7 +9,6 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -58,12 +57,11 @@ import org.crosswire.common.util.Reporter;
 import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.BooksEvent;
 import org.crosswire.jsword.book.BooksListener;
-import org.crosswire.jsword.book.readings.ReadingsBookDriver;
+import org.crosswire.jsword.book.Defaults;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.util.ConverterFactory;
@@ -504,33 +502,33 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
             }
             else if (protocol.equals(COMMENTARY_PROTOCOL))
             {
-                Key key = reference.getBook().getKey(data);
-                reference.setKey(key);
+                Book book = Defaults.getCommentary();
+                if (book != null && Books.installed().getBook(book.getName()) != null)
+                {
+                    reference.selectDictionary(book);
+                    Key key = reference.getBook().getKey(data);
+                    reference.setKey(key);
+                }
             }
             else if (protocol.equals(GREEK_DEF_PROTOCOL))
             {
-                // TODO(DM): determine the right Strong's dictionary and switch to it.
-                reference.setWord(data);
+                jump(Defaults.getGreekDefinitions(), data);
             }
             else if (protocol.equals(HEBREW_DEF_PROTOCOL))
             {
-                // TODO(DM): determine the right Strong's dictionary and switch to it.
-                reference.setWord(data);
+                jump(Defaults.getHebrewDefinitions(), data);
             }
             else if (protocol.equals(GREEK_MORPH_PROTOCOL))
             {
-                // TODO(DM): determine the right Strong's dictionary and switch to it.
-                reference.setWord(data);
+                jump(Defaults.getGreekParse(), data);
             }
             else if (protocol.equals(HEBREW_MORPH_PROTOCOL))
             {
-                // TODO(DM): determine the right Strong's dictionary and switch to it.
-                reference.setWord(data);
+                jump(Defaults.getHebrewParse(), data);
             }
             else if (protocol.equals(DICTIONARY_PROTOCOL))
             {
-                // TODO(DM): determine the right dictionary and switch to it.
-                reference.setWord(data);
+                jump(Defaults.getDictionary(), data);
             }
             else
             {
@@ -540,6 +538,21 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         catch (NoSuchKeyException ex)
         {
             Reporter.informUser(this, ex);
+        }
+    }
+
+    /**
+     * Open the requested book and go to the requested key.
+     * @param book The book to use
+     * @param data The key to find
+     */
+    private void jump(Book book, String data)
+    {
+        // TODO(DM): If it is not installed, offer to install it.
+        if (book != null && Books.installed().getBook(book.getName()) != null)
+        {
+            reference.selectDictionary(book);
+            reference.setWord(data);
         }
     }
 
@@ -689,9 +702,6 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     {
         refreshBooks();
 
-        // Create the array of readings sets
-        ChoiceFactory.getDataMap().put(READINGS_KEY, ReadingsBookDriver.getInstalledReadingsSets());
-
         // And the array of allowed osis>html converters
         Map converters = ConverterFactory.getKnownConverters();
         Set keys = converters.keySet();
@@ -709,26 +719,18 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
      */
     protected final void refreshBooks()
     {
-        // Create the array of Bibles
-        String[] bnames = getFullNameArray(BookFilters.getBibles());
-        ChoiceFactory.getDataMap().put(BIBLE_KEY, bnames);
-
-        // Create the array of Commentaries
-        String[] cnames = getFullNameArray(BookFilters.getCommentaries());
-        ChoiceFactory.getDataMap().put(COMMENTARY_KEY, cnames);
-
-        // Create the array of Dictionaries
-        String[] dnames = getFullNameArray(BookFilters.getDictionaries());
-        ChoiceFactory.getDataMap().put(DICTIONARY_KEY, dnames);
+        Defaults.refreshBooks();
 
         // Has the number of reference books changed?
-        int newRefBooks = dnames.length + cnames.length;
-        if (newRefBooks != refBooks)
+        boolean hasDictionaries = Defaults.getDictionary() != null;
+        boolean hasCommentaries = Defaults.getCommentary() != null;
+        boolean newRefBooks = hasDictionaries || hasCommentaries;
+        if (newRefBooks != hasRefBooks)
         {
             // This method is called during setup
             if (reference != null)
             {
-                if (newRefBooks == 0)
+                if (!newRefBooks)
                 {
                     sptBooks.setDividerLocation(8000);
                 }
@@ -741,25 +743,8 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
                 //sptBooks.setDividerLocation(0.8D);
             }
 
-            refBooks = newRefBooks;
+            hasRefBooks = newRefBooks;
         }
-    }
-
-    /**
-     * Convert a filter into an array of names of Books that pass the filter.
-     */
-    private String[] getFullNameArray(BookFilter filter)
-    {
-        List books = Books.installed().getBooks(filter);
-        List names = new ArrayList();
-
-        for (Iterator it = books.iterator(); it.hasNext(); )
-        {
-            Book book = (Book) it.next();
-            names.add(book.getBookMetaData().getFullName());
-        }
-
-        return (String[]) names.toArray(new String[names.size()]);
     }
 
     /**
@@ -770,7 +755,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         return config;
     }
 
-    private int refBooks;
+    private boolean hasRefBooks;
 
     // Strings for the names of property files.
     private static final String SPLASH_PROPS = "splash"; //$NON-NLS-1$
@@ -790,12 +775,8 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     // Various other strings used as keys
     private static final String CONFIG_KEY = "config"; //$NON-NLS-1$
     private static final String DESKTOP_KEY = "desktop"; //$NON-NLS-1$
-    private static final String READINGS_KEY = "readings"; //$NON-NLS-1$
     private static final String CONV_KEY = "converters"; //$NON-NLS-1$
     private static final String CSWING_KEY = "cswing-styles"; //$NON-NLS-1$
-    private static final String BIBLE_KEY = "bible-names"; //$NON-NLS-1$
-    private static final String COMMENTARY_KEY = "commentary-names"; //$NON-NLS-1$
-    private static final String DICTIONARY_KEY = "dictionary-names"; //$NON-NLS-1$
 
     /**
      * The configuration engine

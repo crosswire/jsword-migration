@@ -49,6 +49,33 @@
     <map name="commentary-names"/>
   </option>
 
+<!-- Currently there is only one, so nothing to pick from
+  <option key="Bibles.ReadingsSet" type="string-options">
+    <introspect class="org.crosswire.jsword.book.readings.ReadingsBookDriver" property="ReadingsSet"/>
+    <map name="readings"/>
+  </option>
+-->
+
+  <option key="Bibles.DefaultGreekDefinitions" type="string-options">
+    <introspect class="org.crosswire.jsword.book.Defaults" property="GreekDefinitionsByName"/>
+    <map name="greekdef-names"/>
+  </option>
+
+  <option key="Bibles.DefaultHebrewDefinitions" type="string-options">
+    <introspect class="org.crosswire.jsword.book.Defaults" property="HebrewDefinitionsByName"/>
+    <map name="hebrewdef-names"/>
+  </option>
+
+  <option key="Bibles.DefaultGreekParse" type="string-options">
+    <introspect class="org.crosswire.jsword.book.Defaults" property="GreekParseByName"/>
+    <map name="greekparse-names"/>
+  </option>
+
+  <option key="Bibles.DefaultHebrewParse" type="string-options">
+    <introspect class="org.crosswire.jsword.book.Defaults" property="HebrewParseByName"/>
+    <map name="hebrewparse-names"/>
+  </option>
+
 <!-- At this time we only have one converter
   <option key="BibleDisplay.Converter" type="string-options">
     <introspect class="org.crosswire.jsword.util.ConverterFactory" property="CurrentConverterName"/>
@@ -105,13 +132,6 @@
     <alternative number="2"/>
     <alternative number="3"/>
   </option>
-
-<!-- Currently there is only one, so nothing to pick from
-  <option key="Readings.ReadingsSet" type="string-options">
-    <introspect class="org.crosswire.jsword.book.readings.ReadingsBookDriver" property="ReadingsSet"/>
-    <map name="readings"/>
-  </option>
--->
 
 <!-- Useful only to developers. Developers may uncomment this.
   <option key="Application.LookAndFeel" type="class">

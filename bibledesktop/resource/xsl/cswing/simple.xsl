@@ -13,7 +13,7 @@
     -->
   <!-- gdef and hdef refer to hebrew and greek definitions keyed by strongs -->
   <xsl:param name="greek.def.protocol" select="'gdef:'"/>
-  <xsl:param name="hebrew.def.url" select="'hdef:'"/>
+  <xsl:param name="hebrew.def.protocol" select="'hdef:'"/>
   <!-- currently these are not used, but they are for morphologic forms -->
   <xsl:param name="greek.morph.protocol" select="'gmorph:'"/>
   <xsl:param name="hebrew.morph.protocol" select="'hmorph:'"/>
@@ -315,7 +315,7 @@
           </xsl:variable>
           <xsl:choose>
             <xsl:when test="$strongs-type = 'H'">
-              <a href="{$hebrew.def.url}{$first-lemma}" class="strongs"><xsl:apply-templates/></a>
+              <a href="{$hebrew.def.protocol}{$first-lemma}" class="strongs"><xsl:apply-templates/></a>
             </xsl:when>
             <xsl:otherwise>
               <a href="{$greek.def.protocol}{$first-lemma}" class="strongs"><xsl:apply-templates/></a>

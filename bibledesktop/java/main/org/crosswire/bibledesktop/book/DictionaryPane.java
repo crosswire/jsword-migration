@@ -266,6 +266,11 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
         }     
     */
 
+    public void selectDictionary(Book book)
+    {
+        lstDicts.setSelectedValue(book, true);
+    }
+
     /**
      * Called when someone selects a new Dictionary
      */
@@ -275,7 +280,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
         if (selected != null)
         {
             Book book = (Book) selected;
-            if (book.getBookMetaData().getType().equals(BookType.DICTIONARY))
+            if (book.getType().equals(BookType.DICTIONARY))
             {
                 dict = book;
                 Key key = dict.getGlobalKeyList();
@@ -308,7 +313,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
         Book book = (Book) lstDicts.getSelectedValue();
         if (book == null)
         {
-            log.warn("no selected commentary"); //$NON-NLS-1$
+            log.warn("no selected dictionary"); //$NON-NLS-1$
             return;
         }
 
