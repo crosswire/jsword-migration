@@ -36,6 +36,33 @@
         <filter token="jnlp.hostname" value="${jnlp.hostname}"/>
       </filterset>
     </copy>
+    <!-- sign the jars to the nightly build dir -->
+    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="bibledesktop.jar"/>
+    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="common.jar"/>
+    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="commons-lang-2.0.jar"/>
+    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="commons-net-1.1.0.jar"/>
+    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="jsword.jar"/>
+    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="jdom.jar"/>
+    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="jlfgr-1_0.jar"/>
+    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="log4j-1.2.8.jar"/>
+    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="lucene-1.3-final.jar"/>
+    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="tar.jar"/>
+    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="winlaf-0.4.jar"/>
+    <!-- Copy the bin files to the directory -->
+    <copy todir="${webapp.bibledesktop}/nightly">
+      <fileset dir="${source.etc}/bin"/>
+    </copy>
+    <chmod perm="a+x">
+      <fileset dir="${webapp.bibledesktop}/nightly">
+        <include name="**/*.sh"/>
+      </fileset>
+    </chmod>
+    <fixcrlf srcdir="${webapp.bibledesktop}/nightly" eol="lf">
+      <include name="**/*.sh"/>
+    </fixcrlf>
+    <fixcrlf srcdir="${webapp.bibledesktop}/nightly" eol="crlf">
+      <include name="**/*.bat"/>
+    </fixcrlf>
     <copy todir="${webapp.bibledesktop}">
       <fileset dir="${source.web}">
         <exclude name="*.jsp"/>
@@ -52,9 +79,25 @@
   <target name="install" depends="install.dependency, webapp" description="Install all the files" >
   </target>
 
-  <!--=======================================================================-->
-  <target name="incremental" depends="install" description="To be run nightly at crosswire">
-    <!-- also used to depend on veryclean -->
+  <!--=======================================================================
+    == Override targets that should do nothing
+    =======================================================================-->
+  <!-- It is necessary to build and prepare the dependencies -->
+  <target name="prepare"
+          depends="prepare.dependency"
+          description="Prepare the build by copying needed jars and files">
+    <!-- There are no jars to copy -->
+  </target>
+
+  <target name="build" 
+          depends="build.dependency"
+          description="Run a full build">
+    <!-- There is nothing to build -->
+  </target>
+
+  <target name="testcompile"
+          description="Compile the test source">
+    <!-- There is no test code build -->
   </target>
 
 </project>
