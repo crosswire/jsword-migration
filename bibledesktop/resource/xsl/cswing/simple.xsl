@@ -109,10 +109,14 @@
           BODY { <xsl:value-of select="$fontspec" /> }
           A { text-decoration: none; }
           A.strongs { color: black; text-decoration: none; }
+          SUB.strongs { font-size: 75%; color: red; }
+          SUB.morph { font-size: 75%; color: blue; }
+          SUB.lemma { font-size: 75%; color: red; }
           SUP.verse { font-size: 75%; color: gray; }
           SUP.note { font-size: 75%; color: green; }
           FONT.jesus { color: red; }
           FONT.speech { color: blue; }
+          FONT.transChange { font-style: italic; }
           h3 { font-size: 110%; color: #666699; font-weight: bold; }
           h2 { font-size: 115%; color: #669966; font-weight: bold; }
           div.margin { font-size: 90%; }
@@ -315,44 +319,91 @@
 
   <!--=======================================================================-->
   <xsl:template match="w">
-    <!-- FIXME: Handle all the other attributes besides lemma. -->
-    <!-- FIXME: Only handles one x-StrongsNumber when more than one present -->
-      <xsl:variable name="siblings" select="../child::node()"/>
-      <xsl:variable name="next-position" select="position() + 1"/>
-      <xsl:choose>
-        <xsl:when test="$Strongs = 'true' and (starts-with(@lemma, 'x-Strongs:') or starts-with(@lemma, 'strong:'))">
-          <xsl:variable name="orig-lemma" select="substring-after(@lemma, ':')"/>
-          <xsl:variable name="strongs-type" select="substring($orig-lemma, 1, 1)"/>
-          <xsl:variable name="first-lemma">
-            <xsl:choose>
-              <xsl:when test="contains($orig-lemma, '|')">
-                <xsl:value-of select="substring-before($orig-lemma, '|')"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="$orig-lemma"/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:variable>
-          <xsl:choose>
-            <xsl:when test="$strongs-type = 'H'">
-              <a href="{$hebrew.def.protocol}{$first-lemma}" class="strongs"><xsl:apply-templates/></a>
-            </xsl:when>
-            <xsl:otherwise>
-              <a href="{$greek.def.protocol}{$first-lemma}" class="strongs"><xsl:apply-templates/></a>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates/>
-        </xsl:otherwise>
-      </xsl:choose>
-      <!--
+    <!-- Output the content followed by all the lemmas and then all the morphs. -->
+    <xsl:apply-templates/>
+    <xsl:if test="$Strongs = 'true' and (starts-with(@lemma, 'x-Strongs:') or starts-with(@lemma, 'strong:'))">
+      <xsl:call-template name="lemma">
+        <xsl:with-param name="lemma" select="@lemma"/>
+      </xsl:call-template>
+    </xsl:if>
+    <xsl:if test="$Morph = 'true' and (starts-with(@morph, 'x-Robinson:') or starts-with(@morph, 'robinson:'))">
+      <xsl:call-template name="morph">
+        <xsl:with-param name="morph" select="@morph"/>
+      </xsl:call-template>
+    </xsl:if>
+    <!--
         except when followed by a text node or non-printing node.
         This is true whether the href is output or not.
-      -->
-      <xsl:if test="$siblings[$next-position] and name($siblings[$next-position]) != ''">
-        <xsl:text> </xsl:text>
-      </xsl:if>
+    -->
+    <xsl:variable name="siblings" select="../child::node()"/>
+    <xsl:variable name="next-position" select="position() + 1"/>
+    <xsl:if test="$siblings[$next-position] and name($siblings[$next-position]) != ''">
+      <xsl:text> </xsl:text>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template name="lemma">
+    <xsl:param name="lemma"/>
+    <xsl:variable name="orig-lemma" select="substring-after($lemma, ':')"/>
+    <xsl:variable name="protocol">
+      <xsl:choose>
+        <xsl:when test="substring($orig-lemma, 1, 1) = 'H'">
+          <xsl:value-of select="$hebrew.def.protocol"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$greek.def.protocol"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="separator">
+      <xsl:choose>
+        <xsl:when test="contains($orig-lemma, '|')">
+          <xsl:value-of select="'|'"/>
+        </xsl:when>
+        <xsl:when test="contains($orig-lemma, ' ')">
+          <xsl:value-of select="' '"/>
+        </xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$separator = ''">
+        <sub class="strongs"><a href="{$protocol}{$orig-lemma}">S<xsl:number level="any" from="/osis//verse" format="1"/></a></sub>
+      </xsl:when>
+      <xsl:otherwise>
+        <sub class="strongs"><a href="{$protocol}{$orig-lemma}">S<xsl:number level="any" from="/osis//verse" format="1"/></a></sub>
+        <xsl:call-template name="lemma">
+          <xsl:with-param name="lemma" select="substring-after($lemma, $separator)"/>
+        </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <!-- FIXME: Only handles one Robinsons Greek morphology (which is the only morph module today) -->
+  <xsl:template name="morph">
+    <xsl:param name="morph"/>
+    <xsl:variable name="orig-morph" select="substring-after($morph, ':')"/>
+    <xsl:variable name="protocol" select="$greek.morph.protocol"/>
+    <xsl:variable name="separator">
+      <xsl:choose>
+        <xsl:when test="contains($orig-morph, '|')">
+          <xsl:value-of select="'|'"/>
+        </xsl:when>
+        <xsl:when test="contains($orig-morph, ' ')">
+          <xsl:value-of select="' '"/>
+        </xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$separator = ''">
+        <sub class="morph"><a href="{$protocol}{$orig-morph}">M<xsl:number level="any" from="/osis//verse" format="1"/></a></sub>
+      </xsl:when>
+      <xsl:otherwise>
+        <sub class="morph"><a href="{$protocol}{$orig-morph}">M<xsl:number level="any" from="/osis//verse" format="1"/></a></sub>
+        <xsl:call-template name="morph">
+          <xsl:with-param name="morph" select="substring-after($morph, $separator)"/>
+        </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!--=======================================================================-->

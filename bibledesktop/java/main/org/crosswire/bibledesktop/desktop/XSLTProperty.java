@@ -36,6 +36,11 @@ public class XSLTProperty implements Serializable
     public static final XSLTProperty STRONGS_NUMBERS = new XSLTProperty("Strongs", false); //$NON-NLS-1$
 
     /**
+     * Determines whether Word Morphology (e.g. Robinson) should show
+     */
+    public static final XSLTProperty MORPH = new XSLTProperty("Morph", false); //$NON-NLS-1$
+
+    /**
      * Determines whether verses should start on a new line.
      */
     public static final XSLTProperty START_VERSE_ON_NEWLINE = new XSLTProperty("VLine", false); //$NON-NLS-1$
@@ -171,6 +176,7 @@ public class XSLTProperty implements Serializable
     private static final XSLTProperty[] VALUES =
     {
         STRONGS_NUMBERS,
+        MORPH,
         START_VERSE_ON_NEWLINE,
         VERSE_NUMBERS,
         TINY_VERSE_NUMBERS,

@@ -210,10 +210,35 @@ public class DesktopActions
         da.copy();
     }
 
+    /**
+     * Go to previous passage.
+     */
+    public void doBack()
+    {
+        getDesktop().selectHistory(-1);
+    }
+
+    /**
+     * Go to next passage.
+     */
+    public void doForward()
+    {
+        getDesktop().selectHistory(1);
+    }
+
     public void doStrongs(ActionEvent ev)
     {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         XSLTProperty.STRONGS_NUMBERS.setState(toggle.isSelected());
+        BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
+        SplitBookDataDisplay da = view.getPassagePane();
+        da.getBookDataDisplay().refresh();
+    }
+
+    public void doMorph(ActionEvent ev)
+    {
+        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
+        XSLTProperty.MORPH.setState(toggle.isSelected());
         BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
         SplitBookDataDisplay da = view.getPassagePane();
         da.getBookDataDisplay().refresh();
@@ -380,6 +405,7 @@ public class DesktopActions
     // Enumeration of all the keys to known actions
     static final String FILE = "File"; //$NON-NLS-1$
     static final String EDIT = "Edit"; //$NON-NLS-1$
+    static final String GO = "Go"; //$NON-NLS-1$
     static final String VIEW = "View"; //$NON-NLS-1$
     static final String TOOLS = "Tools"; //$NON-NLS-1$
     static final String HELP = "Help"; //$NON-NLS-1$
@@ -389,6 +415,8 @@ public class DesktopActions
     static final String SAVE_ALL = "SaveAll"; //$NON-NLS-1$
     static final String EXIT = "Exit"; //$NON-NLS-1$
     static final String COPY = "Copy"; //$NON-NLS-1$
+    static final String BACK = "Back"; //$NON-NLS-1$
+    static final String FORWARD = "Forward"; //$NON-NLS-1$
     static final String TOOLTIP_TOGGLE = "ToolTipToggle"; //$NON-NLS-1$
     static final String STATUS_TOGGLE = "StatusToggle"; //$NON-NLS-1$
     static final String SIDEBAR_TOGGLE = "SidebarToggle"; //$NON-NLS-1$

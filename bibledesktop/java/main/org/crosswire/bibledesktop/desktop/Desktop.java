@@ -30,12 +30,16 @@ import javax.swing.WindowConstants;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
 import org.crosswire.bibledesktop.book.DictionaryPane;
+import org.crosswire.bibledesktop.book.DisplaySelectEvent;
+import org.crosswire.bibledesktop.book.DisplaySelectListener;
+import org.crosswire.bibledesktop.book.DisplaySelectPane;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.URLEvent;
 import org.crosswire.bibledesktop.display.URLEventListener;
 import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.config.ChoiceFactory;
 import org.crosswire.common.config.Config;
+import org.crosswire.common.history.History;
 import org.crosswire.common.progress.Job;
 import org.crosswire.common.progress.JobManager;
 import org.crosswire.common.swing.CatchingThreadGroup;
@@ -100,7 +104,7 @@ import org.jdom.Document;
  * @author DM Smith [dmsmith555 at yahoo dot com]
  * @version $Id$
  */
-public class Desktop extends JFrame implements URLEventListener, ViewEventListener, ViewGenerator
+public class Desktop extends JFrame implements URLEventListener, ViewEventListener, DisplaySelectListener, ViewGenerator
 {
     /**
      * Central start point.
@@ -244,6 +248,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         sptBooks = new FixedSplitPane();
         views = new ViewManager(this);
         views.addViewEventListener(this);
+        history = new History();
     }
 
     /**
@@ -290,11 +295,12 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         //menuEdit.add(actions.getAction(DesktopActions.PASTE)).addMouseListener(barStatus);
         menuEdit.setToolTipText(null);
 
+        JMenu menuGo = new JMenu(actions.getAction(DesktopActions.GO));
+        menuGo.add(actions.getAction(DesktopActions.BACK)).addMouseListener(barStatus);
+        menuGo.add(actions.getAction(DesktopActions.FORWARD)).addMouseListener(barStatus);
+        
         JMenu menuView = new JMenu(actions.getAction(DesktopActions.VIEW));
-        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.STRONGS_NUMBERS.getName()));
-        toggle.setSelected(XSLTProperty.STRONGS_NUMBERS.getDefault());
-        menuView.add(toggle).addMouseListener(barStatus);
-        toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.START_VERSE_ON_NEWLINE.getName()));
+        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.START_VERSE_ON_NEWLINE.getName()));
         toggle.setSelected(XSLTProperty.START_VERSE_ON_NEWLINE.getDefault());
         menuView.add(toggle).addMouseListener(barStatus);
         toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.VERSE_NUMBERS.getName()));
@@ -308,6 +314,12 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         menuView.add(toggle).addMouseListener(barStatus);
         toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.XREF.getName()));
         toggle.setSelected(XSLTProperty.XREF.getDefault());
+        menuView.add(toggle).addMouseListener(barStatus);
+        toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.STRONGS_NUMBERS.getName()));
+        toggle.setSelected(XSLTProperty.STRONGS_NUMBERS.getDefault());
+        menuView.add(toggle).addMouseListener(barStatus);
+        toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.MORPH.getName()));
+        toggle.setSelected(XSLTProperty.MORPH.getDefault());
         menuView.add(toggle).addMouseListener(barStatus);
         menuView.addSeparator();
         menuView.add(views.getTdiView()).addMouseListener(barStatus);
@@ -362,6 +374,9 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         //pnlTbar.add(actions.getAction(DesktopActions.CUT)).addMouseListener(barStatus);
         pnlTbar.add(actions.getAction(DesktopActions.COPY)).addMouseListener(barStatus);
         //pnlTbar.add(actions.getAction(DesktopActions.PASTE)).addMouseListener(barStatus);
+        pnlTbar.addSeparator();
+        pnlTbar.add(actions.getAction(DesktopActions.BACK)).addMouseListener(barStatus);
+        pnlTbar.add(actions.getAction(DesktopActions.FORWARD)).addMouseListener(barStatus);
         pnlTbar.addSeparator();
         //pnlTbar.add(actions.getAction("Generate")).addMouseListener(barStatus);
         //pnlTbar.add(actions.getAction("Diff")).addMouseListener(barStatus);
@@ -423,6 +438,8 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         BookDataDisplay display = view.getPassagePane().getBookDataDisplay();
         display.addURLEventListener(this);
         display.addURLEventListener(barStatus);
+        DisplaySelectPane dsp = view.getSelectPane();
+        dsp.addCommandListener(this);
         return view;
     }
 
@@ -435,6 +452,38 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         BookDataDisplay display = view.getPassagePane().getBookDataDisplay();
         display.removeURLEventListener(this);
         display.removeURLEventListener(barStatus);
+        DisplaySelectPane dsp = view.getSelectPane();
+        dsp.removeCommandListener(this);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.book.DisplaySelectListener#bookChosen(org.crosswire.bibledesktop.book.DisplaySelectEvent)
+     */
+    public void bookChosen(DisplaySelectEvent ev)
+    {
+        // Do nothing        
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.book.DisplaySelectListener#passageSelected(org.crosswire.bibledesktop.book.DisplaySelectEvent)
+     */
+    public void passageSelected(DisplaySelectEvent ev)
+    {
+        Key key = ev.getKey();
+        if (key != null && ! key.isEmpty())
+        {
+            // add the string because keys are heavyweights
+            history.add(key.getName());
+        }
+    }
+
+    public void selectHistory(int i)
+    {
+        Object obj = history.go(i);
+        if (obj != null)
+        {
+            activateURL(new URLEvent(this, Desktop.BIBLE_PROTOCOL, (String) obj));
+        }
     }
 
     /* (non-Javadoc)
@@ -805,6 +854,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     private StatusBar barStatus;
     private DictionaryPane reference;
     private JSplitPane sptBooks;
+    private History history;
 
     /**
      * Serialization ID
