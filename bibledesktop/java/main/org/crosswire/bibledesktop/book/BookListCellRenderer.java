@@ -46,13 +46,13 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
      */
     public BookListCellRenderer()
     {
-        if (no_focus == null)
+        if (noFocus == null)
         {
-            no_focus = BorderFactory.createEmptyBorder(1, 1, 1, 1);
+            noFocus = BorderFactory.createEmptyBorder(1, 1, 1, 1);
         }
 
         setOpaque(true);
-        setBorder(no_focus);
+        setBorder(noFocus);
     }
 
     /**
@@ -96,7 +96,7 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
 
             setEnabled(list.isEnabled());
             setFont(list.getFont());
-            setBorder(focus ? UIManager.getBorder("List.focusCellHighlightBorder") : no_focus); //$NON-NLS-1$
+            setBorder(focus ? UIManager.getBorder("List.focusCellHighlightBorder") : noFocus); //$NON-NLS-1$
         }
 
         if (value instanceof BookMetaData)
@@ -109,7 +109,7 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
 
             setEnabled(list.isEnabled());
             setFont(list.getFont());
-            setBorder(focus ? UIManager.getBorder("List.focusCellHighlightBorder") : no_focus); //$NON-NLS-1$
+            setBorder(focus ? UIManager.getBorder("List.focusCellHighlightBorder") : noFocus); //$NON-NLS-1$
         }
 
         return this;
@@ -123,7 +123,7 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
     /**
      * border if we do not have focus
      */
-    private static Border no_focus;
+    private static Border noFocus;
 
     /**
      * Make sure that book names are not too wide

@@ -47,7 +47,7 @@ import org.crosswire.jsword.passage.PassageUtil;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class TabbedDisplayPane extends JPanel implements BookDataDisplay
+public class TabbedDisplayPane implements BookDataDisplay
 {
     /**
      * Simple Constructor
@@ -59,7 +59,7 @@ public class TabbedDisplayPane extends JPanel implements BookDataDisplay
         init();
 
         center = pnlView.getComponent();
-        this.add(center, BorderLayout.CENTER);
+        pnlMain.add(center, BorderLayout.CENTER);
 
         // NOTE: when we tried dynamic laf update, these needed special treatment
         // There are times when tab_main or pnl_view are not in visible or
@@ -68,14 +68,6 @@ public class TabbedDisplayPane extends JPanel implements BookDataDisplay
         // them with the L&F handler to be altered when the L&F changes.
         //LookAndFeelUtil.addComponentToUpdate(pnlView);
         //LookAndFeelUtil.addComponentToUpdate(tabMain);
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.FocusablePart#getComponent()
-     */
-    public Component getComponent()
-    {
-        return this;
     }
 
     /**
@@ -92,211 +84,74 @@ public class TabbedDisplayPane extends JPanel implements BookDataDisplay
             }
         });
 
-        this.setLayout(new BorderLayout());
+        pnlMain.setLayout(new BorderLayout());
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getComponent()
+     */
+    public Component getComponent()
+    {
+        return pnlMain;
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
      */
-    public void setBookData(Book book, Key key) throws BookException
-    {
-        setBook(book);
-        setPassage(PassageUtil.getPassage(key));
-    }
-
-    /**
-     * Set the version used for lookup
-     */
-    public synchronized void setBook(Book book)
+    public void setBookData(Book book, Key newkey) throws BookException
     {
         this.book = book;
-    }
+        this.key = PassageUtil.getPassage(newkey);
 
-    /**
-     * Set the passage being viewed
-     */
-    public synchronized void setPassage(Passage ref) throws BookException
-    {
-        this.whole = ref;
-
+        // Tabbed view or not we should clear out the old tabs
         tabMain.removeAll();
         displays.clear();
         displays.add(pnlView);
 
         // Do we need a tabbed view
-        tabs = (ref != null && ref.countVerses() > pagesize);
+        tabs = (key != null && key.countVerses() > pageSize);
         if (tabs)
         {
             // Calc the verses to display in this tab
-            Passage cut = (Passage) whole.clone();
-            waiting = cut.trimVerses(pagesize);
+            Passage first = (Passage) key.clone();
+            waiting = first.trimVerses(pageSize);
 
             // Create the tab
             BookDataDisplay pnlNew = createInnerDisplayPane();
-            setDisplay(pnlNew, cut);
+            pnlNew.setBookData(book, first);
 
             Component display = pnlNew.getComponent();
-            tabMain.add(shortenName(cut.getName()), display);
+
+            tabMain.add(getTabName(first), display);
             tabMain.add(Msg.MORE.toString(), pnlMore);
 
             setCenterComponent(tabMain);
         }
         else
         {
-            setDisplay(pnlView, ref);
+            pnlView.setBookData(book, key);
+
             setCenterComponent(pnlView.getComponent());
         }
 
-        this.repaint();
+        // there was a time when we needed to do pnlMain.repaint();
+        // but we don't seem to have a problem now
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.FocusablePart#getBook()
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getKey()
+     */
+    public Key getKey()
+    {
+        return key;
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBook()
      */
     public Book getBook()
     {
         return book;
-    }
-
-    /**
-     * @param display
-     * @param cut
-     * @throws BookException
-     */
-    private void setDisplay(BookDataDisplay display, Passage cut) throws BookException
-    {
-        if (cut == null || book == null)
-        {
-            display.setBookData(null, null);
-        }
-        else
-        {
-            display.setBookData(book, cut);
-        }
-    }
-
-    /**
-     * Make a new component reside in the center of this panel
-     */
-    private void setCenterComponent(Component comp)
-    {
-        // And show it is needed
-        if (center != comp)
-        {
-            this.remove(center);
-            center = comp;
-            this.add(center, BorderLayout.CENTER);
-        }
-    }
-
-    /**
-     * Tabs changed, generate some stuff
-     */
-    protected void tabChanged()
-    {
-        try
-        {
-            // This is someone clicking on more isnt it?
-            if (tabMain.getSelectedComponent() != pnlMore)
-            {
-                return;
-            }
-
-            // First remove the old more ... tab that the user has just selected
-            tabMain.remove(pnlMore);
-
-            // Calculate the new verses to display
-            Passage cut = waiting;
-            waiting = cut.trimVerses(pagesize);
-
-            // Create a new tab
-            BookDataDisplay pnlNew = createInnerDisplayPane();
-            setDisplay(pnlNew, cut);
-
-            Component display = pnlNew.getComponent();
-            tabMain.add(shortenName(cut.getName()), display);
-
-            // Do we need a new more tab
-            if (waiting != null)
-            {
-                tabMain.add(Msg.MORE.toString(), pnlMore);
-            }
-
-            // Select the real new tab in place of any more tabs
-            tabMain.setSelectedComponent(display);
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(this, ex);
-        }
-    }
-
-    /**
-     * Accessor for the current TextComponent
-     */
-    public BookDataDisplay getInnerDisplayPane()
-    {
-        if (tabs)
-        {
-            return (BookDataDisplay) tabMain.getSelectedComponent();
-        }
-        else
-        {
-            return pnlView;
-        }
-    }
-
-    /**
-     * Tab creation helper
-     */
-    private synchronized BookDataDisplay createInnerDisplayPane()
-    {
-        BookDataDisplay idp = new ScrolledBookDataDisplay(BookDataDisplayFactory.createBookDataDisplay());
-        displays.add(idp);
-
-        // Add all the known listeners to this new BookDataDisplay
-        if (hyperlis != null)
-        {
-            for (Iterator it = hyperlis.iterator(); it.hasNext();)
-            {
-                HyperlinkListener li = (HyperlinkListener) it.next();
-                idp.addHyperlinkListener(li);
-            }
-        }
-
-        return idp;
-    }
-
-    /**
-     * Ensure that the tab names are not too long - 25 chars max
-     * @param tabname The name to be shortened
-     * @return The first 9 chars followed by ... followed by the last 9
-     */
-    private static String shortenName(String tabname)
-    {
-        int len = tabname.length();
-        if (len > 25)
-        {
-            tabname = tabname.substring(0, 9) + " ... " + tabname.substring(len - 9, len); //$NON-NLS-1$
-        }
-
-        return tabname;
-    }
-
-    /**
-     * Accessor for the page size
-     */
-    public static void setPageSize(int page_size)
-    {
-        TabbedDisplayPane.pagesize = page_size;
-    }
-
-    /**
-     * Accessor for the page size
-     */
-    public static int getPageSize()
-    {
-        return pagesize;
     }
 
     /* (non-Javadoc)
@@ -308,7 +163,7 @@ public class TabbedDisplayPane extends JPanel implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#addHyperlinkListener(javax.swing.event.HyperlinkListener)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addHyperlinkListener(javax.swing.event.HyperlinkListener)
      */
     public synchronized void addHyperlinkListener(HyperlinkListener li)
     {
@@ -340,7 +195,7 @@ public class TabbedDisplayPane extends JPanel implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
      */
     public synchronized void removeHyperlinkListener(HyperlinkListener li)
     {
@@ -361,19 +216,140 @@ public class TabbedDisplayPane extends JPanel implements BookDataDisplay
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#getKey()
+    /**
+     * Make a new component reside in the center of this panel
      */
-    public Key getKey()
+    private void setCenterComponent(Component comp)
     {
-        return whole;
+        // And show it is needed
+        if (center != comp)
+        {
+            pnlMain.remove(center);
+            center = comp;
+            pnlMain.add(center, BorderLayout.CENTER);
+        }
     }
 
     /**
-     * How many verses on a tab.
-     * Should this be a static?
+     * Tabs changed, generate some stuff
      */
-    private static int pagesize = 50;
+    protected void tabChanged()
+    {
+        try
+        {
+            // This is someone clicking on more isnt it?
+            if (tabMain.getSelectedComponent() != pnlMore)
+            {
+                return;
+            }
+
+            // First remove the old more ... tab that the user has just selected
+            tabMain.remove(pnlMore);
+
+            // What do we display next
+            Passage next = waiting;
+            waiting = next.trimVerses(pageSize);
+
+            // Create a new tab
+            BookDataDisplay pnlNew = createInnerDisplayPane();
+            pnlNew.setBookData(book, next);
+
+            Component display = pnlNew.getComponent();
+            tabMain.add(getTabName(next), display);
+
+            // Do we need a new more tab
+            if (waiting != null)
+            {
+                tabMain.add(Msg.MORE.toString(), pnlMore);
+            }
+
+            // Select the real new tab in place of any more tabs
+            tabMain.setSelectedComponent(display);
+        }
+        catch (Exception ex)
+        {
+            Reporter.informUser(this, ex);
+        }
+    }
+
+    /**
+     * Accessor for the current TextComponent
+     */
+    private BookDataDisplay getInnerDisplayPane()
+    {
+        if (tabs)
+        {
+            return (BookDataDisplay) tabMain.getSelectedComponent();
+        }
+        else
+        {
+            return pnlView;
+        }
+    }
+
+    /**
+     * Tab creation helper
+     */
+    private synchronized BookDataDisplay createInnerDisplayPane()
+    {
+        BookDataDisplay display = new ScrolledBookDataDisplay(BookDataDisplayFactory.createBookDataDisplay());
+        displays.add(display);
+
+        // Add all the known listeners to this new BookDataDisplay
+        if (hyperlis != null)
+        {
+            for (Iterator it = hyperlis.iterator(); it.hasNext();)
+            {
+                HyperlinkListener li = (HyperlinkListener) it.next();
+                display.addHyperlinkListener(li);
+            }
+        }
+
+        return display;
+    }
+
+    /**
+     * Accessor for the page size
+     */
+    public static void setPageSize(int pageSize)
+    {
+        TabbedDisplayPane.pageSize = pageSize;
+    }
+
+    /**
+     * Accessor for the page size
+     */
+    public static int getPageSize()
+    {
+        return pageSize;
+    }
+
+    /**
+     * Ensure that the tab names are not too long - 25 chars max
+     * @param key The key to get a short name from
+     * @return The first 9 chars followed by ... followed by the last 9
+     */
+    private static String getTabName(Key key)
+    {
+        String tabname = key.getName();
+        int len = tabname.length();
+        if (len > TITLE_LENGTH)
+        {
+            tabname = tabname.substring(0, 9) + " ... " + tabname.substring(len - 9, len); //$NON-NLS-1$
+        }
+
+        return tabname;
+    }
+
+    /**
+     * What is the max length for a tab title
+     */
+    private static final int TITLE_LENGTH = 25;
+
+    /**
+     * How many verses on a tab.
+     */
+    private static int pageSize = 50;
 
     /**
      * A list of all the HyperlinkListeners
@@ -383,7 +359,7 @@ public class TabbedDisplayPane extends JPanel implements BookDataDisplay
     /**
      * The passage that we are displaying (in one or more tabs)
      */
-    private Passage whole = null;
+    private Passage key = null;
 
     /**
      * The verses that we have not created tabs for yet
@@ -424,4 +400,9 @@ public class TabbedDisplayPane extends JPanel implements BookDataDisplay
      * Blank thing for the "More..." button
      */
     private JPanel pnlMore = new JPanel();
+
+    /**
+     * The top level component
+     */
+    private JPanel pnlMain = new JPanel();
 }

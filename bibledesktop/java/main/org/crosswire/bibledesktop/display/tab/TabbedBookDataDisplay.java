@@ -48,11 +48,6 @@ import org.crosswire.jsword.passage.Key;
 public class TabbedBookDataDisplay implements BookDataDisplay
 {
     /**
-     * What is the max length for a tab title
-     */
-    private static final int TITLE_LENGTH = 25;
-
-    /**
      * Simple Constructor
      */
     public TabbedBookDataDisplay()
@@ -60,6 +55,9 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         pnlView = createInnerDisplayPane();
 
         init();
+
+        center = pnlView.getComponent();
+        pnlMain.add(center, BorderLayout.CENTER);
 
         // NOTE: when we tried dynamic laf update, these needed special treatment
         // There are times when tab_main or pnl_view are not in visible or
@@ -85,8 +83,14 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         });
 
         pnlMain.setLayout(new BorderLayout());
-        center = pnlView.getComponent();
-        pnlMain.add(center, BorderLayout.CENTER);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getComponent()
+     */
+    public Component getComponent()
+    {
+        return pnlMain;
     }
 
     /* (non-Javadoc)
@@ -121,37 +125,29 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         }
         else
         {
-            getTabName(key);
-
-            // Setup the front tab
             pnlView.setBookData(book, key);
 
             setCenterComponent(pnlView.getComponent());
         }
 
-        // tabMain.repaint();
-    }
-
-    /**
-     * Make a new component reside in the center of this panel
-     */
-    private void setCenterComponent(Component comp)
-    {
-        // And show it is needed
-        if (center != comp)
-        {
-            pnlMain.remove(center);
-            center = comp;
-            pnlMain.add(center, BorderLayout.CENTER);
-        }
+        // there was a time when we needed to do pnlMain.repaint();
+        // but we don't seem to have a problem now
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getComponent()
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getKey()
      */
-    public Component getComponent()
+    public Key getKey()
     {
-        return pnlMain;
+        return key;
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBook()
+     */
+    public Book getBook()
+    {
+        return book;
     }
 
     /* (non-Javadoc)
@@ -216,20 +212,18 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getKey()
+    /**
+     * Make a new component reside in the center of this panel
      */
-    public Key getKey()
+    private void setCenterComponent(Component comp)
     {
-        return key;
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBook()
-     */
-    public Book getBook()
-    {
-        return book;
+        // And show it is needed
+        if (center != comp)
+        {
+            pnlMain.remove(center);
+            center = comp;
+            pnlMain.add(center, BorderLayout.CENTER);
+        }
     }
 
     /**
@@ -255,6 +249,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
             // Create a new tab
             BookDataDisplay pnlNew = createInnerDisplayPane();
             pnlNew.setBookData(book, next);
+
             Component display = pnlNew.getComponent();
             tabMain.add(getTabName(next), display);
 
@@ -312,9 +307,9 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * Accessor for the page size
      */
-    public static void setPageSize(int page_size)
+    public static void setPageSize(int pageSize)
     {
-        TabbedBookDataDisplay.pagesize = page_size;
+        TabbedBookDataDisplay.pageSize = pageSize;
     }
 
     /**
@@ -322,7 +317,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
      */
     public static int getPageSize()
     {
-        return pagesize;
+        return pageSize;
     }
 
     /**
@@ -343,10 +338,14 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /**
-     * How many verses on a tab.
-     * Should this be a static?
+     * What is the max length for a tab title
      */
-    private static int pagesize = 50;
+    private static final int TITLE_LENGTH = 25;
+
+    /**
+     * How many verses on a tab.
+     */
+    private static int pageSize = 50;
 
     /**
      * A list of all the HyperlinkListeners
@@ -354,19 +353,24 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     private transient List hyperlis;
 
     /**
-     * Are we using tabs?
+     * The current key
      */
-    private boolean tabs = false;
+    private Key key = null;
 
     /**
-     * The book that the current passage comes from
+     * The set of Keys for each tab
+     */
+    private List keys = null;
+
+    /**
+     * The version used for display
      */
     private Book book = null;
 
     /**
-     * The current key
+     * Are we using tabs?
      */
-    private Key key = null;
+    private boolean tabs = false;
 
     /**
      * If we are using tabs, this is the main view
@@ -382,11 +386,6 @@ public class TabbedBookDataDisplay implements BookDataDisplay
      * A list of all the InnerDisplayPanes so we can control listeners
      */
     private List displays = new ArrayList();
-
-    /**
-     * The set of Keys for each tab
-     */
-    private List keys = null;
 
     /**
      * Pointer to whichever of the above is currently in use

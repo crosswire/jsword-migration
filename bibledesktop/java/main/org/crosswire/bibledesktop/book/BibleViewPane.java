@@ -17,8 +17,12 @@ import javax.swing.event.HyperlinkListener;
 import javax.swing.filechooser.FileFilter;
 
 import org.crosswire.bibledesktop.display.splitlist.OuterDisplayPane;
+import org.crosswire.bibledesktop.display.tab.TabbedDisplayPane;
+import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.util.StringUtil;
+import org.crosswire.jsword.book.BookException;
+import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageFactory;
@@ -66,7 +70,6 @@ public class BibleViewPane extends JPanel
         chooser.addChoosableFileFilter(new CustomFileFilter());
         chooser.setMultiSelectionEnabled(false);
 
-        pnlSelect.addCommandListener(pnlPassg.getDisplaySelectListener());
         pnlSelect.addCommandListener(new DisplaySelectListener()
         {
             /* (non-Javadoc)
@@ -78,6 +81,16 @@ public class BibleViewPane extends JPanel
                 {
                     fireTitleChanged(new TitleChangedEvent(BibleViewPane.this, getTitle()));
                 }
+
+                try
+                {
+                    log.debug("new bible chosen: "+ev.getBook()); //$NON-NLS-1$
+                    pnlPassg.setBookData(ev.getBook(), ev.getPassage());
+                }
+                catch (BookException ex)
+                {
+                    Reporter.informUser(BibleViewPane.this, ex);
+                }
             }
 
             /* (non-Javadoc)
@@ -85,14 +98,15 @@ public class BibleViewPane extends JPanel
              */
             public void bookChosen(DisplaySelectEvent ev)
             {
+                log.debug("new passage chosen: "+ev.getPassage().getName()); //$NON-NLS-1$
+                setPassage(ev.getPassage());
             }
         });
-        pnlPassg.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
 
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         this.setLayout(new BorderLayout());
         this.add(pnlSelect, BorderLayout.NORTH);
-        this.add(pnlPassg, BorderLayout.CENTER);
+        this.add(pnlPassg.getComponent(), BorderLayout.CENTER);
     }
 
     /**
@@ -124,12 +138,11 @@ public class BibleViewPane extends JPanel
 
     /**
      * Save the view to disk.
-     * @throws IOException
      */
     public void save() throws IOException
     {
-        Passage passage = getPassage();
-        if (passage == null)
+        Key key = getKey();
+        if (key == null)
         {
             return;
         }
@@ -139,35 +152,53 @@ public class BibleViewPane extends JPanel
             querySaveFile();
         }
 
-        Writer out = new FileWriter(saved);
-        passage.writeDescription(out);
+        saveKey(key);
     }
     
-    /**
-     * Returns true if there is something to save.
-     * @return
-     */
-    public boolean maySave()
-    {
-        return getPassage() != null;
-    }
-
     /**
      * Save the view to disk, but ask the user where to save it first.
      * @throws IOException
      */
     public void saveAs() throws IOException
     {
-        Passage passage = getPassage();
-        if (passage == null)
+        Key key = getKey();
+        if (key == null)
         {
             return;
         }
 
         querySaveFile();
 
+        saveKey(key);
+    }
+
+    /**
+     * Do the real work of saving to a file
+     * @param key The key to save
+     * @throws IOException If a write error happens
+     */
+    private void saveKey(Key key) throws IOException
+    {
         Writer out = new FileWriter(saved);
-        getPassage().writeDescription(out);
+        if (key instanceof Passage)
+        {
+            Passage ref = (Passage) key;
+            ref.writeDescription(out);
+        }
+        else
+        {
+            out.write(key.getName());
+            out.write("\n"); //$NON-NLS-1$
+        }
+        out.close();
+    }
+
+    /**
+     * Returns true if there is something to save.
+     */
+    public boolean maySave()
+    {
+        return getKey() != null;
     }
 
     /**
@@ -222,9 +253,9 @@ public class BibleViewPane extends JPanel
     /**
      * Accessor for the current passage
      */
-    public Passage getPassage()
+    public Key getKey()
     {
-        return pnlPassg.getPassage();
+        return pnlPassg.getKey();
     }
 
     /**
@@ -232,8 +263,15 @@ public class BibleViewPane extends JPanel
      */
     public void setPassage(Passage ref)
     {
-        pnlSelect.setPassage(ref);
-        pnlPassg.setPassage(ref);
+        try
+        {
+            pnlSelect.setPassage(ref);
+            pnlPassg.setBookData(pnlSelect.getBook(), ref);
+        }
+        catch (BookException ex)
+        {
+            Reporter.informUser(this, ex);
+        }
     }
 
     /**
@@ -324,10 +362,15 @@ public class BibleViewPane extends JPanel
     protected File saved = null;
     private transient List listeners;
     private DisplaySelectPane pnlSelect = new DisplaySelectPane();
-    private OuterDisplayPane pnlPassg = new OuterDisplayPane();
+    protected OuterDisplayPane pnlPassg = new OuterDisplayPane(new TabbedDisplayPane());
     private static int shortlen = 30;
     private JFileChooser chooser = new JFileChooser();
     private static final String EXTENSION = ".lst"; //$NON-NLS-1$
+
+    /**
+     * The log stream
+     */
+    protected static final Logger log = Logger.getLogger(BibleViewPane.class);
 
     /**
      * Returns the shortlen.

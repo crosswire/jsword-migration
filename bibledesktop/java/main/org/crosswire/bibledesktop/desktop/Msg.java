@@ -31,6 +31,7 @@ public class Msg extends MsgBase
     // Strings used by Desktop
     // String for the title and version
     static final Msg APP_TITLE = new Msg("Desktop.Title"); //$NON-NLS-1$
+    static final Msg SPLASH_TITLE = new Msg("Desktop.Splash"); //$NON-NLS-1$
     static final Msg APP_VERSION = new Msg("Desktop.Version"); //$NON-NLS-1$
     static final Msg VERSION_TITLE = new Msg("Desktop.VersionTitle"); //$NON-NLS-1$
     static final Msg VERSION_APP_TITLE = new Msg("Desktop.VersionAppTitle"); //$NON-NLS-1$
@@ -58,12 +59,9 @@ public class Msg extends MsgBase
     static final Msg NO_HELP = new Msg("DesktopActions.NoHelp"); //$NON-NLS-1$
     static final Msg NOT_IMPLEMENTED = new Msg("DesktopActions.NotImplemented"); //$NON-NLS-1$
     static final Msg NO_PASSAGE = new Msg("DesktopActions.NoPassage"); //$NON-NLS-1$
-    static final Msg DEBUG_METHOD = new Msg("Method: "); //$NON-NLS-1$
     static final Msg SOURCE_MISSING = new Msg("DesktopActions.SourceMissing"); //$NON-NLS-1$
-    static final Msg DEBUG_GO = new Msg("GO"); //$NON-NLS-1$
-    static final Msg HTML = new Msg("DesktopActions.HTML"); //$NON-NLS-1$
     static final Msg OSIS = new Msg("DesktopActions.OSIS"); //$NON-NLS-1$
-    static final Msg SOURCE_FOUND = new Msg("DesktopActions.SourceFound"); //$NON-NLS-1$
+    static final Msg NO_SOURCE = new Msg("DesktopActions.NoSourceFound"); //$NON-NLS-1$
 
     // Strings for AboutPane and Splash
     // The splash image is of an English version of the application
@@ -81,28 +79,32 @@ public class Msg extends MsgBase
     static final Msg CONFIG_TITLE = new Msg("OptionsAction.ConfigTitle"); //$NON-NLS-1$
 
     // Strings for ComparePane
-    static final Msg COMPARE_DIALOG = new Msg("Bible Compare"); //$NON-NLS-1$
-    static final Msg COMPARE_IDENT_QUESTION = new Msg("You are attempting to compare 2 Books that are identical.\nDo you want to continue?"); //$NON-NLS-1$
-    static final Msg COMPARE_IDENT_TITLE = new Msg("Compare Identical Books?"); //$NON-NLS-1$
-    static final Msg DEBUG_VIEWS = new Msg("Views:"); //$NON-NLS-1$
-    static final Msg COMPARE_WORDS = new Msg("Words:  "); //$NON-NLS-1$
-    static final Msg COMPARE_GO = new Msg("Compare"); //$NON-NLS-1$
-    static final Msg COMPARE_USING = new Msg("Compare Using"); //$NON-NLS-1$
-    static final Msg COMPARE_WORDS_TIP = new Msg("[empty] - test no words; * - test all words, text - test all words starting with 'text'"); //$NON-NLS-1$
-    static final Msg COMPARE_TITLE = new Msg("Books To Compare"); //$NON-NLS-1$
-    static final Msg COMPARE_VERSES = new Msg("Verses: "); //$NON-NLS-1$
+    static final Msg COMPARE_DIALOG = new Msg("Compare.DIALOG"); //$NON-NLS-1$
+    static final Msg COMPARE_IDENT_QUESTION = new Msg("Compare.IDENT_QUESTION"); //$NON-NLS-1$
+    static final Msg COMPARE_IDENT_TITLE = new Msg("Compare.IDENT_TITLE"); //$NON-NLS-1$
+    static final Msg COMPARE_WORDS = new Msg("Compare.WORDS"); //$NON-NLS-1$
+    static final Msg COMPARE_GO = new Msg("Compare.GO"); //$NON-NLS-1$
+    static final Msg COMPARE_USING = new Msg("Compare.USING"); //$NON-NLS-1$
+    static final Msg COMPARE_WORDS_TIP = new Msg("Compare.WORDS_TIP"); //$NON-NLS-1$
+    static final Msg COMPARE_TITLE = new Msg("Compare.TITLE"); //$NON-NLS-1$
+    static final Msg COMPARE_VERSES = new Msg("Compare.VERSES"); //$NON-NLS-1$
 
     // Strings for CompareResultsPane
-    static final Msg RESULTS_TITLE = new Msg("Results"); //$NON-NLS-1$
-    static final Msg RESULTS_START = new Msg("Start"); //$NON-NLS-1$
-    static final Msg RESULTS_CLOSE = new Msg("Close"); //$NON-NLS-1$
-    static final Msg RESULTS_DIALOG = new Msg("Verify Results"); //$NON-NLS-1$
-    static final Msg RESULTS_BOOKS = new Msg("Books:"); //$NON-NLS-1$
-    static final Msg RESULTS_COMPARING = new Msg("Comparing:"); //$NON-NLS-1$
-    static final Msg RESULTS_PASSAGE = new Msg("Passage"); //$NON-NLS-1$
-    static final Msg RESULTS_WORDS = new Msg("Word"); //$NON-NLS-1$
-    static final Msg DEBUG_STEPS = new Msg("Step {0}/{1}"); //$NON-NLS-1$
-    static final Msg RESULTS_STOP = new Msg("Stop"); //$NON-NLS-1$
+    static final Msg RESULTS_TITLE = new Msg("Results.TITLE"); //$NON-NLS-1$
+    static final Msg RESULTS_START = new Msg("Results.START"); //$NON-NLS-1$
+    static final Msg RESULTS_CLOSE = new Msg("Results.CLOSE"); //$NON-NLS-1$
+    static final Msg RESULTS_DIALOG = new Msg("Results.DIALOG"); //$NON-NLS-1$
+    static final Msg RESULTS_BOOKS = new Msg("Results.BOOKS"); //$NON-NLS-1$
+    static final Msg RESULTS_COMPARING = new Msg("Results.COMPARING"); //$NON-NLS-1$
+    static final Msg RESULTS_PASSAGE = new Msg("Results.PASSAGE"); //$NON-NLS-1$
+    static final Msg RESULTS_WORDS = new Msg("Results.WORDS"); //$NON-NLS-1$
+    static final Msg RESULTS_STOP = new Msg("RESULTS_STOP"); //$NON-NLS-1$
+
+    // Strings for DebugPane
+    static final Msg DEBUG_STEPS = new Msg("Debug.STEPS"); //$NON-NLS-1$
+    static final Msg DEBUG_VIEWS = new Msg("Debug.VIEWS"); //$NON-NLS-1$
+    static final Msg DEBUG_GO = new Msg("Debug.GO"); //$NON-NLS-1$
+    static final Msg DEBUG_METHOD = new Msg("Debug.METHOD"); //$NON-NLS-1$
 
     /**
      * Passthrough ctor

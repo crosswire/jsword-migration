@@ -30,7 +30,6 @@ class Msg extends MsgBase
 {
     static final Msg EMPTY_FILE = new Msg("BibleViewPane.EmptyFile"); //$NON-NLS-1$
     static final Msg VERSE_LIST_DESC = new Msg("BibleViewPane.VerseListDesc"); //$NON-NLS-1$
-    static final Msg ERROR_READING = new Msg("BibleViewPane.ErrorReading"); //$NON-NLS-1$
     static final Msg BOOKS = new Msg("BibleViewPane.Books"); //$NON-NLS-1$
     static final Msg SELECT_BOOK = new Msg("BibleViewPane.SelectBook"); //$NON-NLS-1$
     static final Msg SELECT_CHAPTER = new Msg("BibleViewPane.SelectChapter"); //$NON-NLS-1$

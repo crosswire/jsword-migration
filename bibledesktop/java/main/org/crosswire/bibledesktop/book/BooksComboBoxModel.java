@@ -4,6 +4,7 @@ import javax.swing.ComboBoxModel;
 
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookMetaData;
+import org.crosswire.jsword.book.Defaults;
 
 /**
  * The BibleModels class implements a number of swing DataModels
@@ -49,12 +50,25 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
 
         if (getSize() > 0)
         {
+            // The default is to have the first selected
             current = (BookMetaData) getElementAt(0);
+
+            // but if the default Bible is in the available list we should
+            // start with that as the default.
+            BookMetaData bmd = Defaults.getBibleMetaData();
+            if (bmd != null)
+            {
+                int i = bmds.indexOf(bmd);
+                if (i != -1)
+                {
+                    current = bmd;
+                }
+            }
         }
     }
 
-    /**
-     * implements javax.swing.ComboBoxModel
+    /* (non-Javadoc)
+     * @see javax.swing.ComboBoxModel#setSelectedItem(java.lang.Object)
      */
     public void setSelectedItem(Object current)
     {
@@ -62,8 +76,8 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
         fireContentsChanged(this, -1, -1);
     }
 
-    /**
-     * implements javax.swing.ComboBoxModel
+    /* (non-Javadoc)
+     * @see javax.swing.ComboBoxModel#getSelectedItem()
      */
     public Object getSelectedItem()
     {

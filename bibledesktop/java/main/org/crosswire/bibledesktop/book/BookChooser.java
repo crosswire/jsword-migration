@@ -1,4 +1,3 @@
-
 package org.crosswire.bibledesktop.book;
 
 import java.awt.BorderLayout;
@@ -17,10 +16,10 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookMetaData;
 
@@ -66,22 +65,22 @@ public class BookChooser extends JPanel
     public BookChooser(BookFilter filter)
     {
         bmod = new BooksListModel(filter);
-        jbInit();
+        init();
     }
 
     /**
-     * Initializa all the GUI components
+     * Initialize all the GUI components
      */
-    private void jbInit()
+    private void init()
     {
-        pnl_bibles.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        pnl_bibles.setLayout(new BorderLayout());
-        pnl_bibles.add(scr_bibles, BorderLayout.CENTER);
-        scr_bibles.setViewportView(lst_bibles);
-        lst_bibles.setModel(bmod);
-        lst_bibles.setCellRenderer(new BookListCellRenderer());
-        lst_bibles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        lst_bibles.addListSelectionListener(new ListSelectionListener()
+        pnlBibles.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        pnlBibles.setLayout(new BorderLayout());
+        pnlBibles.add(scrBibles, BorderLayout.CENTER);
+        scrBibles.setViewportView(lstBibles);
+        lstBibles.setModel(bmod);
+        lstBibles.setCellRenderer(new BookListCellRenderer());
+        lstBibles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        lstBibles.addListSelectionListener(new ListSelectionListener()
         {
             public void valueChanged(ListSelectionEvent ev)
             {
@@ -89,21 +88,20 @@ public class BookChooser extends JPanel
             }
         });
 
-        // TODO: i18n
-        btn_ok.setText(Msg.CHOOSER_OK.toString());
-        btn_ok.setMnemonic(Msg.CHOOSER_OK.toString().charAt(0));
-        btn_ok.addActionListener(new ActionListener()
+        btnOk.setText(Msg.CHOOSER_OK.toString());
+        btnOk.setMnemonic(Msg.CHOOSER_OK.toString().charAt(0));
+        btnOk.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent ev)
             {
                 okPressed();
             }
         });
-        btn_ok.setEnabled(selected != null);
-        btn_ok.setDefaultCapable(true);
+        btnOk.setEnabled(selected != null);
+        btnOk.setDefaultCapable(true);
 
-        btn_cancel.setText(Msg.CHOOSER_CANCEL.toString());
-        btn_cancel.addActionListener(new ActionListener()
+        btnCancel.setText(Msg.CHOOSER_CANCEL.toString());
+        btnCancel.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent ev)
             {
@@ -111,13 +109,13 @@ public class BookChooser extends JPanel
             }
         });
 
-        pnl_buttons.setLayout(new FlowLayout());
-        pnl_buttons.add(btn_ok);
-        pnl_buttons.add(btn_cancel);
+        pnlButtons.setLayout(new FlowLayout());
+        pnlButtons.add(btnOk);
+        pnlButtons.add(btnCancel);
 
         this.setLayout(new BorderLayout());
-        this.add(pnl_bibles, BorderLayout.CENTER);
-        this.add(pnl_buttons, BorderLayout.SOUTH);
+        this.add(pnlBibles, BorderLayout.CENTER);
+        this.add(pnlButtons, BorderLayout.SOUTH);
     }
 
     /**
@@ -125,9 +123,7 @@ public class BookChooser extends JPanel
      */
     public int showDialog(Component parent)
     {
-        Frame frame = (parent instanceof Frame)
-                      ? (Frame) parent
-                      : (Frame) SwingUtilities.getAncestorOfClass(Frame.class, parent);
+        Frame frame = GuiUtil.getFrame(parent);
 
         dialog = new JDialog(frame, title, true);
 
@@ -172,7 +168,7 @@ public class BookChooser extends JPanel
      */
     public BookMetaData getSelected()
     {
-        return (BookMetaData) lst_bibles.getSelectedValue();
+        return (BookMetaData) lstBibles.getSelectedValue();
     }
 
     /**
@@ -180,8 +176,8 @@ public class BookChooser extends JPanel
      */
     public void selection()
     {
-        selected = (String) lst_bibles.getSelectedValue();
-        btn_ok.setEnabled(selected != null);
+        selected = (String) lstBibles.getSelectedValue();
+        btnOk.setEnabled(selected != null);
     }
 
     /**
@@ -239,11 +235,11 @@ public class BookChooser extends JPanel
 
     /* GUI Componenets */
     private JDialog dialog;
-    private JPanel pnl_bibles = new JPanel();
-    private JScrollPane scr_bibles = new JScrollPane();
-    private JList lst_bibles = new JList();
+    private JPanel pnlBibles = new JPanel();
+    private JScrollPane scrBibles = new JScrollPane();
+    private JList lstBibles = new JList();
 
-    private JPanel pnl_buttons = new JPanel();
-    private JButton btn_ok = new JButton();
-    private JButton btn_cancel = new JButton();
+    private JPanel pnlButtons = new JPanel();
+    private JButton btnOk = new JButton();
+    private JButton btnCancel = new JButton();
 }

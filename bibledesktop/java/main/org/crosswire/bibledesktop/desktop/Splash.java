@@ -2,9 +2,11 @@ package org.crosswire.bibledesktop.desktop;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -14,20 +16,25 @@ import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import org.crosswire.common.progress.Job;
+import org.crosswire.common.progress.JobManager;
+import org.crosswire.common.progress.WorkEvent;
+import org.crosswire.common.progress.WorkListener;
 import org.crosswire.common.progress.swing.JobsProgressBar;
+import org.crosswire.common.swing.GuiUtil;
 
 /**
  * A Simple splash screen.
  * <p>so start one of these call:
  * <pre>
- * new Splash(getComponent(), 60000);
+ * Splash s = new Splash();
+ * ... // init code
+ * s.close();
  * </pre>
  * 
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
@@ -53,20 +60,14 @@ import org.crosswire.common.progress.swing.JobsProgressBar;
  */
 public class Splash extends JWindow
 {
-    private static final String SPLASH_FONT = "SanSerif"; //$NON-NLS-1$
-    private static final String THUMB_COLOR = "ScrollBar.thumbHighlight"; //$NON-NLS-1$
-
     /**
      * Create a splash window
      */
-    public Splash(Component comp, int wait)
+    public Splash()
     {
-        super(JOptionPane.getFrameForComponent(comp));
-        this.wait = wait;
+        super(GuiUtil.getFrame(null));
 
         init();
-
-        new Thread(new CloseRunnable()).start();
     }
 
     /**
@@ -81,35 +82,51 @@ public class Splash extends JWindow
             icon = new ImageIcon(url);
         }
 
-        JLabel lbl_picture = new JLabel();
-        lbl_picture.setBackground(Color.black);
-        lbl_picture.setOpaque(true);
-        lbl_picture.setIcon(icon);
-        lbl_picture.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
+        JLabel lblPicture = new JLabel();
+        lblPicture.setBackground(Color.BLACK);
+        lblPicture.setOpaque(true);
+        lblPicture.setIcon(icon);
+        lblPicture.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
 
-        JLabel lbl_info = new JLabel();
-        lbl_info.setBackground(Color.black);
-        lbl_info.setFont(new Font(SPLASH_FONT, 1, 14));
-        lbl_info.setForeground(UIManager.getColor(THUMB_COLOR));
-        lbl_info.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
-        lbl_info.setOpaque(true);
-        lbl_info.setHorizontalAlignment(SwingConstants.RIGHT);
-        lbl_info.setText(Msg.getVersionInfo());
+        JLabel lblText = new JLabel();
+        lblText.setFont(new Font(SPLASH_FONT, Font.BOLD, 48));
+        lblText.setForeground(new Color(0x99, 0x66, 0xAA));
+        lblText.setOpaque(false);
+        lblText.setVerticalAlignment(SwingConstants.BOTTOM);
+        lblText.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblText.setText(Msg.SPLASH_TITLE.toString());
 
-        JPanel pnl_info = new JPanel();
-        JobsProgressBar pnl_jobs = new JobsProgressBar(false);
-        pnl_info.setLayout(new BorderLayout(5, 0));
-        pnl_info.setBackground(Color.black);
-        pnl_info.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
-        pnl_info.add(lbl_info, BorderLayout.CENTER);
-        pnl_info.add(pnl_jobs, BorderLayout.SOUTH);
+        JPanel pnlDisplay = new JPanel();
+        pnlDisplay.setLayout(new GridBagLayout());
+        pnlDisplay.add(lblText, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 10), 0, 0));
+        pnlDisplay.add(lblPicture, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 
-        this.getContentPane().add(pnl_info, BorderLayout.SOUTH);
-        this.getContentPane().add(lbl_picture, BorderLayout.CENTER);
+        JLabel lblInfo = new JLabel();
+        lblInfo.setBackground(Color.black);
+        lblInfo.setFont(new Font(SPLASH_FONT, 1, 14));
+        lblInfo.setForeground(UIManager.getColor(THUMB_COLOR));
+        lblInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
+        lblInfo.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblInfo.setText(Msg.getVersionInfo());
+        lblInfo.setOpaque(false);
+
+        JPanel pnlInfo = new JPanel();
+        JobsProgressBar pnlJobs = new JobsProgressBar(false);
+        pnlInfo.setLayout(new BorderLayout(5, 0));
+        pnlInfo.setBackground(Color.black);
+        pnlInfo.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
+        pnlInfo.add(lblInfo, BorderLayout.CENTER);
+        pnlInfo.add(pnlJobs, BorderLayout.SOUTH);
+
+        this.getContentPane().setLayout(new BorderLayout());
+        this.getContentPane().add(pnlInfo, BorderLayout.SOUTH);
+        this.getContentPane().add(pnlDisplay, BorderLayout.CENTER);
 
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        Dimension window = lbl_picture.getPreferredSize();
-        this.setLocation(screen.width/2 - (window.width/2), screen.height/2 - (window.height/2));
+        Dimension window = lblPicture.getPreferredSize();
+        this.setLocation(screen.width / 2 - (window.width / 2), screen.height / 2 - (window.height / 2));
+
+        JobManager.addWorkListener(listener);
 
         this.addMouseListener(new MouseAdapter()
         {
@@ -127,36 +144,32 @@ public class Splash extends JWindow
      */
     public void close()
     {
+        JobManager.removeWorkListener(listener);
+
         setVisible(false);
         dispose();
     }
 
-    /**
-     * Timer to close the window
-     */
-    class CloseRunnable implements Runnable
-    {
-        public void run()
-        {
-            try
-            {
-                Thread.sleep(wait);
+    private CustomWorkListener listener = new CustomWorkListener();
 
-                SwingUtilities.invokeAndWait(new Runnable()
-                {
-                    public void run()
-                    {
-                        setVisible(false);
-                        dispose();
-                    }
-                });
-            }
-            catch (Exception ex)
+    private static final String SPLASH_FONT = "SanSerif"; //$NON-NLS-1$
+    private static final String THUMB_COLOR = "ScrollBar.thumbHighlight"; //$NON-NLS-1$
+
+    /**
+     * Pack the frame if we get new jobs that could shunt things around
+     */
+    private final class CustomWorkListener implements WorkListener
+    {
+        /* (non-Javadoc)
+         * @see org.crosswire.common.progress.WorkListener#workProgressed(org.crosswire.common.progress.WorkEvent)
+         */
+        public void workProgressed(WorkEvent ev)
+        {
+            Job job = ev.getJob();
+            if (job.getPercent() == 0 || job.isFinished())
             {
-                ex.printStackTrace();
+                Splash.this.pack();
             }
         }
     }
-
-    protected final int wait;
 }

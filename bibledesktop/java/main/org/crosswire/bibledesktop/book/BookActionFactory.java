@@ -70,7 +70,7 @@ public final class BookActionFactory extends ActionFactory
         // use reflecton to do a direct lookup and call
         try
         {
-            Method doMethod = caller.getClass().getDeclaredMethod(METHOD_PREFIX+action, new Class[] { });
+            Method doMethod = caller.getClass().getDeclaredMethod(METHOD_PREFIX + action, new Class[] { });
             doMethod.invoke(caller, null);
         }
         catch (NoSuchMethodException e1)

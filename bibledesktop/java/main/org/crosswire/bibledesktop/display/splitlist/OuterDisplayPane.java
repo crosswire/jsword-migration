@@ -2,7 +2,6 @@ package org.crosswire.bibledesktop.display.splitlist;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.util.List;
 
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -13,24 +12,19 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
-import org.crosswire.bibledesktop.book.DisplaySelectEvent;
-import org.crosswire.bibledesktop.book.DisplaySelectListener;
 import org.crosswire.bibledesktop.book.DisplaySelectPane;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
-import org.crosswire.bibledesktop.display.tab.TabbedDisplayPane;
 import org.crosswire.bibledesktop.passage.PassageGuiUtil;
 import org.crosswire.bibledesktop.passage.PassageListModel;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookException;
-import org.crosswire.jsword.book.BookFilters;
-import org.crosswire.jsword.book.BookMetaData;
-import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageConstants;
 import org.crosswire.jsword.passage.PassageFactory;
+import org.crosswire.jsword.passage.PassageUtil;
 import org.crosswire.jsword.passage.VerseRange;
 
 /**
@@ -57,28 +51,15 @@ import org.crosswire.jsword.passage.VerseRange;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class OuterDisplayPane extends JPanel implements BookDataDisplay
+public class OuterDisplayPane implements BookDataDisplay
 {
     /**
      * Initialize the OuterDisplayPane
      */
-    public OuterDisplayPane()
+    public OuterDisplayPane(BookDataDisplay child)
     {
-        try
-        {
-            List booklist = Books.installed().getBookMetaDatas(BookFilters.getBibles());
-            if (booklist.size() != 0)
-            {
-                Book book = ((BookMetaData) booklist.get(0)).getBook();
-                txtPassg.setBook(book);
-            }
-
-            init();
-        }
-        catch (Exception ex)
-        {
-            log.error("Failed to set default book", ex); //$NON-NLS-1$
-        }
+        this.child = child;
+        init();
     }
 
     /**
@@ -86,11 +67,11 @@ public class OuterDisplayPane extends JPanel implements BookDataDisplay
      */
     private void init()
     {
-        mdlPassg.setMode(PassageListModel.LIST_RANGES);
-        mdlPassg.setRestriction(PassageConstants.RESTRICT_CHAPTER);
+        model.setMode(PassageListModel.LIST_RANGES);
+        model.setRestriction(PassageConstants.RESTRICT_CHAPTER);
 
-        lstPassg.setModel(mdlPassg);
-        lstPassg.addListSelectionListener(new ListSelectionListener()
+        list.setModel(model);
+        list.addListSelectionListener(new ListSelectionListener()
         {
             public void valueChanged(ListSelectionEvent ev)
             {
@@ -98,111 +79,36 @@ public class OuterDisplayPane extends JPanel implements BookDataDisplay
             }
         });
 
-        sptPassg.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-        sptPassg.add(scrPassg, JSplitPane.LEFT);
-        sptPassg.add(txtPassg, JSplitPane.RIGHT);
-        sptPassg.setOneTouchExpandable(true);
-        sptPassg.setDividerLocation(0.0D);
+        split.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+        split.add(scroll, JSplitPane.LEFT);
+        split.add(child.getComponent(), JSplitPane.RIGHT);
+        split.setOneTouchExpandable(true);
+        split.setDividerLocation(0.0D);
 
-        scrPassg.getViewport().add(lstPassg);
+        scroll.getViewport().add(list);
 
-        this.setLayout(new BorderLayout());
-        this.add(sptPassg, BorderLayout.CENTER);
+        main.setLayout(new BorderLayout());
+        main.add(split, BorderLayout.CENTER);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getComponent()
+     */
+    public Component getComponent()
+    {
+        return main;
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
      */
-    public void setBookData(Book book, Key key) throws BookException
+    public void setBookData(Book book, Key newkey) throws BookException
     {
-        throw new NullPointerException("not implemented"); //$NON-NLS-1$
-    }
+        this.book = book;
+        this.key = PassageUtil.getPassage(newkey);
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.FocusablePart#getComponent()
-     */
-    public Component getComponent()
-    {
-        return this;
-    }
-
-    /**
-     * Accessor for a notifier from the DisplaySelectPane
-     */
-    public DisplaySelectListener getDisplaySelectListener()
-    {
-        return dsli;
-    }
-
-    /**
-     * Set the passage to be displayed
-     */
-    public void setPassage(Passage ref)
-    {
-        this.ref = ref;
-
-        try
-        {
-            mdlPassg.setPassage(ref);
-            txtPassg.setPassage(ref);
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(this, ex);
-        }
-    }
-
-    /**
-     * Get the passage being displayed.
-     */
-    public Passage getPassage()
-    {
-        return mdlPassg.getPassage();
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.FocusablePart#getBook()
-     */
-    public Book getBook()
-    {
-        return txtPassg.getBook();
-    }
-
-    /**
-     * Delete the selected verses
-     */
-    public void deleteSelected(BibleViewPane view)
-    {
-        PassageGuiUtil.deleteSelectedVersesFromList(lstPassg);
-
-        // Update the text box
-        ref = mdlPassg.getPassage();
-        DisplaySelectPane psel = view.getSelectPane();
-        psel.setPassage(ref);
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#copy()
-     */
-    public void copy()
-    {
-        txtPassg.copy();
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#addHyperlinkListener(javax.swing.event.HyperlinkListener)
-     */
-    public void addHyperlinkListener(HyperlinkListener li)
-    {
-        txtPassg.addHyperlinkListener(li);
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
-     */
-    public void removeHyperlinkListener(HyperlinkListener li)
-    {
-        txtPassg.removeHyperlinkListener(li);
+        model.setPassage(key);
+        child.setBookData(book, key);
     }
 
     /* (non-Javadoc)
@@ -210,7 +116,52 @@ public class OuterDisplayPane extends JPanel implements BookDataDisplay
      */
     public Key getKey()
     {
-        return txtPassg.getKey();
+        return key;
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.FocusablePart#getBook()
+     */
+    public Book getBook()
+    {
+        return book;
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.book.FocusablePart#copy()
+     */
+    public void copy()
+    {
+        child.copy();
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.book.FocusablePart#addHyperlinkListener(javax.swing.event.HyperlinkListener)
+     */
+    public void addHyperlinkListener(HyperlinkListener li)
+    {
+        child.addHyperlinkListener(li);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.book.FocusablePart#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
+     */
+    public void removeHyperlinkListener(HyperlinkListener li)
+    {
+        child.removeHyperlinkListener(li);
+    }
+
+    /**
+     * Delete the selected verses
+     */
+    public void deleteSelected(BibleViewPane view)
+    {
+        PassageGuiUtil.deleteSelectedVersesFromList(list);
+
+        // Update the text box
+        key = model.getPassage();
+        DisplaySelectPane psel = view.getSelectPane();
+        psel.setPassage(key);
     }
 
     /**
@@ -220,12 +171,12 @@ public class OuterDisplayPane extends JPanel implements BookDataDisplay
     {
         try
         {
-            Object[] ranges = lstPassg.getSelectedValues();
+            Object[] ranges = list.getSelectedValues();
 
             Passage local = null;
             if (ranges.length == 0)
             {
-                local = ref;
+                local = key;
             }
             else
             {
@@ -242,7 +193,7 @@ public class OuterDisplayPane extends JPanel implements BookDataDisplay
                 }
             }
 
-            txtPassg.setPassage(local);
+            setBookData(book, local);
         }
         catch (Exception ex)
         {
@@ -253,7 +204,12 @@ public class OuterDisplayPane extends JPanel implements BookDataDisplay
     /**
      * The whole passage that we are viewing
      */
-    private Passage ref;
+    private Passage key = null;
+
+    /**
+     * What book are we currently viewing?
+     */
+    private Book book = null;
 
     /**
      * The log stream
@@ -263,41 +219,10 @@ public class OuterDisplayPane extends JPanel implements BookDataDisplay
     /*
      * GUI Components
      */
-    private JSplitPane sptPassg = new JSplitPane();
-    private JScrollPane scrPassg = new JScrollPane();
-    protected TabbedDisplayPane txtPassg = new TabbedDisplayPane();
-    private JList lstPassg = new JList();
-    private PassageListModel mdlPassg = new PassageListModel();
-    private DisplaySelectListener dsli = new CustomDisplaySelectListener();
-
-    /**
-     * Update the display whenever the version or passage changes
-     */
-    private class CustomDisplaySelectListener implements DisplaySelectListener
-    {
-        /* (non-Javadoc)
-         * @see org.crosswire.bibledesktop.book.DisplaySelectListener#bookChosen(org.crosswire.bibledesktop.book.DisplaySelectEvent)
-         */
-        public void bookChosen(DisplaySelectEvent ev)
-        {
-            log.debug("new bible chosen: "+ev.getBook()); //$NON-NLS-1$
-
-            Book book = ev.getBook();
-            txtPassg.setBook(book);
-
-            // The following way to refresh the view is a little harsh because
-            // resets any list selections. It would be nice if we could get
-            // away with calling selection(), however it doesn't seem to work.
-            setPassage(ev.getPassage());
-        }
-
-        /* (non-Javadoc)
-         * @see org.crosswire.bibledesktop.book.DisplaySelectListener#passageSelected(org.crosswire.bibledesktop.book.DisplaySelectEvent)
-         */
-        public void passageSelected(DisplaySelectEvent ev)
-        {
-            log.debug("new passage chosen: "+ev.getPassage().getName()); //$NON-NLS-1$
-            setPassage(ev.getPassage());
-        }
-    }
+    private JSplitPane split = new JSplitPane();
+    private JScrollPane scroll = new JScrollPane();
+    private JPanel main = new JPanel();
+    private JList list = new JList();
+    private PassageListModel model = new PassageListModel();
+    private BookDataDisplay child = null;
 }

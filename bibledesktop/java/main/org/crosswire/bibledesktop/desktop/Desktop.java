@@ -24,6 +24,7 @@ import javax.swing.FocusManager;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSplitPane;
@@ -48,6 +49,7 @@ import org.crosswire.common.config.ChoiceFactory;
 import org.crosswire.common.config.Config;
 import org.crosswire.common.progress.Job;
 import org.crosswire.common.progress.JobManager;
+import org.crosswire.common.swing.CatchingThreadGroup;
 import org.crosswire.common.swing.ExceptionPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.swing.LookAndFeelUtil;
@@ -144,13 +146,20 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     {
         try
         {
-            Desktop desktop = new Desktop();
-            desktop.getJFrame().pack();
-            GuiUtil.centerWindow(desktop.getJFrame());
-            desktop.getJFrame().toFront();
-            desktop.getJFrame().setVisible(true);
+            ThreadGroup group = new CatchingThreadGroup("BibleDesktopUIGroup"); //$NON-NLS-1$
+            new Thread(group, "BibleDesktopUIThread") //$NON-NLS-1$
+            {
+                public void run()
+                {
+                    Desktop desktop = new Desktop();
+                    desktop.getJFrame().pack();
+                    GuiUtil.centerWindow(desktop.getJFrame());
+                    desktop.getJFrame().toFront();
+                    desktop.getJFrame().setVisible(true);
 
-            log.debug(EXITING);
+                    log.debug(EXITING);
+                }
+            }.start();
         }
         catch (Exception ex)
         {
@@ -171,20 +180,26 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         // This will set it as a place to look for overrides for
         // ResourceBundles, properties and other resources
         Project project = Project.instance();
-        
+
+        // Other jobs before we create any GUI
         LookAndFeelUtil.tweakLookAndFeel();
+
+        // Create the frame but don't show it so anything that happens has
+        // something to attach itself to
+        frame = new JFrame();
+        JOptionPane.setRootFrame(frame);
+
+        // Grab errors
         Reporter.grabAWTExecptions(true);
 
+        // Splash screen
         URL predicturl = project.getWritablePropertiesURL(SPLASH_PROPS);
-        Splash splash = new Splash(frame, 60000);
+        Splash splash = new Splash();
         Job startJob = JobManager.createJob(Msg.STARTUP_TITLE.toString(), predicturl, true);
         splash.pack();
 
         // Create the Desktop Actions
         actions = new DesktopActions(this);
-        
-        // Initial setup
-        frame = new JFrame();
 
         startJob.setProgress(Msg.STARTUP_CONFIG.toString());
         generateConfig();
@@ -398,7 +413,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         getViewLayout().add(view);
 
         setLayoutComponent(getViewLayout().getRootComponent());
-        getViewLayout().getSelected().adjustFocus(); 
+        getViewLayout().getSelected().adjustFocus();
     }
 
     /**
@@ -475,7 +490,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
             {
                 return (BookDataDisplay) comp;
             }
-        
+
             comp = comp.getParent();
         }
 
@@ -611,8 +626,8 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
                     {
                         url = url.substring(1);
                     }
-                    Object [] msg = { url };
-                    log.debug(MessageFormat.format(SCROLL_TO_URL, msg));
+
+                    log.debug(MessageFormat.format(SCROLL_TO_URL, new Object[] { url }));
                     pane.scrollToReference(url);
                 }
                 else
@@ -657,7 +672,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         }
 
         String protocol = url.substring(0, match);
-        String data = url.substring(match+1);
+        String data = url.substring(match + 1);
         if (data.startsWith(DOUBLE_SLASH))
         {
             data = data.substring(2);
@@ -684,7 +699,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         {
             try
             {
-                Passage ref = PassageFactory.createPassage(data);    
+                Passage ref = PassageFactory.createPassage(data);
                 barSide.getCommentaryPane().setPassage(ref);
             }
             catch (NoSuchVerseException ex)
@@ -778,7 +793,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
             {
                 URL predicturl = Project.instance().getWritablePropertiesURL(DISPLAY_PROPS);
                 Job job = JobManager.createJob(Msg.PRELOAD_TITLE.toString(), predicturl, this, true);
-    
+
                 try
                 {
                     job.setProgress(Msg.PRELOAD_SETUP.toString());
@@ -787,27 +802,27 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
                     {
                         return;
                     }
-    
+
                     Book test = ((BookMetaData) booklist.get(0)).getBook();
                     if (interrupted())
                     {
                         return;
                     }
-    
+
                     job.setProgress(Msg.PRELOAD_DATA.toString());
                     BookData data = test.getData(test.getGlobalKeyList().get(0));
                     if (interrupted())
                     {
                         return;
                     }
-    
+
                     job.setProgress(Msg.PRELOAD_PROVIDER.toString());
                     SAXEventProvider provider = data.getSAXEventProvider();
                     if (interrupted())
                     {
                         return;
                     }
-    
+
                     job.setProgress(Msg.PRELOAD_STYLE.toString());
                     Converter converter = ConverterFactory.getConverter();
                     converter.convert(provider);
@@ -828,7 +843,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
                 }
             }
         };
-    
+
         worker.setPriority(Thread.MIN_PRIORITY);
         worker.start();
     }
@@ -958,7 +973,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     /**
      * The array of valid layouts
      */
-    protected ViewLayout[] layouts; 
+    protected ViewLayout[] layouts;
 
     /**
      * The current way the views are laid out

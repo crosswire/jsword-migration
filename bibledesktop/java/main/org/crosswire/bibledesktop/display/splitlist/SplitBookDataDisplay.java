@@ -7,12 +7,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
+import javax.swing.event.HyperlinkListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 
+import org.crosswire.bibledesktop.book.BibleViewPane;
+import org.crosswire.bibledesktop.book.DisplaySelectPane;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
-import org.crosswire.bibledesktop.display.proxy.ProxyBookDataDisplay;
-import org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay;
 import org.crosswire.bibledesktop.passage.KeyTreeModel;
 import org.crosswire.bibledesktop.passage.PassageGuiUtil;
 import org.crosswire.common.util.Logger;
@@ -21,6 +22,8 @@ import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.KeyList;
+import org.crosswire.jsword.passage.Passage;
+import org.crosswire.jsword.passage.PassageUtil;
 
 /**
  * A quick Swing Bible display pane.
@@ -46,22 +49,21 @@ import org.crosswire.jsword.passage.KeyList;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class SplitBookDataDisplay extends ProxyBookDataDisplay implements BookDataDisplay
+public class SplitBookDataDisplay implements BookDataDisplay
 {
     /**
      * Initialize the OuterDisplayPane
      */
-    public SplitBookDataDisplay()
+    public SplitBookDataDisplay(BookDataDisplay child)
     {
-        super(new TabbedBookDataDisplay());
-
-        initialize();
+        this.child = child;
+        init();
     }
 
     /**
      * Create the GUI
      */
-    private void initialize()
+    private void init()
     {
         tree.setModel(model);
         tree.addTreeSelectionListener(new TreeSelectionListener()
@@ -74,7 +76,7 @@ public class SplitBookDataDisplay extends ProxyBookDataDisplay implements BookDa
 
         split.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         split.add(scroll, JSplitPane.LEFT);
-        split.add(getProxy().getComponent(), JSplitPane.RIGHT);
+        split.add(child.getComponent(), JSplitPane.RIGHT);
         split.setOneTouchExpandable(true);
         split.setDividerLocation(0.0D);
 
@@ -98,18 +100,66 @@ public class SplitBookDataDisplay extends ProxyBookDataDisplay implements BookDa
     public void setBookData(Book book, Key key) throws BookException
     {
         this.book = book;
+        this.key = key;
+
         model = new KeyTreeModel(key);
-        super.setBookData(book, key);
+        child.setBookData(book, key);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.book.FocusablePart#getKey()
+     */
+    public Key getKey()
+    {
+        return key;
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.FocusablePart#getBook()
+     */
+    public Book getBook()
+    {
+        return book;
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.book.FocusablePart#copy()
+     */
+    public void copy()
+    {
+        child.copy();
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.book.FocusablePart#addHyperlinkListener(javax.swing.event.HyperlinkListener)
+     */
+    public void addHyperlinkListener(HyperlinkListener li)
+    {
+        child.addHyperlinkListener(li);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.book.FocusablePart#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
+     */
+    public void removeHyperlinkListener(HyperlinkListener li)
+    {
+        child.removeHyperlinkListener(li);
     }
 
     /**
      * Delete the selected verses
      */
-    public void deleteSelected() throws BookException
+    public void deleteSelected(BibleViewPane view) throws BookException
     {
         PassageGuiUtil.deleteSelectedVersesFromTree(tree);
+
         Key updated = model.getKey();
+
         setBookData(book, updated);
+
+        Passage ref = PassageUtil.getPassage(updated);
+        DisplaySelectPane psel = view.getSelectPane();
+        psel.setPassage(ref);
     }
 
     /**
@@ -126,13 +176,13 @@ public class SplitBookDataDisplay extends ProxyBookDataDisplay implements BookDa
                 setBookData(null, null);
             }
             /*
-             else if (selected.size() == 1)
-             {
-             Book book = data.getBook();
-             KeyList context = selected.getContext();
-             setBookData(book.getData(context));
-             }
-             */
+            else if (selected.size() == 1)
+            {
+                Book book = data.getBook();
+                KeyList context = selected.getContext();
+                setBookData(book.getData(context));
+            }
+            */
             else
             {
                 setBookData(book, selected);
@@ -143,6 +193,11 @@ public class SplitBookDataDisplay extends ProxyBookDataDisplay implements BookDa
             Reporter.informUser(this, ex);
         }
     }
+
+    /**
+     * The whole passage that we are viewing
+     */
+    private Key key;
 
     /**
      * What book are we currently viewing?
@@ -159,7 +214,8 @@ public class SplitBookDataDisplay extends ProxyBookDataDisplay implements BookDa
      */
     private JSplitPane split = new JSplitPane();
     private JScrollPane scroll = new JScrollPane();
+    private JPanel main = new JPanel();
     private JTree tree = new JTree();
     private KeyTreeModel model = null;
-    private JPanel main = new JPanel();
+    private BookDataDisplay child = null;
 }

@@ -73,18 +73,20 @@ public class DebugPane extends JPanel
             }
         }
 
-        jbInit();
+        init();
     }
 
     /**
      * Setup the GUI
      */
-    private void jbInit()
+    private void init()
     {
         lblMethod.setLabelFor(cboMethod);
         lblMethod.setText(Msg.DEBUG_METHOD.toString());
+
         cboMethod.setModel(mdlMethods);
         cboMethod.setRenderer(new CustomListCellRenderer());
+
         btnMethod.setText(Msg.DEBUG_GO.toString());
         btnMethod.setMnemonic(Msg.DEBUG_GO.toString().charAt(0));
         btnMethod.addActionListener(new ActionListener()
@@ -94,6 +96,7 @@ public class DebugPane extends JPanel
                 action();
             }
         });
+
         pnlMethod.setLayout(new BorderLayout(5, 5));
         pnlMethod.add(lblMethod, BorderLayout.WEST);
         pnlMethod.add(cboMethod, BorderLayout.CENTER);

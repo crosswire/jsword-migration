@@ -34,6 +34,7 @@ import org.crosswire.jsword.book.BooksListener;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageConstants;
+import org.crosswire.jsword.passage.PassageUtil;
 import org.crosswire.jsword.util.ConverterFactory;
 import org.crosswire.jsword.util.Project;
 
@@ -69,41 +70,6 @@ import org.crosswire.jsword.util.Project;
  */
 public class DesktopActions implements ActionListener
 {
-    // Enumeration of all the keys to known actions
-    public static final String FILE = "File"; //$NON-NLS-1$
-    public static final String EDIT = "Edit"; //$NON-NLS-1$
-    public static final String VIEW = "View"; //$NON-NLS-1$
-    public static final String TOOLS = "Tools"; //$NON-NLS-1$
-    public static final String HELP = "Help"; //$NON-NLS-1$
-    public static final String NEW_WINDOW = "NewWindow"; //$NON-NLS-1$
-    public static final String OPEN = "Open"; //$NON-NLS-1$
-    public static final String CLOSE = "Close"; //$NON-NLS-1$
-    public static final String CLOSE_ALL = "CloseAll"; //$NON-NLS-1$
-    public static final String SAVE = "Save"; //$NON-NLS-1$
-    public static final String SAVE_AS = "SaveAs"; //$NON-NLS-1$
-    public static final String SAVE_ALL = "SaveAll"; //$NON-NLS-1$
-    public static final String EXIT = "Exit"; //$NON-NLS-1$
-    public static final String CUT = "Cut"; //$NON-NLS-1$
-    public static final String COPY = "Copy"; //$NON-NLS-1$
-    public static final String PASTE = "Paste"; //$NON-NLS-1$
-    public static final String TAB_MODE = "TabMode"; //$NON-NLS-1$
-    public static final String WINDOW_MODE = "WindowMode"; //$NON-NLS-1$
-    public static final String VIEW_HTML = "ViewHTML"; //$NON-NLS-1$
-    public static final String VIEW_OSIS = "ViewOSIS"; //$NON-NLS-1$
-    public static final String BLUR1 = "Blur1"; //$NON-NLS-1$
-    public static final String BLUR5 = "Blur5"; //$NON-NLS-1$
-    public static final String DELETE_SELECTED = "DeleteSelected"; //$NON-NLS-1$
-    public static final String BOOKS = "Books"; //$NON-NLS-1$
-    public static final String OPTIONS = "Options"; //$NON-NLS-1$
-    public static final String CONTENTS = "Contents"; //$NON-NLS-1$
-    public static final String ABOUT = "About"; //$NON-NLS-1$
-    public static final String ABOUT_OK = "AboutOK"; //$NON-NLS-1$
-
-    // Enumeration of error strings used in this class
-    private static final String UNKNOWN_ACTION_ERROR = "Unknown action : {0}"; //$NON-NLS-1$
-    private static final String UNEXPECTED_ERROR = "Stupid Programmer Error"; //$NON-NLS-1$
-    private static final String METHOD_PREFIX = "do"; //$NON-NLS-1$
-
     /**
      * Create the actions for the desktop
      * @param desktop the desktop for which these actions apply
@@ -375,16 +341,23 @@ public class DesktopActions implements ActionListener
         try
         {
             BookDataDisplay da = getDesktop().getDisplayArea();
-            Book book = da.getBook();
             Key key = da.getKey();
 
-            BookData bdata = book.getData(key);
+            if (key == null)
+            {
+                Reporter.informUser(getDesktop().getJFrame(), Msg.SOURCE_MISSING);
+            }
+            else
+            {
+                Book book = da.getBook();
+                BookData bdata = book.getData(key);
 
-            SAXEventProvider osissep = bdata.getSAXEventProvider();
-            SAXEventProvider htmlsep = converter.convert(osissep);
-            String text = XMLUtil.writeToString(htmlsep);
+                SAXEventProvider osissep = bdata.getSAXEventProvider();
+                SAXEventProvider htmlsep = converter.convert(osissep);
+                String text = XMLUtil.writeToString(htmlsep);
 
-            showTextViewer(da.getKey(), Msg.OSIS.toString(), text);
+                showTextViewer(da.getKey(), Msg.OSIS.toString(), text);
+            }
         }
         catch (Exception ex)
         {
@@ -400,16 +373,23 @@ public class DesktopActions implements ActionListener
         try
         {
             BookDataDisplay da = getDesktop().getDisplayArea();
-            Book book = da.getBook();
             Key key = da.getKey();
 
-            BookData bdata = book.getData(key);
-            SAXEventProvider provider = bdata.getSAXEventProvider();
+            if (key == null)
+            {
+                Reporter.informUser(getDesktop().getJFrame(), Msg.SOURCE_MISSING);
+            }
+            else
+            {
+                Book book = da.getBook();
+                BookData bdata = book.getData(key);
+                SAXEventProvider provider = bdata.getSAXEventProvider();
 
-            SerializingContentHandler handler = new SerializingContentHandler(true);
-            provider.provideSAXEvents(handler);
+                SerializingContentHandler handler = new SerializingContentHandler(true);
+                provider.provideSAXEvents(handler);
 
-            showTextViewer(da.getKey(), Msg.OSIS.toString(), handler.toString());
+                showTextViewer(da.getKey(), Msg.OSIS.toString(), handler.toString());
+            }
         }
         catch (Exception ex)
         {
@@ -464,14 +444,17 @@ public class DesktopActions implements ActionListener
         BibleViewPane view = getDesktop().getSelectedBibleViewPane();
         if (view != null)
         {
-            Passage ref = view.getPassage();
-            if (ref != null) {
+            Key key = view.getKey();
+            Passage ref = PassageUtil.getPassage(key);
+
+            if (ref != null)
+            {
                 ref.blur(amount, PassageConstants.RESTRICT_CHAPTER);
                 view.setPassage(ref);
             }
         }
     }
-    
+
     /**
      * Remove the selected verses out of the PassagePane.
      */
@@ -573,6 +556,41 @@ public class DesktopActions implements ActionListener
         Reporter.informUser(getDesktop().getJFrame(), Msg.NOT_IMPLEMENTED, msg);
     }
 
+    // Enumeration of all the keys to known actions
+    static final String FILE = "File"; //$NON-NLS-1$
+    static final String EDIT = "Edit"; //$NON-NLS-1$
+    static final String VIEW = "View"; //$NON-NLS-1$
+    static final String TOOLS = "Tools"; //$NON-NLS-1$
+    static final String HELP = "Help"; //$NON-NLS-1$
+    static final String NEW_WINDOW = "NewWindow"; //$NON-NLS-1$
+    static final String OPEN = "Open"; //$NON-NLS-1$
+    static final String CLOSE = "Close"; //$NON-NLS-1$
+    static final String CLOSE_ALL = "CloseAll"; //$NON-NLS-1$
+    static final String SAVE = "Save"; //$NON-NLS-1$
+    static final String SAVE_AS = "SaveAs"; //$NON-NLS-1$
+    static final String SAVE_ALL = "SaveAll"; //$NON-NLS-1$
+    static final String EXIT = "Exit"; //$NON-NLS-1$
+    static final String CUT = "Cut"; //$NON-NLS-1$
+    static final String COPY = "Copy"; //$NON-NLS-1$
+    static final String PASTE = "Paste"; //$NON-NLS-1$
+    static final String TAB_MODE = "TabMode"; //$NON-NLS-1$
+    static final String WINDOW_MODE = "WindowMode"; //$NON-NLS-1$
+    static final String VIEW_HTML = "ViewHTML"; //$NON-NLS-1$
+    static final String VIEW_OSIS = "ViewOSIS"; //$NON-NLS-1$
+    static final String BLUR1 = "Blur1"; //$NON-NLS-1$
+    static final String BLUR5 = "Blur5"; //$NON-NLS-1$
+    static final String DELETE_SELECTED = "DeleteSelected"; //$NON-NLS-1$
+    static final String BOOKS = "Books"; //$NON-NLS-1$
+    static final String OPTIONS = "Options"; //$NON-NLS-1$
+    static final String CONTENTS = "Contents"; //$NON-NLS-1$
+    static final String ABOUT = "About"; //$NON-NLS-1$
+    static final String ABOUT_OK = "AboutOK"; //$NON-NLS-1$
+
+    // Enumeration of error strings used in this class
+    private static final String UNKNOWN_ACTION_ERROR = "Unknown action : {0}"; //$NON-NLS-1$
+    private static final String UNEXPECTED_ERROR = "Stupid Programmer Error"; //$NON-NLS-1$
+    private static final String METHOD_PREFIX = "do"; //$NON-NLS-1$
+
     /**
      * The desktop on which these actions work
      */
@@ -602,5 +620,4 @@ public class DesktopActions implements ActionListener
      * The log stream
      */
     private static final Logger log = Logger.getLogger(DesktopActions.class);
-
 }

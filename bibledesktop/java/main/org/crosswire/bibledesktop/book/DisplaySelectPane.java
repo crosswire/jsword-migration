@@ -69,45 +69,18 @@ import org.crosswire.jsword.passage.PassageTally;
  */
 public class DisplaySelectPane extends JPanel implements ActionListener
 {
-    // Enumeration of all the keys to known actions
-    public static final String PASSAGE_OPTIONS = "PassageOption"; //$NON-NLS-1$
-    public static final String MATCH_OPTIONS = "MatchOption"; //$NON-NLS-1$
-    public static final String SEARCH_OPTIONS = "SearchOption"; //$NON-NLS-1$
-    
-    // For the Passage card
-    public static final String VIEW_LABEL = "ViewLabel"; //$NON-NLS-1$
-    public static final String PASSAGE_FIELD = "PassageAction"; //$NON-NLS-1$
-    public static final String MORE = "More"; //$NON-NLS-1$
-    public static final String GO_PASSAGE = "GoPassage"; //$NON-NLS-1$
-    
-    // for the Search card
-    public static final String SEARCH_LABEL = "SearchLabel"; //$NON-NLS-1$
-    public static final String RESTRICT_SEARCH = "RestrictSearch"; //$NON-NLS-1$
-    public static final String GO_SEARCH = "GoSearch"; //$NON-NLS-1$
-    private static final String SEARCH_FIELD = "SearchAction"; //$NON-NLS-1$
-    private static final String SEARCH_RESTRICTION = "SearchEverywhere"; //$NON-NLS-1$
-    
-    // for the Match card
-    public static final String MATCH_LABEL = "MatchLabel"; //$NON-NLS-1$
-    public static final String RESTRICT_MATCH = "RestrictMatch"; //$NON-NLS-1$
-    public static final String GO_MATCH = "GoMatch"; //$NON-NLS-1$
-    private static final String MATCH_FIELD = "MatchAction"; //$NON-NLS-1$
-    private static final String MATCH_RESTRICTION = "MatchAnywhere"; //$NON-NLS-1$
-    
-    public static final String EMPTY_STRING = ""; //$NON-NLS-1$
-    
     /**
      * General constructor
      */
     public DisplaySelectPane()
     {
-        initialize();
+        init();
     }
 
     /**
      * Initialize the GUI
      */
-    private void initialize()
+    private void init()
     {
         title = Msg.UNTITLED.toString(new Integer(base++));
         
@@ -132,7 +105,6 @@ public class DisplaySelectPane extends JPanel implements ActionListener
         this.setLayout(new BorderLayout());
         this.add(pnlSelect, BorderLayout.PAGE_START);
         this.add(pnlCards, BorderLayout.CENTER);
-
     }
 
     /**
@@ -296,6 +268,15 @@ public class DisplaySelectPane extends JPanel implements ActionListener
         panel.add(goButton, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 20, 5, 20), 0, 0));
 
         return panel;
+    }
+
+    /**
+     * What is the currently selected Book?
+     */
+    public Book getBook()
+    {
+        BookMetaData bmd = mdlVersn.getSelectedBookMetaData();
+        return bmd != null ? bmd.getBook() : null;
     }
 
     /* (non-Javadoc)
@@ -673,6 +654,31 @@ public class DisplaySelectPane extends JPanel implements ActionListener
             }
         }
     }
+
+    // Enumeration of all the keys to known actions
+    private static final String PASSAGE_OPTIONS = "PassageOption"; //$NON-NLS-1$
+    private static final String MATCH_OPTIONS = "MatchOption"; //$NON-NLS-1$
+    private static final String SEARCH_OPTIONS = "SearchOption"; //$NON-NLS-1$
+
+    // For the Passage card
+    private static final String VIEW_LABEL = "ViewLabel"; //$NON-NLS-1$
+    private static final String PASSAGE_FIELD = "PassageAction"; //$NON-NLS-1$
+    private static final String MORE = "More"; //$NON-NLS-1$
+    private static final String GO_PASSAGE = "GoPassage"; //$NON-NLS-1$
+
+    // for the Search card
+    private static final String SEARCH_LABEL = "SearchLabel"; //$NON-NLS-1$
+    private static final String RESTRICT_SEARCH = "RestrictSearch"; //$NON-NLS-1$
+    private static final String GO_SEARCH = "GoSearch"; //$NON-NLS-1$
+    private static final String SEARCH_FIELD = "SearchAction"; //$NON-NLS-1$
+    private static final String SEARCH_RESTRICTION = "SearchEverywhere"; //$NON-NLS-1$
+
+    // for the Match card
+    private static final String MATCH_LABEL = "MatchLabel"; //$NON-NLS-1$
+    private static final String RESTRICT_MATCH = "RestrictMatch"; //$NON-NLS-1$
+    private static final String GO_MATCH = "GoMatch"; //$NON-NLS-1$
+    private static final String MATCH_FIELD = "MatchAction"; //$NON-NLS-1$
+    private static final String MATCH_RESTRICTION = "MatchAnywhere"; //$NON-NLS-1$
 
     private static final String PASSAGE = "p"; //$NON-NLS-1$
     private static final String SEARCH = "s"; //$NON-NLS-1$

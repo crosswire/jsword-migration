@@ -1,4 +1,4 @@
-package org.crosswire.bibledesktop.book;
+package org.crosswire.common.swing;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
