@@ -58,13 +58,13 @@ public class BibleViewPane extends JPanel
      */
     public BibleViewPane()
     {
-        initialize();
+        init();
     }
 
     /**
      * Setup the GUI
      */
-    private void initialize()
+    private void init()
     {
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         chooser.addChoosableFileFilter(new CustomFileFilter());

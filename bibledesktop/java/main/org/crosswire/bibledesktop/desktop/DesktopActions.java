@@ -21,6 +21,7 @@ import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWAction;
 import org.crosswire.common.swing.TextViewPanel;
 import org.crosswire.common.util.Logger;
+import org.crosswire.common.util.MsgBase;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
@@ -108,7 +109,6 @@ public class DesktopActions implements ActionListener
         {
             Method doMethod = DesktopActions.class.getDeclaredMethod(METHOD_PREFIX+action, new Class[] { });
             doMethod.invoke(this, null);
-            log.info(action);
         }
         catch (NoSuchMethodException e1)
         {
@@ -356,7 +356,7 @@ public class DesktopActions implements ActionListener
                 SAXEventProvider htmlsep = converter.convert(osissep);
                 String text = XMLUtil.writeToString(htmlsep);
 
-                showTextViewer(da.getKey(), Msg.OSIS.toString(), text);
+                showTextViewer(Msg.HTML, text);
             }
         }
         catch (Exception ex)
@@ -388,7 +388,7 @@ public class DesktopActions implements ActionListener
                 SerializingContentHandler handler = new SerializingContentHandler(true);
                 provider.provideSAXEvents(handler);
 
-                showTextViewer(da.getKey(), Msg.OSIS.toString(), handler.toString());
+                showTextViewer(Msg.OSIS, handler.toString());
             }
         }
         catch (Exception ex)
@@ -399,19 +399,18 @@ public class DesktopActions implements ActionListener
 
     /**
      * Pop up a TextViewPane or inform user of the problem
-     * @param ref
-     * @param name
-     * @param html
+     * @param msg The Text panel title resource name
+     * @param source The source to display
      */
-    private void showTextViewer(Key ref, String name, String html)
+    private void showTextViewer(MsgBase msg, String source)
     {
-        if (html == null || html.length() == 0 || ref == null)
+        if (source == null || source.length() == 0)
         {
-            Reporter.informUser(getDesktop().getJFrame(), Msg.SOURCE_MISSING, name);
+            Reporter.informUser(getDesktop().getJFrame(), Msg.SOURCE_MISSING);
             return;
         }
         
-        TextViewPanel viewer = new TextViewPanel(html, Msg.SOURCE_MISSING.toString(name));
+        TextViewPanel viewer = new TextViewPanel(source, msg.toString());
         viewer.setEditable(true);
         viewer.showInFrame(getDesktop().getJFrame());
     }

@@ -61,6 +61,7 @@ public class Msg extends MsgBase
     static final Msg NO_PASSAGE = new Msg("DesktopActions.NoPassage"); //$NON-NLS-1$
     static final Msg SOURCE_MISSING = new Msg("DesktopActions.SourceMissing"); //$NON-NLS-1$
     static final Msg OSIS = new Msg("DesktopActions.OSIS"); //$NON-NLS-1$
+    static final Msg HTML = new Msg("DesktopActions.HTML"); //$NON-NLS-1$
     static final Msg NO_SOURCE = new Msg("DesktopActions.NoSourceFound"); //$NON-NLS-1$
 
     // Strings for AboutPane and Splash
@@ -141,8 +142,7 @@ public class Msg extends MsgBase
     {
         String title = Msg.APP_TITLE.toString();
         String version = Msg.APP_VERSION.toString();
-        Object [] params = { title, version };
-        return Msg.VERSION_APP_TITLE.toString(params);
+        return Msg.VERSION_APP_TITLE.toString(new Object[] { title, version });
     }
 
     /**

@@ -230,7 +230,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         // NOTE: when we tried dynamic laf update, frame needed special treatment
         //LookAndFeelUtil.addComponentToUpdate(frame);
 
-        // Keep track of the selected FocusablePart
+        // Keep track of the selected BookDataDisplay
         FocusManager.getCurrentManager().addPropertyChangeListener(new PropertyChangeListener()
         {
             public void propertyChange(PropertyChangeEvent ev)
@@ -476,16 +476,46 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
 
     /**
      * Get the currently selected component and the walk up the component tree
-     * trying to find a component that implements FocusablePart
+     * trying to find a component that implements BookDataDisplay
      */
     protected BookDataDisplay recurseDisplayArea()
     {
-        Component comp = KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
+        BookDataDisplay reply = null;
 
+        Component comp = KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
+        reply = searchForBookDataDisplay(comp);
+        if (reply != null)
+        {
+            return reply;
+        }
+
+        comp = KeyboardFocusManager.getCurrentKeyboardFocusManager().getPermanentFocusOwner();
+        reply = searchForBookDataDisplay(comp);
+        if (reply != null)
+        {
+            return reply;
+        }
+
+        // So we couldn't get anything from the current context
+        return null;
+    }
+
+    /**
+     * @param comp
+     * @return
+     */
+    private BookDataDisplay searchForBookDataDisplay(Component comp)
+    {
         // So we've got the current component, we now need to walk up the tree
         // to find something that we recognize.
         while (comp != null)
         {
+            if (comp instanceof BibleViewPane)
+            {
+                BibleViewPane bvp = (BibleViewPane) comp;
+                return bvp.getPassagePane();
+            }
+
             if (comp instanceof BookDataDisplay)
             {
                 return (BookDataDisplay) comp;

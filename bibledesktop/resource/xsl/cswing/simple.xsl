@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-
 <xsl:stylesheet xmlns="http://www.w3.org/TR/REC-html40" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-<xsl:output method="html" omit-xml-declaration="yes" indent="no"/>
-<xsl:strip-space elements="*"/>
+
+  <xsl:output method="html" omit-xml-declaration="yes" indent="no"/>
+  <xsl:strip-space elements="*"/>
 
   <xsl:param name="strongs.hebrew.url" select="'dict:'"/>
   <xsl:param name="strongs.greek.url" select="'dict:'"/>
@@ -73,45 +73,14 @@
           <link rel="stylesheet" type="text/css" href="{$css}" title="styling" />
         </xsl:if>
         <style type="text/css">
-          BODY
-          {
-            <xsl:value-of select="$fontspec" />
-          }
-          A
-          {
-            text-decoration: none;
-          }
-          A.strongs
-          {
-            color: black;
-            text-decoration: none;
-          }
-          SUP.verse
-          {
-            font-size: 75%;
-            color: gray;
-          }
-          SUP.note
-          {
-            font-size: 75%;
-            color: green;
-          }
-          FONT.verse
-          {
-            font-size: 125%;
-          }
-          passageTitle
-          {
-            font-size: 125%;
-            color: red;
-            font-weight: bold;
-          }
-          sectionTitle
-          {
-            font-size: 125%;
-            color: blue;
-            font-weight: bold;
-          }
+          BODY { <xsl:value-of select="$fontspec" /> }
+          A { text-decoration: none; }
+          A.strongs { color: black; text-decoration: none; }
+          SUP.verse { font-size: 75%; color: gray; }
+          SUP.note { font-size: 75%; color: green; }
+          FONT.verse { font-size: 125%; }
+          .passageTitle { font-size: +1; color: red; font-weight: bold; }
+          .sectionTitle { font-size: 125%; color: blue; font-weight: bold; }
         </style>
       </head>
       <body>
