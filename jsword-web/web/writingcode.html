@@ -24,7 +24,7 @@
 
 <h2>Coding Recommendations</h2>
 
-<h4>Notes</h4>
+<h3>Notes</h3>
 <p>
   Quite often we need to mark a place in the source-code in case we need to come
   back to it at some later date. The general format we use it like this:
@@ -54,10 +54,22 @@
     </li>
   </ul>
 <p>
-There are other tags, documented in tags.txt in the root of the project
+  There are other tags, documented in tags.txt in the root of the jsword module.
 </p>
 
-<h4>JDK Versions</h4>
+<h3>Compiler Settings</h3>
+<p>
+  If you want to know how to setup Eclipse to use the same compiler settings
+  as we do then the following screenshots ought to help:
+  <li><a href="images/eclipse/compiler1-style.gif">Style Tab</a></li>
+  <li><a href="images/eclipse/compiler2-advanced.gif">Advanced Tab</a></li>
+  <li><a href="images/eclipse/compiler3-unused.gif">Unused Code Tab</a></li>
+  <li><a href="images/eclipse/compiler4-javadoc.gif">JavaDoc Tab</a></li>
+  <li><a href="images/eclipse/compiler5-compliance.gif">Compliance and Classfiles Tab</a></li>
+  <li><a href="images/eclipse/compiler6-build.gif">Build Path Tab</a></li>
+</p>
+
+<h3>JDK Versions</h3>
 <p>
   The goal of Java is "write once, run anywhere." With regard to the JSword development,
   it means, "write once, anywhere." The practical impact of this is that JSword
@@ -72,14 +84,14 @@ There are other tags, documented in tags.txt in the root of the project
   features we'll use reflection or some other trick to remain compatible with JDK1.4.
 </p>
 
-<h4>Coding Standards</h4>
+<h3>Coding Standards</h3>
 <p>
   The coding standards used on this project so far are very much based on the
   SUN coding standards. This is some notes on style we are using, some of this
   deviates from the SUN standard, and some is just extensions to it.
 </p>
 
-<h5>Packaging</h5>
+<h4>Packaging</h4>
 <p>
   There is a split between classes that are specific to this project and those
   that could be usefully employed elsewhere. Generally we should:
@@ -106,7 +118,7 @@ There are other tags, documented in tags.txt in the root of the project
   us in packaging code for a distribution, in excluding other interfaces.
 </p>
 
-<h5>Bracket Indentation</h5>
+<h4>Bracket Indentation</h4>
 <p>
   The "Sun Way" conserves screen space at the expense of readibility - which
   given the cost of decent size monitors these days seems silly. A lot of Java
@@ -123,7 +135,7 @@ There are other tags, documented in tags.txt in the root of the project
   under Window->Preferences->Java->Code Formatter->Load.
 </p>
 
-<h5>Variable Naming</h5>
+<h4>Variable Naming</h4>
 <p>
   Sun recommend using the same convention as for method names. This does confuse
   method names and variable names. So the suggested use for this project is all
@@ -133,13 +145,13 @@ There are other tags, documented in tags.txt in the root of the project
   use public member variables, however that is generally not recommended behavior.
 </p>
 
-<h5>Class Ordering</h5>
+<h4>Class Ordering</h4>
 <p>
   Variables are not important members of a class so why put them at the top?
   JSword usage puts them at the bottom.
 </p>
 
-<h5>Tabbing</h5>
+<h4>Tabbing</h4>
 <p>
   4 space indents are a Good Thing, however using a tab character instead of
   4 spaces just causes problems when you want to print, open in a different editor,
@@ -147,7 +159,7 @@ There are other tags, documented in tags.txt in the root of the project
   exactly the same if you use spaces instead of tabs.
 </p>
 
-<h5>Preamble</h5>
+<h4>Preamble</h4>
 <p>All java source should have the following at the end of the class JavaDoc</p>
 <pre style="font-size: 80%">
  * &lt;p>&lt;table border='1' cellPadding='3' cellSpacing='0'>
@@ -190,7 +202,7 @@ There are other tags, documented in tags.txt in the root of the project
 </table>
 <p></p>
 
-<h4>Similarity beween Java Sword API and C++ Sword API</h4>
+<h3>Similarity beween Java Sword API and C++ Sword API</h3>
 <p>
   The core Java API is similar in that there are concepts like Key, Verse etc
   in both. However there are differences; In Java Verse is stateless but the

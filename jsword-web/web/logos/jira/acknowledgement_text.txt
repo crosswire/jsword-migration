@@ -1,0 +1,3 @@
+Atlassian supports our efforts by contributing their bug tracking and issue tracking application, JIRA, to our project.
+
+Atlassian is an innovative Australian software company providing enterprise software solutions to the world's leading organisations. Atlassian's leading software product, JIRA is a bug tracking and issue tracking application developed to track and manage the issues and bugs that emerge during a project. JIRA customers include departments from NASA, Boeing, Cisco, JP Morgan, 3M, BP, Sony and more. <a href="http://www.atlassian.com/c/NPOS/10160">Try it</a> for yourself today.
