@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE jnlp PUBLIC "-//Sun Microsystems, Inc//DTD JNLP Descriptor 1.0//EN" "jnlp.dtd">
 
-<jnlp spec="1.0+" codebase="@HOSTNAME@/@WEBAPP@" href="bibledesktop.jnlp">
+<jnlp spec="1.0+" codebase="@jnlp.codebase@" href="bibledesktop.jnlp">
 
   <information>
     <title>Bible Desktop (Nighty Build)</title>
     <vendor>Crosswire Bible Society</vendor>
-    <homepage href="@HOSTNAME@/@WEBAPP@"/>
+    <homepage href="@jnlp.homepage@"/>
     <description>Bible Desktop - Bible Study Software based on the Sword project</description>
     <description kind="short">Bible Desktop is a Bible study package available over the internet</description>
     <description kind="tooltip">Bible Desktop Application</description>
