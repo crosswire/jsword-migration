@@ -1,50 +1,43 @@
 
-body
-{
-    background-image: url(banner.gif);
-    background-color: white;
-    border: 2px solid #BBCCCC;
-    vertical-align: middle;
-    padding-top: 50px;
-    padding-bottom: 20px;
-    padding-left: 100px;
-    padding-right: 100px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 60px;
-    margin-right: 60px;
-    background-repeat: no-repeat;
-    font: sans-serif;
-}
-
 html
 {
-    background-color: #DDEEEE;
+}
+
+body
+{
+    background-image: url(images/weblogo.gif);
+    background-position: 15px 15px;
+    background-color: white;
+    background-repeat: no-repeat;
+    margin-top: 120px;
+    margin-bottom: 20px;
+    margin-left: 80px;
+    margin-right: 220px;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 80%;
+}
+
+h1
+{
+    font-family: Arial Black, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 110%;
+}
+
+h2
+{
+    font-family: Arial Black, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 100%;
 }
 
 #side
 {
-    width: 90px;
+    font-size: 80%;
     position: absolute;
+    width: 120px;
     top: 100px;
     right: 35px;
-}
-
-#rsidediv
-{
-    width: 90px;
-    position: absolute;
-    top: 200px;
-    right: 35px;
-    border: 2px solid white;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-bottom: 7px;
-    color: white;
-    font-size: small;
-    background-color: #7474b1;
 }
 
 .lsidecell
@@ -55,71 +48,57 @@ html
     padding-left: 10px;
     padding-right: 10px;
     margin-bottom: 7px;
-    color: white;
 }
 
 .lsidecell a
 {
+    font-family: Arial Black, Arial, sans-serif;
     font-weight: bold;
+    font-size: 100%;
+    color: Black;
     text-decoration: none;
-    color: white;
 }
 
 .current
 {
-    background-color: #444482;
+    background-color: #9FA0BE;
+    border: 1px solid #838391;
 }
 
 .pagelink
 {
-    background-color: #7474b1;
+    background-color: #CCCCE6;
+    border: 1px solid #838391;
 }
 
 .subscribe
 {
+    font-size: 90%;
+    border: 1px solid #838391;
+    background-color: #DCDCDC;
     margin-top: 30px;
-    background-color: #AAAAAA;
-    font-size: small;
     color: black;
     padding: 5px;
     margin-bottom: 7px;
 }
 
+.subscribe form
+{
+    margin-top: 4px;
+}
+
 .subscribe input
 {
+    font-size: 90%;
+    margin-top: 2px;
+    margin-right: 4px;
+    margin-left: 4px;
     margin-bottom: 4px;
     border: 1px solid black;
+    width: 100px;
 }
 
 .subscribe form
 {
     margin-bottom: 0px;
-}
-
-#rsidediv a
-{
-    color: white;
-    display: block;
-    background-color: #036;
-    width: 90px;
-    padding: 2px 8px;
-    text-decoration: none;
-}
-
-#rsidediv a:hover
-{
-    background-color: #8f8fcc;
-    color: #white;
-}
-
-#rsidediv ul
-{
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}
-
-#navcontainer li
-{
-    margin-top: 4px;
 }
