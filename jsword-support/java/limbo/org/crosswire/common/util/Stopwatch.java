@@ -1,5 +1,4 @@
-
-package org.crosswire.util;
+package org.crosswire.common.util;
 
 import java.util.*;
 

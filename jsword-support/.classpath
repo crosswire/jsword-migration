@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="/jsword"/>
+	<classpathentry kind="src" path="/common"/>
+	<classpathentry kind="src" path="java/limbo"/>
+	<classpathentry kind="src" path="/bibledesktop"/>
+	<classpathentry kind="src" path="/jsword-sword"/>
+	<classpathentry kind="src" path="/jsword-web"/>
+	<classpathentry kind="output" path="target/eclipse/classes"/>
+</classpath>

@@ -1,5 +1,4 @@
-
-package org.crosswire.net;
+package org.crosswire.common.net;
 
 /**
 * A set of Headers are set from the server to the browser before the

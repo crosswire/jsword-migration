@@ -1,10 +1,4 @@
-
-package org.crosswire.net;
-
-import java.util.*;
-import java.io.*;
-import java.net.*;
-
+package org.crosswire.common.net;
 
 /**
 * A quick way of testing CommsXL

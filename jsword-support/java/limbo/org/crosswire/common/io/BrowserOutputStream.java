@@ -1,8 +1,7 @@
-package org.crosswire.io;
+package org.crosswire.common.io;
 
-import java.io.OutputStream;
-import java.io.IOException;
 import java.applet.AppletContext;
+import java.io.OutputStream;
 
 /**
  * BrowserOutputStream allows output to the status line of a Browser

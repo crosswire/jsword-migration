@@ -1,26 +1,25 @@
-package org.crosswire.io;
+package org.crosswire.common.io;
 
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.Writer;
 import java.util.Vector;
 
-import org.crosswire.util.Level;
-import org.crosswire.util.Logger;
+import org.crosswire.common.util.Logger;
 
 /**
- * TeeOutputStream allows you to have one stream act as a proxy
+ * TeeWriter allows you to have one stream act as a proxy
  * to a number of other streams, so that output to one goes to all
  * of the streams.
  * @author Joe Walker
  */
-public class TeeOutputStream extends OutputStream
+public class TeeWriter extends Writer
 {
     /**
-     * Add the specified OutputStream to the list of streams.
+     * Add the specified Writer to the list of streams.
      * @param out
      * @return "this". So we can do <pre>tee.add(a).add(b).add(c);</pre>
      */
-    public TeeOutputStream add(OutputStream out)
+    public TeeWriter add(Writer out)
     {
         if (!list.contains(out))
         {
@@ -31,35 +30,60 @@ public class TeeOutputStream extends OutputStream
     }
 
     /**
-     * Remove the specified OutputStream from the list of streams
+     * Remove the specified Writer from the list of streams
      * used in all outputs.
      * @param out The Stream to be removed
      */
-    public boolean remove(OutputStream out)
+    public boolean remove(Writer out)
     {
         return list.removeElement(out);
     }
 
     /**
-     * Override to write to ass the listed Streams.
+     * Override write to ask the listed Streams.
+     * @param b The byte to be written, as normal.
+     */
+    public void write(char[] cbuf, int off, int len) throws IOException
+    {
+        for (int i=0; i<list.size(); i++)
+        {
+            Writer out = (Writer) list.elementAt(i);
+            out.write(cbuf, off, len);
+        }
+    }
+
+    /**
+     * Override write to ask the listed Streams.
      * @param b The byte to be written, as normal.
      */
     public void write(int b) throws IOException
     {
         for (int i=0; i<list.size(); i++)
         {
-            OutputStream out = (OutputStream) list.elementAt(i);
+            Writer out = (Writer) list.elementAt(i);
             out.write(b);
         }
     }
 
     /**
-     * If someone closes the TeeOutputStream then we go round
+     * Override flush to flush the listed Streams.
+     */
+    public void flush() throws IOException
+    {
+        for (int i=0; i<list.size(); i++)
+        {
+            Writer out = (Writer) list.elementAt(i);
+            out.flush();
+        }
+    }
+
+    /**
+     * If someone closes the TeeWriter then we go round
      * and close all the Streams on the stack.
      */
     public void close() throws IOException
     {
-        // Close each OutputStream catching and noting IOExceptions
+        // Close each Writer catching and noting IOExceptions
         // Then rethrow at end if any failed.
         boolean failed = false;
 
@@ -67,12 +91,12 @@ public class TeeOutputStream extends OutputStream
         {
             try
             {
-                OutputStream out = (OutputStream) list.elementAt(i);
+                Writer out = (Writer) list.elementAt(i);
                 out.close();
             }
             catch (Exception ex)
             {
-                log.log(Level.INFO, "Error in closing loop", ex);
+                log.warn("Error in closing loop", ex);
                 failed = true;
             }
         }
@@ -103,7 +127,7 @@ public class TeeOutputStream extends OutputStream
 
         for (int i=list.size()-1; i>=0; i--)
         {
-            OutputStream out = (OutputStream) list.elementAt(i);
+            Writer out = (Writer) list.elementAt(i);
             retcode += "Stream" + i + ": " + out.toString() + NEWLINE;
         }
 
@@ -113,5 +137,5 @@ public class TeeOutputStream extends OutputStream
     private Vector list = new Vector();
 
     /** The log stream */
-    protected static Logger log = Logger.getLogger(TeeOutputStream.class);
+    protected static Logger log = Logger.getLogger(TeeWriter.class);
 }

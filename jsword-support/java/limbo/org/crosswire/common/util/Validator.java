@@ -1,4 +1,4 @@
-package org.crosswire.util;
+package org.crosswire.common.util;
 
 /**
  * A generic class of String utils.

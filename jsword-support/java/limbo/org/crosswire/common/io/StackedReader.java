@@ -1,12 +1,10 @@
-
-package org.crosswire.io;
+package org.crosswire.common.io;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Vector;
 
-import org.crosswire.util.Level;
-import org.crosswire.util.Logger;
+import org.crosswire.common.util.Logger;
 
 /**
  * This class allows you to have a stack of inputs.
@@ -123,7 +121,7 @@ public class StackedReader extends Reader
             }
             catch (Exception ex)
             {
-                log.log(Level.INFO, "Error in closing loop", ex);
+                log.warn("Error in closing loop", ex);
                 failed = true;
             }
         }

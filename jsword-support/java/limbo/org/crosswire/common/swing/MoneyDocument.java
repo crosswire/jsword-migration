@@ -1,8 +1,8 @@
+package org.crosswire.common.swing;
 
-package org.crosswire.swing;
-
-import javax.swing.*;
-import javax.swing.text.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 /**
 * A money document simply extends document to refuse all non-financial

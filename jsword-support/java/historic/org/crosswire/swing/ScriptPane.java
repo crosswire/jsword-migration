@@ -1,5 +1,4 @@
-
-package org.crosswire.swing;
+package org.crosswire.common.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

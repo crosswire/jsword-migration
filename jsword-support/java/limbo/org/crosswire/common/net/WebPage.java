@@ -1,5 +1,4 @@
-
-package org.crosswire.net;
+package org.crosswire.common.net;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -9,14 +8,15 @@ import java.net.URLConnection;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import org.crosswire.common.util.Logger;
+import org.crosswire.common.util.StringUtil;
+
 // import java.a*t.*;
 // import java.a*t.event.*;
 // import javax.sw*ng.*;
 // import javax.sw*ng.text.*;
 // import javax.sw*ng.text.html.*;
 // import sunw.hotjava.bean.*;
-import org.crosswire.util.Logger;
-import org.crosswire.util.StringUtil;
 
 /**
 * Represents a single web page.

@@ -1,6 +1,7 @@
-package org.crosswire.io;
+package org.crosswire.common.io;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.Writer;
 
 /**
  * NullWriter allows you to write to /dev/null

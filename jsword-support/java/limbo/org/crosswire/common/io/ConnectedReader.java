@@ -1,7 +1,8 @@
+package org.crosswire.common.io;
 
-package org.crosswire.io;
-
-import java.io.*;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 
 /**
  * ConnectedReader is for use in command line processing type applications

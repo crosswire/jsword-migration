@@ -1,5 +1,4 @@
-
-package org.crosswire.io;
+package org.crosswire.common.io;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -30,7 +29,7 @@ public class TimeoutReader extends Reader implements Runnable
     {
         try
         {
-            work.sleep(timeout);
+            Thread.sleep(timeout);
 
             // Kill the thread that is blocked
             if (calling != null)
@@ -64,7 +63,7 @@ public class TimeoutReader extends Reader implements Runnable
             int read = in.read(cbuf, off, len);
 
             calling = null;
-            work.stop();
+            work.interrupt();
             work = null;
 
             return read;

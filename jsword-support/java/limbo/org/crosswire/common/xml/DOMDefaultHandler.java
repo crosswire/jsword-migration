@@ -1,18 +1,18 @@
-
-package org.crosswire.util;
+package org.crosswire.common.xml;
 
 import java.util.Stack;
 
+import org.crosswire.common.util.Reporter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.xml.sax.AttributeList;
-import org.xml.sax.HandlerBase;
+import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * The DOMHandlerBase class implements the SAX class HandlerBase and from
+ * The DOMDefaultHandler class implements the SAX class HandlerBase and from
  * the SAX events generated from a parse, generates a DOM XML document,
  * embedded into another.
  *
@@ -37,7 +37,7 @@ import org.xml.sax.SAXParseException;
  * @author Joe Walker
  * @version D0.I0.T0
  */
-public class DOMHandlerBase extends HandlerBase
+public class DOMDefaultHandler extends DefaultHandler
 {
     /**
      * Default constructor. A null base element means we assume that
@@ -45,7 +45,7 @@ public class DOMHandlerBase extends HandlerBase
      * the Document. Otherwise we dont.
      * @param base The Element in the document to start at
      */
-    public DOMHandlerBase(Node base)
+    public DOMDefaultHandler(Node base)
     {
         this.doc = base.getOwnerDocument();
         this.base = base;
@@ -76,10 +76,10 @@ public class DOMHandlerBase extends HandlerBase
         //out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
     }
 
-    /**
-     * The start of an Element
+    /* (non-Javadoc)
+     * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
-    public void startElement(String name, AttributeList attrs)
+    public void startElement(String uri, String name, String qName, Attributes attrs) throws SAXException
     {
         Element ele = doc.createElement(name);
         current.appendChild(ele);
@@ -92,7 +92,7 @@ public class DOMHandlerBase extends HandlerBase
             int len = attrs.getLength();
             for (int i=0; i<len; i++)
             {
-                ele.setAttribute(attrs.getName(i), attrs.getValue(i));
+                ele.setAttribute(attrs.getLocalName(i), attrs.getValue(i));
             }
         }
     }

@@ -1,10 +1,9 @@
-
-package org.crosswire.net;
+package org.crosswire.common.net;
 
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.crosswire.util.Logger;
+import org.crosswire.common.util.Logger;
 
 /**
 *
@@ -72,7 +71,7 @@ public class WebBrowser
     {
         for (Enumeration en=headers.elements(); en.hasMoreElements(); )
         {
-            log.fine(""+en.nextElement());
+            log.debug(""+en.nextElement());
         }
     }
 
@@ -118,7 +117,7 @@ public class WebBrowser
     {
         for (Enumeration en=cookies.elements(); en.hasMoreElements(); )
         {
-            log.fine(""+en.nextElement());
+            log.debug(""+en.nextElement());
         }
     }
 
@@ -165,4 +164,3 @@ public class WebBrowser
     /** The log stream */
     protected static Logger log = Logger.getLogger(WebBrowser.class);
 }
-

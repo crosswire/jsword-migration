@@ -1,12 +1,11 @@
-
-package org.crosswire.io;
+package org.crosswire.common.io;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Vector;
 
-import org.crosswire.util.Level;
-import org.crosswire.util.Logger;
+import org.crosswire.common.util.Logger;
+
 
 /**
  * This class allows you to have a stack of inputs.
@@ -103,7 +102,7 @@ public class StackedInputStream extends InputStream
             }
             catch (Exception ex)
             {
-                log.log(Level.INFO, "Failure during close", ex);
+                log.warn("Failure during close", ex);
                 failed = true;
             }
         }

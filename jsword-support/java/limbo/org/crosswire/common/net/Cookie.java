@@ -1,7 +1,7 @@
 
-package org.crosswire.net;
+package org.crosswire.common.net;
 
-import org.crosswire.util.StringUtil;
+import org.apache.commons.lang.StringUtils;
 
 /**
 * Creates a cookie, a small amount of information sent by a servlet to
@@ -85,7 +85,7 @@ public class Cookie implements Cloneable
     */
     public Cookie(String header)
     {
-        String[] parts = StringUtil.tokenize(header, ";");
+        String[] parts = StringUtils.split(header, ";");
 
         // The name and value
         String base = parts[0];
@@ -119,9 +119,6 @@ public class Cookie implements Cloneable
             else if (mod.equalsIgnoreCase("version"))
                 setVersion(Integer.parseInt(val));
         }
-
-        this.name = name;
-        this.value = value;
     }
 
     /**
