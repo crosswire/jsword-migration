@@ -163,7 +163,7 @@ public class BooksListModel extends AbstractListModel
         {
             int oldsize = getSize();
             cacheData();
-            fireIntervalAdded(ev.getSource(), 0, oldsize);
+            fireContentsChanged(ev.getSource(), 0, oldsize);
         }
 
         /* (non-Javadoc)
@@ -173,24 +173,16 @@ public class BooksListModel extends AbstractListModel
         {
             int oldsize = getSize();
             cacheData();
-            fireIntervalRemoved(ev.getSource(), 0, oldsize);
+            fireContentsChanged(ev.getSource(), 0, oldsize);
         }
     }
 
     /* (non-Javadoc)
-     * @see javax.swing.AbstractListModel#fireIntervalAdded(java.lang.Object, int, int)
+     * @see javax.swing.AbstractListModel#fireContentsChanged(java.lang.Object, int, int)
      */
-    protected void fireIntervalAdded(Object source, int index0, int index1)
+    protected void fireContentsChanged(Object source, int index0, int index1)
     {
-        super.fireIntervalAdded(source, index0, index1);
-    }
-
-    /* (non-Javadoc)
-     * @see javax.swing.AbstractListModel#fireIntervalRemoved(java.lang.Object, int, int)
-     */
-    protected void fireIntervalRemoved(Object source, int index0, int index1)
-    {
-        super.fireIntervalRemoved(source, index0, index1);
+        super.fireContentsChanged(source, index0, index1);
     }
 
     /**

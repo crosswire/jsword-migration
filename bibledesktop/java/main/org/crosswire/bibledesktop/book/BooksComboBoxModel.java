@@ -118,6 +118,7 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
             if (getElementAt(i) == current)
             {
                 found = true;
+                break;
             }
         }
 

@@ -77,7 +77,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
      */
     private void init()
     {
-        lstDicts.setVisibleRowCount(4);
+        lstDicts.setVisibleRowCount(6);
         lstDicts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         lstDicts.setModel(mdlDicts);
         lstDicts.setCellRenderer(new BookListCellRenderer());
