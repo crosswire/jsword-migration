@@ -66,6 +66,23 @@ class Msg extends MsgBase
     static final Msg ERROR = new Msg("PassageSelectionPane.Error"); //$NON-NLS-1$
     static final Msg SUMMARY = new Msg("PassageSelectionPane.Summary"); //$NON-NLS-1$
 
+    static final Msg SEARCH_PHRASE = new Msg("AdvancedSearchPane.Phrase"); //$NON-NLS-1$
+    static final Msg SEARCH_GO = new Msg("AdvancedSearchPane.Go"); //$NON-NLS-1$
+    static final Msg SEARCH_SELECT = new Msg("AdvancedSearchPane.Select"); //$NON-NLS-1$
+    static final Msg SEARCH_RESTRICT = new Msg("AdvancedSearchPane.Restrict"); //$NON-NLS-1$
+    static final Msg SEARCH_HEADING = new Msg("AdvancedSearchPane.Heading"); //$NON-NLS-1$
+    static final Msg SEARCH_EXCLUDES = new Msg("AdvancedSearchPane.Excludes"); //$NON-NLS-1$
+    static final Msg SEARCH_INCLUDES = new Msg("AdvancedSearchPane.Includes"); //$NON-NLS-1$
+
+    static final Msg SELECT_GO = new Msg("KeySelectPane.Go"); //$NON-NLS-1$
+    static final Msg SELECT_KEYS = new Msg("KeySelectPane.Keys"); //$NON-NLS-1$
+    static final Msg SELECT_MATCH = new Msg("KeySelectPane.Match"); //$NON-NLS-1$
+    static final Msg SELECT_ADVANCED = new Msg("KeySelectPane.Advanced"); //$NON-NLS-1$
+    static final Msg SELECT_HELP = new Msg("KeySelectPane.Help"); //$NON-NLS-1$
+    static final Msg SELECT_BIBLE = new Msg("KeySelectPane.Bible"); //$NON-NLS-1$
+    static final Msg SELECT_DISPLAY = new Msg("KeySelectPane.Display"); //$NON-NLS-1$
+    static final Msg SELECT_SEARCH = new Msg("KeySelectPane.Search"); //$NON-NLS-1$
+
     /**
      * Passthrough ctor
      */

@@ -1,11 +1,12 @@
 package org.crosswire.bibledesktop.book;
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Component;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -14,20 +15,20 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Action;
-import javax.swing.ButtonGroup;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import org.crosswire.bibledesktop.passage.KeyChangeEvent;
 import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
@@ -69,83 +70,28 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     public DisplaySelectPane()
     {
-        init();
+        initialize();
     }
 
     /**
      * Initialize the GUI
      */
-    private void init()
+    private void initialize()
     {
         title = Msg.UNTITLED.toString(new Integer(base++));
 
         actions = new ActionFactory(DisplaySelectPane.class, this);
 
-        // Create a way for selecting how passages are found
-        JPanel pnlSelect = new JPanel(new GridBagLayout());
-
-        // Layout the card picker and the Bible picker side by side
-        pnlSelect.add(createRadioPanel(), new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE,
-                        new Insets(0, 2, 0, 2), 0, 0));
-        pnlSelect.add(createBiblePicker(), new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,
-                        2, 0, 2), 0, 0));
-
-        // Create a deck of "cards" for the different ways of finding passages
-        layCards = new CardLayout();
-        pnlCards = new JPanel(layCards);
-
-        pnlCards.add(createPassagePanel(), PASSAGE);
-        pnlCards.add(createSearchPanel(), SEARCH);
-        pnlCards.add(createMatchPanel(), MATCH);
-
-        this.setLayout(new BorderLayout());
-        this.add(pnlSelect, BorderLayout.PAGE_START);
-        this.add(pnlCards, BorderLayout.CENTER);
-
-    }
-
-    /**
-     *
-     */
-    private Component createRadioPanel()
-    {
-        // These buttons control which "card" in the deck is shown
-        rdoPassg = new JRadioButton(actions.getAction(PASSAGE_OPTIONS));
-        rdoMatch = new JRadioButton(actions.getAction(MATCH_OPTIONS));
-        rdoSearch = new JRadioButton(actions.getAction(SEARCH_OPTIONS));
-
-        ButtonGroup grpType = new ButtonGroup();
-        grpType.add(rdoPassg);
-        grpType.add(rdoSearch);
-        grpType.add(rdoMatch);
-
-        JPanel pnlRadios = new JPanel();
-        pnlRadios.add(rdoPassg, null);
-        pnlRadios.add(rdoSearch, null);
-        pnlRadios.add(rdoMatch, null);
-        rdoPassg.setSelected(true);
-
-        return pnlRadios;
-    }
-
-    /**
-     *
-     */
-    private Component createBiblePicker()
-    {
-        // Create the Bible picker
         // search() and version() rely on this returning only Bibles
-        mdlVersn = new BooksComboBoxModel(BookFilters.getBibles());
-        JComboBox cboVersn = new JComboBox(mdlVersn);
-        Object selected = mdlVersn.getSelectedItem();
+        mdlBible = new BooksComboBoxModel(BookFilters.getBibles());
+        JComboBox cboBible = new JComboBox(mdlBible);
+        Object selected = mdlBible.getSelectedItem();
         if (selected != null)
         {
-            cboVersn.setToolTipText(selected.toString());
+            cboBible.setToolTipText(selected.toString());
         }
-        cboVersn.setRenderer(new BookListCellRenderer());
-        // Allow for layout to size the combo box
-        cboVersn.setPrototypeDisplayValue(" "); //$NON-NLS-1$
-        cboVersn.addItemListener(new ItemListener()
+        cboBible.setRenderer(new BookListCellRenderer());
+        cboBible.addItemListener(new ItemListener()
         {
             public void itemStateChanged(ItemEvent ev)
             {
@@ -157,19 +103,24 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
                 }
             }
         });
-        return cboVersn;
-    }
+        JLabel lblBible = new JLabel();
+        lblBible.setText(Msg.SELECT_BIBLE.toString());
+        lblBible.setLabelFor(cboBible);
 
-    /**
-     *
-     */
-    private Component createPassagePanel()
-    {
-        JLabel label = actions.createJLabel(VIEW_LABEL);
+        JButton btnMenu = new JButton();
+        btnMenu.setIcon(ICON_MENU);
+        btnMenu.setBorderPainted(false);
 
-        txtPassg = new JTextField();
-        txtPassg.setAction(actions.getAction(PASSAGE_FIELD));
-        txtPassg.addKeyListener(new KeyAdapter()
+        JPanel pnlBible = new JPanel();
+        pnlBible.setLayout(new BorderLayout());
+        pnlBible.add(lblBible, BorderLayout.WEST);
+        pnlBible.add(cboBible, BorderLayout.CENTER);
+        pnlBible.add(btnMenu, BorderLayout.EAST);
+
+        JLabel lblKey = actions.createJLabel(VIEW_LABEL);
+        txtKey = new JTextField();
+        txtKey.setAction(actions.getAction(PASSAGE_FIELD));
+        txtKey.addKeyListener(new KeyAdapter()
         {
             public void keyTyped(KeyEvent ev)
             {
@@ -179,84 +130,48 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
                 }
             }
         });
+        JButton btnKey = new JButton(actions.getAction(MORE));
+        btnKey.setIcon(ICON_SELECT);
+        btnKey.setBorderPainted(false);
+        JButton btnKeyGo = new JButton(actions.getAction(GO_PASSAGE));
 
-        JButton btnDialg = new JButton(actions.getAction(MORE));
-
-        JButton goButton = new JButton(actions.getAction(GO_PASSAGE));
-
-        JPanel panel = new JPanel(new GridBagLayout());
-
-        panel.add(label, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 2, 2, 2), 0, 0));
-        panel.add(txtPassg, new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 2, 2, 2), 0, 0));
-        panel.add(goButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 2, 2), 0, 0));
-        panel.add(btnDialg, new GridBagConstraints(1, 1, 2, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
-
-        return panel;
-    }
-
-    /**
-     *
-     */
-    private Component createSearchPanel()
-    {
         txtSearch = new JTextField();
         txtSearch.setAction(actions.getAction(SEARCH_FIELD));
+        JLabel lblSearch = actions.createJLabel(SEARCH_LABEL);
+        lblSearch.setLabelFor(txtSearch);
+        JButton btnSearch = new JButton(actions.getAction(GO_SEARCH));
 
-        JLabel label = actions.createJLabel(SEARCH_LABEL);
-        label.setLabelFor(txtSearch);
+        JButton btnHelp = new JButton();
+        btnHelp.setBorderPainted(true);
+        btnHelp.setBorder(BorderFactory.createLineBorder(SystemColor.control, 5));
+        btnHelp.setBackground(Color.yellow);
+        btnHelp.setFont(btnHelp.getFont().deriveFont(Font.BOLD));
+        btnHelp.setIcon(ICON_HELP);
 
-        chkSRestrict = new JCheckBox(actions.getAction(RESTRICT_SEARCH));
-        chkSRestrict.setSelected(false);
+        JButton btnAdvanced = new JButton();
+        btnAdvanced.setText(Msg.SELECT_ADVANCED.toString());
+        btnAdvanced.setMnemonic(KeyEvent.VK_V);
+        btnAdvanced.setBorderPainted(true);
+        btnAdvanced.setIcon(ICON_SEARCH);
+        btnAdvanced.setBorderPainted(false);
 
-        txtSRestrict = new JTextField();
-        Action action = actions.getAction(SEARCH_RESTRICTION);
-        txtSRestrict.setAction(action);
-        txtSRestrict.setText(action.getValue(Action.NAME).toString());
+        chkMatch = new JCheckBox();
+        chkMatch.setText(Msg.SELECT_MATCH.toString());
 
-        JButton goButton = new JButton(actions.getAction(GO_SEARCH));
+        this.setLayout(new GridBagLayout());
+        this.add(pnlBible, new GridBagConstraints(0, 0, 6, 1, 1.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
-        JPanel panel = new JPanel(new GridBagLayout());
+        this.add(lblKey, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));
+        this.add(txtKey, new GridBagConstraints(2, 1, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(3, 0, 0, 0), 0, 0));
+        this.add(btnKey, new GridBagConstraints(4, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(btnKeyGo, new GridBagConstraints(5, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 
-        panel.add(label, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 2, 2, 2), 0, 0));
-        panel.add(txtSearch, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 2, 2, 2), 0, 0));
-        panel.add(goButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 2, 2, 2), 0, 0));
-        panel.add(chkSRestrict, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
-        panel.add(txtSRestrict, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2),
-                        0, 0));
-
-        return panel;
-    }
-
-    /**
-     *
-     */
-    private Component createMatchPanel()
-    {
-        txtMatch = new JTextField();
-        txtMatch.setAction(actions.getAction(MATCH_FIELD));
-
-        JLabel label = actions.createJLabel(MATCH_LABEL);
-        label.setLabelFor(txtMatch);
-
-        txtMRestrict = new JTextField();
-        Action action = actions.getAction(MATCH_RESTRICTION);
-        txtMRestrict.setAction(action);
-        txtMRestrict.setText(action.getValue(Action.NAME).toString());
-
-        chkMRestrict = new JCheckBox(actions.getAction(RESTRICT_MATCH));
-        chkMRestrict.setSelected(false);
-
-        JButton goButton = new JButton(actions.getAction(GO_MATCH));
-
-        JPanel panel = new JPanel(new GridBagLayout());
-
-        panel.add(label, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 2, 2, 2), 0, 0));
-        panel.add(txtMatch, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 2, 2, 2), 0, 0));
-        panel.add(goButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 2, 2, 2), 0, 0));
-        panel.add(chkMRestrict, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
-        panel.add(txtMRestrict, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
-
-        return panel;
+        this.add(btnHelp, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(lblSearch, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));
+        this.add(txtSearch, new GridBagConstraints(2, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(chkMatch, new GridBagConstraints(3, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(btnAdvanced, new GridBagConstraints(4, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(btnSearch, new GridBagConstraints(5, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 2, 2, 2), 0, 0));
     }
 
     /**
@@ -264,10 +179,13 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     public Book getBook()
     {
-        BookMetaData bmd = mdlVersn.getSelectedBookMetaData();
+        BookMetaData bmd = mdlBible.getSelectedBookMetaData();
         return bmd != null ? bmd.getBook() : null;
     }
 
+    /**
+     * 
+     */
     public void clear()
     {
         if (isClear())
@@ -275,18 +193,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
             return;
         }
 
-        txtPassg.setText(""); //$NON-NLS-1$
-        flipOption(PASSAGE);
-
-        Action action = actions.getAction(SEARCH_RESTRICTION);
+        txtKey.setText(""); //$NON-NLS-1$
         txtSearch.setText(""); //$NON-NLS-1$
-        txtSRestrict.setText(action.getValue(Action.NAME).toString());
-        chkSRestrict.setSelected(false);
-
-        action = actions.getAction(MATCH_RESTRICTION);
-        txtMatch.setText(""); //$NON-NLS-1$
-        txtMRestrict.setText(action.getValue(Action.NAME).toString());
-        chkMRestrict.setSelected(false);
 
         title = Msg.UNTITLED.toString(new Integer(base++));
 
@@ -294,67 +202,36 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
     }
 
+    /**
+     * 
+     */
     public boolean isClear()
     {
         return title.indexOf(Msg.CLEAR.toString()) != -1;
     }
 
-    // The following are behaviors associated with the actions executed by actionPerformed
-    public void doPassageOption()
-    {
-        flipOption(PASSAGE);
-    }
-
-    public void doMatchOption()
-    {
-        flipOption(MATCH);
-    }
-
-    public void doSearchOption()
-    {
-        flipOption(SEARCH);
-    }
-
-    private void flipOption(String toWhat)
-    {
-        layCards.show(pnlCards, toWhat);
-        adjustFocus();
-    }
-
-    // More (...) button was clicked
+    /**
+     * More (...) button was clicked
+     */
     public void doMore()
     {
         showSelectDialog();
     }
 
-    // Go button was clicked
+    /**
+     * Go button was clicked
+     */
     public void doGoPassage()
     {
         doPassageAction();
     }
 
-    // Go button was clicked
+    /**
+     * Go button was clicked
+     */
     public void doGoSearch()
     {
         doSearchAction();
-    }
-
-    // Enter was hit in txtRestrict
-    public void doSearchEverywhere()
-    {
-        doSearchAction();
-    }
-
-    // Go button was clicked
-    public void doGoMatch()
-    {
-        doMatchAction();
-    }
-
-    // Enter was hit in txtMRestrict
-    public void doMatchAnywhere()
-    {
-        doMatchAction();
     }
 
     /**
@@ -362,7 +239,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     public void doPassageAction()
     {
-        setTitle(txtPassg.getText());
+        setTitle(txtKey.getText());
         updateDisplay();
     }
 
@@ -371,7 +248,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     public void doSearchAction()
     {
-        BookMetaData bmd = mdlVersn.getSelectedBookMetaData();
+        BookMetaData bmd = mdlBible.getSelectedBookMetaData();
         if (bmd == null)
         {
             noBookInstalled();
@@ -382,49 +259,9 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         {
             String param = txtSearch.getText();
             Book book = bmd.getBook();
+            boolean match = chkMatch.isSelected();
 
-            Search search = new Search(param, false);
-            if (chkSRestrict.isSelected())
-            {
-                Key restrict = book.getKey(txtSRestrict.getText());
-                search.setRestriction(restrict);
-            }
-
-            Key key = book.find(search);
-
-            txtPassg.setText(key.getName());
-            setTitle(param);
-            updateDisplay();
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(this, ex);
-        }
-    }
-
-    /**
-     * Someone pressed return in the match area
-     */
-    public void doMatchAction()
-    {
-        BookMetaData bmd = mdlVersn.getSelectedBookMetaData();
-        if (bmd == null)
-        {
-            noBookInstalled();
-            return;
-        }
-
-        try
-        {
-            String param = txtMatch.getText();
-            Book book = bmd.getBook();
-
-            Search search = new Search(param, true);
-            if (chkMRestrict.isSelected())
-            {
-                Key restrict = book.getKey(txtMRestrict.getText());
-                search.setRestriction(restrict);
-            }
+            Search search = new Search(param, match);
 
             Key key = book.find(search);
 
@@ -436,8 +273,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
                 tally.trimRanges(20, RestrictionType.NONE);
             }
 
-            txtPassg.setText(key.getName());
-
+            txtKey.setText(key.getName());
             setTitle(param);
             updateDisplay();
         }
@@ -448,30 +284,11 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     }
 
     /**
-     * Some on (un)checked the restrict match box
-     */
-    public void doRestrictMatch()
-    {
-        boolean selected = chkMRestrict.isSelected();
-        txtMRestrict.setEnabled(selected);
-    }
-
-    /**
-     * Some on (un)checked the restrict search box
-     */
-    public void doRestrictSearch()
-    {
-        boolean selected = chkSRestrict.isSelected();
-        txtSRestrict.setEnabled(selected);
-
-    }
-
-    /**
      * Sync the viewed passage with the passage text box
      */
     private void updateDisplay()
     {
-        BookMetaData bmd = mdlVersn.getSelectedBookMetaData();
+        BookMetaData bmd = mdlBible.getSelectedBookMetaData();
         if (bmd == null)
         {
             noBookInstalled();
@@ -481,7 +298,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         try
         {
             Book book = bmd.getBook();
-            Key key = book.getKey(txtPassg.getText());
+            Key key = book.getKey(txtKey.getText());
 
             fireCommandMade(new DisplaySelectEvent(this, key, book));
         }
@@ -500,18 +317,6 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     public void adjustFocus()
     {
-        if (rdoPassg.isSelected())
-        {
-            txtPassg.grabFocus();
-        }
-        else if (rdoSearch.isSelected())
-        {
-            txtSearch.grabFocus();
-        }
-        else if (rdoMatch.isSelected())
-        {
-            txtMatch.grabFocus();
-        }
     }
 
     /**
@@ -535,10 +340,10 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     public void setText(String text)
     {
-        String currentText = txtPassg.getText();
+        String currentText = txtKey.getText();
         if (!currentText.equals(text))
         {
-            txtPassg.setText(text);
+            txtKey.setText(text);
             setTitle(text);
             updateDisplay();
         }
@@ -549,7 +354,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     protected void changeVersion()
     {
-        BookMetaData bmd = mdlVersn.getSelectedBookMetaData();
+        BookMetaData bmd = mdlBible.getSelectedBookMetaData();
         if (bmd == null)
         {
             noBookInstalled();
@@ -559,7 +364,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         try
         {
             Book book = bmd.getBook();
-            Key key = book.getKey(txtPassg.getText());
+            Key key = book.getKey(txtKey.getText());
 
             fireVersionChanged(new DisplaySelectEvent(this, key, book));
         }
@@ -587,8 +392,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         {
             dlgSelect = new PassageSelectionPane();
         }
-        String passg = dlgSelect.showInDialog(this, Msg.SELECT_PASSAGE_TITLE.toString(), true, txtPassg.getText());
-        txtPassg.setText(passg);
+        String passg = dlgSelect.showInDialog(this, Msg.SELECT_PASSAGE_TITLE.toString(), true, txtKey.getText());
+        txtKey.setText(passg);
         doPassageAction();
     }
 
@@ -665,11 +470,6 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         }
     }
 
-    // Enumeration of all the keys to known actions
-    private static final String PASSAGE_OPTIONS = "PassageOption"; //$NON-NLS-1$
-    private static final String MATCH_OPTIONS = "MatchOption"; //$NON-NLS-1$
-    private static final String SEARCH_OPTIONS = "SearchOption"; //$NON-NLS-1$
-
     // For the Passage card
     private static final String VIEW_LABEL = "ViewLabel"; //$NON-NLS-1$
     private static final String PASSAGE_FIELD = "PassageAction"; //$NON-NLS-1$
@@ -678,21 +478,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
     // for the Search card
     private static final String SEARCH_LABEL = "SearchLabel"; //$NON-NLS-1$
-    private static final String RESTRICT_SEARCH = "RestrictSearch"; //$NON-NLS-1$
     private static final String GO_SEARCH = "GoSearch"; //$NON-NLS-1$
     private static final String SEARCH_FIELD = "SearchAction"; //$NON-NLS-1$
-    private static final String SEARCH_RESTRICTION = "SearchEverywhere"; //$NON-NLS-1$
-
-    // for the Match card
-    private static final String MATCH_LABEL = "MatchLabel"; //$NON-NLS-1$
-    private static final String RESTRICT_MATCH = "RestrictMatch"; //$NON-NLS-1$
-    private static final String GO_MATCH = "GoMatch"; //$NON-NLS-1$
-    private static final String MATCH_FIELD = "MatchAction"; //$NON-NLS-1$
-    private static final String MATCH_RESTRICTION = "MatchAnywhere"; //$NON-NLS-1$
-
-    private static final String PASSAGE = "p"; //$NON-NLS-1$
-    private static final String SEARCH = "s"; //$NON-NLS-1$
-    private static final String MATCH = "m"; //$NON-NLS-1$
 
     private static int base = 1;
 
@@ -700,26 +487,28 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
     private transient List listeners;
 
-    private BooksComboBoxModel mdlVersn;
+    private static final ImageIcon ICON_SEARCH = GuiUtil.getIcon("toolbarButtonGraphics/general/Find16.gif"); //$NON-NLS-1$
+
+    private static final ImageIcon ICON_SELECT = GuiUtil.getIcon("toolbarButtonGraphics/general/Edit16.gif"); //$NON-NLS-1$
+
+    private static final ImageIcon ICON_HELP = GuiUtil.getIcon("toolbarButtonGraphics/general/ContextualHelp16.gif"); //$NON-NLS-1$
+
+    private static final ImageIcon ICON_MENU = GuiUtil.getIcon("toolbarButtonGraphics/general/Preferences16.gif"); //$NON-NLS-1$
+
+    private BooksComboBoxModel mdlBible;
+
     private PassageSelectionPane dlgSelect;
-    private JTextField txtPassg;
-    private JTextField txtSearch;
-    protected JCheckBox chkSRestrict;
-    protected JTextField txtSRestrict;
-    private JTextField txtMatch;
-    protected JCheckBox chkMRestrict;
-    protected JTextField txtMRestrict;
-    private JRadioButton rdoMatch;
-    private JRadioButton rdoSearch;
-    private JRadioButton rdoPassg;
-    private JPanel pnlCards;
-    private CardLayout layCards;
 
     private ActionFactory actions;
+
+    private JTextField txtKey;
+
+    private JTextField txtSearch;
+
+    private JCheckBox chkMatch = null;
 
     /**
      * SERIALUID(dms): A placeholder for the ultimate version id.
      */
     private static final long serialVersionUID = 1L;
 }
-
