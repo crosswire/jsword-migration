@@ -470,8 +470,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     }
 
     /**
-     * @param comp
-     * @return
+     * 
      */
     private BookDataDisplay searchForBookDataDisplay(Component comp)
     {

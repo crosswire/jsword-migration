@@ -1,5 +1,12 @@
 <project name="jsword-web" default="all">
 
+  <import file="../common/core.xml"/>
+  <property name="dependency"       value="bibledesktop"/>
+  <property name="dependency.jar"   value="../${dependency}/target/ant/jar"/>
+  <property name="dependency.install" value="../${dependency}/target/ant/${dependency}"/>
+  <property name="jnlp.web.hostname" value="http://www.crosswire.org"/>
+  <property name="jnlp.web.location" value="jnlp"/>
+
   <!--=======================================================================-->
   <property name="source.web"       value="${source.root}/web"/>
   <property name="target.download"  value="${target.root}/download"/> <!-- designed for override -->
@@ -14,6 +21,8 @@
   <property name="localprefix"      value="${basedir}/${target.download}"/>
   <property name="nightly.dir"      value="${localprefix}/nightly"/>
   <property name="release.dir"      value="${localprefix}/release"/>
+
+  <property name="target.installed" value="${target.web}/jnlp"/>
 
   <!--=======================================================================-->
   <path id="path.alljava">
@@ -37,23 +46,21 @@
   <fileset id="fileset.alljava" dir="..">
     <patternset refid="pattern.alljava"/>
   </fileset>
-
-  <!--=======================================================================-->
-  <property name="dependency"       value="bibledesktop"/>
-  <property name="dependency.jar"   value="../${dependency}/target/ant/jar"/>
-  <import file="../common/core.xml"/>
-
-  <!--=======================================================================-->
-  <property name="support.tools" value="../jsword-support/tools"/>
-  <import file="${support.tools}/checkstyle33/build.xml"/> <!-- done -->
-  <import file="${support.tools}/java2html131/build.xml"/> <!-- done -->
-  <import file="${support.tools}/javadoc/build.xml"/> <!-- done, memory error -->
-  <import file="${support.tools}/javancss2141/build.xml"/> <!-- converted, no output -->
-  <import file="${support.tools}/jcoverage104/build.xml"/> <!--  -->
-  <import file="${support.tools}/jdepend26/build.xml"/> <!-- converted, no output -->
-  <import file="${support.tools}/findbugs070/build.xml"/> <!-- ignored, poor task -->
-  <import file="${support.tools}/pmd-1.8/build.xml"/> <!-- done, memory error -->
-  <import file="${support.tools}/tomcat/build.xml"/> <!-- ignored -->
+  <path id="path.allclasses">
+    <pathelement path="../common/${target.classes}"/>
+    <pathelement path="../jsword/${target.classes}"/>
+    <pathelement path="../bibledesktop/${target.classes}"/>
+    <pathelement path="../jsword-web/${target.classes}"/>
+  </path>
+  <patternset id="pattern.allclasses">
+    <include name="common/${target.classes}/**/*.class"/>
+    <include name="jsword/${target.classes}/**/*.class"/>
+    <include name="bibledesktop/${target.classes}/**/*.class"/>
+    <include name="jsword-web/${target.classes}/**/*.class"/>
+  </patternset>
+  <fileset id="fileset.allclasses" dir="..">
+    <patternset refid="pattern.allclasses"/>
+  </fileset>
 
   <!--=======================================================================-->
   <target name="files" depends="build" description="Build an unpacked war file">
@@ -93,77 +100,68 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="web" depends="files, tools" description="All the documentation tasks">
+  <target name="webapp" description="Build an unpacked war file">
+    <mkdir dir="${target.web}"/>
+    <style basedir="${source.web}" extension=".html" style="${source.web}/template.xsl" destdir="${target.web}">
+      <include name="**/*.html"/>
+      <xmlcatalog>
+        <dtd publicid="-//W3C//DTD XHTML 1.0 Transitional//EN" location="${source.etc}/xhtml1-transitional.dtd"/>
+      </xmlcatalog>
+    </style>
+    <style basedir="${source.web}" extension=".jsp" style="${source.web}/template.xsl" destdir="${target.web}">
+      <include name="*.jsp"/>
+    </style>
+    <copy todir="${target.web}">
+      <fileset dir="${source.web}">
+        <exclude name="*.jsp"/>
+        <exclude name="*.html"/>
+        <exclude name="*.xsl"/>
+      </fileset>
+    </copy>
+    <mkdir dir="${target.web}/WEB-INF"/>
+    <copy todir="${target.web}/WEB-INF" filtering="true">
+      <filterset>
+        <filter token="localprefix" value="${localprefix}"/>
+        <filter token="webprefix" value="${webprefix}"/>
+      </filterset>
+      <fileset dir="${source.etc}/web"/>
+    </copy>
+    <mkdir dir="${target.web}/WEB-INF/classes"/>
+    <mkdir dir="${target.web}/WEB-INF/lib"/>
+    <copy todir="${target.web}/WEB-INF/lib">
+      <fileset dir="${target.jar}" includes="*.jar"/>
+    </copy>
+    <!-- needed by the download servlet -->
+    <mkdir dir="${nightly.dir}"/>
+    <mkdir dir="${release.dir}"/>
   </target>
 
   <!--=======================================================================-->
-  <target name="release.nightly" description="Build a nightly release fileset">
-    <tstamp>
-      <format property="today" pattern="yyyyMMdd"/>
-    </tstamp>
-    <antcall target="release.version">
-      <param name="version" value="${today}"/>
-      <param name="directory" value="${nightly.dir}"/>
-    </antcall>
+  <target name="jnlp" description="Prepares for web based jnlp deploy" >
+    <mkdir dir="${target.installed}"/>
+    <copy todir="${target.installed}" filtering="true">
+      <fileset dir="${dependency.install}">
+        <include name="**/*.jnlp"/>
+      </fileset>
+      <filterset>
+        <filter token="HOSTNAME" value="${jnlp.web.hostname}"/>
+        <filter token="WEBAPP" value="${jnlp.web.location}"/>
+      </filterset>
+    </copy>
+    <copy todir="${target.installed}" filtering="false">
+      <fileset dir="${dependency.install}">
+        <exclude name="**/*.jnlp"/>
+      </fileset>
+    </copy>
   </target>
 
   <!--=======================================================================-->
-  <target name="release.final">
-    <antcall target="release.version">
-      <param name="version" value="${product.version}"/>
-      <param name="directory" value="${release.dir}"/>
-    </antcall>
+  <target name="install" depends="install.dependency, jnlp, webapp" description="Install all the files" >
   </target>
 
   <!--=======================================================================-->
-  <target name="release.version" depends="web">
-    <echo message="Building release ${version} to ${directory}"/>
-    <!-- source packages -->
-    <mkdir dir="${directory}"/>
-    <zip zipfile="${directory}/jsword-${version}-src.zip">
-      <zipfileset prefix="jsword" dir="../jsword" excludes="target/**"/>
-      <zipfileset prefix="common" dir="../common" excludes="target/**"/>
-      <zipfileset prefix="bibledesktop" dir="../bibledesktop" excludes="target/**"/>
-    </zip>
-    <tar tarfile="${directory}/jsword-${version}-src.tar.gz" compression="gzip">
-      <tarfileset prefix="jsword" dir="../jsword" excludes="target/**"/>
-      <tarfileset prefix="common" dir="../common" excludes="target/**"/>
-      <tarfileset prefix="bibledesktop" dir="../bibledesktop" excludes="target/**"/>
-    </tar>
-    <!-- binary packages -->
-    <zip zipfile="${directory}/jsword-${version}-bin.zip">
-      <zipfileset prefix="jsword-${version}" dir="../bibledesktop/target/ant/installed"/>
-    </zip>
-    <tar tarfile="${directory}/jsword-${version}-bin.tar.gz" compression="gzip">
-      <tarfileset prefix="jsword-${version}" dir="../bibledesktop/target/ant/installed"/>
-    </tar>
-    <!-- documentation packages -->
-    <zip zipfile="${directory}/jsword-${version}-doc.zip">
-      <zipfileset prefix="jsword-${version}" dir="${target.web}/api"/>
-    </zip>
-    <tar tarfile="${directory}/jsword-${version}-doc.tar.gz" compression="gzip">
-      <tarfileset prefix="jsword-${version}" dir="${target.web}/api"/>
-    </tar>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="tools" depends="checkstyle, java2html, javancss, findbugs">
-    <!-- I've taken jcoverage out becuase the task is not converted -->
-    <!-- I've taken pmd out because the ant task is very poor -->
-    <!-- I've taken cpd out because it is very slow and not that useful -->
-    <!-- I've taken jdepend out because it is confusing eclipse -->
-  </target>
-
-  <!--=======================================================================-->
-  <target name="nightly" depends="web, release.nightly" description="To be run nightly at crosswire">
+  <target name="incremental" depends="" description="To be run nightly at crosswire">
     <!-- also used to depend on veryclean -->
-  </target>
-
-  <!--=======================================================================-->
-  <target name="cvsup.extra" description="Extra stuff to do after calling cvsup">
-    <chmod perm="755">
-      <fileset dir="${source.etc}/build" includes="**/*.sh"/>
-    </chmod>
   </target>
 
 </project>

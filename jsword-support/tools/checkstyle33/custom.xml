@@ -9,7 +9,10 @@
 
   <!-- enforce package documentation -->
   <module name="PackageHtml"/>
+  <!-- the eclipse code formatter deletes these and CVS doesn't seem to mind in
+  the way the checkstyle docs say it does so it seems silly to fight eclipse
   <module name="NewlineAtEndOfFile"/>
+  -->
 
   <module name="TreeWalker">
 
