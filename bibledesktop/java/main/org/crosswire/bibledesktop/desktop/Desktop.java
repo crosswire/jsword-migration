@@ -931,13 +931,12 @@ public class Desktop extends JFrame implements TitleChangedListener, URLEventLis
     }
 
     /**
-     * @param defaultSize The defaultSize to set.
+     * @param newDefaultSize The defaultSize to set.
      */
     public static void setDefaultSize(Dimension newDefaultSize)
     {
         defaultSize = newDefaultSize;
     }
-
 
     /**
      * Setup the choices so that the options dialog knows what there is to
