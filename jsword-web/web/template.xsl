@@ -86,7 +86,7 @@
             <li><a href="download.jsp">Download</a></li>
             <li><a href="http://www.crosswire.org/sword/modules/index.jsp">Modules</a></li>
             <li><a href="screenshot.html">Screenshots</a></li>
-            <li><a href="demo.jsp">Web-Demo</a></li>
+            <!-- li><a href="demo.jsp">Web-Demo</a></li -->
           </ul>
           <p>Getting-Involved</p>
           <ul>
