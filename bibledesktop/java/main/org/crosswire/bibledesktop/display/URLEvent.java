@@ -1,9 +1,9 @@
-package org.crosswire.bibledesktop.display.textpane;
+package org.crosswire.bibledesktop.display;
 
-import org.crosswire.common.util.MsgBase;
+import java.util.EventObject;
 
 /**
- * Compile safe Msg resource settings.
+ * A KeyChangeEvent happens whenever a user changes a key.
  * 
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
@@ -23,21 +23,39 @@ import org.crosswire.common.util.MsgBase;
  * The copyright to this program is held by it's authors.
  * </font></td></tr></table>
  * @see gnu.gpl.Licence
- * @author Joe Walker [joe at eireneh dot com]
+ * @author DM Smith [dmsmith555 at yahoo dot com]
  * @version $Id$
  */
-class Msg extends MsgBase
+public class URLEvent extends EventObject
 {
-    static final Msg TRANSFORM_FAIL = new Msg("TextPaneBookDataDisplay.TransformationFailure"); //$NON-NLS-1$
-    // Strings for hyperlink urls
-    static final Msg BAD_PROTOCOL_URL = new Msg("TextPaneBookDataDisplay.BadProtocolUrl"); //$NON-NLS-1$
+    /**
+     * For when a command has been made
+     * @param source The thing that started this off
+     */
+    public URLEvent(Object source, String protocol, String url)
+    {
+        super(source);
 
+        this.protocol = protocol;
+        this.url = url;
+    }
 
     /**
-     * Passthrough ctor
+     * @return Returns the protocol.
      */
-    private Msg(String name)
+    public String getProtocol()
     {
-        super(name);
+        return protocol;
     }
+
+    /**
+     * @return Returns the url.
+     */
+    public String getUrl()
+    {
+        return url;
+    }
+
+    private String protocol;
+    private String url;
 }

@@ -105,7 +105,7 @@ public class PassageListModel extends AbstractListModel implements PassageListen
     }
 
     /**
-     * Return the current restriction
+     * Return the current txtRestrict
      */
     public RestrictionType getRestriction()
     {

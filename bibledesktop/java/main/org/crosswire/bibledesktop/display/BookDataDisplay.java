@@ -2,8 +2,6 @@ package org.crosswire.bibledesktop.display;
 
 import java.awt.Component;
 
-import javax.swing.event.HyperlinkListener;
-
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 
@@ -40,15 +38,15 @@ public interface BookDataDisplay
 
     /**
      * Add a listener for when someone clicks on a browser 'link'
-     * @param li The listener to add
+     * @param listener The listener to add
      */
-    public void addHyperlinkListener(HyperlinkListener li);
+    public void addURLEventListener(URLEventListener listener);
 
     /**
      * Remove a listener for when someone clicks on a browser 'link'
-     * @param li The listener to remove
+     * @param listener The listener to remove
      */
-    public void removeHyperlinkListener(HyperlinkListener li);
+    public void removeURLEventListener(URLEventListener listener);
 
     /**
      * Accessor for the Swing component

@@ -207,19 +207,19 @@ public class DebugPane extends JPanel
     }
 
     /**
-     * 
+     *
      */
     public void openSplash()
     {
         if (splash == null)
         {
             splash = new Splash();
-            splash.pack();    
+            splash.pack();
         }
     }
 
     /**
-     * 
+     *
      */
     public void closeSplash()
     {

@@ -13,12 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.HyperlinkListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
+import org.crosswire.bibledesktop.display.URLEventListener;
 import org.crosswire.bibledesktop.passage.KeyListListModel;
 import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.util.Logger;
@@ -176,17 +176,17 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.FocusablePart#addHyperlinkListener(javax.swing.event.HyperlinkListener)
      */
-    public void addHyperlinkListener(HyperlinkListener li)
+    public void addURLEventListener(URLEventListener listener)
     {
-        display.addHyperlinkListener(li);
+        display.addURLEventListener(listener);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.FocusablePart#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
      */
-    public void removeHyperlinkListener(HyperlinkListener li)
+    public void removeURLEventListener(URLEventListener listener)
     {
-        display.removeHyperlinkListener(li);
+        display.removeURLEventListener(listener);
     }
 
     /* (non-Javadoc)

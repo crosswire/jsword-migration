@@ -1,11 +1,13 @@
 package org.crosswire.bibledesktop.util;
 
+import java.awt.Font;
 import java.io.IOException;
 import java.net.URL;
 import java.util.MissingResourceException;
 
 import javax.xml.transform.TransformerException;
 
+import org.apache.commons.lang.StringUtils;
 import org.crosswire.common.util.FileUtil;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.ResourceUtil;
@@ -104,6 +106,18 @@ public class ConfigurableSwingConverter implements Converter
     public static String getFont()
     {
         return font;
+    }
+
+    /**
+     * Accessor for the stylesheet we are transforming using
+     */
+    public static Font toFont()
+    {
+        String[] fontSpec = StringUtils.split(font, ","); //$NON-NLS-1$
+        int fontStyle = new Integer(fontSpec[1]).intValue();
+        int fontSize = new Integer(fontSpec[2]).intValue();
+        Font newFont = new Font(fontSpec[0], fontStyle, fontSize);
+        return newFont;
     }
 
     /**

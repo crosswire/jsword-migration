@@ -5,9 +5,8 @@ import java.awt.ComponentOrientation;
 import java.awt.event.MouseListener;
 import java.net.URL;
 
-import javax.swing.event.HyperlinkListener;
-
 import org.crosswire.bibledesktop.display.BookDataDisplay;
+import org.crosswire.bibledesktop.display.URLEventListener;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
@@ -111,14 +110,14 @@ public class JDTBBookDataDisplay implements BookDataDisplay
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.FocusablePart#addHyperlinkListener(javax.swing.event.HyperlinkListener)
      */
-    public void addHyperlinkListener(HyperlinkListener li)
+    public void addURLEventListener(URLEventListener listener)
     {
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.FocusablePart#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
      */
-    public void removeHyperlinkListener(HyperlinkListener li)
+    public void removeURLEventListener(URLEventListener listener)
     {
     }
 

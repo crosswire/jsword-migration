@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.KeyboardFocusManager;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -14,7 +13,6 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -37,21 +35,16 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSplitPane;
-import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
-import javax.swing.text.Element;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
 import org.crosswire.bibledesktop.book.DictionaryPane;
 import org.crosswire.bibledesktop.book.TitleChangedEvent;
 import org.crosswire.bibledesktop.book.TitleChangedListener;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
+import org.crosswire.bibledesktop.display.URLEvent;
+import org.crosswire.bibledesktop.display.URLEventListener;
 import org.crosswire.bibledesktop.display.splitlist.SplitBookDataDisplay;
 import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.config.ChoiceFactory;
@@ -62,6 +55,7 @@ import org.crosswire.common.swing.CatchingThreadGroup;
 import org.crosswire.common.swing.ExceptionPane;
 import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.swing.GuiUtil;
+import org.crosswire.common.swing.LookAndFeelUtil;
 import org.crosswire.common.util.CWClassLoader;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
@@ -109,9 +103,10 @@ import org.jdom.JDOMException;
  * @see gnu.gpl.Licence
  * @author Joe Walker [joe at eireneh dot com]
  * @author Mark Goodwin [mark at thorubio dot org]
+ * @author DM Smith [dmsmith555 at yahoo dot com]
  * @version $Id$
  */
-public class Desktop extends JFrame implements TitleChangedListener, HyperlinkListener
+public class Desktop extends JFrame implements TitleChangedListener, URLEventListener
 {
     /**
      * Central start point.
@@ -126,13 +121,19 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
             {
                 public void run()
                 {
+                    LookAndFeelUtil.initialize();
+
                     Desktop desktop = new Desktop();
-                    desktop.pack();
+
+                    // change the size and location before showing the application.
+                    GuiUtil.setSize(desktop, getDefaultSize());
                     GuiUtil.centerWindow(desktop);
+
+                    // Don't use pack.
+                    // It uses preferred dimensions, which are not used here.
+                    desktop.show();
                     desktop.toFront();
                     desktop.setVisible(true);
-
-                    log.debug(EXITING);
                 }
             };
             t.start();
@@ -151,6 +152,7 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
      */
     public Desktop()
     {
+
         views = new ArrayList();
         // Calling Project.instance() will set up the project's home directory
         //     ~/.jsword
@@ -208,7 +210,7 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
         {
             public void propertyChange(PropertyChangeEvent ev)
             {
-                BookDataDisplay da = recurseDisplayArea();
+                SplitBookDataDisplay da = recurseDisplayArea();
                 if (da != null)
                 {
                     last = da;
@@ -225,23 +227,6 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
 
         startJob.done();
         splash.close();
-
-        // Nearly fill up the screen with BibleDesktop, but no larger than 1280x960
-        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-        // Allow an extra 50x100 for window decoration.
-        if (screenSize.width - maxWidth < 50)
-        {
-            maxWidth = screenSize.width - 50;
-        }
-
-        if (screenSize.height - maxHeight < 100)
-        {
-            maxHeight = screenSize.height - 100;
-        }
-
-        final JComponent contentPane = (JComponent) getContentPane();
-        contentPane.setPreferredSize(new Dimension(maxWidth, maxHeight));
 
         // News users probably wont have any Bibles installedso we give them a
         // hand getting to the installation diallog.
@@ -293,8 +278,8 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
         menuFile.add(actions.getAction(DesktopActions.NEW_TAB)).addMouseListener(barStatus);
         menuFile.add(actions.getAction(DesktopActions.OPEN)).addMouseListener(barStatus);
         menuFile.addSeparator();
-        menuFile.add(actions.getAction(DesktopActions.CLOSE)).addMouseListener(barStatus);
-        menuFile.add(actions.getAction(DesktopActions.CLOSE_ALL)).addMouseListener(barStatus);
+        menuFile.add(actions.getAction(DesktopActions.CLEAR_VIEW)).addMouseListener(barStatus);
+        menuFile.add(actions.getAction(DesktopActions.CLOSE_OTHER_VIEWS)).addMouseListener(barStatus);
         menuFile.addSeparator();
         //menuFile.add(actFilePrint).addMouseListener(barStatus);
         //menuFile.addSeparator();
@@ -307,8 +292,8 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
 
         JPopupMenu popup = new JPopupMenu();
         popup.add(actions.getAction(DesktopActions.NEW_TAB)).addMouseListener(barStatus);
-        popup.add(actions.getAction(DesktopActions.CLOSE)).addMouseListener(barStatus);
-        popup.add(actions.getAction(DesktopActions.CLOSE_ALL)).addMouseListener(barStatus);
+        popup.add(actions.getAction(DesktopActions.CLEAR_VIEW)).addMouseListener(barStatus);
+        popup.add(actions.getAction(DesktopActions.CLOSE_OTHER_VIEWS)).addMouseListener(barStatus);
 
         TDIViewLayout tdi = (TDIViewLayout) LayoutType.TDI.getLayout();
         tdi.addPopup(popup);
@@ -392,7 +377,7 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
 
         //barBook.addHyperlinkListener(this);
         //barSide.addHyperlinkListener(this);
-        reference.addHyperlinkListener(this);
+        reference.addURLEventListener(this);
 
         sptBooks.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         sptBooks.setRightComponent(reference);
@@ -436,7 +421,9 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
     public void addBibleViewPane(BibleViewPane view)
     {
         view.addTitleChangedListener(this);
-        view.addHyperlinkListener(this);
+        BookDataDisplay display = view.getPassagePane().getBookDataDisplay();
+        display.addURLEventListener(this);
+        display.addURLEventListener(barStatus);
         views.add(view);
 
         getViewLayout().add(view);
@@ -451,7 +438,9 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
     public void removeBibleViewPane(BibleViewPane view)
     {
         view.removeTitleChangedListener(this);
-        view.removeHyperlinkListener(this);
+        BookDataDisplay display = view.getPassagePane().getBookDataDisplay();
+        display.removeURLEventListener(this);
+        display.removeURLEventListener(barStatus);
         views.remove(view);
 
         getViewLayout().remove(view);
@@ -461,6 +450,11 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
 
         setLayoutComponent(getViewLayout().getRootComponent());
         //getViewLayout().getSelected().adjustFocus();
+    }
+
+    public void clearBibleViewPane(BibleViewPane view)
+    {
+        view.clear();
     }
 
     /**
@@ -492,9 +486,9 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
     /**
      * Find the currently highlighted FocusablePart
      */
-    public BookDataDisplay getDisplayArea()
+    public SplitBookDataDisplay getDisplayArea()
     {
-        BookDataDisplay da = recurseDisplayArea();
+        SplitBookDataDisplay da = recurseDisplayArea();
         if (da != null)
         {
             return da;
@@ -507,9 +501,9 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
      * Get the currently selected component and the walk up the component tree
      * trying to find a component that implements BookDataDisplay
      */
-    protected BookDataDisplay recurseDisplayArea()
+    protected SplitBookDataDisplay recurseDisplayArea()
     {
-        BookDataDisplay reply = null;
+        SplitBookDataDisplay reply = null;
 
         Component comp = KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
         reply = searchForBookDataDisplay(comp);
@@ -532,7 +526,7 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
     /**
      *
      */
-    private BookDataDisplay searchForBookDataDisplay(Component comp)
+    private SplitBookDataDisplay searchForBookDataDisplay(Component comp)
     {
         // So we've got the current component, we now need to walk up the tree
         // to find something that we recognize.
@@ -544,9 +538,9 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
                 return bvp.getPassagePane();
             }
 
-            if (comp instanceof BookDataDisplay)
+            if (comp instanceof SplitBookDataDisplay)
             {
-                return (BookDataDisplay) comp;
+                return (SplitBookDataDisplay) comp;
             }
 
             comp = comp.getParent();
@@ -690,82 +684,15 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
         Desktop.initial = LayoutType.fromInteger(initialLayout);
     }
 
+
     /* (non-Javadoc)
-     * @see javax.swing.event.HyperlinkListener#hyperlinkUpdate(javax.swing.event.HyperlinkEvent)
+     * @see org.crosswire.bibledesktop.display.URLEventListener#processURL(org.crosswire.bibledesktop.display.URLEvent)
      */
-    public void hyperlinkUpdate(HyperlinkEvent ev)
+    public void activateURL(URLEvent ev)
     {
-        try
-        {
-            barStatus.hyperlinkUpdate(ev);
-
-            HyperlinkEvent.EventType type = ev.getEventType();
-            JTextPane pane = (JTextPane) ev.getSource();
-
-            if (type == HyperlinkEvent.EventType.ACTIVATED)
-            {
-                String url = ev.getDescription();
-                if (url.indexOf(':') == -1)
-                {
-                    // So there is no protocol, this must be relative to the current
-                    // in which case we assume that it is an in page reference.
-                    // We ignore the frame case (example code within JEditorPane
-                    // JavaDoc).
-                    if (url.charAt(0) == '#')
-                    {
-                        url = url.substring(1);
-                    }
-
-                    log.debug(MessageFormat.format(SCROLL_TO_URL, new Object[] { url }));
-                    pane.scrollToReference(url);
-                }
-                else
-                {
-                    // Fully formed, so we open a new window
-                    openHyperlink(ev.getDescription());
-                }
-            }
-            else
-            {
-                // Must be either an enter or an exit event
-                // simulate a link rollover effect, a CSS style not supported in JDK 1.4
-                Element textElement = ev.getSourceElement();
-
-                // Focus is needed to decorate Enter and Leave events
-                pane.grabFocus();
-
-                int start = textElement.getStartOffset();
-                int length = textElement.getEndOffset() - start;
-
-                Style style = pane.addStyle(HYPERLINK_STYLE, null);
-                StyleConstants.setUnderline(style, type == HyperlinkEvent.EventType.ENTERED);
-                StyledDocument doc = pane.getStyledDocument();
-                doc.setCharacterAttributes(start, length, style, false);
-            }
-        }
-        catch (MalformedURLException ex)
-        {
-            Reporter.informUser(this, ex);
-        }
-    }
-
-    /**
-     * Create a new view showing the contents of the given hyperlink
-     */
-    public void openHyperlink(String url) throws MalformedURLException
-    {
-        int match = url.indexOf(':');
-        if (match == -1)
-        {
-            throw new MalformedURLException(Msg.BAD_PROTOCOL_URL.toString(url));
-        }
-
-        String protocol = url.substring(0, match);
-        String data = url.substring(match + 1);
-        if (data.startsWith(DOUBLE_SLASH))
-        {
-            data = data.substring(2);
-        }
+        barStatus.activateURL(ev);
+        String protocol = ev.getProtocol();
+        String data = ev.getUrl();
 
         try
         {
@@ -793,13 +720,29 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
             }
             else
             {
-                throw new MalformedURLException(Msg.UNKNOWN_PROTOCOL.toString(protocol));
+                Reporter.informUser(this, new MalformedURLException(Msg.UNKNOWN_PROTOCOL.toString(protocol)));
             }
         }
         catch (NoSuchKeyException ex)
         {
             Reporter.informUser(this, ex);
         }
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.URLEventListener#enterURL(org.crosswire.bibledesktop.display.URLEvent)
+     */
+    public void enterURL(URLEvent ev)
+    {
+        // We don't care about enter events
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.URLEventListener#leaveURL(org.crosswire.bibledesktop.display.URLEvent)
+     */
+    public void leaveURL(URLEvent ev)
+    {
+        // We don't care about leave events
     }
 
     /**
@@ -813,15 +756,9 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
         while (it.hasNext())
         {
             BibleViewPane view = (BibleViewPane) it.next();
-            BookDataDisplay loopDisplay = view.getPassagePane();
-            if (loopDisplay instanceof SplitBookDataDisplay)
-            {
-                SplitBookDataDisplay sbDisplay = (SplitBookDataDisplay) loopDisplay;
-                sbDisplay.showSidebar(show);
-            }
+            SplitBookDataDisplay sbDisplay = view.getPassagePane();
+            sbDisplay.showSidebar(show);
         }
-
-//      pack(); // cause it to auto resize
     }
 
     /**
@@ -838,7 +775,7 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
         {
             corePanel.remove(barStatus);
         }
-        pack(); // cause it to auto resize
+        validate();
     }
 
      /**
@@ -865,7 +802,7 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
         {
             contentPane.remove(pnlTbar);
         }
-        pack(); // cause it to auto resize
+        validate();
     }
 
     /**
@@ -892,8 +829,8 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
      */
     public void setCloseEnabled(boolean enabled)
     {
-        actions.getAction(DesktopActions.CLOSE).setEnabled(enabled);
-        actions.getAction(DesktopActions.CLOSE_ALL).setEnabled(enabled);
+        actions.getAction(DesktopActions.CLEAR_VIEW).setEnabled(enabled);
+        actions.getAction(DesktopActions.CLOSE_OTHER_VIEWS).setEnabled(enabled);
     }
 
     /* (non-Javadoc)
@@ -959,7 +896,7 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
      */
     public static void setMaxHeight(int maxHeight)
     {
-        Desktop.maxHeight = maxHeight;
+        defaultSize.height = maxHeight;
     }
 
     /**
@@ -967,7 +904,7 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
      */
     public static int getMaxHeight()
     {
-        return maxHeight;
+        return defaultSize.height;
     }
 
     /**
@@ -975,7 +912,7 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
      */
     public static int getMaxWidth()
     {
-        return maxWidth;
+        return defaultSize.width;
     }
 
     /**
@@ -983,8 +920,24 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
      */
     public static void setMaxWidth(int maxWidth)
     {
-        Desktop.maxWidth = maxWidth;
+        defaultSize.width = maxWidth;
     }
+    /**
+     * @return Returns the defaultSize.
+     */
+    public static Dimension getDefaultSize()
+    {
+        return defaultSize;
+    }
+
+    /**
+     * @param defaultSize The defaultSize to set.
+     */
+    public static void setDefaultSize(Dimension newDefaultSize)
+    {
+        defaultSize = newDefaultSize;
+    }
+
 
     /**
      * Setup the choices so that the options dialog knows what there is to
@@ -1055,16 +1008,10 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
     // Strings for the names of property files.
     private static final String SPLASH_PROPS = "splash"; //$NON-NLS-1$
 
-    // Strings for hyperlinks
+    // Strings for URL protocols
     private static final String BIBLE_PROTOCOL = "bible"; //$NON-NLS-1$
     private static final String DICTIONARY_PROTOCOL = "dict"; //$NON-NLS-1$
     private static final String COMMENTARY_PROTOCOL = "comment"; //$NON-NLS-1$
-    private static final String HYPERLINK_STYLE = "Hyperlink"; //$NON-NLS-1$
-    private static final String DOUBLE_SLASH = "//"; //$NON-NLS-1$
-    private static final String SCROLL_TO_URL = "scrolling to: {0}"; //$NON-NLS-1$
-
-    // Strings for debug messages
-    private static final String EXITING = "desktop main exiting."; //$NON-NLS-1$
 
     // Empty String
     private static final String EMPTY_STRING = ""; //$NON-NLS-1$
@@ -1095,14 +1042,9 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
     private LayoutType current;
 
     /**
-     * <code>maxHeight</code> of the window
+     * The default dimension for this frame
      */
-    private static int maxHeight = 1024;
-
-    /**
-     * <code>maxWidth</code> of the window
-     */
-    private static int maxWidth = 2048;
+    private static Dimension defaultSize = new Dimension(1280, 960);
 
     /**
      * The list of BibleViewPanes being viewed in tdi and mdi workspaces
@@ -1112,7 +1054,7 @@ public class Desktop extends JFrame implements TitleChangedListener, HyperlinkLi
     /**
      * The last selected BookDataDisplay
      */
-    protected BookDataDisplay last;
+    protected SplitBookDataDisplay last;
 
     /**
      * The log stream

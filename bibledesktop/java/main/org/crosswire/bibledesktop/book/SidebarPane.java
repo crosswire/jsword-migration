@@ -4,8 +4,8 @@ import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.event.HyperlinkListener;
 
+import org.crosswire.bibledesktop.display.URLEventListener;
 import org.crosswire.common.swing.FixedSplitPane;
 
 /**
@@ -63,19 +63,19 @@ public class SidebarPane extends JPanel
     /**
      * Add a listener when someone clicks on a browser 'link'
      */
-    public void addHyperlinkListener(HyperlinkListener li)
+    public void addURLEventListener(URLEventListener li)
     {
-        dicts.addHyperlinkListener(li);
-        comments.addHyperlinkListener(li);
+        dicts.addURLEventListener(li);
+        comments.addURLEventListener(li);
     }
 
     /**
      * Remove a listener when someone clicks on a browser 'link'
      */
-    public void removeHyperlinkListener(HyperlinkListener li)
+    public void removeURLEventListener(URLEventListener li)
     {
-        dicts.removeHyperlinkListener(li);
-        comments.removeHyperlinkListener(li);
+        dicts.removeURLEventListener(li);
+        comments.removeURLEventListener(li);
     }
 
     /**

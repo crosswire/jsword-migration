@@ -12,7 +12,7 @@ import javax.swing.ToolTipManager;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
 import org.crosswire.bibledesktop.book.SitesPane;
-import org.crosswire.bibledesktop.display.BookDataDisplay;
+import org.crosswire.bibledesktop.display.splitlist.SplitBookDataDisplay;
 import org.crosswire.common.config.swing.ConfigEditorFactory;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.util.Reporter;
@@ -36,9 +36,9 @@ import org.crosswire.jsword.util.Project;
  * of the Desktop. It could easily be member methods in that class.
  * It is here simply to simplify the Desktop class and minimize
  * maintenance cost.
- * 
+ *
  * Previously each of the "do" methods was a separate class.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -113,7 +113,7 @@ public class DesktopActions
 
         getDesktop().addBibleViewPane(view);
 
-        view.addHyperlinkListener(getDesktop());
+//        view.addHyperlinkListener(getDesktop());
     }
 
     /**
@@ -135,22 +135,26 @@ public class DesktopActions
     /**
      * Close the current passage window.
      */
-    public void doClose()
+    public void doClearView()
     {
         BibleViewPane view = getDesktop().getSelectedBibleViewPane();
-        getDesktop().removeBibleViewPane(view);
+        view.clear();
     }
-
     /**
      * Close all the passage windows.
      */
-    public void doCloseAll()
+    public void doCloseOtherViews()
     {
+        BibleViewPane view = getDesktop().getSelectedBibleViewPane();
         Iterator it = getDesktop().iterateBibleViewPanes();
         while (it.hasNext())
         {
-            BibleViewPane view = (BibleViewPane) it.next();
-            getDesktop().removeBibleViewPane(view);
+            BibleViewPane aView = (BibleViewPane) it.next();
+            if (aView != view)
+            {
+                getDesktop().removeBibleViewPane(aView);
+            }
+
         }
     }
 
@@ -249,7 +253,7 @@ public class DesktopActions
      */
     public void doCopy()
     {
-        BookDataDisplay da = getDesktop().getDisplayArea();
+        SplitBookDataDisplay da = getDesktop().getDisplayArea();
         da.copy();
     }
 
@@ -279,7 +283,7 @@ public class DesktopActions
     {
         try
         {
-            BookDataDisplay da = getDesktop().getDisplayArea();
+            SplitBookDataDisplay da = getDesktop().getDisplayArea();
             Key key = da.getKey();
 
             if (key == null)
@@ -438,8 +442,8 @@ public class DesktopActions
     static final String HELP = "Help"; //$NON-NLS-1$
     static final String NEW_TAB = "NewTab"; //$NON-NLS-1$
     static final String OPEN = "Open"; //$NON-NLS-1$
-    static final String CLOSE = "Close"; //$NON-NLS-1$
-    static final String CLOSE_ALL = "CloseAll"; //$NON-NLS-1$
+    static final String CLEAR_VIEW = "ClearView"; //$NON-NLS-1$
+    static final String CLOSE_OTHER_VIEWS = "CloseOtherViews"; //$NON-NLS-1$
     static final String SAVE = "Save"; //$NON-NLS-1$
     static final String SAVE_AS = "SaveAs"; //$NON-NLS-1$
     static final String SAVE_ALL = "SaveAll"; //$NON-NLS-1$

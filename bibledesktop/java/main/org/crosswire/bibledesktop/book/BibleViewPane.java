@@ -13,13 +13,13 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-import javax.swing.event.HyperlinkListener;
 import javax.swing.filechooser.FileFilter;
 
 import org.apache.commons.lang.StringUtils;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.splitlist.SplitBookDataDisplay;
 import org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay;
+import org.crosswire.bibledesktop.passage.KeySidebar;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.passage.Key;
@@ -58,6 +58,13 @@ public class BibleViewPane extends JPanel
      */
     public BibleViewPane()
     {
+        pnlSelect = new DisplaySelectPane();
+        KeySidebar sidebar = new KeySidebar(pnlSelect.getBook());
+        BookDataDisplay display = new TabbedBookDataDisplay();
+        pnlPassg = new SplitBookDataDisplay(sidebar, display);
+        sidebar.addKeyChangeListener(pnlSelect);
+        pnlSelect.addCommandListener(sidebar);
+        pnlPassg.addKeyChangeListener(sidebar);
         init();
     }
 
@@ -92,7 +99,7 @@ public class BibleViewPane extends JPanel
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         this.setLayout(new BorderLayout());
         this.add(pnlSelect, BorderLayout.NORTH);
-        this.add(pnlPassg.getComponent(), BorderLayout.CENTER);
+        this.add(pnlPassg, BorderLayout.CENTER);
     }
 
     /**
@@ -101,6 +108,12 @@ public class BibleViewPane extends JPanel
     public void adjustFocus()
     {
         pnlSelect.adjustFocus();
+    }
+
+    public void clear()
+    {
+        saved = null;
+        pnlSelect.clear();
     }
 
     /**
@@ -263,7 +276,7 @@ public class BibleViewPane extends JPanel
     /**
      * Accessor for the SplitBookDataDisplay
      */
-    public BookDataDisplay getPassagePane()
+    public SplitBookDataDisplay getPassagePane()
     {
         return pnlPassg;
     }
@@ -276,21 +289,21 @@ public class BibleViewPane extends JPanel
         return pnlSelect;
     }
 
-    /**
-     * Add a listener when someone clicks on a browser 'link'
-     */
-    public void addHyperlinkListener(HyperlinkListener li)
-    {
-        pnlPassg.addHyperlinkListener(li);
-    }
-
-    /**
-     * Remove a listener when someone clicks on a browser 'link'
-     */
-    public void removeHyperlinkListener(HyperlinkListener li)
-    {
-        pnlPassg.removeHyperlinkListener(li);
-    }
+//    /**
+//     * Add a listener when someone clicks on a browser 'link'
+//     */
+//    public void addHyperlinkListener(HyperlinkListener li)
+//    {
+//        pnlPassg.addHyperlinkListener(li);
+//    }
+//
+//    /**
+//     * Remove a listener when someone clicks on a browser 'link'
+//     */
+//    public void removeHyperlinkListener(HyperlinkListener li)
+//    {
+//        pnlPassg.removeHyperlinkListener(li);
+//    }
 
     /**
      * Add a listener to the list
@@ -347,8 +360,8 @@ public class BibleViewPane extends JPanel
 
     protected File saved = null;
     private transient List listeners;
-    private DisplaySelectPane pnlSelect = new DisplaySelectPane();
-    protected BookDataDisplay pnlPassg = new SplitBookDataDisplay(new TabbedBookDataDisplay());
+    private DisplaySelectPane pnlSelect;
+    protected SplitBookDataDisplay pnlPassg;
     private static int shortlen = 30;
     private JFileChooser chooser = new JFileChooser();
     private static final String EXTENSION = ".lst"; //$NON-NLS-1$

@@ -423,7 +423,7 @@ public class PassageSelectionPane extends JPanel
     private boolean changing;
 
     /**
-     * The psaage we are editing
+     * The passage we are editing
      */
     private Passage ref;
 

@@ -14,7 +14,6 @@ import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
@@ -164,7 +163,6 @@ public class SitePane extends JPanel
         treAvailable.setCellEditor(null);
         treAvailable.setRootVisible(false);
         treAvailable.setShowsRootHandles(true);
-        treAvailable.setCellRenderer(new CustomTreeCellRenderer());
         treAvailable.addTreeSelectionListener(new TreeSelectionListener()
         {
             public void valueChanged(TreeSelectionEvent ev)
@@ -272,28 +270,6 @@ public class SitePane extends JPanel
 
         //actions.getAction(DELETE).setEnabled(bookSelected);
         actions.getAction(INSTALL).setEnabled(bookSelected);
-    }
-
-    /**
-     * Display the BookMetaData as something better than toString()
-     */
-    private static final class CustomTreeCellRenderer extends DefaultTreeCellRenderer
-    {
-        /* (non-Javadoc)
-         * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int, boolean)
-         */
-        public Component getTreeCellRendererComponent(JTree tree, Object value, boolean isSelected, boolean expanded, boolean leaf, int row, boolean focus)
-        {
-            super.getTreeCellRendererComponent(tree, value, isSelected, expanded, leaf, row, focus);
-
-            if (value instanceof BookMetaData)
-            {
-                BookMetaData bmd = (BookMetaData) value;
-                setText(bmd.getFullName());
-            }
-
-            return this;
-        }
     }
 
     private static final String INSTALLED_BOOKS_LABEL = "InstalledBooksLabel"; //$NON-NLS-1$

@@ -1,9 +1,10 @@
-package org.crosswire.bibledesktop.display.textpane;
+package org.crosswire.bibledesktop.display;
 
-import org.crosswire.common.util.MsgBase;
+import java.util.EventListener;
 
 /**
- * Compile safe Msg resource settings.
+ * Implement URLEventListener to recieve URLEvents whenever someone
+ * activates an URL.
  * 
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
@@ -23,21 +24,26 @@ import org.crosswire.common.util.MsgBase;
  * The copyright to this program is held by it's authors.
  * </font></td></tr></table>
  * @see gnu.gpl.Licence
- * @author Joe Walker [joe at eireneh dot com]
+ * @author DM Smith [dmsmith555 at yahoo dot com]
  * @version $Id$
  */
-class Msg extends MsgBase
+public interface URLEventListener extends EventListener
 {
-    static final Msg TRANSFORM_FAIL = new Msg("TextPaneBookDataDisplay.TransformationFailure"); //$NON-NLS-1$
-    // Strings for hyperlink urls
-    static final Msg BAD_PROTOCOL_URL = new Msg("TextPaneBookDataDisplay.BadProtocolUrl"); //$NON-NLS-1$
-
+    /**
+     * This method is called to indicate that an URL can be processed.
+     * @param ev Describes the URL
+     */
+    public void activateURL(URLEvent ev);
 
     /**
-     * Passthrough ctor
+     * This method is called to indicate that the mouse has entered the URL.
+     * @param ev Describes the URL
      */
-    private Msg(String name)
-    {
-        super(name);
-    }
+    public void enterURL(URLEvent ev);
+
+    /**
+     * This method is called to indicate that the mouse has left the URL.
+     * @param ev Describes the URL
+     */
+    public void leaveURL(URLEvent ev);
 }

@@ -2,6 +2,7 @@ package org.crosswire.bibledesktop.desktop;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
@@ -15,13 +16,14 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
+import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
 
 /**
  * ViewSourcePane allow viewing of some text in its own standalone frame.
  * The text to be viewed can be grabbed from a String, a URL, or a file.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -63,7 +65,10 @@ public class ViewSourcePane extends JPanel
     {
         actions = new ActionFactory(ViewSourcePane.class, this);
 
+        Font userRequestedFont = ConfigurableSwingConverter.toFont();
+
         JTextArea txtOrig = new JTextArea(orig, 24, 80);
+        txtOrig.setFont(userRequestedFont);
         txtOrig.setEditable(false);
         txtOrig.setLineWrap(true);
         txtOrig.setWrapStyleWord(true);
@@ -72,12 +77,14 @@ public class ViewSourcePane extends JPanel
         pnlOrig.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         JTextArea txtOsis = new JTextArea(osis, 24, 80);
+        txtOsis.setFont(userRequestedFont);
         txtOsis.setEditable(false);
         JPanel pnlOsis = new JPanel(new BorderLayout());
         pnlOsis.add(new JScrollPane(txtOsis), BorderLayout.CENTER);
         pnlOsis.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         JTextArea txtHtml = new JTextArea(html, 24, 80);
+        txtHtml.setFont(userRequestedFont);
         txtHtml.setEditable(false);
         JPanel pnlHtml = new JPanel(new BorderLayout());
         pnlHtml.add(new JScrollPane(txtHtml), BorderLayout.CENTER);
@@ -130,7 +137,7 @@ public class ViewSourcePane extends JPanel
     }
 
     /**
-     * 
+     *
      */
     public void doSourceOK()
     {

@@ -1,9 +1,11 @@
-package org.crosswire.bibledesktop.display.textpane;
+package org.crosswire.bibledesktop.passage;
 
-import org.crosswire.common.util.MsgBase;
+import java.util.EventObject;
+
+import org.crosswire.jsword.passage.Key;
 
 /**
- * Compile safe Msg resource settings.
+ * A KeyChangeEvent happens whenever a user changes a key.
  * 
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
@@ -23,21 +25,35 @@ import org.crosswire.common.util.MsgBase;
  * The copyright to this program is held by it's authors.
  * </font></td></tr></table>
  * @see gnu.gpl.Licence
- * @author Joe Walker [joe at eireneh dot com]
+ * @author DM Smith [dmsmith555 at yahoo dot com]
  * @version $Id$
  */
-class Msg extends MsgBase
+public class KeyChangeEvent extends EventObject
 {
-    static final Msg TRANSFORM_FAIL = new Msg("TextPaneBookDataDisplay.TransformationFailure"); //$NON-NLS-1$
-    // Strings for hyperlink urls
-    static final Msg BAD_PROTOCOL_URL = new Msg("TextPaneBookDataDisplay.BadProtocolUrl"); //$NON-NLS-1$
+    /**
+     * For when a key has been changed
+     * @param source The thing that started this off
+     * @param key The selected Key
+     */
+    public KeyChangeEvent(Object source, Key key)
+    {
+        super(source);
 
+        this.key = key;
+    }
 
     /**
-     * Passthrough ctor
+     * Get the key with its changes
+     * @return the changed key
      */
-    private Msg(String name)
+    public Key getKey()
     {
-        super(name);
+        return key;
     }
+
+    /**
+     * The new key
+     */
+    private Key key;
+
 }

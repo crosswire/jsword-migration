@@ -13,9 +13,9 @@ import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 
+import org.crosswire.bibledesktop.display.URLEvent;
+import org.crosswire.bibledesktop.display.URLEventListener;
 import org.crosswire.common.progress.swing.JobsProgressBar;
 
 /**
@@ -49,7 +49,7 @@ import org.crosswire.common.progress.swing.JobsProgressBar;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class StatusBar extends JComponent implements MouseListener, HyperlinkListener
+public class StatusBar extends JComponent implements MouseListener, URLEventListener
 {
     /**
      * Create a new StatusBar
@@ -88,22 +88,37 @@ public class StatusBar extends JComponent implements MouseListener, HyperlinkLis
         this.add(lbl_name,    new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
     }
 
-    /**
-     * When the mouse points at a hyperlink that has registered with us
-     * to be shown on the statusbar
-     * @see javax.swing.event.HyperlinkListener#hyperlinkUpdate(javax.swing.event.HyperlinkEvent)
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.URLEventListener#processURL(org.crosswire.bibledesktop.display.URLEvent)
      */
-    public void hyperlinkUpdate(HyperlinkEvent ev)
+    public void activateURL(URLEvent ev)
     {
-        HyperlinkEvent.EventType type = ev.getEventType();
-        if (type == HyperlinkEvent.EventType.ENTERED)
+        // We don't care about activate events
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.URLEventListener#enterURL(org.crosswire.bibledesktop.display.URLEvent)
+     */
+    public void enterURL(URLEvent ev)
+    {
+        String protocol = ev.getProtocol();
+        String url = ev.getUrl();
+        if (protocol.length() == 0)
         {
-            lbl_message.setText(ev.getDescription());
+            lbl_message.setText(url); //$NON-NLS-1$
         }
-        else if (type == HyperlinkEvent.EventType.EXITED)
+        else
         {
-            lbl_message.setText(Msg.STATUS_DEFAULT.toString());
+            lbl_message.setText(protocol + "://" + url); //$NON-NLS-1$
         }
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.URLEventListener#leaveURL(org.crosswire.bibledesktop.display.URLEvent)
+     */
+    public void leaveURL(URLEvent ev)
+    {
+        lbl_message.setText(Msg.STATUS_DEFAULT.toString());
     }
 
     /**

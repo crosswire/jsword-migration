@@ -104,8 +104,9 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
         {
             BookMetaData bmd = (BookMetaData) value;
 
-            setText(bmd.getName());
-            setToolTipText(bmd.getFullName());
+            String displayName = bmd.toString();
+            setText(displayName);
+            setToolTipText(displayName);
 
             BookType type = bmd.getType();
             if (type.equals(BookType.BIBLE))

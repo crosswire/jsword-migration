@@ -110,7 +110,7 @@ public class Splash extends JWindow
         lblInfo.setBackground(Color.BLACK);
         //lblInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
         lblInfo.setHorizontalAlignment(SwingConstants.RIGHT);
-        lblInfo.setText(Msg.getVersionInfo()+" "); //$NON-NLS-1$
+        lblInfo.setText(Msg.getVersionInfo() + " "); //$NON-NLS-1$
         lblInfo.setOpaque(true);
 
         JobsProgressBar pnlJobs = new JobsProgressBar(false);

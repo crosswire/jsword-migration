@@ -12,7 +12,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.HyperlinkListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
@@ -25,6 +24,7 @@ import org.crosswire.bibledesktop.book.BookListCellRenderer;
 import org.crosswire.bibledesktop.book.BooksComboBoxModel;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
+import org.crosswire.bibledesktop.display.URLEventListener;
 import org.crosswire.bibledesktop.passage.KeyTreeNode;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
@@ -177,17 +177,17 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.FocusablePart#addHyperlinkListener(javax.swing.event.HyperlinkListener)
      */
-    public void addHyperlinkListener(HyperlinkListener li)
+    public void addURLEventListener(URLEventListener listener)
     {
-        txtDisplay.addHyperlinkListener(li);
+        txtDisplay.addURLEventListener(listener);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.FocusablePart#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
      */
-    public void removeHyperlinkListener(HyperlinkListener li)
+    public void removeURLEventListener(URLEventListener listener)
     {
-        txtDisplay.removeHyperlinkListener(li);
+        txtDisplay.removeURLEventListener(listener);
     }
 
     /**

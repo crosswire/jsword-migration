@@ -25,6 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import org.crosswire.bibledesktop.passage.KeyChangeEvent;
+import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
@@ -60,7 +62,7 @@ import org.crosswire.jsword.passage.RestrictionType;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class DisplaySelectPane extends JPanel
+public class DisplaySelectPane extends JPanel implements KeyChangeListener
 {
     /**
      * General constructor
@@ -83,8 +85,8 @@ public class DisplaySelectPane extends JPanel
         JPanel pnlSelect = new JPanel(new GridBagLayout());
 
         // Layout the card picker and the Bible picker side by side
-        pnlSelect.add(createRadioPanel(), new GridBagConstraints(0, 0, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 2), 0, 0));
-        pnlSelect.add(createBiblePicker(), new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 2, 0, 2), 0, 0));
+        pnlSelect.add(createRadioPanel(), new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 2), 0, 0));
+        pnlSelect.add(createBiblePicker(), new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 2, 0, 2), 0, 0));
 
         // Create a deck of "cards" for the different ways of finding passages
         layCards = new CardLayout();
@@ -97,6 +99,7 @@ public class DisplaySelectPane extends JPanel
         this.setLayout(new BorderLayout());
         this.add(pnlSelect, BorderLayout.PAGE_START);
         this.add(pnlCards, BorderLayout.CENTER);
+
     }
 
     /**
@@ -132,7 +135,14 @@ public class DisplaySelectPane extends JPanel
         // search() and version() rely on this returning only Bibles
         mdlVersn = new BooksComboBoxModel(BookFilters.getBibles());
         JComboBox cboVersn = new JComboBox(mdlVersn);
+        Object selected = mdlVersn.getSelectedItem();
+        if (selected != null)
+        {
+            cboVersn.setToolTipText(selected.toString());
+        }
         cboVersn.setRenderer(new BookListCellRenderer());
+        // Allow for layout to size the combo box
+        cboVersn.setPrototypeDisplayValue(" "); //$NON-NLS-1$
         cboVersn.addItemListener(new ItemListener()
         {
             public void itemStateChanged(ItemEvent ev)
@@ -140,6 +150,8 @@ public class DisplaySelectPane extends JPanel
                 if (ev.getStateChange() == ItemEvent.SELECTED)
                 {
                     changeVersion();
+                    JComboBox combo = (JComboBox) ev.getSource();
+                    combo.setToolTipText(combo.getSelectedItem().toString());
                 }
             }
         });
@@ -172,9 +184,9 @@ public class DisplaySelectPane extends JPanel
 
         JPanel panel = new JPanel(new GridBagLayout());
 
-        panel.add(label, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
-        panel.add(txtPassg, new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
-        panel.add(goButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
+        panel.add(label, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 2, 2, 2), 0, 0));
+        panel.add(txtPassg, new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 2, 2, 2), 0, 0));
+        panel.add(goButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 2, 2), 0, 0));
         panel.add(btnDialg, new GridBagConstraints(1, 1, 2, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
 
         return panel;
@@ -203,9 +215,9 @@ public class DisplaySelectPane extends JPanel
 
         JPanel panel = new JPanel(new GridBagLayout());
 
-        panel.add(label, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
-        panel.add(txtSearch, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
-        panel.add(goButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
+        panel.add(label, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 2, 2, 2), 0, 0));
+        panel.add(txtSearch, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 2, 2, 2), 0, 0));
+        panel.add(goButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 2, 2, 2), 0, 0));
         panel.add(chkSRestrict, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
         panel.add(txtSRestrict, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
 
@@ -235,9 +247,9 @@ public class DisplaySelectPane extends JPanel
 
         JPanel panel = new JPanel(new GridBagLayout());
 
-        panel.add(label, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
-        panel.add(txtMatch, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
-        panel.add(goButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
+        panel.add(label, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 2, 2, 2), 0, 0));
+        panel.add(txtMatch, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 2, 2, 2), 0, 0));
+        panel.add(goButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 2, 2, 2), 0, 0));
         panel.add(chkMRestrict, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
         panel.add(txtMRestrict, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
 
@@ -251,6 +263,27 @@ public class DisplaySelectPane extends JPanel
     {
         BookMetaData bmd = mdlVersn.getSelectedBookMetaData();
         return bmd != null ? bmd.getBook() : null;
+    }
+
+    public void clear()
+    {
+        txtPassg.setText(""); //$NON-NLS-1$
+        flipOption(PASSAGE);
+
+        Action action = actions.getAction(SEARCH_RESTRICTION);
+        txtSearch.setText(""); //$NON-NLS-1$
+        txtSRestrict.setText(action.getValue(Action.NAME).toString());
+        chkSRestrict.setSelected(false);
+
+        action = actions.getAction(MATCH_RESTRICTION);
+        txtMatch.setText(""); //$NON-NLS-1$
+        txtMRestrict.setText(action.getValue(Action.NAME).toString());
+        chkMRestrict.setSelected(false);
+
+        title = Msg.UNTITLED.toString(new Integer(base++));
+
+        updateDisplay();
+
     }
 
     // The following are behaviors associated with the actions executed by actionPerformed
@@ -293,7 +326,7 @@ public class DisplaySelectPane extends JPanel
         doSearchAction();
     }
 
-    // Enter was hit in txtSRestrict
+    // Enter was hit in txtRestrict
     public void doSearchEverywhere()
     {
         doSearchAction();
@@ -350,7 +383,7 @@ public class DisplaySelectPane extends JPanel
 
             setDefaultName(param);
             updateDisplay();
-            setCurrentAction(PASSAGE);
+//            setCurrentAction(PASSAGE);
         }
         catch (Exception ex)
         {
@@ -396,7 +429,7 @@ public class DisplaySelectPane extends JPanel
 
             setDefaultName(param);
             updateDisplay();
-            setCurrentAction(PASSAGE);
+//            setCurrentAction(PASSAGE);
         }
         catch (Exception ex)
         {
@@ -452,29 +485,29 @@ public class DisplaySelectPane extends JPanel
         }
     }
 
-    /**
-     * What is the currently displayed action?
-     * @param action one of the constants PASSAGE, SEARCH or MATCH;
-     */
-    private void setCurrentAction(String action)
-    {
-        layCards.show(pnlCards, action);
-
-        if (action.equals(PASSAGE))
-        {
-            rdoPassg.setSelected(true);
-        }
-        else if (action.equals(SEARCH))
-        {
-            rdoSearch.setSelected(true);
-        }
-        else if (action.equals(MATCH))
-        {
-            rdoMatch.setSelected(true);
-        }
-
-        adjustFocus();
-    }
+//    /**
+//     * What is the currently displayed action?
+//     * @param action one of the constants PASSAGE, SEARCH or MATCH;
+//     */
+//    private void setCurrentAction(String action)
+//    {
+//        layCards.show(pnlCards, action);
+//
+//        if (action.equals(PASSAGE))
+//        {
+//            rdoPassg.setSelected(true);
+//        }
+//        else if (action.equals(SEARCH))
+//        {
+//            rdoSearch.setSelected(true);
+//        }
+//        else if (action.equals(MATCH))
+//        {
+//            rdoMatch.setSelected(true);
+//        }
+//
+//        adjustFocus();
+//    }
 
     /**
      * Set the focus to the right initial component
@@ -570,6 +603,21 @@ public class DisplaySelectPane extends JPanel
         String passg = dlgSelect.showInDialog(this, Msg.SELECT_PASSAGE_TITLE.toString(), true, txtPassg.getText());
         txtPassg.setText(passg);
         doPassageAction();
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.book.KeyChangeListener#keyChanged(org.crosswire.bibledesktop.book.KeyChangeEvent)
+     */
+    public void keyChanged(KeyChangeEvent ev)
+    {
+        String text = ev.getKey().getName();
+        String passage = txtPassg.getText();
+        if (!passage.equals(text))
+        {
+            txtPassg.setText(text);
+            setDefaultName(text);
+            updateDisplay();
+        }
     }
 
     /**

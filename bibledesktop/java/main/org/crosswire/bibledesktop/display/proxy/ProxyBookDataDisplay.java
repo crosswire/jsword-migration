@@ -2,9 +2,8 @@ package org.crosswire.bibledesktop.display.proxy;
 
 import java.awt.Component;
 
-import javax.swing.event.HyperlinkListener;
-
 import org.crosswire.bibledesktop.display.BookDataDisplay;
+import org.crosswire.bibledesktop.display.URLEventListener;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 
@@ -57,17 +56,17 @@ public class ProxyBookDataDisplay implements BookDataDisplay
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#addHyperlinkListener(javax.swing.event.HyperlinkListener)
      */
-    public void addHyperlinkListener(HyperlinkListener li)
+    public void addURLEventListener(URLEventListener listener)
     {
-        proxy.addHyperlinkListener(li);
+        proxy.addURLEventListener(listener);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
      */
-    public void removeHyperlinkListener(HyperlinkListener li)
+    public void removeURLEventListener(URLEventListener listener)
     {
-        proxy.removeHyperlinkListener(li);
+        proxy.removeURLEventListener(listener);
     }
 
     /* (non-Javadoc)

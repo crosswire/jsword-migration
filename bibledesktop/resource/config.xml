@@ -49,15 +49,31 @@
     <map name="commentary-names"/>
   </option>
 
-  <option key="Bibles.VersesPerTab" type="number">
+<!-- At this time we only have one converter
+  <option key="BibleDisplay.Converter" type="string-options">
+    <introspect class="org.crosswire.jsword.util.ConverterFactory" property="CurrentConverterName"/>
+    <map name="converters"/>
+  </option>
+
+  <option key="BibleDisplay.ConfigurableStylesheet" type="string-options">
+    <introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="ResourceName"/>
+    <map name="cswing-styles"/>
+  </option>
+-->
+
+  <option key="BibleDisplay.VersesPerTab" type="number">
     <introspect class="org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay" property="PageSize"/>
   </option>
 
-  <option key="Sword.ModuleSearchPath" type="path">
+  <option key="BibleDisplay.ConfigurableFont" type="font">
+    <introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="Font"/>
+  </option>
+
+  <option key="SwordModule.ModuleSearchPath" type="path">
     <introspect class="org.crosswire.jsword.book.sword.SwordBookDriver" property="SwordPath"/>
   </option>
 
-  <option key="Sword.DownloadDirectory" type="directory">
+  <option key="SwordModule.DownloadDirectory" type="directory">
     <introspect class="org.crosswire.jsword.book.sword.SwordBookDriver" property="DownloadDir"/>
   </option>
 
@@ -86,14 +102,18 @@
     <alternative number="3"/>
   </option>
 
+<!-- Currently there is only one, so nothing to pick from
   <option key="Readings.ReadingsSet" type="string-options">
     <introspect class="org.crosswire.jsword.book.readings.ReadingsBookDriver" property="ReadingsSet"/>
     <map name="readings"/>
   </option>
+-->
 
+<!-- Useful only to developers. Developers may uncomment this.
   <option key="Application.LookAndFeel" type="class">
     <introspect class="org.crosswire.common.swing.LookAndFeelUtil" property="LookAndFeel"/>
   </option>
+-->
 
   <option key="Application.InitialLayout" type="int-options">
     <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="InitialLayoutType"/>
@@ -109,42 +129,37 @@
     <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="MaxHeight"/>
   </option>
 
-  <option key="BibleDisplay.Converter" type="string-options">
-    <introspect class="org.crosswire.jsword.util.ConverterFactory" property="CurrentConverterName"/>
-    <map name="converters"/>
-  </option>
-
-  <option key="BibleDisplay.ConfigurableStylesheet" type="string-options">
-    <introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="ResourceName"/>
-    <map name="cswing-styles"/>
-  </option>
-
-  <option key="BibleDisplay.ConfigurableFont" type="font">
-    <introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="Font"/>
-  </option>
-
 <!-- Currently not used
   <option key="Advanced.Raw.CacheData" type="boolean">
     <introspect class="org.crosswire.jsword.book.raw.RawBook" property="DefaultCacheData"/>
   </option>
 -->
 
+<!-- This really only useful for developers, they can uncomment it.
   <option key="Advanced.Reports.ShowErrorsInDialogBox" type="boolean" priority="8">
     <introspect class="org.crosswire.common.swing.ExceptionPane" property="HelpDeskListener"/>
   </option>
+-->
 
+<!-- This really only useful for developers, they can uncomment it.
   <option key="Advanced.Reports.LogErrorsInLogWindow" type="boolean" priority="8">
     <introspect class="org.crosswire.common.swing.ExceptionShelf" property="HelpDeskListener"/>
   </option>
+-->
 
+<!-- This really only useful for developers, they can uncomment it.
   <option key="Advanced.SourcePath" type="path" priority="9">
     <introspect class="org.crosswire.common.swing.ExceptionPane" property="SourcePath"/>
   </option>
+-->
 
+<!-- Program recognizes when the XSLT has changed and recompiles it.
   <option key="Advanced.XSLT.Cache" type="boolean">
     <introspect class="org.crosswire.common.xml.TransformingSAXEventProvider" property="Cache"/>
   </option>
+-->
 
+<!-- This really only useful for developers, they can uncomment it.
   <option key="Advanced.Passage.DefaultType" type="int-options">
     <introspect class="org.crosswire.jsword.passage.PassageKeyFactory" property="DefaultPassage"/>
     <alternative number="0"/>
@@ -152,9 +167,12 @@
     <alternative number="2"/>
     <alternative number="3"/>
   </option>
+-->
 
+<!-- This really only useful for developers, they can uncomment it.
   <option key="Advanced.AboutDialog.IncludeAdvancedTabs" type="boolean">
     <introspect class="org.crosswire.bibledesktop.desktop.AboutPane" property="Advanced"/>
   </option>
+-->
 
 </config>
