@@ -53,16 +53,26 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
             // The default is to have the first selected
             current = (BookMetaData) getElementAt(0);
 
-            // but if the default Bible is in the available list we should
-            // start with that as the default.
-            BookMetaData bmd = Defaults.getBibleMetaData();
-            if (bmd != null)
+            // If one of our favorite Books is in the list we ought to start
+            // with that selected. We put the Bible last so it will override
+            // the others if this is a broad list of books
+            tryInitialSelection(Defaults.getCommentaryMetaData());
+            tryInitialSelection(Defaults.getDictionaryMetaData());
+            tryInitialSelection(Defaults.getBibleMetaData());
+        }
+    }
+
+    /**
+     * @param bmd
+     */
+    private void tryInitialSelection(BookMetaData bmd)
+    {
+        if (bmd != null)
+        {
+            int i = bmds.indexOf(bmd);
+            if (i != -1)
             {
-                int i = bmds.indexOf(bmd);
-                if (i != -1)
-                {
-                    current = bmd;
-                }
+                current = bmd;
             }
         }
     }
@@ -99,7 +109,7 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
     protected void cacheData()
     {
         super.cacheData();
-        
+
         // Find the previously selected item
         boolean found = false;
         int size = getSize();
@@ -110,7 +120,7 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
                 found = true;
             }
         }
-        
+
         // If it was not found then either set to first element or null
         if (!found)
         {

@@ -34,40 +34,53 @@
 ]>
 
 <config>
+
   <option key="Bibles.Default Bible" type="string-options">
-  	<introspect class="org.crosswire.jsword.book.Defaults" property="BibleByName"/>
+    <introspect class="org.crosswire.jsword.book.Defaults" property="BibleByName"/>
     <help>Which of the available Bibles is the default.</help>
-    <map name="biblenames"/>
+    <map name="bible-names"/>
     <!-- set up in OptionsAction.refreshBooks() along with dict and commentary versions -->
   </option>
 
+  <option key="Bibles.Default Dictionary" type="string-options">
+    <introspect class="org.crosswire.jsword.book.Defaults" property="DictionaryByName"/>
+    <help>Which of the available Dictionaries is the default.</help>
+    <map name="dictionary-names"/>
+  </option>
+
+  <option key="Bibles.Default Commentary" type="string-options">
+    <introspect class="org.crosswire.jsword.book.Defaults" property="CommentaryByName"/>
+    <help>Which of the available Commentaries is the default.</help>
+    <map name="commentary-names"/>
+  </option>
+
   <option key="Bibles.Verses Per Tab" type="number">
-  	<introspect class="org.crosswire.bibledesktop.display.tab.TabbedDisplayPane" property="PageSize"/>
+    <introspect class="org.crosswire.bibledesktop.display.tab.TabbedDisplayPane" property="PageSize"/>
     <help>How many verses do you want to display on a page before spilling to tabbed mode.</help>
   </option>
 
   <option key="Sword.Module Search Path" type="path">
-  	<introspect class="org.crosswire.jsword.book.sword.SwordBookDriver" property="SwordPath"/>
+    <introspect class="org.crosswire.jsword.book.sword.SwordBookDriver" property="SwordPath"/>
     <help>Where should we look for SWORD Project modules.</help>
   </option>
 
   <option key="Sword.Download Directory" type="directory">
-  	<introspect class="org.crosswire.jsword.book.sword.SwordBookDriver" property="DownloadDir"/>
+    <introspect class="org.crosswire.jsword.book.sword.SwordBookDriver" property="DownloadDir"/>
     <help>Where should we store newly downloaded modules.</help>
   </option>
 
   <option key="Remote.Remote Host" type="string-array" separator=" ">
-  	<introspect class="org.crosswire.jsword.book.remote.HttpRemoteBookDriver" property="URLs"/>
+    <introspect class="org.crosswire.jsword.book.remote.HttpRemoteBookDriver" property="URLs"/>
     <help>The URL of a remote HTTP host.</help>
   </option>
 
   <option key="Passages.Persistent Naming" type="boolean">
-  	<introspect class="org.crosswire.jsword.passage.PassageUtil" property="PersistentNaming"/>
+    <introspect class="org.crosswire.jsword.passage.PassageUtil" property="PersistentNaming"/>
     <help>True if the passage editor re-writes the references to conform to its notation.</help>
   </option>
 
   <option key="Passages.Blurring Rules" type="int-options">
-  	<introspect class="org.crosswire.jsword.passage.PassageUtil" property="BlurRestriction"/>
+    <introspect class="org.crosswire.jsword.passage.PassageUtil" property="BlurRestriction"/>
     <help>What is the default blurring - Blur across chapter boundaries or not.</help>
     <alternative number="0" name="None"/>
     <alternative number="1" name="Book"/>
@@ -75,7 +88,7 @@
   </option>
 
   <option key="Passages.Book Case" type="int-options">
-  	<introspect class="org.crosswire.jsword.passage.BibleInfo" property="Case"/>
+    <introspect class="org.crosswire.jsword.passage.BibleInfo" property="Case"/>
     <help>What case should we use to display the references.</help>
     <alternative number="0" name="lower"/>
     <alternative number="1" name="Sentence"/>
@@ -84,81 +97,73 @@
   </option>
 
   <option key="Readings.Readings Set" type="string-options">
-  	<introspect class="org.crosswire.jsword.book.readings.ReadingsBookDriver" property="ReadingsSet"/>
+    <introspect class="org.crosswire.jsword.book.readings.ReadingsBookDriver" property="ReadingsSet"/>
     <help>Which of the available readings sets is the default.</help>
     <map name="readings"/>
   </option>
 
-  <option key="Looks.Look and Feel" type="class">
-  	<introspect class="org.crosswire.common.swing.LookAndFeelUtil" property="LookAndFeel"/>
+  <option key="Application.Look and Feel" type="class">
+    <introspect class="org.crosswire.common.swing.LookAndFeelUtil" property="LookAndFeel"/>
     <help>The look and feel of the application</help>
   </option>
 
-  <option key="Looks.Initial Layout" type="int-options">
-  	<introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="InitialLayoutType"/>
+  <option key="Application.Initial Layout" type="int-options">
+    <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="InitialLayoutType"/>
     <help>Do you want to start in SDI, TDI or MDI view mode</help>
     <alternative number="0" name="Tabbed Document Interface"/>
     <alternative number="1" name="Multiple Document Interface"/>
   </option>
 
-  <option key="Looks.Converter" type="string-options">
-  	<introspect class="org.crosswire.jsword.util.ConverterFactory" property="CurrentConverterName"/>
+  <option key="Bible Display.Converter" type="string-options">
+    <introspect class="org.crosswire.jsword.util.ConverterFactory" property="CurrentConverterName"/>
     <help>The engine used to genterate the book display</help>
     <map name="converters"/>
   </option>
 
-  <option key="Looks.Simple.Stylesheet" type="string-options">
-  	<introspect class="org.crosswire.bibledesktop.util.SimpleSwingConverter" property="ResourceName"/>
+  <option key="Bible Display.Simple Stylesheet" type="string-options">
+    <introspect class="org.crosswire.bibledesktop.util.SimpleSwingConverter" property="ResourceName"/>
     <help>The style applied to displayed Books when using the simple styler.</help>
     <map name="swing-styles"/>
   </option>
 
-  <option key="Looks.Configurable.Stylesheet" type="string-options">
-  	<introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="ResourceName"/>
+  <option key="Bible Display.Configurable Stylesheet" type="string-options">
+    <introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="ResourceName"/>
     <help>The style applied to displayed Books when using the configurable styler.</help>
     <map name="cswing-styles"/>
   </option>
 
-  <option key="Looks.Configurable.Font" type="font">
-  	<introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="Font"/>
+  <option key="Bible Display.Configurable Font" type="font">
+    <introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="Font"/>
     <help>The font to be used to display books</help>
   </option>
-
-  <!--
-  <option key="Looks.Configurable.Font" type="string-options">
-  	<introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="RealFont"/>
-    <help>The font to be used to display books</help>
-    <map name="font-names"/>
-  </option>
-  -->
 
   <option key="Advanced.Raw.Cache Data" type="boolean">
-  	<introspect class="org.crosswire.jsword.book.raw.RawBook" property="DefaultCacheData"/>
+    <introspect class="org.crosswire.jsword.book.raw.RawBook" property="DefaultCacheData"/>
     <help>Do new RawBibles cache the entire Bible in memory, or just the indexes.</help>
   </option>
 
   <option key="Advanced.Reports.Show errors in a dialog box" type="boolean" priority="8">
-  	<introspect class="org.crosswire.common.swing.ExceptionPane" property="HelpDeskListener"/>
+    <introspect class="org.crosswire.common.swing.ExceptionPane" property="HelpDeskListener"/>
     <help>Do we display Exceptions in a GUI window.</help>
   </option>
 
   <option key="Advanced.Reports.Log errors in the log window" type="boolean" priority="8">
-  	<introspect class="org.crosswire.common.swing.ExceptionShelf" property="HelpDeskListener"/>
+    <introspect class="org.crosswire.common.swing.ExceptionShelf" property="HelpDeskListener"/>
     <help>Do we display Exceptions in a the GUI shelf.</help>
   </option>
 
   <option key="Advanced.Source Path" type="path" priority="9">
-  	<introspect class="org.crosswire.common.swing.ExceptionPane" property="SourcePath"/>
+    <introspect class="org.crosswire.common.swing.ExceptionPane" property="SourcePath"/>
     <help>The directories to search for source code in when investigating an exception.</help>
   </option>
 
   <option key="Advanced.XSLT.Cache" type="boolean">
-  	<introspect class="org.crosswire.common.xml.TransformingSAXEventProvider" property="Cache"/>
+    <introspect class="org.crosswire.common.xml.TransformingSAXEventProvider" property="Cache"/>
     <help>Do we cache the XSLT pages (faster but a pain for development).</help>
   </option>
 
   <option key="Advanced.Passage.Default Type" type="int-options">
-  	<introspect class="org.crosswire.jsword.passage.PassageFactory" property="DefaultPassage"/>
+    <introspect class="org.crosswire.jsword.passage.PassageFactory" property="DefaultPassage"/>
     <help>What type of passage does the PassageFactory create by default.</help>
     <alternative number="0" name="Speed (Rocket)"/>
     <alternative number="1" name="Write Speed (Bitwise)"/>
@@ -166,9 +171,9 @@
     <alternative number="3" name="Mix (Ranged)"/>
   </option>
 
-  <option key="Advanced.About Dialog.Include Debug Tab" type="boolean">
-  	<introspect class="org.crosswire.bibledesktop.desktop.AboutPane" property="Debugging"/>
-    <help>Is the debug tab visible in the about dialog.</help>
+  <option key="Advanced.About Dialog.Include Advanced Tabs" type="boolean">
+    <introspect class="org.crosswire.bibledesktop.desktop.AboutPane" property="Advanced"/>
+    <help>Are the advanced tabs visible in the "About ..." Dialog. (Requires restart)</help>
   </option>
 
 </config>

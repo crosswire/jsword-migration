@@ -151,7 +151,7 @@ public class ConfigurableSwingConverter implements Converter
     /**
      * The font to be used in OSIS->HTML generation
      */
-    private static String font = "Serif"; //$NON-NLS-1$
+    private static String font = "Serif,0,14"; //$NON-NLS-1$
 
     /**
      * The stylesheet we are transforming using

@@ -1,12 +1,9 @@
-package org.crosswire.bibledesktop.passage;
-
-import javax.swing.AbstractListModel;
-import javax.swing.ListModel;
-
-import org.crosswire.jsword.passage.KeyList;
+package org.crosswire.jsword.passage;
 
 /**
- * A simple implementation of ListModel that is backed by a SortedSet.
+ * For any time when a component wishes to express a preferrence for a Key.
+ * This interface will often be optional to allow objects to not specify a
+ * preferrence.
  * 
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
@@ -29,32 +26,11 @@ import org.crosswire.jsword.passage.KeyList;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class KeyListListModel extends AbstractListModel implements ListModel
+public interface PreferredKey
 {
     /**
-     * Constructor for ListListModel.
+     * What Key would this objct like us to use?
+     * @return The preferredKey
      */
-    public KeyListListModel(KeyList keys)
-    {
-        this.keys = keys;
-    }
-
-    /* (non-Javadoc)
-     * @see javax.swing.ListModel#getSize()
-     */
-    public int getSize()
-    {
-        return keys.size();
-    }
-
-    /**
-     * There must be a faster way of doing this?
-     * @see javax.swing.ListModel#getElementAt(int)
-     */
-    public Object getElementAt(int index)
-    {
-        return keys.get(index);
-    }
-
-    private KeyList keys = null;
+    public Key getPreferred();
 }

@@ -22,9 +22,11 @@ import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
+import org.crosswire.jsword.book.Defaults;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.KeyList;
 import org.crosswire.jsword.passage.NoSuchKeyException;
+import org.crosswire.jsword.passage.PreferredKey;
 
 /**
  * Builds a panel on which all the Dictionaries and their entries are visible.
@@ -58,6 +60,9 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
     public DictionaryPane()
     {
         init();
+
+        // This must come after the setViewportView() calls so scrolling works
+        lstDicts.setSelectedValue(Defaults.getDictionaryMetaData(), true);
     }
 
     /**
@@ -65,38 +70,38 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
      */
     private void init()
     {
-        lstdicts.setVisibleRowCount(4);
-        lstdicts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        lstdicts.setModel(mdldicts);
-        lstdicts.setCellRenderer(new BookListCellRenderer());
-        lstdicts.setPrototypeCellValue(BookListCellRenderer.PROTOTYPE_BOOK_NAME);
-        lstdicts.addListSelectionListener(new ListSelectionListener()
+        lstDicts.setVisibleRowCount(4);
+        lstDicts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        lstDicts.setModel(mdldicts);
+        lstDicts.setCellRenderer(new BookListCellRenderer());
+        lstDicts.setPrototypeCellValue(BookListCellRenderer.PROTOTYPE_BOOK_NAME);
+        lstDicts.addListSelectionListener(new ListSelectionListener()
         {
             public void valueChanged(ListSelectionEvent ev)
             {
                 newDictionary();
             }
         });
-        scrdicts.setViewportView(lstdicts);
+        scrDicts.setViewportView(lstDicts);
 
-        lstentries.addListSelectionListener(new ListSelectionListener()
+        lstEntries.addListSelectionListener(new ListSelectionListener()
         {
             public void valueChanged(ListSelectionEvent ev)
             {
                 newEntry();
             }
         });
-        screntries.setViewportView(lstentries);
+        scrEntries.setViewportView(lstEntries);
 
-        scrdisplay.setViewportView(txtdisplay.getComponent());
+        scrDisplay.setViewportView(txtdisplay.getComponent());
 
-        sptmain.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        sptmain.setTopComponent(screntries);
-        sptmain.setBottomComponent(scrdisplay);
+        sptMain.setOrientation(JSplitPane.VERTICAL_SPLIT);
+        sptMain.setTopComponent(scrEntries);
+        sptMain.setBottomComponent(scrDisplay);
 
         this.setLayout(new BorderLayout(5, 5));
-        this.add(scrdicts, BorderLayout.NORTH);
-        this.add(sptmain, BorderLayout.CENTER);
+        this.add(scrDicts, BorderLayout.NORTH);
+        this.add(sptMain, BorderLayout.CENTER);
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
     }
 
@@ -129,7 +134,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
      */
     public Key getKey()
     {
-        return (Key) lstentries.getSelectedValue();
+        return (Key) lstEntries.getSelectedValue();
     }
 
     /* (non-Javadoc)
@@ -172,7 +177,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
             Key key = dict.getKey(data);
             if (key != null)
             {
-                lstentries.setSelectedValue(key, true);
+                lstEntries.setSelectedValue(key, true);
             }
         }
         catch (NoSuchKeyException ex)
@@ -199,14 +204,14 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
                 // ignore - we only wanted to see if it could be done.
             }
         }     
-     */
+    */
 
     /**
      * Called when someone selects a new Dictionary
      */
     protected void newDictionary()
     {
-        Object selected = lstdicts.getSelectedValue();
+        Object selected = lstDicts.getSelectedValue();
         if (selected != null)
         {
             BookMetaData dmd = (BookMetaData) selected;
@@ -214,7 +219,15 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
             KeyList set = dict.getGlobalKeyList();
 
             KeyListListModel model = new KeyListListModel(set);
-            lstentries.setModel(model);
+            lstEntries.setModel(model);
+
+            if (dict instanceof PreferredKey)
+            {
+                PreferredKey pref = (PreferredKey) dict;
+                Key key = pref.getPreferred();
+
+                lstEntries.setSelectedValue(key, true);
+            }
         }
     }
 
@@ -225,7 +238,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
     {
         try
         {
-            Key key = (Key) lstentries.getSelectedValue();
+            Key key = (Key) lstEntries.getSelectedValue();
             if (key != null)
             {
                 txtdisplay.setBookData(dict, key);
@@ -246,10 +259,10 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
     private BooksComboBoxModel mdldicts = new BooksComboBoxModel(filter);
     private Book dict = null;
 
-    private JScrollPane scrdicts = new JScrollPane();
-    private JList lstdicts = new JList();
-    private JSplitPane sptmain = new JSplitPane();
-    private JScrollPane screntries = new JScrollPane();
-    private JScrollPane scrdisplay =new JScrollPane();
-    private JList lstentries = new JList();
+    private JScrollPane scrDicts = new JScrollPane();
+    private JList lstDicts = new JList();
+    private JSplitPane sptMain = new JSplitPane();
+    private JScrollPane scrEntries = new JScrollPane();
+    private JScrollPane scrDisplay = new JScrollPane();
+    private JList lstEntries = new JList();
 }

@@ -139,13 +139,10 @@ public class AboutPane
             JobsViewPane pnl_jobs = new JobsViewPane();
             tab_main.add(pnl_jobs, Msg.TASK_TAB_TITLE.toString());
 
-            if (debugging)
-            {
-                // create and add the Debug tab
-                //tab_main.add(pnl_logs, "Logs");
-                DebugPane pnl_debug = new DebugPane(desktop);
-                tab_main.add(pnl_debug, Msg.DEBUG_TAB_TITLE.toString());
-            }
+            // create and add the Debug tab
+            //tab_main.add(pnl_logs, "Logs");
+            DebugPane pnl_debug = new DebugPane(desktop);
+            tab_main.add(pnl_debug, Msg.DEBUG_TAB_TITLE.toString());
         }
     }
 
@@ -184,22 +181,6 @@ public class AboutPane
     }
 
     /**
-     * Is the debug tab visible?
-     */
-    public synchronized static boolean isDebugging()
-    {
-        return debugging;
-    }
-
-    /**
-     * Set the visibility of the debug tab?
-     */
-    public static void setDebugging(boolean debugging)
-    {
-        AboutPane.debugging = debugging;
-    }
-
-    /**
      * @return Returns whether the window should show an advanced view.
      */
     public static synchronized boolean isAdvanced()
@@ -215,8 +196,7 @@ public class AboutPane
         AboutPane.advanced = advanced;
     }
 
-    private static boolean advanced = true; // TODO: Add to config.xml
-    private static boolean debugging;
+    private static boolean advanced = false;
     private JDialog dlg_main;
     private JPanel pnl_main;
 }
