@@ -132,15 +132,17 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         JLabel lblBible = actions.createJLabel(BIBLE);
         lblBible.setLabelFor(cboBible);
 
+        /* LATER(JOE)
         JButton btnMenu = new JButton();
         btnMenu.setIcon(ICON_MENU);
         btnMenu.setBorderPainted(false);
+        */
 
         JPanel pnlBible = new JPanel();
         pnlBible.setLayout(new BorderLayout());
         pnlBible.add(lblBible, BorderLayout.WEST);
-        pnlBible.add(cboBible, BorderLayout.CENTER);
-        pnlBible.add(btnMenu, BorderLayout.EAST);
+        pnlBible.add(cboBible, BorderLayout.EAST); // CENTER);
+        // pnlBible.add(btnMenu, BorderLayout.EAST);
 
         JLabel lblKey = actions.createJLabel(VIEW_LABEL);
         txtKey = new JTextField();
