@@ -82,7 +82,7 @@
   of Java as for the stable release of J-Sword.
 </p>
 <div align="center">
-  <a href="jnlp/jsword.jnlp"><img src="images/webstart.jpg" width="247" height="60" border="0"/></a>
+  <a href="jnlp/bibledesktop.jnlp"><img src="images/webstart.jpg" width="247" height="60" border="0"/></a>
 </div>
 
 <h2>Zip/Tar Based Downloads</h2>

@@ -3,13 +3,14 @@
   <!-- this should be overridden by the parent file -->
   <property name="support.tools" value=".."/>
 
+  <taskdef resource="checkstyletask.properties">
+    <classpath>
+      <fileset dir="${support.tools}/checkstyle33" includes="**/*.jar"/>
+    </classpath>
+  </taskdef>
+
   <target name="checkstyle">
     <mkdir dir="${target.web}/checkstyle"/>
-    <taskdef resource="checkstyletask.properties">
-      <classpath>
-        <fileset dir="${support.tools}/checkstyle33" includes="**/*.jar"/>
-      </classpath>
-    </taskdef>
     <copy file="${support.tools}/checkstyle33/custom.xml" overwrite="true"
         tofile="${target.web}/checkstyle/custom.xml">
       <filterset>

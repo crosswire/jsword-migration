@@ -320,7 +320,6 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         barMenu.add(menuTools);
         barMenu.add(menuHelp);
 
-        //JToolBar pnlTbar = new JToolBar();
         pnlTbar.setRollover(true);
         pnlTbar.setFloatable(false);
 
@@ -350,9 +349,8 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         sptBooks.add(new JPanel(), JSplitPane.LEFT);
         sptBooks.setResizeWeight(0.9D);
         sptBooks.setDividerSize(7);
-        sptBooks.setOpaque(false);
+        sptBooks.setOpaque(true);
         sptBooks.setBorder(null);
-        sptBooks.setBackground(sptBooks.getBackground().darker());
 
         frame.addWindowListener(new WindowAdapter()
         {
@@ -363,7 +361,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         });
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(new BorderLayout());
-        //frame.getContentPane().add(pnlTbar, BorderLayout.NORTH);
+        frame.getContentPane().add(pnlTbar, BorderLayout.NORTH);
         frame.getContentPane().add(barStatus, BorderLayout.SOUTH);
         frame.getContentPane().add(sptBooks, BorderLayout.CENTER);
         frame.setJMenuBar(barMenu);

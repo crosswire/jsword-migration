@@ -1,4 +1,4 @@
-<project name="tomcat" default="install">
+<project name="tomcat" default="tomcat.install">
 
   <target name="tomcatinit">
     <property name="web.path" value="/jsword"/>
@@ -20,15 +20,15 @@
     -->
   </target>
 
-  <target name="install" description="Install web application" depends="tomcatinit">
+  <target name="tomcat.install" description="Install a web application" depends="tomcatinit">
     <install url="${url}" username="${username}" password="${password}" path="${path}" war="file://$basedir}/${target.root}/web"/>
   </target>
 
-  <target name="reload" description="Reload web application" depends="tomcatinit">
+  <target name="tomcat.reload" description="Reload web application" depends="tomcatinit">
     <reload url="${url}" username="${username}" password="${password}" path="${path}"/>
   </target>
 
-  <target name="remove" description="Remove web application" depends="tomcatinit">
+  <target name="tomcat.remove" description="Remove web application" depends="tomcatinit">
     <remove url="${url}" username="${username}" password="${password}" path="${path}"/>
   </target>
 

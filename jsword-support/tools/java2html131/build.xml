@@ -3,12 +3,13 @@
   <!-- this should be overridden by the parent file -->
   <property name="support.tools" value=".."/>
 
+  <taskdef name="java2html" classname="com.java2html.Java2HTMLTask">
+    <classpath>
+      <fileset dir="${support.tools}" includes="java2html*/**/*.jar"/>
+    </classpath>
+  </taskdef>
+
   <target name="java2html" description="HTML versions of the java code">
-    <taskdef name="java2html" classname="com.java2html.Java2HTMLTask">
-      <classpath>
-        <fileset dir="${support.tools}" includes="java2html*/**/*.jar"/>
-      </classpath>
-    </taskdef>
     <mkdir dir="${target.web}/java2html"/>
     <java2html title="J-Sword Source" 
         simple="no"

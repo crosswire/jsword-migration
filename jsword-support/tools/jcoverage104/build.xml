@@ -1,80 +1,161 @@
-<project name="jcoverage" default="jcoverage">
+<project name="jcoverage" default="alltests">
 
   <!-- this should be overridden by the parent file -->
   <property name="support.tools" value=".."/>
+  <property name="target.temp" value="${target.root}/temp"/>
 
-  <target name="jcoverage" description="Run the standard test suite">
-    <taskdef resource="tasks.properties">
-      <classpath>
-        <fileset dir="${support.tools}" includes="jcoverage*/**/*.jar"/>
-      </classpath>
-    </taskdef>
-    <delete failonerror="false">
-      <fileset dir="${target.temp}/jcoverage"/>
+  <!-- instrumented classes are deposited into this directory. -->
+  <property name="target.jcov.root" value="${target.temp}/jcoverage"/>
+  <property name="target.jcov.classes" value="${target.jcov.root}/classes"/>
+  <!-- Location of instrumented source -->
+  <property name="target.jcov.src" value="${target.jcov.root}/src"/>
+  <!-- Location of JCoverage report -->
+  <property name="target.web.jcov" value="${target.web}/jcoverage"/>
+  <!-- intermediate test results are deposited into this directory. -->
+  <property name="target.tested" value="${target.temp}/junit"/>
+  <!-- Location of JUnit report -->
+  <property name="target.web.junit" value="${target.web}/junit"/>
+  
+  <property name="source.java.common" value="../common/${source.java}"/>
+  <property name="source.java.jsword" value="../jsword/${source.java}"/>
+  <property name="target.classes.common" value="../common/${target.classes}"/>
+  <property name="target.classes.jsword" value="../jsword/${target.classes}"/>
+  <property name="test.classes.common" value="../common/${test.classes}"/>
+  <property name="test.classes.jsword" value="../jsword/${test.classes}"/>
+
+  <path id="jcoverage">
+    <fileset dir="${support.tools}" includes="jcoverage*/**/jcoverage.jar"/>
+  </path>
+  
+  <path id="jcoverage.base.path">
+    <fileset dir="${support.tools}" includes="jcoverage*/**/*.jar"/>
+  </path>
+
+  <!-- If we ever decide to use the jcoverage ant tasks
+  <taskdef classpathref="jcoverage" resource="tasks.properties"/>
+  -->
+
+  <target name="alltests" depends="test.instrument, test.unit, test.report.unit, test.report.coverage" description="Run a full test suite"/>
+  <target name="test.instrument" description="Instrument for coverage analysis">
+	<delete failonerror="false">
+      <fileset dir="${target.jcov.root}"/>
     </delete>
-    <delete failonerror="false">
-      <fileset dir="${source.root}">
-        <include name="jcoverage.ser"/>
+    <mkdir dir="${target.jcov.root}"/>
+    <!--
+      == For greater control don't use the ant task <instrument>
+      == Here we instrument several different areas at the same time.
+      == And we change the directory where jcoverage.ser is stored.
+      -->
+    <java fork="yes" classname="com.jcoverage.coverage.Instrument">
+      <!-- Put jcoverage.ser in its own directory -->
+      <sysproperty key="com.jcoverage.rawcoverage.dir" file="${target.jcov.root}"/>
+      <classpath refid="jcoverage.base.path"/>
+      <arg value="-ignore"/>
+      <arg value="org.apache.log4j.*"/>
+      <arg value="-d"/>
+      <arg file="${target.jcov.classes}"/>
+      <arg file="${target.classes.common}"/>
+      <arg file="${target.classes.jsword}"/>
+    </java>
+
+    <!-- Make jcoverage a lot quieter use a custom log4j.properties -->
+	<copy todir="${target.jcov.root}" flatten="true" >
+  	  <fileset dir="${support.tools}">
+  		<include name="**/jcoverage*/log4j.properties"/>
       </fileset>
-    </delete>
-    <instrument todir="${target.temp}/jcoverage">
-      <fileset dir="${target.classes}/common" includes="**/*.class"/>
-    </instrument>
-    <instrument todir="${target.temp}/jcoverage">
-      <fileset dir="${target.classes}/jsword" includes="**/*.class"/>
-      <!--
-      <ignore regex="org.apache.log4j.*"/>
-      <fileset dir="${target.classes}/swing" includes="**/*.class"/>
-      <fileset dir="${target.classes}/servlet" includes="**/*.class"/>
+    </copy>
+  </target>
+
+  <!-- JUnit can run w/ or w/o having run jcoverage.
+    == We have it set to run jcoverage first
+    -->
+  <target name="test.unit" description="Run unit tests">
+    <mkdir dir="${target.tested}"/>
+    <echo>JUnit may fail if jdepend.jar is not visible to Ant.
+To make it visible you need to do one of two things depending
+on whether you are running ant in Eclipse or not.
+In Eclipse, add jdepend.jar to Preferences -> Ant -> Runtime -> Global Entries.
+This is not necessary in the most recent version of Eclipse.
+Otherwise, run the junit.antlibs task to copy jars to ANT_HOME/lib</echo>
+    <junit fork="yes"
+      	maxmemory="512M"
+      	haltonfailure="no"
+      	errorProperty="test.failed"
+      	failureProperty="test.failed"
+      	printsummary="on"
+      	showoutput="on">
+	  <!-- Tell it where to store hit counts! -->
+      <sysproperty key="com.jcoverage.rawcoverage.dir" file="${target.jcov.root}"/>
+      <!-- Maybe this is useful??? JCoverage has this in its build.xml file.
+      <sysproperty key="com.jcoverage.instrumentation.interval" value="5"/>
       -->
-    </instrument>
-    <mkdir dir="${target.temp}/junit"/>
-    <echo message="JUnit needs jars in ${ant.lib}. See the antlibs task."/>
-    <junit fork="yes" haltonfailure="no" printsummary="on" showoutput="yes">
-      <test name="CommonAllTests" todir="${target.temp}/junit"/>
-      <test name="JSwordAllTests" todir="${target.temp}/junit"/>
-      <!--
-      <test name="MapAllTests" todir="${target.temp}/junit"/>
-      -->
+      <!-- Test common -->
+      <test name="AllTests" todir="${target.tested}"/>
+      <!-- Test JSword -->
+      <test name="JSwordAllTests" todir="${target.tested}"/>
+      <!-- Output to console -->
       <formatter type="plain" usefile="false"/>
+      <!-- Also output to file in xml format -->
       <formatter type="xml"/>
-      <classpath>
-        <fileset dir="${source.jar}" includes="**/*.jar"/>
-        <fileset dir="${support.tools}/jcoverage104" includes="**/*.jar"/>
-        <pathelement path="${target.temp}/jcoverage"/>
-        <!--
-        <pathelement path="${target.classes}/common"/>
-        <pathelement path="${target.classes}/jsword"/>
-        -->
-        <pathelement path="${target.classes}/servlet"/>
-        <pathelement path="${target.classes}/swing"/>
-        <pathelement path="${target.classes}/osis"/>
-        <pathelement path="${target.classes}/commontest"/>
-        <pathelement path="${target.classes}/jswordtest"/>
-        <pathelement path="${target.classes}/servlettest"/>
-        <pathelement path="${target.classes}/swingtest"/>
-        <pathelement path="${target.classes}/resource"/>
-        <pathelement path="${source.res}"/>
-      </classpath>
+      <!-- Use the classes instrumented by jcoverage -->
+      <classpath location="${target.jcov.classes}"/>
+      <!-- Location of log4j.properties -->
+      <classpath location="${target.jcov.root}"/>
+      <!-- Need to include the test code -->
+      <classpath location="${test.classes.common}"/>
+      <classpath location="${test.classes.jsword}"/>
+      <!-- And the classes that testing needs -->
+      <classpath refid="test.jarpath"/>
+      <!-- Include JCoverage so it the instrumented code can run -->
+      <classpath refid="jcoverage"/>
     </junit>
   </target>
-
-  <target name="testreport" depends="jcoverage" description="Compile test report">
-    <mkdir dir="${target.web}/test"/>
-    <junitreport todir="${target.temp}/junit">
-      <fileset dir="${target.temp}/junit">
+  <target name="test.report.unit" description="Report results of unit tests">
+    <mkdir dir="${target.web.junit}"/>
+    <junitreport todir="${target.tested}">
+      <fileset dir="${target.tested}">
         <include name="TEST-*.xml"/>
       </fileset>
-      <report format="frames" todir="${target.web}/test"/>
+      <report format="frames" todir="${target.web.junit}"/>
     </junitreport>
-    <mkdir dir="${target.web}/jcoverage"/>
-    <report srcdir="${source.java}/common" destdir="${target.web}/jcoverage"/>
-    <!--
-    <report srcdir="${source.java}/jsword" destdir="${target.web}/jcoverage"/>
-    -->
+    <fail message="Tests failed." if="test.failed" />
   </target>
 
-  <target name="antlibs" description="Copy required jars to ant/lib">
+  <target name="test.report.coverage" depends="test.instrument,test.unit" description="Provide coverage report">
+    <!-- JCoverage has a fundamental limitation of getting its source from one
+      == directory tree. For that reason we copy it here and then delete it
+      == when we are done.
+      == Perhaps there is a better way.
+      -->
+    <copy todir="${target.jcov.src}">
+      <mapper type="regexp" from=".*[\\/](org[\\/].*)" to="\1"/>
+      <fileset dir="../common/${source.java}" casesensitive="yes">
+        <patternset refid="java.compile"/>
+      </fileset>
+      <fileset dir="../jsword/${source.java}" casesensitive="yes">
+        <patternset refid="java.compile"/>
+      </fileset>
+    </copy>
+    <!-- Again to get more control, we don't use JCoverage ant task.
+      == Here we need it to provide the location of jcoverage.ser.
+      -->
+    <java fork="yes" classname="com.jcoverage.coverage.reporting.Main">
+      <classpath refid="jcoverage.base.path"/>
+      <!-- Need this only for Log4J.properties -->
+      <classpath location="${target.jcov.root}"/>
+      <arg value="--instrumentation"/>
+      <arg file="${target.jcov.root}/jcoverage.ser"/>
+      <arg value="--output"/>
+      <arg file="${target.web.jcov}"/>
+      <arg value="--source"/>
+      <arg file="${target.jcov.src}"/>
+    </java>
+	<delete failonerror="false">
+      <fileset dir="${target.jcov.src}"/>
+    </delete>
+  </target>
+
+  <target name="junit.antlibs" description="Copy required jars to ant/lib">
     <echo message="copy ${basedir}/${source.jar}/junit381/junit.jar to ${ant.home}/lib"/>
     <copy file="${source.jar}/junit381/junit.jar" todir="${ant.home}/lib"/>
   </target>

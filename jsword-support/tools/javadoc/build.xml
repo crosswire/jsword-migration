@@ -3,6 +3,9 @@
   <target name="javadoc" description="Create JavaDoc">
     <mkdir dir="${target.web}/api"/>
     <javadoc
+        sourcepathref="path.alljava"
+        packagenames="org.crosswire.*,gnu.gpl.*"
+        classpathref="runtime.jarpath"
         stylesheetfile="${source.etc}/javadoc/stylesheet.css"
         destdir="${target.web}/api"
         overview="../jsword/java/jsword/overview.html"
@@ -10,11 +13,10 @@
         author="true"
         use="true"
         splitindex="true"
-        version="true">
-      <footer>Copyright &#168; 2003</footer>
-        <fileset refid="fileset.alljava"/>
-      <classpath>
-      </classpath>
+        version="true"
+        source="1.4"
+        failonerror="false">
+      <footer>Copyright &#168; 2003-2004</footer>
       <link offline="true" href="http://java.sun.com/j2se/1.4/docs/api/" packagelistLoc="${source.etc}/javadoc"/>
     </javadoc>
   </target>

@@ -32,5 +32,5 @@ $ANT_HOME/bin/ant cvsup $PROPERTIES
 # keep the cvsup separate to allow build.xml to be updated
 cd $JSWORD_HOME
 $ANT_HOME/bin/ant cvsup $PROPERTIES
-$ANT_HOME/bin/ant nightly $PROPERTIES
+$ANT_HOME/bin/ant incremental $PROPERTIES
 

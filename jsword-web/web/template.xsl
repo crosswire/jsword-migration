@@ -99,9 +99,9 @@
         <li><a href="api/org/crosswire/common/config/package-summary.html">Config API</a></li>
         <li><a href="api/index.html">JavaDoc</a></li>
         <li><a href="java2html/index.html">Java-Source</a></li>
-        <li><a href="test/index.html">Test-Results</a></li>
+        <li><a href="junit/index.html">Test-Results</a></li>
         <li><a href="jcoverage/index.html">Test-Coverage</a></li>
-        <li><a href="checkstyle/checkstyle_errors.html">CheckStyle</a></li>
+        <li><a href="checkstyle/index.html">CheckStyle</a></li>
         <li><a href="pmd/index.html">PMD Report</a></li>
         <li><a href="findbugs/report.txt">FindBugs Report</a></li>
         <li><a href="jdepend/jdepend-report.html">JDepend Report</a></li>

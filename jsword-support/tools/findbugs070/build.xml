@@ -3,13 +3,14 @@
   <!-- this should be overridden by the parent file -->
   <property name="support.tools" value=".."/>
 
+  <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
+    <classpath>
+      <fileset dir="${support.tools}/findbugs070" includes="**/*.jar"/>
+    </classpath>
+  </taskdef>
+
   <target name="findbugs">
     <mkdir dir="${target.web}/findbugs"/>
-    <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
-      <classpath>
-        <fileset dir="${support.tools}/findbugs070" includes="**/*.jar"/>
-      </classpath>
-    </taskdef>
     <findbugs home="${support.tools}/findbugs070"
         output="text"
         outputFile="${target.web}/findbugs/report.txt"
@@ -22,7 +23,7 @@
       <auxClasspath path="${target.jar}/commons-lang-2.0.jar"/>
       <auxClasspath path="${target.jar}/commons-net-1.1.0.jar"/>
       <auxClasspath path="${target.jar}/jdom.jar"/>
-      <auxClasspath path="${target.jar}/log4j-1.2.7.jar"/>
+      <auxClasspath path="${target.jar}/log4j-1.2.8.jar"/>
       <auxClasspath path="${target.jar}/lucene-1.3-final.jar"/>
       <auxClasspath path="${target.jar}/winlaf-0.4.jar"/>
       <auxClasspath path="${target.jar}/tar.jar"/>

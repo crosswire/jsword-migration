@@ -3,24 +3,21 @@
   <!-- this should be overridden by the parent file -->
   <property name="support.tools" value=".."/>
 
+  <taskdef name="javancss" classname="javancss.JavancssAntTask">
+	<classpath>
+	  <fileset dir="${support.tools}" includes="javancss*/**/*.jar"/>
+	</classpath>
+  </taskdef>
+
   <target name="javancss">
-    <echo message="If this fails with a DTM ID exception you might need to upgrade the Xalan in your JDK"/>
-    <echo message="If this fails you might need to run the antlibs task to copy jars to ant/lib:"/>
-    <taskdef name="javancss" classname="javancss.JavancssAntTask">
-      <classpath>
-        <fileset dir="${support.tools}" includes="javancss*/**/*.jar"/>
-      </classpath>
-    </taskdef>
     <mkdir dir="${target.web}/javancss"/>
     <javancss
-        srcdir="${support.tools}"
-        includes="**/*.java"
+        srcdir=".."
         generateReport="true"
         outputfile="${target.web}/javancss/javancss_metrics.xml"
         format="xml">
       <patternset refid="pattern.alljava"/>
     </javancss>
-    <mkdir dir="${target.web}/javancss"/>
     <style
         in="${target.web}/javancss/javancss_metrics.xml"
         out="${target.web}/javancss/index.html"
