@@ -83,6 +83,11 @@ public class BookChooser extends JPanel
         {
             public void valueChanged(ListSelectionEvent ev)
             {
+                if (ev.getValueIsAdjusting())
+                {
+                    return;
+                }
+
                 selection();
             }
         });

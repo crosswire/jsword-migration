@@ -85,6 +85,11 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
         {
             public void valueChanged(ListSelectionEvent ev)
             {
+                if (ev.getValueIsAdjusting())
+                {
+                    return;
+                }
+
                 newDictionary();
             }
         });

@@ -91,6 +91,11 @@ public class MaintenancePane extends EirPanel
         {
             public void valueChanged(ListSelectionEvent ev)
             {
+                if (ev.getValueIsAdjusting())
+                {
+                    return;
+                }
+
                 updateButtons();
             }
         });

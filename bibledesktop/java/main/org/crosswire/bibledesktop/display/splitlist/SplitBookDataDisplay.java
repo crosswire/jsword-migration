@@ -87,6 +87,11 @@ public class SplitBookDataDisplay implements BookDataDisplay
         {
             public void valueChanged(ListSelectionEvent ev)
             {
+                if (ev.getValueIsAdjusting())
+                {
+                    return;
+                }
+
                 selection();
             }
         });
@@ -296,10 +301,10 @@ public class SplitBookDataDisplay implements BookDataDisplay
                 }
 
                 // if there was a single selection then show the whole chapter
-                if (selected.length == 1)
-                {
-                    selectedKey.blur(5, PassageConstants.RESTRICT_CHAPTER);
-                }
+//                if (selected.length == 1)
+//                {
+//                    selectedKey.blur(5, PassageConstants.RESTRICT_CHAPTER);
+//                }
 
                 local = selectedKey;
             }

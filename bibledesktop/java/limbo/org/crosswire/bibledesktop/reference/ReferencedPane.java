@@ -93,6 +93,11 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
         {
             public void valueChanged(ListSelectionEvent ev)
             {
+                if (ev.getValueIsAdjusting())
+                {
+                    return;
+                }
+
                 newBook();
             }
         });

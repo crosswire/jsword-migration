@@ -96,6 +96,11 @@ public class EditSitePane extends JPanel
         {
             public void valueChanged(ListSelectionEvent ev)
             {
+                if (ev.getValueIsAdjusting())
+                {
+                    return;
+                }
+
                 select();
             }
         });
