@@ -52,6 +52,7 @@ import org.crosswire.common.swing.ExceptionPane;
 import org.crosswire.common.swing.ExtensionFileFilter;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Reporter;
+import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
@@ -148,7 +149,7 @@ public class Mapper extends JFrame
             Document xmlconfig = Project.instance().getDocument("config");
             config.add(xmlconfig);
 
-            Properties prop = Project.instance().getProperties("mapper");
+            Properties prop = ResourceUtil.getProperties("mapper");
             if (prop != null)
             {
                 config.setProperties(prop);
