@@ -66,6 +66,8 @@
   <!-- ignored <import file="${support.tools}/tomcat/build.xml"/> -->
 
   <target name="javadoc" description="Create JavaDoc">
+    <!-- This is not incremental. Empty it so it can remove unused docs. -->
+    <delete dir="${target.web}/api"/>
     <mkdir dir="${target.web}/api"/>
     <javadoc
         sourcepathref="path.alljava"
