@@ -44,7 +44,7 @@ import org.crosswire.jsword.book.search.parse.RetainCommandWord;
 
 /**
  * An advanced search dialog.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -68,7 +68,7 @@ import org.crosswire.jsword.book.search.parse.RetainCommandWord;
  */
 public class AdvancedSearchPane extends JPanel implements DocumentListener
 {
-    /**
+	/**
      * This is the default constructor
      */
     public AdvancedSearchPane()
@@ -346,7 +346,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     }
 
     /**
-     * 
+     *
      */
     public void doRestrictSelect()
     {
@@ -373,7 +373,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     }
 
     /**
-     * 
+     *
      */
     public void updatePreset()
     {
@@ -468,7 +468,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         editingRestrict = true;
         boolean match = false;
         ComboBoxModel model = cboPresets.getModel();
-        String find = PRESET_START + restrict + PRESET_END; 
+        String find = PRESET_START + restrict + PRESET_END;
         for (int i = 0; !match && i < model.getSize(); i++)
         {
             String element = (String) model.getElementAt(i);
@@ -559,12 +559,12 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     /**
      * If escape was pressed we don't want to update the parent
      */
-    protected boolean bailout;
+    protected boolean bailout = false;
 
     /**
      * The ActionFactory holding the actions used by this Component.
      */
-    private ActionFactory actions;
+    private ActionFactory actions = null;
 
     /**
      * The entries in the restrictions preset
@@ -579,7 +579,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     /*
      * GUI Components
      */
-    private PassageSelectionPane dlgSelect;
+    private PassageSelectionPane dlgSelect = null;
     private JLabel lblPhrase = null;
     private JLabel lblIncludes = null;
     private JTextField txtIncludes = null;
@@ -618,4 +618,9 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
      * The log stream
      */
     private static final Logger log = Logger.getLogger(AdvancedSearchPane.class);
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3977303234983245108L;
 }

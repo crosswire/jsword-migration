@@ -33,7 +33,7 @@ import org.crosswire.jsword.util.IndexDownloader;
 /**
  * A panel for use within a SitesPane to display one set of Books that are
  * installed or could be installed.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -109,41 +109,31 @@ public class SitePane extends JPanel
     }
 
     /**
-     * 
+     *
      */
     private void updateDescription()
     {
-        String desc = "#ERROR#"; //$NON-NLS-1$
-
         if (installer == null)
         {
             int bookCount = Books.installed().getBookMetaDatas().size();
-            desc = Msg.INSTALLED_DESC.toString(new Object[]
-            {
-                new Integer(bookCount)
-            });
+            lblDesc.setText(Msg.INSTALLED_DESC.toString(new Object[] { new Integer(bookCount) }));
         }
         else
         {
             int bookCount = installer.getBookMetaDatas().size();
             if (bookCount == 0)
             {
-                desc = Msg.NONE_AVAILABLE_DESC.toString();
+                lblDesc.setText(Msg.NONE_AVAILABLE_DESC.toString());
             }
             else
             {
-                desc = Msg.AVAILABLE_DESC.toString(new Object[]
-                {
-                    new Integer(bookCount)
-                });
+                lblDesc.setText(Msg.AVAILABLE_DESC.toString(new Object[] { new Integer(bookCount) }));
             }
         }
-
-        lblDesc.setText(desc);
     }
 
     /**
-     * 
+     *
      */
     private Component createSplitPane(Component left, Component right)
     {
@@ -159,7 +149,7 @@ public class SitePane extends JPanel
     }
 
     /**
-     * 
+     *
      */
     private Component createAvailablePanel(String labelAcronymn, BookList books)
     {
@@ -178,7 +168,7 @@ public class SitePane extends JPanel
     }
 
     /**
-     * 
+     *
      */
     private Component createSelectedPanel()
     {
@@ -197,7 +187,7 @@ public class SitePane extends JPanel
     }
 
     /**
-     * 
+     *
      */
     private Component createScrolledTree(BookList books)
     {
@@ -222,7 +212,7 @@ public class SitePane extends JPanel
     }
 
     /**
-     * 
+     *
      */
     private Component createPanelActions()
     {
@@ -290,7 +280,7 @@ public class SitePane extends JPanel
                         return;
                     }
 
-                    float size = NetUtil.getSize(installer.toRemoteURL(name)) / 1024;
+                    float size = NetUtil.getSize(installer.toRemoteURL(name)) / 1024.0F;
                     if (JOptionPane.showConfirmDialog(this, Msg.SIZE.toString(new Object[] {name.getName(), new Float(size)}),
                                     Msg.CONFIRMATION_TITLE.toString(),
                                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)

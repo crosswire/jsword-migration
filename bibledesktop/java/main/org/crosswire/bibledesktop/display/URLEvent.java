@@ -28,7 +28,7 @@ import java.util.EventObject;
  */
 public class URLEvent extends EventObject
 {
-    /**
+	/**
      * For when a command has been made
      * @param source The thing that started this off
      */
@@ -58,4 +58,9 @@ public class URLEvent extends EventObject
 
     private String protocol;
     private String url;
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3978710575457187634L;
 }

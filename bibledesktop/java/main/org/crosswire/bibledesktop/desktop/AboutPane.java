@@ -198,7 +198,7 @@ public class AboutPane
 
     private static final String ABOUT_OK = "AboutOK"; //$NON-NLS-1$
 
-    private static boolean advanced;
-    private JDialog dlgMain;
-    private JPanel pnlMain;
+    private static boolean advanced = false;
+    private JDialog dlgMain = null;
+    private JPanel pnlMain = null;
 }

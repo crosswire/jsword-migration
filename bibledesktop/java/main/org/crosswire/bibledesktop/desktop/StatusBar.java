@@ -51,7 +51,7 @@ import org.crosswire.common.progress.swing.JobsProgressBar;
  */
 public class StatusBar extends JComponent implements MouseListener, URLEventListener
 {
-    /**
+	/**
      * Create a new StatusBar
      */
     public StatusBar()
@@ -195,4 +195,9 @@ public class StatusBar extends JComponent implements MouseListener, URLEventList
      * Where the product name goes
      */
     private JLabel lbl_name = new JLabel();
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3546920264718955568L;
 }

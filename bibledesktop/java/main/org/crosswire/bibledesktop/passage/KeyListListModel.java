@@ -31,7 +31,7 @@ import org.crosswire.jsword.passage.Key;
  */
 public class KeyListListModel extends AbstractListModel implements ListModel
 {
-    /**
+	/**
      * Constructor for ListListModel.
      */
     public KeyListListModel(Key keys)
@@ -57,4 +57,9 @@ public class KeyListListModel extends AbstractListModel implements ListModel
     }
 
     private Key keys;
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3546356240990286645L;
 }

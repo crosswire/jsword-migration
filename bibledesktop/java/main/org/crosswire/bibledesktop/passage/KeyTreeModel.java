@@ -30,7 +30,7 @@ import org.crosswire.jsword.passage.Key;
  */
 public class KeyTreeModel extends DefaultTreeModel
 {
-    /**
+	/**
      * Simple ctor
      * @param key The root TreeNode
      */
@@ -62,4 +62,9 @@ public class KeyTreeModel extends DefaultTreeModel
      * The key that this tree is displaying.
      */
     private Key key;
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3977303235050353714L;
 }

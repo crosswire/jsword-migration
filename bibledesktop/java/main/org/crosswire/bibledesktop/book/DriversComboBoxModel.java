@@ -1,4 +1,3 @@
-
 package org.crosswire.bibledesktop.book;
 
 import javax.swing.ComboBoxModel;
@@ -8,7 +7,7 @@ import org.crosswire.jsword.book.BookDriver;
 /**
  * The DriverModels class implements ComboBoxModel by extending the
  * DriverListModel.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -32,15 +31,17 @@ import org.crosswire.jsword.book.BookDriver;
  */
 public class DriversComboBoxModel extends DriversListModel implements ComboBoxModel
 {
-    /**
+	/**
      * Basic Constructor
      */
-    public DriversComboBoxModel(boolean include_ro)
+    public DriversComboBoxModel(boolean includeRo)
     {
-        super(include_ro);
+        super(includeRo);
 
         if (drivers.length > 0)
+        {
             current = drivers[0];
+        }
     }
 
     /* (non-Javadoc)
@@ -73,4 +74,9 @@ public class DriversComboBoxModel extends DriversListModel implements ComboBoxMo
      * The currently selected version
      */
     protected Object current;
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3689068456540910136L;
 }

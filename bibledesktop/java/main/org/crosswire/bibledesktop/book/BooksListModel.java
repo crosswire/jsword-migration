@@ -20,7 +20,7 @@ import org.crosswire.jsword.book.BooksListener;
  * doing that would stop me calling fireInterval*() in AbstractListModel
  * because that is a protected method and the inner class is neither
  * in the same package or a sub class.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -144,7 +144,7 @@ public class BooksListModel extends AbstractListModel
     /**
      * Setup the data-stores of the current Bibles and drivers
      */
-    protected synchronized void cacheData()
+    protected final synchronized void cacheData()
     {
         bmds = new ArrayList();
         bmds.addAll(books.getBookMetaDatas(filter));

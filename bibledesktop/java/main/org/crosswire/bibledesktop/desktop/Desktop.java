@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -67,7 +66,6 @@ import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.util.ConverterFactory;
 import org.crosswire.jsword.util.Project;
 import org.jdom.Document;
-import org.jdom.JDOMException;
 
 /**
  * A container for various tools, particularly the BibleGenerator and
@@ -103,7 +101,7 @@ import org.jdom.JDOMException;
  */
 public class Desktop extends JFrame implements URLEventListener, ViewEventListener, ViewGenerator
 {
-    /**
+	/**
      * Central start point.
      * @param args The command line arguments
      */
@@ -534,7 +532,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     /**
      * Load the config.xml file
      */
-    public void generateConfig()
+    public final void generateConfig()
     {
         fillChoiceFactory();
 
@@ -544,17 +542,12 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         {
             xmlconfig = XMLUtil.getDocument(CONFIG_KEY);
         }
-        catch (JDOMException e)
+        catch (Exception ex)
         {
             // Something went wrong before we've managed to get on our feet.
             // so we want the best possible shot at working out what failed.
-            e.printStackTrace();
-            ExceptionPane.showExceptionDialog(null, e);
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            ExceptionPane.showExceptionDialog(null, e);
+            ex.printStackTrace();
+            ExceptionPane.showExceptionDialog(null, ex);
         }
 
         Locale defaultLocale = Locale.getDefault();
@@ -566,15 +559,10 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         {
             config.setProperties(ResourceUtil.getProperties(DESKTOP_KEY));
         }
-        catch (MalformedURLException e1)
+        catch (Exception ex)
         {
-            e1.printStackTrace();
-            ExceptionPane.showExceptionDialog(null, e1);
-        }
-        catch (IOException e1)
-        {
-            e1.printStackTrace();
-            ExceptionPane.showExceptionDialog(null, e1);
+            ex.printStackTrace();
+            ExceptionPane.showExceptionDialog(null, ex);
         }
 
         config.localToApplication(true);
@@ -653,7 +641,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     /**
      * Setup the book choices
      */
-    protected void refreshBooks()
+    protected final void refreshBooks()
     {
         // Create the array of Bibles
         String[] bnames = getFullNameArray(BookFilters.getBibles());
@@ -767,4 +755,9 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     private StatusBar barStatus;
     private DictionaryPane reference;
     private JSplitPane sptBooks;
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3977014029116191800L;
 }

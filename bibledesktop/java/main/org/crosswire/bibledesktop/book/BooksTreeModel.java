@@ -22,12 +22,12 @@ import org.crosswire.jsword.book.BooksListener;
  * A TreeModel that displays the installed Books.
  * The children of the root node are "Bibles", "Commentaries" and
  * "Dictionaries". the children of those nodes are the Books themselves.
- * 
+ *
  * <p>I briefly considered making this mode generic by having a set of named
  * BookFilters, however whilst more generic I'm not sure how often this would
  * be used, and it stops me extending this class to deal with uninstalled
  * Books.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -298,7 +298,7 @@ public class BooksTreeModel implements TreeModel
     /**
      * Regenerate the cache of bibles, commentaries and dictionaries
      */
-    protected void cacheBooks()
+    protected final void cacheBooks()
     {
         bibles = new ArrayList();
         bibles.addAll(books.getBookMetaDatas(BookFilters.getBibles()));

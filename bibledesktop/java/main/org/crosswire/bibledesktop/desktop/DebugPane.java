@@ -54,7 +54,7 @@ import org.crosswire.jsword.util.Project;
  */
 public class DebugPane extends JPanel
 {
-    /**
+	/**
      * Simple ctor
      */
     public DebugPane(Desktop desktop)
@@ -145,13 +145,13 @@ public class DebugPane extends JPanel
     {
         StringBuffer reply = new StringBuffer();
 
-        reply.append("\n" + Msg.DEBUG_VIEWS.toString()); //$NON-NLS-1$
+        reply.append('\n' + Msg.DEBUG_VIEWS.toString());
         int i = 0;
         Iterator it = desktop.getViews().iterator();
         while (it.hasNext())
         {
             BibleViewPane view = (BibleViewPane) it.next();
-            reply.append((i++) + ": " + view.getTitle() + " " + view.toString()); //$NON-NLS-1$ //$NON-NLS-2$
+            reply.append((i++) + ": " + view.getTitle() + ' ' + view.toString()); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         return reply.toString();
@@ -254,16 +254,16 @@ public class DebugPane extends JPanel
     private JTextPane txtResults = new JTextPane();
 
     /**
-     * SERIALUID(dms): A placeholder for the ultimate version id.
+     * Serialization ID
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3257853185987983152L;
 
     /**
      * Simpler method name display
      */
     private static final class CustomListCellRenderer extends DefaultListCellRenderer
     {
-        /* (non-Javadoc)
+		/* (non-Javadoc)
          * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
          */
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
@@ -275,5 +275,10 @@ public class DebugPane extends JPanel
             }
             return this;
         }
+
+        /**
+         * Serialization ID
+         */
+        private static final long serialVersionUID = 3257853185987983152L;
     }
 }

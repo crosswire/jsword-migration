@@ -11,7 +11,7 @@ import org.crosswire.jsword.passage.Verse;
 
 /**
  * PassageTableModel.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -127,19 +127,19 @@ public class ChapterTreeNode extends BookTreeNode
     {
         try
         {
-            String Passage_num = Integer.toString(chapter);
+            String chapNum = Integer.toString(chapter);
             if (ref == null)
             {
-                return Passage_num;
+                return chapNum;
             }
 
             int verses = ref.versesInPassage(book, chapter);
             if (verses == 0)
             {
-                return Passage_num;
+                return chapNum;
             }
 
-            return Passage_num + " (" + verses + ")";  //$NON-NLS-1$ //$NON-NLS-2$
+            return chapNum + " (" + verses + ')';  //$NON-NLS-1$
         }
         catch (NoSuchVerseException ex)
         {

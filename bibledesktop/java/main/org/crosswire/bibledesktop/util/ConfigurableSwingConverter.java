@@ -18,7 +18,7 @@ import org.crosswire.common.xml.TransformingSAXEventProvider;
 
 /**
  * Turn XML from a Bible into HTML according to a Display style.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -114,8 +114,8 @@ public class ConfigurableSwingConverter implements Converter
     public static Font toFont()
     {
         String[] fontSpec = StringUtil.split(font, ","); //$NON-NLS-1$
-        int fontStyle = new Integer(fontSpec[1]).intValue();
-        int fontSize = new Integer(fontSpec[2]).intValue();
+        int fontStyle = Integer.parseInt(fontSpec[1]);
+        int fontSize = Integer.parseInt(fontSpec[2]);
         Font newFont = new Font(fontSpec[0], fontStyle, fontSize);
         return newFont;
     }

@@ -2,7 +2,8 @@ package org.crosswire.bibledesktop.passage;
 
 import java.awt.Component;
 import java.io.Serializable;
-import java.util.Hashtable;
+import java.util.Map;
+import java.util.HashMap;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -19,7 +20,7 @@ import org.crosswire.jsword.passage.VerseRange;
 
 /**
  * Renders a Passage in a JList.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -127,7 +128,7 @@ public class PassageListCellRenderer implements ListCellRenderer, Serializable
     /**
      * A cache of Bible texts
      */
-    private Hashtable hash = new Hashtable();
+    private Map hash = new HashMap();
 
     /**
      * SERIALUID(dms): A placeholder for the ultimate version id.

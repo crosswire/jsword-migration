@@ -115,7 +115,7 @@ public class SitesPane extends JPanel
     /**
      * Re-create the list of installers
      */
-    protected void addAllInstallers()
+    protected final void addAllInstallers()
     {
         // Now add panels for book installation sites
         for (Iterator it = installers.keySet().iterator(); it.hasNext(); )

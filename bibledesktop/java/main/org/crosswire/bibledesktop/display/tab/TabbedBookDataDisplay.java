@@ -27,7 +27,7 @@ import org.crosswire.jsword.passage.Passage;
  * <p>At some stage we should convert this code to remove Passage so it
  * will work with all Books and not just Bibles. Code is included
  * (commented out) on how this could be done.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -374,27 +374,27 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * A list of all the HyperlinkListeners
      */
-    private transient List hyperlis;
+    private transient List hyperlis = null;
 
     /**
      * The passage that we are displaying (in one or more tabs)
      */
-    private Passage key;
+    private Passage key = null;
 
     /**
      * The verses that we have not created tabs for yet
      */
-    private Passage waiting;
+    private Passage waiting = null;
 
     /**
      * The version used for display
      */
-    private Book book;
+    private Book book = null;
 
     /**
      * Are we using tabs?
      */
-    private boolean tabs;
+    private boolean tabs = false;
 
     /**
      * If we are using tabs, this is the main view
@@ -404,7 +404,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * If we are not using tabs, this is the main view
      */
-    private BookDataDisplay pnlView;
+    private BookDataDisplay pnlView = null;
 
     /**
      * A list of all the InnerDisplayPanes so we can control listeners
@@ -414,7 +414,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * Pointer to whichever of the above is currently in use
      */
-    private Component center;
+    private Component center = null;
 
     /**
      * Blank thing for the "More..." button

@@ -10,7 +10,7 @@ import org.crosswire.jsword.passage.Verse;
 
 /**
  * A ComboBoxModel for selecting book/chapter/verse.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -272,12 +272,12 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
     /**
      * What is currently selected?
      */
-    private Object selected;
+    private Object selected = null;
 
     /**
      * Are we a book, chapter or verse selector
      */
-    protected int level;
+    protected int level = 0;
 
     /**
      * SERIALUID(dms): A placeholder for the ultimate version id.

@@ -38,7 +38,7 @@ import org.crosswire.jsword.book.install.InstallerListener;
  */
 public class InstallManagerComboBoxModel extends AbstractListModel implements ComboBoxModel
 {
-    /**
+	/**
      * Simple ctor
      */
     public InstallManagerComboBoxModel(InstallManager imanager)
@@ -78,7 +78,7 @@ public class InstallManagerComboBoxModel extends AbstractListModel implements Co
     /* (non-Javadoc)
      * @see javax.swing.ListModel#getElementAt(int)
      */
-    public Object getElementAt(int index)
+    public final Object getElementAt(int index)
     {
         return names.get(index);
     }
@@ -108,7 +108,7 @@ public class InstallManagerComboBoxModel extends AbstractListModel implements Co
     /**
      * Simple way to avoid eclipse private/protected warning
      */
-    protected void update(InstallerEvent ev)
+    protected final void update(InstallerEvent ev)
     {
         int oldmax = names.size();
 
@@ -136,4 +136,9 @@ public class InstallManagerComboBoxModel extends AbstractListModel implements Co
      * The install manager that we are representing
      */
     private InstallManager imanager;
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3256725082729756980L;
 }

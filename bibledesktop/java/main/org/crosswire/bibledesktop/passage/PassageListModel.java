@@ -11,7 +11,7 @@ import org.crosswire.jsword.passage.RestrictionType;
 /**
  * The PassageListModel class gives access to a Passage via a
  * ListModel.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -78,7 +78,7 @@ public class PassageListModel extends AbstractListModel implements PassageListen
      * @param mode The new operation mode
      * @exception IllegalArgumentException If the mode is illegal
      */
-    public void setMode(PassageListType mode)
+    public final void setMode(PassageListType mode)
     {
         this.mode = mode;
     }
@@ -190,7 +190,7 @@ public class PassageListModel extends AbstractListModel implements PassageListen
     /**
      * Accessor for the current passage
      */
-    public void setPassage(Passage newRef)
+    public final void setPassage(Passage newRef)
     {
         fireIntervalRemoved(this, 0, size);
 

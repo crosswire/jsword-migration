@@ -1,4 +1,3 @@
-
 package org.crosswire.bibledesktop.passage;
 
 import javax.swing.tree.DefaultTreeModel;
@@ -32,13 +31,18 @@ import javax.swing.tree.DefaultTreeModel;
  */
 public class WholeBibleTreeModel extends DefaultTreeModel
 {
-    /**
-    * Basic constructor.
-    * At some stage when editing this and PassageTreeNode we should be able to
-    * remove the JTree param.
-    */
+	/**
+     * Basic constructor.
+     * At some stage when editing this and PassageTreeNode we should be able to
+     * remove the JTree param.
+     */
     public WholeBibleTreeModel()
     {
         super(WholeBibleTreeNode.getRootNode());
     }
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3688785881985004853L;
 }

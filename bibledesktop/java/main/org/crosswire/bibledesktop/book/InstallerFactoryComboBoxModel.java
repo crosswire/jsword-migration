@@ -36,7 +36,7 @@ import org.crosswire.jsword.book.install.InstallManager;
  */
 public class InstallerFactoryComboBoxModel extends AbstractListModel implements ComboBoxModel
 {
-    /**
+	/**
      * Simple ctor
      */
     public InstallerFactoryComboBoxModel(InstallManager imanager)
@@ -88,4 +88,9 @@ public class InstallerFactoryComboBoxModel extends AbstractListModel implements 
      * The currently selected object
      */
     private Object selection;
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3258134643734885174L;
 }

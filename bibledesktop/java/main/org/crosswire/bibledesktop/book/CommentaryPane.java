@@ -50,7 +50,7 @@ import org.crosswire.jsword.passage.Verse;
  */
 public class CommentaryPane extends JPanel implements BookDataDisplay
 {
-    /**
+	/**
      * Simple constructor that uses all the Books
      */
     public CommentaryPane()
@@ -237,4 +237,9 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
     private JComboBox cboVerse = new JComboBox();
     private JPanel pnlSelect = new JPanel();
     private JPanel pnlTop = new JPanel();
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3258411737760804915L;
 }

@@ -31,7 +31,7 @@ import org.crosswire.jsword.passage.Key;
  */
 public class DisplaySelectEvent extends EventObject
 {
-    /**
+	/**
      * For when a command has been made
      * @param source The thing that started this off
      * @param key The selected Key
@@ -72,4 +72,9 @@ public class DisplaySelectEvent extends EventObject
      * The new Book
      */
     private Book book;
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3689068456540910136L;
 }

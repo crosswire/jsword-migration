@@ -11,7 +11,7 @@ import org.crosswire.jsword.passage.Verse;
 
 /**
  * PassageTableModel.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -59,8 +59,8 @@ public class BookTreeNode extends BibleTreeNode
             {
                 kids = new ChapterTreeNode[ref.chaptersInPassage(book)];
 
-                int current_Passage = 0;
-                int Passage_count = 0;
+                int currentRef = 0;
+                int count = 0;
 
                 Iterator it = ref.iterator();
                 while (it.hasNext())
@@ -68,13 +68,13 @@ public class BookTreeNode extends BibleTreeNode
                     Verse verse = (Verse) it.next();
 
                     if ((book == 0 || verse.getBook() == book)
-                        && current_Passage != verse.getChapter())
+                        && currentRef != verse.getChapter())
                     {
-                        current_Passage = verse.getChapter();
+                        currentRef = verse.getChapter();
 
-                        ChapterTreeNode node = new ChapterTreeNode(this, book, current_Passage);
+                        ChapterTreeNode node = new ChapterTreeNode(this, book, currentRef);
                         node.setPassage(ref, true);
-                        kids[Passage_count++] = node;
+                        kids[count++] = node;
                     }
                 }
             }
@@ -136,13 +136,19 @@ public class BookTreeNode extends BibleTreeNode
     {
         try
         {
-            String book_name = BibleInfo.getLongBookName(book);
-            if (ref == null) return book_name;
+            String bookName = BibleInfo.getLongBookName(book);
+            if (ref == null)
+            {
+                return bookName;
+            }
 
             int chapters = ref.chaptersInPassage(book);
-            if (chapters == 0) return book_name;
+            if (chapters == 0)
+            {
+                return bookName;
+            }
 
-            return book_name + " (" + chapters + ")";  //$NON-NLS-1$ //$NON-NLS-2$
+            return bookName + " (" + chapters + ')';  //$NON-NLS-1$ //$NON-NLS-2$
         }
         catch (NoSuchVerseException ex)
         {
@@ -159,7 +165,9 @@ public class BookTreeNode extends BibleTreeNode
         return book;
     }
 
-    /** The Book that this node referrs to */
+    /**
+     * The Book that this node referrs to
+     */
     protected int book;
 
     /** The base of this tree */

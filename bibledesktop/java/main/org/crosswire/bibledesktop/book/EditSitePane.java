@@ -45,7 +45,7 @@ import org.crosswire.jsword.book.install.InstallerFactory;
 
 /**
  * An editor for the list of available update sites.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -185,7 +185,7 @@ public class EditSitePane extends JPanel
         JSplitPane sptMain = new FixedSplitPane();
         sptMain.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         // Make resizing affect the right only
-        sptMain.setResizeWeight(0);
+        sptMain.setResizeWeight(0.0D);
         sptMain.setLeftComponent(pnlSite);
         sptMain.setRightComponent(pnlMain);
 
@@ -287,7 +287,7 @@ public class EditSitePane extends JPanel
     /**
      * Someone has picked a new installer
      */
-    protected void select()
+    protected final void select()
     {
         String name = (String) lstSite.getSelectedValue();
         if (name == null)

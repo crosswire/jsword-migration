@@ -44,7 +44,7 @@ import org.crosswire.jsword.passage.Key;
  */
 public class SplitBookDataDisplay extends JPanel
 {
-    /**
+	/**
      * Initialize the SplitBookDataDisplay
      */
     public SplitBookDataDisplay(KeySidebar sidebar, BookDataDisplay child)
@@ -240,4 +240,9 @@ public class SplitBookDataDisplay extends JPanel
     private KeySidebar sidebar;
     private JSplitPane split;
     private BookDataDisplay child;
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3257283643176202806L;
 }

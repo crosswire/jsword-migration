@@ -8,7 +8,7 @@ import org.crosswire.jsword.passage.Passage;
 
 /**
  * PassageTableModel.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -35,9 +35,9 @@ public class VerseTreeNode extends ChapterTreeNode
     /**
      * This constructor is for when we are really a BookTreeNode
      */
-    protected VerseTreeNode(TreeNode parent, int book, int Passage, int verse) throws NoSuchVerseException
+    protected VerseTreeNode(TreeNode parent, int book, int passage, int verse) throws NoSuchVerseException
     {
-        super(parent, book, Passage);
+        super(parent, book, passage);
         this.verse = verse;
     }
 
@@ -91,7 +91,9 @@ public class VerseTreeNode extends ChapterTreeNode
         return verse;
     }
 
-    /** The Verse that this node referrs to */
+    /**
+     * The Verse that this node referrs to
+     */
     protected int verse;
 }
 

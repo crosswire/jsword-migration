@@ -18,7 +18,7 @@ import org.crosswire.jsword.book.BookType;
  * A custom list view that paints icons alongside the words.
  * This was a simple modification of DefaultListCellRenderer however something
  * has made us implement ListCellRenderer directory and I'm not sure what.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -42,7 +42,7 @@ import org.crosswire.jsword.book.BookType;
  */
 public class BookListCellRenderer extends JLabel implements ListCellRenderer
 {
-    /**
+	/**
      * Constructs a default renderer object for an item in a list.
      */
     public BookListCellRenderer()
@@ -148,10 +148,15 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
     /**
      * border if we do not have focus
      */
-    private static Border noFocus;
+    private static Border noFocus = null;
 
     /**
      * Make sure that book names are not too wide
      */
     public static final String PROTOTYPE_BOOK_NAME = "012345678901234567890123456789"; //$NON-NLS-1$
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3978138859576308017L;
 }

@@ -12,7 +12,7 @@ import org.crosswire.jsword.passage.Verse;
 
 /**
  * BibleTreeNode.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -57,19 +57,19 @@ public class BibleTreeNode implements TreeNode
             {
                 kids = new BookTreeNode[ref.booksInPassage()];
 
-                int current_book = 0;
-                int book_count = 0;
+                int currentBook = 0;
+                int bookCount = 0;
 
                 Iterator it = ref.iterator();
                 while (it.hasNext())
                 {
                     Verse verse = (Verse) it.next();
-                    if (current_book != verse.getBook())
+                    if (currentBook != verse.getBook())
                     {
-                        current_book = verse.getBook();
-                        BookTreeNode node = new BookTreeNode(this, current_book);
+                        currentBook = verse.getBook();
+                        BookTreeNode node = new BookTreeNode(this, currentBook);
                         node.setPassage(ref, true);
-                        kids[book_count++] = node;
+                        kids[bookCount++] = node;
                     }
                 }
             }

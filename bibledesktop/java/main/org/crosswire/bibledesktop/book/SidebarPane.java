@@ -10,7 +10,7 @@ import org.crosswire.common.swing.FixedSplitPane;
 
 /**
  * SidebarPane builds a panel containing a set of books in tabbed dialogs.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -34,25 +34,25 @@ import org.crosswire.common.swing.FixedSplitPane;
  */
 public class SidebarPane extends JPanel
 {
-    /**
+	/**
      * Simple ctor
      */
     public SidebarPane()
     {
-        jbInit();
+        init();
     }
 
     /**
      * GUI initializer.
      */
-    private void jbInit()
+    private void init()
     {
         split.setOrientation(JSplitPane.VERTICAL_SPLIT);
         split.setDividerLocation(0.3D);
         split.setDividerSize(7);
         split.setBorder(null);
         // Make resizing affect the right only
-        split.setResizeWeight(0);
+        split.setResizeWeight(0.0);
         split.setTopComponent(comments);
         split.setBottomComponent(dicts);
 
@@ -97,4 +97,9 @@ public class SidebarPane extends JPanel
     private CommentaryPane comments = new CommentaryPane();
     private JSplitPane split = new FixedSplitPane();
     private DictionaryPane dicts = new DictionaryPane();
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3256727294637521206L;
 }

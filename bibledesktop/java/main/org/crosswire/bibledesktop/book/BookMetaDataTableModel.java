@@ -5,7 +5,7 @@ import org.crosswire.jsword.book.BookMetaData;
 
 /**
  * A TableModel that displays the data in a BookMetaData object.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -29,7 +29,7 @@ import org.crosswire.jsword.book.BookMetaData;
  */
 public class BookMetaDataTableModel extends MapTableModel
 {
-    /**
+	/**
      * Simple ctor
      */
     public BookMetaDataTableModel()
@@ -56,7 +56,7 @@ public class BookMetaDataTableModel extends MapTableModel
     /**
      * @param bmd The BookMetaData to set.
      */
-    public void setBookMetaData(BookMetaData bmd)
+    public final void setBookMetaData(BookMetaData bmd)
     {
         if (bmd != this.bmd)
         {
@@ -77,4 +77,9 @@ public class BookMetaDataTableModel extends MapTableModel
      * The meta data that we are displaying
      */
     private BookMetaData bmd;
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3257566222043460664L;
 }

@@ -33,7 +33,7 @@ import org.crosswire.common.swing.GuiUtil;
  * ... // init code
  * s.close();
  * </pre>
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -57,7 +57,7 @@ import org.crosswire.common.swing.GuiUtil;
  */
 public class Splash extends JWindow
 {
-    /**
+	/**
      * Create a splash window
      */
     public Splash()
@@ -103,7 +103,7 @@ public class Splash extends JWindow
         lblInfo.setBackground(Color.BLACK);
         //lblInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
         lblInfo.setHorizontalAlignment(SwingConstants.RIGHT);
-        lblInfo.setText(Msg.getVersionInfo() + " "); //$NON-NLS-1$
+        lblInfo.setText(Msg.getVersionInfo() + ' ');
         lblInfo.setOpaque(true);
 
         JobsProgressBar pnlJobs = new JobsProgressBar(false);
@@ -153,6 +153,11 @@ public class Splash extends JWindow
     private CustomWorkListener listener = new CustomWorkListener();
 
     private static final String SPLASH_FONT = "SanSerif"; //$NON-NLS-1$
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3258133565731256119L;
 
     /**
      * Pack the frame if we get new jobs that could shunt things around

@@ -1,4 +1,3 @@
-
 package org.crosswire.bibledesktop.passage;
 
 import javax.swing.JTree;
@@ -35,7 +34,7 @@ import org.crosswire.jsword.passage.Passage;
  */
 public class PassageTreeModel extends DefaultTreeModel
 {
-    /**
+	/**
      * Basic constructor.
      * At some stage when editing this and PassageTreeNode we should be able to
      * remove the JTree param.
@@ -44,4 +43,9 @@ public class PassageTreeModel extends DefaultTreeModel
     {
         super(new PassageTreeNode(ref, tree));
     }
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3546081345886434357L;
 }

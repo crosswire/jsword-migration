@@ -17,10 +17,10 @@ import org.crosswire.jsword.book.Books;
 
 /**
  * A ListModel that shows the regestered BookDrivers.
- * 
+ *
  * <p>DriversListModel can be set to read-only mode where it will display only
  * the BookDrivers that can receive new Book data.</p>
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -44,12 +44,12 @@ import org.crosswire.jsword.book.Books;
  */
 public class DriversListModel extends AbstractListModel
 {
-    /**
+	/**
      * Basic constructor
      */
-    public DriversListModel(boolean include_ro)
+    public DriversListModel(boolean includeRo)
     {
-        if (include_ro)
+        if (includeRo)
         {
             drivers = Books.installed().getDrivers();
         }
@@ -144,6 +144,11 @@ public class DriversListModel extends AbstractListModel
     protected static final Border NO_FOCUS_BORDER = BorderFactory.createEmptyBorder(1, 1, 1, 1);
 
     /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3689068456540910136L;
+
+    /**
      * Create a BookListCellRenderer
      */
     public static ListCellRenderer getListCellRenderer()
@@ -157,7 +162,7 @@ public class DriversListModel extends AbstractListModel
      */
     public static class BibleListCellRenderer extends JLabel implements ListCellRenderer
     {
-        /**
+		/**
          * Constructs a default renderer object for an item in a list.
          */
         public BibleListCellRenderer()
@@ -197,5 +202,10 @@ public class DriversListModel extends AbstractListModel
 
             return this;
         }
+
+        /**
+         * Serialization ID
+         */
+        private static final long serialVersionUID = 3256722892245971512L;
     }
 }

@@ -48,7 +48,7 @@ import org.crosswire.jsword.passage.VerseRange;
 
 /**
  * A JPanel (or dialog) that presents a interactive GUI way to select passages.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -108,7 +108,7 @@ public class PassageSelectionPane extends JPanel
     }
 
     /**
-     * 
+     *
      */
     private Component createScrolledTree(JLabel label)
     {
@@ -130,7 +130,7 @@ public class PassageSelectionPane extends JPanel
     }
 
     /**
-     * 
+     *
      */
     private Component createScrolledList(JLabel label)
     {
@@ -149,7 +149,7 @@ public class PassageSelectionPane extends JPanel
     }
 
     /**
-     * 
+     *
      */
     private Component createDisplayPanel()
     {
@@ -167,7 +167,7 @@ public class PassageSelectionPane extends JPanel
     }
 
     /**
-     * 
+     *
      */
     private Component createMessageLabel()
     {
@@ -204,10 +204,10 @@ public class PassageSelectionPane extends JPanel
 
         changing = true;
         String refstr = txtDisplay.getText();
-        Passage temp = null;
+
         try
         {
-            temp = (Passage) keyf.getKey(refstr);
+            Passage temp = (Passage) keyf.getKey(refstr);
             ref.clear();
             ref.addAll(temp);
 
@@ -398,17 +398,17 @@ public class PassageSelectionPane extends JPanel
     /**
      * If escape was pressed we don't want to update the parent
      */
-    protected boolean bailout;
+    protected boolean bailout = false;
 
     /**
      * Prevent us getting in an event cascade loop
      */
-    private boolean changing;
+    private boolean changing = false;
 
     /**
      * The passage we are editing
      */
-    private Passage ref;
+    private Passage ref = null;
 
     /**
      * The ActionFactory holding the actions used by this Component.
@@ -418,13 +418,13 @@ public class PassageSelectionPane extends JPanel
     /*
      * GUI Components
      */
-    private Icon icoGood;
-    private Icon icoBad;
-    private JTree treAll;
-    private JList lstSel;
-    private JTextField txtDisplay;
-    private JLabel lblMessage;
-    protected JDialog dlgMain;
+    private Icon icoGood = null;
+    private Icon icoBad = null;
+    private JTree treAll = null;
+    private JList lstSel = null;
+    private JTextField txtDisplay = null;
+    private JLabel lblMessage = null;
+    protected JDialog dlgMain = null;
 
     /**
      * SERIALUID(dms): A placeholder for the ultimate version id.
