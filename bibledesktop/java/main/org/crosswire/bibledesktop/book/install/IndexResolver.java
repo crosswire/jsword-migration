@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.crosswire.common.util.Logger;
-import org.crosswire.jsword.book.BookMetaData;
+import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.install.InstallManager;
 import org.crosswire.jsword.book.install.Installer;
 import org.crosswire.jsword.book.search.IndexManagerFactory;
@@ -65,7 +65,7 @@ public class IndexResolver
      * @param parent
      *
      */
-    public static void scheduleIndex(BookMetaData bmd, Component parent)
+    public static void scheduleIndex(Book book, Component parent)
     {
         String title = Msg.HOW_MESSAGE_TITLE.toString();
         Msg msg = Msg.HOW_MESSAGE;
@@ -79,7 +79,7 @@ public class IndexResolver
                 {
                     try
                     {
-                        IndexDownloader.downloadIndex(bmd, installer);
+                        IndexDownloader.downloadIndex(book, installer);
                     }
                     catch (Exception ex)
                     {
@@ -92,14 +92,14 @@ public class IndexResolver
 
                         if (yn == JOptionPane.YES_OPTION)
                         {
-                            IndexManagerFactory.getIndexManager().scheduleIndexCreation(bmd.getBook());
+                            IndexManagerFactory.getIndexManager().scheduleIndexCreation(book);
                         }
                     }
                 }
                 break;
 
             case 1: // generate
-                IndexManagerFactory.getIndexManager().scheduleIndexCreation(bmd.getBook());
+                IndexManagerFactory.getIndexManager().scheduleIndexCreation(book);
                 break;
 
             default: // cancel

@@ -37,7 +37,6 @@ import org.crosswire.common.swing.QuickHelpDialog;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
-import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.IndexStatus;
 import org.crosswire.jsword.book.search.parse.IndexSearcher;
 import org.crosswire.jsword.book.search.parse.PhraseParamWord;
@@ -94,10 +93,10 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         // search() and version() rely on this returning only Bibles
         mdlBible = new BooksComboBoxModel(BookFilters.getBibles());
         JComboBox cboBible = new JComboBox(mdlBible);
-        selected = mdlBible.getSelectedBookMetaData();
+        selected = mdlBible.getSelectedBook();
         if (selected != null)
         {
-            cboBible.setToolTipText(selected.toString());
+            cboBible.setToolTipText(selected.getBookMetaData().toString());
         }
         else
         {
@@ -204,8 +203,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     public Book getBook()
     {
-        BookMetaData bmd = mdlBible.getSelectedBookMetaData();
-        return bmd != null ? bmd.getBook() : null;
+        return mdlBible.getSelectedBook();
     }
 
     /**
@@ -272,8 +270,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     public void doSearchAction()
     {
-        BookMetaData bmd = mdlBible.getSelectedBookMetaData();
-        if (bmd == null)
+        Book book = mdlBible.getSelectedBook();
+        if (book == null)
         {
             noBookInstalled();
             return;
@@ -282,8 +280,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         try
         {
             String param = txtSearch.getText();
-            Book book = bmd.getBook();
-
+ 
             if (chkMatch.isSelected())
             {
                 String quote = IndexSearcher.getPreferredSyntax(PhraseParamWord.class);
@@ -361,8 +358,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     private void updateDisplay()
     {
-        BookMetaData bmd = mdlBible.getSelectedBookMetaData();
-        if (bmd == null)
+        Book book = mdlBible.getSelectedBook();
+        if (book == null)
         {
             noBookInstalled();
             return;
@@ -370,7 +367,6 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
         try
         {
-            Book book = bmd.getBook();
             Key key = book.getKey(txtKey.getText());
 
             fireCommandMade(new DisplaySelectEvent(this, key, book));
@@ -420,12 +416,12 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     protected void changeVersion()
     {
-        BookMetaData newSelected = mdlBible.getSelectedBookMetaData();
+        Book newSelected = mdlBible.getSelectedBook();
 
         if (selected != null && selected != newSelected)
         {
-            selected.removePropertyChangeListener(pcl);
-            newSelected.addPropertyChangeListener(pcl);
+            selected.getBookMetaData().removePropertyChangeListener(pcl);
+            newSelected.getBookMetaData().addPropertyChangeListener(pcl);
         }
 
         selected = newSelected;
@@ -440,10 +436,9 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
         try
         {
-            Book book = selected.getBook();
-            Key key = book.getKey(txtKey.getText());
+            Key key = selected.getKey(txtKey.getText());
 
-            fireVersionChanged(new DisplaySelectEvent(this, key, book));
+            fireVersionChanged(new DisplaySelectEvent(this, key, selected));
         }
         catch (Exception ex)
         {
@@ -477,8 +472,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     protected void enableComponents()
     {
         boolean readable = selected != null;
-        boolean searchable = readable && selected.getIndexStatus().equals(IndexStatus.DONE);
-        boolean indexable = readable && selected.getIndexStatus().equals(IndexStatus.UNDONE);
+        boolean searchable = readable && selected.getBookMetaData().getIndexStatus().equals(IndexStatus.DONE);
+        boolean indexable = readable && selected.getBookMetaData().getIndexStatus().equals(IndexStatus.UNDONE);
 
         txtSearch.setEnabled(searchable);
         txtSearch.setBackground(searchable ? SystemColor.text : SystemColor.control);
@@ -613,7 +608,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
     private ActionFactory actions;
 
-    private BookMetaData selected;
+    private Book selected;
 
     /*
      * GUI Components

@@ -5,7 +5,7 @@ import java.util.Set;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import org.crosswire.jsword.book.BookMetaDataSet;
+import org.crosswire.jsword.book.BookSet;
 
 /**
  * A Node for a book in a tree. It may be a property of a BookMetaData
@@ -35,7 +35,7 @@ import org.crosswire.jsword.book.BookMetaDataSet;
 public class BookNode extends DefaultMutableTreeNode
 {
 
-    public BookNode(Object node, BookMetaDataSet books, Object [] grouping, int level)
+    public BookNode(Object node, BookSet books, Object [] grouping, int level)
     {
         setUserObject(node);
         if (level < grouping.length)
@@ -46,7 +46,7 @@ public class BookNode extends DefaultMutableTreeNode
             while (iter.hasNext())
             {
                 String value = iter.next().toString();
-                BookMetaDataSet subBooks = books.filter(key, value);
+                BookSet subBooks = books.filter(key, value);
                 add(new BookNode(value, subBooks, grouping, level + 1));
             }
         }

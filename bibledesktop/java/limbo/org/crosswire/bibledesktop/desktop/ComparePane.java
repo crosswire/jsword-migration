@@ -23,7 +23,6 @@ import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
-import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.basic.Verifier;
 import org.crosswire.jsword.passage.Key;
 
@@ -135,10 +134,10 @@ public class ComparePane extends EirPanel
      */
     protected void compare()
     {
-        BookMetaData bmd1 = mdlBibles1.getSelectedBookMetaData();
-        BookMetaData bmd2 = mdlBibles2.getSelectedBookMetaData();
+        Book book1 = mdlBibles1.getSelectedBook();
+        Book book2 = mdlBibles2.getSelectedBook();
 
-        if (bmd1.equals(bmd2))
+        if (book1.equals(book2))
         {
             if (JOptionPane.showConfirmDialog(this, Msg.COMPARE_IDENT_QUESTION.toString(), Msg.COMPARE_IDENT_TITLE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
             {
@@ -148,9 +147,6 @@ public class ComparePane extends EirPanel
 
         try
         {
-            Book book1 = bmd1.getBook();
-            Book book2 = bmd2.getBook();
-
             String words = txtWords.getText();
             String refText = txtVerses.getText();
 

@@ -18,7 +18,6 @@ import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
-import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.Verse;
@@ -118,8 +117,8 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
      */
     protected void updateDisplay()
     {
-        BookMetaData bmd = (BookMetaData) cboComments.getSelectedItem();
-        if (bmd == null)
+        Book book = (Book) cboComments.getSelectedItem();
+        if (book == null)
         {
             return;
         }
@@ -127,7 +126,7 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
         try
         {
             Verse verse = set.getVerse();
-            display.setBookData(bmd.getBook(), verse);
+            display.setBookData(book, verse);
         }
         catch (Exception ex)
         {
@@ -156,13 +155,7 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
      */
     public Book getBook()
     {
-        BookMetaData bmd = (BookMetaData) cboComments.getSelectedItem();
-        if (bmd == null)
-        {
-            return null;
-        }
-
-        return bmd.getBook();
+        return (Book) cboComments.getSelectedItem();
     }
 
     /* (non-Javadoc)
@@ -170,8 +163,7 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
      */
     public void setBookData(Book book, Key key)
     {
-        BookMetaData bmd = book.getBookMetaData();
-        cboComments.setSelectedItem(bmd);
+        cboComments.setSelectedItem(book);
 
         setKey(key);
     }

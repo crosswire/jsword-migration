@@ -20,8 +20,8 @@ import org.crosswire.bibledesktop.book.BooksComboBoxModel;
 import org.crosswire.common.swing.EirPanel;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Reporter;
+import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
-import org.crosswire.jsword.book.BookMetaData;
 
 /**
  * Allows various maintenance procedures to be done on Bibles like
@@ -146,8 +146,8 @@ public class MaintenancePane extends EirPanel
     {
         try
         {
-            BookMetaData bmd = getSelected();
-            if (bmd == null)
+            Book book = getSelected();
+            if (book == null)
             {
                 JOptionPane.showMessageDialog(this,
                     "Please select a Bible to delete.", //$NON-NLS-1$
@@ -157,11 +157,11 @@ public class MaintenancePane extends EirPanel
             }
 
             if (JOptionPane.showConfirmDialog(this,
-                "Are you sure you want to delete "+bmd.getName()+"?\nDeleted Books can not be recovered", //$NON-NLS-1$ //$NON-NLS-2$
+                "Are you sure you want to delete "+book.getBookMetaData().getName()+"?\nDeleted Books can not be recovered", //$NON-NLS-1$ //$NON-NLS-2$
                 "Delete Bible", //$NON-NLS-1$
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
             {
-                bmd.getDriver().delete(bmd);
+                book.getBookMetaData().getDriver().delete(book);
             }
         }
         catch (Exception ex)
@@ -174,9 +174,9 @@ public class MaintenancePane extends EirPanel
      * What is the selected Bible name?
      * @return The version name or null if none is selected
      */
-    private BookMetaData getSelected()
+    private Book getSelected()
     {
-        return (BookMetaData) lst_versions.getSelectedValue();
+        return (Book) lst_versions.getSelectedValue();
     }
 
     /**

@@ -63,10 +63,10 @@ public class BooksListModel extends AbstractListModel
     /**
      * Basic constructor
      */
-    public BooksListModel(BookFilter filter, BookList books)
+    public BooksListModel(BookFilter filter, BookList bookList)
     {
         this.filter = filter;
-        this.books = books;
+        this.bookList = bookList;
 
         cacheData();
     }
@@ -76,7 +76,7 @@ public class BooksListModel extends AbstractListModel
      */
     public int getSize()
     {
-        return bmds.size();
+        return books.size();
     }
 
     /* (non-Javadoc)
@@ -85,13 +85,13 @@ public class BooksListModel extends AbstractListModel
     public synchronized Object getElementAt(int index)
     {
         // PARANOIA(joe): this check shouldn't be needed
-        if (index > bmds.size())
+        if (index > books.size())
         {
-            log.error("trying to get book at " + index + " when there are only " + bmds.size() + " known books.", new Exception()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            log.error("trying to get book at " + index + " when there are only " + books.size() + " known books.", new Exception()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             return null;
         }
 
-        return bmds.get(index);
+        return books.get(index);
     }
 
     /**
@@ -101,7 +101,7 @@ public class BooksListModel extends AbstractListModel
      */
     public synchronized int getIndexOf(Object test)
     {
-        return bmds.indexOf(test);
+        return books.indexOf(test);
     }
 
     /**
@@ -122,7 +122,7 @@ public class BooksListModel extends AbstractListModel
     {
         if (listenerList.getListenerCount() == 0)
         {
-            books.addBooksListener(listener);
+            bookList.addBooksListener(listener);
         }
 
         super.addListDataListener(li);
@@ -137,7 +137,7 @@ public class BooksListModel extends AbstractListModel
 
         if (listenerList.getListenerCount() == 0)
         {
-            books.removeBooksListener(listener);
+            bookList.removeBooksListener(listener);
         }
     }
 
@@ -146,9 +146,9 @@ public class BooksListModel extends AbstractListModel
      */
     protected final synchronized void cacheData()
     {
-        bmds = new ArrayList();
-        bmds.addAll(books.getBookMetaDatas(filter));
-        Collections.sort(bmds);
+        books = new ArrayList();
+        books.addAll(bookList.getBooks(filter));
+        Collections.sort(books);
     }
 
     /**
@@ -188,7 +188,7 @@ public class BooksListModel extends AbstractListModel
     /**
      * The list of books in this tree
      */
-    private BookList books;
+    private BookList bookList;
 
     /**
      * The filter used to choose Bibles
@@ -206,7 +206,7 @@ public class BooksListModel extends AbstractListModel
      * ensure that one thread can't update the list of books while another is
      * trying to create a JList based on this class.
      */
-    protected List bmds;
+    protected List books;
 
     /**
      * The log stream

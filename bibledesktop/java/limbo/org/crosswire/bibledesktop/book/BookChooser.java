@@ -20,8 +20,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.crosswire.common.swing.GuiUtil;
+import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
-import org.crosswire.jsword.book.BookMetaData;
 
 /**
  * BookChooser is like JFileChooser except that it allows the user to
@@ -172,9 +172,9 @@ public class BookChooser extends JPanel
      * Returns the selected Book.
      * @return the selected Book
      */
-    public BookMetaData getSelected()
+    public Book getSelected()
     {
-        return (BookMetaData) lstBibles.getSelectedValue();
+        return (Book) lstBibles.getSelectedValue();
     }
 
     /**

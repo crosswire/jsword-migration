@@ -190,8 +190,8 @@ public class CompareResultsPane extends JPanel implements Runnable
     private void setTitles()
     {
         lblBible1.setText("<html><b>" + Msg.RESULTS_BOOKS + "</b> " //$NON-NLS-1$ //$NON-NLS-2$
-                           + ver.getBible1().getBookMetaData().getName() + " / " //$NON-NLS-1$
-                           + ver.getBible2().getBookMetaData().getName());
+                           + ver.getBible1().getName() + " / " //$NON-NLS-1$
+                           + ver.getBible2().getName());
 
         String compare = "<html><b>" + Msg.RESULTS_COMPARING + "</b> "; //$NON-NLS-1$ //$NON-NLS-2$
         if (checkRef != null)

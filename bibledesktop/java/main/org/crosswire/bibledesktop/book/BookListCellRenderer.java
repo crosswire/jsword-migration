@@ -11,6 +11,7 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 
 import org.crosswire.common.swing.GuiUtil;
+import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.BookType;
 
@@ -102,13 +103,13 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
 
         if (value instanceof BookMetaData)
         {
-            BookMetaData bmd = (BookMetaData) value;
+            Book book = (Book) value;
 
-            String displayName = bmd.toString();
+            String displayName = book.toString();
             setText(displayName);
             setToolTipText(displayName);
 
-            BookType type = bmd.getType();
+            BookType type = book.getType();
             if (type.equals(BookType.BIBLE))
             {
                 setIcon(ICON_BIBLE);

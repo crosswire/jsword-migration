@@ -10,7 +10,6 @@ import org.crosswire.common.util.IteratorEnumeration;
 import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
-import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.BooksEvent;
 import org.crosswire.jsword.book.BooksListener;
@@ -50,7 +49,7 @@ public class ReferenceRootTreeNode implements TreeNode
         Books.installed().addBooksListener(new CustomBooksListener());
 
         this.filter = null;
-        books = Books.installed().getBookMetaDatas();
+        books = Books.installed().getBooks();
     }
 
     /**
@@ -62,7 +61,7 @@ public class ReferenceRootTreeNode implements TreeNode
         Books.installed().addBooksListener(new CustomBooksListener());
 
         this.filter = filter;
-        books = Books.installed().getBookMetaDatas(filter);
+        books = Books.installed().getBooks(filter);
     }
 
     /* (non-Javadoc)
@@ -79,7 +78,7 @@ public class ReferenceRootTreeNode implements TreeNode
     public void setFilter(BookFilter filter)
     {
         this.filter = filter;
-        books = Books.installed().getBookMetaDatas(filter);
+        books = Books.installed().getBooks(filter);
 
         model.fireTreeStructureChanged(filter, new Object[] { this }, new int[0], null);
     }
@@ -129,8 +128,8 @@ public class ReferenceRootTreeNode implements TreeNode
      */
     public TreeNode getChildAt(int childIndex)
     {
-        BookMetaData bmd = (BookMetaData) books.get(childIndex);
-        return new ReferenceBookTreeNode(model, this, bmd);
+        Book book = (Book) books.get(childIndex);
+        return new ReferenceBookTreeNode(model, this, book);
     }
 
     /* (non-Javadoc)
@@ -139,8 +138,7 @@ public class ReferenceRootTreeNode implements TreeNode
     public int getIndex(TreeNode node)
     {
         ReferenceBookTreeNode refnode = (ReferenceBookTreeNode) node;
-        BookMetaData bmd = refnode.getBookMetaData();
-        Book book = bmd.getBook();
+        Book book = refnode.getBook();
         return books.indexOf(book);
     }
 
@@ -174,11 +172,11 @@ public class ReferenceRootTreeNode implements TreeNode
          */
         public void bookAdded(BooksEvent ev)
         {
-            BookMetaData bmd = ev.getBookMetaData();
+            Book book = ev.getBook();
 
-            if (filter.test(bmd))
+            if (filter.test(book))
             {
-                boolean changed = books.add(bmd);
+                boolean changed = books.add(book);
                 if (!changed)
                 {
                     log.error("added a book from an event but our filtered book list did not change"); //$NON-NLS-1$
@@ -191,11 +189,11 @@ public class ReferenceRootTreeNode implements TreeNode
          */
         public void bookRemoved(BooksEvent ev)
         {
-            BookMetaData bmd = ev.getBookMetaData();
+            Book book = ev.getBook();
 
-            if (filter.test(bmd))
+            if (filter.test(book))
             {
-                boolean changed = books.remove(bmd);
+                boolean changed = books.remove(book);
                 if (!changed)
                 {
                     log.error("removed a book from an event but our filtered book list did not change"); //$NON-NLS-1$

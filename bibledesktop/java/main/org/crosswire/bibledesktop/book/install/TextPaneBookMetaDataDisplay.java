@@ -13,7 +13,7 @@ import org.crosswire.common.xml.JDOMSAXEventProvider;
 import org.crosswire.common.xml.SAXEventProvider;
 import org.crosswire.common.xml.TransformingSAXEventProvider;
 import org.crosswire.common.xml.XMLUtil;
-import org.crosswire.jsword.book.BookMetaData;
+import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.util.ConverterFactory;
 
 /**
@@ -57,9 +57,9 @@ public class TextPaneBookMetaDataDisplay
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
      */
-    public void setBookMetaData(BookMetaData bmd)
+    public void setBook(Book book)
     {
-        if (bmd == null)
+        if (book == null)
         {
             txtView.setText(""); //$NON-NLS-1$
             return;
@@ -68,7 +68,7 @@ public class TextPaneBookMetaDataDisplay
         try
         {
 
-            SAXEventProvider osissep = new JDOMSAXEventProvider(bmd.toOSIS());
+            SAXEventProvider osissep = new JDOMSAXEventProvider(book.getBookMetaData().toOSIS());
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
             String text = XMLUtil.writeToString(htmlsep);
 

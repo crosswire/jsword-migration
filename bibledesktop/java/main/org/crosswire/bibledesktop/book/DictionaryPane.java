@@ -26,7 +26,6 @@ import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
-import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.BookType;
 import org.crosswire.jsword.book.Defaults;
 import org.crosswire.jsword.passage.Key;
@@ -69,7 +68,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
         init();
 
         // This must come after the setViewportView() calls so scrolling works
-        lstDicts.setSelectedValue(Defaults.getDictionaryMetaData(), true);
+        lstDicts.setSelectedValue(Defaults.getDictionary(), true);
     }
 
     /**
@@ -275,10 +274,10 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
         Object selected = lstDicts.getSelectedValue();
         if (selected != null)
         {
-            BookMetaData dmd = (BookMetaData) selected;
-            if (dmd.getType().equals(BookType.DICTIONARY))
+            Book book = (Book) selected;
+            if (book.getBookMetaData().getType().equals(BookType.DICTIONARY))
             {
-                dict = dmd.getBook();
+                dict = book;
                 Key key = dict.getGlobalKeyList();
 
                 KeyListListModel model = new KeyListListModel(key);
@@ -306,8 +305,8 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
      */
     protected void updateDisplay()
     {
-        BookMetaData bmd = (BookMetaData) lstDicts.getSelectedValue();
-        if (bmd == null)
+        Book book = (Book) lstDicts.getSelectedValue();
+        if (book == null)
         {
             log.warn("no selected commentary"); //$NON-NLS-1$
             return;
@@ -316,7 +315,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
         try
         {
             Verse verse = set.getVerse();
-            display.setBookData(bmd.getBook(), verse);
+            display.setBookData(book, verse);
         }
         catch (Exception ex)
         {

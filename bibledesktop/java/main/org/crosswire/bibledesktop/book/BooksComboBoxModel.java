@@ -2,8 +2,8 @@ package org.crosswire.bibledesktop.book;
 
 import javax.swing.ComboBoxModel;
 
+import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
-import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Defaults;
 
 /**
@@ -53,28 +53,28 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
         if (getSize() > 0)
         {
             // The default is to have the first selected
-            current = (BookMetaData) getElementAt(0);
+            current = (Book) getElementAt(0);
 
             // If one of our favorite Books is in the list we ought to start
             // with that selected. We put the Bible last so it will override
             // the others if this is a broad list of books
-            tryInitialSelection(Defaults.getCommentaryMetaData());
-            tryInitialSelection(Defaults.getDictionaryMetaData());
-            tryInitialSelection(Defaults.getBibleMetaData());
+            tryInitialSelection(Defaults.getCommentary());
+            tryInitialSelection(Defaults.getDictionary());
+            tryInitialSelection(Defaults.getBible());
         }
     }
 
     /**
-     * @param bmd
+     * @param book
      */
-    private void tryInitialSelection(BookMetaData bmd)
+    private void tryInitialSelection(Book book)
     {
-        if (bmd != null)
+        if (book != null)
         {
-            int i = bmds.indexOf(bmd);
+            int i = books.indexOf(book);
             if (i != -1)
             {
-                current = bmd;
+                current = book;
             }
         }
     }
@@ -82,9 +82,9 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
     /* (non-Javadoc)
      * @see javax.swing.ComboBoxModel#setSelectedItem(java.lang.Object)
      */
-    public void setSelectedItem(Object current)
+    public void setSelectedItem(Object selected)
     {
-        this.current = (BookMetaData) current;
+        this.current = (Book) selected;
         fireContentsChanged(this, -1, -1);
     }
 
@@ -100,7 +100,7 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
      * Get the selected Bible
      * @return A Bible
      */
-    public BookMetaData getSelectedBookMetaData()
+    public Book getSelectedBook()
     {
         return current;
     }
@@ -127,7 +127,7 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
         {
             if (getSize() > 0)
             {
-                current = (BookMetaData) getElementAt(0);
+                current = (Book) getElementAt(0);
             }
             else
             {
@@ -139,7 +139,7 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
     /**
      * The currently selected version
      */
-    protected BookMetaData current;
+    protected Book current;
 
     /**
      * Serialization ID

@@ -239,7 +239,7 @@
     <!-- Always output the verse -->
     <xsl:choose>
  	  <xsl:when test="$VLine = 'true'">
-        <xsl:apply-templates/><br/>
+        <div class="l"><xsl:apply-templates/><xsl:text> </xsl:text></div>
       </xsl:when>
       <xsl:otherwise>
         <xsl:apply-templates/>
@@ -484,15 +484,17 @@
   </xsl:template>
   
   <!-- Avoid adding whitespace -->
+  <!-- We add a single space to the end of the line because of a bug in Sun's rendering. -->
   <xsl:template match="l">
-    <div class="l"><xsl:apply-templates/></div>
+    <div class="l"><xsl:apply-templates/><xsl:text> </xsl:text></div>
   </xsl:template>
   
   <!-- Avoid adding whitespace -->
   <!-- While a BR is a break, if it is immediately followed by punctuation,
        indenting this rule can introduce whitespace.
+       We use <div class="l"><xsl:text> </xsl:text></div> here because <br/> does not work. Nor does <br>
     -->
-  <xsl:template match="lb"><br/></xsl:template>
+  <xsl:template match="lb"><div class="l"><xsl:text> </xsl:text></div></xsl:template>
   
   <!-- Avoid adding whitespace -->
   <xsl:template match="list">

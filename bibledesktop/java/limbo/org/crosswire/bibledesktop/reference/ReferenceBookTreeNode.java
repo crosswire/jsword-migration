@@ -5,7 +5,7 @@ import java.util.Enumeration;
 import javax.swing.tree.TreeNode;
 
 import org.crosswire.common.util.IteratorEnumeration;
-import org.crosswire.jsword.book.BookMetaData;
+import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 
 /**
@@ -37,22 +37,22 @@ public class ReferenceBookTreeNode implements TreeNode
     /**
      * Simple ctor
      */
-    public ReferenceBookTreeNode(ReferenceTreeModel model, TreeNode parent, BookMetaData bmd)
+    public ReferenceBookTreeNode(ReferenceTreeModel model, TreeNode parent, Book book)
     {
         this.model = model;
         this.parent = parent;
-        this.bmd = bmd;
-        this.keys = bmd.getBook().getGlobalKeyList();
+        this.book = book;
+        this.keys = book.getGlobalKeyList();
     }
 
     /**
      * Simple ctor
      */
-    public ReferenceBookTreeNode(ReferenceTreeModel model, TreeNode parent, BookMetaData bmd, Key keys)
+    public ReferenceBookTreeNode(ReferenceTreeModel model, TreeNode parent, Book book, Key keys)
     {
         this.model = model;
         this.parent = parent;
-        this.bmd = bmd;
+        this.book = book;
         this.keys = keys;
     }
 
@@ -61,7 +61,7 @@ public class ReferenceBookTreeNode implements TreeNode
      */
     public String toString()
     {
-        return bmd.getName();
+        return book.getBookMetaData().getName();
     }
 
     /* (non-Javadoc)
@@ -110,7 +110,7 @@ public class ReferenceBookTreeNode implements TreeNode
     public TreeNode getChildAt(int childIndex)
     {
         Key key = keys.get(childIndex);
-        return new ReferenceKeyTreeNode(model, bmd, this, key);
+        return new ReferenceKeyTreeNode(model, book, this, key);
     }
 
     /* (non-Javadoc)
@@ -124,11 +124,11 @@ public class ReferenceBookTreeNode implements TreeNode
     }
 
     /**
-     * The BookMetaData object that we are wrapping
+     * The Book object that we are wrapping
      */
-    public BookMetaData getBookMetaData()
+    public Book getBook()
     {
-        return bmd;
+        return book;
     }
 
     /**
@@ -166,5 +166,5 @@ public class ReferenceBookTreeNode implements TreeNode
     /**
      * The book that we are representing
      */
-    private BookMetaData bmd;
+    private Book book;
 }

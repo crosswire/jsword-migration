@@ -4,7 +4,7 @@ import java.util.Enumeration;
 
 import javax.swing.tree.TreeNode;
 
-import org.crosswire.jsword.book.BookMetaData;
+import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 
 /**
@@ -36,15 +36,15 @@ public class ReferenceKeyTreeNode implements TreeNode
     /**
      * Simple ctor
      */
-    public ReferenceKeyTreeNode(ReferenceTreeModel model, BookMetaData bmd, TreeNode parent, Key key)
+    public ReferenceKeyTreeNode(ReferenceTreeModel model, Book book, TreeNode parent, Key key)
     {
         this.model = model;
-        this.bmd = bmd;
+        this.book = book;
         this.parent = parent;
         this.key = key;
 
         // NOWARN: this just shuts eclipse up - remove it later.
-        this.bmd.hashCode();
+        this.book.hashCode();
         this.model.hashCode();
     }
 
@@ -121,7 +121,7 @@ public class ReferenceKeyTreeNode implements TreeNode
     }
 
     private ReferenceTreeModel model;
-    private BookMetaData bmd;
+    private Book book;
     private TreeNode parent;
     private Key key;
 }

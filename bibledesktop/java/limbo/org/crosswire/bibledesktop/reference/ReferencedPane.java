@@ -30,7 +30,6 @@ import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
-import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 
@@ -241,12 +240,11 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
         // Code to search for a word
         for (Iterator it = Books.getBooks(filter).iterator(); it.hasNext();)
         {
-            BookMetaData dmd = (BookMetaData) it.next();
-            Book tempdict = dmd.getBook();
+            Book book = (Book) it.next();
             try
             {
-                Key key = tempdict.getKey(data);
-                lstdicts.setSelectedValue(tempdict, true);
+                Key key = book.getKey(data);
+                lstdicts.setSelectedValue(book, true);
                 lstentries.setSelectedValue(key, true);
                 return;
             }
@@ -263,8 +261,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     protected void newBook()
     {
         Object selected = tblBooks.getSelectedValue();
-        BookMetaData bmd = (BookMetaData) selected;
-        book = bmd.getBook();
+        book = (Book) selected;
         Key set = book.getGlobalKeyList();
 
         TreeModel model = new DefaultTreeModel(new KeyTreeNode(set, null), true);

@@ -58,9 +58,8 @@ public class JDTBURLConnection extends URLConnection
             int sep2 = astext.indexOf(PROTOCOL_SEPARATOR2);
             String bookName = astext.substring(sep1, sep2);
             String keyName = astext.substring(sep2);
-            BookMetaData bmd = Books.installed().getBookMetaData(bookName);
+            book = Books.installed().getBook(bookName);
     
-            book = bmd.getBook();
             key = book.getKey(keyName);
         }
         catch (Exception ex)

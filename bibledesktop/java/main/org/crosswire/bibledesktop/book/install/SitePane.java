@@ -24,14 +24,19 @@ import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
+import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookList;
 import org.crosswire.jsword.book.BookMetaData;
-import org.crosswire.jsword.book.BookMetaDataSet;
+import org.crosswire.jsword.book.BookSet;
+import org.crosswire.jsword.book.BookType;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.BooksEvent;
 import org.crosswire.jsword.book.BooksListener;
 import org.crosswire.jsword.book.install.InstallException;
 import org.crosswire.jsword.book.install.Installer;
+import org.crosswire.jsword.book.search.IndexManager;
+import org.crosswire.jsword.book.search.IndexManagerFactory;
 
 /**
  * A panel for use within a SitesPane to display one set of Books that are
@@ -121,12 +126,12 @@ public class SitePane extends JPanel
 
         if (installer == null)
         {
-            int bookCount = Books.installed().getBookMetaDatas().size();
+            int bookCount = Books.installed().getBooks().size();
             desc = Msg.INSTALLED_DESC.toString(new Object[] { new Integer(bookCount) });
         }
         else
         {
-            int bookCount = installer.getBookMetaDatas().size();
+            int bookCount = installer.getBooks().size();
             if (bookCount == 0)
             {
                 desc = Msg.NONE_AVAILABLE_DESC.toString();
@@ -224,13 +229,13 @@ public class SitePane extends JPanel
     private TreeModel createTreeModel(BookList books)
     {
         // return new BooksTreeModel(books);
-        BookMetaDataSet bmds = new BookMetaDataSet(books.getBookMetaDatas());
+        BookSet bmds = new BookSet(books.getBooks());
         TreeNode bookRoot = new BookNode("root", bmds, new Object[] { BookMetaData.KEY_TYPE, BookMetaData.KEY_LANGUAGE }, 0); //$NON-NLS-1$
         return new DefaultTreeModel(bookRoot);
     }
 
     // provide for backward compatibility
-    private BookMetaData getBookMetaData(Object obj)
+    private Book getBook(Object obj)
     {
         // new way
         if (obj instanceof DefaultMutableTreeNode)
@@ -238,9 +243,9 @@ public class SitePane extends JPanel
             obj = ((DefaultMutableTreeNode) obj).getUserObject();
         }
         // Old way
-        if (obj instanceof BookMetaData)
+        if (obj instanceof Book)
         {
-            return (BookMetaData) obj;
+            return (Book) obj;
         }
         return null;
     }
@@ -257,10 +262,10 @@ public class SitePane extends JPanel
             panel.add(new JButton(actions.getAction(INSTALL_SEARCH)));
             panel.add(new JButton(actions.getAction(REFRESH)));
         }
-//        else
-//        {
-//            pnlActions.add(new JButton(actions.getAction(DELETE)));
-//        }
+        else
+        {
+            panel.add(new JButton(actions.getAction(DELETE)));
+        }
         return panel;
     }
 
@@ -269,6 +274,33 @@ public class SitePane extends JPanel
      */
     public void doDelete()
     {
+        TreePath path = treAvailable.getSelectionPath();
+        if (path == null)
+        {
+            return;
+        }
+
+        Object last = path.getLastPathComponent();
+        Book book = getBook(last);
+
+        try
+        {
+            book.getBookMetaData().getDriver().delete(book);
+
+            IndexManager imanager = IndexManagerFactory.getIndexManager();
+            if (imanager.isIndexed(book))
+            {
+                imanager.deleteIndex(book);
+                
+            }
+//            // unselect it and then remove from list.
+//            treAvailable.removeSelectionPath(path);
+//            ((DefaultTreeModel)treAvailable.getModel()).removeNodeFromParent((MutableTreeNode) last);
+        }
+        catch (BookException e)
+        {
+            Reporter.informUser(this, e);
+        }
     }
 
     /**
@@ -295,37 +327,41 @@ public class SitePane extends JPanel
      */
     public void doInstall()
     {
-        if (installer != null)
+        if (installer == null)
         {
-            TreePath path = treAvailable.getSelectionPath();
-            if (path != null)
+            return;
+        }
+
+        TreePath path = treAvailable.getSelectionPath();
+        if (path == null)
+        {
+            return;
+        }
+
+        Object last = path.getLastPathComponent();
+        Book name = getBook(last);
+
+        try
+        {
+            // Is the book already installed? Then nothing to do.
+            Book book = Books.installed().getBook(name.getBookMetaData().getName());
+            if (book != null && !installer.isNewer(name))
             {
-                Object last = path.getLastPathComponent();
-                BookMetaData name = getBookMetaData(last);
-
-                try
-                {
-                    // Is the book already installed? Then nothing to do.
-                    BookMetaData bmd = Books.installed().getBookMetaData(name.getName());
-                    if (bmd != null && !installer.isNewer(bmd))
-                    {
-                        Reporter.informUser(this, Msg.INSTALLED, name.getName());
-                        return;
-                    }
-
-                    float size = NetUtil.getSize(installer.toRemoteURL(name)) / 1024.0F;
-                    if (JOptionPane.showConfirmDialog(this, Msg.SIZE.toString(new Object[] {name.getName(), new Float(size)}),
-                                    Msg.CONFIRMATION_TITLE.toString(),
-                                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
-                    {
-                        installer.install(name);
-                    }
-                }
-                catch (InstallException ex)
-                {
-                    Reporter.informUser(this, ex);
-                }
+                Reporter.informUser(this, Msg.INSTALLED, name.getBookMetaData().getName());
+                return;
             }
+
+            float size = NetUtil.getSize(installer.toRemoteURL(name)) / 1024.0F;
+            if (JOptionPane.showConfirmDialog(this, Msg.SIZE.toString(new Object[] {name.getBookMetaData().getName(), new Float(size)}),
+                            Msg.CONFIRMATION_TITLE.toString(),
+                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+            {
+                installer.install(name);
+            }
+        }
+        catch (InstallException ex)
+        {
+            Reporter.informUser(this, ex);
         }
     }
 
@@ -342,8 +378,8 @@ public class SitePane extends JPanel
             try
             {
                 Object last = path.getLastPathComponent();
-                BookMetaData bmd = getBookMetaData(last);
-                IndexResolver.scheduleIndex(bmd, this);
+                Book book = getBook(last);
+                IndexResolver.scheduleIndex(book, this);
             }
             catch (Exception ex)
             {
@@ -360,21 +396,21 @@ public class SitePane extends JPanel
         TreePath path = treAvailable.getSelectionPath();
 
         boolean bookSelected = false;
-        BookMetaData bmd = null;
+        Book book = null;
         if (path != null)
         {
             Object last = path.getLastPathComponent();
-            bmd = getBookMetaData(last);
-            if (bmd != null)
+            book = getBook(last);
+            if (book != null)
             {
                 bookSelected = true;
             }
         }
-        display.setBookMetaData(bmd);
+        display.setBook(book);
 
-        //actions.getAction(DELETE).setEnabled(bookSelected);
+        actions.getAction(DELETE).setEnabled(bookSelected && book.getDriver().isDeletable(book));
         actions.getAction(INSTALL).setEnabled(bookSelected);
-        actions.getAction(INSTALL_SEARCH).setEnabled(bookSelected);
+        actions.getAction(INSTALL_SEARCH).setEnabled(bookSelected && book.getType() == BookType.BIBLE);
     }
 
     public void setTreeModel(BookList books)
@@ -411,7 +447,7 @@ public class SitePane extends JPanel
     private static final String REFRESH = "Refresh"; //$NON-NLS-1$
     private static final String INSTALL = "Install"; //$NON-NLS-1$
     private static final String INSTALL_SEARCH = "InstallSearch"; //$NON-NLS-1$
-    //private static final String DELETE = "Delete"; //$NON-NLS-1$
+    private static final String DELETE = "Delete"; //$NON-NLS-1$
 
     /**
      * From which we get our list of installable modules

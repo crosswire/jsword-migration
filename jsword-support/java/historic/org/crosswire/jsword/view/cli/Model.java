@@ -68,9 +68,8 @@ public class Model
 
     public String dictList()
     {
-        List dicts = Books.installed().getBookMetaDatas(BookFilters.getDictionaries());
-        BookMetaData bmd = (BookMetaData) dicts.get(0);
-        Book dict = bmd.getBook();
+        List dicts = Books.installed().getBooks(BookFilters.getDictionaries());
+        Book dict = (Book) dicts.get(0);
 
         KeyList set = dict.getGlobalKeyList();
 
@@ -103,9 +102,8 @@ public class Model
     
     public String search(String str) throws BookException
     {
-        List dicts = Books.installed().getBookMetaDatas(BookFilters.getBibles());
-        BookMetaData bmd = (BookMetaData) dicts.get(0);
-        Book book = bmd.getBook();
+        List dicts = Books.installed().getBooks(BookFilters.getBibles());
+        Book book = (Book) dicts.get(0);
         
         Key key = book.find(new Search(str, false));
         return key.getName();
@@ -113,9 +111,8 @@ public class Model
     
     public String match(String str) throws BookException
     {
-        List dicts = Books.installed().getBookMetaDatas(BookFilters.getBibles());
-        BookMetaData bmd = (BookMetaData) dicts.get(0);
-        Book book = bmd.getBook();
+        List dicts = Books.installed().getBooks(BookFilters.getBibles());
+        Book book = (Book) dicts.get(0);
 
         Key key = book.find(new Search(str, true));
         return key.getName();
@@ -145,11 +142,11 @@ public class Model
     {
         StringBuffer buffer = new StringBuffer();
 
-        List list = Books.installed().getBookMetaDatas(filter);
+        List list = Books.installed().getBooks(filter);
         for (Iterator it = list.iterator(); it.hasNext();)
         {
-            BookMetaData bmd = (BookMetaData) it.next();
-            buffer.append(bmd.getFullName());
+            Book book = (Book) it.next();
+            buffer.append(book.getBookMetaData().getFullName());
             
             if (it.hasNext())
             {

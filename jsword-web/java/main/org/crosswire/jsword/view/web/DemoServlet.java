@@ -58,7 +58,7 @@ public class DemoServlet extends HttpServlet
         try
         {
             String bookname = config.getInitParameter("book-name"); //$NON-NLS-1$
-            book = Books.installed().getBookMetaData(bookname).getBook();
+            book = Books.installed().getBook(bookname);
         }
         catch (Exception ex)
         {

@@ -60,7 +60,6 @@ import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
-import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.BooksEvent;
 import org.crosswire.jsword.book.BooksListener;
@@ -212,7 +211,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
 
         // News users probably wont have any Bibles installedso we give them a
         // hand getting to the installation diallog.
-        List bibles = Books.installed().getBookMetaDatas(BookFilters.getBibles());
+        List bibles = Books.installed().getBooks(BookFilters.getBibles());
         if (bibles.size() == 0)
         {
             int reply = JOptionPane.showConfirmDialog(this, Msg.NO_BIBLES_MESSAGE, Msg.NO_BIBLES_TITLE.toString(), JOptionPane.OK_CANCEL_OPTION,
@@ -751,13 +750,13 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
      */
     private String[] getFullNameArray(BookFilter filter)
     {
-        List bmds = Books.installed().getBookMetaDatas(filter);
+        List books = Books.installed().getBooks(filter);
         List names = new ArrayList();
 
-        for (Iterator it = bmds.iterator(); it.hasNext(); )
+        for (Iterator it = books.iterator(); it.hasNext(); )
         {
-            BookMetaData bmd = (BookMetaData) it.next();
-            names.add(bmd.getFullName());
+            Book book = (Book) it.next();
+            names.add(book.getBookMetaData().getFullName());
         }
 
         return (String[]) names.toArray(new String[names.size()]);
