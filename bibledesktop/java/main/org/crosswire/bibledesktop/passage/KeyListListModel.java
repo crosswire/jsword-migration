@@ -44,7 +44,7 @@ public class KeyListListModel extends AbstractListModel implements ListModel
      */
     public int getSize()
     {
-        return keys.getChildCount();
+        return keys != null ? keys.getChildCount() : 0;
     }
 
     /**
@@ -53,7 +53,7 @@ public class KeyListListModel extends AbstractListModel implements ListModel
      */
     public Object getElementAt(int index)
     {
-        return keys.get(index);
+        return keys != null ? keys.get(index) : null;
     }
 
     private Key keys;

@@ -277,6 +277,12 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
     protected void newDictionary()
     {
         Object selected = lstDicts.getSelectedValue();
+        // Don't leave the scroller in the middle of the list!
+        lstEntries.ensureIndexIsVisible(0);
+        // Make sure that the list of keys is empty.
+        lstEntries.setModel(new KeyListListModel(null));
+        // Make sure that the display is emtpy.
+        display.setBookData(null, null);
         if (selected != null)
         {
             Book book = (Book) selected;
@@ -300,6 +306,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
             }
             else
             {
+                updateDisplay();
                 sptMain.setTopComponent(pnlSelect);
             }
         }
