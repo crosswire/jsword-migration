@@ -1,4 +1,3 @@
-
 package org.crosswire.biblemapper.model;
 
 import org.crosswire.common.util.Logger;
