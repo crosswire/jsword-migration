@@ -117,7 +117,7 @@ on the <a href="devt.html">Getting Involved</a> page.
 
 <h3>Modules</h3>
 <p>
-Sword modules are available <a href="http://www.crossire.org/sword/modules/index.jsp">here</a>. 
+Sword modules are available <a href="http://www.crosswire.org/sword/modules/index.jsp">here</a>. 
 Most of these modules are working with JSword so please report any that fail.
 </p>
 
