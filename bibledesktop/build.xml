@@ -28,6 +28,7 @@
 
   <!--=======================================================================-->
   <target name="install" depends="build, keygen" description="Prepares for web based jnlp deploy">
+  	<echo message="Building JNLP: uninstalled files in: ${jnlp.uninstalled} and installed in ${jnlp.installed}"/>
 	<!-- sign the jars to a temporary location so they can be reused -->
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="bibledesktop.jar"/>
 	<jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="common.jar"/>
