@@ -41,10 +41,10 @@
       <class location="${target.jar}/common.jar"/>
       <sourcePath path="${target.bugs.src}"/>
       <!-- auxClasspath path="${target.jar}/commons-lang-2.0.jar"/ -->
-      <auxClasspath path="${target.jar}/commons-net-1.1.0.jar"/>
+      <auxClasspath path="${target.jar}/commons-net-1.3.0.jar"/>
       <auxClasspath path="${target.jar}/jdom.jar"/>
       <!-- auxClasspath path="${target.jar}/log4j-1.2.8.jar"/ -->
-      <auxClasspath path="${target.jar}/lucene-1.4.1.jar"/>
+      <auxClasspath path="${target.jar}/lucene-1.4.3.jar"/>
       <!-- auxClasspath path="${target.jar}/winlaf-0.4.jar"/ -->
       <auxClasspath path="${target.jar}/tar.jar"/>
       <auxClasspath path="${target.jar}/jlfgr-1_0.jar"/>

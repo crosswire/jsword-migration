@@ -69,14 +69,14 @@
       <attribute name="URI" value="/WEB-INF/lib/tar.jar" />
     </containerElement>
     <containerElement type="library" level="module">
-      <url>jar://$MODULE_DIR$/../jsword/jar/lucene-1.4.1/lucene-1.4.1.jar!/</url>
+      <url>jar://$MODULE_DIR$/../jsword/jar/lucene-1.4.3/lucene-1.4.3.jar!/</url>
       <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib/lucene-1.4.1.jar" />
+      <attribute name="URI" value="/WEB-INF/lib/lucene-1.4.3.jar" />
     </containerElement>
     <containerElement type="library" level="module">
-      <url>jar://$MODULE_DIR$/../jsword/jar/net-1.1.0/commons-net-1.1.0.jar!/</url>
+      <url>jar://$MODULE_DIR$/../jsword/jar/net-1.3.0/commons-net-1.3.0.jar!/</url>
       <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib/commons-net-1.1.0.jar" />
+      <attribute name="URI" value="/WEB-INF/lib/commons-net-1.3.0.jar" />
     </containerElement>
     <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/web/WEB-INF/web.xml" version="2.3" />
     <webroots>
