@@ -79,28 +79,28 @@ public class GeneratorPane extends EirPanel
      */
     public GeneratorPane()
     {
-        jbInit();
+        init();
     }
 
     /**
      * Create the GUI components.
      */
-    private void jbInit()
+    private void init()
     {
         cbo_source.setModel(mdl_source);
         cbo_source.setRenderer(new BookListCellRenderer());
-        lbl_source.setText("  Source Bible: ");
+        lbl_source.setText("  Source Bible: "); //$NON-NLS-1$
         pnl_source.setLayout(new BorderLayout());
-        pnl_source.setBorder(BorderFactory.createTitledBorder("Source"));
+        pnl_source.setBorder(BorderFactory.createTitledBorder("Source")); //$NON-NLS-1$
         pnl_source.add(lbl_source, BorderLayout.WEST);
         pnl_source.add(cbo_source, BorderLayout.CENTER);
 
-        lbl_name.setText("New Name:");
-        lbl_driver.setText("Driver Class:");
+        lbl_name.setText("New Name:"); //$NON-NLS-1$
+        lbl_driver.setText("Driver Class:"); //$NON-NLS-1$
 
         cbo_driver.setModel(mdl_driver);
         pnl_dest.setLayout(lay_dest);
-        pnl_dest.setBorder(BorderFactory.createTitledBorder("Destination"));
+        pnl_dest.setBorder(BorderFactory.createTitledBorder("Destination")); //$NON-NLS-1$
 
         pnl_dest.add(lbl_name, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 5), 0, 0));
         pnl_dest.add(lbl_driver, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0));
@@ -111,7 +111,7 @@ public class GeneratorPane extends EirPanel
         bar_prog.setString(""); //$NON-NLS-1$
         bar_prog.setStringPainted(true);
         pnl_prog.setLayout(new BorderLayout());
-        pnl_prog.setBorder(BorderFactory.createTitledBorder("Progress"));
+        pnl_prog.setBorder(BorderFactory.createTitledBorder("Progress")); //$NON-NLS-1$
         pnl_prog.add(bar_prog, BorderLayout.CENTER);
 
         box_main = Box.createVerticalBox();
@@ -125,10 +125,10 @@ public class GeneratorPane extends EirPanel
                 generate();
             }
         });
-        btn_generate.setText("Generate");
+        btn_generate.setText("Generate"); //$NON-NLS-1$
         btn_generate.setMnemonic('G');
 
-        chk_verify.setText("Verify After Generation");
+        chk_verify.setText("Verify After Generation"); //$NON-NLS-1$
         chk_verify.setMnemonic('V');
         chk_verify.setSelected(false);
         lay_buttons.setAlignment(FlowLayout.RIGHT);
@@ -147,7 +147,7 @@ public class GeneratorPane extends EirPanel
      */
     public void showInDialog(Component parent)
     {
-        showInDialog(parent, "Generator", false);
+        showInDialog(parent, "Generator", false); //$NON-NLS-1$
     }
 
     /**
@@ -156,9 +156,9 @@ public class GeneratorPane extends EirPanel
      */
     public void showInFrame(Frame parent)
     {
-        final JDialog frame = new JDialog(parent, "Bible Generator");
+        final JDialog frame = new JDialog(parent, "Bible Generator"); //$NON-NLS-1$
 
-        btn_close = new JButton("Close");
+        btn_close = new JButton("Close"); //$NON-NLS-1$
         btn_close.setMnemonic('C');
         btn_close.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev)
@@ -316,7 +316,7 @@ public class GeneratorPane extends EirPanel
                     cbo_driver.setEnabled(false);
                     btn_generate.setEnabled(false);
                     chk_verify.setEnabled(false);
-                    btn_close.setText("Cancel");
+                    btn_close.setText("Cancel"); //$NON-NLS-1$
                 }
             });
 
@@ -363,7 +363,7 @@ public class GeneratorPane extends EirPanel
                     cbo_driver.setEnabled(true);
                     btn_generate.setEnabled(true);
                     chk_verify.setEnabled(true);
-                    btn_close.setText("Close");
+                    btn_close.setText("Close"); //$NON-NLS-1$
                 }
             });
         }

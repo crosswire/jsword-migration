@@ -58,7 +58,7 @@ public class MaintenancePane extends EirPanel
      */
     public MaintenancePane()
     {
-        jbInit();
+        init();
         updateButtons();
     }
 
@@ -76,13 +76,13 @@ public class MaintenancePane extends EirPanel
      */
     public void showInDialog(Component parent)
     {
-        showInDialog(parent, "Version Maintenance", false);
+        showInDialog(parent, "Version Maintenance", false); //$NON-NLS-1$
     }
 
     /**
      * Create the GUI
      */
-    private void jbInit()
+    private void init()
     {
         scr_versions.getViewport().add(lst_versions, null);
         lst_versions.setModel(mdl_versions);
@@ -96,7 +96,7 @@ public class MaintenancePane extends EirPanel
             }
         });
 
-        btn_add.setText("Add ...");
+        btn_add.setText("Add ..."); //$NON-NLS-1$
         btn_add.setMnemonic('A');
         btn_add.addActionListener(new ActionListener()
         {
@@ -106,7 +106,7 @@ public class MaintenancePane extends EirPanel
             }
         });
 
-        btn_remove.setText("Remove");
+        btn_remove.setText("Remove"); //$NON-NLS-1$
         btn_remove.setMnemonic('R');
         btn_remove.addActionListener(new ActionListener()
         {
@@ -146,15 +146,15 @@ public class MaintenancePane extends EirPanel
             if (bmd == null)
             {
                 JOptionPane.showMessageDialog(this,
-                    "Please select a Bible to delete.",
-                    "Delete Bible",
+                    "Please select a Bible to delete.", //$NON-NLS-1$
+                    "Delete Bible", //$NON-NLS-1$
                     JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
             if (JOptionPane.showConfirmDialog(this,
-                "Are you sure you want to delete "+bmd.getName()+"?\nDeleted Books can not be recovered",
-                "Delete Bible",
+                "Are you sure you want to delete "+bmd.getName()+"?\nDeleted Books can not be recovered", //$NON-NLS-1$ //$NON-NLS-2$
+                "Delete Bible", //$NON-NLS-1$
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
             {
                 bmd.getDriver().delete(bmd);
