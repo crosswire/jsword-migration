@@ -46,9 +46,6 @@
     </copy>
     <mkdir dir="${webapp.bibledesktop}/WEB-INF/classes"/>
     <mkdir dir="${webapp.bibledesktop}/WEB-INF/lib"/>
-    <copy todir="${webapp.bibledesktop}/WEB-INF/lib">
-      <fileset dir="${target.jar}" includes="*.jar"/>
-    </copy>
   </target>
 
   <!--=======================================================================-->
