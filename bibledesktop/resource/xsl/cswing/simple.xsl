@@ -166,16 +166,7 @@
         </xsl:choose>
       </h2>
     </xsl:if>
-    <xsl:if test="@osisID">
-      <a href="{@osisID}">
-        <xsl:apply-templates/>
-      </a>
-      <!-- DMS: reading references need a following space -->
-      <xsl:text> </xsl:text>
-    </xsl:if>
-    <xsl:if test="not(@osisID)">
-      <xsl:apply-templates/>
-    </xsl:if>
+    <xsl:apply-templates/>
     <xsl:if test="@divTitle">
       <p>&#0160;</p>
     </xsl:if>

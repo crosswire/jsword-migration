@@ -166,7 +166,7 @@ public class DebugPane extends JPanel
         createTestJob(30000, "test2", 3, false); //$NON-NLS-1$
         createTestJob(30000, "test3", 3, true); //$NON-NLS-1$
     }
-    
+
     /**
      * Create a test job
      */
@@ -205,6 +205,32 @@ public class DebugPane extends JPanel
         };
         test.start();
     }
+
+    /**
+     * 
+     */
+    public void openSplash()
+    {
+        if (splash == null)
+        {
+            splash = new Splash();
+            splash.pack();    
+        }
+    }
+
+    /**
+     * 
+     */
+    public void closeSplash()
+    {
+        if (splash != null)
+        {
+            splash.close();
+            splash = null;
+        }
+    }
+
+    private Splash splash = null;
 
     /**
      * The log stream

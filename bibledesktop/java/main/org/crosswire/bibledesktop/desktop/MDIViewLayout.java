@@ -1,6 +1,7 @@
 package org.crosswire.bibledesktop.desktop;
 
 import java.awt.Component;
+import java.awt.Dimension;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
@@ -68,6 +69,7 @@ public class MDIViewLayout implements ViewLayout
         String name = view.getTitle();
 
         JInternalFrame iframe = new JInternalFrame(name, true, true, true, true);
+        iframe.setPreferredSize(new Dimension(640, 480));
         iframe.getContentPane().add(view);
 
         mdiMain.add(iframe/*, JLayeredPane.PALETTE_LAYER*/);

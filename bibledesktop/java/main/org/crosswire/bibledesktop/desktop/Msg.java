@@ -35,7 +35,7 @@ public class Msg extends MsgBase
     static final Msg APP_VERSION = new Msg("Desktop.Version"); //$NON-NLS-1$
     static final Msg VERSION_TITLE = new Msg("Desktop.VersionTitle"); //$NON-NLS-1$
     static final Msg VERSION_APP_TITLE = new Msg("Desktop.VersionAppTitle"); //$NON-NLS-1$
-    
+
     // Strings for hyperlink urls
     static final Msg UNKNOWN_PROTOCOL = new Msg("Desktop.UnknownProtocol"); //$NON-NLS-1$
     static final Msg BAD_PROTOCOL_URL = new Msg("Desktop.BadProtocolUrl"); //$NON-NLS-1$
@@ -127,7 +127,7 @@ public class Msg extends MsgBase
     {
         super(name);
     }
-    
+
     /*
      * get the title of the application
      * @return the title of the application

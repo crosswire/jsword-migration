@@ -20,6 +20,7 @@ import javax.swing.event.ListSelectionListener;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
 import org.crosswire.bibledesktop.passage.KeyListListModel;
+import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
@@ -127,6 +128,8 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
         scrDisplay.setViewportView(display.getComponent());
 
         sptMain.setOrientation(JSplitPane.VERTICAL_SPLIT);
+        // Make the top 20% of the total
+        sptMain.setResizeWeight(0.2D);
         sptMain.setTopComponent(new JPanel());
         sptMain.setBottomComponent(scrDisplay);
         sptMain.setBorder(null);
@@ -348,7 +351,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
     private JPanel pnlSelect = new JPanel();
     private JScrollPane scrDicts = new JScrollPane();
     private JList lstDicts = new JList();
-    private JSplitPane sptMain = new JSplitPane();
+    private JSplitPane sptMain = new FixedSplitPane();
     private JScrollPane scrEntries = new JScrollPane();
     private JScrollPane scrDisplay = new JScrollPane();
     private JList lstEntries = new JList();

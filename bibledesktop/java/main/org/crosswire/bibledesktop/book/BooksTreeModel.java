@@ -246,7 +246,7 @@ public class BooksTreeModel implements TreeModel
             if (listeners[i] == TreeModelListener.class)
             {
                 ((TreeModelListener) listeners[i + 1]).treeNodesInserted(ev);
-            }          
+            }
         }
     }
 
@@ -264,7 +264,7 @@ public class BooksTreeModel implements TreeModel
             if (listeners[i] == TreeModelListener.class)
             {
                 ((TreeModelListener) listeners[i + 1]).treeNodesRemoved(ev);
-            }          
+            }
         }
     }
 
@@ -282,7 +282,7 @@ public class BooksTreeModel implements TreeModel
             if (listeners[i] == TreeModelListener.class)
             {
                 ((TreeModelListener) listeners[i + 1]).treeStructureChanged(ev);
-            }          
+            }
         }
     }
 

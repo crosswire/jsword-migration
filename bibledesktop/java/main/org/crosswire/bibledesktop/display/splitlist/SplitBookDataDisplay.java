@@ -18,6 +18,7 @@ import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.passage.PassageGuiUtil;
 import org.crosswire.bibledesktop.passage.PassageListModel;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
@@ -120,14 +121,14 @@ public class SplitBookDataDisplay implements BookDataDisplay
         mutate.add(blur1);
         mutate.add(blur5);
 
-        JPanel data = new JPanel(new BorderLayout());
-        data.add(mutate, BorderLayout.NORTH);
-        data.add(scroll, BorderLayout.CENTER);
+        sidebar = new JPanel(new BorderLayout());
+        sidebar.add(mutate, BorderLayout.NORTH);
+        sidebar.add(scroll, BorderLayout.CENTER);
 
-        JSplitPane split = new JSplitPane();
+        split = new FixedSplitPane();
         split.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-        split.add(data, JSplitPane.LEFT);
-        split.add(child.getComponent(), JSplitPane.RIGHT);
+        split.setLeftComponent(sidebar);
+        split.setRightComponent(child.getComponent());
         split.setOneTouchExpandable(true);
         split.setDividerLocation(0.0D);
         split.setBorder(null);
@@ -236,6 +237,30 @@ public class SplitBookDataDisplay implements BookDataDisplay
 
         setActive();
     }
+
+    /**
+     * Show or hide the passage sidebar.
+     * @param show boolean
+     */
+    public void showSidebar(boolean show)
+    {
+        Component childComponent = child.getComponent();
+        if (show)
+        {
+            main.remove(childComponent);
+            split.add(childComponent, JSplitPane.RIGHT);
+            main.add(split);
+       }
+        else
+        {
+            main.remove(split);
+            split.remove(childComponent);
+            main.add(childComponent);
+        }
+        // Force it to layout again.
+        main.validate();
+    }
+
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.FocusablePart#getKey()
@@ -356,6 +381,8 @@ public class SplitBookDataDisplay implements BookDataDisplay
      * GUI Components
      */
     private JPanel main;
+    private JPanel sidebar;
+    private JSplitPane split;
     private BookDataDisplay child;
     private JList list;
     private PassageListModel model;

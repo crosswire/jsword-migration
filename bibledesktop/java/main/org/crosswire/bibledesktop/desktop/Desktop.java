@@ -33,6 +33,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
@@ -50,6 +51,7 @@ import org.crosswire.bibledesktop.book.DictionaryPane;
 import org.crosswire.bibledesktop.book.TitleChangedEvent;
 import org.crosswire.bibledesktop.book.TitleChangedListener;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
+import org.crosswire.bibledesktop.display.splitlist.SplitBookDataDisplay;
 import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.config.ChoiceFactory;
 import org.crosswire.common.config.Config;
@@ -57,8 +59,8 @@ import org.crosswire.common.progress.Job;
 import org.crosswire.common.progress.JobManager;
 import org.crosswire.common.swing.CatchingThreadGroup;
 import org.crosswire.common.swing.ExceptionPane;
+import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.swing.GuiUtil;
-import org.crosswire.common.swing.LookAndFeelUtil;
 import org.crosswire.common.util.CWClassLoader;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
@@ -108,7 +110,7 @@ import org.jdom.JDOMException;
  * @author Mark Goodwin [mark at thorubio dot org]
  * @version $Id$
  */
-public class Desktop implements TitleChangedListener, HyperlinkListener
+public class Desktop extends JFrame implements TitleChangedListener, HyperlinkListener
 {
     /**
      * Central start point.
@@ -124,10 +126,10 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
                 public void run()
                 {
                     Desktop desktop = new Desktop();
-                    desktop.getJFrame().pack();
-                    GuiUtil.centerWindow(desktop.getJFrame());
-                    desktop.getJFrame().toFront();
-                    desktop.getJFrame().setVisible(true);
+                    desktop.pack();
+                    GuiUtil.centerWindow(desktop);
+                    desktop.toFront();
+                    desktop.setVisible(true);
 
                     log.debug(EXITING);
                 }
@@ -148,19 +150,20 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
      */
     public Desktop()
     {
-        // Other jobs before we create any GUI
-        LookAndFeelUtil.tweakLookAndFeel();
-
+        views = new ArrayList();
         // Calling Project.instance() will set up the project's home directory
         //     ~/.jsword
         // This will set it as a place to look for overrides for
         // ResourceBundles, properties and other resources
         Project project = Project.instance();
 
-        // Create the frame but don't show it so anything that happens has
-        // something to attach itself to
-        frame = new JFrame();
-        JOptionPane.setRootFrame(frame);
+        // Load the configuration.
+        // This has to be done before any gui components are created are created.
+        // This includes code that is invoked by it.
+        generateConfig();
+
+        // Make this be the root frame of optiondialogs
+        JOptionPane.setRootFrame(this);
 
         // Grab errors
         Reporter.grabAWTExecptions(true);
@@ -175,7 +178,6 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         actions = new DesktopActions(this);
 
         startJob.setProgress(Msg.STARTUP_CONFIG.toString());
-        generateConfig();
 
         startJob.setProgress(Msg.STARTUP_GENERATE.toString());
         createComponents();
@@ -184,18 +186,15 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         debug();
         init();
 
-        if (initial.equals(LayoutType.MDI))
+        if (getViewLayoutType().equals(LayoutType.MDI))
         {
             rdoViewMdi.setSelected(true);
         }
-        if (initial.equals(LayoutType.TDI))
+        if (getViewLayoutType().equals(LayoutType.TDI))
         {
             rdoViewTdi.setSelected(true);
         }
 
-        // Sort out the current ViewLayout. We need to reset current to be
-        // initial because the config system may well have changed initial
-        current = initial;
         ensureAvailableBibleViewPane();
 
         // Configuration
@@ -226,8 +225,6 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         startJob.done();
         splash.close();
 
-        frame.pack();
-
         // Nearly fill up the screen with BibleDesktop, but no larger than 1280x960
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -242,7 +239,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
             maxHeight = screenSize.height - 100;
         }
 
-        final JComponent contentPane = (JComponent) frame.getContentPane();
+        final JComponent contentPane = (JComponent) getContentPane();
         contentPane.setPreferredSize(new Dimension(maxWidth, maxHeight));
 
         // News users probably wont have any Bibles installedso we give them a
@@ -250,7 +247,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         List bibles = Books.installed().getBookMetaDatas(BookFilters.getBibles());
         if (bibles.size() == 0)
         {
-            int reply = JOptionPane.showConfirmDialog(frame, Msg.NO_BIBLES_MESSAGE, Msg.NO_BIBLES_TITLE.toString(), JOptionPane.OK_CANCEL_OPTION,
+            int reply = JOptionPane.showConfirmDialog(this, Msg.NO_BIBLES_MESSAGE, Msg.NO_BIBLES_TITLE.toString(), JOptionPane.OK_CANCEL_OPTION,
                             JOptionPane.QUESTION_MESSAGE);
             if (reply == JOptionPane.OK_OPTION)
             {
@@ -283,7 +280,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         //barSide = new SidebarPane();
         //barBook = new ReferencedPane();
         reference = new DictionaryPane();
-        sptBooks = new JSplitPane();
+        sptBooks = new FixedSplitPane();
     }
 
     /**
@@ -292,7 +289,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     private void init()
     {
         JMenu menuFile = new JMenu(actions.getAction(DesktopActions.FILE));
-        menuFile.add(actions.getAction(DesktopActions.NEW_WINDOW)).addMouseListener(barStatus);
+        menuFile.add(actions.getAction(DesktopActions.NEW_TAB)).addMouseListener(barStatus);
         menuFile.add(actions.getAction(DesktopActions.OPEN)).addMouseListener(barStatus);
         menuFile.addSeparator();
         menuFile.add(actions.getAction(DesktopActions.CLOSE)).addMouseListener(barStatus);
@@ -306,6 +303,14 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         menuFile.addSeparator();
         menuFile.add(actions.getAction(DesktopActions.EXIT)).addMouseListener(barStatus);
         menuFile.setToolTipText(null);
+
+        JPopupMenu popup = new JPopupMenu();
+        popup.add(actions.getAction(DesktopActions.NEW_TAB)).addMouseListener(barStatus);
+        popup.add(actions.getAction(DesktopActions.CLOSE)).addMouseListener(barStatus);
+        popup.add(actions.getAction(DesktopActions.CLOSE_ALL)).addMouseListener(barStatus);
+
+        TDIViewLayout tdi = (TDIViewLayout) LayoutType.TDI.getLayout();
+        tdi.addPopup(popup);
 
         JMenu menuEdit = new JMenu(actions.getAction(DesktopActions.EDIT));
         //menuEdit.add(actions.getAction(DesktopActions.CUT)).addMouseListener(barStatus);
@@ -338,6 +343,9 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.STATUS_TOGGLE));
         toggle.setSelected(true);
         menuView.add(toggle);
+        toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.SIDEBAR_TOGGLE));
+        toggle.setSelected(true);
+        menuView.add(toggle);
         menuView.addSeparator();
         menuView.add(actions.getAction(DesktopActions.VIEW_SOURCE)).addMouseListener(barStatus);
         menuView.setToolTipText(null);
@@ -367,7 +375,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         pnlTbar.setRollover(true);
         pnlTbar.setFloatable(true);
 
-        pnlTbar.add(actions.getAction(DesktopActions.NEW_WINDOW)).addMouseListener(barStatus);
+        pnlTbar.add(actions.getAction(DesktopActions.NEW_TAB)).addMouseListener(barStatus);
         pnlTbar.add(actions.getAction(DesktopActions.OPEN)).addMouseListener(barStatus);
         pnlTbar.add(actions.getAction(DesktopActions.SAVE)).addMouseListener(barStatus);
         pnlTbar.addSeparator();
@@ -386,17 +394,14 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         reference.addHyperlinkListener(this);
 
         sptBooks.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-        //sptBooks.setOneTouchExpandable(true);
-        sptBooks.setDividerLocation(0.9D);
-        //sptBooks.add(barBook, JSplitPane.RIGHT);
-        sptBooks.add(reference, JSplitPane.RIGHT);
-        sptBooks.add(new JPanel(), JSplitPane.LEFT);
-        sptBooks.setResizeWeight(0.9D);
+        sptBooks.setRightComponent(reference);
+        sptBooks.setLeftComponent(new JPanel());
+        sptBooks.setResizeWeight(0.8D);
         sptBooks.setDividerSize(7);
         sptBooks.setOpaque(true);
         sptBooks.setBorder(null);
 
-        frame.addWindowListener(new WindowAdapter()
+        addWindowListener(new WindowAdapter()
         {
             public void windowClosed(WindowEvent ev)
             {
@@ -404,22 +409,23 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
             }
         });
 
-        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         // The toolbar needs to be in the outermost container, on the border
         // And the only other item in that container can be CENTER
-        frame.getContentPane().setLayout(new BorderLayout());
-        frame.getContentPane().add(pnlTbar, BorderLayout.NORTH);
+        final JComponent contentPane = (JComponent) getContentPane();
+        contentPane.setLayout(new BorderLayout());
+        contentPane.add(pnlTbar, BorderLayout.NORTH);
 
         // Put everything else in its own panel
         corePanel = new JPanel(new BorderLayout());
         corePanel.add(barStatus, BorderLayout.SOUTH);
         corePanel.add(sptBooks, BorderLayout.CENTER);
-        frame.getContentPane().add(corePanel, BorderLayout.CENTER);
-        frame.setJMenuBar(barMenu);
+        contentPane.add(corePanel, BorderLayout.CENTER);
+        setJMenuBar(barMenu);
 
-        frame.setEnabled(true);
-        frame.setTitle(Msg.getApplicationTitle());
+        setEnabled(true);
+        setTitle(Msg.getApplicationTitle());
     }
 
     /**
@@ -452,7 +458,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         ensureAvailableBibleViewPane();
 
         setLayoutComponent(getViewLayout().getRootComponent());
-        //getViewLayout().getSelected().adjustFocus(); 
+        //getViewLayout().getSelected().adjustFocus();
     }
 
     /**
@@ -522,7 +528,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     }
 
     /**
-     * 
+     *
      */
     private BookDataDisplay searchForBookDataDisplay(Component comp)
     {
@@ -550,9 +556,41 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     /**
      * What is the current layout?
      */
+    private static final LayoutType getInitialViewLayoutType()
+    {
+        if (initial == null)
+        {
+            initial = LayoutType.TDI;
+        }
+        return initial;
+    }
+
+    /**
+     * What is the current layout type?
+     */
+    private final LayoutType getViewLayoutType()
+    {
+        if (current == null)
+        {
+            current = getInitialViewLayoutType();
+        }
+        return current;
+    }
+
+    /**
+     * Set the current layout type
+     */
+    private final void setViewLayoutType(LayoutType newLayoutType)
+    {
+        current = newLayoutType;
+    }
+
+     /**
+     * What is the current layout?
+     */
     private final ViewLayout getViewLayout()
     {
-        return current.getLayout();
+        return getViewLayoutType().getLayout();
     }
 
     /**
@@ -561,7 +599,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     public void setLayoutType(LayoutType next)
     {
         // Check this is a change
-        if (current.equals(next))
+        if (getViewLayoutType().equals(next))
         {
             return;
         }
@@ -574,7 +612,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
             getViewLayout().remove(view);
         }
 
-        current = next;
+        setViewLayoutType(next);
 
         // Go through the views adding them to the layout SDIViewLayout may well add
         // a view, in which case the view needs to be set already so this must come
@@ -613,7 +651,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         }
         */
 
-        sptBooks.add(next, JSplitPane.LEFT);
+        sptBooks.setLeftComponent(next);
     }
 
     /**
@@ -635,6 +673,10 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
      */
     public static int getInitialLayoutType()
     {
+        if (initial == null)
+        {
+            initial = LayoutType.TDI;
+        }
         return initial.toInteger();
     }
 
@@ -744,7 +786,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
             }
             else if (protocol.equals(DICTIONARY_PROTOCOL))
             {
-                // TODO: determine the right dictionary and switch to it.
+                // TODO(DM): determine the right dictionary and switch to it.
                 reference.setWord(data);
             }
             else
@@ -762,6 +804,28 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
      * Show or hide the status bar.
      * @param show boolean
      */
+    public void showSidebar(boolean show)
+    {
+        // Go through the views removing them from the layout
+        Iterator it = iterateBibleViewPanes();
+        while (it.hasNext())
+        {
+            BibleViewPane view = (BibleViewPane) it.next();
+            BookDataDisplay loopDisplay = view.getPassagePane();
+            if (loopDisplay instanceof SplitBookDataDisplay)
+            {
+                SplitBookDataDisplay sbDisplay = (SplitBookDataDisplay) loopDisplay;
+                sbDisplay.showSidebar(show);
+            }
+        }
+
+//      pack(); // cause it to auto resize
+    }
+
+    /**
+     * Show or hide the status bar.
+     * @param show boolean
+     */
     public void showStatusBar(boolean show)
     {
         if (show)
@@ -772,16 +836,16 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         {
             corePanel.remove(barStatus);
         }
-        getJFrame().pack(); // cause it to auto resize
+        pack(); // cause it to auto resize
     }
 
-    /**
+     /**
      * Show or hide the tool bar.
      * @param show boolean
      */
     public void showToolBar(boolean show)
     {
-        Container contentPane = getJFrame().getContentPane();
+        Container contentPane = getContentPane();
         if (show)
         {
             // Honor the previous orientation
@@ -799,7 +863,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         {
             contentPane.remove(pnlTbar);
         }
-        getJFrame().pack(); // cause it to auto resize
+        pack(); // cause it to auto resize
     }
 
     /**
@@ -837,14 +901,6 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     {
         BibleViewPane bvp = (BibleViewPane) ev.getSource();
         getViewLayout().updateTitle(bvp);
-    }
-
-    /**
-     * Accessor for the main desktop Frame
-     */
-    public JFrame getJFrame()
-    {
-        return frame;
     }
 
     /**
@@ -977,7 +1033,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         List bmds = Books.installed().getBookMetaDatas(filter);
         List names = new ArrayList();
 
-        for (Iterator it = bmds.iterator(); it.hasNext();)
+        for (Iterator it = bmds.iterator(); it.hasNext(); )
         {
             BookMetaData bmd = (BookMetaData) it.next();
             names.add(bmd.getFullName());
@@ -1029,12 +1085,12 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     /**
      * The initial layout state
      */
-    private static LayoutType initial = LayoutType.TDI;
+    private static LayoutType initial;
 
     /**
      * The current way the views are laid out
      */
-    private LayoutType current = initial;
+    private LayoutType current;
 
     /**
      * <code>maxHeight</code> of the window
@@ -1069,12 +1125,11 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     private JRadioButtonMenuItem rdoViewTdi;
     private JRadioButtonMenuItem rdoViewMdi;
 
-    private JFrame frame;
     private JPanel corePanel;
     private ToolBar pnlTbar;
     private StatusBar barStatus;
     //private SidebarPane barSide;
-    //private ReferencedPane barBook = null;
-    private DictionaryPane reference = null;
+    //private ReferencedPane barBook;
+    private DictionaryPane reference;
     private JSplitPane sptBooks;
 }

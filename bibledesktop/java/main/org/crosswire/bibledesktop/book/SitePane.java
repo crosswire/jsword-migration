@@ -2,6 +2,7 @@ package org.crosswire.bibledesktop.book;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -91,6 +92,7 @@ public class SitePane extends JPanel
      */
     private void initialize(String labelAcronymn, BookList books)
     {
+        setPreferredSize(new Dimension(750, 500));
         Component left = createAvailablePanel(labelAcronymn, books);
         Component right = createSelectedPanel();
         this.setLayout(new BorderLayout());
@@ -103,12 +105,13 @@ public class SitePane extends JPanel
     private Component createSplitPane(Component left, Component right)
     {
         JSplitPane split = new FixedSplitPane();
-        split.setResizeWeight(0.5);
+        split.setDividerLocation(0.3D);
+        split.setResizeWeight(0.3D);
         split.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         split.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         split.setDividerSize(10);
-        split.add(left, JSplitPane.LEFT);
-        split.add(right, JSplitPane.RIGHT);
+        split.setLeftComponent(left);
+        split.setRightComponent(right);
         return split;
     }
 

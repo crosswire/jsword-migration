@@ -82,7 +82,7 @@ public class ViewSourcePane extends JPanel
         JPanel pnlHtml = new JPanel(new BorderLayout());
         pnlHtml.add(new JScrollPane(txtHtml), BorderLayout.CENTER);
         pnlHtml.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        
+
         textAreas = new JTextArea[] { txtOrig, txtOsis, txtHtml };
 
         pnlButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));

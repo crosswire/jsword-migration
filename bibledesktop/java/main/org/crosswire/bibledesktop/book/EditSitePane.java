@@ -2,6 +2,7 @@ package org.crosswire.bibledesktop.book;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -35,6 +36,7 @@ import javax.swing.event.ListSelectionListener;
 
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.BeanPanel;
+import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.install.InstallManager;
@@ -78,6 +80,7 @@ public class EditSitePane extends JPanel
         init();
         setState(STATE_DISPLAY, null);
         select();
+        setPreferredSize(new Dimension(480, 320));
     }
 
     /**
@@ -179,11 +182,12 @@ public class EditSitePane extends JPanel
         pnlMain.add(pnlBean, new GridBagConstraints(0, 4, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         pnlMain.add(pnlBtn2, new GridBagConstraints(0, 5, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
-        JSplitPane sptMain = new JSplitPane();
+        JSplitPane sptMain = new FixedSplitPane();
         sptMain.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-        sptMain.setResizeWeight(0.0);
-        sptMain.add(pnlSite, JSplitPane.LEFT);
-        sptMain.add(pnlMain, JSplitPane.RIGHT);
+        // Make resizing affect the right only
+        sptMain.setResizeWeight(0);
+        sptMain.setLeftComponent(pnlSite);
+        sptMain.setRightComponent(pnlMain);
 
         this.setLayout(new BorderLayout());
         this.add(sptMain, BorderLayout.CENTER);
@@ -248,19 +252,19 @@ public class EditSitePane extends JPanel
         if (txtName.isEditable())
         {
             String name = txtName.getText().trim();
-    
+
             if (name.length() == 0)
             {
                 setState(STATE_EDIT_ERROR, Msg.MISSING_SITE.toString());
                 return;
             }
-    
+
             if (imanager.getInstaller(name) != null)
             {
                 setState(STATE_EDIT_ERROR, Msg.DUPLICATE_SITE.toString());
                 return;
             }
-    
+
             setState(STATE_EDIT_OK, EMPTY_STRING);
         }
     }
@@ -271,7 +275,7 @@ public class EditSitePane extends JPanel
     protected void newType()
     {
         if (userInitiated)
-        {    
+        {
             String type = (String) cboType.getSelectedItem();
             InstallerFactory ifactory = imanager.getInstallerFactory(type);
             Installer installer = ifactory.createInstaller();
@@ -417,7 +421,7 @@ public class EditSitePane extends JPanel
 
             actions.getAction(RESET).setEnabled(false);
             actions.getAction(SAVE).setEnabled(false);
-            
+
             actions.getAction(CLOSE).setEnabled(true);
 
             txtName.setEditable(false);

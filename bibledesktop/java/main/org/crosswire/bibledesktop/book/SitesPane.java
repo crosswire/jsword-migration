@@ -29,7 +29,7 @@ import org.crosswire.jsword.book.install.InstallerListener;
  * sites = new SitesPane();
  * sites.showInDialog(parent);
  * </pre>
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -130,7 +130,7 @@ public class SitesPane extends JPanel
         for (Iterator it = installers.keySet().iterator(); it.hasNext(); )
         {
             String name = (String) it.next();
-            Installer installer = (Installer) installers.get(name); 
+            Installer installer = (Installer) installers.get(name);
 
             SitePane site = new SitePane(installer);
             tabMain.add(name, site);
@@ -189,16 +189,16 @@ public class SitesPane extends JPanel
     }
 
     /**
-     * 
+     *
      */
     private Component createButtons()
     {
         if (pnlButtons == null)
         {
             JButton btnOK = new JButton(actions.getAction(CLOSE));
-    
+
             JButton btnAdd = new JButton(actions.getAction(EDIT_SITE));
-    
+
             pnlButtons = new JPanel();
             pnlButtons.setLayout(new FlowLayout(FlowLayout.RIGHT));
             pnlButtons.add(btnAdd, null);

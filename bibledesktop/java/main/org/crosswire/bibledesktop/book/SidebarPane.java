@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.event.HyperlinkListener;
 
+import org.crosswire.common.swing.FixedSplitPane;
+
 /**
  * SidebarPane builds a panel containing a set of books in tabbed dialogs.
  * 
@@ -46,11 +48,13 @@ public class SidebarPane extends JPanel
     private void jbInit()
     {
         split.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        split.setDividerLocation(150);
+        split.setDividerLocation(0.3D);
         split.setDividerSize(7);
         split.setBorder(null);
-        split.add(comments, JSplitPane.TOP);
-        split.add(dicts, JSplitPane.BOTTOM);
+        // Make resizing affect the right only
+        split.setResizeWeight(0);
+        split.setTopComponent(comments);
+        split.setBottomComponent(dicts);
 
         this.setLayout(new BorderLayout());
         this.add(split, BorderLayout.CENTER);
@@ -91,6 +95,6 @@ public class SidebarPane extends JPanel
     }
 
     private CommentaryPane comments = new CommentaryPane();
-    private JSplitPane split = new JSplitPane();
+    private JSplitPane split = new FixedSplitPane();
     private DictionaryPane dicts = new DictionaryPane();
 }

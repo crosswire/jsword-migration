@@ -107,7 +107,7 @@ public class DesktopActions
     /**
      * For creating a new window.
      */
-    public void doNewWindow()
+    public void doNewTab()
     {
         BibleViewPane view = new BibleViewPane();
 
@@ -128,7 +128,7 @@ public class DesktopActions
         }
         catch (Exception ex)
         {
-            Reporter.informUser(getDesktop().getJFrame(), ex);
+            Reporter.informUser(getDesktop(), ex);
         }
     }
 
@@ -164,7 +164,7 @@ public class DesktopActions
             BibleViewPane view = getDesktop().getSelectedBibleViewPane();
             if (!view.maySave())
             {
-                Reporter.informUser(getDesktop().getJFrame(), Msg.NO_PASSAGE);
+                Reporter.informUser(getDesktop(), Msg.NO_PASSAGE);
                 return;
             }
 
@@ -172,7 +172,7 @@ public class DesktopActions
         }
         catch (IOException ex)
         {
-            Reporter.informUser(getDesktop().getJFrame(), ex);
+            Reporter.informUser(getDesktop(), ex);
         }
     }
 
@@ -186,7 +186,7 @@ public class DesktopActions
             BibleViewPane view = getDesktop().getSelectedBibleViewPane();
             if (!view.maySave())
             {
-                Reporter.informUser(getDesktop().getJFrame(), Msg.NO_PASSAGE);
+                Reporter.informUser(getDesktop(), Msg.NO_PASSAGE);
                 return;
             }
 
@@ -194,7 +194,7 @@ public class DesktopActions
         }
         catch (IOException ex)
         {
-            Reporter.informUser(getDesktop().getJFrame(), ex);
+            Reporter.informUser(getDesktop(), ex);
         }
     }
 
@@ -217,7 +217,7 @@ public class DesktopActions
 
         if (!ok)
         {
-            Reporter.informUser(getDesktop().getJFrame(), Msg.NO_PASSAGE);
+            Reporter.informUser(getDesktop(), Msg.NO_PASSAGE);
             return;
         }
 
@@ -231,7 +231,7 @@ public class DesktopActions
             }
             catch (IOException ex)
             {
-                Reporter.informUser(getDesktop().getJFrame(), ex);
+                Reporter.informUser(getDesktop(), ex);
             }
         }
     }
@@ -284,7 +284,7 @@ public class DesktopActions
 
             if (key == null)
             {
-                Reporter.informUser(getDesktop().getJFrame(), Msg.SOURCE_MISSING);
+                Reporter.informUser(getDesktop(), Msg.SOURCE_MISSING);
                 return;
             }
 
@@ -306,11 +306,11 @@ public class DesktopActions
             osissep.provideSAXEvents(osis);
 
             ViewSourcePane viewer = new ViewSourcePane(orig, osis.toString(), html);
-            viewer.showInFrame(getDesktop().getJFrame());
+            viewer.showInFrame(getDesktop());
         }
         catch (Exception ex)
         {
-            Reporter.informUser(getDesktop().getJFrame(), ex);
+            Reporter.informUser(getDesktop(), ex);
         }
     }
 
@@ -319,7 +319,7 @@ public class DesktopActions
      */
     public void doBooks()
     {
-        getSites().showInDialog(getDesktop().getJFrame());
+        getSites().showInDialog(getDesktop());
     }
 
     /**
@@ -345,7 +345,7 @@ public class DesktopActions
             Books.installed().addBooksListener(cbl);
 
             URL configUrl = Project.instance().getWritablePropertiesURL("desktop"); //$NON-NLS-1$
-            ConfigEditorFactory.showDialog(desktop.getConfig(), desktop.getJFrame(), configUrl);
+            ConfigEditorFactory.showDialog(desktop.getConfig(), desktop, configUrl);
 
             Books.installed().removeBooksListener(cbl);
         }
@@ -360,7 +360,7 @@ public class DesktopActions
      */
     public void doContents()
     {
-        JOptionPane.showMessageDialog(getDesktop().getJFrame(), Msg.NO_HELP);
+        JOptionPane.showMessageDialog(getDesktop(), Msg.NO_HELP);
     }
 
     /**
@@ -373,7 +373,7 @@ public class DesktopActions
             atp = new AboutPane(getDesktop());
         }
 
-        atp.showInDialog(getDesktop().getJFrame());
+        atp.showInDialog(getDesktop());
     }
 
     /**
@@ -421,13 +421,22 @@ public class DesktopActions
         desktop.showStatusBar(toggle.isSelected());
     }
 
+    /**
+     * Show large or small tool bar icons.
+     */
+    public void doSidebarToggle(ActionEvent ev)
+    {
+        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
+        desktop.showSidebar(toggle.isSelected());
+    }
+
     // Enumeration of all the keys to known actions
     static final String FILE = "File"; //$NON-NLS-1$
     static final String EDIT = "Edit"; //$NON-NLS-1$
     static final String VIEW = "View"; //$NON-NLS-1$
     static final String TOOLS = "Tools"; //$NON-NLS-1$
     static final String HELP = "Help"; //$NON-NLS-1$
-    static final String NEW_WINDOW = "NewWindow"; //$NON-NLS-1$
+    static final String NEW_TAB = "NewTab"; //$NON-NLS-1$
     static final String OPEN = "Open"; //$NON-NLS-1$
     static final String CLOSE = "Close"; //$NON-NLS-1$
     static final String CLOSE_ALL = "CloseAll"; //$NON-NLS-1$
@@ -443,6 +452,7 @@ public class DesktopActions
     static final String TOOLBAR_LARGE = "ToolBarLarge"; //$NON-NLS-1$
     static final String TOOLTIP_TOGGLE = "ToolTipToggle"; //$NON-NLS-1$
     static final String STATUS_TOGGLE = "StatusToggle"; //$NON-NLS-1$
+    static final String SIDEBAR_TOGGLE = "SidebarToggle"; //$NON-NLS-1$
     static final String VIEW_SOURCE = "ViewSource"; //$NON-NLS-1$
     static final String BOOKS = "Books"; //$NON-NLS-1$
     static final String OPTIONS = "Options"; //$NON-NLS-1$

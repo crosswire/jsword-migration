@@ -174,7 +174,7 @@ public class BooksListModel extends AbstractListModel
             int oldsize = getSize();
             cacheData();
             fireIntervalRemoved(ev.getSource(), 0, oldsize);
-        }    
+        }
     }
 
     /* (non-Javadoc)

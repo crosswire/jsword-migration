@@ -1,17 +1,19 @@
 package org.crosswire.bibledesktop.desktop;
 
 import java.awt.Component;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
 
 /**
  * TDI manager of how we layout views.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -40,13 +42,14 @@ public class TDIViewLayout implements ViewLayout
      */
     public TDIViewLayout()
     {
+        views = new ArrayList();
     }
 
     /**
      * If we do this setup in the ctor then the look and feel settings will be
-     * missed, so we delay it to when this class is used.
+     * missed, so we delay it to when tabs are actually used.
      */
-    private void delayedCreate()
+    private JTabbedPane getTabs()
     {
         if (tabMain == null)
         {
@@ -55,6 +58,7 @@ public class TDIViewLayout implements ViewLayout
             // NOTE: when we tried dynamic laf update, tab_main needed special treatment
             //LookAndFeelUtil.addComponentToUpdate(tab_main);
         }
+        return tabMain;
     }
 
     /* (non-Javadoc)
@@ -62,16 +66,24 @@ public class TDIViewLayout implements ViewLayout
      */
     public Component getRootComponent()
     {
-        delayedCreate();
-
         if (views.size() == 1)
         {
             return (Component) views.get(0);
         }
         else
         {
-            return tabMain;
+            return getTabs();
         }
+    }
+
+    /**
+     * Bind a popup to the tabbed page
+     */
+    public void addPopup(JPopupMenu popup)
+    {
+        JTabbedPane tabs = getTabs();
+        MouseListener ml = new TabPopupListener(tabs, popup);
+        tabs.addMouseListener(ml);
     }
 
     /* (non-Javadoc)
@@ -79,28 +91,28 @@ public class TDIViewLayout implements ViewLayout
      */
     public void add(BibleViewPane view)
     {
-        delayedCreate();
+        JTabbedPane tabs = getTabs();
 
         switch (views.size())
         {
         case 0:
-            // Don't add the view to tab_main
+            // Don't add the view to tabMain
             break;
 
         case 1:
             // We used to be in SDI mode, but we are about to go into TDI mode
             // (when getRootComponent() is called is a few secs. So we need
-            // to construct tab_main properly
-            BibleViewPane first = (BibleViewPane) views.get(0); 
-            tabMain.add(first, first.getTitle());
-            tabMain.add(view, view.getTitle());
-            tabMain.setSelectedComponent(view);
+            // to construct tabMain properly
+            BibleViewPane first = (BibleViewPane) views.get(0);
+            tabs.add(first, first.getTitle());
+            tabs.add(view, view.getTitle());
+            tabs.setSelectedComponent(view);
             break;
 
         default:
             // So we are well into tabbed mode
-            tabMain.add(view, view.getTitle());
-            tabMain.setSelectedComponent(view);
+            tabs.add(view, view.getTitle());
+            tabs.setSelectedComponent(view);
             break;
         }
 
@@ -112,15 +124,15 @@ public class TDIViewLayout implements ViewLayout
      */
     public void remove(BibleViewPane view)
     {
-        delayedCreate();
 
+        JTabbedPane tabs = getTabs();
         if (views.size() == 2)
         {
             // remove both tabs, because 0 will be reparented
-            tabMain.removeTabAt(0);
+            tabs.removeTabAt(0);
         }
 
-        tabMain.remove(view);
+        tabs.remove(view);
 
         views.remove(view);
     }
@@ -130,12 +142,11 @@ public class TDIViewLayout implements ViewLayout
      */
     public void updateTitle(BibleViewPane view)
     {
-        delayedCreate();
-
         if (views.size() > 1)
         {
-            int index = tabMain.indexOfComponent(view);
-            tabMain.setTitleAt(index, view.getTitle());
+            JTabbedPane tabs = getTabs();
+            int index = getTabs().indexOfComponent(view);
+            tabs.setTitleAt(index, view.getTitle());
         }
     }
 
@@ -144,16 +155,12 @@ public class TDIViewLayout implements ViewLayout
      */
     public BibleViewPane getSelected()
     {
-        delayedCreate();
-
         if (views.size() == 1)
         {
             return (BibleViewPane) views.get(0);
         }
-        else
-        {
-            return (BibleViewPane) tabMain.getSelectedComponent();
-        }
+        JTabbedPane tabs = getTabs();
+        return (BibleViewPane) tabs.getSelectedComponent();
     }
 
     /**
@@ -165,5 +172,5 @@ public class TDIViewLayout implements ViewLayout
     /**
      * The tabbed view pane
      */
-    private JTabbedPane tabMain = null;
+    private JTabbedPane tabMain;
 }

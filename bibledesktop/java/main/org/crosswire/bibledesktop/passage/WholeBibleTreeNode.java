@@ -11,7 +11,7 @@ import org.crosswire.jsword.passage.VerseRange;
 
 /**
  * A PassageTreeNode extends TreeNode to Model a Passage.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -57,7 +57,7 @@ public class WholeBibleTreeNode implements TreeNode
             if (b == -1)
             {
                 assert false : b;
-            } 
+            }
             else if (c == -1)
             {
                 thislevel = LEVEL_BOOK;
@@ -208,16 +208,16 @@ public class WholeBibleTreeNode implements TreeNode
             {
             case LEVEL_BIBLE:
                 return BibleInfo.booksInBible();
-    
+
             case LEVEL_BOOK:
                 return BibleInfo.chaptersInBook(range.getStart().getBook());
-    
+
             case LEVEL_CHAPTER:
                 return BibleInfo.versesInChapter(range.getStart().getBook(), range.getStart().getChapter());
-    
+
             case LEVEL_VERSE:
                 return 0;
-    
+
             default:
                 return 0;
             }
@@ -282,7 +282,7 @@ public class WholeBibleTreeNode implements TreeNode
             count++;
             return getChildAt(count);
         }
-        
+
         private int count = 0;
     }
 

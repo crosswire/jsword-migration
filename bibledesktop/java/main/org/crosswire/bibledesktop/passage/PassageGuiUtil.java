@@ -73,7 +73,7 @@ public class PassageGuiUtil
         KeyTreeModel mdl = (KeyTreeModel) tree.getModel();
         Key root = mdl.getKey();
 
-        for (Iterator it = selected.iterator(); it.hasNext();)
+        for (Iterator it = selected.iterator(); it.hasNext(); )
         {
             Key key = (Key) it.next();
             root.removeAll(key);

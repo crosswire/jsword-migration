@@ -105,7 +105,7 @@ public class Splash extends JWindow
 
         JLabel lblInfo = new JLabel();
         lblInfo.setBorder(null);
-        lblInfo.setFont(new Font(SPLASH_FONT, Font.PLAIN, 10));
+        lblInfo.setFont(new Font(SPLASH_FONT, Font.PLAIN, 9));
         lblInfo.setForeground(Color.WHITE);
         lblInfo.setBackground(Color.BLACK);
         //lblInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
@@ -113,13 +113,15 @@ public class Splash extends JWindow
         lblInfo.setText(Msg.getVersionInfo()+" "); //$NON-NLS-1$
         lblInfo.setOpaque(true);
 
-        JPanel pnlInfo = new JPanel();
         JobsProgressBar pnlJobs = new JobsProgressBar(false);
+        pnlJobs.setBackground(Color.WHITE);
+        pnlJobs.setForeground(Color.BLACK);
+        pnlJobs.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+
+        JPanel pnlInfo = new JPanel();
         pnlInfo.setLayout(new BorderLayout(5, 0));
-        pnlInfo.setBackground(Color.WHITE);
         pnlInfo.setOpaque(true);
         //pnlInfo.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
-        pnlJobs.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         pnlInfo.add(lblInfo, BorderLayout.CENTER);
         pnlInfo.add(pnlJobs, BorderLayout.SOUTH);
 

@@ -83,7 +83,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
             assert book > 0;
             setBook(book);
             break;
-   
+
         case LEVEL_CHAPTER:
             Integer csel = (Integer) selected;
             setChapter(csel.intValue());
@@ -93,7 +93,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
             Integer vsel = (Integer) selected;
             setVerse(vsel.intValue());
             break;
-   
+
         default:
             assert false : level;
         }
@@ -120,13 +120,13 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
             {
             case LEVEL_BOOK:
                 return BibleInfo.booksInBible();
-            
+
             case LEVEL_CHAPTER:
                 return BibleInfo.chaptersInBook(set.getVerse().getBook());
-            
+
             case LEVEL_VERSE:
                 return BibleInfo.versesInChapter(set.getVerse().getBook(), set.getVerse().getChapter());
-            
+
             default:
                 assert false : level;
                 return 0;
@@ -243,7 +243,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
     {
         super.fireContentsChanged(source, index0, index1);
     }
-    
+
     /**
      * The log stream
      */

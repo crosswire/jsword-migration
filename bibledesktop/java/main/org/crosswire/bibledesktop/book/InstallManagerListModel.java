@@ -84,7 +84,7 @@ public class InstallManagerListModel extends AbstractListModel
         public void installerRemoved(InstallerEvent ev)
         {
             update(ev);
-        }        
+        }
     }
 
     /**

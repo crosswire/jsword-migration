@@ -289,15 +289,10 @@
       <property name="format" value="((public)|(protected))\s+void\s+finalize\(\s*\)"/>
     </module>
 	<!-- Check to find trailing whitespace at the end of a line -->
-	<!-- We are not ready for this
 	<module name="GenericIllegalRegexp">
       <property name="format" value="\s$"/>
-	-->
-	<!-- v3.4 -->
-	<!--
       <property name="ignoreComments" value="true"/>
 	</module>
-	-->
 
     <module name="TodoComment"/>
 	<module name="UncommentedMain">

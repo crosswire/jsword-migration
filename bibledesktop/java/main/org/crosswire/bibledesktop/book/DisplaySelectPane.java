@@ -3,7 +3,6 @@ package org.crosswire.bibledesktop.book;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Action;
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -82,11 +80,11 @@ public class DisplaySelectPane extends JPanel
         actions = new ActionFactory(DisplaySelectPane.class, this);
 
         // Create a way for selecting how passages are found
-        JPanel pnlSelect = new JPanel(new BorderLayout());
+        JPanel pnlSelect = new JPanel(new GridBagLayout());
 
         // Layout the card picker and the Bible picker side by side
-        pnlSelect.add(createRadioPanel(), BorderLayout.LINE_START);
-        pnlSelect.add(createBiblePicker(), BorderLayout.LINE_END);
+        pnlSelect.add(createRadioPanel(), new GridBagConstraints(0, 0, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 2), 0, 0));
+        pnlSelect.add(createBiblePicker(), new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 2, 0, 2), 0, 0));
 
         // Create a deck of "cards" for the different ways of finding passages
         layCards = new CardLayout();
@@ -135,10 +133,6 @@ public class DisplaySelectPane extends JPanel
         mdlVersn = new BooksComboBoxModel(BookFilters.getBibles());
         JComboBox cboVersn = new JComboBox(mdlVersn);
         cboVersn.setRenderer(new BookListCellRenderer());
-        cboVersn.setPrototypeDisplayValue(BookListCellRenderer.PROTOTYPE_BOOK_NAME);
-        Dimension min = cboVersn.getMinimumSize();
-        min.width = 100;
-        cboVersn.setMinimumSize(min);
         cboVersn.addItemListener(new ItemListener()
         {
             public void itemStateChanged(ItemEvent ev)
@@ -173,16 +167,15 @@ public class DisplaySelectPane extends JPanel
         });
 
         JButton btnDialg = new JButton(actions.getAction(MORE));
-        btnDialg.setBorder(BorderFactory.createCompoundBorder(txtPassg.getBorder(), btnDialg.getBorder()));
 
-        JButton btnPassg = new JButton(actions.getAction(GO_PASSAGE));
+        JButton goButton = new JButton(actions.getAction(GO_PASSAGE));
 
         JPanel panel = new JPanel(new GridBagLayout());
 
-        panel.add(label, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.VERTICAL, new Insets(5, 5, 0, 2), 0, 0));
-        panel.add(txtPassg, new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 2, 2, -1), 0, 0));
-        panel.add(btnDialg, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.VERTICAL, new Insets(5, -1, 0, 2), 0, 0));
-        panel.add(btnPassg, new GridBagConstraints(0, 1, 3, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 20, 5, 20), 0, 0));
+        panel.add(label, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
+        panel.add(txtPassg, new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
+        panel.add(goButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
+        panel.add(btnDialg, new GridBagConstraints(1, 1, 2, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
 
         return panel;
     }
@@ -210,11 +203,11 @@ public class DisplaySelectPane extends JPanel
 
         JPanel panel = new JPanel(new GridBagLayout());
 
-        panel.add(label, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 5, 2, 2), 0, 0));
-        panel.add(txtSearch, new GridBagConstraints(1, 0, 2, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 2, 2, 5), 0, 0));
-        panel.add(chkSRestrict, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 5, 5, 2), 0, 0));
-        panel.add(txtSRestrict, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 5, 2), 0, 0));
-        panel.add(goButton, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 20, 5, 20), 0, 0));
+        panel.add(label, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
+        panel.add(txtSearch, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
+        panel.add(goButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
+        panel.add(chkSRestrict, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
+        panel.add(txtSRestrict, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
 
         return panel;
     }
@@ -242,11 +235,11 @@ public class DisplaySelectPane extends JPanel
 
         JPanel panel = new JPanel(new GridBagLayout());
 
-        panel.add(label, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 5, 2, 2), 0, 0));
-        panel.add(txtMatch, new GridBagConstraints(1, 0, 2, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 2, 2, 5), 0, 0));
-        panel.add(chkMRestrict, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 5, 5, 2), 0, 0));
-        panel.add(txtMRestrict, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 5, 2), 0, 0));
-        panel.add(goButton, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 20, 5, 20), 0, 0));
+        panel.add(label, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
+        panel.add(txtMatch, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
+        panel.add(goButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
+        panel.add(chkMRestrict, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
+        panel.add(txtMRestrict, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
 
         return panel;
     }
@@ -417,7 +410,7 @@ public class DisplaySelectPane extends JPanel
     public void doRestrictMatch()
     {
         boolean selected = chkMRestrict.isSelected();
-        txtMRestrict.setEnabled(selected);        
+        txtMRestrict.setEnabled(selected);
     }
 
     /**
@@ -700,3 +693,4 @@ public class DisplaySelectPane extends JPanel
      */
     private static final long serialVersionUID = 1L;
 }
+
