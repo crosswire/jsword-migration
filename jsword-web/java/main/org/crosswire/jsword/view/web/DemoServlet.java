@@ -19,7 +19,6 @@ import org.crosswire.jsword.book.Search;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageConstants;
-import org.crosswire.jsword.passage.PassageFactory;
 import org.crosswire.jsword.passage.PassageTally;
 
 /**
@@ -100,7 +99,7 @@ public class DemoServlet extends HttpServlet
             if (view != null)
             {
                 request.setAttribute(FIELD_VIEW, view);
-                key = PassageFactory.createPassage(view);
+                key = book.getKey(view);
             }
 
             if (key instanceof Passage)
