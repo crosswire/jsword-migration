@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 
 import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
-import org.crosswire.common.util.LogicError;
 
 /**
  * VBAExport takes a Map and exports the data to a Word VBA file.
@@ -244,7 +243,7 @@ public class VBAExport
         }
         catch (NoSuchVerseException ex)
         {
-            throw new LogicError(ex);
+            assert false : ex;
         }
 
         out.println("End Sub");

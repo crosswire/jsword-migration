@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.crosswire.common.util.Logger;
-import org.crosswire.common.util.LogicError;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.Search;
@@ -31,7 +30,7 @@ import org.jdom.output.XMLOutputter;
  * It is similar to a central margin reference data set, except that it works
  * with chapters and not verses and every chapter is linked to a constant
  * number of others, and the links have strengths.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -108,7 +107,7 @@ public class LinkArray implements Serializable
     public void fromXML(Element elinks) throws JDOMException
     {
         if (!elinks.getName().equals("links"))
-        {    
+        {
             throw new JDOMException("root element is not called 'links'");
         }
 
@@ -118,7 +117,7 @@ public class LinkArray implements Serializable
         {
             Element eb = (Element) bit.next();
             int b = Integer.parseInt(eb.getAttributeValue("num"));
-            
+
             List ecs = eb.getChildren("chapter");
             Iterator cit = ecs.iterator();
             while (cit.hasNext())
@@ -189,7 +188,7 @@ public class LinkArray implements Serializable
         }
         catch (NoSuchVerseException ex)
         {
-            throw new LogicError(ex);
+            assert false : ex;
         }
 
         return elinks;
@@ -225,7 +224,7 @@ public class LinkArray implements Serializable
         {
             PassageTally total = new PassageTally();
             total.setOrdering(PassageTally.ORDER_TALLY);
-            
+
             for (int v=1; v<=BibleInfo.versesInChapter(b, c); v++)
             {
                 Verse find = new Verse(b, c, v);
@@ -233,7 +232,7 @@ public class LinkArray implements Serializable
                 ref.add(find);
 
                 BookData bdata = book.getData(ref);
-                String text = bdata.getPlainText();   
+                String text = bdata.getPlainText();
                 PassageTally temp = (PassageTally) book.find(new Search(text, false));
                 temp.setOrdering(PassageTally.ORDER_TALLY);
                 total.addAll(temp);
@@ -257,15 +256,15 @@ public class LinkArray implements Serializable
                 int strength = total.getTallyOf(loop);
                 links[b][c][i] = new Link(loop.getBook(), loop.getChapter(), strength);
             }
-            
-            log.debug("Generated links for: book="+b+" chapter="+c+" #links="+links[b][c].length);
 
-            return links[b][c];
+            log.debug("Generated links for: book="+b+" chapter="+c+" #links="+links[b][c].length);
         }
         catch (Exception ex)
         {
-            throw new LogicError(ex);
+            assert false : ex;
         }
+
+        return links[b][c];
     }
 
     /**
@@ -296,14 +295,14 @@ public class LinkArray implements Serializable
                 Verse start = new Verse(b, c, 1);
                 Verse end = new Verse(b, c, BibleInfo.versesInChapter(b, c));
                 VerseRange chapter = new VerseRange(start, end);
-                
+
                 int chaptotal = 0;
 
                 for (int v=1; v<=BibleInfo.versesInChapter(b, c); v++)
                 {
                     chaptotal += tally.getTallyOf(new Verse(b, c, v));
                 }
-                
+
                 tally.remove(chapter);
                 tally.add(start, chaptotal);
 
@@ -312,7 +311,7 @@ public class LinkArray implements Serializable
                     System.out.println("truncated chaptotal: "+chaptotal);
                 }
             }
-        }        
+        }
     }
 
     /**

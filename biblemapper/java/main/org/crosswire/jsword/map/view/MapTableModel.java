@@ -4,6 +4,7 @@ package org.crosswire.jsword.map.view;
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 
+import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.map.model.Map;
 import org.crosswire.jsword.map.model.MapEvent;
 import org.crosswire.jsword.map.model.MapListener;
@@ -11,8 +12,6 @@ import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.passage.VerseRange;
-import org.crosswire.common.util.LogicError;
-import org.crosswire.common.util.Reporter;
 
 /**
  * A MapTableModel takes an underlying map and represents it as a
@@ -306,7 +305,7 @@ public class MapTableModel extends AbstractTableModel
             }
             catch (NoSuchVerseException ex)
             {
-                throw new LogicError(ex);
+                assert false : ex;
             }
         }
 

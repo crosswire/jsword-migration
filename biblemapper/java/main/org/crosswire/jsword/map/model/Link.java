@@ -1,4 +1,3 @@
-
 package org.crosswire.jsword.map.model;
 
 import java.io.Serializable;
@@ -7,7 +6,6 @@ import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.passage.VerseRange;
-import org.crosswire.common.util.LogicError;
 
 /**
  * A Link describes a destination verse and a link strength.
@@ -83,7 +81,8 @@ public class Link implements Serializable
         }
         catch (NoSuchVerseException ex)
         {
-            throw new LogicError(ex);
+            assert false : ex;
+            return "Link(ERROR)";
         }
     }
 

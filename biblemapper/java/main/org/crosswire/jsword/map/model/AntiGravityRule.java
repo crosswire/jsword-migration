@@ -1,8 +1,6 @@
-
 package org.crosswire.jsword.map.model;
 
 import org.crosswire.common.util.Logger;
-import org.crosswire.common.util.LogicError;
 import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 
@@ -76,20 +74,20 @@ public class AntiGravityRule extends AbstractRule
                     }
                 }
             }
-    
-            // Average the totals out, and add in the original position
-            for (int d=0; d<totals.length; d++)
-            {
-                totals[d] = totals[d] / count;
-                totals[d] += us[d];
-            }
-    
-            return new Position(totals);
         }
         catch (NoSuchVerseException ex)
         {
-            throw new LogicError(ex);
+            assert false : ex;
         }
+
+        // Average the totals out, and add in the original position
+        for (int d=0; d<totals.length; d++)
+        {
+            totals[d] = totals[d] / count;
+            totals[d] += us[d];
+        }
+
+        return new Position(totals);
     }
 
     /**

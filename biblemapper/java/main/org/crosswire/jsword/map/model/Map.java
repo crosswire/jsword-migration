@@ -1,4 +1,3 @@
-
 package org.crosswire.jsword.map.model;
 
 import java.io.IOException;
@@ -10,6 +9,8 @@ import java.io.Writer;
 import java.util.Iterator;
 import java.util.List;
 
+import org.crosswire.common.util.EventListenerList;
+import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.jdom.Document;
@@ -17,9 +18,6 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
-import org.crosswire.common.util.Logger;
-import org.crosswire.common.util.EventListenerList;
-import org.crosswire.common.util.LogicError;
 
 /**
  * A map is an array of Nodes (verses with position).
@@ -78,8 +76,7 @@ public class Map implements Serializable
         }
         catch (NoSuchVerseException ex)
         {
-            ex.printStackTrace();
-            throw new LogicError(ex);
+            assert false : ex;
         }
     }
 
@@ -170,7 +167,7 @@ public class Map implements Serializable
         }
         catch (NoSuchVerseException ex)
         {
-            throw new LogicError(ex);
+            assert false : ex;
         }
     }
 
@@ -217,7 +214,7 @@ public class Map implements Serializable
         }
         catch (NoSuchVerseException ex)
         {
-            throw new LogicError(ex);
+            assert false : ex;
         }
     }
 
@@ -260,7 +257,7 @@ public class Map implements Serializable
         }
         catch (NoSuchVerseException ex)
         {
-            throw new LogicError(ex);
+            assert false : ex;
         }
 
         fireMapRewritten();
@@ -525,7 +522,7 @@ public class Map implements Serializable
         }
         catch (NoSuchVerseException ex)
         {
-            throw new LogicError(ex);
+            assert false : ex;
         }
 
         return epos;

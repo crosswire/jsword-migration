@@ -1,4 +1,3 @@
-
 package org.crosswire.jsword.map.view;
 
 import java.awt.Color;
@@ -16,7 +15,6 @@ import org.crosswire.jsword.map.model.MapEvent;
 import org.crosswire.jsword.map.model.MapListener;
 import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
-import org.crosswire.common.util.LogicError;
 
 /**
  * This is an Swing GUI interface to the BMap project.
@@ -182,7 +180,7 @@ public class MapperPane extends JPanel implements Scrollable
         }
         catch (NoSuchVerseException ex)
         {
-            throw new LogicError(ex);
+            assert false : ex;
         }
     }
 
