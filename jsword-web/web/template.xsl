@@ -8,12 +8,14 @@
     >
 
 <xsl:output
-    method="xml"
-    doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
-    doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+    method="xml"    
     indent="yes"
     encoding="windows-1252"
     />
+    <!--
+    doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+    doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+    -->
 
 <xsl:template match="/jsp:root">
   <jsp:root version="1.2">

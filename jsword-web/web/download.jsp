@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="1.2">
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
