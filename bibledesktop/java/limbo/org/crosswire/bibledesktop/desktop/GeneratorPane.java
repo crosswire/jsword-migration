@@ -72,7 +72,6 @@ import org.crosswire.jsword.book.basic.Verifier;
  */
 public class GeneratorPane extends EirPanel
 {
-    // DEAD(DM): This class is not used. Find a use for it or delete it.
     // I18N: This class has not been internationalized, because it is not used.
     /**
      * Construct a Bible Generator tool, this simply calls jbInit
@@ -338,7 +337,7 @@ public class GeneratorPane extends EirPanel
 
                     CompareResultsPane results = new CompareResultsPane(ver);
                     results.setCheckText(""); //$NON-NLS-1$
-                    results.setCheckPassages(Verifier.WHOLE);
+                    results.setCheckPassages(null);
                     results.showInFrame(GuiUtil.getFrame(GeneratorPane.this));
                     results.startStop();
                 }

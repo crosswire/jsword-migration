@@ -55,7 +55,7 @@ public class PassageTreeNode implements TreeNode, PassageListener
      */
     public TreeNode getChildAt(int index)
     {
-        return new VerseRangeTreeNode(ref.getVerseRangeAt(index, PassageConstants.RESTRICT_CHAPTER));
+        return new VerseRangeTreeNode(ref.getRangeAt(index, PassageConstants.RESTRICT_CHAPTER));
     }
 
     /**

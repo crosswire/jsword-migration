@@ -22,10 +22,8 @@ import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.passage.KeyList;
-import org.crosswire.jsword.passage.Passage;
+import org.crosswire.jsword.passage.KeyUtil;
 import org.crosswire.jsword.passage.PassageConstants;
-import org.crosswire.jsword.passage.PassageUtil;
 import org.crosswire.jsword.passage.VerseRange;
 
 /**
@@ -138,7 +136,7 @@ public class SplitBookDataDisplay implements BookDataDisplay
      */
     public void doBlur1()
     {
-        doBlur(1);        
+        doBlur(1);
     }
 
     /**
@@ -147,7 +145,7 @@ public class SplitBookDataDisplay implements BookDataDisplay
      */
     public void doBlur5()
     {
-       doBlur(5);        
+        doBlur(5);
     }
 
     /**
@@ -157,15 +155,10 @@ public class SplitBookDataDisplay implements BookDataDisplay
      */
     private void doBlur(int amount)
     {
-        Passage ref = PassageUtil.getPassage(key);
-        
-        if (ref != null)
-        {
-            ref.blur(amount, PassageConstants.RESTRICT_CHAPTER);
-            setBookData(book, ref);
-            
-            updateParents();
-        }
+        key.blur(amount, PassageConstants.RESTRICT_CHAPTER);
+        setBookData(book, key);
+
+        updateParents();
     }
 
     /**
@@ -192,7 +185,7 @@ public class SplitBookDataDisplay implements BookDataDisplay
      */
     private void updateParents()
     {
-        // TODO: update the editable area with the current value
+        // TODO(joe): update the editable area with the current value
         // BibleViewPane view = ...
         // DisplaySelectPane psel = view.getSelectPane();
         // psel.setPassage(ref);
@@ -211,9 +204,9 @@ public class SplitBookDataDisplay implements BookDataDisplay
      */
     public void setBookData(Book book, Key key)
     {
-        boolean keyChanged = this.key == null || ! this.key.equals(key);
-        boolean bookChanged = this.book == null || ! this.book.equals(book);
- 
+        boolean keyChanged = this.key == null || !this.key.equals(key);
+        boolean bookChanged = this.book == null || !this.book.equals(book);
+
         this.book = book;
         this.key = key;
 
@@ -222,9 +215,9 @@ public class SplitBookDataDisplay implements BookDataDisplay
         if (keyChanged)
         {
             log.debug("new passage chosen: " + key.getName()); //$NON-NLS-1$
-            model.setPassage(PassageUtil.getPassage(key));
+            model.setPassage(KeyUtil.getPassage(key));
         }
-        
+
         if (bookChanged || keyChanged)
         {
             if (bookChanged)
@@ -284,7 +277,7 @@ public class SplitBookDataDisplay implements BookDataDisplay
     {
         try
         {
-            //KeyList selected = PassageGuiUtil.getSelectedKeys(tree);
+            //Key selected = PassageGuiUtil.getSelectedKeys(tree);
             Object[] selected = list.getSelectedValues();
 
             Key local = null;
@@ -294,24 +287,18 @@ public class SplitBookDataDisplay implements BookDataDisplay
             }
             else
             {
-                KeyList selectedKey = book.createEmptyKeyList();
-                for (int i=0; i<selected.length; i++)
+                Key selectedKey = book.createEmptyKeyList();
+
+                for (int i = 0; i < selected.length; i++)
                 {
-                    selectedKey.add((VerseRange) selected[i]);
+                    Key added = KeyUtil.getKeyList((VerseRange) selected[i], getBook());
+                    selectedKey.addAll(added);
                 }
 
                 // if there was a single selection then show the whole chapter
                 if (selected.length == 1)
                 {
-                    if (selectedKey instanceof Passage)
-                    {
-                        Passage ref = (Passage) selectedKey;
-                        ref.blur(1000, PassageConstants.RESTRICT_CHAPTER);
-                    }
-                    else
-                    {
-                        selectedKey.blur(5);
-                    }
+                    selectedKey.blur(5, PassageConstants.RESTRICT_CHAPTER);
                 }
 
                 local = selectedKey;

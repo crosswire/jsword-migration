@@ -149,7 +149,7 @@ public class PassageListModel extends AbstractListModel implements PassageListen
 
         if (mode == LIST_RANGES)
         {
-            return ref.getVerseRangeAt(index, restrict);
+            return ref.getRangeAt(index, restrict);
         }
         else
         {

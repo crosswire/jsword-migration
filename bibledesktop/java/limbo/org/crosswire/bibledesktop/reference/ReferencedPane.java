@@ -32,7 +32,6 @@ import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.passage.KeyList;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 
 /**
@@ -159,8 +158,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
         }
 
         KeyTreeNode keytn = (KeyTreeNode) path.getLastPathComponent();
-        Key key = keytn.getKey();
-        return key;
+        return keytn.getKey();
     }
 
     /* (non-Javadoc)
@@ -254,7 +252,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
         Object selected = tblBooks.getSelectedValue();
         BookMetaData bmd = (BookMetaData) selected;
         book = bmd.getBook();
-        KeyList set = book.getGlobalKeyList();
+        Key set = book.getGlobalKeyList();
 
         TreeModel model = new DefaultTreeModel(new KeyTreeNode(set, null), true);
         treEntries.setModel(model);

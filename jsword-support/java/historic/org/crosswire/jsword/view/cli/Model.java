@@ -17,7 +17,7 @@ import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.Search;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.passage.KeyList;
+import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.util.Project;
 import org.jdom.Document;

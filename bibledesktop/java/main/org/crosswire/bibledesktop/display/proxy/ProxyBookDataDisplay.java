@@ -86,8 +86,8 @@ public class ProxyBookDataDisplay implements BookDataDisplay
         return proxy.getComponent();
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.BookData)
+    /*
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(Book, Key)
      */
     public void setBookData(Book book, Key key)
     {

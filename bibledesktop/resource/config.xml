@@ -134,7 +134,7 @@
   </option>
 
   <option key="Advanced.Passage.DefaultType" type="int-options">
-    <introspect class="org.crosswire.jsword.passage.PassageFactory" property="DefaultPassage"/>
+    <introspect class="org.crosswire.jsword.passage.PassageKeyFactory" property="DefaultPassage"/>
     <alternative number="0"/>
     <alternative number="1"/>
     <alternative number="2"/>

@@ -3,7 +3,6 @@ package org.crosswire.jsword.book.sword;
 import org.crosswire.common.activate.Activatable;
 import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.passage.KeyList;
 
 /**
  * A generic way to read data from disk for later formatting.
@@ -35,7 +34,7 @@ public interface Backend extends Activatable
      * Initialise a Backend before use. This method needs to call addKey() a
      * number of times on SwordDictionary
      */
-    public KeyList readIndex();
+    public Key readIndex();
 
     /**
      * Get the bytes alotted for the given verse

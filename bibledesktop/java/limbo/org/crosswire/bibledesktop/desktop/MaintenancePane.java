@@ -51,7 +51,6 @@ import org.crosswire.jsword.book.BookFilters;
  */
 public class MaintenancePane extends EirPanel
 {
-    // DEAD(DM): This class is not used. Find a use for it or delete it.
     // I18N: This class has not been internationalized, because it is not used.
     /**
      * Create a new BibleMaintenance Panel

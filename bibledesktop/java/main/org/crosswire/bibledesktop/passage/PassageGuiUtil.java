@@ -8,7 +8,6 @@ import javax.swing.tree.TreePath;
 
 import org.crosswire.jsword.passage.DefaultKeyList;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.passage.KeyList;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.VerseRange;
 
@@ -69,19 +68,15 @@ public class PassageGuiUtil
      */
     public static void deleteSelectedVersesFromTree(JTree tree)
     {
-        KeyList selected = getSelectedKeys(tree);
+        Key selected = getSelectedKeys(tree);
 
         KeyTreeModel mdl = (KeyTreeModel) tree.getModel();
         Key root = mdl.getKey();
 
-        if (root instanceof KeyList)
+        for (Iterator it = selected.iterator(); it.hasNext();)
         {
-            KeyList set = (KeyList) root;
-            for (Iterator it = selected.iterator(); it.hasNext();)
-            {
-                Key key = (Key) it.next();
-                set.remove(key);
-            }
+            Key key = (Key) it.next();
+            root.removeAll(key);
         }
 
         mdl.setKey(root);
@@ -90,15 +85,15 @@ public class PassageGuiUtil
     /**
      * @return The selected keys in the tree
      */
-    public static KeyList getSelectedKeys(JTree tree)
+    public static Key getSelectedKeys(JTree tree)
     {
-        KeyList selected = new DefaultKeyList();
+        Key selected = new DefaultKeyList();
         TreePath[] paths = tree.getSelectionPaths();
 
         for (int i = 0; i < paths.length; i++)
         {
             KeyTreeNode node = (KeyTreeNode) paths[1].getLastPathComponent();
-            selected.add(node.getKey());
+            selected.addAll(node.getKey());
         }
 
         return selected;

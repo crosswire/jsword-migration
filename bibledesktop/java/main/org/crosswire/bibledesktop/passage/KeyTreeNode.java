@@ -1,14 +1,11 @@
 package org.crosswire.bibledesktop.passage;
 
 import java.util.Enumeration;
-import java.util.Vector;
 
 import javax.swing.tree.TreeNode;
 
 import org.crosswire.common.util.IteratorEnumeration;
-import org.crosswire.jsword.passage.DefaultKeyList;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.passage.KeyList;
 
 /**
  * An implementation of TreeNode that reads from Keys and KeyLists.
@@ -43,11 +40,6 @@ public class KeyTreeNode implements TreeNode
     {
         this.key = key;
         this.parent = parent;
-
-        if (key instanceof KeyList)
-        {
-            this.keylist = DefaultKeyList.getKeyList(key);
-        }
     }
 
     /* (non-Javadoc)
@@ -55,14 +47,7 @@ public class KeyTreeNode implements TreeNode
      */
     public int getChildCount()
     {
-        if (key instanceof KeyList)
-        {
-            return keylist.size();
-        }
-        else
-        {
-            return 0;
-        }
+        return key.getChildCount();
     }
 
     /* (non-Javadoc)
@@ -70,7 +55,7 @@ public class KeyTreeNode implements TreeNode
      */
     public boolean getAllowsChildren()
     {
-        return key instanceof KeyList;
+        return key.canHaveChildren();
     }
 
     /* (non-Javadoc)
@@ -78,7 +63,7 @@ public class KeyTreeNode implements TreeNode
      */
     public boolean isLeaf()
     {
-        return !(key instanceof KeyList);
+        return key.isEmpty();
     }
 
     /* (non-Javadoc)
@@ -86,14 +71,7 @@ public class KeyTreeNode implements TreeNode
      */
     public Enumeration children()
     {
-        if (key instanceof KeyList)
-        {
-            return new IteratorEnumeration(keylist.iterator());
-        }
-        else
-        {
-            return new Vector().elements();
-        }
+        return new IteratorEnumeration(key.iterator());
     }
 
     /* (non-Javadoc)
@@ -109,15 +87,8 @@ public class KeyTreeNode implements TreeNode
      */
     public TreeNode getChildAt(int index)
     {
-        if (key instanceof KeyList)
-        {
-            Key child = keylist.get(index);
-            return new KeyTreeNode(child, this);
-        }
-        else
-        {
-            return null;
-        }
+        Key child = key.get(index);
+        return new KeyTreeNode(child, this);
     }
 
     /* (non-Javadoc)
@@ -129,8 +100,8 @@ public class KeyTreeNode implements TreeNode
         {
             KeyTreeNode keynode = (KeyTreeNode) node;
             Key that = keynode.getKey();
-            
-            return keylist.indexOf(that);
+
+            return key.indexOf(that);
         }
         else
         {
@@ -147,6 +118,5 @@ public class KeyTreeNode implements TreeNode
     }
 
     private Key key;
-    private KeyList keylist;
     private TreeNode parent;
 }

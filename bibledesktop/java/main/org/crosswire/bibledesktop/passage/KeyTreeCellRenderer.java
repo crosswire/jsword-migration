@@ -50,12 +50,12 @@ public class KeyTreeCellRenderer extends DefaultTreeCellRenderer
         }
         else
         {
-            log.warn("value is not a key: "+value.getClass().getName()); //$NON-NLS-1$
+            log.warn("value is not a key: " + value.getClass().getName()); //$NON-NLS-1$
         }
 
         return this;
     }
-    
+
     /**
      * The log stream
      */

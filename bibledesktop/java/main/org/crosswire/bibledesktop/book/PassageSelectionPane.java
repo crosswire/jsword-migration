@@ -40,11 +40,12 @@ import org.crosswire.bibledesktop.passage.WholeBibleTreeNode;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.ResourceUtil;
-import org.crosswire.jsword.passage.NoSuchVerseException;
+import org.crosswire.jsword.passage.KeyFactory;
+import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageConstants;
 import org.crosswire.jsword.passage.PassageEvent;
-import org.crosswire.jsword.passage.PassageFactory;
+import org.crosswire.jsword.passage.PassageKeyFactory;
 import org.crosswire.jsword.passage.PassageListener;
 import org.crosswire.jsword.passage.VerseRange;
 
@@ -225,14 +226,14 @@ public class PassageSelectionPane extends JPanel
         Passage temp = null;
         try
         {
-            temp = PassageFactory.createPassage(refstr);
+            temp = (Passage) keyf.getKey(refstr);
             ref.clear();
             ref.addAll(temp);
 
             setValidPassage(true);
             updateMessageSummary();
         }
-        catch (NoSuchVerseException ex)
+        catch (NoSuchKeyException ex)
         {
             setValidPassage(false);
             updateMessage(ex);
@@ -256,7 +257,7 @@ public class PassageSelectionPane extends JPanel
      * Write out an error message to the message label
      * @param ex
      */
-    private void updateMessage(NoSuchVerseException ex)
+    private void updateMessage(NoSuchKeyException ex)
     {
         lblMessage.setText(Msg.ERROR.toString(ex.getMessage()));
         lblMessage.setIcon(icoBad);
@@ -281,7 +282,7 @@ public class PassageSelectionPane extends JPanel
     {
         try
         {
-            ref = PassageFactory.createPassage(refstr);
+            ref = (Passage) keyf.getKey(refstr);
 
             txtDisplay.setText(refstr);
             lstSel.setModel(new PassageListModel(ref, PassageListModel.LIST_RANGES, PassageConstants.RESTRICT_CHAPTER));
@@ -289,7 +290,7 @@ public class PassageSelectionPane extends JPanel
             ref.addPassageListener(new CustomPassageListener());
             updateMessageSummary();
         }
-        catch (NoSuchVerseException ex)
+        catch (NoSuchKeyException ex)
         {
             setValidPassage(false);
             updateMessage(ex);
@@ -404,6 +405,11 @@ public class PassageSelectionPane extends JPanel
     private static final String SELECTED_VERSES = "SelectedVerses"; //$NON-NLS-1$
     private static final String VERSES = "Verses"; //$NON-NLS-1$
     private static final String DONE = "Done"; //$NON-NLS-1$
+
+    /**
+     * To convert strings into Biblical keys
+     */
+    protected KeyFactory keyf = new PassageKeyFactory();
 
     /**
      * If escape was pressed we don't want to update the parent

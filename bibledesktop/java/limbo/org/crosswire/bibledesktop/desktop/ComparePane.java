@@ -26,8 +26,6 @@ import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.basic.Verifier;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.passage.KeyList;
-import org.crosswire.jsword.passage.PassageFactory;
 
 /**
  * A ComparePane allows you to compare 2 differing version of the Bible
@@ -61,19 +59,18 @@ import org.crosswire.jsword.passage.PassageFactory;
  */
 public class ComparePane extends EirPanel
 {
-    // DEAD(DM): This class is not used. Find a use for it or delete it.
     /**
      * Basic Constructor
      */
     public ComparePane()
     {
-        jbInit();
+        init();
     }
 
     /**
      * Generate the GUI
      */
-    private void jbInit()
+    private void init()
     {
         cboBible1.setModel(mdlBibles1);
         cboBible1.setRenderer(new BookListCellRenderer());
@@ -93,7 +90,8 @@ public class ComparePane extends EirPanel
         pnlBibles.add(Box.createVerticalStrut(5), null);
         pnlBibles.add(cboBible2, null);
 
-        txtVerses.setText(PassageFactory.getWholeBiblePassage().toString());
+        // TODO(joe): don't hard code this, read it from a Book
+        txtVerses.setText("Gen-Rev"); //$NON-NLS-1$
         lblVerses.setText(Msg.COMPARE_VERSES.toString());
         lblVerses.setLabelFor(txtVerses);
         pnlVerses.setLayout(new BorderLayout());
@@ -158,8 +156,6 @@ public class ComparePane extends EirPanel
 
             // Is this right?
             Key key = book1.getKey(refText);
-            KeyList keylist = book1.createEmptyKeyList();
-            keylist.add(key);
 
             words = words.trim();
             if (words.equals("*")) //$NON-NLS-1$
@@ -175,7 +171,7 @@ public class ComparePane extends EirPanel
 
             CompareResultsPane results = new CompareResultsPane(ver);
             results.setCheckText(words);
-            results.setCheckPassages(keylist);
+            results.setCheckPassages(key);
             results.showInFrame(GuiUtil.getFrame(this));
             results.startStop();
         }

@@ -3,7 +3,7 @@ package org.crosswire.bibledesktop.passage;
 import javax.swing.AbstractListModel;
 import javax.swing.ListModel;
 
-import org.crosswire.jsword.passage.KeyList;
+import org.crosswire.jsword.passage.Key;
 
 /**
  * A simple implementation of ListModel that is backed by a SortedSet.
@@ -34,7 +34,7 @@ public class KeyListListModel extends AbstractListModel implements ListModel
     /**
      * Constructor for ListListModel.
      */
-    public KeyListListModel(KeyList keys)
+    public KeyListListModel(Key keys)
     {
         this.keys = keys;
     }
@@ -44,7 +44,7 @@ public class KeyListListModel extends AbstractListModel implements ListModel
      */
     public int getSize()
     {
-        return keys.size();
+        return keys.getChildCount();
     }
 
     /**
@@ -56,5 +56,5 @@ public class KeyListListModel extends AbstractListModel implements ListModel
         return keys.get(index);
     }
 
-    private KeyList keys = null;
+    private Key keys = null;
 }

@@ -62,7 +62,7 @@ public class BookTreeNode extends BibleTreeNode
                 int current_Passage = 0;
                 int Passage_count = 0;
 
-                Iterator it = ref.verseIterator();
+                Iterator it = ref.iterator();
                 while (it.hasNext())
                 {
                     Verse verse = (Verse) it.next();

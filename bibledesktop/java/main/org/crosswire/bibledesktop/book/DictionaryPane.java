@@ -23,7 +23,6 @@ import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Defaults;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.passage.KeyList;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.PreferredKey;
 
@@ -71,7 +70,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
     {
         lstDicts.setVisibleRowCount(4);
         lstDicts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        lstDicts.setModel(mdldicts);
+        lstDicts.setModel(mdlDicts);
         lstDicts.setCellRenderer(new BookListCellRenderer());
         lstDicts.setPrototypeCellValue(BookListCellRenderer.PROTOTYPE_BOOK_NAME);
         lstDicts.addListSelectionListener(new ListSelectionListener()
@@ -215,7 +214,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
         {
             BookMetaData dmd = (BookMetaData) selected;
             dict = dmd.getBook();
-            KeyList set = dict.getGlobalKeyList();
+            Key set = dict.getGlobalKeyList();
 
             KeyListListModel model = new KeyListListModel(set);
             lstEntries.setModel(model);
@@ -255,7 +254,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
     private BookDataDisplay txtdisplay = BookDataDisplayFactory.createBookDataDisplay();
 
     private BookFilter filter = BookFilters.getDictionaries();
-    private BooksComboBoxModel mdldicts = new BooksComboBoxModel(filter);
+    private BooksComboBoxModel mdlDicts = new BooksComboBoxModel(filter);
     private Book dict = null;
 
     private JScrollPane scrDicts = new JScrollPane();

@@ -7,7 +7,6 @@ import javax.swing.tree.TreeNode;
 import org.crosswire.common.util.IteratorEnumeration;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.passage.KeyList;
 
 /**
  * A Book in the (possibly filtered) list of books in the reference tree.
@@ -49,7 +48,7 @@ public class ReferenceBookTreeNode implements TreeNode
     /**
      * Simple ctor
      */
-    public ReferenceBookTreeNode(ReferenceTreeModel model, TreeNode parent, BookMetaData bmd, KeyList keys)
+    public ReferenceBookTreeNode(ReferenceTreeModel model, TreeNode parent, BookMetaData bmd, Key keys)
     {
         this.model = model;
         this.parent = parent;
@@ -70,7 +69,7 @@ public class ReferenceBookTreeNode implements TreeNode
      */
     public int getChildCount()
     {
-        return keys.size();
+        return keys.getChildCount();
     }
 
     /* (non-Javadoc)
@@ -135,7 +134,7 @@ public class ReferenceBookTreeNode implements TreeNode
     /**
      * The full list of keys or a shortened list if we are filtering
      */
-    public KeyList getKeyList()
+    public Key getKeyList()
     {
         return keys;
     }
@@ -143,7 +142,7 @@ public class ReferenceBookTreeNode implements TreeNode
     /**
      * Set a shortened list of keys to filter by
      */
-    public void setKeyList(KeyList keys)
+    public void setKeyList(Key keys)
     {
         this.keys = keys;
         model.fireTreeNodesChanged(this, new Object[] { parent, this, }, new int[0], null);
@@ -157,7 +156,7 @@ public class ReferenceBookTreeNode implements TreeNode
     /**
      * The list of Keys that we should display
      */
-    private KeyList keys;
+    private Key keys;
 
     /**
      * The tree model to which we report changes

@@ -48,7 +48,7 @@ public class MoneyDocument extends PlainDocument
 
         super.insertString(offs, clear.toString(), a);
 
-        /* TODO: Some other time
+        /* TODO(joe): Some other time
         String after = getText(0, getLength());
         int dot_pos = after.indexOf('.');
 

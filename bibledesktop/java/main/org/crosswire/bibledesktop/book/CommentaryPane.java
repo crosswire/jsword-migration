@@ -20,8 +20,8 @@ import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.passage.KeyUtil;
 import org.crosswire.jsword.passage.Passage;
-import org.crosswire.jsword.passage.PassageUtil;
 import org.crosswire.jsword.passage.Verse;
 
 /**
@@ -128,7 +128,8 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
         try
         {
             Verse verse = set.getVerse();
-            display.setBookData(bmd.getBook(), verse);
+            Key updated = KeyUtil.getKeyList(verse, getBook());
+            display.setBookData(bmd.getBook(), updated);
         }
         catch (Exception ex)
         {
@@ -149,7 +150,7 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
      */
     public Key getKey()
     {
-        return ref;
+        return key;
     }
 
     /* (non-Javadoc)
@@ -174,22 +175,26 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
         BookMetaData bmd = book.getBookMetaData();
         cboComments.setSelectedItem(bmd);
 
-        Passage newref = PassageUtil.getPassage(key);
-        setPassage(newref);
+        setKey(key);
     }
 
     /**
      * Accessor for the current passage
      */
-    public void setPassage(Passage ref)
+    public void setKey(Key key)
     {
-        this.ref = ref;
+        this.key = key;
 
-        if (ref != null && ref.countVerses() > 0)
+        if (key != null && key instanceof Passage)
         {
-            set.setVerse(ref.getVerseAt(0));
-            updateDisplay();
+            Passage ref = (Passage) key;
+            if (ref.countVerses() > 0)
+            {
+                set.setVerse(ref.getVerseAt(0));
+            }
         }
+
+        updateDisplay();
     }
 
     /* (non-Javadoc)
@@ -211,7 +216,7 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
     /**
      * Last displayed
      */
-    protected Passage ref = null;
+    protected Key key = null;
 
     /**
      * To get us just the Commentaries

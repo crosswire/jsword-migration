@@ -19,8 +19,8 @@ import org.crosswire.bibledesktop.display.scrolled.ScrolledBookDataDisplay;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.passage.KeyUtil;
 import org.crosswire.jsword.passage.Passage;
-import org.crosswire.jsword.passage.PassageUtil;
 
 /**
  * An inner component of Passage pane that can't show the list.
@@ -103,7 +103,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     public void setBookData(Book book, Key newkey)
     {
         this.book = book;
-        this.key = PassageUtil.getPassage(newkey);
+        this.key = KeyUtil.getPassage(newkey);
 
         // Tabbed view or not we should clear out the old tabs
         tabMain.removeAll();
@@ -112,7 +112,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
 
         // So use purely Keys and not Passage, create a utility to cut up
         // a key into a number of keys.
-        //   private KeyList keys;
+        //   private Key keys;
         //   private Passage waiting;
         //   ...
         //   keys = null; // OSISUtil.pagenate(key, pagesize * 10);

@@ -41,6 +41,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
+import org.crosswire.bibledesktop.book.CommentaryPane;
 import org.crosswire.bibledesktop.book.SidebarPane;
 import org.crosswire.bibledesktop.book.TitleChangedEvent;
 import org.crosswire.bibledesktop.book.TitleChangedListener;
@@ -59,14 +60,14 @@ import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.common.xml.XMLUtil;
+import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.readings.ReadingsBookDriver;
-import org.crosswire.jsword.passage.NoSuchVerseException;
-import org.crosswire.jsword.passage.Passage;
-import org.crosswire.jsword.passage.PassageFactory;
+import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.util.ConverterFactory;
 import org.crosswire.jsword.util.Project;
 import org.jdom.Document;
@@ -671,41 +672,38 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
             data = data.substring(2);
         }
 
-        if (protocol.equals(BIBLE_PROTOCOL))
+        try
         {
-            try
+            if (protocol.equals(BIBLE_PROTOCOL))
             {
-                Passage ref = PassageFactory.createPassage(data);
                 BibleViewPane view = new BibleViewPane();
-
                 addBibleViewPane(view);
 
-                view.setKey(ref);
+                Book book = view.getSelectPane().getBook();
+                if (book != null)
+                {
+                    Key key = book.getKey(data);
+                    view.setKey(key);
+                }
             }
-            catch (NoSuchVerseException ex)
+            else if (protocol.equals(COMMENTARY_PROTOCOL))
             {
-                Reporter.informUser(this, ex);
+                CommentaryPane comments = barSide.getCommentaryPane();
+                Key key = comments.getBook().getKey(data);
+                comments.setKey(key);
+            }
+            else if (protocol.equals(DICTIONARY_PROTOCOL))
+            {
+                barSide.getDictionaryPane().setWord(data);
+            }
+            else
+            {
+                throw new MalformedURLException(Msg.UNKNOWN_PROTOCOL.toString(protocol));
             }
         }
-        else if (protocol.equals(COMMENTARY_PROTOCOL))
+        catch (NoSuchKeyException ex)
         {
-            try
-            {
-                Passage ref = PassageFactory.createPassage(data);
-                barSide.getCommentaryPane().setPassage(ref);
-            }
-            catch (NoSuchVerseException ex)
-            {
-                Reporter.informUser(this, ex);
-            }
-        }
-        else if (protocol.equals(DICTIONARY_PROTOCOL))
-        {
-            barSide.getDictionaryPane().setWord(data);
-        }
-        else
-        {
-            throw new MalformedURLException(Msg.UNKNOWN_PROTOCOL.toString(protocol));
+            Reporter.informUser(this, ex);
         }
     }
 

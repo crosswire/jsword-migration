@@ -50,7 +50,6 @@ import org.crosswire.jsword.book.BookMetaData;
  */
 public class BookChooser extends JPanel
 {
-    // DEAD(DM): This class is not used. Find a use for it or delete it.
     /**
      * Basic constructor
      */

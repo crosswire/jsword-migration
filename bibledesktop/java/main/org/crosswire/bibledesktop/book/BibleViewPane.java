@@ -25,7 +25,7 @@ import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Passage;
-import org.crosswire.jsword.passage.PassageUtil;
+import org.crosswire.jsword.passage.PassageKeyFactory;
 
 /**
  * A quick Swing Bible display pane.
@@ -141,7 +141,7 @@ public class BibleViewPane extends JPanel
 
         saveKey(key);
     }
-    
+
     /**
      * Save the view to disk, but ask the user where to save it first.
      * @throws IOException
@@ -206,7 +206,7 @@ public class BibleViewPane extends JPanel
             }
 
             Reader in = new FileReader(saved);
-            Passage ref = PassageUtil.readPassage(in);
+            Passage ref = PassageKeyFactory.readPassage(in);
             setKey(ref);
             in.close();
         }

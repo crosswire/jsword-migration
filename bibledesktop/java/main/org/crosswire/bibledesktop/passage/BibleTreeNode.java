@@ -60,7 +60,7 @@ public class BibleTreeNode implements TreeNode
                 int current_book = 0;
                 int book_count = 0;
 
-                Iterator it = ref.verseIterator();
+                Iterator it = ref.iterator();
                 while (it.hasNext())
                 {
                     Verse verse = (Verse) it.next();

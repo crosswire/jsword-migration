@@ -2,7 +2,7 @@
 package org.crosswire.biblemapper.model;
 
 /**
- * RectangularBoundsRule implements Rule and attempts to move the Node within the
+ * RectangularBoundsRule implements Rule and attempts to move the Key within the
  * space (0, 0, _) to (1, 1, _). 
  * 
  * <p><table border='1' cellPadding='3' cellSpacing='0'>

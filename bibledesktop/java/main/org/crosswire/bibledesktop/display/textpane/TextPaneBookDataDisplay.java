@@ -82,9 +82,9 @@ public class TextPaneBookDataDisplay implements BookDataDisplay
         {
             bdata = book.getData(key);
         }
-        catch (BookException e)
+        catch (BookException ex)
         {
-            Reporter.informUser(this, e);
+            Reporter.informUser(this, ex);
         }
 
         try

@@ -13,6 +13,8 @@ import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.Search;
 import org.crosswire.jsword.passage.BibleInfo;
+import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.passage.KeyUtil;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.PassageTally;
 import org.crosswire.jsword.passage.Verse;
@@ -225,7 +227,8 @@ public class LinkArray implements Serializable
             for (int v=1; v<=BibleInfo.versesInChapter(b, c); v++)
             {
                 Verse find = new Verse(b, c, v);
-                BookData bdata = book.getData(find);
+                Key key = KeyUtil.getKeyList(find, book);
+                BookData bdata = book.getData(key);
                 String text = bdata.getPlainText();
                 PassageTally temp = (PassageTally) book.find(new Search(text, false));
                 temp.setOrdering(PassageTally.ORDER_TALLY);
