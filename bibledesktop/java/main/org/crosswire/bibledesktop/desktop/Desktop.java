@@ -318,6 +318,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
 
         //JToolBar pnlTbar = new JToolBar();
         pnlTbar.setRollover(true);
+        pnlTbar.setFloatable(false);
 
         pnlTbar.add(actions.getAction(DesktopActions.NEW_WINDOW)).addMouseListener(barStatus);
         pnlTbar.add(actions.getAction(DesktopActions.OPEN)).addMouseListener(barStatus);

@@ -13,16 +13,17 @@
   <!-- The CSS stylesheet to use. The url must be absolute. -->
   <xsl:param name="css"/>
 
-  <!-- The font that is passed in is of the form: font or font,style,size 
-       where style is a bit mask with 1 being bold and 2 being italic.
-       This needs to be changed into a style="xxx" specification
-    -->
+  <!--
+  The font that is passed in is of the form: font or font,style,size 
+  where style is a bit mask with 1 being bold and 2 being italic.
+  This needs to be changed into a style="xxx" specification
+  -->
   <xsl:param name="font" select="Serif"/>
   <xsl:variable name="aFont">
-	<xsl:choose>
-	  <xsl:when test="substring-before($font, ',') = ''"><xsl:value-of select="$font"/>,0,16</xsl:when>
-	  <xsl:otherwise><xsl:value-of select="$font"/></xsl:otherwise>
-	</xsl:choose>
+    <xsl:choose>
+      <xsl:when test="substring-before($font, ',') = ''"><xsl:value-of select="$font"/>,0,16</xsl:when>
+      <xsl:otherwise><xsl:value-of select="$font"/></xsl:otherwise>
+    </xsl:choose>
   </xsl:variable>
   <xsl:variable name="fontfamily" select='concat("font-family: &apos;", substring-before($aFont, ","), "&apos;;")' />
   <xsl:variable name="fontsize" select="concat(' font-size: ', substring-after(substring-after($aFont, ','), ','), 'pt;')" />
@@ -78,9 +79,10 @@
           A.strongs { color: black; text-decoration: none; }
           SUP.verse { font-size: 75%; color: gray; }
           SUP.note { font-size: 75%; color: green; }
-          FONT.verse { font-size: 125%; }
-          .passageTitle { font-size: +1; color: red; font-weight: bold; }
-          .sectionTitle { font-size: 125%; color: blue; font-weight: bold; }
+          FONT.verse { }
+          h3 { font-size: 110%; color: #666699; font-weight: bold; }
+          h2 { font-size: 115%; color: #669966; font-weight: bold; }
+          div.margin { font-size: 90%; }
         </style>
       </head>
       <body>
@@ -90,11 +92,11 @@
             <table width="100%">
               <tr>
                 <td width="3%">&#160;</td>
-                <td valign="top" width="80%">
+                <td valign="top" width="75%">
                   <xsl:apply-templates/>
                 </td>
                 <td width="2%">&#160;</td>
-                <td valign="top" width="15%" style="background:#f4f4e8;">
+                <td valign="top" width="20%" style="background:#f4f4e8;">
                   <p>&#160;</p>
                   <xsl:apply-templates select="//note" mode="print-notes"/>
                 </td>
@@ -165,9 +167,13 @@
     <xsl:if test="preceding-sibling::*[local-name() = 'verse']">
       <xsl:text> &#160;</xsl:text>
     </xsl:if>
+    <xsl:variable name="title" select=".//title"/>
+    <xsl:if test="string-length($title) > 0">
+      <h3><xsl:value-of select="$title"/></h3>
+    </xsl:if>
     <a name="{@osisID}"><sup class="verse"><xsl:value-of select="substring-after(substring-after(@osisID, '.'), '.')"/></sup></a>
     <font class="verse">
-      <xsl:apply-templates />
+      <xsl:apply-templates/>
     </font>
   </xsl:template>
 
@@ -191,13 +197,14 @@
 
   <!--=======================================================================-->
   <xsl:template match="note" mode="print-notes">
-    <b><xsl:number level="any" from="/" format="a"/></b>
-    <a name="note-{generate-id(.)}">
-      <xsl:text> </xsl:text>
-    </a>
-    <xsl:apply-templates/>
-    [<a href="#{ancestor::verse[1]/@osisID}">verse</a>]
-    <br/>
+    <div class="margin">
+      <b><xsl:number level="any" from="/" format="a"/></b>
+      <a name="note-{generate-id(.)}">
+        <xsl:text> </xsl:text>
+      </a>
+      <xsl:apply-templates/>
+      [<a href="#{ancestor::verse[1]/@osisID}">verse</a>]
+    </div>
   </xsl:template>
 
   <!--=======================================================================-->
@@ -306,16 +313,18 @@
 
   <!--=======================================================================-->
   <xsl:template match="title">
-    <div class="passageTitle">
+    <h2>
       <xsl:apply-templates/>
-    </div>
+    </h2>
   </xsl:template>
 
   <!--=======================================================================-->
   <xsl:template match="title[@type='section']">
-    <div class="sectionTitle">
+  <!-- Done by a line in [verse]
+    <h3>
       <xsl:apply-templates/>
-    </div>
+    </h3>
+  -->
   </xsl:template>
 
   <!--=======================================================================-->
