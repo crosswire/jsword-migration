@@ -30,12 +30,8 @@
     <jar href="jsword.jar"/>
     <jar href="common.jar"/>
     <jar href="jdom-1.0.jar"/>
-    <!-- jar href="log4j-1.2.8.jar"/ -->
-    <!-- jar href="commons-lang-2.0.jar"/ -->
     <jar href="commons-net-1.3.0.jar"/>
     <jar href="lucene-1.4.3.jar"/>
-    <!-- jar href="tar.jar"/ -->
-    <!-- jar href="winlaf-0.4.jar"/ -->
     <jar href="jlfgr-1_0.jar"/>
     <property name="apple.laf.useScreenMenuBar" value="true"/>
     <property name="com.apple.mrj.application.apple.menu.about.name" value="BibleDesktop"/>
