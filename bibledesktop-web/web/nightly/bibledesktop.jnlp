@@ -37,6 +37,9 @@
     <jar href="tar.jar"/>
     <jar href="winlaf-0.4.jar"/>
     <jar href="jlfgr-1_0.jar"/>
+    <property name="apple.laf.useScreenMenuBar" value="true"/>
+    <property name="com.apple.mrj.application.apple.menu.about.name" value="BibleDesktop"/>
+
   </resources>
 
   <application-desc main-class="org.crosswire.bibledesktop.desktop.Desktop"/>
