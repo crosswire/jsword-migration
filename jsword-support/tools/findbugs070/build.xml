@@ -1,5 +1,8 @@
 <project name="findbugs" default="findbugs">
 
+  <!-- this should be overridden by the parent file -->
+  <property name="support.tools" value=".."/>
+
   <target name="findbugs">
     <mkdir dir="${target.web}/findbugs"/>
     <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
@@ -12,9 +15,8 @@
         outputFile="${target.web}/findbugs/report.txt"
         reportLevel="low"
         sort="text"
-        jvmargs="-Xmx512m"
-        >
-      <class location="${target.web}/jnlp/jsword-swing.jar" />
+        jvmargs="-Xmx512m">
+      <class location="${target.web}/jnlp/jsword-swing.jar"/>
       <class location="${target.web}/jnlp/jsword.jar"/>
       <auxClasspath path="${target.web}/jnlp/jsword-osis.jar"/>
       <auxClasspath path="${target.web}/jnlp/commons-lang-2.0.jar"/>
@@ -28,18 +30,6 @@
       <auxClasspath path="${target.web}/jnlp/winlaf-0.4.jar"/>
       <auxClasspath path="${target.web}/jnlp/tar.jar"/>
       <auxClasspath path="${target.web}/jnlp/jlfgr-1_0.jar"/>
-      <!--
-        ** The following is needed only for the unused org.crosswire.jsword.view.cli
-        ** It can be removed when cli is removed.
-        -->
-      <auxClasspath path="${source.jar}/bsf23/js.jar"/>
-      <!-- sourcePath is really only needed by the findbugs gui -->
-      <sourcePath>
-        <pathelement path="${source.java}/common"/>
-        <pathelement path="${source.java}/jsword"/>
-        <pathelement path="${source.java}/swing"/>
-        <pathelement path="${source.java}/servlet"/>
-      </sourcePath>
     </findbugs>
   </target>
 

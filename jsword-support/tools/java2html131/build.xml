@@ -1,0 +1,25 @@
+<project name="java2html" default="java2html">
+
+  <!-- this should be overridden by the parent file -->
+  <property name="support.tools" value=".."/>
+
+  <target name="java2html" description="HTML versions of the java code">
+    <taskdef name="java2html" classname="com.java2html.Java2HTMLTask">
+      <classpath>
+        <fileset dir="${support.tools}" includes="java2html*/**/*.jar"/>
+      </classpath>
+    </taskdef>
+    <mkdir dir="${target.web}/java2html"/>
+    <java2html title="J-Sword Source" 
+        simple="no"
+        tabsize="4"
+        marginsize="4"
+        header="true"
+        footer="false"
+        destination="${target.web}/java2html">
+      <fileset refid="fileset.alljava"/>
+      <javadoc localRef="${source.etc}/javadoc" httpRef="http://java.sun.com/j2se/1.4/docs/api/"/>
+    </java2html>    
+  </target>
+
+</project>

@@ -4,29 +4,49 @@
   <import file="../common/core.xml"/>
   <property name="dependency"       value="bibledesktop"/>
   <property name="dependency.jar"   value="../${dependency}/target/ant/jar"/>
-  
+
   <import file="../jsword-support/build.xml"/>
+  <property name="source.web"       value="${source.root}/web"/>
 
   <!--=======================================================================-->
-  <property name="source.web"       value="${source.root}/web"/>
   <property name="target.download"  value="${target.root}/download"/> <!-- designed for override -->
   <property name="target.web"       value="${target.root}/web"/> <!-- designed for override -->
 
-  <!-- things from other projects that will be needed here -->
-  <property name="gener.root" value="target/gener"/>
-  <property name="target.swingui" value="${target.root}/swingui/jsword"/>
-  
-  <property name="ant.lib" value="${ant.home}/lib"/>
-  <!-- override this with -Djnlp.hostname=www.crosswire.org to build in live -->
-  <property name="jnlp.hostname" value="localhost:8080"/>
-  <!-- override this to build in live. This probably won't work without overriding -->
-  <property name="webprefix" value="../download"/>
-  <property name="localprefix" value="${basedir}/${target.download}"/>
-  <property name="nightly.dir" value="${localprefix}/nightly"/>
-  <property name="release.dir" value="${localprefix}/release"/>
+  <property name="gener.root"       value="target/gener"/>
+  <property name="target.swingui"   value="${target.root}/swingui/jsword"/>
+
+  <property name="ant.lib"          value="${ant.home}/lib"/>
+  <property name="jnlp.hostname"    value="localhost:8080"/> <!-- override this with -Djnlp.hostname=www.crosswire.org to build in live -->
+  <property name="webprefix"        value="../download"/> <!-- override this to build in live. This probably won't work without overriding -->
+  <property name="localprefix"      value="${basedir}/${target.download}"/>
+  <property name="nightly.dir"      value="${localprefix}/nightly"/>
+  <property name="release.dir"      value="${localprefix}/release"/>
 
   <!--=======================================================================-->
-  <target name="files" description="Copy the file based documentation">
+  <path id="path.alljava">
+    <pathelement path="../common/java/config"/>
+    <pathelement path="../common/java/core"/>
+    <pathelement path="../common/java/gpl"/>
+    <pathelement path="../common/java/swing"/>
+    <pathelement path="../jsword/java/jsword"/>
+    <pathelement path="../bibledesktop/java/main"/>
+    <pathelement path="../jsword-web/java/main"/>
+  </path>
+  <patternset id="pattern.alljava">
+    <include name="common/java/config/**/*.java"/>
+    <include name="common/java/core/**/*.java"/>
+    <include name="common/java/gpl/**/*.java"/>
+    <include name="common/java/swing/**/*.java"/>
+    <include name="jsword/java/jsword/**/*.java"/>
+    <include name="bibledesktop/java/main/**/*.java"/>
+    <include name="jsword-web/java/main/**/*.java"/>
+  </patternset>
+  <fileset id="fileset.alljava" dir="..">
+    <patternset refid="pattern.alljava"/>
+  </fileset>
+
+  <!--=======================================================================-->
+  <target name="files" depends="build" description="Build an unpacked war file">
     <mkdir dir="${target.web}"/>
     <style basedir="${source.web}" extension=".html" style="${source.web}/template.xsl" destdir="${target.web}">
       <include name="**/*.html"/>
@@ -53,14 +73,9 @@
       <fileset dir="${source.etc}/web"/>
     </copy>
     <mkdir dir="${target.web}/WEB-INF/classes"/>
-    <copy todir="${target.web}/WEB-INF/classes">
-      <fileset dir="${target.classes}/resource"/>
-      <fileset dir="${source.res}"/>
-    </copy>
     <mkdir dir="${target.web}/WEB-INF/lib"/>
     <copy todir="${target.web}/WEB-INF/lib">
-      <fileset dir="${target.web}/jnlp" includes="**/*.jar"/>
-      <fileset dir="${target.jar}" includes="jsword-servlet.jar"/>
+      <fileset dir="${target.jar}" includes="*.jar"/>
     </copy>
     <!-- needed by the download servlet -->
     <mkdir dir="${nightly.dir}"/>
@@ -95,31 +110,29 @@
     <echo message="Building release ${version} to ${directory}"/>
     <!-- source packages -->
     <mkdir dir="${directory}"/>
-    <zip zipfile="${directory}/${ant.project.name}-${version}-src.zip">
-      <zipfileset prefix="${ant.project.name}-${version}" dir="${source.root}">
-        <exclude name="target/**"/>
-        <exclude name="notes/**"/>
-      </zipfileset>
+    <zip zipfile="${directory}/jsword-${version}-src.zip">
+      <zipfileset prefix="jsword" dir="../jsword" excludes="target/**"/>
+      <zipfileset prefix="common" dir="../common" excludes="target/**"/>
+      <zipfileset prefix="bibledesktop" dir="../bibledesktop" excludes="target/**"/>
     </zip>
-    <tar tarfile="${directory}/${ant.project.name}-${version}-src.tar.gz" compression="gzip">
-      <tarfileset prefix="${ant.project.name}-${version}" dir="${source.root}">
-        <exclude name="target/**"/>
-        <exclude name="notes/**"/>
-      </tarfileset>
+    <tar tarfile="${directory}/jsword-${version}-src.tar.gz" compression="gzip">
+      <tarfileset prefix="jsword" dir="../jsword" excludes="target/**"/>
+      <tarfileset prefix="common" dir="../common" excludes="target/**"/>
+      <tarfileset prefix="bibledesktop" dir="../bibledesktop" excludes="target/**"/>
     </tar>
     <!-- binary packages -->
-    <zip zipfile="${directory}/${ant.project.name}-${version}-bin.zip">
-      <zipfileset prefix="${ant.project.name}-${version}" dir="${target.swingui}"/>
+    <zip zipfile="${directory}/jsword-${version}-bin.zip">
+      <zipfileset prefix="jsword-${version}" dir="../bibledesktop/target/ant/installed"/>
     </zip>
-    <tar tarfile="${directory}/${ant.project.name}-${version}-bin.tar.gz" compression="gzip">
-      <tarfileset prefix="${ant.project.name}-${version}" dir="${target.swingui}"/>
+    <tar tarfile="${directory}/jsword-${version}-bin.tar.gz" compression="gzip">
+      <tarfileset prefix="jsword-${version}" dir="../bibledesktop/target/ant/installed"/>
     </tar>
     <!-- documentation packages -->
-    <zip zipfile="${directory}/${ant.project.name}-${version}-doc.zip">
-      <zipfileset prefix="${ant.project.name}-${version}" dir="${target.web}/api"/>
+    <zip zipfile="${directory}/jsword-${version}-doc.zip">
+      <zipfileset prefix="jsword-${version}" dir="${target.web}/api"/>
     </zip>
-    <tar tarfile="${directory}/${ant.project.name}-${version}-doc.tar.gz" compression="gzip">
-      <tarfileset prefix="${ant.project.name}-${version}" dir="${target.web}/api"/>
+    <tar tarfile="${directory}/jsword-${version}-doc.tar.gz" compression="gzip">
+      <tarfileset prefix="jsword-${version}" dir="${target.web}/api"/>
     </tar>
   </target>
 

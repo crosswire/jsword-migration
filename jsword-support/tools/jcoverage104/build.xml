@@ -1,9 +1,12 @@
 <project name="jcoverage" default="jcoverage">
 
+  <!-- this should be overridden by the parent file -->
+  <property name="support.tools" value=".."/>
+
   <target name="jcoverage" description="Run the standard test suite">
     <taskdef resource="tasks.properties">
       <classpath>
-        <fileset dir="${support.tools}/jcoverage104" includes="**/*.jar"/>
+        <fileset dir="${support.tools}" includes="jcoverage*/**/*.jar"/>
       </classpath>
     </taskdef>
     <delete failonerror="false">

@@ -1,18 +1,18 @@
 <project name="pmd" default="pmd">
 
+  <!-- this should be overridden by the parent file -->
+  <property name="support.tools" value=".."/>
+
   <target name="pmd">
     <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask">
       <classpath>
-        <fileset dir="${support.tools}/pmd15" includes="**/*.jar"/>
+        <fileset dir="${support.tools}" includes="pmd*/**/*.jar"/>
       </classpath>
     </taskdef>
     <mkdir dir="${target.web}/pmd"/>
     <pmd rulesetfiles="${basedir}/${support.tools}/pmd15/ruleset.xml" shortFilenames="true">
       <formatter type="html" toFile="${target.web}/pmd/index.html"/>
-      <fileset dir="${source.java}/common" includes="**/*.java"/>
-      <fileset dir="${source.java}/jsword" includes="**/*.java"/>
-      <fileset dir="${source.java}/servlet" includes="**/*.java"/>
-      <fileset dir="${source.java}/swing" includes="**/*.java"/>
+      <fileset refid="fileset.alljava"/>
     </pmd>
   </target>
 
@@ -20,7 +20,7 @@
     <mkdir dir="${target.web}/cpd"/>
     <java classname="net.sourceforge.pmd.cpd.CPD" output="${target.web}/cpd/report.txt">
       <classpath>
-        <fileset dir="${support.tools}/pmd15" includes="**/*.jar"/>
+        <fileset dir="${support.tools}" includes="pmd*/**/*.jar"/>
       </classpath>
       <arg value="100"/>
       <arg value="${source.java}"/>

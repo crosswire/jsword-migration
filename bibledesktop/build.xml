@@ -24,10 +24,11 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="prepare.extra">
-    <copy file="${source.etc}/jnlp/${ant.project.name}.jnlp"
-        todir="${target.jnlp}"/>
+  <target name="jar.extra" description="Prepares for web based jnlp deploy" >
+    <mkdir dir="${target.jnlp}"/>
     <copy todir="${target.jnlp}">
+      <fileset dir="${target.jar}"/>
+      <fileset dir="${source.etc}/jnlp" includes="${ant.project.name}.jnlp"/>
       <fileset dir="${source.etc}/bin"/>
     </copy>
     <chmod perm="a+x">
@@ -41,21 +42,11 @@
     <fixcrlf srcdir="${target.jnlp}" eol="crlf">
       <include name="**/*.bat"/>
     </fixcrlf>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="jar.extra"
-      description="Moves files to correct location for JNLP deploy" >
-    <mkdir dir="${target.jnlp}"/>
-    <copy todir="${target.jnlp}">
-      <fileset dir="${target.jar}"/>
-    </copy>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="install"
-      depends="jar"
-      description="Moves files to correct location for JNLP deploy" >
+    <!--
+    Attempt a local deploy, we might be able to get the jnlp file to work
+    locally on a relative path, but in the mean time there is always the *.bat
+    and *.sh startup files.
+    -->
     <mkdir dir="${target.installed}"/>
     <copy todir="${target.installed}" filtering="true">
       <fileset dir="${target.jnlp}">

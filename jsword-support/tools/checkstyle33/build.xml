@@ -1,7 +1,9 @@
 <project name="checkstyle" default="checkstyle">
 
+  <!-- this should be overridden by the parent file -->
+  <property name="support.tools" value=".."/>
+
   <target name="checkstyle">
-    <mkdir dir="${target.temp}/checkstyle"/>
     <mkdir dir="${target.web}/checkstyle"/>
     <taskdef resource="checkstyletask.properties">
       <classpath>
@@ -9,25 +11,21 @@
       </classpath>
     </taskdef>
     <copy file="${support.tools}/checkstyle33/custom.xml" overwrite="true"
-        tofile="${target.temp}/checkstyle/custom.xml">
+        tofile="${target.web}/checkstyle/custom.xml">
       <filterset>
         <filter token="source.java" value="${basedir}/${source.java}"/>
-        <filter token="target.checkstyle" value="${basedir}/${target.temp}/checkstyle"/>
+        <filter token="target.checkstyle" value="${basedir}/${target.web}/checkstyle"/>
       </filterset>
     </copy>
-    <checkstyle config="${target.temp}/checkstyle/custom.xml" failOnViolation="false">
-      <fileset dir="${source.java}/common" includes="**/*.java"/>
-      <fileset dir="${source.java}/jsword" includes="**/*.java"/>
-      <fileset dir="${source.java}/servlet" includes="**/*.java"/>
-      <fileset dir="${source.java}/swing" includes="**/*.java"/>
+    <checkstyle config="${target.web}/checkstyle/custom.xml" failOnViolation="false">
+      <fileset refid="fileset.alljava"/>
       <formatter type="plain"/>
-      <formatter type="xml" toFile="${target.temp}/checkstyle/checkstyle_errors.xml"/>
+      <formatter type="xml" toFile="${target.web}/checkstyle/checkstyle_errors.xml"/>
     </checkstyle>
     <style
-        basedir="${target.temp}/checkstyle"
-        destdir="${target.web}/checkstyle"
-        includes="checkstyle_errors.xml"
+        in="${target.web}/checkstyle/checkstyle_errors.xml"
+        out="${target.web}/checkstyle/index.html"
         style="${support.tools}/checkstyle33/checkstyle-noframes.xsl"/>
   </target>
-  
+
 </project>

@@ -1,19 +1,20 @@
 <project name="jsword-support" default="tools">
 
-  <property name="support.root" value="../jsword-support"/>
-  <property name="support.tools" value="${support.root}/tools"/>
+  <property name="support.tools" value="../jsword-support/tools"/>
 
-  <import file="${support.tools}/checkstyle33/build.xml"/>
-  <import file="${support.tools}/java2html12/build.xml"/>
-  <import file="${support.tools}/javadoc/build.xml"/>
-  <import file="${support.tools}/javancss2141/build.xml"/>
-  <import file="${support.tools}/jcoverage104/build.xml"/>
-  <import file="${support.tools}/jdepend26/build.xml"/>
-  <import file="${support.tools}/findbugs070/build.xml"/>
-  <import file="${support.tools}/pmd15/build.xml"/>
-  <import file="${support.tools}/tomcat/build.xml"/>
+  <import file="${support.tools}/checkstyle33/build.xml"/> <!-- done -->
+  <import file="${support.tools}/java2html131/build.xml"/> <!-- done -->
+  <import file="${support.tools}/javadoc/build.xml"/> <!-- done, memory error -->
+  <import file="${support.tools}/javancss2141/build.xml"/> <!-- converted, no output -->
+  <import file="${support.tools}/jcoverage104/build.xml"/> <!--  -->
+  <import file="${support.tools}/jdepend26/build.xml"/> <!-- converted, no output -->
+  <import file="${support.tools}/findbugs070/build.xml"/> <!-- ignored, poor task -->
+  <import file="${support.tools}/pmd15/build.xml"/> <!-- done, memory error -->
+  <import file="${support.tools}/tomcat/build.xml"/> <!-- ignored -->
 
-  <target name="tools" depends="jdepend, checkstyle, pmd, jcoverage, java2html, javancss, findbugs">
+  <target name="tools" depends="jdepend, checkstyle, java2html, javancss, findbugs">
+    <!-- I've taken jcoverage out becuase the task is not converted -->
+    <!-- I've taken pmd out because the ant task is very poor -->
     <!-- I've taken cpd out because it is very slow and not that useful -->
   </target>
 

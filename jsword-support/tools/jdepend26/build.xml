@@ -1,25 +1,20 @@
 <project name="jdepend" default="jdepend">
 
   <target name="jdepend">
-    <mkdir dir="${target.temp}/jdepend"/>
     <mkdir dir="${target.web}/jdepend"/>
-    <echo message="If this fails you might need to run the antlibs task to copy jars to ant/lib:"/>
-    <jdepend format="xml" outputfile="${target.temp}/jdepend/jdepend-report.xml" fork="yes">
+    <echo message="On failure, run the antlibs task to copy jars to ant/lib:"/>
+    <jdepend format="xml" outputfile="${target.web}/jdepend/jdepend-report.xml" fork="yes">
       <classespath>
-        <pathelement path="${target.classes}/common"/>
-        <pathelement path="${target.classes}/jsword"/>
-        <pathelement path="${target.classes}/swing"/>
-        <pathelement path="${target.classes}/servlet"/>
+        <path refid="path.alljava"/>
       </classespath>
       <classpath>
-        <fileset dir="${source.jar}" includes="**/*.jar"/>
+        <fileset dir="${target.jar}" includes="**/*.jar"/>
         <fileset dir="${support.tools}/jdepend26" includes="**/*.jar"/>
       </classpath>
     </jdepend>
     <style
-        basedir="${target.temp}/jdepend"
-        destdir="${target.web}/jdepend"
-        includes="jdepend-report.xml"
+        in="${target.web}/jdepend/jdepend-report.xml"
+        out="${target.web}/jdepend/jdepend-report.html"
         style="${support.tools}/jdepend26/jdepend.xsl"/>
   </target>
 
