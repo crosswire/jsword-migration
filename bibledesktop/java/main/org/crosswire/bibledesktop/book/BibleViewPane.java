@@ -107,13 +107,8 @@ public class BibleViewPane extends JPanel implements Titleable, Clearable
     }
 
     /**
-     * Allow the current
+     * Make it as though no-one is using this view
      */
-    public void adjustFocus()
-    {
-        pnlSelect.adjustFocus();
-    }
-
     public void clear()
     {
         saved = null;
@@ -123,6 +118,9 @@ public class BibleViewPane extends JPanel implements Titleable, Clearable
         }
     }
 
+    /**
+     * Has anyone started using this view
+     */
     public boolean isClear()
     {
         saved = null;

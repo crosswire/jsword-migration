@@ -1,4 +1,4 @@
-package org.crosswire.bibledesktop.book.parse;
+package org.crosswire.bibledesktop.book;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -11,7 +11,6 @@ import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
@@ -31,7 +30,6 @@ import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import org.crosswire.bibledesktop.book.PassageSelectionPane;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.swing.LookAndFeelUtil;
@@ -75,7 +73,6 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
      */
     public AdvancedSearchPane()
     {
-        commands = IndexSearcher.getPreferredMap();
         presets = Msg.PRESETS.toString().split("\\|"); //$NON-NLS-1$
 
         initialize();
@@ -358,7 +355,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
             dlgSelect = new PassageSelectionPane();
         }
 
-        String passg = dlgSelect.showInDialog(this, Msg.SELECT_PASSAGE_TITLE.toString(), true, txtRestrict.getText());
+        String passg = dlgSelect.showInDialog(this, Msg.ADVANCED_SELECT_TITLE.toString(), true, txtRestrict.getText());
         if (passg != null)
         {
             cboPresets.setSelectedItem(presets[presets.length - 1]);
@@ -406,11 +403,11 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
      */
     private void updateSearchString()
     {
-        String quote = (String) commands.get(PhraseParamWord.class);
-        String plus = (String) commands.get(RetainCommandWord.class);
-        String minus = (String) commands.get(RemoveCommandWord.class);
-        String open = (String) commands.get(PassageLeftParamWord.class);
-        String close = (String) commands.get(PassageRightParamWord.class);
+        String quote = IndexSearcher.getPreferredSyntax(PhraseParamWord.class);
+        String plus = IndexSearcher.getPreferredSyntax(RetainCommandWord.class);
+        String minus = IndexSearcher.getPreferredSyntax(RemoveCommandWord.class);
+        String open = IndexSearcher.getPreferredSyntax(PassageLeftParamWord.class);
+        String close = IndexSearcher.getPreferredSyntax(PassageRightParamWord.class);
 
         StringBuffer search = new StringBuffer();
 
@@ -568,11 +565,6 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
      * The ActionFactory holding the actions used by this Component.
      */
     private ActionFactory actions;
-
-    /**
-     * The symbols that have been configured
-     */
-    private Map commands = null;
 
     /**
      * The entries in the restrictions preset

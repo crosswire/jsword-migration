@@ -1,11 +1,9 @@
-package org.crosswire.jsword.book.search;
+package org.crosswire.jsword.book.search.ser;
 
-import org.crosswire.common.util.ClassUtil;
-import org.crosswire.common.util.Logger;
-import org.crosswire.jsword.book.Book;
+import org.crosswire.common.util.MsgBase;
 
 /**
- * Factory method for creating a new Searcher.
+ * Compile safe Msg resource settings.
  * 
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
@@ -28,37 +26,21 @@ import org.crosswire.jsword.book.Book;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class IndexFactory
+class Msg extends MsgBase
 {
+    static final Msg INDEX_START = new Msg("SerIndex.Indexing"); //$NON-NLS-1$
+    static final Msg SER_INIT = new Msg("SerIndex.Init"); //$NON-NLS-1$
+    static final Msg DELETE_FAILED = new Msg("SerIndex.DeleteFailed"); //$NON-NLS-1$
+    static final Msg WRITE_ERROR = new Msg("SerIndex.WriteError"); //$NON-NLS-1$
+    static final Msg FINDING_WORDS = new Msg("SerIndex.FindingWords"); //$NON-NLS-1$
+    static final Msg WRITING_WORDS = new Msg("SerIndex.WritingWords"); //$NON-NLS-1$
+    static final Msg SAVING = new Msg("SerIndex.Saving"); //$NON-NLS-1$
+
     /**
-     * Prevent Instansiation
+     * Passthrough ctor 
      */
-    private IndexFactory()
+    private Msg(String name)
     {
+        super(name);
     }
-
-    /**
-     * Create a new Searcher.
-     */
-    public static Index getIndexForBook(Book book) throws InstantiationException
-    {
-        try
-        {
-            Class impl = ClassUtil.getImplementor(Index.class);
-            Index index = (Index) impl.newInstance();
-            index.init(book);
-
-            return index;
-        }
-        catch (Exception ex)
-        {
-            log.error("createParser failed", ex); //$NON-NLS-1$
-            throw new InstantiationException();
-        }
-    }
-
-    /**
-     * The log stream
-     */
-    private static final Logger log = Logger.getLogger(IndexFactory.class);
 }

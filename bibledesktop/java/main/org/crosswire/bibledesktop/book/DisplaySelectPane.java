@@ -11,6 +11,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.crosswire.bibledesktop.book.parse.AdvancedSearchPane;
 import org.crosswire.bibledesktop.passage.KeyChangeEvent;
 import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.common.swing.ActionFactory;
@@ -34,7 +35,10 @@ import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
-import org.crosswire.jsword.book.Search;
+import org.crosswire.jsword.book.IndexStatus;
+import org.crosswire.jsword.book.search.IndexManagerFactory;
+import org.crosswire.jsword.book.search.parse.IndexSearcher;
+import org.crosswire.jsword.book.search.parse.PhraseParamWord;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.PassageTally;
@@ -86,7 +90,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         // search() and version() rely on this returning only Bibles
         mdlBible = new BooksComboBoxModel(BookFilters.getBibles());
         JComboBox cboBible = new JComboBox(mdlBible);
-        Object selected = mdlBible.getSelectedItem();
+        selected = mdlBible.getSelectedBookMetaData();
         if (selected != null)
         {
             cboBible.setToolTipText(selected.toString());
@@ -130,16 +134,16 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
                 }
             }
         });
-        JButton btnKey = new JButton(actions.getAction(MORE));
+        btnKey = new JButton(actions.getAction(MORE));
         btnKey.setIcon(ICON_SELECT);
         btnKey.setBorderPainted(false);
-        JButton btnKeyGo = new JButton(actions.getAction(GO_PASSAGE));
+        btnKeyGo = new JButton(actions.getAction(GO_PASSAGE));
 
         txtSearch = new JTextField();
         txtSearch.setAction(actions.getAction(SEARCH_FIELD));
         JLabel lblSearch = actions.createJLabel(SEARCH_LABEL);
         lblSearch.setLabelFor(txtSearch);
-        JButton btnSearch = new JButton(actions.getAction(GO_SEARCH));
+        btnSearch = new JButton(actions.getAction(GO_SEARCH));
 
         JButton btnHelp = new JButton(actions.getAction(HELP));
         btnHelp.setBorder(BorderFactory.createLineBorder(SystemColor.control, 5));
@@ -147,8 +151,9 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         btnHelp.setText(null);
         dlgHelp = new QuickHelpDialog(GuiUtil.getFrame(this), Msg.HELP_TITLE.toString(), Msg.HELP_TEXT.toString());
 
-        JButton btnAdvanced = new JButton(actions.getAction(ADVANCED));
+        btnAdvanced = new JButton(actions.getAction(ADVANCED));
         btnAdvanced.setBorderPainted(false);
+        btnIndex = new JButton(actions.getAction(INDEX));
 
         chkMatch = new JCheckBox(actions.getAction(MATCH));
 
@@ -162,10 +167,13 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
         this.add(btnHelp, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         this.add(lblSearch, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));
+        this.add(btnIndex, new GridBagConstraints(2, 2, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         this.add(txtSearch, new GridBagConstraints(2, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
         this.add(chkMatch, new GridBagConstraints(3, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         this.add(btnAdvanced, new GridBagConstraints(4, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
         this.add(btnSearch, new GridBagConstraints(5, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 2, 2, 2), 0, 0));
+
+        enableComponents();
     }
 
     /**
@@ -193,7 +201,6 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         title = Msg.UNTITLED.toString(new Integer(base++));
 
         updateDisplay();
-
     }
 
     /**
@@ -253,11 +260,14 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         {
             String param = txtSearch.getText();
             Book book = bmd.getBook();
-            boolean match = chkMatch.isSelected();
 
-            Search search = new Search(param, match);
+            if (chkMatch.isSelected())
+            {
+                String quote = IndexSearcher.getPreferredSyntax(PhraseParamWord.class);
+                param = quote + param + quote;
+            }
 
-            Key key = book.find(search);
+            Key key = book.find(param);
 
             // we get PassageTallys for best match searches
             if (key instanceof PassageTally)
@@ -308,6 +318,22 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     }
 
     /**
+     * Someone clicked one the index button
+     */
+    public void doIndex()
+    {
+        BookMetaData bmd = mdlBible.getSelectedBookMetaData();
+        if (bmd == null)
+        {
+            noBookInstalled();
+            return;
+        }
+
+        IndexManagerFactory.getIndexManager().scheduleIndexCreation(bmd.getBook());
+        enableComponents();
+    }
+
+    /**
      * Sync the viewed passage with the passage text box
      */
     private void updateDisplay()
@@ -334,13 +360,6 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         {
             Reporter.informUser(this, ex);
         }
-    }
-
-    /**
-     * Set the focus to the right initial component
-     */
-    public void adjustFocus()
-    {
     }
 
     /**
@@ -378,8 +397,19 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     protected void changeVersion()
     {
-        BookMetaData bmd = mdlBible.getSelectedBookMetaData();
-        if (bmd == null)
+        BookMetaData newSelected = mdlBible.getSelectedBookMetaData();
+
+        if (selected != null && selected != newSelected)
+        {
+            selected.removePropertyChangeListener(pcl);
+            newSelected.addPropertyChangeListener(pcl);
+        }
+
+        selected = newSelected;
+
+        enableComponents();
+
+        if (selected == null)
         {
             noBookInstalled();
             return;
@@ -387,7 +417,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
         try
         {
-            Book book = bmd.getBook();
+            Book book = selected.getBook();
             Key key = book.getKey(txtKey.getText());
 
             fireVersionChanged(new DisplaySelectEvent(this, key, book));
@@ -399,12 +429,46 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     }
 
     /**
+     * Keep the selection up to date with indexing.
+     */
+    private PropertyChangeListener pcl = new PropertyChangeListener()
+    {
+        public void propertyChange(PropertyChangeEvent ev)
+        {
+            enableComponents();
+        }
+    };
+
+    /**
      * Display a dialog indicating that no Bible is installed.
      */
     private void noBookInstalled()
     {
         String noBible = Msg.NO_INSTALLED_BIBLE.toString();
         JOptionPane.showMessageDialog(this, noBible, noBible, JOptionPane.WARNING_MESSAGE);
+    }
+
+    /**
+     * Ensure that the right components are enabled
+     */
+    protected void enableComponents()
+    {
+        boolean readable = selected != null;
+        boolean searchable = readable && selected.getIndexStatus().equals(IndexStatus.DONE);
+        boolean indexable = readable && selected.getIndexStatus().equals(IndexStatus.UNDONE);
+
+        txtSearch.setEnabled(searchable);
+        txtSearch.setBackground(searchable ? SystemColor.text : SystemColor.control);
+        txtSearch.setVisible(searchable);
+        chkMatch.setEnabled(searchable);
+        btnAdvanced.setEnabled(searchable);
+        btnSearch.setEnabled(searchable);
+        txtKey.setEnabled(readable);
+        txtKey.setBackground(readable ? SystemColor.text : SystemColor.control);
+        btnKey.setEnabled(readable);
+        btnKeyGo.setEnabled(readable);
+        btnIndex.setVisible(indexable);
+        btnIndex.setEnabled(indexable);
     }
 
     /**
@@ -510,6 +574,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     private static final String ADVANCED = "Advanced"; //$NON-NLS-1$
     private static final String MATCH = "Match"; //$NON-NLS-1$
     private static final String BIBLE = "Bible"; //$NON-NLS-1$
+    private static final String INDEX = "Index"; //$NON-NLS-1$
 
     private static final ImageIcon ICON_SELECT = GuiUtil.getIcon("toolbarButtonGraphics/general/Edit16.gif"); //$NON-NLS-1$
 
@@ -517,25 +582,30 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
     private static int base = 1;
 
-    private String title;
+    private String title = null;
 
-    private transient List listeners;
+    private transient List listeners = null;
 
     private QuickHelpDialog dlgHelp = null;
 
-    private BooksComboBoxModel mdlBible = null;
-
-    private PassageSelectionPane dlgSelect = null;
-
     private ActionFactory actions = null;
 
+    private BookMetaData selected = null;
+
+    /*
+     * GUI Components
+     */
+    private BooksComboBoxModel mdlBible = null;
+    private PassageSelectionPane dlgSelect = null;
     private JTextField txtKey = null;
-
     private JTextField txtSearch = null;
-
     private JCheckBox chkMatch = null;
-
+    private JButton btnAdvanced = null;
+    private JButton btnSearch = null;
+    private JButton btnKey = null;
+    private JButton btnKeyGo = null;
     private AdvancedSearchPane advanced = new AdvancedSearchPane();
+    private JButton btnIndex = null;
 
     /**
      * SERIALUID(dms): A placeholder for the ultimate version id.

@@ -348,8 +348,6 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         sptBooks.setDividerSize(7);
         sptBooks.setOpaque(true);
         sptBooks.setBorder(null);
-        BibleViewPane bvp = (BibleViewPane) views.getSelected();
-        bvp.adjustFocus();
 
         addWindowListener(new WindowAdapter()
         {
@@ -405,11 +403,6 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         BookDataDisplay display = view.getPassagePane().getBookDataDisplay();
         display.removeURLEventListener(this);
         display.removeURLEventListener(barStatus);
-        BibleViewPane bvp = (BibleViewPane) getViews().getSelected();
-        if (bvp != null)
-        {
-            bvp.adjustFocus();
-        }
     }
 
     /* (non-Javadoc)

@@ -1,9 +1,10 @@
-package org.crosswire.bibledesktop.book.parse;
+package org.crosswire.jsword.book.search;
 
-import org.crosswire.common.util.MsgBase;
+import org.crosswire.common.util.ClassUtil;
+import org.crosswire.common.util.Logger;
 
 /**
- * Compile safe Msg resource settings.
+ * A Factory class for IndexManagers.
  * 
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
@@ -26,16 +27,46 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-class Msg extends MsgBase
+public class IndexManagerFactory
 {
-    static final Msg PRESETS = new Msg("AdvancedSearchPane.Presets"); //$NON-NLS-1$
-    static final Msg SELECT_PASSAGE_TITLE = new Msg("AdvancedSearchPane.SelectPassageTitle"); //$NON-NLS-1$
+    /**
+     * Prevent Instansiation
+     */
+    private IndexManagerFactory()
+    {
+    }
 
     /**
-     * Passthrough ctor
+     * Create a new IndexManager.
      */
-    private Msg(String name)
+    public static IndexManager getIndexManager()
     {
-        super(name);
+        return instance;
+    }
+
+    /**
+     * The singleton
+     */
+    private static IndexManager instance = null;
+
+    /**
+     * The log stream
+     */
+    private static final Logger log = Logger.getLogger(IndexManagerFactory.class);
+
+    /**
+     * Setup the instance
+     */
+    static
+    {
+        try
+        {
+            Class impl = ClassUtil.getImplementor(IndexManager.class);
+            instance = (IndexManager) impl.newInstance();
+        }
+        catch (Exception ex)
+        {
+            log.error("createIndexManager failed", ex); //$NON-NLS-1$
+        }
     }
 }

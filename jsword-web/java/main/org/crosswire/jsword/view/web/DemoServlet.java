@@ -15,7 +15,8 @@ import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.Books;
-import org.crosswire.jsword.book.Search;
+import org.crosswire.jsword.book.search.parse.IndexSearcher;
+import org.crosswire.jsword.book.search.parse.PhraseParamWord;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageTally;
@@ -82,14 +83,15 @@ public class DemoServlet extends HttpServlet
             if (search != null)
             {
                 request.setAttribute(FIELD_SEARCH, search);
-                key = book.find(new Search(search, false));
+                key = book.find(search);
             }
 
             String match = request.getParameter(FIELD_MATCH);
             if (match != null)
             {
                 request.setAttribute(FIELD_MATCH, match);
-                PassageTally tally = (PassageTally) book.find(new Search(match, true));
+                String quote = IndexSearcher.getPreferredSyntax(PhraseParamWord.class);
+                PassageTally tally = (PassageTally) book.find(quote + match + quote);
                 tally.setOrdering(PassageTally.ORDER_TALLY);
                 tally.trimRanges(tallyTrim, RestrictionType.NONE);
                 key = tally;

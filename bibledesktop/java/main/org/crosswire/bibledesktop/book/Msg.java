@@ -69,6 +69,9 @@ class Msg extends MsgBase
     static final Msg ERROR = new Msg("PassageSelectionPane.Error"); //$NON-NLS-1$
     static final Msg SUMMARY = new Msg("PassageSelectionPane.Summary"); //$NON-NLS-1$
 
+    static final Msg PRESETS = new Msg("AdvancedSearchPane.Presets"); //$NON-NLS-1$
+    static final Msg ADVANCED_SELECT_TITLE = new Msg("AdvancedSearchPane.SelectPassageTitle"); //$NON-NLS-1$
+
     /**
      * Passthrough ctor
      */

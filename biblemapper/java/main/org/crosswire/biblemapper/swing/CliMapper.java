@@ -10,7 +10,8 @@ import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Books;
-import org.crosswire.jsword.book.Search;
+import org.crosswire.jsword.book.search.parse.IndexSearcher;
+import org.crosswire.jsword.book.search.parse.PhraseParamWord;
 import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.PassageTally;
@@ -99,7 +100,9 @@ public class CliMapper
                         Verse find = new Verse(b, c, v);
                         BookData bdata = book.getData(find);
                         String text = bdata.getPlainText();
-                        PassageTally temp = (PassageTally) book.find(new Search(text, true));
+                        String quote = IndexSearcher.getPreferredSyntax(PhraseParamWord.class);
+                        text = quote + text + quote;
+                        PassageTally temp = (PassageTally) book.find(text);
                         temp.setOrdering(PassageTally.ORDER_TALLY);
                         total.addAll(temp);
                     }

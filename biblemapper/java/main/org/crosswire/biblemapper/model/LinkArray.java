@@ -11,7 +11,6 @@ import java.util.List;
 import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
-import org.crosswire.jsword.book.Search;
 import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.PassageTally;
@@ -227,7 +226,7 @@ public class LinkArray implements Serializable
                 Verse find = new Verse(b, c, v);
                 BookData bdata = book.getData(find);
                 String text = bdata.getPlainText();
-                PassageTally temp = (PassageTally) book.find(new Search(text, false));
+                PassageTally temp = (PassageTally) book.find(text);
                 temp.setOrdering(PassageTally.ORDER_TALLY);
                 total.addAll(temp);
             }
