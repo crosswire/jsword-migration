@@ -72,7 +72,7 @@
   </option>
 
   <option key="Passages.BlurringRules" type="int-options">
-    <introspect class="org.crosswire.jsword.passage.PassageUtil" property="BlurRestriction"/>
+    <introspect class="org.crosswire.jsword.passage.RestrictionType" property="BlurRestriction"/>
     <alternative number="0"/>
     <alternative number="1"/>
     <alternative number="2"/>

@@ -3,9 +3,10 @@ package org.crosswire.bibledesktop.passage;
 import javax.swing.AbstractListModel;
 
 import org.crosswire.jsword.passage.Passage;
-import org.crosswire.jsword.passage.PassageConstants;
 import org.crosswire.jsword.passage.PassageEvent;
+import org.crosswire.jsword.passage.PassageListType;
 import org.crosswire.jsword.passage.PassageListener;
+import org.crosswire.jsword.passage.RestrictionType;
 
 /**
  * The PassageListModel class gives access to a Passage via a
@@ -42,11 +43,7 @@ public class PassageListModel extends AbstractListModel implements PassageListen
      */
     public PassageListModel()
     {
-        this.ref = null;
-        this.restrict = PassageConstants.RESTRICT_NONE;
-
-        setMode(PassageListModel.LIST_VERSES);
-        setPassage(ref);
+        this(null, PassageListType.VERSES, RestrictionType.NONE);
     }
 
     /**
@@ -56,24 +53,18 @@ public class PassageListModel extends AbstractListModel implements PassageListen
      */
     public PassageListModel(Passage ref)
     {
-        this.ref = ref;
-        this.restrict = PassageConstants.RESTRICT_NONE;
-
-        setMode(PassageListModel.LIST_VERSES);
-        setPassage(ref);
+        this(ref, PassageListType.VERSES, RestrictionType.NONE);
     }
 
     /**
      * Create a PassageListModel from a Passage. We also specify whether
-     * to list the individual verses using the constant
-     * <code>PassageListModel.LIST_VERSES</code> or to list ranges using
-     * <code>PassageListModel.LIST_RANGES</code>.
+     * to list the individual verses.
      * @param ref The reference that we are modeling
      * @param mode The verse/range mode
      * @param restrict When we are in range mode, do we chop at chapter boundries
      * @exception IllegalArgumentException If the mode is illegal
      */
-    public PassageListModel(Passage ref, int mode, int restrict)
+    public PassageListModel(Passage ref, PassageListType mode, RestrictionType restrict)
     {
         this.ref = ref;
         this.restrict = restrict;
@@ -83,17 +74,12 @@ public class PassageListModel extends AbstractListModel implements PassageListen
     }
 
     /**
-     * Change the mode we are operating in. Must be one of:
-     * <code>PassageListModel.LIST_VERSES</code> or
-     * <code>PassageListModel.LIST_RANGES</code>.
+     * Change the mode we are operating in.
      * @param mode The new operation mode
      * @exception IllegalArgumentException If the mode is illegal
      */
-    public void setMode(int mode)
+    public void setMode(PassageListType mode)
     {
-        // TODO (DM): convert list mode to an Enum
-        assert mode == LIST_VERSES || mode == LIST_RANGES;
-
         this.mode = mode;
     }
 
@@ -101,7 +87,7 @@ public class PassageListModel extends AbstractListModel implements PassageListen
      * Return the mode we are operating in.
      * @return The operation mode
      */
-    public int getMode()
+    public PassageListType getMode()
     {
         return mode;
     }
@@ -113,7 +99,7 @@ public class PassageListModel extends AbstractListModel implements PassageListen
      * <code>RESTRICT_CHAPTER</code>
      * @param restrict The new restrictions
      */
-    public void setRestriction(int restrict)
+    public void setRestriction(RestrictionType restrict)
     {
         this.restrict = restrict;
     }
@@ -121,7 +107,7 @@ public class PassageListModel extends AbstractListModel implements PassageListen
     /**
      * Return the current restriction
      */
-    public int getRestriction()
+    public RestrictionType getRestriction()
     {
         return restrict;
     }
@@ -136,25 +122,21 @@ public class PassageListModel extends AbstractListModel implements PassageListen
     }
 
     /**
+     * Recompute the size from the reference.
+     */
+    private void recomputeSize()
+    {
+        size = mode.count(ref, restrict);
+    }
+
+    /**
      * Returns the value at the specified index.
      * @param index The index (based at 0) of the element to fetch
      * @return The required verse/range
      */
     public Object getElementAt(int index)
     {
-        if (ref == null)
-        {
-            return null;
-        }
-
-        if (mode == LIST_RANGES)
-        {
-            return ref.getRangeAt(index, restrict);
-        }
-        else
-        {
-            return ref.getVerseAt(index);
-        }
+        return mode.getElementAt(ref, index, restrict);
     }
 
     /**
@@ -164,6 +146,8 @@ public class PassageListModel extends AbstractListModel implements PassageListen
      */
     public void versesAdded(PassageEvent ev)
     {
+        recomputeSize();
+
         fireIntervalRemoved(this, 0, size);
         fireIntervalAdded(this, 0, getSize());
 
@@ -178,6 +162,8 @@ public class PassageListModel extends AbstractListModel implements PassageListen
      */
     public void versesRemoved(PassageEvent ev)
     {
+        recomputeSize();
+
         fireIntervalRemoved(this, 0, size);
         fireIntervalAdded(this, 0, getSize());
 
@@ -192,6 +178,8 @@ public class PassageListModel extends AbstractListModel implements PassageListen
      */
     public void versesChanged(PassageEvent ev)
     {
+        recomputeSize();
+
         fireIntervalRemoved(this, 0, size);
         fireIntervalAdded(this, 0, getSize());
 
@@ -202,7 +190,7 @@ public class PassageListModel extends AbstractListModel implements PassageListen
     /**
      * Accessor for the current passage
      */
-    public void setPassage(Passage ref)
+    public void setPassage(Passage newRef)
     {
         fireIntervalRemoved(this, 0, size);
 
@@ -211,26 +199,15 @@ public class PassageListModel extends AbstractListModel implements PassageListen
             this.ref.removePassageListener(this);
         }
 
-        this.ref = ref;
+        ref = newRef;
 
         if (ref != null)
         {
             ref.optimizeReads();
             ref.addPassageListener(this);
+        }
 
-            if (mode == LIST_RANGES)
-            {
-                size = ref.countRanges(restrict);
-            }
-            else
-            {
-                size = ref.countVerses();
-            }
-        }
-        else
-        {
-            size = 0;
-        }
+        recomputeSize();
 
         fireIntervalAdded(this, 0, getSize());
     }
@@ -242,16 +219,6 @@ public class PassageListModel extends AbstractListModel implements PassageListen
     {
         return ref;
     }
-
-    /**
-     * Constant to make us list individual verses not ranges
-     */
-    public static final int LIST_VERSES = 0;
-
-    /**
-     * Constant to make us list verses in ranges
-     */
-    public static final int LIST_RANGES = 1;
 
     /**
      * The Passage that we are modelling
@@ -267,12 +234,12 @@ public class PassageListModel extends AbstractListModel implements PassageListen
     /**
      * Are we modelling in groups or individually
      */
-    private int mode;
+    private PassageListType mode;
 
     /**
      * If we are modelling in groups, do we break at chapter/book boundries
      */
-    private int restrict;
+    private RestrictionType restrict;
 
     /**
      * SERIALUID(dms): A placeholder for the ultimate version id.

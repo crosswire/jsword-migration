@@ -424,7 +424,6 @@ public class EditSitePane extends JPanel
             cboType.setEnabled(false);
             pnlBean.setEditable(false);
 
-            lblMesg.setIcon(null);
             break;
 
         case STATE_EDIT_OK:
@@ -444,7 +443,6 @@ public class EditSitePane extends JPanel
             cboType.setEnabled(true);
             pnlBean.setEditable(true);
 
-            // PENDING: lblMesg.setIcon(null);
             break;
 
         default:

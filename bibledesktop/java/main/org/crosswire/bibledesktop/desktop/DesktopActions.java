@@ -255,7 +255,7 @@ public class DesktopActions
      */
     public void doTabMode()
     {
-        getDesktop().setLayoutType(Desktop.LAYOUT_TYPE_TDI);
+        getDesktop().setLayoutType(LayoutType.TDI);
     }
 
     /**
@@ -263,7 +263,7 @@ public class DesktopActions
      */
     public void doWindowMode()
     {
-        getDesktop().setLayoutType(Desktop.LAYOUT_TYPE_MDI);
+        getDesktop().setLayoutType(LayoutType.TDI);
     }
 
     /**

@@ -135,7 +135,7 @@ public class BibleComboBoxModelSet
         }
     }
 
-    private Verse verse = new Verse();
+    private Verse verse = Verse.DEFAULT;
 
     protected JComboBox cboBook = null;
     protected JComboBox cboChapter = null;

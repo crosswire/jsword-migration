@@ -1,18 +1,18 @@
 
 package org.crosswire.bibledesktop.passage;
 
-import java.util.Iterator;
 import java.util.Enumeration;
+import java.util.Iterator;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 
+import org.crosswire.common.util.IteratorEnumeration;
 import org.crosswire.jsword.passage.Passage;
-import org.crosswire.jsword.passage.PassageConstants;
 import org.crosswire.jsword.passage.PassageEvent;
 import org.crosswire.jsword.passage.PassageListener;
-import org.crosswire.common.util.IteratorEnumeration;
+import org.crosswire.jsword.passage.RestrictionType;
 
 /**
  * A PassageTreeNode extends TreeNode to Model a Passage.
@@ -55,7 +55,7 @@ public class PassageTreeNode implements TreeNode, PassageListener
      */
     public TreeNode getChildAt(int index)
     {
-        return new VerseRangeTreeNode(ref.getRangeAt(index, PassageConstants.RESTRICT_CHAPTER));
+        return new VerseRangeTreeNode(ref.getRangeAt(index, RestrictionType.CHAPTER));
     }
 
     /**
@@ -64,7 +64,7 @@ public class PassageTreeNode implements TreeNode, PassageListener
      */
     public int getChildCount()
     {
-        return ref.countRanges(PassageConstants.RESTRICT_CHAPTER);
+        return ref.countRanges(RestrictionType.CHAPTER);
     }
 
     /**
@@ -83,7 +83,7 @@ public class PassageTreeNode implements TreeNode, PassageListener
     public int getIndex(TreeNode node)
     {
         int count = 0;
-        Iterator it = ref.rangeIterator(PassageConstants.RESTRICT_NONE);
+        Iterator it = ref.rangeIterator(RestrictionType.NONE);
 
         while (it.hasNext())
         {
@@ -148,7 +148,7 @@ public class PassageTreeNode implements TreeNode, PassageListener
      */
     public Enumeration children()
     {
-        return new IteratorEnumeration(ref.rangeIterator(PassageConstants.RESTRICT_NONE));
+        return new IteratorEnumeration(ref.rangeIterator(RestrictionType.NONE));
     }
 
     /**

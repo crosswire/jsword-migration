@@ -75,33 +75,27 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
     {
         log.debug("setSelectedItem(" + selected + ") level=" + level); //$NON-NLS-1$ //$NON-NLS-2$
 
-        try
+        switch (level)
         {
-            switch (level)
-            {
-            case LEVEL_BOOK:
-                String bsel = (String) selected;
-                int book = BibleInfo.getBookNumber(bsel);
-                setBook(book);
-                break;
-    
-            case LEVEL_CHAPTER:
-                Integer csel = (Integer) selected;
-                setChapter(csel.intValue());
-                break;
+        case LEVEL_BOOK:
+            String bsel = (String) selected;
+            int book = BibleInfo.getBookNumber(bsel);
+            assert book > 0;
+            setBook(book);
+            break;
+   
+        case LEVEL_CHAPTER:
+            Integer csel = (Integer) selected;
+            setChapter(csel.intValue());
+            break;
 
-            case LEVEL_VERSE:
-                Integer vsel = (Integer) selected;
-                setVerse(vsel.intValue());
-                break;
-    
-            default:
-                assert false : level;
-            }
-        }
-        catch (NoSuchVerseException ex)
-        {
-            assert false : ex;
+        case LEVEL_VERSE:
+            Integer vsel = (Integer) selected;
+            setVerse(vsel.intValue());
+            break;
+   
+        default:
+            assert false : level;
         }
 
         this.selected = selected;

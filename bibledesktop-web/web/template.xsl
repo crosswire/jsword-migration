@@ -29,6 +29,41 @@
   <head>
     <link rel="stylesheet" type="text/css" href="sword.css"/>
     <xsl:copy-of select="html:head/*"/>
+    <script language="javascript">
+      <![CDATA[
+      var thispage = location.href.substring(location.href.lastIndexOf("/")+1);
+      function writeLink(parentName, dest, title)
+      {
+        var parent = document.getElementById(parentName);
+        if (dest == thispage)
+        {
+          var div = document.createElement("div");
+          parent.appendChild(div);
+          div.setAttribute("class", "lsidecell current");
+          div.appendChild(document.createTextNode(title));
+        }
+        else
+        {
+          var div = document.createElement("div");
+          var a = document.createElement("a");
+          parent.appendChild(div);
+          div.setAttribute("class", "lsidecell pagelink");
+          div.appendChild(a);
+          a.setAttribute("href", dest);
+          a.appendChild(document.createTextNode(title));
+        }
+      }
+
+      function emptyIf(id, ifval)
+      {
+        var textele = document.getElementById(id);
+        if (textele.value == ifval)
+        {
+          textele.value = "";
+        }
+      }
+      ]]>
+    </script>
   </head>
   <body>
     <xsl:copy-of select="html:body/@*"/>
@@ -36,9 +71,13 @@
     <xsl:copy-of select="html:body/*"/>
 
     <div id="side">
-      <div class="lsidecell current"><a href="index.html">Home</a></div>
-      <div class="lsidecell pagelink"><a href="download.html">Download</a></div>
-      <div class="lsidecell pagelink"><a href="news.html">News</a></div>
+      <script language="javascript">
+        <![CDATA[
+        writeLink("side", "index.html", "Home");
+        writeLink("side", "download.html", "Download");
+        writeLink("side", "screenshot.html", "Screenshots");
+        ]]>
+      </script>
 
       <p>
         Related Projects:<br/>
@@ -47,11 +86,12 @@
       </p>
 
       <div class="lsidecell subscribe">
-        <form action="submit" method="post">
+        <form method="post" action="http://www.crosswire.org/mailman/subscribe/jsword-devel">
+          <input type='hidden' name="digest" value="0"/>
           Stay informed:<br/>
-          <input type="text" size="10" value="your e-mail"/>
+          <input type="text" size="10" id="email" name="email" value="your e-mail" onfocus="emptyIf('email', 'your e-mail');"/>
           <br/>
-          <input type="submit" value="Subscribe"/>
+          <input type="submit" name="email-button" value="Subscribe"/>
         </form>
       </div>
     </div>

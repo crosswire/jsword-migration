@@ -43,10 +43,11 @@ import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.jsword.passage.KeyFactory;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.Passage;
-import org.crosswire.jsword.passage.PassageConstants;
 import org.crosswire.jsword.passage.PassageEvent;
 import org.crosswire.jsword.passage.PassageKeyFactory;
+import org.crosswire.jsword.passage.PassageListType;
 import org.crosswire.jsword.passage.PassageListener;
+import org.crosswire.jsword.passage.RestrictionType;
 import org.crosswire.jsword.passage.VerseRange;
 
 /**
@@ -285,7 +286,7 @@ public class PassageSelectionPane extends JPanel
             ref = (Passage) keyf.getKey(refstr);
 
             txtDisplay.setText(refstr);
-            lstSel.setModel(new PassageListModel(ref, PassageListModel.LIST_RANGES, PassageConstants.RESTRICT_CHAPTER));
+            lstSel.setModel(new PassageListModel(ref, PassageListType.RANGES, RestrictionType.CHAPTER));
 
             ref.addPassageListener(new CustomPassageListener());
             updateMessageSummary();

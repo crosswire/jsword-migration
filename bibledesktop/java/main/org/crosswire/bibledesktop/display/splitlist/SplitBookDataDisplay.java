@@ -23,7 +23,8 @@ import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.KeyUtil;
-import org.crosswire.jsword.passage.PassageConstants;
+import org.crosswire.jsword.passage.PassageListType;
+import org.crosswire.jsword.passage.RestrictionType;
 
 /**
  * A quick Swing Bible display pane.
@@ -79,8 +80,8 @@ public class SplitBookDataDisplay implements BookDataDisplay
 
         //*
         model = new PassageListModel();
-        model.setMode(PassageListModel.LIST_RANGES);
-        model.setRestriction(PassageConstants.RESTRICT_CHAPTER);
+        model.setMode(PassageListType.RANGES);
+        model.setRestriction(RestrictionType.CHAPTER);
 
         list = new JList(model);
         list.addListSelectionListener(new ListSelectionListener()
@@ -161,7 +162,7 @@ public class SplitBookDataDisplay implements BookDataDisplay
      */
     private void doBlur(int amount)
     {
-        key.blur(amount, PassageConstants.RESTRICT_CHAPTER);
+        key.blur(amount, RestrictionType.CHAPTER);
         setBookData(book, key);
 
         updateParents();
@@ -303,7 +304,7 @@ public class SplitBookDataDisplay implements BookDataDisplay
                 // if there was a single selection then show the whole chapter
 //                if (selected.length == 1)
 //                {
-//                    selectedKey.blur(5, PassageConstants.RESTRICT_CHAPTER);
+//                    selectedKey.blur(5, RestrictionType.CHAPTER);
 //                }
 
                 local = selectedKey;

@@ -18,8 +18,8 @@ import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.Search;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
-import org.crosswire.jsword.passage.PassageConstants;
 import org.crosswire.jsword.passage.PassageTally;
+import org.crosswire.jsword.passage.RestrictionType;
 
 /**
  * A quick demo of how easy it is to write new front-ends to JSword.
@@ -91,7 +91,7 @@ public class DemoServlet extends HttpServlet
                 request.setAttribute(FIELD_MATCH, match);
                 PassageTally tally = (PassageTally) book.find(new Search(match, true));
                 tally.setOrdering(PassageTally.ORDER_TALLY);
-                tally.trimRanges(tallyTrim, PassageConstants.RESTRICT_NONE);
+                tally.trimRanges(tallyTrim, RestrictionType.NONE);
                 key = tally;
             }
 

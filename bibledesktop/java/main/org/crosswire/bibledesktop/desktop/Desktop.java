@@ -179,11 +179,11 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         debug();
         init();
 
-        if (initial == LAYOUT_TYPE_MDI)
+        if (initial.equals(LayoutType.MDI))
         {
             rdoViewMdi.setSelected(true);
         }
-        if (initial == LAYOUT_TYPE_TDI)
+        if (initial.equals(LayoutType.TDI))
         {
             rdoViewTdi.setSelected(true);
         }
@@ -240,10 +240,6 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
      */
     private void createComponents()
     {
-        layouts = new ViewLayout[2];
-        layouts[LAYOUT_TYPE_TDI] = new TDIViewLayout();
-        layouts[LAYOUT_TYPE_MDI] = new MDIViewLayout();
-
         rdoViewTdi = new JRadioButtonMenuItem(actions.getAction(DesktopActions.TAB_MODE));
         rdoViewMdi = new JRadioButtonMenuItem(actions.getAction(DesktopActions.WINDOW_MODE));
 
@@ -501,16 +497,16 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
      */
     private final ViewLayout getViewLayout()
     {
-        return layouts[current];
+        return current.getLayout();
     }
 
     /**
      * Setup the current view
      */
-    public void setLayoutType(int next)
+    public void setLayoutType(LayoutType next)
     {
         // Check this is a change
-        if (current == next)
+        if (current.equals(next))
         {
             return;
         }
@@ -584,18 +580,15 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
      */
     public static int getInitialLayoutType()
     {
-        return initial;
+        return initial.toInteger();
     }
 
     /**
      * What should the initial layout state be?
      */
-    public static void setInitialLayoutType(int initial)
+    public static void setInitialLayoutType(int initialLayout)
     {
-        // TODO (DM): convert layout type to an Enum
-        assert initial == LAYOUT_TYPE_TDI || initial == LAYOUT_TYPE_MDI;
-
-        Desktop.initial = initial;
+        Desktop.initial = LayoutType.fromInteger(initialLayout);
     }
 
     /* (non-Javadoc)
@@ -923,29 +916,14 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     private Config config;
 
     /**
-     * Tabbed document interface
-     */
-    protected static final int LAYOUT_TYPE_TDI = 0;
-
-    /**
-     * Multiple document interface
-     */
-    protected static final int LAYOUT_TYPE_MDI = 1;
-
-    /**
      * The initial layout state
      */
-    private static int initial = LAYOUT_TYPE_TDI;
-
-    /**
-     * The array of valid layouts
-     */
-    protected ViewLayout[] layouts;
+    private static LayoutType initial = LayoutType.TDI;
 
     /**
      * The current way the views are laid out
      */
-    private int current = initial;
+    private LayoutType current = initial;
 
     /**
      * The list of BibleViewPanes being viewed in tdi and mdi workspaces
