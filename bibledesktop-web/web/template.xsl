@@ -77,6 +77,7 @@
         writeLink("side", "download.html", "Download");
         writeLink("side", "screenshot.html", "Screenshots");
         writeLink("side", "howto.html", "How-To");
+        writeLink("side", "bibledesktop-manual.pdf", "Help");
         writeLink("side", "maillists.html", "Mailing-Lists");
         ]]>
       </script>
