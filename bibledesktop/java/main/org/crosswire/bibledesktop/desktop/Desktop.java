@@ -183,6 +183,10 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         debug();
         init();
 
+        // This is technically overkill, but it does hide the reference pane if
+        // there are no reference works
+        refreshBooks();
+
         // Configuration
         startJob.setProgress(Msg.STARTUP_GENERAL_CONFIG.toString());
 
@@ -669,6 +673,29 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         // Create the array of Dictionaries
         String[] dnames = getFullNameArray(BookFilters.getDictionaries());
         ChoiceFactory.getDataMap().put(DICTIONARY_KEY, dnames);
+
+        // Has the number of reference books changed?
+        int newRefBooks = dnames.length + cnames.length;
+        if (newRefBooks != refBooks)
+        {
+            // This method is called during setup
+            if (reference != null)
+            {
+                if (newRefBooks == 0)
+                {
+                    sptBooks.setDividerLocation(8000);
+                }
+                else
+                {
+                    int norm = (int) (sptBooks.getMaximumDividerLocation() * 0.8);
+                    sptBooks.setDividerLocation(norm);
+                }
+                //reference.setVisible(newRefBooks != 0);
+                //sptBooks.setDividerLocation(0.8D);
+            }
+
+            refBooks = newRefBooks;
+        }
     }
 
     /**
@@ -695,6 +722,8 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     {
         return config;
     }
+
+    private int refBooks = 0;
 
     // Strings for the names of property files.
     private static final String SPLASH_PROPS = "splash"; //$NON-NLS-1$
