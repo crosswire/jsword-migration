@@ -2,7 +2,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<html>
 <head>
 <title>Setting Up Eclipse for JSword and BibleDesktop</title>
 </head>
@@ -61,40 +60,40 @@
   Perhaps the best way to run Eclipse from inside the Gnome desktop is to create a
   Launcher for it. This is not an endorsement of the Gnome desktop. I don't have any
   experience with KDE. Perhaps someone can provide instructions on how to do that.
-  <ol>
-    <li>Assuming that you installed Java as instructed above, you can use
-        <code>-vm /usr/bin/java.</code> I strongly recommend that you explicitly
-        tell Eclipse which Java to run. Please note, you can independently tell
-        Eclipse which Java to use to compile code with.</li>
-    <li>By default, Java caps memory usage to too low a value. You will need to increase
-        it to 512M, with <code>-vmargs -Xmx512M</code></li>
-    <li>The icon for the program is <code>/usr/java/eclipse/icon.xpm</code>
-  </ol>
-  You can create a <q>Launcher</q> that will be in a Gnome panel of your choice by:
-  <ol>
-    <li>Right click on the panel in which you want to create the <q>Launcher</q></li>
-    <li>Choose <q>Add to Panel...</q>. 
-        <a href="images/linux/addpanel.png">[Image]</a></li>
-    <li>Choose <q>Custom Application Launcher</q>
-        <a href="images/linux/choosecustom.png">[Image]</a></li>
-    <li>In the dialog fill in the following values:
-        <a href="images/linux/createlauncher.png">[Image]</a>
-      <table>
-        <tr>
-          <td><strong>Name:</strong></td>
-          <td>JSword Eclipse</td>
-        </tr>
-        <tr>
-          <td><strong>Command:</strong></td>
-          <td>/usr/java/eclipse/eclipse -vm /usr/bin/java -vmargs -Xmx512M</td>
-        </tr>
-        <tr>
-          <td colspan="2">Click on the icon and enter /usr/java/eclipse/icon.xpm</td>
-        </tr>
-      </table>
-    </li>
-  </ol>
 </p>
+<ol>
+  <li>Assuming that you installed Java as instructed above, you can use
+      <code>-vm /usr/bin/java.</code> I strongly recommend that you explicitly
+      tell Eclipse which Java to run. Please note, you can independently tell
+      Eclipse which Java to use to compile code with.</li>
+  <li>By default, Java caps memory usage to too low a value. You will need to increase
+      it to 512M, with <code>-vmargs -Xmx512M</code></li>
+  <li>The icon for the program is <code>/usr/java/eclipse/icon.xpm</code></li>
+</ol>
+You can create a <q>Launcher</q> that will be in a Gnome panel of your choice by:
+<ol>
+  <li>Right click on the panel in which you want to create the <q>Launcher</q></li>
+  <li>Choose <q>Add to Panel...</q>. 
+      <a href="images/linux/addpanel.png">[Image]</a></li>
+  <li>Choose <q>Custom Application Launcher</q>
+      <a href="images/linux/choosecustom.png">[Image]</a></li>
+  <li>In the dialog fill in the following values:
+      <a href="images/linux/createlauncher.png">[Image]</a>
+    <table>
+      <tr>
+        <td><strong>Name:</strong></td>
+        <td>JSword Eclipse</td>
+      </tr>
+      <tr>
+        <td><strong>Command:</strong></td>
+        <td>/usr/java/eclipse/eclipse -vm /usr/bin/java -vmargs -Xmx512M</td>
+      </tr>
+      <tr>
+        <td colspan="2">Click on the icon and enter /usr/java/eclipse/icon.xpm</td>
+      </tr>
+    </table>
+  </li>
+</ol>
 
 <h2>Setting up the JSword projects in Eclipse</h2>
 
@@ -129,47 +128,47 @@
 <p>
   Add the CVS Respository Exploring perspective.
   <a href="images/eclipse/repositoryperspective.png">[Image]</a>
-  <ul>
-    <li>This will automatically open the CVS Repository Exploring perspective.</li>
-	<li>Click on the <q>Add CVS Repository</q> button.</li>
-	<li>Fill in the dialog with the following values:
-	  <table>
-	    <tr>
-	      <td><strong>Host:</strong></td>
-	      <td>cvs.crosswire.org</td>
-	    </tr>
-	    <tr>
-		  <td><strong>Repository Path:</strong></td>
-		  <td>/cvs/jsword</td>
-	    </tr>
-	    <tr>
-	  	  <td><strong>User:</strong></td>
-		  <td>anonymous</td>
-	    </tr>
-	    <tr>
-		  <td><strong>Password:</strong></td>
-		  <td>anonymous</td>
-	    </tr>
-	    <tr>
-		  <td colspan="2">Click on <q>Save Password</q> as it is no secret!</td>
-	    </tr>
-	    <tr>
-		  <td colspan="2">Click on <q>Finish</q></td>
-	    </tr>
-      </table>
-      This will provide you with read-only access to the repository.
-      To change the code you will submit patches which is explained below.
-    </li>
-    <li>Open the repository and expand HEAD.</li>
-    <li>Right click on bibledesktop, choose <q>Check Out As...</q>
-        and then click <q>Finish</q>.</li>
-    <li>Repeat this for common, jsword and jsword-support.
-        Later you may wish to do help maintain the website and then you will
-        want bibledesktop-web and jsword-web.</li>
-    <li>You don't need this perspective for day to day development,
-        so you can remove it.</li>
-  </ul>
 </p>
+<ul>
+  <li>This will automatically open the CVS Repository Exploring perspective.</li>
+  <li>Click on the <q>Add CVS Repository</q> button.</li>
+  <li>Fill in the dialog with the following values:
+	<table>
+	  <tr>
+	    <td><strong>Host:</strong></td>
+	    <td>cvs.crosswire.org</td>
+	  </tr>
+	  <tr>
+		<td><strong>Repository Path:</strong></td>
+		<td>/cvs/jsword</td>
+	  </tr>
+	  <tr>
+	  	<td><strong>User:</strong></td>
+		<td>anonymous</td>
+	  </tr>
+	  <tr>
+		<td><strong>Password:</strong></td>
+		<td>anonymous</td>
+	  </tr>
+	  <tr>
+		<td colspan="2">Click on <q>Save Password</q> as it is no secret!</td>
+	  </tr>
+	  <tr>
+		<td colspan="2">Click on <q>Finish</q></td>
+	  </tr>
+    </table>
+    This will provide you with read-only access to the repository.
+    To change the code you will submit patches which is explained below.
+  </li>
+  <li>Open the repository and expand HEAD.</li>
+  <li>Right click on bibledesktop, choose <q>Check Out As...</q>
+      and then click <q>Finish</q>.</li>
+  <li>Repeat this for common, jsword and jsword-support.
+      Later you may wish to do help maintain the website and then you will
+      want bibledesktop-web and jsword-web.</li>
+  <li>You don't need this perspective for day to day development,
+      so you can remove it.</li>
+</ul>
 
 <h3>Setting up preferences in Eclipse</h3>
 <p>
@@ -182,15 +181,15 @@
   If you want to know how to setup Eclipse to use the same compiler settings
   as we do then the following screenshots (from an earlier version of Eclipse)
   ought to help:
-  <ul>
-    <li><a href="images/eclipse/compiler1-style.gif">Style Tab</a></li>
-    <li><a href="images/eclipse/compiler2-advanced.gif">Advanced Tab</a></li>
-    <li><a href="images/eclipse/compiler3-unused.gif">Unused Code Tab</a></li>
-    <li><a href="images/eclipse/compiler4-javadoc.gif">JavaDoc Tab</a></li>
-	<li><a href="images/eclipse/compiler5-compliance.gif">Compliance and Classfiles Tab</a></li>
-    <li><a href="images/eclipse/compiler6-build.gif">Build Path Tab</a></li>
-  </ul>
 </p>
+<ul>
+  <li><a href="images/eclipse/compiler1-style.gif">Style Tab</a></li>
+  <li><a href="images/eclipse/compiler2-advanced.gif">Advanced Tab</a></li>
+  <li><a href="images/eclipse/compiler3-unused.gif">Unused Code Tab</a></li>
+  <li><a href="images/eclipse/compiler4-javadoc.gif">JavaDoc Tab</a></li>
+  <li><a href="images/eclipse/compiler5-compliance.gif">Compliance and Classfiles Tab</a></li>
+  <li><a href="images/eclipse/compiler6-build.gif">Build Path Tab</a></li>
+</ul>
 <p>
   In addition Eclipse provides a code formatter
   <a href="images/eclipse/FormatPrefs.png">[Image]</a>
