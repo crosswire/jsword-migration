@@ -6,6 +6,7 @@ import java.awt.Component;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -20,6 +21,7 @@ import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.swing.MapTable;
 import org.crosswire.common.swing.MapTableModel;
+import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.BookList;
 import org.crosswire.jsword.book.BookMetaData;
@@ -235,7 +237,21 @@ public class SitePane extends JPanel
 
                 try
                 {
-                    installer.install(name);
+                    // Is the book already installed? Then nothing to do.
+                    if (Books.installed().getBookMetaData(name.getName()) != null)
+                    {
+                        Reporter.informUser(this, Msg.INSTALLED, name.getName());
+                        return;
+                    }
+
+                    float size = NetUtil.getSize(installer.toURL(name)) / 1024;
+                    if (JOptionPane.showConfirmDialog(this, Msg.SIZE.toString(new Object[] {name.getName(), new Float(size)}),
+                                    Msg.CONFIRMATION_TITLE.toString(),
+                                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+                    {
+                        installer.install(name);
+                    }
+
                 }
                 catch (InstallException ex)
                 {

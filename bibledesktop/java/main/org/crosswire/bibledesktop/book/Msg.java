@@ -51,6 +51,10 @@ class Msg extends MsgBase
     static final Msg AVAILABLE_BOOKS = new Msg("SitesPane.AvailableBooks"); //$NON-NLS-1$
     static final Msg LOCAL_BOOKS = new Msg("SitesPane.Local"); //$NON-NLS-1$
 
+    static final Msg SIZE = new Msg("SitePane.Size"); //$NON-NLS-1$
+    static final Msg CONFIRMATION_TITLE = new Msg("SitePane.ConfirmationTitle"); //$NON-NLS-1$
+    static final Msg INSTALLED = new Msg("SitePane.Installed"); //$NON-NLS-1$
+
     static final Msg EDIT_SITE_TITLE = new Msg("EditSitePane.EditSitesTitle"); //$NON-NLS-1$
     static final Msg MISSING_SITE = new Msg("EditSitePane.MissingSite"); //$NON-NLS-1$
     static final Msg DUPLICATE_SITE = new Msg("EditSitePane.DuplicateSite"); //$NON-NLS-1$
