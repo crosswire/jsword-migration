@@ -283,7 +283,7 @@ public class WholeBibleTreeNode implements TreeNode
             return getChildAt(count);
         }
 
-        private int count = 0;
+        private int count;
     }
 
     protected static final int LEVEL_BIBLE = 0;

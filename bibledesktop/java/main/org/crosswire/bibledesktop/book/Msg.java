@@ -45,6 +45,7 @@ class Msg extends MsgBase
     static final Msg BAD_VERSE = new Msg("DisplaySelectPane.BadVerse"); //$NON-NLS-1$
     static final Msg NO_INSTALLED_BIBLE = new Msg("DisplaySelectPane.NoInstalledBible"); //$NON-NLS-1$
     static final Msg SELECT_PASSAGE_TITLE = new Msg("DisplaySelectPane.SelectPassageTitle"); //$NON-NLS-1$
+    static final Msg CLEAR = new Msg("DisplaySelectPane.Clear"); //$NON-NLS-1$
     static final Msg UNTITLED = new Msg("DisplaySelectPane.Untitled"); //$NON-NLS-1$
 
     static final Msg AVAILABLE_BOOKS = new Msg("SitesPane.AvailableBooks"); //$NON-NLS-1$

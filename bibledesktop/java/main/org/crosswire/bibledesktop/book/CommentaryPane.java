@@ -214,7 +214,7 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
     /**
      * Last displayed
      */
-    protected Key key = null;
+    protected Key key;
 
     /**
      * To get us just the Commentaries

@@ -10,11 +10,9 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.URL;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
@@ -74,12 +72,7 @@ public class Splash extends JWindow
      */
     private void init()
     {
-        URL url = getClass().getResource(Msg.SPLASH_IMAGE.toString());
-        Icon icon = null;
-        if (url != null)
-        {
-            icon = new ImageIcon(url);
-        }
+        Icon icon = GuiUtil.getIcon(Msg.SPLASH_IMAGE.toString());
 
         JLabel lblPicture = new JLabel();
         lblPicture.setBackground(Color.WHITE);

@@ -160,9 +160,9 @@ public class BookTreeNode extends BibleTreeNode
     }
 
     /** The Book that this node referrs to */
-    protected int book = 0;
+    protected int book;
 
     /** The base of this tree */
-    protected TreeNode parent = null;
+    protected TreeNode parent;
 }
 

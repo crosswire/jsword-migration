@@ -19,12 +19,13 @@ import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageListType;
 import org.crosswire.jsword.passage.RestrictionType;
 
 /**
- * A list view of a key range list
+ * A list view of a key range list.
  *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
@@ -164,7 +165,19 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
             return;
         }
 
-        key = newKey;
+        try
+        {
+            // Have to have a copy of the key
+            // since we allow it to be blurred and
+            // that would cause the shared location
+            // to get the change w/o seeing it.
+            key = book.getKey(newKey.getName());
+        }
+        catch (NoSuchKeyException e)
+        {
+            assert false;
+        }
+        partial = null;
         model.setPassage((Passage) key);
         fireKeyChanged(new KeyChangeEvent(this, key));
     }
@@ -222,7 +235,6 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
      */
     public void passageSelected(DisplaySelectEvent ev)
     {
-        ev.getKey();
         setKey(ev.getKey());
     }
 

@@ -116,7 +116,7 @@
 -->
 
   <option key="Application.InitialLayout" type="int-options">
-    <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="InitialLayoutType"/>
+    <introspect class="org.crosswire.common.swing.desktop.ViewManager" property="InitialLayoutType"/>
     <alternative number="0"/>
     <alternative number="1"/>
   </option>
@@ -150,12 +150,6 @@
 <!-- This really only useful for developers, they can uncomment it.
   <option key="Advanced.SourcePath" type="path" priority="9">
     <introspect class="org.crosswire.common.swing.ExceptionPane" property="SourcePath"/>
-  </option>
--->
-
-<!-- Program recognizes when the XSLT has changed and recompiles it.
-  <option key="Advanced.XSLT.Cache" type="boolean">
-    <introspect class="org.crosswire.common.xml.TransformingSAXEventProvider" property="Cache"/>
   </option>
 -->
 

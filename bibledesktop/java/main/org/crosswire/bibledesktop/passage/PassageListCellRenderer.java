@@ -112,7 +112,7 @@ public class PassageListCellRenderer implements ListCellRenderer, Serializable
     /**
      * The Bible in which to look up verses
      */
-    private Book bible = null;
+    private Book bible;
 
     /**
      * The label to display if the item is not selected

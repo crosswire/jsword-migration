@@ -162,10 +162,10 @@ public class PassageTreeNode implements TreeNode, PassageListener
     /**
      * The Passage to be displayed
      */
-    protected Passage ref = null;
+    protected Passage ref;
 
     /**
      * The Passage to be displayed
      */
-    protected JTree tree = null;
+    protected JTree tree;
 }

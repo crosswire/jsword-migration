@@ -85,8 +85,10 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         JPanel pnlSelect = new JPanel(new GridBagLayout());
 
         // Layout the card picker and the Bible picker side by side
-        pnlSelect.add(createRadioPanel(), new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 2), 0, 0));
-        pnlSelect.add(createBiblePicker(), new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 2, 0, 2), 0, 0));
+        pnlSelect.add(createRadioPanel(), new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE,
+                        new Insets(0, 2, 0, 2), 0, 0));
+        pnlSelect.add(createBiblePicker(), new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,
+                        2, 0, 2), 0, 0));
 
         // Create a deck of "cards" for the different ways of finding passages
         layCards = new CardLayout();
@@ -219,7 +221,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         panel.add(txtSearch, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 2, 2, 2), 0, 0));
         panel.add(goButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 2, 2, 2), 0, 0));
         panel.add(chkSRestrict, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
-        panel.add(txtSRestrict, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
+        panel.add(txtSRestrict, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2),
+                        0, 0));
 
         return panel;
     }
@@ -267,6 +270,11 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
     public void clear()
     {
+        if (isClear())
+        {
+            return;
+        }
+
         txtPassg.setText(""); //$NON-NLS-1$
         flipOption(PASSAGE);
 
@@ -284,6 +292,11 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
         updateDisplay();
 
+    }
+
+    public boolean isClear()
+    {
+        return title.indexOf(Msg.CLEAR.toString()) != -1;
     }
 
     // The following are behaviors associated with the actions executed by actionPerformed
@@ -349,7 +362,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     public void doPassageAction()
     {
-        setDefaultName(txtPassg.getText());
+        setTitle(txtPassg.getText());
         updateDisplay();
     }
 
@@ -380,10 +393,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
             Key key = book.find(search);
 
             txtPassg.setText(key.getName());
-
-            setDefaultName(param);
+            setTitle(param);
             updateDisplay();
-//            setCurrentAction(PASSAGE);
         }
         catch (Exception ex)
         {
@@ -427,9 +438,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
             txtPassg.setText(key.getName());
 
-            setDefaultName(param);
+            setTitle(param);
             updateDisplay();
-//            setCurrentAction(PASSAGE);
         }
         catch (Exception ex)
         {
@@ -485,30 +495,6 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         }
     }
 
-//    /**
-//     * What is the currently displayed action?
-//     * @param action one of the constants PASSAGE, SEARCH or MATCH;
-//     */
-//    private void setCurrentAction(String action)
-//    {
-//        layCards.show(pnlCards, action);
-//
-//        if (action.equals(PASSAGE))
-//        {
-//            rdoPassg.setSelected(true);
-//        }
-//        else if (action.equals(SEARCH))
-//        {
-//            rdoSearch.setSelected(true);
-//        }
-//        else if (action.equals(MATCH))
-//        {
-//            rdoMatch.setSelected(true);
-//        }
-//
-//        adjustFocus();
-//    }
-
     /**
      * Set the focus to the right initial component
      */
@@ -531,7 +517,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     /**
      * Accessor for the default name
      */
-    public String getDefaultName()
+    public String getTitle()
     {
         return title;
     }
@@ -539,21 +525,22 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     /**
      * Sets the default name
      */
-    public void setDefaultName(String title)
+    public void setTitle(String title)
     {
         this.title = title;
     }
 
     /**
-     * The passage string, post parsing
+     * Sets the default name
      */
-    public void setPassageLabel(String text)
+    public void setText(String text)
     {
-        String passage = txtPassg.getText();
-        if (!passage.equals(text))
+        String currentText = txtPassg.getText();
+        if (!currentText.equals(text))
         {
             txtPassg.setText(text);
-            setDefaultName(text);
+            setTitle(text);
+            updateDisplay();
         }
     }
 
@@ -611,13 +598,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     public void keyChanged(KeyChangeEvent ev)
     {
         String text = ev.getKey().getName();
-        String passage = txtPassg.getText();
-        if (!passage.equals(text))
-        {
-            txtPassg.setText(text);
-            setDefaultName(text);
-            updateDisplay();
-        }
+        setText(text);
     }
 
     /**

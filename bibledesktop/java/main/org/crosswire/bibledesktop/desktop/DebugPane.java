@@ -147,7 +147,7 @@ public class DebugPane extends JPanel
 
         reply.append("\n" + Msg.DEBUG_VIEWS.toString()); //$NON-NLS-1$
         int i = 0;
-        Iterator it = desktop.iterateBibleViewPanes();
+        Iterator it = desktop.getViews().iterator();
         while (it.hasNext())
         {
             BibleViewPane view = (BibleViewPane) it.next();
@@ -230,7 +230,7 @@ public class DebugPane extends JPanel
         }
     }
 
-    private Splash splash = null;
+    private Splash splash;
 
     /**
      * The log stream

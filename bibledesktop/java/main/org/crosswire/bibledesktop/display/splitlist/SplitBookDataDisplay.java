@@ -165,22 +165,6 @@ public class SplitBookDataDisplay extends JPanel
         child.copy();
     }
 
-//    /* (non-Javadoc)
-//     * @see org.crosswire.bibledesktop.book.FocusablePart#addHyperlinkListener(javax.swing.event.HyperlinkListener)
-//     */
-//    public void addHyperlinkListener(HyperlinkListener li)
-//    {
-//        child.addHyperlinkListener(li);
-//    }
-//
-//    /* (non-Javadoc)
-//     * @see org.crosswire.bibledesktop.book.FocusablePart#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
-//     */
-//    public void removeHyperlinkListener(HyperlinkListener li)
-//    {
-//        child.removeHyperlinkListener(li);
-//    }
-
     /**
      * Add a command listener
      */

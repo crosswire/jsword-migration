@@ -4,13 +4,14 @@ import java.awt.Component;
 
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
+import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.book.BookDriver;
 import org.crosswire.jsword.book.Books;
 
@@ -135,7 +136,7 @@ public class DriversListModel extends AbstractListModel
     /**
      * The small version icon
      */
-    protected static final ImageIcon SMALL_ICON = new ImageIcon("/org/crosswire/resources/task_small.gif"); //$NON-NLS-1$
+    protected static final Icon SMALL_ICON = GuiUtil.getIcon("/org/crosswire/resources/task_small.gif"); //$NON-NLS-1$
 
     /**
      * border if we do not have focus

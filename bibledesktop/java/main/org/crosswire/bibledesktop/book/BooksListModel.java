@@ -201,7 +201,7 @@ public class BooksListModel extends AbstractListModel
     /**
      * The filter used to choose Bibles
      */
-    private BookFilter filter = null;
+    private BookFilter filter;
 
     /**
      * The listener
@@ -214,7 +214,7 @@ public class BooksListModel extends AbstractListModel
      * ensure that one thread can't update the list of books while another is
      * trying to create a JList based on this class.
      */
-    protected List bmds = null;
+    protected List bmds;
 
     /**
      * The log stream

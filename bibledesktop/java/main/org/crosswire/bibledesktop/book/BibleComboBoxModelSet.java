@@ -137,9 +137,9 @@ public class BibleComboBoxModelSet
 
     private Verse verse = Verse.DEFAULT;
 
-    protected JComboBox cboBook = null;
-    protected JComboBox cboChapter = null;
-    private JComboBox cboVerse = null;
+    protected JComboBox cboBook;
+    protected JComboBox cboChapter;
+    private JComboBox cboVerse;
 
     protected BibleComboBoxModel mdlBook = new BibleComboBoxModel(this, BibleComboBoxModel.LEVEL_BOOK);
     protected BibleComboBoxModel mdlChapter = new BibleComboBoxModel(this, BibleComboBoxModel.LEVEL_CHAPTER);

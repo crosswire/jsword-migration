@@ -120,5 +120,5 @@ public class ProxyBookDataDisplay implements BookDataDisplay
     /**
      * The component to which we proxy
      */
-    private BookDataDisplay proxy = null;
+    private BookDataDisplay proxy;
 }

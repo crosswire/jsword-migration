@@ -1,5 +1,6 @@
 package org.crosswire.bibledesktop.desktop;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
@@ -15,6 +16,7 @@ import org.crosswire.bibledesktop.book.SitesPane;
 import org.crosswire.bibledesktop.display.splitlist.SplitBookDataDisplay;
 import org.crosswire.common.config.swing.ConfigEditorFactory;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.desktop.ViewVisitor;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
@@ -58,7 +60,7 @@ import org.crosswire.jsword.util.Project;
  * </font></td></tr></table>
  * @see gnu.gpl.Licence
  * @author Joe Walker [joe at eireneh dot com]
- * @author DM Smith [dmsmith555 at hotmail dot com]
+ * @author DM Smith [dmsmith555 at yahoo dot com]
  * @version $Id$
  */
 public class DesktopActions
@@ -105,56 +107,18 @@ public class DesktopActions
     }
 
     /**
-     * For creating a new window.
-     */
-    public void doNewTab()
-    {
-        BibleViewPane view = new BibleViewPane();
-
-        getDesktop().addBibleViewPane(view);
-
-//        view.addHyperlinkListener(getDesktop());
-    }
-
-    /**
      * Open a new passage window from a file.
      */
     public void doOpen()
     {
         try
         {
-            BibleViewPane view = getDesktop().getSelectedBibleViewPane();
+            BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
             view.open();
         }
         catch (Exception ex)
         {
             Reporter.informUser(getDesktop(), ex);
-        }
-    }
-
-    /**
-     * Close the current passage window.
-     */
-    public void doClearView()
-    {
-        BibleViewPane view = getDesktop().getSelectedBibleViewPane();
-        view.clear();
-    }
-    /**
-     * Close all the passage windows.
-     */
-    public void doCloseOtherViews()
-    {
-        BibleViewPane view = getDesktop().getSelectedBibleViewPane();
-        Iterator it = getDesktop().iterateBibleViewPanes();
-        while (it.hasNext())
-        {
-            BibleViewPane aView = (BibleViewPane) it.next();
-            if (aView != view)
-            {
-                getDesktop().removeBibleViewPane(aView);
-            }
-
         }
     }
 
@@ -165,7 +129,7 @@ public class DesktopActions
     {
         try
         {
-            BibleViewPane view = getDesktop().getSelectedBibleViewPane();
+            BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
             if (!view.maySave())
             {
                 Reporter.informUser(getDesktop(), Msg.NO_PASSAGE);
@@ -187,7 +151,7 @@ public class DesktopActions
     {
         try
         {
-            BibleViewPane view = getDesktop().getSelectedBibleViewPane();
+            BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
             if (!view.maySave())
             {
                 Reporter.informUser(getDesktop(), Msg.NO_PASSAGE);
@@ -209,7 +173,7 @@ public class DesktopActions
     {
         boolean ok = false;
 
-        Iterator it = getDesktop().iterateBibleViewPanes();
+        Iterator it = getDesktop().getViews().iterator();
         while (it.hasNext())
         {
             BibleViewPane view = (BibleViewPane) it.next();
@@ -225,7 +189,7 @@ public class DesktopActions
             return;
         }
 
-        it = getDesktop().iterateBibleViewPanes();
+        it = getDesktop().getViews().iterator();
         while (it.hasNext())
         {
             try
@@ -253,24 +217,9 @@ public class DesktopActions
      */
     public void doCopy()
     {
-        SplitBookDataDisplay da = getDesktop().getDisplayArea();
+        BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
+        SplitBookDataDisplay da = view.getPassagePane();
         da.copy();
-    }
-
-    /**
-     * View the Tabbed Document Interface (TDI) interface.
-     */
-    public void doTabMode()
-    {
-        getDesktop().setLayoutType(LayoutType.TDI);
-    }
-
-    /**
-     * View the Multiple Document/Window Interface (MDI) interface.
-     */
-    public void doWindowMode()
-    {
-        getDesktop().setLayoutType(LayoutType.MDI);
     }
 
     /**
@@ -283,7 +232,9 @@ public class DesktopActions
     {
         try
         {
-            SplitBookDataDisplay da = getDesktop().getDisplayArea();
+            BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
+            SplitBookDataDisplay da = view.getPassagePane();
+
             Key key = da.getKey();
 
             if (key == null)
@@ -381,33 +332,6 @@ public class DesktopActions
     }
 
     /**
-     * Show or hide the tool bar.
-     */
-    public void doToolBarToggle(ActionEvent ev)
-    {
-        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
-        desktop.showToolBar(toggle.isSelected());
-    }
-
-    /**
-     * Show or hide the tool bar text.
-     */
-    public void doToolBarText(ActionEvent ev)
-    {
-        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
-        desktop.showToolBarText(toggle.isSelected());
-    }
-
-    /**
-     * Show large or small tool bar icons.
-     */
-    public void doToolBarLarge(ActionEvent ev)
-    {
-        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
-        desktop.showToolBarLargeIcons(toggle.isSelected());
-    }
-
-    /**
      * Show large or small tool bar icons.
      */
     public void doToolTipToggle(ActionEvent ev)
@@ -431,7 +355,16 @@ public class DesktopActions
     public void doSidebarToggle(ActionEvent ev)
     {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
-        desktop.showSidebar(toggle.isSelected());
+        final boolean show = toggle.isSelected();
+        desktop.getViews().visit(new ViewVisitor()
+        {
+            public void visitView(Component component)
+            {
+                BibleViewPane view = (BibleViewPane) component;
+                SplitBookDataDisplay sbDisplay = view.getPassagePane();
+                sbDisplay.showSidebar(show);
+            }
+        });
     }
 
     // Enumeration of all the keys to known actions
@@ -440,20 +373,12 @@ public class DesktopActions
     static final String VIEW = "View"; //$NON-NLS-1$
     static final String TOOLS = "Tools"; //$NON-NLS-1$
     static final String HELP = "Help"; //$NON-NLS-1$
-    static final String NEW_TAB = "NewTab"; //$NON-NLS-1$
     static final String OPEN = "Open"; //$NON-NLS-1$
-    static final String CLEAR_VIEW = "ClearView"; //$NON-NLS-1$
-    static final String CLOSE_OTHER_VIEWS = "CloseOtherViews"; //$NON-NLS-1$
     static final String SAVE = "Save"; //$NON-NLS-1$
     static final String SAVE_AS = "SaveAs"; //$NON-NLS-1$
     static final String SAVE_ALL = "SaveAll"; //$NON-NLS-1$
     static final String EXIT = "Exit"; //$NON-NLS-1$
     static final String COPY = "Copy"; //$NON-NLS-1$
-    static final String TAB_MODE = "TabMode"; //$NON-NLS-1$
-    static final String WINDOW_MODE = "WindowMode"; //$NON-NLS-1$
-    static final String TOOLBAR_TOGGLE = "ToolBarToggle"; //$NON-NLS-1$
-    static final String TOOLBAR_TEXT = "ToolBarText"; //$NON-NLS-1$
-    static final String TOOLBAR_LARGE = "ToolBarLarge"; //$NON-NLS-1$
     static final String TOOLTIP_TOGGLE = "ToolTipToggle"; //$NON-NLS-1$
     static final String STATUS_TOGGLE = "StatusToggle"; //$NON-NLS-1$
     static final String SIDEBAR_TOGGLE = "SidebarToggle"; //$NON-NLS-1$

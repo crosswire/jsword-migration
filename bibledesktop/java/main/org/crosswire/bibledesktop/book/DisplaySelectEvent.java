@@ -66,7 +66,7 @@ public class DisplaySelectEvent extends EventObject
     /**
      * The new passage
      */
-    private Key key = null;
+    private Key key;
 
     /**
      * The new Book

@@ -214,7 +214,7 @@ public class SitesPane extends JPanel
     /**
      * The known installers fetched from InstallManager
      */
-    private Map installers = null;
+    private Map installers;
 
     /**
      * The current installer

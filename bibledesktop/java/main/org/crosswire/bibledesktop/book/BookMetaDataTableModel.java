@@ -76,5 +76,5 @@ public class BookMetaDataTableModel extends MapTableModel
     /**
      * The meta data that we are displaying
      */
-    private BookMetaData bmd = null;
+    private BookMetaData bmd;
 }

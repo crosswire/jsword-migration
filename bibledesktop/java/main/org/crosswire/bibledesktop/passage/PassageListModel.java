@@ -229,7 +229,7 @@ public class PassageListModel extends AbstractListModel implements PassageListen
      * We need to cache the passage size because we need to report on changed
      * ranges, when informed by the passage that has already changed
      */
-    private int size = 0;
+    private int size;
 
     /**
      * Are we modelling in groups or individually

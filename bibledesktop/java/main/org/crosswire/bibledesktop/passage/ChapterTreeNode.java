@@ -159,6 +159,6 @@ public class ChapterTreeNode extends BookTreeNode
     /**
      * The Book that this node referrs to
      */
-    protected int chapter = 0;
+    protected int chapter;
 }
 

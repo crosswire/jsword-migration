@@ -92,6 +92,6 @@ public class VerseTreeNode extends ChapterTreeNode
     }
 
     /** The Verse that this node referrs to */
-    protected int verse = 0;
+    protected int verse;
 }
 

@@ -182,16 +182,16 @@ public class BibleTreeNode implements TreeNode
             return kids[index++];
         }
 
-        private int index = 0;
+        private int index;
     }
 
     /**
      * If we are only displaying some of the verses
      */
-    protected Passage ref = null;
+    protected Passage ref;
 
     /**
      * The ChapterTreeNodes that we have created
      */
-    protected TreeNode[] kids = null;
+    protected TreeNode[] kids;
 }

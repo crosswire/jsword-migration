@@ -8,12 +8,9 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.net.URL;
-import java.util.MissingResourceException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -39,7 +36,6 @@ import org.crosswire.bibledesktop.passage.WholeBibleTreeModel;
 import org.crosswire.bibledesktop.passage.WholeBibleTreeNode;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
-import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.jsword.passage.KeyFactory;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.Passage;
@@ -81,24 +77,8 @@ public class PassageSelectionPane extends JPanel
      */
     public PassageSelectionPane()
     {
-        try
-        {
-            URL urlGood = ResourceUtil.getResource("toolbarButtonGraphics/general/About24.gif"); //$NON-NLS-1$
-            if (urlGood != null)
-            {
-                icoGood = new ImageIcon(urlGood);
-            }
-
-            URL urlBad = ResourceUtil.getResource("toolbarButtonGraphics/general/Stop24.gif"); //$NON-NLS-1$
-            if (urlBad != null)
-            {
-                icoBad = new ImageIcon(urlBad);
-            }
-        }
-        catch (MissingResourceException ex)
-        {
-            assert false : ex;
-        }
+        icoGood = GuiUtil.getIcon("toolbarButtonGraphics/general/About24.gif"); //$NON-NLS-1$
+        icoBad = GuiUtil.getIcon("toolbarButtonGraphics/general/Stop24.gif"); //$NON-NLS-1$
 
         init();
     }

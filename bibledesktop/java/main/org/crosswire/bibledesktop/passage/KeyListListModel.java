@@ -56,5 +56,5 @@ public class KeyListListModel extends AbstractListModel implements ListModel
         return keys.get(index);
     }
 
-    private Key keys = null;
+    private Key keys;
 }

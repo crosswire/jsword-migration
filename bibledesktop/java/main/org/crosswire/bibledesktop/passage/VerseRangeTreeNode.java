@@ -109,6 +109,6 @@ public class VerseRangeTreeNode implements TreeNode
     }
 
     /** The range that we are displaying */
-    private VerseRange range = null;
+    private VerseRange range;
 }
 

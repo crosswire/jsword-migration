@@ -15,11 +15,14 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
 
-import org.apache.commons.lang.StringUtils;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.splitlist.SplitBookDataDisplay;
 import org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay;
 import org.crosswire.bibledesktop.passage.KeySidebar;
+import org.crosswire.common.swing.desktop.Clearable;
+import org.crosswire.common.swing.desktop.Titleable;
+import org.crosswire.common.swing.desktop.event.TitleChangedEvent;
+import org.crosswire.common.swing.desktop.event.TitleChangedListener;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.passage.Key;
@@ -28,7 +31,8 @@ import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageKeyFactory;
 
 /**
- * A quick Swing Bible display pane.
+ * A BibleViewPane consists of three areas for looking up passages,
+ * for navigating and minipulating parts of passage and for viewing a passage.
  *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
@@ -51,7 +55,7 @@ import org.crosswire.jsword.passage.PassageKeyFactory;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class BibleViewPane extends JPanel
+public class BibleViewPane extends JPanel implements Titleable, Clearable
 {
     /**
      * Simple ctor
@@ -113,7 +117,16 @@ public class BibleViewPane extends JPanel
     public void clear()
     {
         saved = null;
-        pnlSelect.clear();
+        if (!pnlSelect.isClear())
+        {
+            pnlSelect.clear();
+        }
+    }
+
+    public boolean isClear()
+    {
+        saved = null;
+        return pnlSelect.isClear();
     }
 
     /**
@@ -123,13 +136,7 @@ public class BibleViewPane extends JPanel
     {
         if (saved == null)
         {
-            String deft = pnlSelect.getDefaultName();
-            if (deft.length() > shortlen)
-            {
-                deft = StringUtils.abbreviate(deft, shortlen);
-            }
-
-            return deft;
+            return pnlSelect.getTitle();
         }
 
         return saved.getName();
@@ -265,7 +272,7 @@ public class BibleViewPane extends JPanel
      */
     public void setKey(Key key)
     {
-        pnlSelect.setPassageLabel(key.getName());
+        pnlSelect.setTitle(key.getName());
         pnlPassg.setBookData(pnlSelect.getBook(), key);
         if (saved == null)
         {
@@ -358,11 +365,10 @@ public class BibleViewPane extends JPanel
         }
     }
 
-    protected File saved = null;
+    protected File saved;
     private transient List listeners;
     private DisplaySelectPane pnlSelect;
     protected SplitBookDataDisplay pnlPassg;
-    private static int shortlen = 30;
     private JFileChooser chooser = new JFileChooser();
     private static final String EXTENSION = ".lst"; //$NON-NLS-1$
 
@@ -375,24 +381,6 @@ public class BibleViewPane extends JPanel
      * SERIALUID(dms): A placeholder for the ultimate version id.
      */
     private static final long serialVersionUID = 1L;
-
-    /**
-     * Returns the shortlen.
-     * @return int
-     */
-    public static int getShortlen()
-    {
-        return shortlen;
-    }
-
-    /**
-     * Sets the shortlen.
-     * @param shortlen The shortlen to set
-     */
-    public static void setShortlen(int shortlen)
-    {
-        BibleViewPane.shortlen = shortlen;
-    }
 
     /**
      * Filter out verse lists

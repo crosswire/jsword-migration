@@ -342,7 +342,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
 
     private BookFilter filter = BookFilters.either(BookFilters.getDictionaries(), BookFilters.getCommentaries());
     private BooksComboBoxModel mdlDicts = new BooksComboBoxModel(filter);
-    private Book dict = null;
+    private Book dict;
 
     protected BibleComboBoxModelSet set = new BibleComboBoxModelSet();
     private JComboBox cboBooks = new JComboBox();
