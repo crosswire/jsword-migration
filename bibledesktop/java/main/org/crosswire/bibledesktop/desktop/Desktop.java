@@ -126,7 +126,6 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
 
                     // Don't use pack.
                     // It uses preferred dimensions, which are not used here.
-                    desktop.show();
                     desktop.toFront();
                     desktop.setVisible(true);
                 }

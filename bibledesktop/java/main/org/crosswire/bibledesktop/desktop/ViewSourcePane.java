@@ -1,6 +1,7 @@
 package org.crosswire.bibledesktop.desktop;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
@@ -180,7 +181,7 @@ public class ViewSourcePane extends JPanel
         frame.getContentPane().setLayout(new BorderLayout());
         frame.getContentPane().add(this, BorderLayout.CENTER);
 
-        frame.pack();
+        GuiUtil.setSize(frame, new Dimension(750, 500));
         GuiUtil.centerWindow(frame);
         frame.setVisible(true);
     }

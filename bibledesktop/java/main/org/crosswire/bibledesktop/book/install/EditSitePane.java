@@ -7,7 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -80,7 +79,7 @@ public class EditSitePane extends JPanel
         init();
         setState(STATE_DISPLAY, null);
         select();
-        setPreferredSize(new Dimension(480, 320));
+//        setPreferredSize(new Dimension(480, 320));
     }
 
     /**
@@ -230,7 +229,7 @@ public class EditSitePane extends JPanel
         dlgMain.setTitle(Msg.EDIT_SITE_TITLE.toString());
         dlgMain.setModal(true);
 
-        GuiUtil.restrainedPack(dlgMain, 0.5f, 0.75f);
+        GuiUtil.setSize(dlgMain, new Dimension(480, 320));
         GuiUtil.centerWindow(dlgMain);
         dlgMain.setVisible(true);
     }
@@ -324,8 +323,7 @@ public class EditSitePane extends JPanel
         setState(STATE_EDIT_OK, null);
         siteUpdate();
 
-        Window window = GuiUtil.getWindow(this);
-        GuiUtil.restrainedRePack(window);
+        GuiUtil.refresh(this);
     }
 
     /**
@@ -510,8 +508,7 @@ public class EditSitePane extends JPanel
             Reporter.informUser(this, ex);
         }
 
-        Window window = GuiUtil.getWindow(this);
-        GuiUtil.restrainedRePack(window);
+        GuiUtil.refresh(this);
     }
 
     private static final String ADD = "Add"; //$NON-NLS-1$

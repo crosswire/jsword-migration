@@ -13,6 +13,7 @@ import javax.swing.SwingUtilities;
 import org.crosswire.biblemapper.model.Map;
 import org.crosswire.biblemapper.model.MapEvent;
 import org.crosswire.biblemapper.model.MapListener;
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 
@@ -253,7 +254,7 @@ public class MapperPane extends JPanel implements Scrollable
         super.setMaximumSize(dim);
         super.setPreferredSize(dim);
 
-        revalidate();
+        GuiUtil.refresh(this);
     }
 
     /**

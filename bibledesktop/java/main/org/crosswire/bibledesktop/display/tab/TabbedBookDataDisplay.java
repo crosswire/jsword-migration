@@ -16,6 +16,7 @@ import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
 import org.crosswire.bibledesktop.display.URLEventListener;
 import org.crosswire.bibledesktop.display.scrolled.ScrolledBookDataDisplay;
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
@@ -155,12 +156,8 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         }
 
         // Since we changed the contents of the page we need to cause it to repaint
-        center.invalidate();
-        center.validate();
-        center.repaint();
-        pnlMain.invalidate();
-        pnlMain.validate();
-        pnlMain.repaint();
+        GuiUtil.refresh(center);
+        GuiUtil.refresh(pnlMain);
     }
 
     /* (non-Javadoc)
