@@ -35,7 +35,6 @@ import org.crosswire.jsword.book.BooksEvent;
 import org.crosswire.jsword.book.BooksListener;
 import org.crosswire.jsword.book.install.InstallException;
 import org.crosswire.jsword.book.install.Installer;
-import org.crosswire.jsword.util.IndexDownloader;
 
 /**
  * A panel for use within a SitesPane to display one set of Books that are
@@ -347,7 +346,7 @@ public class SitePane extends JPanel
             {
                 Object last = path.getLastPathComponent();
                 BookMetaData bmd = getBookMetaData(last);
-                IndexDownloader.downloadIndex(bmd, installer);
+                IndexResolver.scheduleIndex(bmd, this);
             }
             catch (Exception ex)
             {
