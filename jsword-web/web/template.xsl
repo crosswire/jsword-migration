@@ -92,6 +92,7 @@
           <ul>
             <li><a href="cvs.html">CVS</a></li>
             <li><a href="maillists.html">Mailing Lists</a></li>
+            <li><a href="http://www.crosswire.org/bugs">Bug Tracking</a></li>
           </ul>
           <p>Documentation</p>
           <ul>
