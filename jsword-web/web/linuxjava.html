@@ -1,4 +1,7 @@
-<html>
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Installing Java under Fedora Core 3</title>
 </head>
@@ -43,10 +46,10 @@ For whatever reason, JSword and Bible Desktop does not work with /usr/bin/java, 
       or<br/>
       rpm -ihv j2sdk-1_4_2_07-linux-i586-rpm.bin</li>
    </ol></li>
-<li>Fedora uses <q>alternatives</q> to manage multiple versions of java.
-   <ol type="a">
+<li>Fedora uses <q>alternatives</q> to manage multiple versions of java.<br/>
    Make the Java you downloaded an alternative.<br/>
    This must be done as root.<br/>
+   <ol type="a">
    <li>Add it as an alternative:<br/>
       At the command line execute the following command:<br/>
       alternatives --install /usr/bin/java java /usr/java/j2re1.4.2_07/bin/java 300<br/>

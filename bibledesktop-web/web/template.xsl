@@ -89,7 +89,7 @@
       </p>
 
       <div class="lsidecell subscribe">
-        <form method="post" action="http://www.crosswire.org/mailman/subscribe/bibledesktop-announce">
+        <form method="post" action="/mailman/subscribe/bibledesktop-announce">
           <input type='hidden' name="digest" value="0"/>
           Stay informed:<br/>
           <input type="text" size="10" id="email" name="email" value="your e-mail" onfocus="emptyIf('email', 'your e-mail');"/>

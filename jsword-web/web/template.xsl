@@ -36,7 +36,7 @@
     <table width="100%">
       <tr align="center">
         <td class="navbutton" align="center"><a href="http://www.crosswire.org/">Crosswire</a></td>
-        <td class="navbutton" align="center"><a href="http://www.crosswire.org/jsword/">JSword Home</a></td>
+        <td class="navbutton" align="center"><a href="index.html">JSword Home</a></td>
         <td class="navbutton" align="center"><a href="http://www.crosswire.org/sword/">Sword Home</a></td>
         <td class="navbutton" align="center"><a href="http://www.crosswire.org/sword/about/index.jsp">Purpose Statement</a></td>
       </tr>
@@ -54,7 +54,7 @@
       <tr align="center">
         <td class="navbutton" align="center"><a href="news.html">Latest News</a></td>
         <td class="navbutton" align="center"><a href="devt.html">Getting Involved</a></td>
-        <td class="navbutton" align="center"><a href="screenshot.html">Screenshots</a></td>      
+        <td class="navbutton" align="center"><a href="http://www.crosswire.org/bibledesktop/screenshot.html">Screenshots</a></td>      
         <td class="navbutton" align="center"><a href="download.jsp">Download</a></td>
         <td class="navbutton" align="center"><a href="http://www.crosswire.org/sword/modules/index.jsp">Module Add-ins</a></td>
       </tr>
@@ -85,7 +85,7 @@
           <ul>
             <li><a href="download.jsp">Download</a></li>
             <li><a href="http://www.crosswire.org/sword/modules/index.jsp">Modules</a></li>
-            <li><a href="screenshot.html">Screenshots</a></li>
+            <li><a href="http://www.crosswire.org/bibledesktop/screenshot.html">Screenshots</a></li>
             <!-- li><a href="demo.jsp">Web-Demo</a></li -->
           </ul>
           <p>Getting-Involved</p>
