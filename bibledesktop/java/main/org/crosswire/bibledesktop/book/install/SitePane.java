@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -23,8 +22,6 @@ import javax.swing.tree.TreeSelectionModel;
 
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.FixedSplitPane;
-import org.crosswire.common.swing.MapTable;
-import org.crosswire.common.swing.MapTableModel;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.BookList;
@@ -183,17 +180,17 @@ public class SitePane extends JPanel
      */
     private Component createSelectedPanel()
     {
-        emptyTableModel = new MapTableModel(null);
-        tblSelected = new MapTable(emptyTableModel);
+        
         JLabel lblSelected = actions.createJLabel(SELECTED_BOOK_LABEL);
-        lblSelected.setLabelFor(tblSelected);
+        display = new TextPaneBookMetaDataDisplay();
+        lblSelected.setLabelFor(display.getComponent());
 
         JScrollPane scrSelected = new JScrollPane();
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.add(lblSelected, BorderLayout.PAGE_START);
         panel.add(scrSelected, BorderLayout.CENTER);
-        scrSelected.getViewport().add(tblSelected);
+        scrSelected.getViewport().add(display.getComponent());
         return panel;
     }
 
@@ -363,18 +360,17 @@ public class SitePane extends JPanel
         TreePath path = treAvailable.getSelectionPath();
 
         boolean bookSelected = false;
-        MapTableModel mtm = emptyTableModel;
+        BookMetaData bmd = null;
         if (path != null)
         {
             Object last = path.getLastPathComponent();
-            BookMetaData bmd = getBookMetaData(last);
+            bmd = getBookMetaData(last);
             if (bmd != null)
             {
-                mtm = new BookMetaDataTableModel(bmd);
                 bookSelected = true;
             }
         }
-        tblSelected.setModel(mtm);
+        display.setBookMetaData(bmd);
 
         //actions.getAction(DELETE).setEnabled(bookSelected);
         actions.getAction(INSTALL).setEnabled(bookSelected);
@@ -431,8 +427,7 @@ public class SitePane extends JPanel
      * GUI Components
      */
     private JTree treAvailable = null;
-    private JTable tblSelected = null;
-    private MapTableModel emptyTableModel = null;
+    private TextPaneBookMetaDataDisplay display;
     private JLabel lblDesc = null;
 
     /**

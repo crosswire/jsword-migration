@@ -413,12 +413,6 @@
     </h4>
   </xsl:template>
   
-  <xsl:template match="hi">
-    <span class="hi">
-      <xsl:apply-templates/>
-    </span>
-  </xsl:template>
-
   <xsl:template match="index">
     <a name="index{@id}" class="index"/>
   </xsl:template>
@@ -608,6 +602,7 @@
     </xsl:variable>
     <xsl:element name="{$element-name}">
       <xsl:attribute name="class">cell</xsl:attribute>
+      <xsl:attribute name="valign">top</xsl:attribute>
       <xsl:if test="@rows">
         <xsl:attribute name="rowspan">
           <xsl:value-of select="@rows"/>
@@ -628,36 +623,37 @@
     </span>
   </xsl:template>
   
-  
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      Named templates
-   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
-  <xsl:template name="trim-zeros-from-number">
-    <xsl:param name="number" select="'0'"/>
-    <xsl:value-of select="string(number($number))"/>
+  <xsl:template match="hi">
+      <xsl:choose>
+        <xsl:when test="@rend = 'bold'">
+          <b><xsl:apply-templates/></b>
+        </xsl:when>
+        <xsl:when test="@rend = 'illuminated'">
+          <b><i><xsl:apply-templates/></i></b>
+        </xsl:when>
+        <xsl:when test="@rend = 'italic'">
+          <i><xsl:apply-templates/></i>
+        </xsl:when>
+        <xsl:when test="@rend = 'line-through'">
+          <!-- later -->
+          <xsl:apply-templates/>
+        </xsl:when>
+        <xsl:when test="@rend = 'normal'">
+           <!-- later -->
+          <xsl:apply-templates/>
+        </xsl:when>
+        <xsl:when test="@rend = 'small-caps'">
+          <!-- later -->
+          <xsl:apply-templates/>
+        </xsl:when>
+        <xsl:when test="@rend = 'underline'">
+          <!-- later -->
+          <xsl:apply-templates/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates/>
+        </xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
   
-  <xsl:template name="print-prev-next-links">
-    <xsl:param name="div" select="."/>
-    
-    <xsl:variable name="previous-section" select="$div/preceding::div[@type = $page-div-type][1]"/>
-    <xsl:variable name="next-section" select="$div/following::div[@type = $page-div-type][1]"/>
-    <xsl:if test="$previous-section or $next-section">
-      <table width="100%" class="navigation">
-        <tr>
-          <xsl:if test="$previous-section">
-            <td align="left">
-              <a href="{$previous-section/@osisID}.html" class="previous-link">[&lt; Previous]</a>
-            </td>
-          </xsl:if>
-          <xsl:if test="$next-section">
-            <td align="right">
-              <a href="{$next-section/@osisID}.html" class="next-link">[Next &gt;]</a>
-            </td>
-          </xsl:if>
-        </tr>
-      </table>
-    </xsl:if>
-  </xsl:template>
 </xsl:stylesheet>
