@@ -19,7 +19,7 @@ import org.crosswire.bibledesktop.display.scrolled.ScrolledBookDataDisplay;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookException;
-import org.crosswire.jsword.book.JAXBUtil;
+import org.crosswire.jsword.book.OSISUtil;
 
 /**
  * An inner component of Passage pane that can't show the list.
@@ -99,7 +99,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         displays.clear();
         displays.add(pnlView);
 
-        datas = JAXBUtil.pagenate(data, pagesize * 10);
+        datas = null; // OSISUtil.pagenate(data, pagesize * 10);
         tabs = (datas.size() > 1);
         if (tabs)
         {
@@ -111,14 +111,14 @@ public class TabbedBookDataDisplay implements BookDataDisplay
 
             Component display = pnlNew.getComponent();
 
-            tabMain.add(JAXBUtil.getTitle(first, TITLE_LENGTH), display);
+            tabMain.add(OSISUtil.getTitle(first, TITLE_LENGTH), display);
             tabMain.add(Msg.MORE.toString(), pnlMore);
 
             setCenterComponent(tabMain);
         }
         else
         {
-            JAXBUtil.getTitle(data, 25);
+            OSISUtil.getTitle(data, 25);
 
             // Setup the front tab
             pnlView.setBookData(data);
@@ -299,7 +299,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
             BookDataDisplay pnlNew = createInnerDisplayPane();
             pnlNew.setBookData(next);
             Component display = pnlNew.getComponent();
-            tabMain.add(JAXBUtil.getTitle(next, TITLE_LENGTH), display);
+            tabMain.add(OSISUtil.getTitle(next, TITLE_LENGTH), display);
 
             // Do we need a new more tab
             if (countTabs >= datas.size())

@@ -12,10 +12,11 @@
   <import file="${support.tools}/pmd15/build.xml"/> <!-- done, memory error -->
   <import file="${support.tools}/tomcat/build.xml"/> <!-- ignored -->
 
-  <target name="tools" depends="jdepend, checkstyle, java2html, javancss, findbugs">
+  <target name="tools" depends="checkstyle, java2html, javancss, findbugs">
     <!-- I've taken jcoverage out becuase the task is not converted -->
     <!-- I've taken pmd out because the ant task is very poor -->
     <!-- I've taken cpd out because it is very slow and not that useful -->
+    <!-- I've taken jdepend out because it is confusing eclipse -->
   </target>
 
   <target name="antlibs" description="Copy required jars to ant/lib">
