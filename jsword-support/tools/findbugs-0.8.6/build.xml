@@ -33,8 +33,8 @@
     </copy>
     <mkdir dir="${target.web}/findbugs"/>
     <findbugs home="${support.bugs}"
-        output="xml"
-        outputFile="${target.web}/findbugs/report.xml"
+        output="html"
+        outputFile="${target.web}/findbugs/index.html"
         reportLevel="low"
         sort="text"
         workHard="true"
@@ -56,14 +56,6 @@
 	  <delete failonerror="false">
       <fileset dir="${target.bugs.src}"/>
     </delete>
-    <style
-        in="${target.web}/findbugs/report.xml"
-        out="${target.web}/findbugs/index.html"
-        style="${support.bugs}/findbugs.xsl">
-      <!-- The messages.xml file is from plugin/coreplugin.jar -->
-      <param name="messagefile" expression="messages.xml"/>
-      <!-- expression="jar:file://${basedir}/${support.bugs}/plugin/coreplugin.jar!messages.xml"/> -->
-    </style>
   </target>
 
 </project>
