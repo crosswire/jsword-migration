@@ -47,6 +47,9 @@ class Msg extends MsgBase
     static final Msg SELECT_PASSAGE_TITLE = new Msg("DisplaySelectPane.SelectPassageTitle"); //$NON-NLS-1$
     static final Msg CLEAR = new Msg("DisplaySelectPane.Clear"); //$NON-NLS-1$
     static final Msg UNTITLED = new Msg("DisplaySelectPane.Untitled"); //$NON-NLS-1$
+    static final Msg SELECT_BIBLE = new Msg("DisplaySelectPane.Bible"); //$NON-NLS-1$
+    static final Msg SELECT_ADVANCED = new Msg("DisplaySelectPane.Advanced"); //$NON-NLS-1$
+    static final Msg SELECT_MATCH = new Msg("DisplaySelectPane.Match"); //$NON-NLS-1$
 
     static final Msg AVAILABLE_BOOKS = new Msg("SitesPane.AvailableBooks"); //$NON-NLS-1$
     static final Msg LOCAL_BOOKS = new Msg("SitesPane.Local"); //$NON-NLS-1$
@@ -74,14 +77,8 @@ class Msg extends MsgBase
     static final Msg SEARCH_EXCLUDES = new Msg("AdvancedSearchPane.Excludes"); //$NON-NLS-1$
     static final Msg SEARCH_INCLUDES = new Msg("AdvancedSearchPane.Includes"); //$NON-NLS-1$
 
-    static final Msg SELECT_GO = new Msg("KeySelectPane.Go"); //$NON-NLS-1$
-    static final Msg SELECT_KEYS = new Msg("KeySelectPane.Keys"); //$NON-NLS-1$
-    static final Msg SELECT_MATCH = new Msg("KeySelectPane.Match"); //$NON-NLS-1$
-    static final Msg SELECT_ADVANCED = new Msg("KeySelectPane.Advanced"); //$NON-NLS-1$
-    static final Msg SELECT_HELP = new Msg("KeySelectPane.Help"); //$NON-NLS-1$
-    static final Msg SELECT_BIBLE = new Msg("KeySelectPane.Bible"); //$NON-NLS-1$
-    static final Msg SELECT_DISPLAY = new Msg("KeySelectPane.Display"); //$NON-NLS-1$
-    static final Msg SELECT_SEARCH = new Msg("KeySelectPane.Search"); //$NON-NLS-1$
+    static final Msg HELP_TEXT = new Msg("DisplaySelectPane.HelpText"); //$NON-NLS-1$
+    static final Msg HELP_TITLE = new Msg("DisplaySelectPane.HelpTitle"); //$NON-NLS-1$
 
     /**
      * Passthrough ctor

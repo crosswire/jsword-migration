@@ -2,7 +2,6 @@ package org.crosswire.bibledesktop.book;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -29,6 +28,7 @@ import org.crosswire.bibledesktop.passage.KeyChangeEvent;
 import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
+import org.crosswire.common.swing.QuickHelpDialog;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
@@ -141,12 +141,11 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         lblSearch.setLabelFor(txtSearch);
         JButton btnSearch = new JButton(actions.getAction(GO_SEARCH));
 
-        JButton btnHelp = new JButton();
-        btnHelp.setBorderPainted(true);
+        JButton btnHelp = new JButton(actions.getAction(HELP));
         btnHelp.setBorder(BorderFactory.createLineBorder(SystemColor.control, 5));
         btnHelp.setBackground(Color.yellow);
-        btnHelp.setFont(btnHelp.getFont().deriveFont(Font.BOLD));
-        btnHelp.setIcon(ICON_HELP);
+        btnHelp.setText(null);
+        dlgHelp = new QuickHelpDialog(GuiUtil.getFrame(this), Msg.HELP_TITLE.toString(), Msg.HELP_TEXT.toString());
 
         JButton btnAdvanced = new JButton();
         btnAdvanced.setText(Msg.SELECT_ADVANCED.toString());
@@ -281,6 +280,14 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         {
             Reporter.informUser(this, ex);
         }
+    }
+
+    /**
+     * Someone clicked help
+     */
+    public void doHelpAction()
+    {
+        dlgHelp.setVisible(true);
     }
 
     /**
@@ -475,11 +482,16 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     private static final String PASSAGE_FIELD = "PassageAction"; //$NON-NLS-1$
     private static final String MORE = "More"; //$NON-NLS-1$
     private static final String GO_PASSAGE = "GoPassage"; //$NON-NLS-1$
-
-    // for the Search card
+    private static final String HELP = "HelpAction"; //$NON-NLS-1$
     private static final String SEARCH_LABEL = "SearchLabel"; //$NON-NLS-1$
     private static final String GO_SEARCH = "GoSearch"; //$NON-NLS-1$
     private static final String SEARCH_FIELD = "SearchAction"; //$NON-NLS-1$
+
+    private static final ImageIcon ICON_SEARCH = GuiUtil.getIcon("toolbarButtonGraphics/general/Find16.gif"); //$NON-NLS-1$
+
+    private static final ImageIcon ICON_SELECT = GuiUtil.getIcon("toolbarButtonGraphics/general/Edit16.gif"); //$NON-NLS-1$
+
+    private static final ImageIcon ICON_MENU = GuiUtil.getIcon("toolbarButtonGraphics/general/Preferences16.gif"); //$NON-NLS-1$
 
     private static int base = 1;
 
@@ -487,23 +499,17 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
     private transient List listeners;
 
-    private static final ImageIcon ICON_SEARCH = GuiUtil.getIcon("toolbarButtonGraphics/general/Find16.gif"); //$NON-NLS-1$
+    private QuickHelpDialog dlgHelp = null;
 
-    private static final ImageIcon ICON_SELECT = GuiUtil.getIcon("toolbarButtonGraphics/general/Edit16.gif"); //$NON-NLS-1$
+    private BooksComboBoxModel mdlBible = null;
 
-    private static final ImageIcon ICON_HELP = GuiUtil.getIcon("toolbarButtonGraphics/general/ContextualHelp16.gif"); //$NON-NLS-1$
+    private PassageSelectionPane dlgSelect = null;
 
-    private static final ImageIcon ICON_MENU = GuiUtil.getIcon("toolbarButtonGraphics/general/Preferences16.gif"); //$NON-NLS-1$
+    private ActionFactory actions = null;
 
-    private BooksComboBoxModel mdlBible;
+    private JTextField txtKey = null;
 
-    private PassageSelectionPane dlgSelect;
-
-    private ActionFactory actions;
-
-    private JTextField txtKey;
-
-    private JTextField txtSearch;
+    private JTextField txtSearch = null;
 
     private JCheckBox chkMatch = null;
 
