@@ -59,7 +59,7 @@ public class Header implements Cloneable
     {
         return name != null &&
                value != null &&
-               name.equalsIgnoreCase("Set-Cookie");
+               name.equalsIgnoreCase("Set-Cookie"); //$NON-NLS-1$ 
     }
 
     /**
@@ -81,7 +81,7 @@ public class Header implements Cloneable
         if (name == null) return value;
         if (value == null) return name;
 
-        return name+": "+value;
+        return name+": "+value; //$NON-NLS-1$ 
     }
 
     /** NAME= ... "$Name" style is reserved */

@@ -24,9 +24,9 @@ public class ConnectedReader extends Reader
     /**
      *
      */
-    public void tie(Writer out)
+    public void tie(Writer outWriter)
     {
-        this.out = out;
+        this.out = outWriter;
     }
 
     /**

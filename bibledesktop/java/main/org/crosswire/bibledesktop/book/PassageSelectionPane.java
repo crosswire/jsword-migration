@@ -409,7 +409,7 @@ public class PassageSelectionPane extends JPanel
     /**
      * To convert strings into Biblical keys
      */
-    protected KeyFactory keyf = new PassageKeyFactory();
+    protected KeyFactory keyf = PassageKeyFactory.instance();
 
     /**
      * If escape was pressed we don't want to update the parent

@@ -103,7 +103,7 @@ public class WebPage
     {
         for (Enumeration en=headers.elements(); en.hasMoreElements(); )
         {
-            System.out.println(""+en.nextElement());
+            System.out.println(""+en.nextElement()); //$NON-NLS-1$
         }
     }
 
@@ -248,7 +248,7 @@ public class WebPage
     private URL url;
 
     /** The Web browser we were grabbed from */
-    private WebBrowser browser;
+    protected WebBrowser browser;
 
     /** The log stream */
     protected static Logger log = Logger.getLogger(WebPage.class);

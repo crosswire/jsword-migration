@@ -102,7 +102,7 @@ public class StackedInputStream extends InputStream
             }
             catch (Exception ex)
             {
-                log.warn("Failure during close", ex);
+                log.warn("Failure during close", ex); //$NON-NLS-1$
                 failed = true;
             }
         }
@@ -127,16 +127,16 @@ public class StackedInputStream extends InputStream
      */
     public String toString()
     {
-        String retcode = "";
-        String NEWLINE = System.getProperty("line.separator", "\r\n");
+        String retcode = ""; //$NON-NLS-1$
+        String NEWLINE = System.getProperty("line.separator", "\r\n"); //$NON-NLS-1$ //$NON-NLS-2$
 
-        retcode += "There are " + list.size() + " input(s)" + NEWLINE;
-        retcode += "Curr: " + current.toString() + NEWLINE;
+        retcode += "There are " + list.size() + " input(s)" + NEWLINE; //$NON-NLS-1$ //$NON-NLS-2$
+        retcode += "Curr: " + current.toString() + NEWLINE; //$NON-NLS-1$
 
         for (int i=list.size()-1; i>=0; i--)
         {
             InputStream in = (InputStream) list.elementAt(i);
-            retcode += "Next: " + in.toString() + NEWLINE;
+            retcode += "Next: " + in.toString() + NEWLINE; //$NON-NLS-1$
         }
 
         return retcode;

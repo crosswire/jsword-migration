@@ -90,7 +90,7 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
         }
         else
         {
-            throw new IllegalArgumentException("cannot add to layout: constraint must be a string");
+            throw new IllegalArgumentException("cannot add to layout: constraint must be a string"); //$NON-NLS-1$
         }
     }
 
@@ -204,7 +204,7 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
     {
         if (parent.getLayout() != this)
         {
-            throw new IllegalArgumentException("wrong parent for CardLayout");
+            throw new IllegalArgumentException("wrong parent for CardLayout"); //$NON-NLS-1$
         }
     }
 
@@ -223,8 +223,8 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
         if (comp instanceof Container)
         {
             Container cont = (Container)comp;
-            int count = cont.getComponentCount();
-            for (int i = 0; i < count; i++)
+            int cnt = cont.getComponentCount();
+            for (int i = 0; i < cnt; i++)
             {
                 setActive(cont.getComponent(i), enabled);
             }

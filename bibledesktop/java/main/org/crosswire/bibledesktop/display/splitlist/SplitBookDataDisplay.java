@@ -24,7 +24,6 @@ import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.KeyUtil;
 import org.crosswire.jsword.passage.PassageConstants;
-import org.crosswire.jsword.passage.VerseRange;
 
 /**
  * A quick Swing Bible display pane.
@@ -293,8 +292,7 @@ public class SplitBookDataDisplay implements BookDataDisplay
 
                 for (int i = 0; i < selected.length; i++)
                 {
-                    Key added = KeyUtil.getKeyList((VerseRange) selected[i], getBook());
-                    selectedKey.addAll(added);
+                    selectedKey.addAll((Key) selected[i]);
                 }
 
                 // if there was a single selection then show the whole chapter

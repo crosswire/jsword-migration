@@ -96,7 +96,7 @@ public class TeeWriter extends Writer
             }
             catch (Exception ex)
             {
-                log.warn("Error in closing loop", ex);
+                log.warn("Error in closing loop", ex); //$NON-NLS-1$
                 failed = true;
             }
         }
@@ -120,15 +120,15 @@ public class TeeWriter extends Writer
      */
     public String toString()
     {
-        String retcode = "";
-        String NEWLINE = System.getProperty("line.separator", "\r\n");
+        String retcode = ""; //$NON-NLS-1$
+        String NEWLINE = System.getProperty("line.separator", "\r\n"); //$NON-NLS-1$ //$NON-NLS-2$
 
-        retcode += "There are " + list.size() + " output(s)" + NEWLINE;
+        retcode += "There are " + list.size() + " output(s)" + NEWLINE; //$NON-NLS-1$ //$NON-NLS-2$
 
         for (int i=list.size()-1; i>=0; i--)
         {
             Writer out = (Writer) list.elementAt(i);
-            retcode += "Stream" + i + ": " + out.toString() + NEWLINE;
+            retcode += "Stream" + i + ": " + out.toString() + NEWLINE; //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         return retcode;

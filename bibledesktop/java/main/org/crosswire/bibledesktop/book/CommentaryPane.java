@@ -20,7 +20,6 @@ import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.passage.KeyUtil;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.Verse;
 
@@ -128,8 +127,7 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
         try
         {
             Verse verse = set.getVerse();
-            Key updated = KeyUtil.getKeyList(verse, getBook());
-            display.setBookData(bmd.getBook(), updated);
+            display.setBookData(bmd.getBook(), verse);
         }
         catch (Exception ex)
         {

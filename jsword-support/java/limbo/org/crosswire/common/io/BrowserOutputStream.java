@@ -29,7 +29,7 @@ public class BrowserOutputStream extends OutputStream
 
         if (ch == '\n' || ch == '\r')
         {
-            text = "";
+            text = ""; //$NON-NLS-1$
         }
         else
         {
@@ -39,5 +39,5 @@ public class BrowserOutputStream extends OutputStream
     }
 
     private AppletContext appcx;
-    private String text = "";
+    private String text = ""; //$NON-NLS-1$
 }

@@ -113,10 +113,10 @@ public class DOMDefaultHandler extends DefaultHandler
         current.appendChild(doc.createTextNode(new String(ch, start, length)));
     }
 
-    /**
-     * end element
+    /* (non-Javadoc)
+     * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
      */
-    public void endElement(String name)
+    public void endElement(String uri, String localName, String qName)
     {
         current = (Node) stack.pop();
     }
@@ -151,29 +151,6 @@ public class DOMDefaultHandler extends DefaultHandler
     {
         Reporter.informUser(this, ex);
         throw ex;
-    }
-
-    /**
-     * Returns a string of the location
-     */
-    private String getLocationString(SAXParseException ex)
-    {
-        StringBuffer str = new StringBuffer();
-
-        String systemId = ex.getSystemId();
-        if (systemId != null)
-        {
-            int index = systemId.lastIndexOf('/');
-            if (index != -1)
-                systemId = systemId.substring(index + 1);
-            str.append(systemId);
-        }
-        str.append(':');
-        str.append(ex.getLineNumber());
-        str.append(':');
-        str.append(ex.getColumnNumber());
-
-        return str.toString();
     }
 
     /*

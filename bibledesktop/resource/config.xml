@@ -61,9 +61,11 @@
     <introspect class="org.crosswire.jsword.book.sword.SwordBookDriver" property="DownloadDir"/>
   </option>
 
+<!-- Currently not used
   <option key="Remote.RemoteHost" type="string-array" separator=" ">
     <introspect class="org.crosswire.jsword.book.remote.HttpRemoteBookDriver" property="URLs"/>
   </option>
+-->
 
   <option key="Passages.PersistentNaming" type="boolean">
     <introspect class="org.crosswire.jsword.passage.PassageUtil" property="PersistentNaming"/>
@@ -113,9 +115,11 @@
     <introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="Font"/>
   </option>
 
+<!-- Currently not used
   <option key="Advanced.Raw.CacheData" type="boolean">
     <introspect class="org.crosswire.jsword.book.raw.RawBook" property="DefaultCacheData"/>
   </option>
+-->
 
   <option key="Advanced.Reports.ShowErrorsInDialogBox" type="boolean" priority="8">
     <introspect class="org.crosswire.common.swing.ExceptionPane" property="HelpDeskListener"/>

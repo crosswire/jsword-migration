@@ -149,7 +149,7 @@ public class TextViewPanel extends JPanel
                 clipboard();
             }
         });
-        btn_clipboard.setText("Copy");
+        btn_clipboard.setText("Copy"); //$NON-NLS-1$
 
         lay_buttons.setAlignment(FlowLayout.RIGHT);
         pnl_buttons.setLayout(lay_buttons);
@@ -165,7 +165,7 @@ public class TextViewPanel extends JPanel
      */
     public void showInFrame(Frame parent)
     {
-        frame = new JDialog(parent, "Text Viewer");
+        frame = new JDialog(parent, "Text Viewer"); //$NON-NLS-1$
 
         btn_close = new JButton(Msg.CLOSE.toString());
         btn_close.setMnemonic(Msg.CLOSE.toString().charAt(0));
@@ -298,7 +298,7 @@ public class TextViewPanel extends JPanel
             {
                 try
                 {
-                    InputStream pmin = new ProgressMonitorInputStream(TextViewPanel.this, "Loading ...", in);
+                    InputStream pmin = new ProgressMonitorInputStream(TextViewPanel.this, "Loading ...", in); //$NON-NLS-1$
                     Reader rin = new InputStreamReader(pmin);
                     final String data = StringUtil.read(rin);
 

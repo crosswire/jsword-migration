@@ -60,16 +60,16 @@ public class Cookie implements Cloneable
     public Cookie(String name, String value)
     {
         if (!isToken (name)
-            || name.equalsIgnoreCase("Comment")	// rfc2019
-            || name.equalsIgnoreCase("Discard")	// 2019++
-            || name.equalsIgnoreCase("Domain")
-            || name.equalsIgnoreCase("Expires")	// (old cookies)
-            || name.equalsIgnoreCase("Max-Age")	// rfc2019
-            || name.equalsIgnoreCase("Path")
-            || name.equalsIgnoreCase("Secure")
-            || name.equalsIgnoreCase("Version"))
+            || name.equalsIgnoreCase("Comment")	//$NON-NLS-1$ // rfc2019
+            || name.equalsIgnoreCase("Discard")	//$NON-NLS-1$ // 2019++
+            || name.equalsIgnoreCase("Domain")  //$NON-NLS-1$ 
+            || name.equalsIgnoreCase("Expires")	//$NON-NLS-1$ // (old cookies)
+            || name.equalsIgnoreCase("Max-Age")	//$NON-NLS-1$ // rfc2019
+            || name.equalsIgnoreCase("Path")    //$NON-NLS-1$ 
+            || name.equalsIgnoreCase("Secure")  //$NON-NLS-1$ 
+            || name.equalsIgnoreCase("Version")) //$NON-NLS-1$ 
         {
-            throw new IllegalArgumentException ("Cookie name "+name+" is a reserved token");
+            throw new IllegalArgumentException ("Cookie name "+name+" is a reserved token"); //$NON-NLS-1$ //$NON-NLS-2$ 
         }
 
         this.name = name;
@@ -85,22 +85,22 @@ public class Cookie implements Cloneable
     */
     public Cookie(String header)
     {
-        String[] parts = StringUtils.split(header, ";");
+        String[] parts = StringUtils.split(header, ";"); //$NON-NLS-1$ 
 
         // The name and value
         String base = parts[0];
-        int equals_pos = base.indexOf("=");
+        int equals_pos = base.indexOf("="); //$NON-NLS-1$ 
         name = base.substring(0, equals_pos);
         value = base.substring(equals_pos+1);
 
         // The other parts
         for (int i=1; i<parts.length; i++)
         {
-            equals_pos = parts[i].indexOf("=");
+            equals_pos = parts[i].indexOf("="); //$NON-NLS-1$ 
 
             if (equals_pos == -1)
             {
-                if (parts[1].equalsIgnoreCase("secure"))
+                if (parts[1].equalsIgnoreCase("secure")) //$NON-NLS-1$ 
                     setSecure(true);
                 continue;
             }
@@ -108,15 +108,15 @@ public class Cookie implements Cloneable
             String mod = parts[i].substring(0, equals_pos);
             String val = parts[i].substring(equals_pos+1);
 
-            if (mod.equalsIgnoreCase("path"))
+            if (mod.equalsIgnoreCase("path")) //$NON-NLS-1$ 
                 setPath(val);
-            else if (mod.equalsIgnoreCase("domain"))
+            else if (mod.equalsIgnoreCase("domain")) //$NON-NLS-1$ 
                 setDomain(val);
-            else if (mod.equalsIgnoreCase("max-age"))
+            else if (mod.equalsIgnoreCase("max-age")) //$NON-NLS-1$ 
                 setMaxAge(Integer.parseInt(val));
-            else if (mod.equalsIgnoreCase("comment"))
+            else if (mod.equalsIgnoreCase("comment")) //$NON-NLS-1$ 
                 setComment(val);
-            else if (mod.equalsIgnoreCase("version"))
+            else if (mod.equalsIgnoreCase("version")) //$NON-NLS-1$ 
                 setVersion(Integer.parseInt(val));
         }
     }
@@ -350,7 +350,7 @@ public class Cookie implements Cloneable
     */
     public String toString()
     {
-        return name+": "+value;
+        return name+": "+value; //$NON-NLS-1$ 
     }
 
     /*
@@ -360,13 +360,13 @@ public class Cookie implements Cloneable
     * @return <code>true</code> if the string is a reserved token;
     *         <code>false</code> if it is not
     */
-    private boolean isToken(String value)
+    private boolean isToken(String val)
     {
-        int len = value.length();
+        int len = val.length();
 
         for (int i=0; i<len; i++)
         {
-            char c = value.charAt(i);
+            char c = val.charAt(i);
 
             if (c<0x20 || c>=0x7f || tspecials.indexOf(c) != -1)
                 return false;
@@ -420,6 +420,6 @@ public class Cookie implements Cloneable
     * from RFC 2068, token special case characters
     * private static final String tspecials = "()<>@,;:\\\"/[]?={} \t";
     */
-    private static final String tspecials = ",;";
+    private static final String tspecials = ",;"; //$NON-NLS-1$ 
 }
 

@@ -29,7 +29,6 @@ import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.BookType;
 import org.crosswire.jsword.book.Defaults;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.passage.KeyUtil;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PreferredKey;
@@ -301,8 +300,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
         try
         {
             Verse verse = set.getVerse();
-            Key updated = KeyUtil.getKeyList(verse, getBook());
-            display.setBookData(bmd.getBook(), updated);
+            display.setBookData(bmd.getBook(), verse);
         }
         catch (Exception ex)
         {

@@ -71,7 +71,7 @@ public class WebBrowser
     {
         for (Enumeration en=headers.elements(); en.hasMoreElements(); )
         {
-            log.debug(""+en.nextElement());
+            log.debug(""+en.nextElement()); //$NON-NLS-1$
         }
     }
 
@@ -117,7 +117,7 @@ public class WebBrowser
     {
         for (Enumeration en=cookies.elements(); en.hasMoreElements(); )
         {
-            log.debug(""+en.nextElement());
+            log.debug(""+en.nextElement()); //$NON-NLS-1$
         }
     }
 
@@ -138,16 +138,16 @@ public class WebBrowser
         for (Enumeration en=cookies.elements(); en.hasMoreElements(); )
         {
             Cookie cookie = (Cookie) en.nextElement();
-            buffer.append(cookie.getName()+"="+cookie.getValue());
+            buffer.append(cookie.getName()+"="+cookie.getValue()); //$NON-NLS-1$
             if (en.hasMoreElements())
-                buffer.append("; ");
+                buffer.append("; "); //$NON-NLS-1$
         }
 
         // Add a cookies header
         if (buffer.length() != 0)
         {
             // There are cookies now
-            cook_head = new Header("Cookie", buffer.toString());
+            cook_head = new Header("Cookie", buffer.toString()); //$NON-NLS-1$
             headers.addElement(cook_head);
         }
     }

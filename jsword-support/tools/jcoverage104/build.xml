@@ -71,10 +71,10 @@
     -->
   <target name="test.unit" description="Run unit tests">
     <mkdir dir="${target.tested}"/>
-    <echo>JUnit may fail if jdepend.jar is not visible to Ant.
+    <echo>JUnit may fail if junit.jar is not visible to Ant.
 To make it visible you need to do one of two things depending
 on whether you are running ant in Eclipse or not.
-In Eclipse, add jdepend.jar to Preferences -> Ant -> Runtime -> Global Entries.
+In Eclipse, add junit.jar to Preferences -> Ant -> Runtime -> Global Entries.
 This is not necessary in the most recent version of Eclipse.
 Otherwise, run the junit.antlibs task to copy jars to ANT_HOME/lib</echo>
     <junit fork="yes"

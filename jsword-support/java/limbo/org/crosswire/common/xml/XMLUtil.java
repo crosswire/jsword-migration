@@ -113,21 +113,21 @@ public class XMLUtil
 
         case Node.CDATA_SECTION_NODE:
             buff.append(StringUtils.repeat(DOT, depth*2));
-            buff.append("<![CDATA[");
+            buff.append("<![CDATA["); //$NON-NLS-1$
             buff.append(node.getNodeValue());
-            buff.append("]]>");
+            buff.append("]]>"); //$NON-NLS-1$
             break;
 
         case Node.COMMENT_NODE:
             buff.append(StringUtils.repeat(DOT, depth*2));
-            buff.append("<!-- ");
+            buff.append("<!-- "); //$NON-NLS-1$
             buff.append(node.getNodeValue());
-            buff.append(" -->");
+            buff.append(" -->"); //$NON-NLS-1$
             break;
 
         case Node.ELEMENT_NODE:
             buff.append(StringUtils.repeat(DOT, depth*2));
-            buff.append("<");
+            buff.append("<"); //$NON-NLS-1$
             buff.append(node.getNodeName());
 
             // The attributes
@@ -138,9 +138,9 @@ public class XMLUtil
                 {
                     buff.append(SPACE);
                     buff.append(map.item(i).getNodeName());
-                    buff.append("='");
+                    buff.append("='"); //$NON-NLS-1$
                     buff.append(map.item(i).getNodeValue());
-                    buff.append("'");
+                    buff.append("'"); //$NON-NLS-1$
                 }
             }
 
@@ -149,12 +149,12 @@ public class XMLUtil
 
             if (list == null || list.getLength() == 0)
             {
-                buff.append("/>");
+                buff.append("/>"); //$NON-NLS-1$
                 buff.append(StringUtil.NEWLINE);
             }
             else
             {
-                buff.append(">");
+                buff.append(">"); //$NON-NLS-1$
                 buff.append(StringUtil.NEWLINE);
 
                 for (int i=0; i<list.getLength(); i++)
@@ -163,16 +163,16 @@ public class XMLUtil
                 }
 
                 buff.append(StringUtils.repeat(DOT, depth*2));
-                buff.append("</");
+                buff.append("</"); //$NON-NLS-1$
                 buff.append(node.getNodeName());
-                buff.append(">");
+                buff.append(">"); //$NON-NLS-1$
                 buff.append(StringUtil.NEWLINE);
             }
             break;
 
         default:
             buff.append(StringUtils.repeat(SPACE, depth*2));
-            buff.append("Not sure what to do with node of type ");
+            buff.append("Not sure what to do with node of type "); //$NON-NLS-1$
             buff.append(node.getNodeType());
         }
 
@@ -187,8 +187,8 @@ public class XMLUtil
         }
     }
 
-    private static final String SPACE = " ";
-    private static final String DOT = ".";
+    private static final String SPACE = " "; //$NON-NLS-1$
+    private static final String DOT = "."; //$NON-NLS-1$
 
     /**
      * The log stream
