@@ -1,0 +1,234 @@
+<html>
+<head>
+<title>Setting Up Eclipse for JSword and BibleDesktop</title>
+</head>
+<body>
+<h1>Setting Up Eclipse for JSword and BibleDesktop</h1>
+<p>
+  JSword and Bible Desktop are being actively developed in Eclipse.
+  While this is not an endorsement of Eclipse, you will find project
+  files for Eclipse that will speed your ability to develop JSword.
+  You may use any other mean of developing JSword, but we may not be
+  able to provide guidance.
+</p>
+<p>
+  This document should help you set up Eclipse so you can help develop
+  JSword and BibleDesktop. If you find it incomplete, please let us know
+  or once you have Eclipse set up, make the changes and send us a patch.
+</p>
+
+<h2>Obtain and install Sun's Java 1.4.2_x</h2>
+<p>
+  To develop JSword with Eclipse, you will need to tell it to use
+  Sun's Java 1.4.2. I recommend using the most recent point release
+  which at the time of this writing was 1.4.2_07. You can find instructions
+  on installing Sun's for Linux under
+  <a name="linuxjava" href="linuxjava.html">Installing Java under Fedora Core 3</a>.
+</p>
+
+<h2>Obtain and install Eclipse 3.x</h2>
+<p>
+  Any version of Eclipse 3 will work well. The screenshots that
+  are provided are from 3.1M5a, Linux, GTK version, running under
+  the Gnome desktop.
+</p>
+<p>
+  You can get Eclipse from here:
+  <a href="http://www.eclipse.org/downloads">http://www.eclipse.org/downloads</a>.
+  The download will be about 90M, so it is best to have a broadband connection.
+  With Windows, you will only have one choice. If you are running linux, you will
+  have a choice between Motif and GTK versions. I don't know if there is any practical
+  difference. The screenshots are from the GTK version.
+</p>
+
+<h2>Installing Eclipse</h2>
+<p>
+  As root, install the program to a directory of your choice. Do not install it to a
+  directory containing an existing <q>eclipse</q> directory. Either rename the
+  <q>eclipse</q> directory, delete it or choose a different Eclipse location.
+  I use <code>/usr/java</code> on linux and <code>c:\java</code> on Windows.
+  It will create the Eclipse installation in that directory. For Windows, just unzip
+  it to the c:\java directory. For linux, in the /usr/java directory, run
+  <code>gtar zxvf eclipse-SDK-3.1M5a-linux-gtk.tar.gz</code>.
+</p>
+
+<h2>Launching Eclipse 3.x under Linux</h2>
+<p>
+  Perhaps the best way to run Eclipse from inside the Gnome desktop is to create a
+  Launcher for it. This is not an endorsement of the Gnome desktop. I don't have any
+  experience with KDE. Perhaps someone can provide instructions on how to do that.
+  <ol>
+    <li>Assuming that you installed Java as instructed above, you can use
+        <code>-vm /usr/bin/java.</code> I strongly recommend that you explicitly
+        tell Eclipse which Java to run. Please note, you can independently tell
+        Eclipse which Java to use to compile code with.</li>
+    <li>By default, Java caps memory usage to too low a value. You will need to increase
+        it to 512M, with <code>-vmargs -Xmx512M</code></li>
+    <li>The icon for the program is <code>/usr/java/eclipse/icon.xpm</code>
+  </ol>
+  You can create a <q>Launcher</q> that will be in a Gnome panel of your choice by:
+  <ol>
+    <li>Right click on the panel in which you want to create the <q>Launcher</q></li>
+    <li>Choose <q>Add to Panel...</q>. 
+        <a href="images/linux/addpanel.png">[Image]</a></li>
+    <li>Choose <q>Custom Application Launcher</q>
+        <a href="images/linux/choosecustom.png">[Image]</a></li>
+    <li>In the dialog fill in the following values:
+        <a href="images/linux/createlauncher.png">[Image]</a>
+      <table>
+        <tr>
+          <td><strong>Name:</strong></td>
+          <td>JSword Eclipse</td>
+        </tr>
+        <tr>
+          <td><strong>Command:</strong></td>
+          <td>/usr/java/eclipse/eclipse -vm /usr/bin/java -vmargs -Xmx512M</td>
+        </tr>
+        <tr>
+          <td colspan="2">Click on the icon and enter /usr/java/eclipse/icon.xpm</td>
+        </tr>
+      </table>
+    </li>
+  </ol>
+</p>
+
+<h2>Setting up the JSword projects in Eclipse</h2>
+
+<h3>Setup an Eclipse Workspace</h3>
+<p>
+  When you start up Eclipse, you can choose which workspace to work
+  in or you can create a new one. Eclipse will provide a default workspace
+  in your home directory of <q>workspace</q>.
+  <a href="images/eclipse/startup.png">[Image]</a>
+  Since I develop more than one project, I want to keep each in different workspaces.
+  For JSword, I use ~/eclipse/jsword.
+  <a href="images/eclipse/changeworkspace.png">[Image]</a>
+  Another project would be ~/eclipse/flashcards.
+</p>
+
+<h3>Welcome to Eclipse</h3>
+<p>
+  When you first enter Eclipse you will be presented with an opportunity
+  to learn about Eclipse. You can get back to this view at anytime by choosing
+  Welcome from the Help menu.
+</p>
+<p>
+  Click on the <q>Workbench</q> button to use Eclipse.
+  <a href="images/eclipse/firstrun.png">[Image]</a>
+</p>
+
+<h3>Connect to JSword's CVS repository</h3>
+<strong><em>
+  After we release JSword and BibleDesktop version 1.0,
+  we will be migrating to SVN
+</em></strong>
+<p>
+  Add the CVS Respository Exploring perspective.
+  <a href="images/eclipse/repositoryperspective.png">[Image]</a>
+  <ul>
+    <li>This will automatically open the CVS Repository Exploring perspective.</li>
+	<li>Click on the <q>Add CVS Repository</q> button.</li>
+	<li>Fill in the dialog with the following values:
+	  <table>
+	    <tr>
+	      <td><strong>Host:</strong></td>
+	      <td>cvs.crosswire.org</td>
+	    </tr>
+	    <tr>
+		  <td><strong>Repository Path:</strong></td>
+		  <td>/cvs/jsword</td>
+	    </tr>
+	    <tr>
+	  	  <td><strong>User:</strong></td>
+		  <td>anonymous</td>
+	    </tr>
+	    <tr>
+		  <td><strong>Password:</strong></td>
+		  <td>anonymous</td>
+	    </tr>
+	    <tr>
+		  <td colspan="2">Click on <q>Save Password</q> as it is no secret!</td>
+	    </tr>
+	    <tr>
+		  <td colspan="2">Click on <q>Finish</q></td>
+	    </tr>
+      </table>
+      This will provide you with read-only access to the repository.
+      To change the code you will submit patches which is explained below.
+    </li>
+    <li>Open the repository and expand HEAD.</li>
+    <li>Right click on bibledesktop, choose <q>Check Out As...</q>
+        and then click <q>Finish</q>.</li>
+    <li>Repeat this for common, jsword and jsword-support.
+        Later you may wish to do help maintain the website and then you will
+        want bibledesktop-web and jsword-web.</li>
+    <li>You don't need this perspective for day to day development,
+        so you can remove it.</li>
+  </ul>
+</p>
+
+<h3>Setting up preferences in Eclipse</h3>
+<p>
+  In order to speed development we request that you conform to the style of
+  coding that is currently used. Everyone has their own favorite way of doing
+  things, so we had to establish one style standard. And we try to maintain these.
+  You can read more about these standards <a href="writingcode.html">here</a>.
+</p>
+<p>
+  If you want to know how to setup Eclipse to use the same compiler settings
+  as we do then the following screenshots (from an earlier version of Eclipse)
+  ought to help:
+  <ul>
+    <li><a href="images/eclipse/compiler1-style.gif">Style Tab</a></li>
+    <li><a href="images/eclipse/compiler2-advanced.gif">Advanced Tab</a></li>
+    <li><a href="images/eclipse/compiler3-unused.gif">Unused Code Tab</a></li>
+    <li><a href="images/eclipse/compiler4-javadoc.gif">JavaDoc Tab</a></li>
+	<li><a href="images/eclipse/compiler5-compliance.gif">Compliance and Classfiles Tab</a></li>
+    <li><a href="images/eclipse/compiler6-build.gif">Build Path Tab</a></li>
+  </ul>
+</p>
+<p>
+  In addition Eclipse provides a code formatter
+  <a href="images/eclipse/FormatPrefs.png">[Image]</a>
+  We have a file you can import to get the basic settings. You can find the
+  file in the jsword project in the etc/eclipse/jsword-format.xml file.
+  Just click on the Import button and navigate to it.
+  <a href="images/eclipse/FormatPrefsLocation.png">[Image]</a>
+  It is about as close as we can get to our formatting standards, but it is
+  not exact. For this reason, we do not let Eclipse reformat the entire file.
+</p>
+<h3>Working under the Java Perspective</h3>
+<p>
+  Eclipse provides several perspectives under which you can develop code.
+  My personal rut is the Java Perspective. This can be added in the same manner
+  that the CVS Repository Exploring Perspective was added.
+</p>
+
+<h3>Working under the Team Synchronization Perspective</h3>
+<p>
+  This can be added in the same manner that the
+  <q>CVS Repository Exploring Perspective</q> was added.
+  To initially connect this perspective to the CVS Repository, click on the
+  <q>Synchronize...</q> button. Click on the <q>Next</q> button and then
+  the <q>Finish</q> button.
+</p>
+<p>
+  When you make changes to any of the projects, this perspective will track the changes.
+  Also, you can click the same button, now labelled <q>Sychronize CVS (Workspace)</q>
+  to get the latest changes from the repository.
+</p>
+<p>
+  To submit changes you will create a patch file, one for each project.
+  Zip them all up and email it to
+  <a href="mailto:jsword-devel@crosswire.org">jsword-devel@crosswire.org</a>.
+  Make sure you explain in detail what you have done and how you have tested it.
+</p>
+<p>
+  Generally, we will review the patch and apply it locally. Then we will make
+  changes to make it conform to the coding standards, test it and then check it in.
+  If we are in the middle of a big change that we cannot check in at the moment,
+  your change may have to wait until we can commit our changes. Typically, turn
+  around is a week or less.
+</p>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<html>
+<head>
+  <title>Getting Bible Desktop to work on Fedora Core 3.</title>
+</head>
+<body>
+<h1>Getting Bible Desktop to work on Fedora Core 3.</h1>
+
+<h2>I) The first thing is to get a version of Java that will run Bible Desktop.</h2>
+<p>
+  If you have not done so, follow these instructions:
+  <ul>
+    <li><a href="/jsword/linuxjava.html">Obtain and install Java</a></li>
+  </ul>
+</p>
+
+<h2>II) At this point you have can get Bible Desktop and run it.</h2>
+<p>
+  At this point and time Java's WebStart does not work under Fedora Core 3.
+  This is a reported bug in Sun's Java (see Sun's BugParade ID# 6188963)
+  and will be fixed in some point release of Java 1.5. For this reason,
+  Bible Desktop will need to be manually installed and run.
+</p>
+<ol>
+  <li>Download JSword from the JSword <a href="/jsword/download.jsp">download</a> page.
+      This contains both Bible Desktop and the JSword librarys that it is built on
+      top of. Pick any of the *.tar.gz binary packages.</li>
+  <li>Unpack the package into a directory of your choice.
+      The jsword directory will be created for you.</li>
+  <li>cd into that directory and execute jsword.sh.
+      This is the Bible Desktop program.</li>
+</body>
+</html>
