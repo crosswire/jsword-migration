@@ -293,10 +293,19 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
             // we get PassageTallys for best match searches
             if (key instanceof PassageTally)
             {
-                PassageTally tally = (PassageTally) key;
-                tally.setOrdering(PassageTally.ORDER_TALLY);
-                // TODO: Make the number of ranges in a tally be an option.
-                tally.trimRanges(20, RestrictionType.NONE);
+                if (chkMatch.isSelected())
+                {
+                    PassageTally tally = (PassageTally) key;
+                    tally.setOrdering(PassageTally.ORDER_TALLY);
+                    // TODO: Make the number of ranges in a tally be an option.
+                    tally.trimRanges(20, RestrictionType.NONE);
+                }
+                else
+                {
+                    // If match is not selected then show the entire result
+                    Key newKey = book.createEmptyKeyList();
+                    newKey.addAll(key);
+                }
             }
 
             txtKey.setText(key.getName());
