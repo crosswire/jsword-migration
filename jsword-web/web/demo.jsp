@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <title>JSword - Web Demo</title>
-  <link rel="stylesheet" type="text/css" href="sword.css"/>
 </head>
 <body>
 

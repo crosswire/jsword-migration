@@ -1,40 +1,35 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
   <title>JSword - Download</title>
-  <link rel="stylesheet" type="text/css" href="sword.css"/>
 </head>
 <body>
 
 <jsp:directive.page import="org.crosswire.jsword.view.web.DownloadSet" contentType="text/html"/>
 
 <jsp:scriptlet><![CDATA[
-  String localprefix = application.getInitParameter("localprefix");
-  if (localprefix == null)
-      throw new NullPointerException("localprefix");
+  String webappJSword = application.getInitParameter("webapp.jsword");
+  if (webappJSword == null)
+  {
+      throw new NullPointerException("webapp.jsword");
+  }
 
-  String webprefix = application.getInitParameter("webprefix");
-  if (webprefix == null)
-      throw new NullPointerException("webprefix");
+  String webPrefix = application.getInitParameter("web.prefix");
+  if (webPrefix == null)
+  {
+      throw new NullPointerException("web.prefix");
+  }
 ]]></jsp:scriptlet>
 
 <h1>Stable Release</h1>
 
 <h2>Webstart</h2>
 <p>
-  The latest release of J-Sword is 0.97.
-  It is available via <a href="http://java.sun.com/products/javawebstart/">WebStart</a> which
-  you will need installed. On MacOSX that job is done for you.
-  On Windows it is an easy download either from
-  the <a href="http://java.sun.com/products/javawebstart/">webstart download page</a> or
-  it <a href="http://java.sun.com/j2se/1.4.2/download.html">comes with J2SE 1.4</a>.
-  Once you have Java installed ...
+  The Desktop GUI of J-Sword is called Bible Desktop and it has it's own
+  website along with a Webstart realease. The Webstart download page is
+  <a href="/bibledesktop/download.html">here</a>.
 </p>
-<div align="center">
-  <a href="stable/jsword-stable.jnlp"><img src="images/webstart.jpg" width="247" height="60" border="0"/></a>
-</div>
 
 <h2>Zip/Tar Based Downloads</h2>
 <p>We keep official releases hanging around for a while.</p>
@@ -55,7 +50,7 @@
     <td>.tar.gz</td>
   </tr>
   <jsp:scriptlet><![CDATA[
-  DownloadSet[] dls = DownloadSet.getDownloadSets(localprefix+"/release", webprefix+"/release", false);
+  DownloadSet[] dls = DownloadSet.getDownloadSets(webappJSword + "/release", webPrefix + "/release", false);
   for (int i=0; i<dls.length; i++)
   {
   ]]></jsp:scriptlet>
@@ -73,17 +68,6 @@
   ]]></jsp:scriptlet>
 </table>
 
-
-<h1>Nightly Releases</h1>
-
-<h2>Webstart</h2>
-<p>
-  A nightly webstart build of J-Sword is available. You'll need an installation
-  of Java as for the stable release of J-Sword.
-</p>
-<div align="center">
-  <a href="jnlp/bibledesktop.jnlp"><img src="images/webstart.jpg" width="247" height="60" border="0"/></a>
-</div>
 
 <h2>Zip/Tar Based Downloads</h2>
 <p>
@@ -107,7 +91,7 @@
     <td>.tar.gz</td>
   </tr>
   <jsp:scriptlet><![CDATA[
-  dls = DownloadSet.getDownloadSets(localprefix+"/nightly", webprefix+"/nightly", true);
+  dls = DownloadSet.getDownloadSets(webappJSword + "/nightly", webPrefix + "/nightly", true);
   for (int i=0; i<dls.length; i++)
   {
   ]]></jsp:scriptlet>

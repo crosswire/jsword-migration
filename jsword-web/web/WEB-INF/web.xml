@@ -10,12 +10,12 @@
   <description>Servlet interface to the Bible</description>
 
   <context-param>
-    <param-name>localprefix</param-name>
-    <param-value>@localprefix@</param-value>
+    <param-name>webapp.jsword</param-name>
+    <param-value>@webapp.jsword@</param-value>
   </context-param>
   <context-param>
-    <param-name>webprefix</param-name>
-    <param-value>@webprefix@</param-value>
+    <param-name>web.prefix</param-name>
+    <param-value>@web.prefix@</param-value>
   </context-param>
 
   <servlet>
