@@ -60,6 +60,12 @@ public class TextPaneBookDataDisplay implements BookDataDisplay
         this.book = book;
         this.key = key;
 
+        if (book == null && key == null)
+        {
+            txtView.setText(""); //$NON-NLS-1$
+            return;
+        }
+
         BookData bdata = book.getData(key);
 
         try

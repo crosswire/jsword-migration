@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -61,6 +62,7 @@ public class SplitBookDataDisplay implements BookDataDisplay
     {
         this.child = child;
         init();
+        setActive();
     }
 
     /**
@@ -93,27 +95,35 @@ public class SplitBookDataDisplay implements BookDataDisplay
         });
         //*/
 
+        JScrollPane scroll = new JScrollPane();
         //scroll.getViewport().add(tree);
         scroll.getViewport().add(list);
 
         ActionFactory actions = new ActionFactory(SplitBookDataDisplay.class, this);
 
-        delete = new JButton(actions.getAction(DELETE_SELECTED));
+        actDelete = actions.getAction(DELETE_SELECTED);
+        actBlur1 = actions.getAction(BLUR1);
+        actBlur5 = actions.getAction(BLUR5);
+
+        JButton delete = new JButton(actDelete);
         delete.setText(null);
-        blur1 = new JButton(actions.getAction(BLUR1));
+        JButton blur1 = new JButton(actBlur1);
         blur1.setText(null);
-        blur5 = new JButton(actions.getAction(BLUR5));
+        JButton blur5 = new JButton(actBlur5);
         blur5.setText(null);
 
+        JPanel mutate = new JPanel();
         mutate.setLayout(new FlowLayout());
         mutate.add(delete);
         mutate.add(blur1);
         mutate.add(blur5);
 
+        JPanel data = new JPanel();
         data.setLayout(new BorderLayout());
         data.add(scroll, BorderLayout.CENTER);
         data.add(mutate, BorderLayout.NORTH);
 
+        JSplitPane split = new JSplitPane();
         split.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         split.add(data, JSplitPane.LEFT);
         split.add(child.getComponent(), JSplitPane.RIGHT);
@@ -147,7 +157,7 @@ public class SplitBookDataDisplay implements BookDataDisplay
      * This bound by the boundaries of the Chapter.
      * @param amount The amount of blurring
      */
-    public void doBlur(int amount)
+    private void doBlur(int amount)
     {
         try
         {
@@ -170,7 +180,7 @@ public class SplitBookDataDisplay implements BookDataDisplay
     /**
      * Remove the selected verses out of the PassagePane.
      */
-    protected void doDeleteSelected()
+    public void doDeleteSelected()
     {
         try
         {
@@ -227,6 +237,7 @@ public class SplitBookDataDisplay implements BookDataDisplay
         //model = new KeyTreeModel(key);
         model.setPassage(PassageUtil.getPassage(key));
         child.setBookData(book, key);
+        setActive();
     }
 
     /* (non-Javadoc)
@@ -302,11 +313,26 @@ public class SplitBookDataDisplay implements BookDataDisplay
             }
 
             child.setBookData(book, local);
+            setActive();
         }
         catch (Exception ex)
         {
             Reporter.informUser(this, ex);
         }
+    }
+
+    /**
+     * Make sure the correct buttons are made active
+     */
+    private void setActive()
+    {
+        Object[] selected = list.getSelectedValues();
+
+        // make sure the mutator buttons are correctly active
+        actDelete.setEnabled(selected.length != 0);
+        boolean blurable = model.getSize() != 0;
+        actBlur1.setEnabled(blurable);
+        actBlur5.setEnabled(blurable);
     }
 
     private static final String BLUR1 = "Blur1"; //$NON-NLS-1$
@@ -331,17 +357,13 @@ public class SplitBookDataDisplay implements BookDataDisplay
     /*
      * GUI Components
      */
-    private JSplitPane split = new JSplitPane();
-    private JScrollPane scroll = new JScrollPane();
     private JPanel main = new JPanel();
     private BookDataDisplay child = null;
     private JList list = new JList();
     private PassageListModel model = new PassageListModel();
-    private JPanel data = new JPanel();
-    private JPanel mutate = new JPanel();
-    private JButton delete = null;
-    private JButton blur1 = null;
-    private JButton blur5 = null;
+    private Action actDelete = null;
+    private Action actBlur1 = null;
+    private Action actBlur5 = null;
     /*
     private JTree tree = new JTree();
     private KeyTreeModel model = null;
