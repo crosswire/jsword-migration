@@ -116,6 +116,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
             {
                 public void run()
                 {
+                    ExceptionPane.setHelpDeskListener(true);
                     LookAndFeelUtil.initialize();
 
                     Desktop desktop = new Desktop();
