@@ -295,6 +295,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
             {
                 PassageTally tally = (PassageTally) key;
                 tally.setOrdering(PassageTally.ORDER_TALLY);
+                // TODO: Make the number of ranges in a tally be an option.
                 tally.trimRanges(20, RestrictionType.NONE);
             }
 
