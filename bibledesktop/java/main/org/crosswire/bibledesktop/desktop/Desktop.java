@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ import org.crosswire.common.swing.desktop.event.ViewEvent;
 import org.crosswire.common.swing.desktop.event.ViewEventListener;
 import org.crosswire.common.util.CWClassLoader;
 import org.crosswire.common.util.Logger;
+import org.crosswire.common.util.LucidRuntimeException;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.common.xml.XMLUtil;
@@ -60,6 +62,8 @@ import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Books;
+import org.crosswire.jsword.book.BooksEvent;
+import org.crosswire.jsword.book.BooksListener;
 import org.crosswire.jsword.book.readings.ReadingsBookDriver;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchKeyException;
@@ -156,6 +160,21 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         // This has to be done before any gui components are created are created.
         // This includes code that is invoked by it.
         generateConfig();
+
+        // Listen for book changes so that the Options can be kept current
+        BooksListener cbl = new BooksListener()
+        {
+            public void bookAdded(BooksEvent ev)
+            {
+                generateConfig();
+            }
+
+            public void bookRemoved(BooksEvent ev)
+            {
+                generateConfig();
+            }
+        };
+        Books.installed().addBooksListener(cbl);
 
         // Make this be the root frame of optiondialogs
         JOptionPane.setRootFrame(this);
@@ -535,7 +554,6 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     public final void generateConfig()
     {
         fillChoiceFactory();
-
         config = new Config(Msg.CONFIG_TITLE.toString());
         Document xmlconfig = null;
         try
@@ -565,7 +583,17 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
             ExceptionPane.showExceptionDialog(null, ex);
         }
 
-        config.localToApplication(true);
+        URL configUrl = Project.instance().getWritablePropertiesURL("desktop"); //$NON-NLS-1$
+        try
+        {
+            config.localToApplication();
+            config.localToPermanent(configUrl);
+        }
+        catch (IOException ex)
+        {
+            throw new LucidRuntimeException(Msg.CONFIG_SAVE_FAILED, ex, new Object[] { configUrl });
+        }
+
     }
 
     /**

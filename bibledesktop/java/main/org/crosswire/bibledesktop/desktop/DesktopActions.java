@@ -26,9 +26,6 @@ import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookMetaData;
-import org.crosswire.jsword.book.Books;
-import org.crosswire.jsword.book.BooksEvent;
-import org.crosswire.jsword.book.BooksListener;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.util.ConverterFactory;
 import org.crosswire.jsword.util.Project;
@@ -284,25 +281,8 @@ public class DesktopActions
     {
         try
         {
-            desktop.fillChoiceFactory();
-            BooksListener cbl = new BooksListener()
-            {
-                public void bookAdded(BooksEvent ev)
-                {
-                    desktop.refreshBooks();
-                }
-
-                public void bookRemoved(BooksEvent ev)
-                {
-                    desktop.refreshBooks();
-                }
-            };
-            Books.installed().addBooksListener(cbl);
-
             URL configUrl = Project.instance().getWritablePropertiesURL("desktop"); //$NON-NLS-1$
             ConfigEditorFactory.showDialog(desktop.getConfig(), desktop, configUrl);
-
-            Books.installed().removeBooksListener(cbl);
         }
         catch (Exception ex)
         {

@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -95,6 +97,12 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         {
             cboBible.setToolTipText(selected.toString());
         }
+        else
+        {
+            // The application has started and there are no installed bibles.
+            // So make the combo box a reasonable size.
+            cboBible.setPrototypeDisplayValue("                                                            "); //$NON-NLS-1$
+        }
         cboBible.setRenderer(new BookListCellRenderer());
         cboBible.addItemListener(new ItemListener()
         {
@@ -105,6 +113,17 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
                     changeVersion();
                     JComboBox combo = (JComboBox) ev.getSource();
                     combo.setToolTipText(combo.getSelectedItem().toString());
+                }
+            }
+        });
+        cboBible.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                JComboBox cbo = (JComboBox)e.getSource();
+                if (cbo.getSelectedIndex() == -1 && cbo.getItemCount() > 0)
+                {
+                    cbo.setSelectedIndex(0);
                 }
             }
         });
