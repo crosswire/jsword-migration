@@ -90,14 +90,14 @@ public class RemoterServlet extends HttpServlet
     {
         Map params = request.getParameterMap();
         String methodname = request.getParameter(HttpRemoter.METHOD_KEY);
-        RemoteMethod method = new RemoteMethod(MethodName.getMethod(methodname));
+        RemoteMethod method = new RemoteMethod(MethodName.fromString(methodname));
 
         Iterator it = params.keySet().iterator();
         while (it.hasNext())
         {
             String key = (String) it.next();
             String[] val = (String[]) params.get(key);
-            ParamName param = ParamName.getMethod(key);
+            ParamName param = ParamName.fromString(key);
 
             // This is slightly dodgy - we basically ignore the fact that HTTP
             // GET and POST allow multiple values for each key, however since we

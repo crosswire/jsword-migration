@@ -2,6 +2,7 @@ package org.crosswire.bibledesktop.book;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -171,6 +172,7 @@ public class SitesPane extends JPanel
     public void showInDialog(Component parent)
     {
         dlgMain = new JDialog(JOptionPane.getFrameForComponent(parent));
+        dlgMain.setSize(new Dimension(750, 500));
         dlgMain.getContentPane().setLayout(new BorderLayout());
         dlgMain.getContentPane().add(this, BorderLayout.CENTER);
         dlgMain.getContentPane().add(createButtons(), BorderLayout.SOUTH);
@@ -183,7 +185,6 @@ public class SitesPane extends JPanel
                 doSitesClose();
             }
         });
-        dlgMain.pack();
         dlgMain.setLocationRelativeTo(parent);
         dlgMain.setVisible(true);
     }

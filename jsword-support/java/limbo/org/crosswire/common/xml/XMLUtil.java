@@ -2,7 +2,6 @@ package org.crosswire.common.xml;
 
 import java.io.PrintWriter;
 
-import org.apache.commons.lang.StringUtils;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.StringUtil;
 import org.w3c.dom.Document;
@@ -103,27 +102,27 @@ public class XMLUtil
             String text = node.getNodeValue().trim();
             if (text.length() != 0)
             {
-                buff.append(StringUtils.repeat(DOT, depth*2));
+                buff.append(DOT_PADDING.substring(0, depth*2));
                 buff.append(text);
             }
             break;
 
         case Node.CDATA_SECTION_NODE:
-            buff.append(StringUtils.repeat(DOT, depth*2));
+            buff.append(DOT_PADDING.substring(0, depth*2));
             buff.append("<![CDATA["); //$NON-NLS-1$
             buff.append(node.getNodeValue());
             buff.append("]]>"); //$NON-NLS-1$
             break;
 
         case Node.COMMENT_NODE:
-            buff.append(StringUtils.repeat(DOT, depth*2));
+            buff.append(DOT_PADDING.substring(0, depth*2));
             buff.append("<!-- "); //$NON-NLS-1$
             buff.append(node.getNodeValue());
             buff.append(" -->"); //$NON-NLS-1$
             break;
 
         case Node.ELEMENT_NODE:
-            buff.append(StringUtils.repeat(DOT, depth*2));
+            buff.append(DOT_PADDING.substring(0, depth*2));
             buff.append("<"); //$NON-NLS-1$
             buff.append(node.getNodeName());
 
@@ -159,7 +158,7 @@ public class XMLUtil
                     recurseNodes(list.item(i), out, depth+1);
                 }
 
-                buff.append(StringUtils.repeat(DOT, depth*2));
+                buff.append(DOT_PADDING.substring(0, depth*2));
                 buff.append("</"); //$NON-NLS-1$
                 buff.append(node.getNodeName());
                 buff.append(">"); //$NON-NLS-1$
@@ -168,7 +167,7 @@ public class XMLUtil
             break;
 
         default:
-            buff.append(StringUtils.repeat(SPACE, depth*2));
+            buff.append(SPACE_PADDING.substring(0, depth*2));
             buff.append("Not sure what to do with node of type "); //$NON-NLS-1$
             buff.append(node.getNodeType());
         }
@@ -184,6 +183,8 @@ public class XMLUtil
         }
     }
 
+    private static final String SPACE_PADDING = "                                                                "; //$NON-NLS-1$
+    private static final String DOT_PADDING = ".................................................................."; //$NON-NLS-1$
     private static final String SPACE = " "; //$NON-NLS-1$
     private static final String DOT = "."; //$NON-NLS-1$
 

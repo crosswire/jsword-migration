@@ -1,7 +1,10 @@
 
 package org.crosswire.common.net;
 
-import org.apache.commons.lang.StringUtils;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.crosswire.common.util.StringUtil;
 
 /**
 * Creates a cookie, a small amount of information sent by a servlet to
@@ -85,7 +88,7 @@ public class Cookie implements Cloneable
     */
     public Cookie(String header)
     {
-        String[] parts = StringUtils.split(header, ";"); //$NON-NLS-1$ 
+        String[] parts = StringUtil.split(header, ";"); //$NON-NLS-1$ 
 
         // The name and value
         String base = parts[0];

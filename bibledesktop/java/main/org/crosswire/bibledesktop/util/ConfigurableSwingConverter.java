@@ -7,10 +7,10 @@ import java.util.MissingResourceException;
 
 import javax.xml.transform.TransformerException;
 
-import org.apache.commons.lang.StringUtils;
 import org.crosswire.common.util.FileUtil;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.ResourceUtil;
+import org.crosswire.common.util.StringUtil;
 import org.crosswire.common.util.URLFilter;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
@@ -113,7 +113,7 @@ public class ConfigurableSwingConverter implements Converter
      */
     public static Font toFont()
     {
-        String[] fontSpec = StringUtils.split(font, ","); //$NON-NLS-1$
+        String[] fontSpec = StringUtil.split(font, ","); //$NON-NLS-1$
         int fontStyle = new Integer(fontSpec[1]).intValue();
         int fontSize = new Integer(fontSpec[2]).intValue();
         Font newFont = new Font(fontSpec[0], fontStyle, fontSize);

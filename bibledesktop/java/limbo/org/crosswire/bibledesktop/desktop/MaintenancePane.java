@@ -20,8 +20,8 @@ import org.crosswire.bibledesktop.book.BooksComboBoxModel;
 import org.crosswire.common.swing.EirPanel;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Reporter;
-import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.BookFilters;
+import org.crosswire.jsword.book.BookMetaData;
 
 /**
  * Allows various maintenance procedures to be done on Bibles like

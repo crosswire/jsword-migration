@@ -2,7 +2,6 @@ package org.crosswire.bibledesktop.book;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -91,7 +90,6 @@ public class SitePane extends JPanel
      */
     private void initialize(String labelAcronymn, BookList books)
     {
-        setPreferredSize(new Dimension(750, 500));
         Component left = createAvailablePanel(labelAcronymn, books);
         Component right = createSelectedPanel();
         this.setLayout(new BorderLayout());
