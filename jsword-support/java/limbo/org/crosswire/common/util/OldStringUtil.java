@@ -32,7 +32,6 @@ public class OldStringUtil
      * A character is tested for capitalness using Character.isUpperCase
      * @param words The phrase from which to get the capital letters.
      * @return The capital letters in the given words.
-     * @see #getInitials(String)
      */
     public static String getCapitals(String words)
     {

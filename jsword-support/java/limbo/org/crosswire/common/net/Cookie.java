@@ -1,9 +1,6 @@
 
 package org.crosswire.common.net;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.crosswire.common.util.StringUtil;
 
 /**
@@ -19,14 +16,15 @@ import org.crosswire.common.util.StringUtil;
 * of your servlets.
 *
 * <p>The servlet sends cookies to the browser by using the
-* {@link HttpServletResponse.addCookie} method, which adds
-* fields to HTTP response headers to send cookies to the
+* {@link javax.servlet.http.HttpServletResponse#addCookie(javax.servlet.http.Cookie)}
+* method, which adds fields to HTTP response headers to send cookies to the
 * browser, one at a time. The browser is expected to
 * support 20 cookies for each Web server, of at least 4 KB each.
 *
 * <p>The browser returns cookies to the servlet by adding
 * fields to HTTP request headers. You can retrieve all of the cookies
-* in a request by using the {@link HttpServletRequest.getCookies} method.
+* in a request by using the
+* {@link javax.servlet.http.HttpServletRequest#getCookies()} method.
 * Several cookies might have the same name but different path attributes.
 *
 * <p>Cookies affect the caching of the Web pages that use them.
@@ -300,7 +298,6 @@ public class Cookie implements Cloneable
     * on all browsers.
     * @param value a string specifying the new value
     * @see #getValue
-    * @see #Cookie
     */
     public void setValue(String value)
     {
@@ -310,7 +307,6 @@ public class Cookie implements Cloneable
     /**
     * Returns the value of the cookie.
     * @return a string containing the cookie's present value
-    * @see setValue
     * @see Cookie
     */
     public String getValue()

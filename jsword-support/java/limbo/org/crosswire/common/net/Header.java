@@ -12,7 +12,6 @@ public class Header implements Cloneable
     * Constructs a header with a specified name and value.
     * @param name a string specifying the name of the cookie
     * @param value a string specifying the value of the cookie
-    * @see #setValue
     */
     public Header(String name, String value)
     {
@@ -33,7 +32,6 @@ public class Header implements Cloneable
     /**
     * Returns the value of the header.
     * @return a string containing the header's present value
-    * @see setValue
     */
     public String getValue()
     {

@@ -31,8 +31,6 @@ import org.w3c.dom.NodeList;
  * MA 02111-1307, USA</i>, Or locally at the Licence link below.<br />
  * The copyright to this program is held by it's authors.
  * </font></td></tr></table>
- * @see <a href='http://www.eireneh.com/servlets/Web'>Project B Home</a>
- * @see <{docs.Licence}>
  * @author Joe Walker
  * @version D0.I0.T0
  */
@@ -186,7 +184,6 @@ public class XMLUtil
     private static final String SPACE_PADDING = "                                                                "; //$NON-NLS-1$
     private static final String DOT_PADDING = ".................................................................."; //$NON-NLS-1$
     private static final String SPACE = " "; //$NON-NLS-1$
-    private static final String DOT = "."; //$NON-NLS-1$
 
     /**
      * The log stream

@@ -20,8 +20,6 @@ package org.crosswire.common.util;
  * MA 02111-1307, USA</i>, Or locally at the Licence link below.<br />
  * The copyright to this program is held by it's authors.
  * </font></td></tr></table>
- * @see <a href='http://www.eireneh.com/servlets/Web'>Project B Home</a>
- * @see <{docs.Licence}>
  * @author Joe Walker
  */
 public final class Validator
