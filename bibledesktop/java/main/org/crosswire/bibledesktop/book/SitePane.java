@@ -14,6 +14,10 @@ import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
@@ -25,7 +29,10 @@ import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.BookList;
 import org.crosswire.jsword.book.BookMetaData;
+import org.crosswire.jsword.book.BookMetaDataSet;
 import org.crosswire.jsword.book.Books;
+import org.crosswire.jsword.book.BooksEvent;
+import org.crosswire.jsword.book.BooksListener;
 import org.crosswire.jsword.book.install.InstallException;
 import org.crosswire.jsword.book.install.Installer;
 import org.crosswire.jsword.util.IndexDownloader;
@@ -86,6 +93,7 @@ public class SitePane extends JPanel
         if (bl == null)
         {
             bl = Books.installed();
+            bl.addBooksListener(new CustomBooksListener());
         }
 
         initialize(labelAcronymn, bl);
@@ -113,23 +121,27 @@ public class SitePane extends JPanel
      */
     private void updateDescription()
     {
+        String desc = "#ERROR#"; //$NON-NLS-1$
+
         if (installer == null)
         {
             int bookCount = Books.installed().getBookMetaDatas().size();
-            lblDesc.setText(Msg.INSTALLED_DESC.toString(new Object[] { new Integer(bookCount) }));
+            desc = Msg.INSTALLED_DESC.toString(new Object[] { new Integer(bookCount) });
         }
         else
         {
             int bookCount = installer.getBookMetaDatas().size();
             if (bookCount == 0)
             {
-                lblDesc.setText(Msg.NONE_AVAILABLE_DESC.toString());
+                desc = Msg.NONE_AVAILABLE_DESC.toString();
             }
             else
             {
-                lblDesc.setText(Msg.AVAILABLE_DESC.toString(new Object[] { new Integer(bookCount) }));
+                desc = Msg.AVAILABLE_DESC.toString(new Object[] { new Integer(bookCount) });
             }
         }
+
+        lblDesc.setText(desc);
     }
 
     /**
@@ -192,7 +204,9 @@ public class SitePane extends JPanel
     private Component createScrolledTree(BookList books)
     {
         treAvailable = new JTree();
-        treAvailable.setModel(new BooksTreeModel(books));
+        setTreeModel(books);
+        // Add lines if viewed in Java Look & Feel
+        treAvailable.putClientProperty("JTree.lineStyle", "Angled"); //$NON-NLS-1$ //$NON-NLS-2$
         treAvailable.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         treAvailable.setCellEditor(null);
         treAvailable.setRootVisible(false);
@@ -209,6 +223,30 @@ public class SitePane extends JPanel
         scroller.getViewport().add(treAvailable);
 
         return scroller;
+    }
+
+    private TreeModel createTreeModel(BookList books)
+    {
+        // return new BooksTreeModel(books);
+        BookMetaDataSet bmds = new BookMetaDataSet(books.getBookMetaDatas());
+        TreeNode bookRoot = new BookNode("root", bmds, new Object[] { BookMetaData.KEY_TYPE, BookMetaData.KEY_LANGUAGE }, 0); //$NON-NLS-1$
+        return new DefaultTreeModel(bookRoot);  
+    }
+
+    // provide for backward compatibility
+    private BookMetaData getBookMetaData(Object obj)
+    {
+        // new way
+        if (obj instanceof DefaultMutableTreeNode)
+        {
+            obj = ((DefaultMutableTreeNode)obj).getUserObject();
+        }
+        // Old way
+        if (obj instanceof BookMetaData)
+        {
+            return (BookMetaData) obj;
+        }
+        return null;
     }
 
     /**
@@ -247,8 +285,7 @@ public class SitePane extends JPanel
             try
             {
                 installer.reloadBookList();
-
-                treAvailable.setModel(new BooksTreeModel(installer));
+                setTreeModel(installer);
             }
             catch (InstallException ex)
             {
@@ -268,7 +305,7 @@ public class SitePane extends JPanel
             if (path != null)
             {
                 Object last = path.getLastPathComponent();
-                BookMetaData name = (BookMetaData) last;
+                BookMetaData name = getBookMetaData(last);
 
                 try
                 {
@@ -308,7 +345,8 @@ public class SitePane extends JPanel
         {
             try
             {
-                BookMetaData bmd = (BookMetaData) path.getLastPathComponent();
+                Object last = path.getLastPathComponent();
+                BookMetaData bmd = getBookMetaData(last);
                 IndexDownloader.downloadIndex(bmd, installer);
             }
             catch (Exception ex)
@@ -330,10 +368,10 @@ public class SitePane extends JPanel
         if (path != null)
         {
             Object last = path.getLastPathComponent();
-
-            if (last instanceof BookMetaData)
+            BookMetaData bmd = getBookMetaData(last);
+            if (bmd != null)
             {
-                mtm = new BookMetaDataTableModel((BookMetaData) last);
+                mtm = new BookMetaDataTableModel(bmd);
                 bookSelected = true;
             }
         }
@@ -343,6 +381,34 @@ public class SitePane extends JPanel
         actions.getAction(INSTALL).setEnabled(bookSelected);
         actions.getAction(INSTALL_SEARCH).setEnabled(bookSelected);
     }
+
+    public void setTreeModel(BookList books)
+    {
+        treAvailable.setModel(createTreeModel(books));
+    }
+    
+    /**
+     * When new books are added we need to relfect the change in this tree.
+     */
+    private final class CustomBooksListener implements BooksListener
+    {
+        /* (non-Javadoc)
+         * @see org.crosswire.jsword.book.BooksListener#bookAdded(org.crosswire.jsword.book.BooksEvent)
+         */
+        public void bookAdded(BooksEvent ev)
+        {
+            setTreeModel((BookList) ev.getSource());
+        }
+
+        /* (non-Javadoc)
+         * @see org.crosswire.jsword.book.BooksListener#bookRemoved(org.crosswire.jsword.book.BooksEvent)
+         */
+        public void bookRemoved(BooksEvent ev)
+        {
+            setTreeModel((BookList) ev.getSource());
+        }
+    }
+
 
     private static final String INSTALLED_BOOKS_LABEL = "InstalledBooksLabel"; //$NON-NLS-1$
     private static final String AVAILABLE_BOOKS_LABEL = "AvailableBooksLabel"; //$NON-NLS-1$
@@ -371,7 +437,7 @@ public class SitePane extends JPanel
     private JLabel lblDesc = null;
 
     /**
-     * SERIALUID(dms): A placeholder for the ultimate version id.
+     * Serialization ID
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3616445692051075634L;
 }
