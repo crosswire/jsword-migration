@@ -1,24 +1,21 @@
 <project name="jsword-web" default="all">
 
+  <!-- This build uses the core build targets -->
+  <import file="../common/core.xml"/>
+
   <!--=======================================================================-->
-  <property name="source.root" value="."/>
-  <property name="source.etc" value="${source.root}/etc"/>
-  <property name="source.jar" value="${source.root}/jar"/>
-  <property name="source.java" value="${source.root}/java"/>
-  <property name="source.res" value="${source.root}/resource"/>
   <property name="source.web" value="${source.root}/web"/>
-  <property name="gener.root" value="target/gener"/>
-  <property name="target.root" value="target/ant"/>
   <property name="target.temp" value="${target.root}/temp"/>
-  <property name="target.classes" value="${target.temp}/classes"/>
-  <property name="target.jar" value="${target.temp}/jar"/>
-  <property name="target.swingui" value="${target.root}/swingui/jsword"/>
   <property name="target.download" value="${target.root}/download"/> <!-- designed for override -->
   <property name="target.web" value="${target.root}/web"/> <!-- designed for override -->
   <property name="support.root" value="../jsword-support"/>
   <property name="support.notes" value="${support.root}/notes"/>
   <property name="support.tools" value="${support.root}/tools"/>
 
+  <!-- things from other projects that will be needed here -->
+  <property name="gener.root" value="target/gener"/>
+  <property name="target.swingui" value="${target.root}/swingui/jsword"/>
+  
   <property name="ant.lib" value="${ant.home}/lib"/>
   <!-- override this with -Djnlp.hostname=www.crosswire.org to build in live -->
   <property name="jnlp.hostname" value="localhost:8080"/>
@@ -29,67 +26,7 @@
   <property name="release.dir" value="${localprefix}/release"/>
 
   <!--=======================================================================-->
-  <patternset id="java.non.compile">
-    <include name="**/*.properties"/>
-    <include name="**/*.gif"/>
-    <include name="**/*.jpg"/>
-    <include name="**/*.png"/>
-    <include name="**/*.ser"/>
-  </patternset>
-  <property name="java.non.compile" value="**/*.properties,**/*.gif,**/*.jpg,**/*.png,**/*.ser"/>
-
-  <!--=======================================================================-->
-  <target name="init" description="Prepare for other tasks">
-    <tstamp/>
-    <echo message="Building to: ${target.root}"/>
-  </target>
-
-  <!--=======================================================================-->
   <target name="subprojects">
-  </target>
-
-  <!--=======================================================================-->
-  <target name="compile" description="Validate source syntax">
-    <mkdir dir="${target.classes}/resource"/>
-    <antcall target="compile.section"><param name="section" value="main"/></antcall>
-    <javac debug="on" includes="**/*.java" destdir="${target.classes}/config">
-      <src path="${gener.root}/config"/>
-      <classpath>
-        <dirset dir="${target.classes}"/>
-        <fileset dir="${source.jar}" includes="**/*.jar"/>
-      </classpath>
-    </javac>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="compile.section">
-    <echo message="Compiling ${source.java}/${section}"/>
-    <mkdir dir="${target.classes}/${section}"/>
-    <javac debug="on" includes="**/*.java" destdir="${target.classes}/${section}" source="1.4">
-      <src path="${source.java}/${section}"/>
-      <classpath>
-        <dirset dir="${target.classes}"/>
-        <fileset dir="${source.jar}" includes="**/*.jar"/>
-      </classpath>
-    </javac>
-    <copy todir="${target.classes}/resource">
-      <fileset dir="${source.java}/${section}">
-        <patternset refid="java.non.compile"/>
-      </fileset>
-    </copy>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="jar" unless="jar.servlet.uptodate" depends="compile, jar.check" description="Create a servlet jar file">
-    <mkdir dir="${target.jar}"/>
-    <jar jarfile="${target.jar}/jsword-servlet.jar">
-      <fileset dir="${target.classes}/servlet"/>
-    </jar>
-  </target>
-  <target name="jar.check" description="Check to see that the servlet jar file is up to date">
-    <uptodate property="jar.uptodate" targetfile="${target.jar}/jsword-servlet.jar">
-      <srcfiles dir="${target.classes}/servlet"/>
-    </uptodate>
   </target>
 
   <!--=======================================================================-->
@@ -491,59 +428,6 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="exec" depends="compile" description="Run the project using Ant">
-    <java classname="org.crosswire.bibledesktop.desktop.Desktop" fork="true">
-      <assertions enablesystemassertions="true">
-        <enable/>
-      </assertions>
-      <!--
-      org.crosswire.jsword.bibledesktop.Desktop
-      org.crosswire.jsword.book.ReadEverything
-      abbot.editor.Costello
-      org.acm.seguin.tools.install.PrettyPrinterConfigGUI
-      -->
-      <sysproperty key="jsword.bible.dir" value="${source.res}"/>
-      <jvmarg value="-Xmx512m"/>
-      <!-- ${basedir}/${target.swingui}/resource -->
-      <classpath>
-        <fileset dir="${source.jar}/jdom09" includes="**/*.jar"/>
-        <fileset dir="${source.jar}/log4j127" includes="**/*.jar"/>
-        <fileset dir="${source.jar}/lang200" includes="**/*.jar"/>
-        <fileset dir="${source.jar}/jaxb10endorsed" includes="**/*.jar"/>
-        <fileset dir="${source.jar}/jaxb10">
-          <include name="jaxb-api.jar"/>
-          <include name="jaxb-ri.jar"/>
-          <include name="jaxb-libs.jar"/>
-        </fileset>
-        <pathelement path="${target.classes}/common"/>
-        <pathelement path="${target.classes}/jsword"/>
-        <pathelement path="${target.classes}/servlet"/>
-        <pathelement path="${target.classes}/swing"/>
-        <pathelement path="${target.classes}/osis"/>
-        <pathelement path="${target.classes}/resource"/>
-        <pathelement path="${target.classes}/jswordtest"/>
-        <pathelement path="${source.res}"/>
-        <fileset dir="${support.tools}/abbot090" includes="**/*.jar"/>
-      </classpath>
-    </java>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="all" depends="clean, web" description="Run a full clean/build/deploy/test cycle">
-  </target>
-
-  <!--=======================================================================-->
-  <target name="clean" depends="init" description="Remove the target directory">
-    <delete dir="${target.root}"/>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="veryclean" depends="init" description="Remove the target directory">
-    <delete dir="${target.root}"/>
-    <delete dir="${gener.root}"/>
-  </target>
-
-  <!--=======================================================================-->
   <target name="antlibs" description="Copy required jars to ant/lib">
     <echo message="copy ${basedir}/${source.jar}/junit381/junit.jar to ${ant.home}/lib"/>
     <copy file="${source.jar}/junit381/junit.jar" todir="${ant.home}/lib"/>
@@ -552,15 +436,7 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="cvsup" description="cvs update">
-    <cvs cvsRoot=":pserver:joe@cvs.crosswire.org:/cvs/jsword" dest=".">
-      <commandline>
-        <argument value="-q"/>
-        <argument value="update"/>
-        <argument value="-d"/>
-        <argument value="-P"/>
-      </commandline>
-    </cvs>
+  <target name="cvsup.extra" description="Extra stuff to do after calling cvsup">
     <chmod perm="755">
       <fileset dir="${source.etc}/build" includes="**/*.sh"/>
     </chmod>

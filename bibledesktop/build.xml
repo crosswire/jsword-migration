@@ -74,28 +74,4 @@
     </copy>
   </target>
 
-  <!--=======================================================================-->
-  <target name="exec" depends="jar" description="Run the project using Ant">
-    <!--
-      == org.crosswire.jsword.bibledesktop.Desktop
-      == org.crosswire.jsword.book.ReadEverything
-      == abbot.editor.Costello
-      == org.acm.seguin.tools.install.PrettyPrinterConfigGUI
-      -->
-  	<java classname="org.crosswire.bibledesktop.desktop.Desktop" fork="true">
-      <assertions enablesystemassertions="true">
-        <enable/>
-      </assertions>
-      <jvmarg value="-Xmx512m"/>
-      <classpath refid="runtime.jarpath"/>
-    </java>
-  </target>
-
-  <!--=======================================================================-->
-  <target name="cvsup.extra" description="Extra stuff to do after calling cvsup">
-    <chmod perm="755">
-      <fileset dir="${source.etc}/build" includes="**/*.sh"/>
-    </chmod>
-  </target>
-
 </project>
