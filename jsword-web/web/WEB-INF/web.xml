@@ -14,8 +14,8 @@
     <param-value>@webapp.jsword@</param-value>
   </context-param>
   <context-param>
-    <param-name>web.prefix</param-name>
-    <param-value>@web.prefix@</param-value>
+    <param-name>ftp.prefix</param-name>
+    <param-value>@ftp.prefix@</param-value>
   </context-param>
 
   <servlet>

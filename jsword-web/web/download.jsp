@@ -15,10 +15,10 @@
       throw new NullPointerException("webapp.jsword");
   }
 
-  String webPrefix = application.getInitParameter("web.prefix");
-  if (webPrefix == null)
+  String ftpPrefix = application.getInitParameter("ftp.prefix");
+  if (ftpPrefix == null)
   {
-      throw new NullPointerException("web.prefix");
+      throw new NullPointerException("ftp.prefix");
   }
 ]]></jsp:scriptlet>
 
@@ -50,7 +50,7 @@
     <td>.tar.gz</td>
   </tr>
   <jsp:scriptlet><![CDATA[
-  DownloadSet[] dls = DownloadSet.getDownloadSets(webappJSword + "/release", webPrefix + "/release", false);
+  DownloadSet[] dls = DownloadSet.getDownloadSets(webappJSword + "/release", ftpPrefix + "/release", false);
   for (int i=0; i<dls.length; i++)
   {
   ]]></jsp:scriptlet>
@@ -91,7 +91,7 @@
     <td>.tar.gz</td>
   </tr>
   <jsp:scriptlet><![CDATA[
-  dls = DownloadSet.getDownloadSets(webappJSword + "/nightly", webPrefix + "/nightly", true);
+  dls = DownloadSet.getDownloadSets(webappJSword + "/nightly", ftpPrefix + "/nightly", true);
   for (int i=0; i<dls.length; i++)
   {
   ]]></jsp:scriptlet>

@@ -11,7 +11,7 @@
   <property name="webapp.jsword"    value="${target.root}/web"/> <!-- override -->
   <property name="jnlp.hostname"    value="localhost:8080"/> <!-- override -->
   <property name="ftp.base"         value="${basedir}/${target.root}/download"/> <!-- override -->
-  <property name="web.prefix"       value="../download"/> <!-- override -->
+  <property name="ftp.prefix"       value="../download"/> <!-- override -->
 
   <property name="nightly.dir"      value="${ftp.base}/nightly"/>
   <property name="release.dir"      value="${ftp.base}/release"/>
@@ -110,7 +110,7 @@
     <copy todir="${target.web}/WEB-INF" filtering="true">
       <filterset>
         <filter token="webapp.jsword" value="${webapp.jsword}"/>
-        <filter token="web.prefix" value="${web.prefix}"/>
+        <filter token="ftp.prefix" value="${ftp.prefix}"/>
       </filterset>
       <fileset dir="${source.web}/WEB-INF"/>
     </copy>
