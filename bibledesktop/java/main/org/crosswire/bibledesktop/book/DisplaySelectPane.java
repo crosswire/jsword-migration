@@ -464,15 +464,15 @@ public class DisplaySelectPane extends JPanel
     {
         layCards.show(pnlCards, action);
 
-        if (action == PASSAGE)
+        if (action.equals(PASSAGE))
         {
             rdoPassg.setSelected(true);
         }
-        else if (action == SEARCH)
+        else if (action.equals(SEARCH))
         {
             rdoSearch.setSelected(true);
         }
-        else if (action == MATCH)
+        else if (action.equals(MATCH))
         {
             rdoMatch.setSelected(true);
         }
@@ -617,7 +617,7 @@ public class DisplaySelectPane extends JPanel
     {
         if (listeners != null)
         {
-            for (int i=0; i<listeners.size(); i++)
+            for (int i = 0; i < listeners.size(); i++)
             {
                 DisplaySelectListener li = (DisplaySelectListener) listeners.get(i); 
                 li.passageSelected(ev);
@@ -691,4 +691,9 @@ public class DisplaySelectPane extends JPanel
     private CardLayout layCards;
 
     private ActionFactory actions;
+
+    /**
+     * SERIALUID(dms): A placeholder for the ultimate version id.
+     */
+    private static final long serialVersionUID = 1L;
 }

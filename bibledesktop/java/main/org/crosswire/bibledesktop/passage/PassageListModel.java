@@ -92,7 +92,7 @@ public class PassageListModel extends AbstractListModel implements PassageListen
     public void setMode(int mode)
     {
         // TODO (DM): convert list mode to an Enum
-        assert (mode == LIST_VERSES || mode == LIST_RANGES);
+        assert mode == LIST_VERSES || mode == LIST_RANGES;
 
         this.mode = mode;
     }
@@ -273,4 +273,9 @@ public class PassageListModel extends AbstractListModel implements PassageListen
      * If we are modelling in groups, do we break at chapter/book boundries
      */
     private int restrict;
+
+    /**
+     * SERIALUID(dms): A placeholder for the ultimate version id.
+     */
+    private static final long serialVersionUID = 1L;
 }

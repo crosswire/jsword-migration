@@ -80,7 +80,7 @@ public class VerseTreeNode extends ChapterTreeNode
      */
     public String toString()
     {
-        return ""+verse; //$NON-NLS-1$
+        return Integer.toString(verse);
     }
 
     /**

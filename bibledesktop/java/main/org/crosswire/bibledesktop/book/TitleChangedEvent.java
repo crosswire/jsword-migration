@@ -45,4 +45,3 @@ public class TitleChangedEvent extends EventObject
 
     private String title;
 }
-

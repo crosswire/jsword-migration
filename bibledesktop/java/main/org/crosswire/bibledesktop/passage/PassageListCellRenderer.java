@@ -85,7 +85,7 @@ public class PassageListCellRenderer implements ListCellRenderer, Serializable
                 {
                     BookData bdata = bible.getData(range);
                     String simple = bdata.getPlainText();
-                    text = "<html><b>"+range.getName()+"</b> "+simple; //$NON-NLS-1$ //$NON-NLS-2$
+                    text = "<html><b>" + range.getName() + "</b> " + simple; //$NON-NLS-1$ //$NON-NLS-2$
                     hash.put(range, text);
                 }
 
@@ -104,7 +104,7 @@ public class PassageListCellRenderer implements ListCellRenderer, Serializable
 
         label.setEnabled(list.isEnabled());
         label.setFont(list.getFont());
-        label.setBorder((focus) ? UIManager.getBorder("List.focusCellHighlightBorder") : border); //$NON-NLS-1$
+        label.setBorder(focus ? UIManager.getBorder("List.focusCellHighlightBorder") : border); //$NON-NLS-1$
 
         return label;
     }
@@ -128,4 +128,9 @@ public class PassageListCellRenderer implements ListCellRenderer, Serializable
      * A cache of Bible texts
      */
     private Hashtable hash = new Hashtable();
+
+    /**
+     * SERIALUID(dms): A placeholder for the ultimate version id.
+     */
+    private static final long serialVersionUID = 1L;
 }

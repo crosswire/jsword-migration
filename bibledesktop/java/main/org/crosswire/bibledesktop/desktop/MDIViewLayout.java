@@ -94,7 +94,7 @@ public class MDIViewLayout implements ViewLayout
             // rely on there being a 'current' BibleViewPane so we just use the
             // first one we find, which might be the top one?
             Component[] comps = mdi_main.getComponents();
-            for (int i=0; i<comps.length; i++)
+            for (int i = 0; i < comps.length; i++)
             {
                 if (comps[i] instanceof JInternalFrame)
                 {

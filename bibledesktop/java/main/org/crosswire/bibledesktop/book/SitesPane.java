@@ -229,4 +229,9 @@ public class SitesPane extends JPanel
     private JDialog dlgMain;
     private JPanel pnlButtons;
     protected JTabbedPane tabMain;
+
+    /**
+     * SERIALUID(dms): A placeholder for the ultimate version id.
+     */
+    private static final long serialVersionUID = 1L;
 }

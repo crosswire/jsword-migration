@@ -65,7 +65,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay
         this.book = book;
         this.key = key;
 
-        if (book == null && key == null)
+        if (book == null || key == null)
         {
             txtView.setText(""); //$NON-NLS-1$
             return;
@@ -73,6 +73,12 @@ public class TextPaneBookDataDisplay implements BookDataDisplay
 
         // Make sure Hebrew displays from Right to Left
         BookMetaData bmd = book.getBookMetaData();
+        if (bmd == null)
+        {
+            txtView.setText(""); //$NON-NLS-1$
+            return;
+        }
+
         boolean direction = bmd.isLeftToRight();
         txtView.applyComponentOrientation(direction ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
 

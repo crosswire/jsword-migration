@@ -58,7 +58,7 @@ public class ConfigurableSwingConverter implements Converter
     {
         try
         {
-            String search = "xsl/cswing/"+NetUtil.INDEX_FILE; //$NON-NLS-1$
+            String search = "xsl/cswing/" + NetUtil.INDEX_FILE; //$NON-NLS-1$
             URL index = ResourceUtil.getResource(search);
             return NetUtil.listByIndexFile(index, new URLFilter()
             {
@@ -81,7 +81,7 @@ public class ConfigurableSwingConverter implements Converter
     {
         try
         {
-            String path = "xsl/cswing/"+style; //$NON-NLS-1$
+            String path = "xsl/cswing/" + style; //$NON-NLS-1$
             URL xslurl = ResourceUtil.getResource(path);
 
             TransformingSAXEventProvider tsep = new TransformingSAXEventProvider(xslurl, xmlsep);

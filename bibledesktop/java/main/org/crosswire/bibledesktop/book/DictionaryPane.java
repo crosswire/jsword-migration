@@ -352,4 +352,9 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
      * The log stream
      */
     private static final Logger log = Logger.getLogger(DictionaryPane.class);
+
+    /**
+     * SERIALUID(dms): A placeholder for the ultimate version id.
+     */
+    private static final long serialVersionUID = 1L;
 }

@@ -116,7 +116,7 @@ public class DriversListModel extends AbstractListModel
      */
     public int getIndexOf(Object test)
     {
-        for (int i=0; i<drivers.length; i++)
+        for (int i = 0; i < drivers.length; i++)
         {
             if (test.equals(getElementAt(i)))
             {
@@ -140,7 +140,7 @@ public class DriversListModel extends AbstractListModel
     /**
      * border if we do not have focus
      */
-    protected static Border no_focus;
+    protected static final Border NO_FOCUS_BORDER = BorderFactory.createEmptyBorder(1, 1, 1, 1);
 
     /**
      * Create a BookListCellRenderer
@@ -161,13 +161,8 @@ public class DriversListModel extends AbstractListModel
          */
         public BibleListCellRenderer()
         {
-            if (no_focus == null)
-            {
-                no_focus = BorderFactory.createEmptyBorder(1, 1, 1, 1);
-            }
-
             setOpaque(true);
-            setBorder(no_focus);
+            setBorder(NO_FOCUS_BORDER);
         }
 
         /**
@@ -197,7 +192,7 @@ public class DriversListModel extends AbstractListModel
 
             setEnabled(list.isEnabled());
             setFont(list.getFont());
-            setBorder(focus ? UIManager.getBorder("List.focusCellHighlightBorder") : no_focus); //$NON-NLS-1$
+            setBorder(focus ? UIManager.getBorder("List.focusCellHighlightBorder") : NO_FOCUS_BORDER); //$NON-NLS-1$
 
             return this;
         }

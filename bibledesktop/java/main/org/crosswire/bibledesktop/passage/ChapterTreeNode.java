@@ -94,7 +94,7 @@ public class ChapterTreeNode extends BookTreeNode
                 return kids[i];
             }
 
-            kids[i] = new VerseTreeNode(this, book, chapter, i+1);
+            kids[i] = new VerseTreeNode(this, book, chapter, i + 1);
             return kids[i];
         }
         catch (NoSuchVerseException ex)
@@ -127,7 +127,7 @@ public class ChapterTreeNode extends BookTreeNode
     {
         try
         {
-            String Passage_num = ""+chapter; //$NON-NLS-1$
+            String Passage_num = Integer.toString(chapter);
             if (ref == null)
             {
                 return Passage_num;

@@ -87,7 +87,7 @@ public class BooksListModel extends AbstractListModel
         // PARANOIA(joe): this check shouldn't be needed
         if (index > bmds.size())
         {
-            log.error("trying to get book at "+index+" when there are only "+bmds.size()+" known books.", new Exception()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            log.error("trying to get book at " + index + " when there are only " + bmds.size() + " known books.", new Exception()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             return null;
         }
 
@@ -220,4 +220,9 @@ public class BooksListModel extends AbstractListModel
      * The log stream
      */
     private static Logger log = Logger.getLogger(BooksListModel.class);
+
+    /**
+     * SERIALUID(dms): A placeholder for the ultimate version id.
+     */
+    private static final long serialVersionUID = 1L;
 }

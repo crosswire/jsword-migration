@@ -304,4 +304,9 @@ public class SitePane extends JPanel
     private JTree treAvailable;
     private JTable tblSelected;
     private MapTableModel emptyTableModel;
+
+    /**
+     * SERIALUID(dms): A placeholder for the ultimate version id.
+     */
+    private static final long serialVersionUID = 1L;
 }

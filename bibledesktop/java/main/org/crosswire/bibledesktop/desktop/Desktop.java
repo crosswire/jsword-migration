@@ -114,7 +114,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         try
         {
             ThreadGroup group = new CatchingThreadGroup("BibleDesktopUIGroup"); //$NON-NLS-1$
-            new Thread(group, "BibleDesktopUIThread") //$NON-NLS-1$
+            Thread t = new Thread(group, "BibleDesktopUIThread") //$NON-NLS-1$
             {
                 public void run()
                 {
@@ -126,7 +126,8 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
 
                     log.debug(EXITING);
                 }
-            }.start();
+            };
+            t.start();
         }
         catch (Exception ex)
         {
@@ -592,7 +593,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     public static void setInitialLayoutType(int initial)
     {
         // TODO (DM): convert layout type to an Enum
-        assert (initial == LAYOUT_TYPE_TDI || initial == LAYOUT_TYPE_MDI);
+        assert initial == LAYOUT_TYPE_TDI || initial == LAYOUT_TYPE_MDI;
 
         Desktop.initial = initial;
     }
@@ -871,7 +872,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         List bmds = Books.installed().getBookMetaDatas(filter);
         List names = new ArrayList();
 
-        for (Iterator it = bmds.iterator(); it.hasNext();)
+        for (Iterator it = bmds.iterator(); it.hasNext(); )
         {
             BookMetaData bmd = (BookMetaData) it.next();
             names.add(bmd.getFullName());

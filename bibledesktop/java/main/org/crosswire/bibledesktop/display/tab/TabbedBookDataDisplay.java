@@ -129,7 +129,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         //   if (countTabs >= keys.size())
 
         // Do we need a tabbed view
-        tabs = (key != null && key.countVerses() > pageSize);
+        tabs = key != null && key.countVerses() > pageSize;
         if (tabs)
         {
             // Calc the verses to display in this tab
@@ -207,7 +207,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         }
 
         // Now go through all the known syncs and add this one in
-        for (Iterator it = displays.iterator(); it.hasNext();)
+        for (Iterator it = displays.iterator(); it.hasNext(); )
         {
             BookDataDisplay idp = (BookDataDisplay) it.next();
             idp.addHyperlinkListener(li);
@@ -229,7 +229,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         }
 
         // Now remove from all the known syncs
-        for (Iterator it = displays.iterator(); it.hasNext();)
+        for (Iterator it = displays.iterator(); it.hasNext(); )
         {
             BookDataDisplay idp = (BookDataDisplay) it.next();
             idp.removeHyperlinkListener(li);
@@ -318,7 +318,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         // Add all the known listeners to this new BookDataDisplay
         if (hyperlis != null)
         {
-            for (Iterator it = hyperlis.iterator(); it.hasNext();)
+            for (Iterator it = hyperlis.iterator(); it.hasNext(); )
             {
                 HyperlinkListener li = (HyperlinkListener) it.next();
                 display.addHyperlinkListener(li);

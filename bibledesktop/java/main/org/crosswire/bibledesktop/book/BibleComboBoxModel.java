@@ -73,7 +73,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
      */
     public void setSelectedItem(Object selected)
     {
-        log.debug("setSelectedItem("+selected+") level="+level); //$NON-NLS-1$ //$NON-NLS-2$
+        log.debug("setSelectedItem(" + selected + ") level=" + level); //$NON-NLS-1$ //$NON-NLS-2$
 
         try
         {
@@ -155,11 +155,11 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
             switch (level)
             {
             case LEVEL_BOOK:
-                return BibleInfo.getLongBookName(index+1);
+                return BibleInfo.getLongBookName(index + 1);
 
             case LEVEL_CHAPTER:
             case LEVEL_VERSE:
-                return new Integer(index+1);
+                return new Integer(index + 1);
 
             default:
                 assert false : level;
@@ -284,4 +284,9 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
      * Are we a book, chapter or verse selector
      */
     protected int level;
+
+    /**
+     * SERIALUID(dms): A placeholder for the ultimate version id.
+     */
+    private static final long serialVersionUID = 1L;
 }

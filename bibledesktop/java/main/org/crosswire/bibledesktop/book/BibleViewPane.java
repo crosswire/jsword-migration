@@ -359,6 +359,11 @@ public class BibleViewPane extends JPanel
     protected static final Logger log = Logger.getLogger(BibleViewPane.class);
 
     /**
+     * SERIALUID(dms): A placeholder for the ultimate version id.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Returns the shortlen.
      * @return int
      */

@@ -78,7 +78,7 @@ public class StatusBar extends JComponent implements MouseListener, HyperlinkLis
         */
 
         lbl_name.setBorder(BorderFactory.createEtchedBorder());
-        lbl_name.setText(' '+Msg.getVersionedApplicationTitle()+' ');
+        lbl_name.setText(' ' + Msg.getVersionedApplicationTitle() + ' ');
 
         this.setBorder(BorderFactory.createLoweredBevelBorder());
         this.setLayout(new GridBagLayout());

@@ -89,7 +89,7 @@ public class BibleTreeNode implements TreeNode
         {
             if (kids[i] != null) return kids[i];
 
-            BookTreeNode node = new BookTreeNode(this, i+1);
+            BookTreeNode node = new BookTreeNode(this, i + 1);
             node.setPassage(ref, false);
             kids[i] = node;
 
@@ -174,7 +174,7 @@ public class BibleTreeNode implements TreeNode
     {
         public boolean hasMoreElements()
         {
-            return (index < kids.length);
+            return index < kids.length;
         }
 
         public Object nextElement()

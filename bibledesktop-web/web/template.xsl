@@ -39,7 +39,7 @@
       <div class="lsidecell pagelink"><a href="news.html">News</a></div>
 
       <p>
-        Related Projects:
+        Related Projects:<br/>
         <a href="/jsword">J-Sword</a><br/>
         <a href="/sword">Sword</a>
       </p>

@@ -145,4 +145,9 @@ public class ViewSourcePane extends JPanel
     private JPanel pnlButtons;
     private JDialog frame;
     private ActionFactory actions;
+
+    /**
+     * SERIALUID(dms): A placeholder for the ultimate version id.
+     */
+    private static final long serialVersionUID = 1L;
 }

@@ -145,13 +145,13 @@ public class DebugPane extends JPanel
     {
         StringBuffer reply = new StringBuffer();
 
-        reply.append("\n"+Msg.DEBUG_VIEWS.toString()); //$NON-NLS-1$
+        reply.append("\n" + Msg.DEBUG_VIEWS.toString()); //$NON-NLS-1$
         int i = 0;
         Iterator it = desktop.iterateBibleViewPanes();
         while (it.hasNext())
         {
             BibleViewPane view = (BibleViewPane) it.next();
-            reply.append(""+(i++)+": "+view.getTitle()+" "+view.toString()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            reply.append((i++) + ": " + view.getTitle() + " " + view.toString()); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         return reply.toString();
@@ -185,11 +185,11 @@ public class DebugPane extends JPanel
                 job.setProgress(0, Msg.DEBUG_STEPS.toString(new Object[] { new Integer(0), new Integer(steps) }));
                 log.debug("starting test job:"); //$NON-NLS-1$
 
-                for (int i=1; i<=steps && !Thread.interrupted(); i++)
+                for (int i = 1; i <= steps && !Thread.interrupted(); i++)
                 {
                     try
                     {
-                        wait(millis/steps);
+                        wait(millis / steps);
                     }
                     catch (InterruptedException ex)
                     {
@@ -228,6 +228,11 @@ public class DebugPane extends JPanel
     private JTextPane txtResults = new JTextPane();
 
     /**
+     * SERIALUID(dms): A placeholder for the ultimate version id.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Simpler method name display
      */
     private static final class CustomListCellRenderer extends DefaultListCellRenderer
@@ -240,7 +245,7 @@ public class DebugPane extends JPanel
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             if (value instanceof Method)
             {
-                setText(((Method) value).getName()+"()"); //$NON-NLS-1$
+                setText(((Method) value).getName() + "()"); //$NON-NLS-1$
             }
             return this;
         }

@@ -54,7 +54,7 @@ public class PassageGuiUtil
  
         Passage ref = plm.getPassage();
         Object[] selected = list.getSelectedValues();
-        for (int i=0; i<selected.length; i++)
+        for (int i = 0; i < selected.length; i++)
         {
             VerseRange range = (VerseRange) selected[i];
             ref.remove(range);
@@ -73,7 +73,7 @@ public class PassageGuiUtil
         KeyTreeModel mdl = (KeyTreeModel) tree.getModel();
         Key root = mdl.getKey();
 
-        for (Iterator it = selected.iterator(); it.hasNext();)
+        for (Iterator it = selected.iterator(); it.hasNext(); )
         {
             Key key = (Key) it.next();
             root.removeAll(key);

@@ -86,11 +86,8 @@
     </javadoc>
   </target>
 
-  <target name="tools" depends="">
-    <!--
-    temporarily removed to make things quicker:
-    checkstyle, javadoc, java2html, javancss, findbugs, pmd, cpd, jdepend
-    -->
+  <!--=======================================================================-->
+  <target name="tools" depends="javadoc,java2html,checkstyle,javancss,findbugs,pmd,cpd,jdepend">
   </target>
 
   <!--=======================================================================-->

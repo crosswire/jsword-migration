@@ -94,7 +94,7 @@ public class BookTreeNode extends BibleTreeNode
         {
             if (kids[i] != null) return kids[i];
 
-            ChapterTreeNode node = new ChapterTreeNode(this, book, i+1);
+            ChapterTreeNode node = new ChapterTreeNode(this, book, i + 1);
             node.setPassage(ref, false);
             kids[i] = node;
 
