@@ -107,6 +107,10 @@ public class Msg extends MsgBase
     static final Msg DEBUG_GO = new Msg("Debug.GO"); //$NON-NLS-1$
     static final Msg DEBUG_METHOD = new Msg("Debug.METHOD"); //$NON-NLS-1$
 
+    static final Msg COPY_TO_CLIP = new Msg("COPY_TO_CLIP"); //$NON-NLS-1$
+    static final Msg CLOSE = new Msg("CLOSE"); //$NON-NLS-1$
+    static final Msg TEXT_VIEWER = new Msg("TEXT_VIEWER"); //$NON-NLS-1$
+
     /**
      * Passthrough ctor
      */

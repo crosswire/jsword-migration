@@ -296,8 +296,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         menuView.add(rdoViewMdi);
         //menuView.add(chkViewTbar);
         menuView.addSeparator();
-        menuView.add(actions.getAction(DesktopActions.VIEW_HTML)).addMouseListener(barStatus);
-        menuView.add(actions.getAction(DesktopActions.VIEW_OSIS)).addMouseListener(barStatus);
+        menuView.add(actions.getAction(DesktopActions.VIEW_SOURCE)).addMouseListener(barStatus);
 
         JMenu menuTools = new JMenu(actions.getAction(DesktopActions.TOOLS));
         menuTools.add(actions.getAction(DesktopActions.BLUR1)).addMouseListener(barStatus);

@@ -19,9 +19,7 @@ import org.crosswire.bibledesktop.display.splitlist.OuterDisplayPane;
 import org.crosswire.common.config.swing.ConfigEditorFactory;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWAction;
-import org.crosswire.common.swing.TextViewPanel;
 import org.crosswire.common.util.Logger;
-import org.crosswire.common.util.MsgBase;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
@@ -336,7 +334,7 @@ public class DesktopActions implements ActionListener
      * That is all class="" are stripped out.
      * Also you may find additional whitespace added to the original.
      */
-    protected void doViewHTML()
+    protected void doViewSource()
     {
         try
         {
@@ -354,65 +352,19 @@ public class DesktopActions implements ActionListener
 
                 SAXEventProvider osissep = bdata.getSAXEventProvider();
                 SAXEventProvider htmlsep = converter.convert(osissep);
-                String text = XMLUtil.writeToString(htmlsep);
+                String html = XMLUtil.writeToString(htmlsep);
 
-                showTextViewer(Msg.HTML, text);
+                SerializingContentHandler osis = new SerializingContentHandler(true);
+                osissep.provideSAXEvents(osis);
+
+                ViewSourcePane viewer = new ViewSourcePane(html, osis.toString());
+                viewer.showInFrame(getDesktop().getJFrame());
             }
         }
         catch (Exception ex)
         {
             Reporter.informUser(getDesktop().getJFrame(), ex);
         }
-    }
-
-    /**
-     * View the OSIS source to the current window.
-     */
-    protected void doViewOSIS()
-    {
-        try
-        {
-            BookDataDisplay da = getDesktop().getDisplayArea();
-            Key key = da.getKey();
-
-            if (key == null)
-            {
-                Reporter.informUser(getDesktop().getJFrame(), Msg.SOURCE_MISSING);
-            }
-            else
-            {
-                Book book = da.getBook();
-                BookData bdata = book.getData(key);
-                SAXEventProvider provider = bdata.getSAXEventProvider();
-
-                SerializingContentHandler handler = new SerializingContentHandler(true);
-                provider.provideSAXEvents(handler);
-
-                showTextViewer(Msg.OSIS, handler.toString());
-            }
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(getDesktop().getJFrame(), ex);
-        }
-    }
-
-    /**
-     * Pop up a TextViewPane or inform user of the problem
-     * @param msg The Text panel title resource name
-     * @param source The source to display
-     */
-    private void showTextViewer(MsgBase msg, String source)
-    {
-        if (source == null || source.length() == 0)
-        {
-            Reporter.informUser(getDesktop().getJFrame(), Msg.SOURCE_MISSING);
-            return;
-        }
-        
-        TextViewPanel viewer = new TextViewPanel(source, msg.toString());
-        viewer.setEditable(true);
-        viewer.showInFrame(getDesktop().getJFrame());
     }
 
     /**
@@ -574,8 +526,7 @@ public class DesktopActions implements ActionListener
     static final String PASTE = "Paste"; //$NON-NLS-1$
     static final String TAB_MODE = "TabMode"; //$NON-NLS-1$
     static final String WINDOW_MODE = "WindowMode"; //$NON-NLS-1$
-    static final String VIEW_HTML = "ViewHTML"; //$NON-NLS-1$
-    static final String VIEW_OSIS = "ViewOSIS"; //$NON-NLS-1$
+    static final String VIEW_SOURCE = "ViewSource"; //$NON-NLS-1$
     static final String BLUR1 = "Blur1"; //$NON-NLS-1$
     static final String BLUR5 = "Blur5"; //$NON-NLS-1$
     static final String DELETE_SELECTED = "DeleteSelected"; //$NON-NLS-1$
