@@ -1,6 +1,5 @@
 #!/bin/sh
 
-export SUPPORT_HOME=$JSWORD_HOME-support
 export WEB_HOME=/opt/jsword/webapp
 export FTP_BASE=/opt/jsword/ftpbase
 export ANT_HOME=/opt/ant
