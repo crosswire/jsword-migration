@@ -14,8 +14,8 @@
     <copy file="${support.tools}/checkstyle33/custom.xml" overwrite="true"
         tofile="${target.web}/checkstyle/custom.xml">
       <filterset>
-        <filter token="source.java" value="${basedir}/${source.java}"/>
-        <filter token="target.checkstyle" value="${basedir}/${target.web}/checkstyle"/>
+        <filter token="source.java" value="${source.java}"/> <!-- ${basedir}/ -->
+        <filter token="target.checkstyle" value="${target.web}/checkstyle"/> <!-- ${basedir}/ -->
       </filterset>
     </copy>
     <checkstyle config="${target.web}/checkstyle/custom.xml" failOnViolation="false">

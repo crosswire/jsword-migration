@@ -201,7 +201,7 @@ public class DesktopActions
     public void doSaveAll()
     {
         boolean ok = false;
-        
+
         Iterator it = getDesktop().iterateBibleViewPanes();
         while (it.hasNext())
         {
@@ -211,7 +211,7 @@ public class DesktopActions
                 ok = true;
             }
         }
-        
+
         if (!ok)
         {
             Reporter.informUser(getDesktop().getJFrame(), Msg.NO_PASSAGE);
@@ -295,7 +295,7 @@ public class DesktopActions
             boolean direction = bmd.isLeftToRight();
 
             SAXEventProvider osissep = bdata.getSAXEventProvider();
-            TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider)converter.convert(osissep);
+            TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
             htmlsep.setParameter("direction", direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             String html = XMLUtil.writeToString(htmlsep);
 
