@@ -54,12 +54,12 @@
     <introspect class="org.crosswire.jsword.util.ConverterFactory" property="CurrentConverterName"/>
     <map name="converters"/>
   </option>
+-->
 
   <option key="BibleDisplay.ConfigurableStylesheet" type="string-options">
     <introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="ResourceName"/>
     <map name="cswing-styles"/>
   </option>
--->
 
   <option key="BibleDisplay.VersesPerTab" type="number">
     <introspect class="org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay" property="PageSize"/>
