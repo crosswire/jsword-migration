@@ -15,7 +15,7 @@ import org.crosswire.common.util.Logger;
 
 /**
  * A helper for the download.jsp page.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -153,8 +153,8 @@ public class DownloadSet implements Comparable
     public String getLinkString(String extension)
     {
         File file = new File(localprefix, TEST_PREFIX + setname + extension);
-        String size = NF.format(file.length() / (1024F * 1024F));
-        String reply = "<a href='" + webprefix + "/" + TEST_PREFIX + setname + extension + "'>" + size + " Mb</a>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        String size = NF.format(file.length() / (1024.0F * 1024.0F));
+        String reply = "<a href='" + webprefix + '/' + TEST_PREFIX + setname + extension + "'>" + size + " Mb</a>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
         log.debug("link=" + reply); //$NON-NLS-1$
 

@@ -48,7 +48,7 @@ import org.jdom.output.XMLOutputter;
  */
 public class RemoterServlet extends HttpServlet
 {
-    /* (non-Javadoc)
+	/* (non-Javadoc)
      * @see javax.servlet.Servlet#init(javax.servlet.ServletConfig)
      */
     public void init(ServletConfig config) throws ServletException
@@ -116,4 +116,9 @@ public class RemoterServlet extends HttpServlet
      * The way we answer any questions asked of us.
      */
     private Remoter remoter;
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3256442491094773810L;
 }

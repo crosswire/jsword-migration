@@ -48,10 +48,6 @@ import org.crosswire.jsword.passage.RestrictionType;
  */
 public class DemoServlet extends HttpServlet
 {
-    private static final String FIELD_VIEW = "view"; //$NON-NLS-1$
-    private static final String FIELD_MATCH = "match"; //$NON-NLS-1$
-    private static final String FIELD_SEARCH = "search"; //$NON-NLS-1$
-
     /**
      * @see javax.servlet.Servlet#init(ServletConfig)
      */
@@ -152,8 +148,17 @@ public class DemoServlet extends HttpServlet
     private Book book;
     private SimpleWebConverter style = new SimpleWebConverter();
 
+    private static final String FIELD_VIEW = "view"; //$NON-NLS-1$
+    private static final String FIELD_MATCH = "match"; //$NON-NLS-1$
+    private static final String FIELD_SEARCH = "search"; //$NON-NLS-1$
+
     /**
      * The log stream
      */
     private static final Logger log = Logger.getLogger(DemoServlet.class);
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3257006549032777012L;
 }
