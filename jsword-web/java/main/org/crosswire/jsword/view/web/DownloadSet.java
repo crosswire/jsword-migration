@@ -1,4 +1,3 @@
-
 package org.crosswire.jsword.view.web;
 
 import java.io.File;
@@ -58,13 +57,13 @@ public class DownloadSet implements Comparable
             throw new IOException(Msg.NON_DIR.toString(localprefix));
         }
 
-        log.debug("dig "+localprefix); //$NON-NLS-1$
+        log.debug("dig " + localprefix); //$NON-NLS-1$
         File[] files = dir.listFiles(new FileFilter()
         {
             public boolean accept(File file)
             {
                 String name = file.getName();
-                log.debug("found "+name); //$NON-NLS-1$
+                log.debug("found " + name); //$NON-NLS-1$
                 return file.canRead() && name.startsWith(TEST_PREFIX) && name.endsWith(TEST_SUFFIX);
             }
         });
@@ -73,7 +72,7 @@ public class DownloadSet implements Comparable
         for (int i = 0; i < files.length; i++)
         {
             String name = files[i].getName();
-            log.debug("adding "+name); //$NON-NLS-1$
+            log.debug("adding " + name); //$NON-NLS-1$
             String sets = name.substring(TEST_PREFIX.length(), name.length() - TEST_SUFFIX.length());
             reply.add(new DownloadSet(localprefix, webprefix, sets, datesort));
         }
@@ -91,7 +90,7 @@ public class DownloadSet implements Comparable
         this.setname = setname;
         this.datesort = datesort;
 
-        log.debug("ctor "+webprefix); //$NON-NLS-1$
+        log.debug("ctor " + webprefix); //$NON-NLS-1$
     }
 
     /* (non-Javadoc)
@@ -104,7 +103,7 @@ public class DownloadSet implements Comparable
             log.error("Asked to compare to non DownloadSet"); //$NON-NLS-1$
             return 0;
         }
-        
+
         DownloadSet that = (DownloadSet) obj;
         if (datesort)
         {
@@ -155,9 +154,9 @@ public class DownloadSet implements Comparable
     {
         File file = new File(localprefix, TEST_PREFIX + setname + extension);
         String size = NF.format(file.length() / (1024F * 1024F));
-        String reply = "<a href='"+ webprefix + "/" + TEST_PREFIX + setname + extension + "'>"+size+" Mb</a>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        String reply = "<a href='" + webprefix + "/" + TEST_PREFIX + setname + extension + "'>" + size + " Mb</a>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
-        log.debug("link="+reply); //$NON-NLS-1$
+        log.debug("link=" + reply); //$NON-NLS-1$
 
         return reply;
     }

@@ -98,7 +98,7 @@ public class RemoterServlet extends HttpServlet
             String key = (String) it.next();
             String[] val = (String[]) params.get(key);
             ParamName param = ParamName.getMethod(key);
-            
+
             // This is slightly dodgy - we basically ignore the fact that HTTP
             // GET and POST allow multiple values for each key, however since we
             // get to define the interface i.e. what the allowed keys are, I
