@@ -18,16 +18,8 @@ import org.crosswire.common.config.swing.ConfigEditorFactory;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.desktop.ViewVisitor;
 import org.crosswire.common.util.Reporter;
-import org.crosswire.common.xml.Converter;
-import org.crosswire.common.xml.SAXEventProvider;
-import org.crosswire.common.xml.SerializingContentHandler;
-import org.crosswire.common.xml.TransformingSAXEventProvider;
-import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookData;
-import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.util.ConverterFactory;
 import org.crosswire.jsword.util.Project;
 
 /**
@@ -57,7 +49,7 @@ import org.crosswire.jsword.util.Project;
  * </font></td></tr></table>
  * @see gnu.gpl.Licence
  * @author Joe Walker [joe at eireneh dot com]
- * @author DM Smith [dmsmith555 at yahoo dot com]
+ * @author DM Smith [dmsmith555 at gmail dot com]
  * @version $Id$
  */
 public class DesktopActions
@@ -69,7 +61,6 @@ public class DesktopActions
     public DesktopActions(Desktop desktop)
     {
         this.desktop = desktop;
-        converter = ConverterFactory.getConverter();
         actions = new ActionFactory(Desktop.class, this);
     }
 
@@ -296,22 +287,25 @@ public class DesktopActions
 
             Book book = da.getBook();
 
-            String orig = book.getRawData(key);
+//            String orig = book.getRawData(key);
+//
+//            BookData bdata = book.getData(key);
+//
+//            BookMetaData bmd = book.getBookMetaData();
+//            boolean direction = bmd.isLeftToRight();
+//
+//            SAXEventProvider osissep = bdata.getSAXEventProvider();
+//
+//            ContentHandler osis = new HTMLSerializingContentHandler(FormatType.CLASSIC_INDENT);
+//            osissep.provideSAXEvents(osis);
+//
+//            TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
+//            htmlsep.setParameter("direction", direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+//            
+//            ContentHandler html = new HTMLSerializingContentHandler(FormatType.CLASSIC_INDENT);
+//            htmlsep.provideSAXEvents(html);
 
-            BookData bdata = book.getData(key);
-
-            BookMetaData bmd = book.getBookMetaData();
-            boolean direction = bmd.isLeftToRight();
-
-            SAXEventProvider osissep = bdata.getSAXEventProvider();
-            TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
-            htmlsep.setParameter("direction", direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            String html = XMLUtil.writeToString(htmlsep);
-
-            SerializingContentHandler osis = new SerializingContentHandler(true);
-            osissep.provideSAXEvents(osis);
-
-            ViewSourcePane viewer = new ViewSourcePane(orig, osis.toString(), html);
+            ViewSourcePane viewer = new ViewSourcePane(book, key);
             viewer.showInFrame(getDesktop());
         }
         catch (Exception ex)
@@ -431,11 +425,6 @@ public class DesktopActions
      * The factory for actions that this class works with
      */
     private ActionFactory actions;
-
-    /**
-     * To convert OSIS to HTML
-     */
-    private Converter converter;
 
     /**
      * The About window

@@ -14,11 +14,27 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.WindowConstants;
+import javax.swing.text.JTextComponent;
+import javax.swing.text.html.HTMLEditorKit;
 
 import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.AntiAliasedTextPane;
 import org.crosswire.common.swing.GuiUtil;
+import org.crosswire.common.util.Reporter;
+import org.crosswire.common.xml.Converter;
+import org.crosswire.common.xml.FormatType;
+import org.crosswire.common.xml.HTMLSerializingContentHandler;
+import org.crosswire.common.xml.SAXEventProvider;
+import org.crosswire.common.xml.TransformingSAXEventProvider;
+import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookData;
+import org.crosswire.jsword.book.BookMetaData;
+import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.util.ConverterFactory;
+import org.xml.sax.ContentHandler;
 
 /**
  * ViewSourcePane allow viewing of some text in its own standalone frame.
@@ -43,10 +59,47 @@ import org.crosswire.common.swing.GuiUtil;
  * </font></td></tr></table>
  * @see gnu.gpl.Licence
  * @author Joe Walker [joe at eireneh dot com]
+ * @author DM Smith [dmsmith555 at gmail dot com]
  * @version $Id$
  */
 public class ViewSourcePane extends JPanel
 {
+    public ViewSourcePane(Book book, Key key)
+    {
+        try
+        {
+            String orig = book.getRawData(key);
+
+            BookData bdata = book.getData(key);
+
+            BookMetaData bmd = book.getBookMetaData();
+            boolean direction = bmd.isLeftToRight();
+
+            SAXEventProvider osissep = bdata.getSAXEventProvider();
+
+            ContentHandler osis = new HTMLSerializingContentHandler(FormatType.CLASSIC_INDENT);
+            osissep.provideSAXEvents(osis);
+
+            TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
+            htmlsep.setParameter(XSLTProperty.STRONGS_NUMBERS.getName(), Boolean.toString(XSLTProperty.STRONGS_NUMBERS.getState()));
+            htmlsep.setParameter(XSLTProperty.START_VERSE_ON_NEWLINE.getName(), Boolean.toString(XSLTProperty.START_VERSE_ON_NEWLINE.getState()));
+            htmlsep.setParameter(XSLTProperty.VERSE_NUMBERS.getName(), Boolean.toString(XSLTProperty.VERSE_NUMBERS.getState()));
+            htmlsep.setParameter(XSLTProperty.TINY_VERSE_NUMBERS.getName(), Boolean.toString(XSLTProperty.TINY_VERSE_NUMBERS.getState()));
+            htmlsep.setParameter(XSLTProperty.NOTES.getName(), Boolean.toString(XSLTProperty.NOTES.getState()));
+            htmlsep.setParameter(XSLTProperty.XREF.getName(), Boolean.toString(XSLTProperty.XREF.getState()));
+            htmlsep.setParameter("direction", direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+            ContentHandler html = new HTMLSerializingContentHandler(FormatType.CLASSIC_INDENT);
+            htmlsep.provideSAXEvents(html);
+
+            init(orig, osis.toString(), html.toString());
+        }
+        catch (Exception ex)
+        {
+            Reporter.informUser(null, ex);
+        }
+    }
+
     /**
      * Construct a ViewSourcePane with some string contents
      * @param orig The original contents of the text area
@@ -69,28 +122,35 @@ public class ViewSourcePane extends JPanel
 
         JTextArea txtOrig = new JTextArea(orig, 24, 80);
         txtOrig.setFont(userRequestedFont);
-        txtOrig.setEditable(false);
         txtOrig.setLineWrap(true);
         txtOrig.setWrapStyleWord(true);
+        txtOrig.setTabSize(2);
+        txtOrig.setEditable(false);
         JPanel pnlOrig = new JPanel(new BorderLayout());
         pnlOrig.add(new JScrollPane(txtOrig), BorderLayout.CENTER);
         pnlOrig.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        JTextArea txtOsis = new JTextArea(osis, 24, 80);
+        JTextPane txtOsis = new AntiAliasedTextPane();
         txtOsis.setFont(userRequestedFont);
         txtOsis.setEditable(false);
+        txtOsis.setEditorKit(new HTMLEditorKit());
+        txtOsis.setText(osis);
+        txtOsis.setCaretPosition(0);
         JPanel pnlOsis = new JPanel(new BorderLayout());
         pnlOsis.add(new JScrollPane(txtOsis), BorderLayout.CENTER);
         pnlOsis.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        JTextArea txtHtml = new JTextArea(html, 24, 80);
+        JTextPane txtHtml = new AntiAliasedTextPane();
         txtHtml.setFont(userRequestedFont);
         txtHtml.setEditable(false);
+        txtHtml.setEditorKit(new HTMLEditorKit());
+        txtHtml.setText(html);
+        txtHtml.setCaretPosition(0);
         JPanel pnlHtml = new JPanel(new BorderLayout());
         pnlHtml.add(new JScrollPane(txtHtml), BorderLayout.CENTER);
         pnlHtml.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        textAreas = new JTextArea[] { txtOrig, txtOsis, txtHtml };
+        textAreas = new JTextComponent[] { txtOrig, txtOsis, txtHtml };
 
         pnlButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         pnlButtons.add(new JButton(actions.getAction("SourceClip")), null); //$NON-NLS-1$
@@ -131,8 +191,8 @@ public class ViewSourcePane extends JPanel
     public void doSourceClip()
     {
         int i = tabMain.getSelectedIndex();
-        JTextArea ta = textAreas[i];
-        StringSelection ss = new StringSelection(ta.getText());
+        JTextComponent tc = textAreas[i];
+        StringSelection ss = new StringSelection(tc.getText());
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
     }
 
@@ -149,10 +209,12 @@ public class ViewSourcePane extends JPanel
      * GUI Components
      */
     private JTabbedPane tabMain;
-    private JTextArea [] textAreas;
+    private JTextComponent [] textAreas;
     private JPanel pnlButtons;
     private JDialog frame;
     private ActionFactory actions;
+
+    private static Converter converter = ConverterFactory.getConverter();
 
     /**
      * Serialization ID
