@@ -291,7 +291,6 @@ public class SitePane extends JPanel
             if (imanager.isIndexed(book))
             {
                 imanager.deleteIndex(book);
-                
             }
 //            // unselect it and then remove from list.
 //            treAvailable.removeSelectionPath(path);

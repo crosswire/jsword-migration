@@ -280,7 +280,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         try
         {
             String param = txtSearch.getText();
- 
+
             if (chkMatch.isSelected())
             {
                 String quote = IndexSearcher.getPreferredSyntax(PhraseParamWord.class);

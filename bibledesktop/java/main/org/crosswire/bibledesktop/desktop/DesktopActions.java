@@ -287,24 +287,6 @@ public class DesktopActions
 
             Book book = da.getBook();
 
-//            String orig = book.getRawData(key);
-//
-//            BookData bdata = book.getData(key);
-//
-//            BookMetaData bmd = book.getBookMetaData();
-//            boolean direction = bmd.isLeftToRight();
-//
-//            SAXEventProvider osissep = bdata.getSAXEventProvider();
-//
-//            ContentHandler osis = new HTMLSerializingContentHandler(FormatType.CLASSIC_INDENT);
-//            osissep.provideSAXEvents(osis);
-//
-//            TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
-//            htmlsep.setParameter("direction", direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-//            
-//            ContentHandler html = new HTMLSerializingContentHandler(FormatType.CLASSIC_INDENT);
-//            htmlsep.provideSAXEvents(html);
-
             ViewSourcePane viewer = new ViewSourcePane(book, key);
             viewer.showInFrame(getDesktop());
         }
