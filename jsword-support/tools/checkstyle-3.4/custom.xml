@@ -227,9 +227,7 @@
 	<!-- We are not ready for this
 	<module name="ParameterAssignment"/>
 	-->
-	<!-- We are not ready for this
 	<module name="ExplicitInitialization"/>
-	-->
 	<!-- v3.4 -->
 	<module name="DefaultComesLast"/>
 	<!-- v3.4 We are not ready for this
@@ -307,7 +305,8 @@
 	<module name="Indentation"/>
 	-->
 	<!-- v3.4 -->
-	<!-- This would be a big change
+	<!-- This would be a big change and we use endline comments in Eclipse
+	     to note that the string literal does not need to be internationalized
 	<module name="TrailingComment">
       <property name="format" value="^\\s*$"/>
 	</module>
