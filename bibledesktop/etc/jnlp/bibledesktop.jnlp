@@ -4,14 +4,14 @@
 <jnlp spec="1.0+" codebase="@jnlp.codebase@" href="bibledesktop.jnlp">
 
   <information>
-    <title>Bible Desktop (Nighty Build)</title>
+    <title>Bible Desktop</title>
     <vendor>Crosswire Bible Society</vendor>
     <homepage href="@jnlp.homepage@"/>
     <description>Bible Desktop - Bible Study Software based on the Sword project</description>
     <description kind="short">Bible Desktop is a Bible study package available over the internet</description>
     <description kind="tooltip">Bible Desktop Application</description>
-    <icon href="../images/icon.gif"/>
-    <icon kind="splash" href="../images/jsword.gif"/>    
+    <icon href="icon.gif"/>
+    <icon kind="splash" href="splash.gif"/>    
     <offline-allowed/>
   </information>
 
@@ -37,6 +37,8 @@
     <jar href="tar.jar"/>
     <jar href="winlaf-0.4.jar"/>
     <jar href="jlfgr-1_0.jar"/>
+    <property name="apple.laf.useScreenMenuBar" value="true"/>
+    <property name="com.apple.mrj.application.apple.menu.about.name" value="BibleDesktop"/>
   </resources>
 
   <application-desc main-class="org.crosswire.bibledesktop.desktop.Desktop"/>

@@ -4,20 +4,10 @@
   <property name="dependency"       value="bibledesktop"/>
   <property name="dependency.jar"   value="../${dependency}/target/ant/jar"/>
   <property name="dependency.install" value="../${dependency}/target/ant/${dependency}"/>
-  <property name="jnlp.web.hostname" value="http://www.crosswire.org"/>
-  <property name="jnlp.web.location" value="jnlp"/>
 
   <!--=======================================================================-->
   <property name="source.web"       value="${source.root}/web"/>
-
   <property name="webapp.bibledesktop" value="${target.root}/web"/> <!-- override -->
-  <property name="jnlp.hostname"    value="localhost:8080"/> <!-- override -->
-  <property name="ftp.base"         value="${basedir}/${target.root}/download"/> <!-- override -->
-  <property name="web.prefix"       value="../download"/> <!-- override -->
-
-  <property name="nightly.dir"      value="${ftp.base}/nightly"/>
-  <property name="release.dir"      value="${ftp.base}/release"/>
-  <property name="target.installed" value="${webapp.jsword}/jnlp"/>
 
   <!--=======================================================================-->
   <target name="webapp" description="Build an unpacked war file">
@@ -28,47 +18,11 @@
         <dtd publicid="-//W3C//DTD XHTML 1.0 Transitional//EN" location="${source.etc}/xhtml1-transitional.dtd"/>
       </xmlcatalog>
     </style>
-    <copy todir="${webapp.bibledesktop}" filtering="true">
-      <fileset dir="${source.web}">
-        <include name="**/*.jnlp"/>
-      </fileset>
-      <filterset>
-        <filter token="jnlp.hostname" value="${jnlp.hostname}"/>
-      </filterset>
-    </copy>
-    <!-- sign the jars to the nightly build dir -->
-    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="bibledesktop.jar"/>
-    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="common.jar"/>
-    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="commons-lang-2.0.jar"/>
-    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="commons-net-1.1.0.jar"/>
-    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="jsword.jar"/>
-    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="jdom.jar"/>
-    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="jlfgr-1_0.jar"/>
-    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="log4j-1.2.8.jar"/>
-    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="lucene-1.3-final.jar"/>
-    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="tar.jar"/>
-    <jar.sign srcdir="${dependency.jar}" destdir="${webapp.bibledesktop}/nightly" jar="winlaf-0.4.jar"/>
-    <!-- Copy the bin files to the directory -->
-    <copy todir="${webapp.bibledesktop}/nightly">
-      <fileset dir="${source.etc}/bin"/>
-    </copy>
-    <chmod perm="a+x">
-      <fileset dir="${webapp.bibledesktop}/nightly">
-        <include name="**/*.sh"/>
-      </fileset>
-    </chmod>
-    <fixcrlf srcdir="${webapp.bibledesktop}/nightly" eol="lf">
-      <include name="**/*.sh"/>
-    </fixcrlf>
-    <fixcrlf srcdir="${webapp.bibledesktop}/nightly" eol="crlf">
-      <include name="**/*.bat"/>
-    </fixcrlf>
     <copy todir="${webapp.bibledesktop}">
       <fileset dir="${source.web}">
         <exclude name="*.jsp"/>
         <exclude name="*.html"/>
         <exclude name="*.xsl"/>
-        <exclude name="**/*.jnlp"/>
       </fileset>
     </copy>
     <mkdir dir="${webapp.bibledesktop}/WEB-INF/classes"/>

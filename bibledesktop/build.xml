@@ -5,7 +5,13 @@
   <property name="dependency"       value="jsword"/>
   <property name="dependency.jar"   value="../${dependency}/target/ant/jar"/>
 
-  <property name="gener.root"       value="target/gener"/>
+  <!--=======================================================================-->
+  <property name="gener.root"        value="target/gener"/>
+  <!-- The following works on Windows. Others may need file:// -->
+  <property name="jnlp.uninstalled"  value="${target.root}/uninstalled"/>
+  <property name="jnlp.installed"    value="${target.root}/installed"/> <!-- override -->
+  <property name="jnlp.homepage"     value="file:///${basedir}/${jnlp.installed}"/> <!-- override -->
+  <property name="jnlp.codebase"     value="file:///${basedir}/${jnlp.installed}"/> <!-- override -->
 
   <!--=======================================================================-->
   <target name="testcompile.extra">
@@ -18,6 +24,70 @@
       <src path="${gener.root}/config"/>
       <classpath refid="test.jarpath"/>
     </javac>
+  </target>
+
+  <!--=======================================================================-->
+  <target name="install" depends="build, keygen" description="Prepares for web based jnlp deploy">
+	<!-- sign the jars to a temporary location so they can be reused -->
+    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="bibledesktop.jar"/>
+	<jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="common.jar"/>
+	<jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-lang-2.0.jar"/>
+	<jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-net-1.1.0.jar"/>
+  	<jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jsword.jar"/>
+	<jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jdom.jar"/>
+	<jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jlfgr-1_0.jar"/>
+	<jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="log4j-1.2.8.jar"/>
+	<jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="lucene-1.3-final.jar"/>
+  	<jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="tar.jar"/>
+  	<jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="winlaf-0.4.jar"/>
+    <!-- Copy the files needed for the distribution -->
+    <mkdir dir="${jnlp.uninstalled}"/>
+    <copy todir="${jnlp.uninstalled}">
+      <fileset dir="${target.signed}"/>
+      <fileset dir="${source.etc}/jnlp">
+        <include name="bibledesktop.jnlp"/>
+        <include name="*.gif"/>
+	  </fileset>
+      <fileset dir="${source.etc}/bin"/>
+    </copy>
+    <chmod perm="a+x">
+      <fileset dir="${jnlp.uninstalled}">
+        <include name="**/*.sh"/>
+      </fileset>
+    </chmod>
+    <fixcrlf srcdir="${jnlp.uninstalled}" eol="lf">
+      <include name="**/*.sh"/>
+    </fixcrlf>
+    <fixcrlf srcdir="${jnlp.uninstalled}" eol="crlf">
+      <include name="**/*.bat"/>
+    </fixcrlf>
+  	<!--
+  	This was done in 2 steps so that we could deploy in other methods, however
+  	we now customize this deploy so it isn't needed any more. Sometime we should
+  	perhaps think about making ${jnlp.installed} = ${jnlp.uninstalled}
+  	The only real difference between installed and uninstalled is that the jnlp
+  	file has had the homepage and codebase parts filled in.
+  	-->
+    <!--
+    Attempt a local deploy, we might be able to get the jnlp file to work
+    locally on a relative path, but in the mean time there is always the *.bat
+    and *.sh startup files.
+    -->
+    <mkdir dir="${jnlp.installed}"/>
+    <copy todir="${jnlp.installed}" filtering="true">
+      <fileset dir="${jnlp.uninstalled}">
+        <include name="**/*.jnlp"/>
+      </fileset>
+      <filterset>
+        <filter token="jnlp.homepage" value="${jnlp.homepage}"/>
+        <filter token="jnlp.codebase" value="${jnlp.codebase}"/>
+      </filterset>
+    </copy>
+    <copy todir="${jnlp.installed}" filtering="false">
+      <fileset dir="${jnlp.uninstalled}">
+        <exclude name="**/*.jnlp"/>
+      </fileset>
+    </copy>
   </target>
 
 </project>
