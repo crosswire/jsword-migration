@@ -16,8 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.filechooser.FileFilter;
 
-import org.crosswire.bibledesktop.display.splitlist.OuterDisplayPane;
-import org.crosswire.bibledesktop.display.tab.TabbedDisplayPane;
+import org.crosswire.bibledesktop.display.BookDataDisplay;
+import org.crosswire.bibledesktop.display.splitlist.SplitBookDataDisplay;
+import org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.util.StringUtil;
@@ -147,9 +148,10 @@ public class BibleViewPane extends JPanel
             return;
         }
 
-        if (saved == null)
+        // We need a name to save against
+        if (saved == null && !querySaveFile())
         {
-            querySaveFile();
+            return;
         }
 
         saveKey(key);
@@ -179,6 +181,8 @@ public class BibleViewPane extends JPanel
      */
     private void saveKey(Key key) throws IOException
     {
+        assert saved != null;
+
         Writer out = new FileWriter(saved);
         if (key instanceof Passage)
         {
@@ -275,9 +279,9 @@ public class BibleViewPane extends JPanel
     }
 
     /**
-     * Accessor for the OuterDisplayPane
+     * Accessor for the SplitBookDataDisplay
      */
-    public OuterDisplayPane getPassagePane()
+    public BookDataDisplay getPassagePane()
     {
         return pnlPassg;
     }
@@ -362,7 +366,7 @@ public class BibleViewPane extends JPanel
     protected File saved = null;
     private transient List listeners;
     private DisplaySelectPane pnlSelect = new DisplaySelectPane();
-    protected OuterDisplayPane pnlPassg = new OuterDisplayPane(new TabbedDisplayPane());
+    protected BookDataDisplay pnlPassg = new SplitBookDataDisplay(new TabbedBookDataDisplay());
     private static int shortlen = 30;
     private JFileChooser chooser = new JFileChooser();
     private static final String EXTENSION = ".lst"; //$NON-NLS-1$

@@ -87,6 +87,7 @@ public class DebugPane extends JPanel
         cboMethod.setModel(mdlMethods);
         cboMethod.setRenderer(new CustomListCellRenderer());
 
+        // I18N: migrate this to an ActionFactory
         btnMethod.setText(Msg.DEBUG_GO.toString());
         btnMethod.setMnemonic(Msg.DEBUG_GO.toString().charAt(0));
         btnMethod.addActionListener(new ActionListener()

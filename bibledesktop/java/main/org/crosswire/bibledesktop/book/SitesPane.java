@@ -3,8 +3,6 @@ package org.crosswire.bibledesktop.book;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Iterator;
@@ -17,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.jsword.book.install.InstallManager;
 import org.crosswire.jsword.book.install.Installer;
 import org.crosswire.jsword.book.install.InstallerEvent;
@@ -52,17 +51,14 @@ import org.crosswire.jsword.book.install.InstallerListener;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class SitesPane extends JPanel implements ActionListener
+public class SitesPane extends JPanel
 {
-    private static final String CLOSE = "SitesClose"; //$NON-NLS-1$
-    private static final String EDIT_SITE = "ManageSites"; //$NON-NLS-1$
-
     /**
      * Simple ctor
      */
     public SitesPane()
     {
-        initialize();
+        init();
 
         imanager = new InstallManager();
         installers = imanager.getInstallers();
@@ -101,6 +97,28 @@ public class SitesPane extends JPanel implements ActionListener
     }
 
     /**
+     * Build the GUI components
+     */
+    private void init()
+    {
+        actions = new ActionFactory(SitesPane.class, this);
+
+        JButton btnOK = new JButton(actions.getAction(CLOSE));
+
+        JButton btnAdd = new JButton(actions.getAction(EDIT_SITE));
+
+        pnlButtons = new JPanel();
+        pnlButtons.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        pnlButtons.add(btnAdd, null);
+        pnlButtons.add(btnOK);
+
+        tabMain = new JTabbedPane();
+        this.setLayout(new BorderLayout());
+        this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        this.add(tabMain, BorderLayout.CENTER);
+    }
+
+    /**
      * Re-create the list of installers
      */
     protected void addAllInstallers()
@@ -128,40 +146,9 @@ public class SitesPane extends JPanel implements ActionListener
     }
 
     /**
-     * Build the GUI components
-     */
-    private void initialize()
-    {
-        actions = BookActionFactory.instance();
-        actions.addActionListener(this);
-
-        JButton btnOK = new JButton(actions.getAction(CLOSE));
-
-        JButton btnAdd = new JButton(actions.getAction(EDIT_SITE));
-
-        pnlButtons = new JPanel();
-        pnlButtons.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        pnlButtons.add(btnAdd, null);
-        pnlButtons.add(btnOK);
-
-        tabMain = new JTabbedPane();
-        this.setLayout(new BorderLayout());
-        this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        this.add(tabMain, BorderLayout.CENTER);
-    }
-
-    /* (non-Javadoc)
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
-    public void actionPerformed(ActionEvent e)
-    {
-        actions.actionPerformed(e, this);
-    }
-
-    /**
      * Add a site to the list of install sources.
      */
-    protected void doManageSites()
+    public void doManageSites()
     {
         EditSitePane edit = new EditSitePane(imanager);
         edit.showInDialog(this);
@@ -170,7 +157,7 @@ public class SitesPane extends JPanel implements ActionListener
     /**
      * We are done, close the window
      */
-    protected void doSitesClose()
+    public void doSitesClose()
     {
         if (dlgMain != null)
         {
@@ -201,6 +188,9 @@ public class SitesPane extends JPanel implements ActionListener
         dlgMain.setVisible(true);
     }
 
+    /**
+     * 
+     */
     private Component createButtons()
     {
         if (pnlButtons == null)
@@ -217,6 +207,10 @@ public class SitesPane extends JPanel implements ActionListener
         return pnlButtons;
 
     }
+
+    private static final String CLOSE = "SitesClose"; //$NON-NLS-1$
+    private static final String EDIT_SITE = "ManageSites"; //$NON-NLS-1$
+
     /**
      * The known installers fetched from InstallManager
      */
@@ -227,7 +221,7 @@ public class SitesPane extends JPanel implements ActionListener
      */
     protected InstallManager imanager;
 
-    private BookActionFactory actions;
+    private ActionFactory actions;
 
     /*
      * GUI Components

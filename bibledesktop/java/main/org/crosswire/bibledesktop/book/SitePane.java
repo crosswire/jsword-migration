@@ -3,8 +3,6 @@ package org.crosswire.bibledesktop.book;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -20,8 +18,9 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import org.crosswire.common.swing.MapTableModel;
+import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.MapTable;
+import org.crosswire.common.swing.MapTableModel;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.BookList;
 import org.crosswire.jsword.book.BookMetaData;
@@ -54,15 +53,8 @@ import org.crosswire.jsword.book.install.Installer;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class SitePane extends JPanel implements ActionListener
+public class SitePane extends JPanel
 {
-    private static final String INSTALLED_BOOKS_LABEL = "InstalledBooksLabel"; //$NON-NLS-1$
-    private static final String AVAILABLE_BOOKS_LABEL = "AvailableBooksLabel"; //$NON-NLS-1$
-    private static final String SELECTED_BOOK_LABEL = "SelectedBookLabel"; //$NON-NLS-1$
-    private static final String REFRESH = "Refresh"; //$NON-NLS-1$
-    private static final String INSTALL = "Install"; //$NON-NLS-1$
-    //private static final String DELETE = "Delete"; //$NON-NLS-1$
-
     /**
      * For local installations
      */
@@ -82,15 +74,15 @@ public class SitePane extends JPanel implements ActionListener
     private SitePane(Installer bookListInstaller, String labelAcronymn)
     {
         installer = bookListInstaller;
-        
-        actions = BookActionFactory.instance();
-        actions.addActionListener(this);
+
+        actions = new ActionFactory(SitePane.class, this);
 
         BookList bl = installer;
         if (installer == null)
         {
             bl = Books.installed();
         }
+
         initialize(labelAcronymn, bl);        
     }
 
@@ -190,25 +182,17 @@ public class SitePane extends JPanel implements ActionListener
         return panel;
     }
 
-    /* (non-Javadoc)
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
-    public void actionPerformed(ActionEvent e)
-    {
-        actions.actionPerformed(e, this);
-    }
-
     /**
      * Delete the current book
      */
-    protected void doDelete()
+    public void doDelete()
     {
     }
 
     /**
      * Reload and redisplay the list of books
      */
-    protected void doRefresh()
+    public void doRefresh()
     {
         if (installer != null)
         {
@@ -228,7 +212,7 @@ public class SitePane extends JPanel implements ActionListener
     /**
      * Kick off the installer
      */
-    protected void doInstall()
+    public void doInstall()
     {
         if (installer != null)
         {
@@ -297,6 +281,13 @@ public class SitePane extends JPanel implements ActionListener
         }
     }
 
+    private static final String INSTALLED_BOOKS_LABEL = "InstalledBooksLabel"; //$NON-NLS-1$
+    private static final String AVAILABLE_BOOKS_LABEL = "AvailableBooksLabel"; //$NON-NLS-1$
+    private static final String SELECTED_BOOK_LABEL = "SelectedBookLabel"; //$NON-NLS-1$
+    private static final String REFRESH = "Refresh"; //$NON-NLS-1$
+    private static final String INSTALL = "Install"; //$NON-NLS-1$
+    //private static final String DELETE = "Delete"; //$NON-NLS-1$
+
     /**
      * From which we get our list of installable modules
      */
@@ -305,7 +296,7 @@ public class SitePane extends JPanel implements ActionListener
     /**
      * actions are held by this ActionFactory
      */
-    private BookActionFactory actions;
+    private ActionFactory actions;
     
     /*
      * GUI Components
@@ -314,4 +305,3 @@ public class SitePane extends JPanel implements ActionListener
     private JTable tblSelected;
     private MapTableModel emptyTableModel;
 }
-

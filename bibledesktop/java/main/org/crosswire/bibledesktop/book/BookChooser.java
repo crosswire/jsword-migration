@@ -88,6 +88,7 @@ public class BookChooser extends JPanel
             }
         });
 
+        // I18N: migrate this to an ActionFactory
         btnOk.setText(Msg.CHOOSER_OK.toString());
         btnOk.setMnemonic(Msg.CHOOSER_OK.toString().charAt(0));
         btnOk.addActionListener(new ActionListener()
@@ -100,6 +101,7 @@ public class BookChooser extends JPanel
         btnOk.setEnabled(selected != null);
         btnOk.setDefaultCapable(true);
 
+        // I18N: migrate this to an ActionFactory
         btnCancel.setText(Msg.CHOOSER_CANCEL.toString());
         btnCancel.addActionListener(new ActionListener()
         {

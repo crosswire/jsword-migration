@@ -8,8 +8,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -31,6 +29,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
@@ -67,7 +66,7 @@ import org.crosswire.jsword.passage.PassageTally;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class DisplaySelectPane extends JPanel implements ActionListener
+public class DisplaySelectPane extends JPanel
 {
     /**
      * General constructor
@@ -83,10 +82,9 @@ public class DisplaySelectPane extends JPanel implements ActionListener
     private void init()
     {
         title = Msg.UNTITLED.toString(new Integer(base++));
-        
-        actions = BookActionFactory.instance();
-        actions.addActionListener(this);
-        
+
+        actions = new ActionFactory(DisplaySelectPane.class, this);
+
         // Create a way for selecting how passages are found
         JPanel pnlSelect = new JPanel(new BorderLayout());
 
@@ -221,7 +219,7 @@ public class DisplaySelectPane extends JPanel implements ActionListener
 
         JPanel panel = new JPanel(new GridBagLayout());
 
-        panel.add(label,    new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 5, 2, 2), 0, 0));
+        panel.add(label, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 5, 2, 2), 0, 0));
         panel.add(txtSearch, new GridBagConstraints(1, 0, 2, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 2, 2, 5), 0, 0));
         panel.add(chkSRestrict, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 5, 5, 2), 0, 0));
         panel.add(txtSRestrict, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 5, 2), 0, 0));
@@ -279,26 +277,18 @@ public class DisplaySelectPane extends JPanel implements ActionListener
         return bmd != null ? bmd.getBook() : null;
     }
 
-    /* (non-Javadoc)
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
-    public void actionPerformed(ActionEvent e)
-    {
-        actions.actionPerformed(e, this);
-    }
-
     // The following are behaviors associated with the actions executed by actionPerformed
-    protected void doPassageOption()
+    public void doPassageOption()
     {
         flipOption(PASSAGE);
     }
 
-    protected void doMatchOption()
+    public void doMatchOption()
     {
         flipOption(MATCH);
     }
 
-    protected void doSearchOption()
+    public void doSearchOption()
     {
         flipOption(SEARCH);
     }
@@ -310,37 +300,37 @@ public class DisplaySelectPane extends JPanel implements ActionListener
     }
 
     // More (...) button was clicked
-    protected void doMore()
+    public void doMore()
     {
         showSelectDialog();
     }
     
     // Go button was clicked
-    protected void doGoPassage()
+    public void doGoPassage()
     {
         doPassageAction();
     }
 
     // Go button was clicked
-    protected void doGoSearch()
+    public void doGoSearch()
     {
         doSearchAction();
     }
 
     // Enter was hit in txtSRestrict
-    protected void doSearchEverywhere()
+    public void doSearchEverywhere()
     {
         doSearchAction();
     }
 
     // Go button was clicked
-    protected void doGoMatch()
+    public void doGoMatch()
     {
         doMatchAction();
     }
 
     // Enter was hit in txtMRestrict
-    protected void doMatchAnywhere()
+    public void doMatchAnywhere()
     {
         doMatchAction();
     }
@@ -348,7 +338,7 @@ public class DisplaySelectPane extends JPanel implements ActionListener
     /**
      * Someone pressed return in the passage area
      */
-    protected void doPassageAction()
+    public void doPassageAction()
     {
         setDefaultName(txtPassg.getText());
         updateDisplay();
@@ -357,7 +347,7 @@ public class DisplaySelectPane extends JPanel implements ActionListener
     /**
      * Someone pressed return in the search area
      */
-    protected void doSearchAction()
+    public void doSearchAction()
     {
         BookMetaData bmd = mdlVersn.getSelectedBookMetaData();
         if (bmd == null)
@@ -394,7 +384,7 @@ public class DisplaySelectPane extends JPanel implements ActionListener
     /**
      * Someone pressed return in the match area
      */
-    protected void doMatchAction()
+    public void doMatchAction()
     {
         BookMetaData bmd = mdlVersn.getSelectedBookMetaData();
         if (bmd == null)
@@ -705,5 +695,5 @@ public class DisplaySelectPane extends JPanel implements ActionListener
     private JPanel pnlCards;
     private CardLayout layCards;
 
-    private BookActionFactory actions;
+    private ActionFactory actions;
 }

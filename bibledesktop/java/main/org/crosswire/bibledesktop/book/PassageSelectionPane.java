@@ -37,6 +37,7 @@ import javax.swing.tree.TreePath;
 import org.crosswire.bibledesktop.passage.PassageListModel;
 import org.crosswire.bibledesktop.passage.WholeBibleTreeModel;
 import org.crosswire.bibledesktop.passage.WholeBibleTreeNode;
+import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.jsword.passage.NoSuchVerseException;
@@ -71,7 +72,7 @@ import org.crosswire.jsword.passage.VerseRange;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class PassageSelectionPane extends JPanel implements ActionListener
+public class PassageSelectionPane extends JPanel
 {
     /**
      * Constructor for PassageSelectionPane.
@@ -85,7 +86,7 @@ public class PassageSelectionPane extends JPanel implements ActionListener
             {
                 icoGood = new ImageIcon(urlGood);
             }
-            
+
             URL urlBad = ResourceUtil.getResource("toolbarButtonGraphics/general/Stop24.gif"); //$NON-NLS-1$
             if (urlBad != null)
             {
@@ -97,17 +98,16 @@ public class PassageSelectionPane extends JPanel implements ActionListener
             assert false : ex;
         }
 
-        initialize();
+        init();
     }
 
     /**
      * GUI init
      */
-    private void initialize()
+    private void init()
     {
-        actions = BookActionFactory.instance();
-        actions.addActionListener(this);
-        
+        actions = new ActionFactory(PassageSelectionPane.class, this);
+
         JLabel lblAll = actions.createJLabel(BIBLE_TREE);
         JLabel lblSel = actions.createJLabel(SELECTED_VERSES);
 
@@ -141,9 +141,9 @@ public class PassageSelectionPane extends JPanel implements ActionListener
                 treeSelected();
             }
         });
-    
+
         label.setLabelFor(treAll);
-    
+
         return new JScrollPane(treAll);
     }
 
@@ -160,9 +160,9 @@ public class PassageSelectionPane extends JPanel implements ActionListener
                 listSelected();
             }
         });
-        
+
         label.setLabelFor(lstSel);
-        
+
         return new JScrollPane(lstSel);
     }
 
@@ -190,7 +190,7 @@ public class PassageSelectionPane extends JPanel implements ActionListener
     private Component createMessageLabel()
     {
         lblMessage = new JLabel();
-        
+
         return lblMessage;
     }
 
@@ -341,23 +341,15 @@ public class PassageSelectionPane extends JPanel implements ActionListener
         }
     }
 
-    /* (non-Javadoc)
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
-    public void actionPerformed(ActionEvent e)
-    {
-        actions.actionPerformed(e, this);
-    }
-
     /**
      * Add from the tree to the list
      */
-    protected void doAddVerse()
+    public void doAddVerse()
     {
         TreePath[] selected = treAll.getSelectionPaths();
         if (selected != null)
         {
-            for (int i=0; i<selected.length; i++)
+            for (int i = 0; i < selected.length; i++)
             {
                 WholeBibleTreeNode node = (WholeBibleTreeNode) selected[i].getLastPathComponent();
                 VerseRange range = node.getVerseRange();
@@ -369,12 +361,12 @@ public class PassageSelectionPane extends JPanel implements ActionListener
     /**
      * Remove the selected items from the list
      */
-    protected void doDeleteVerse()
+    public void doDeleteVerse()
     {
         Object[] selected = lstSel.getSelectedValues();
         if (selected != null)
         {
-            for (int i=0; i<selected.length; i++)
+            for (int i = 0; i < selected.length; i++)
             {
                 VerseRange range = (VerseRange) selected[i];
                 ref.remove(range);
@@ -432,7 +424,7 @@ public class PassageSelectionPane extends JPanel implements ActionListener
      * The ActionFactory holding the actions used by this
      * EditSite.
      */
-    private BookActionFactory actions;
+    private ActionFactory actions;
 
     /*
      * GUI Components

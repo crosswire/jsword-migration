@@ -33,6 +33,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.BeanPanel;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Reporter;
@@ -64,19 +65,8 @@ import org.crosswire.jsword.book.install.InstallerFactory;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class EditSitePane extends JPanel implements ActionListener
+public class EditSitePane extends JPanel
 {
-    private static final String ADD = "Add"; //$NON-NLS-1$
-    private static final String EDIT = "Edit"; //$NON-NLS-1$
-    private static final String DELETE = "Delete"; //$NON-NLS-1$
-    private static final String NAME = "Name"; //$NON-NLS-1$
-    private static final String TYPE = "Type"; //$NON-NLS-1$
-    private static final String RESET = "Reset"; //$NON-NLS-1$
-    private static final String SAVE = "Save"; //$NON-NLS-1$
-    private static final String CLOSE = "Close"; //$NON-NLS-1$
-    private static final String EMPTY_STRING = ""; //$NON-NLS-1$
-    private static final String BLANK_STRING = " "; //$NON-NLS-1$
-
     /**
      * This is the default constructor
      */
@@ -84,7 +74,8 @@ public class EditSitePane extends JPanel implements ActionListener
     {
         this.imanager = imanager;
         userInitiated = true;
-        initialize();
+
+        init();
         setState(STATE_DISPLAY, null);
         select();
     }
@@ -92,10 +83,9 @@ public class EditSitePane extends JPanel implements ActionListener
     /**
      * GUI init
      */
-    private void initialize()
+    private void init()
     {
-        actions = BookActionFactory.instance();
-        actions.addActionListener(this);
+        actions = new ActionFactory(EditSitePane.class, this);
 
         lstSite = new JList(new InstallManagerListModel(imanager));
         JScrollPane scrSite = new JScrollPane();
@@ -236,18 +226,10 @@ public class EditSitePane extends JPanel implements ActionListener
         dlgMain.setVisible(true);
     }
 
-    /* (non-Javadoc)
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
-    public void actionPerformed(ActionEvent e)
-    {
-        actions.actionPerformed(e, this);
-    }
-
     /**
      * Close the window, and save the install manager state
      */
-    protected void doClose()
+    public void doClose()
     {
         imanager.save();
         dlgMain.dispose();
@@ -321,7 +303,7 @@ public class EditSitePane extends JPanel implements ActionListener
     /**
      * Add a new installer to the list
      */
-    protected void doAdd()
+    public void doAdd()
     {
         newType();
 
@@ -340,7 +322,7 @@ public class EditSitePane extends JPanel implements ActionListener
     /**
      * Move the selected installer to the installer edit panel
      */
-    protected void doEdit()
+    public void doEdit()
     {
         String name = (String) lstSite.getSelectedValue();
         if (name == null)
@@ -363,7 +345,7 @@ public class EditSitePane extends JPanel implements ActionListener
     /**
      * Delete the selected installer from the list (on the left hand side)
      */
-    protected void doDelete()
+    public void doDelete()
     {
         String name = (String) lstSite.getSelectedValue();
         if (name == null)
@@ -383,7 +365,7 @@ public class EditSitePane extends JPanel implements ActionListener
     /**
      * End editing the current installer
      */
-    protected void doReset()
+    public void doReset()
     {
         if (editName != null)
         {
@@ -401,7 +383,7 @@ public class EditSitePane extends JPanel implements ActionListener
     /**
      * Save the current installer to the list of installers
      */
-    protected void doSave()
+    public void doSave()
     {
         String name = txtName.getText();
         Installer installer = (Installer) pnlBean.getBean();
@@ -525,6 +507,17 @@ public class EditSitePane extends JPanel implements ActionListener
         GuiUtil.restrainedRePack(window);
     }
 
+    private static final String ADD = "Add"; //$NON-NLS-1$
+    private static final String EDIT = "Edit"; //$NON-NLS-1$
+    private static final String DELETE = "Delete"; //$NON-NLS-1$
+    private static final String NAME = "Name"; //$NON-NLS-1$
+    private static final String TYPE = "Type"; //$NON-NLS-1$
+    private static final String RESET = "Reset"; //$NON-NLS-1$
+    private static final String SAVE = "Save"; //$NON-NLS-1$
+    private static final String CLOSE = "Close"; //$NON-NLS-1$
+    private static final String EMPTY_STRING = ""; //$NON-NLS-1$
+    private static final String BLANK_STRING = " "; //$NON-NLS-1$
+
     /**
      * The state is viewing a site
      */
@@ -567,8 +560,8 @@ public class EditSitePane extends JPanel implements ActionListener
      * The ActionFactory holding the actions used by this
      * EditSite.
      */
-    private BookActionFactory actions;
-    
+    private ActionFactory actions;
+
     /*
      * GUI Components for the list of sites
      */
@@ -591,4 +584,3 @@ public class EditSitePane extends JPanel implements ActionListener
     private JButton btnClose;
     private JPanel pnlAction;
 }
-

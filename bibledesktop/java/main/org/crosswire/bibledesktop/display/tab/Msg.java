@@ -1,4 +1,3 @@
-
 package org.crosswire.bibledesktop.display.tab;
 
 import org.crosswire.common.util.MsgBase;
@@ -29,7 +28,7 @@ import org.crosswire.common.util.MsgBase;
  */
 class Msg extends MsgBase
 {
-    static final Msg MORE = new Msg("TabbedDisplayPane.More"); //$NON-NLS-1$
+    static final Msg MORE = new Msg("MORE"); //$NON-NLS-1$
 
     /**
      * Passthrough ctor

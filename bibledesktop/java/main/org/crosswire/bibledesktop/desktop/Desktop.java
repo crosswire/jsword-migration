@@ -56,10 +56,6 @@ import org.crosswire.common.swing.LookAndFeelUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.util.ResourceUtil;
-import org.crosswire.common.xml.Converter;
-import org.crosswire.common.xml.SAXEventProvider;
-import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
@@ -218,9 +214,6 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         iter.hasNext();
         last = ((BibleViewPane) iter.next()).getPassagePane();
 
-        // Preload the PassageInnerPane for faster initial view
-        Desktop.preload();
-
         startJob.done();
         splash.close();
 
@@ -276,11 +269,13 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         menuFile.add(actions.getAction(DesktopActions.SAVE_ALL)).addMouseListener(barStatus);
         menuFile.addSeparator();
         menuFile.add(actions.getAction(DesktopActions.EXIT)).addMouseListener(barStatus);
+        menuFile.setToolTipText(null);
 
         JMenu menuEdit = new JMenu(actions.getAction(DesktopActions.EDIT));
-        menuEdit.add(actions.getAction(DesktopActions.CUT)).addMouseListener(barStatus);
+        //menuEdit.add(actions.getAction(DesktopActions.CUT)).addMouseListener(barStatus);
         menuEdit.add(actions.getAction(DesktopActions.COPY)).addMouseListener(barStatus);
-        menuEdit.add(actions.getAction(DesktopActions.PASTE)).addMouseListener(barStatus);
+        //menuEdit.add(actions.getAction(DesktopActions.PASTE)).addMouseListener(barStatus);
+        menuEdit.setToolTipText(null);
 
         rdoViewTdi.addMouseListener(barStatus);
         rdoViewMdi.addMouseListener(barStatus);
@@ -297,22 +292,21 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         //menuView.add(chkViewTbar);
         menuView.addSeparator();
         menuView.add(actions.getAction(DesktopActions.VIEW_SOURCE)).addMouseListener(barStatus);
+        menuView.setToolTipText(null);
 
         JMenu menuTools = new JMenu(actions.getAction(DesktopActions.TOOLS));
-        menuTools.add(actions.getAction(DesktopActions.BLUR1)).addMouseListener(barStatus);
-        menuTools.add(actions.getAction(DesktopActions.BLUR5)).addMouseListener(barStatus);
-        menuTools.add(actions.getAction(DesktopActions.DELETE_SELECTED)).addMouseListener(barStatus);
-        menuTools.addSeparator();
         //menuTools.add(actions.getAction(DesktopActions.GENERATE)).addMouseListener(barStatus);
         //menuTools.add(actions.getAction(DesktopActions.DIFF)).addMouseListener(barStatus);
         //menuTools.addSeparator();
         menuTools.add(actions.getAction(DesktopActions.BOOKS)).addMouseListener(barStatus);
         menuTools.add(actions.getAction(DesktopActions.OPTIONS)).addMouseListener(barStatus);
+        menuTools.setToolTipText(null);
 
         JMenu menuHelp = new JMenu(actions.getAction(DesktopActions.HELP));
         menuHelp.add(actions.getAction(DesktopActions.CONTENTS)).addMouseListener(barStatus);
         menuHelp.addSeparator();
         menuHelp.add(actions.getAction(DesktopActions.ABOUT)).addMouseListener(barStatus);
+        menuHelp.setToolTipText(null);
 
         JMenuBar barMenu = new JMenuBar();
         barMenu.add(menuFile);
@@ -329,9 +323,9 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         pnlTbar.add(actions.getAction(DesktopActions.OPEN)).addMouseListener(barStatus);
         pnlTbar.add(actions.getAction(DesktopActions.SAVE)).addMouseListener(barStatus);
         pnlTbar.addSeparator();
-        pnlTbar.add(actions.getAction(DesktopActions.CUT)).addMouseListener(barStatus);
+        //pnlTbar.add(actions.getAction(DesktopActions.CUT)).addMouseListener(barStatus);
         pnlTbar.add(actions.getAction(DesktopActions.COPY)).addMouseListener(barStatus);
-        pnlTbar.add(actions.getAction(DesktopActions.PASTE)).addMouseListener(barStatus);
+        //pnlTbar.add(actions.getAction(DesktopActions.PASTE)).addMouseListener(barStatus);
         pnlTbar.addSeparator();
         //pnlTbar.add(actions.getAction("Generate")).addMouseListener(barStatus);
         //pnlTbar.add(actions.getAction("Diff")).addMouseListener(barStatus);
@@ -780,72 +774,6 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     }
 
     /**
-     * Makes the second invocation much faster
-     */
-    public static void preload()
-    {
-        final Thread worker = new Thread(PRELOAD_THREAD_NAME)
-        {
-            public void run()
-            {
-                URL predicturl = Project.instance().getWritablePropertiesURL(DISPLAY_PROPS);
-                Job job = JobManager.createJob(Msg.PRELOAD_TITLE.toString(), predicturl, this, true);
-
-                try
-                {
-                    job.setProgress(Msg.PRELOAD_SETUP.toString());
-                    List booklist = Books.installed().getBookMetaDatas();
-                    if (booklist.size() == 0)
-                    {
-                        return;
-                    }
-
-                    Book test = ((BookMetaData) booklist.get(0)).getBook();
-                    if (interrupted())
-                    {
-                        return;
-                    }
-
-                    job.setProgress(Msg.PRELOAD_DATA.toString());
-                    BookData data = test.getData(test.getGlobalKeyList().get(0));
-                    if (interrupted())
-                    {
-                        return;
-                    }
-
-                    job.setProgress(Msg.PRELOAD_PROVIDER.toString());
-                    SAXEventProvider provider = data.getSAXEventProvider();
-                    if (interrupted())
-                    {
-                        return;
-                    }
-
-                    job.setProgress(Msg.PRELOAD_STYLE.toString());
-                    Converter converter = ConverterFactory.getConverter();
-                    converter.convert(provider);
-                    if (interrupted())
-                    {
-                        return;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    job.ignoreTimings();
-                    log.error(PRELOAD_FAILED, ex);
-                }
-                finally
-                {
-                    job.done();
-                    log.debug(PRELOAD_FINISHED);
-                }
-            }
-        };
-
-        worker.setPriority(Thread.MIN_PRIORITY);
-        worker.start();
-    }
-
-    /**
      * Load the config.xml file
      */
     public void generateConfig()
@@ -949,7 +877,6 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
 
     // Strings for the names of property files.
     private static final String SPLASH_PROPS = "splash"; //$NON-NLS-1$
-    private static final String DISPLAY_PROPS = "display"; //$NON-NLS-1$
 
     // Strings for hyperlinks
     private static final String BIBLE_PROTOCOL = "bible"; //$NON-NLS-1$
@@ -960,9 +887,6 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     private static final String SCROLL_TO_URL = "scrolling to: {0}"; //$NON-NLS-1$
 
     // Strings for debug messages
-    private static final String PRELOAD_THREAD_NAME = "DisplayPreLoader"; //$NON-NLS-1$
-    private static final String PRELOAD_FAILED = "View pre-load failed"; //$NON-NLS-1$
-    private static final String PRELOAD_FINISHED = "View pre-load finished"; //$NON-NLS-1$
     private static final String EXITING = "desktop main exiting."; //$NON-NLS-1$
 
     // Empty String

@@ -89,6 +89,7 @@ public class CompareResultsPane extends JPanel implements Runnable
         pnlResults.add(scrResults, BorderLayout.CENTER);
         pnlResults.add(barProgress, BorderLayout.NORTH);
 
+        // I18N: migrate this to an ActionFactory
         btnStop.setText(Msg.RESULTS_START.toString());
         btnStop.addActionListener(new ActionListener()
         {
@@ -113,6 +114,7 @@ public class CompareResultsPane extends JPanel implements Runnable
     {
         final JDialog frame = new JDialog(parent, Msg.RESULTS_DIALOG.toString());
 
+        // I18N: migrate this to an ActionFactory
         btnClose = new JButton(Msg.RESULTS_CLOSE.toString());
         btnClose.addActionListener(new ActionListener()
         {
@@ -217,6 +219,7 @@ public class CompareResultsPane extends JPanel implements Runnable
         {
             public void run()
             {
+                // I18N: migrate this to an ActionFactory
                 btnStop.setText(Msg.RESULTS_STOP.toString());
             }
         });
@@ -260,6 +263,7 @@ public class CompareResultsPane extends JPanel implements Runnable
         {
             public void run()
             {
+                // I18N: migrate this to an ActionFactory
                 btnStop.setText(Msg.RESULTS_START.toString());
             }
         });

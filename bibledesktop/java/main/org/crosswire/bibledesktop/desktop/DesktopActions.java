@@ -1,7 +1,6 @@
 package org.crosswire.bibledesktop.desktop;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -15,10 +14,8 @@ import javax.swing.JOptionPane;
 import org.crosswire.bibledesktop.book.BibleViewPane;
 import org.crosswire.bibledesktop.book.SitesPane;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
-import org.crosswire.bibledesktop.display.splitlist.OuterDisplayPane;
 import org.crosswire.common.config.swing.ConfigEditorFactory;
 import org.crosswire.common.swing.ActionFactory;
-import org.crosswire.common.swing.CWAction;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.xml.Converter;
@@ -31,9 +28,6 @@ import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.BooksEvent;
 import org.crosswire.jsword.book.BooksListener;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.passage.Passage;
-import org.crosswire.jsword.passage.PassageConstants;
-import org.crosswire.jsword.passage.PassageUtil;
 import org.crosswire.jsword.util.ConverterFactory;
 import org.crosswire.jsword.util.Project;
 
@@ -67,7 +61,7 @@ import org.crosswire.jsword.util.Project;
  * @author DM Smith [dmsmith555 at hotmail dot com]
  * @version $Id$
  */
-public class DesktopActions implements ActionListener
+public class DesktopActions
 {
     /**
      * Create the actions for the desktop
@@ -77,8 +71,7 @@ public class DesktopActions implements ActionListener
     {
         this.desktop = desktop;
 
-        actions = DesktopActionFactory.instance();
-        actions.addActionListener(this);
+        actions = new ActionFactory(Desktop.class, this);
     }
 
     /**
@@ -86,7 +79,7 @@ public class DesktopActions implements ActionListener
      * @param key the internal name for the action
      * @return the action requested or null if it does not exist
      */
-    public CWAction getAction(String key)
+    public Action getAction(String key)
     {
         return actions.getAction(key);
     }
@@ -149,7 +142,7 @@ public class DesktopActions implements ActionListener
     /**
      * For creating a new window.
      */
-    protected void doNewWindow()
+    public void doNewWindow()
     {
         BibleViewPane view = new BibleViewPane();
 
@@ -161,7 +154,7 @@ public class DesktopActions implements ActionListener
     /**
      * Open a new passage window from a file.
      */
-    protected void doOpen()
+    public void doOpen()
     {
         try
         {
@@ -177,7 +170,7 @@ public class DesktopActions implements ActionListener
     /**
      * Close the current passage window.
      */
-    protected void doClose()
+    public void doClose()
     {
         BibleViewPane view = getDesktop().getSelectedBibleViewPane();
         getDesktop().removeBibleViewPane(view);
@@ -186,7 +179,7 @@ public class DesktopActions implements ActionListener
     /**
      * Close all the passage windows.
      */
-    protected void doCloseAll()
+    public void doCloseAll()
     {
         Iterator it = getDesktop().iterateBibleViewPanes();
         while (it.hasNext())
@@ -199,7 +192,7 @@ public class DesktopActions implements ActionListener
     /**
      * Save the current passage window.
      */
-    protected void doSave()
+    public void doSave()
     {
         try
         {
@@ -221,7 +214,7 @@ public class DesktopActions implements ActionListener
     /**
      * Save the current passage window under a new name.
      */
-    protected void doSaveAs()
+    public void doSaveAs()
     {
         try
         {
@@ -243,7 +236,7 @@ public class DesktopActions implements ActionListener
     /**
      * Save all the passage windows.
      */
-    protected void doSaveAll()
+    public void doSaveAll()
     {
         boolean ok = false;
         
@@ -281,41 +274,24 @@ public class DesktopActions implements ActionListener
     /**
      * Exits the VM.
      */
-    protected void doExit()
+    public void doExit()
     {
         System.exit(0);
     }
 
     /**
-     * Remove the selected text from the "active" display area
-     * and put it on the clipboard.
-     */
-    protected void doCut()
-    {
-        doNothing(CUT);
-    }
-
-    /**
      * Copy the selected text from the "active" display area to the clipboard.
      */
-    protected void doCopy()
+    public void doCopy()
     {
         BookDataDisplay da = getDesktop().getDisplayArea();
         da.copy();
     }
 
     /**
-     * Paste the clipboard to the insertion point for the "active" display area.
-     */
-    protected void doPaste()
-    {
-        doNothing(PASTE);
-    }
-
-    /**
      * View the Tabbed Document Interface (TDI) interface.
      */
-    protected void doTabMode()
+    public void doTabMode()
     {
         getDesktop().setLayoutType(Desktop.LAYOUT_TYPE_TDI);
     }
@@ -323,7 +299,7 @@ public class DesktopActions implements ActionListener
     /**
      * View the Multiple Document/Window Interface (MDI) interface.
      */
-    protected void doWindowMode()
+    public void doWindowMode()
     {
         getDesktop().setLayoutType(Desktop.LAYOUT_TYPE_MDI);
     }
@@ -334,7 +310,7 @@ public class DesktopActions implements ActionListener
      * That is all class="" are stripped out.
      * Also you may find additional whitespace added to the original.
      */
-    protected void doViewSource()
+    public void doViewSource()
     {
         try
         {
@@ -368,61 +344,9 @@ public class DesktopActions implements ActionListener
     }
 
     /**
-     * Blur (expand) the current passage action by one verse on each side.
-     * This bound by the boundaries of the Chapter.
-     */
-    protected void doBlur1()
-    {
-        doBlur(1);        
-    }
-
-    /**
-     * Blur (expand) the current passage action by five verses on each side.
-     * This bound by the boundaries of the Chapter.
-     */
-    protected void doBlur5()
-    {
-       doBlur(5);        
-    }
-
-    /**
-     * Blur (expand) the current passage action by amount verses on each side.
-     * This bound by the boundaries of the Chapter.
-     * @param amount The amount of blurring
-     */
-    protected void doBlur(int amount)
-    {
-        BibleViewPane view = getDesktop().getSelectedBibleViewPane();
-        if (view != null)
-        {
-            Key key = view.getKey();
-            Passage ref = PassageUtil.getPassage(key);
-
-            if (ref != null)
-            {
-                ref.blur(amount, PassageConstants.RESTRICT_CHAPTER);
-                view.setPassage(ref);
-            }
-        }
-    }
-
-    /**
-     * Remove the selected verses out of the PassagePane.
-     */
-    protected void doDeleteSelected()
-    {
-        BibleViewPane view = getDesktop().getSelectedBibleViewPane();
-        if (view != null)
-        {
-            OuterDisplayPane odp = view.getPassagePane();
-            odp.deleteSelected(view);
-        }
-    }
-
-    /**
      * Opens the Book installer window (aka a SitesPane)
      */
-    protected void doBooks()
+    public void doBooks()
     {
         if (sites == null)
         {
@@ -435,7 +359,7 @@ public class DesktopActions implements ActionListener
     /**
      * Opens the Options window
      */
-    protected void doOptions()
+    public void doOptions()
     {
         try
         {
@@ -468,7 +392,7 @@ public class DesktopActions implements ActionListener
     /**
      * For opening a help file.
      */
-    protected void doContents()
+    public void doContents()
     {
         JOptionPane.showMessageDialog(getDesktop().getJFrame(), Msg.NO_HELP);
     }
@@ -476,7 +400,7 @@ public class DesktopActions implements ActionListener
     /**
      * For opening the About window
      */
-    protected void doAbout()
+    public void doAbout()
     {
         if (atp == null)
         {
@@ -484,27 +408,6 @@ public class DesktopActions implements ActionListener
         }
 
         atp.showInDialog(getDesktop().getJFrame());
-    }
-
-    /**
-     * For opening the About window
-     */
-    protected void doAboutOK()
-    {
-        if (atp != null)
-        {
-            atp.close();
-        }
-    }
-
-    /**
-     * A declaration that the action is not implemented.
-     * @param action is what is not implemnted
-     */
-    protected void doNothing(String action)
-    {
-        Object[] msg = { getAction(action).getValue(Action.NAME) };
-        Reporter.informUser(getDesktop().getJFrame(), Msg.NOT_IMPLEMENTED, msg);
     }
 
     // Enumeration of all the keys to known actions
@@ -521,20 +424,14 @@ public class DesktopActions implements ActionListener
     static final String SAVE_AS = "SaveAs"; //$NON-NLS-1$
     static final String SAVE_ALL = "SaveAll"; //$NON-NLS-1$
     static final String EXIT = "Exit"; //$NON-NLS-1$
-    static final String CUT = "Cut"; //$NON-NLS-1$
     static final String COPY = "Copy"; //$NON-NLS-1$
-    static final String PASTE = "Paste"; //$NON-NLS-1$
     static final String TAB_MODE = "TabMode"; //$NON-NLS-1$
     static final String WINDOW_MODE = "WindowMode"; //$NON-NLS-1$
     static final String VIEW_SOURCE = "ViewSource"; //$NON-NLS-1$
-    static final String BLUR1 = "Blur1"; //$NON-NLS-1$
-    static final String BLUR5 = "Blur5"; //$NON-NLS-1$
-    static final String DELETE_SELECTED = "DeleteSelected"; //$NON-NLS-1$
     static final String BOOKS = "Books"; //$NON-NLS-1$
     static final String OPTIONS = "Options"; //$NON-NLS-1$
     static final String CONTENTS = "Contents"; //$NON-NLS-1$
     static final String ABOUT = "About"; //$NON-NLS-1$
-    static final String ABOUT_OK = "AboutOK"; //$NON-NLS-1$
 
     // Enumeration of error strings used in this class
     private static final String UNKNOWN_ACTION_ERROR = "Unknown action : {0}"; //$NON-NLS-1$

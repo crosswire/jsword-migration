@@ -52,9 +52,7 @@ import org.crosswire.common.swing.MapTableModel;
  * @version $Id$
  */
 public class AboutPane
-{
-    private static final String SPLASH_FONT = "SanSerif"; //$NON-NLS-1$
-    
+{    
     /**
      * Basic constructor
      */
@@ -89,9 +87,9 @@ public class AboutPane
         lbl_info.setText(Msg.getVersionInfo());
 
         JTabbedPane tab_main = new JTabbedPane();
-        
-        ActionFactory actions = DesktopActionFactory.instance();
-        JButton btn_ok = new JButton(actions.getAction(DesktopActions.ABOUT_OK));
+
+        ActionFactory actions = new ActionFactory(AboutPane.class, this);
+        JButton btn_ok = new JButton(actions.getAction(ABOUT_OK));
 
         JPanel pnl_buttons = new JPanel();
         pnl_buttons.add(btn_ok);
@@ -149,7 +147,7 @@ public class AboutPane
     /**
      * Close this dialog
      */
-    protected void close()
+    public void doAboutOK()
     {
         if (dlg_main != null)
         {
@@ -172,7 +170,7 @@ public class AboutPane
         {
             public void windowClosed(WindowEvent ev)
             {
-                close();
+                doAboutOK();
             }
         });
         dlg_main.pack();
@@ -195,6 +193,10 @@ public class AboutPane
     {
         AboutPane.advanced = advanced;
     }
+
+    private static final String SPLASH_FONT = "SanSerif"; //$NON-NLS-1$
+
+    private static final String ABOUT_OK = "AboutOK"; //$NON-NLS-1$
 
     private static boolean advanced = false;
     private JDialog dlg_main;

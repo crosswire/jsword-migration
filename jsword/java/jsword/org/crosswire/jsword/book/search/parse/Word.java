@@ -1,10 +1,10 @@
-package org.crosswire.bibledesktop.desktop;
-
-import org.crosswire.common.swing.ActionFactory;
+package org.crosswire.jsword.book.search.parse;
 
 /**
- * This trivial singleton class is used as a means of finding
- * DesktopActionFactory.properties
+ * The search.Parser uses a Vector of SearchWords to calculate a search.
+ * SearchWords itself is an empty interface, that is simply a place holder -
+ * extended by CommandWord and Word to provide interfaces that
+ * actually do some good.
  * 
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
@@ -24,25 +24,9 @@ import org.crosswire.common.swing.ActionFactory;
  * The copyright to this program is held by it's authors.
  * </font></td></tr></table>
  * @see gnu.gpl.Licence
- * @author DM Smith [ dmsmith555 at hotmail dot com]
+ * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public final class DesktopActionFactory extends ActionFactory
+public interface Word
 {
-
-    private DesktopActionFactory()
-    {
-        super();
-    }
-
-    public static ActionFactory instance()
-    {
-        if (instance == null)
-        {
-            instance = new DesktopActionFactory();
-        }
-        return instance;
-    }
-    
-    private static ActionFactory instance;
 }

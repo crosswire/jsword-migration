@@ -5,8 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -17,6 +15,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
+import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
 
 /**
@@ -56,8 +55,10 @@ public class ViewSourcePane extends JPanel
         init();
 
         txtHtml.setText(html);
-        txtOsis.setText(osis);
         txtHtml.setCaretPosition(0);
+
+        txtOsis.setText(osis);
+        txtOsis.setCaretPosition(0);
     }
 
     /**
@@ -65,35 +66,28 @@ public class ViewSourcePane extends JPanel
      */
     private void init()
     {
+        actions = new ActionFactory(ViewSourcePane.class, this);
+
+        txtHtml = new JTextArea();
         txtHtml.setEditable(false);
         txtHtml.setColumns(80);
         txtHtml.setRows(24);
-        scrHtml.getViewport().add(txtHtml);
-        pnlHtml.setLayout(new BorderLayout());
-        pnlHtml.add(scrHtml, BorderLayout.CENTER);
+        JPanel pnlHtml = new JPanel(new BorderLayout());
+        pnlHtml.add(new JScrollPane(txtHtml), BorderLayout.CENTER);
         pnlHtml.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
+        txtOsis = new JTextArea();
         txtOsis.setEditable(false);
         txtOsis.setColumns(80);
         txtOsis.setRows(24);
-        scrOsis.getViewport().add(txtOsis);
-        pnlOsis.setLayout(new BorderLayout());
-        pnlOsis.add(scrOsis, BorderLayout.CENTER);
+        JPanel pnlOsis = new JPanel(new BorderLayout());
+        pnlOsis.add(new JScrollPane(txtOsis), BorderLayout.CENTER);
         pnlOsis.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        btnClipboard.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                clipboard();
-            }
-        });
-        btnClipboard.setText(Msg.COPY_TO_CLIP.toString());
+        pnlButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        pnlButtons.add(new JButton(actions.getAction("SourceClip")), null); //$NON-NLS-1$
 
-        layButtons.setAlignment(FlowLayout.RIGHT);
-        pnlButtons.setLayout(layButtons);
-        pnlButtons.add(btnClipboard, null);
-
+        JTabbedPane tabMain = new JTabbedPane();
         tabMain.add(pnlOsis, Msg.OSIS.toString());
         tabMain.add(pnlHtml, Msg.HTML.toString());
 
@@ -109,17 +103,7 @@ public class ViewSourcePane extends JPanel
     {
         frame = new JDialog(parent, Msg.TEXT_VIEWER.toString());
 
-        btnClose = new JButton(Msg.CLOSE.toString());
-        btnClose.setMnemonic(Msg.CLOSE.toString().charAt(0));
-        btnClose.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
-                frame.setVisible(false);
-                frame.dispose();
-            }
-        });
-        pnlButtons.add(btnClose, null);
+        pnlButtons.add(new JButton(actions.getAction("SourceOK")), null); //$NON-NLS-1$
 
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
 
@@ -135,25 +119,28 @@ public class ViewSourcePane extends JPanel
     /**
      * Copy the current text into the system clipboard
      */
-    protected void clipboard()
+    public void doSourceClip()
     {
+        // TODO: make this copy the current tab's text
         StringSelection ss = new StringSelection(txtHtml.getText());
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+    }
+
+    /**
+     * 
+     */
+    public void doSourceOK()
+    {
+        frame.setVisible(false);
+        frame.dispose();
     }
 
     /*
      * GUI Components
      */
-    private JTabbedPane tabMain = new JTabbedPane();
-    private JScrollPane scrHtml = new JScrollPane();
-    private JTextArea txtHtml = new JTextArea();
-    private JPanel pnlHtml = new JPanel();
-    private JScrollPane scrOsis = new JScrollPane();
-    private JTextArea txtOsis = new JTextArea();
-    private JPanel pnlOsis = new JPanel();
-    private JPanel pnlButtons = new JPanel();
-    private FlowLayout layButtons = new FlowLayout();
-    private JButton btnClipboard = new JButton();
-    private JButton btnClose = null;
-    protected JDialog frame = null;
+    private JTextArea txtHtml;
+    private JTextArea txtOsis;
+    private JPanel pnlButtons;
+    private JDialog frame;
+    private ActionFactory actions;
 }

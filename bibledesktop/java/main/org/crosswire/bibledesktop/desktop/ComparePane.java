@@ -109,6 +109,7 @@ public class ComparePane extends EirPanel
         pnl_using.add(pnl_verses, null);
         pnl_using.add(pnl_words, null);
 
+        // I18N: Migrate this to an ActionFactory
         btn_go.setText(Msg.COMPARE_GO.toString());
         pnl_buttons.setLayout(new FlowLayout(FlowLayout.RIGHT));
         pnl_buttons.add(btn_go, null);

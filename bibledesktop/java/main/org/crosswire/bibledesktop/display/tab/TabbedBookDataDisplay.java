@@ -20,9 +20,14 @@ import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.passage.Passage;
+import org.crosswire.jsword.passage.PassageUtil;
 
 /**
  * An inner component of Passage pane that can't show the list.
+ * <p>At some stage we should convert this code to remove Passage so it
+ * will work with all Books and not just Bibles. Code is included
+ * (commented out) on how this could be done.
  * 
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
@@ -96,21 +101,41 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
      */
-    public void setBookData(Book book, Key key) throws BookException
+    public void setBookData(Book book, Key newkey) throws BookException
     {
         this.book = book;
-        this.key = key;
+        this.key = PassageUtil.getPassage(newkey);
 
         // Tabbed view or not we should clear out the old tabs
         tabMain.removeAll();
         displays.clear();
         displays.add(pnlView);
 
-        keys = null; // OSISUtil.pagenate(key, pagesize * 10);
-        tabs = (keys.size() > 1);
+        // So use purely Keys and not Passage, create a utility to cut up
+        // a key into a number of keys.
+        //   private KeyList keys;
+        //   private Passage waiting;
+        //   ...
+        //   keys = null; // OSISUtil.pagenate(key, pagesize * 10);
+        //   tabs = (keys.size() > 1);
+        // And then inside the if:
+        //   Key first = (Key) keys.get(0);
+        // in place of the first/waiting code.
+        // Then down in tabChanged()
+        //   // What do we display next
+        //   int countTabs = tabMain.getTabCount();
+        //   Key next = (Key) keys.get(countTabs);
+        // And a bit lower:
+        //   // Do we need a new more tab
+        //   if (countTabs >= keys.size())
+
+        // Do we need a tabbed view
+        tabs = (key != null && key.countVerses() > pageSize);
         if (tabs)
         {
-            Key first = (Key) keys.get(0);
+            // Calc the verses to display in this tab
+            Passage first = (Passage) key.clone();
+            waiting = first.trimVerses(pageSize);
 
             // Create the first tab
             BookDataDisplay pnlNew = createInnerDisplayPane();
@@ -243,8 +268,8 @@ public class TabbedBookDataDisplay implements BookDataDisplay
             tabMain.remove(pnlMore);
 
             // What do we display next
-            int countTabs = tabMain.getTabCount();
-            Key next = (Key) keys.get(countTabs);
+            Passage next = waiting;
+            waiting = next.trimVerses(pageSize);
 
             // Create a new tab
             BookDataDisplay pnlNew = createInnerDisplayPane();
@@ -254,7 +279,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
             tabMain.add(getTabName(next), display);
 
             // Do we need a new more tab
-            if (countTabs >= keys.size())
+            if (waiting != null)
             {
                 tabMain.add(Msg.MORE.toString(), pnlMore);
             }
@@ -353,14 +378,14 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     private transient List hyperlis;
 
     /**
-     * The current key
+     * The passage that we are displaying (in one or more tabs)
      */
-    private Key key = null;
+    private Passage key = null;
 
     /**
-     * The set of Keys for each tab
+     * The verses that we have not created tabs for yet
      */
-    private List keys = null;
+    private Passage waiting = null;
 
     /**
      * The version used for display
