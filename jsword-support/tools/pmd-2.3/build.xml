@@ -11,7 +11,7 @@
 
   <target name="pmd">
     <mkdir dir="${target.web}/pmd"/>
-    <pmd rulesetfiles="${basedir}/${support.tools}/pmd-1.9/ruleset.xml" shortFilenames="true">
+    <pmd rulesetfiles="${basedir}/${support.tools}/pmd-2.3/ruleset.xml" shortFilenames="true">
       <formatter type="html" toFile="${target.web}/pmd/index.html"/>
       <fileset dir="..">
         <patternset refid="pattern.alljava"/>

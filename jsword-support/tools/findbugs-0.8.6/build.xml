@@ -3,7 +3,7 @@
   <!-- this should be overridden by the parent file -->
   <property name="support.tools" value=".."/>
 
-  <property name="support.bugs" value="${support.tools}/findbugs-0.8.4"/>
+  <property name="support.bugs" value="${support.tools}/findbugs-0.8.6"/>
   <!-- Unified location of source -->
   <property name="target.bugs.src" value="${target.temp}/findbugs/src"/>
 
@@ -27,6 +27,9 @@
       <fileset dir="../jsword/${source.java}" casesensitive="yes">
         <patternset refid="java.compile"/>
       </fileset>
+      <fileset dir="../bibledesktop/${source.java}" casesensitive="yes">
+        <patternset refid="java.compile"/>
+      </fileset>
     </copy>
     <mkdir dir="${target.web}/findbugs"/>
     <findbugs home="${support.bugs}"
@@ -45,13 +48,16 @@
       <auxClasspath path="${target.jar}/jdom-1.0.jar"/>
       <!-- auxClasspath path="${target.jar}/log4j-1.2.8.jar"/ -->
       <auxClasspath path="${target.jar}/lucene-1.4.3.jar"/>
+      <auxClasspath path="../common/jar/jaf-1.0.2/activation.jar"/>
       <!-- auxClasspath path="${target.jar}/winlaf-0.4.jar"/ -->
-      <auxClasspath path="${target.jar}/tar.jar"/>
+      <!-- <auxClasspath path="${target.jar}/tar.jar"/> -->
       <auxClasspath path="${target.jar}/jlfgr-1_0.jar"/>
     </findbugs>
+    <!--
 	  <delete failonerror="false">
       <fileset dir="${target.bugs.src}"/>
     </delete>
+    -->
     <style
         in="${target.web}/findbugs/report.xml"
         out="${target.web}/findbugs/index.html"

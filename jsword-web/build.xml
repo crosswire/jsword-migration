@@ -56,13 +56,13 @@
   </fileset>
 
   <property name="support.tools" value="../jsword-support/tools"/>
-  <import file="${support.tools}/checkstyle-3.4/build.xml"/>
+  <import file="${support.tools}/checkstyle-3.5/build.xml"/>
   <import file="${support.tools}/java2html131/build.xml"/>
   <import file="${support.tools}/javancss2141/build.xml"/>
   <import file="${support.tools}/jcoverage104/build.xml"/>
-  <import file="${support.tools}/jdepend26/build.xml"/>
-  <import file="${support.tools}/findbugs-0.8.4/build.xml"/>
-  <import file="${support.tools}/pmd-1.9/build.xml"/>
+  <import file="${support.tools}/jdepend-2.9/build.xml"/>
+  <import file="${support.tools}/findbugs-0.8.6/build.xml"/>
+  <import file="${support.tools}/pmd-2.3/build.xml"/>
   <!-- ignored <import file="${support.tools}/tomcat/build.xml"/> -->
 
   <target name="javadoc" description="Create JavaDoc">

@@ -7,7 +7,7 @@
     <echo>JDepend may fail if jdepend.jar is not visible to Ant.
 To make it visible you need to do one of two things depending
 on whether you are running ant in Eclipse or not.
-In Eclipse, add jdepend.jar to Preferences -> Ant -> Runtime -> Global Entries
+In Eclipse, add jdepend-2.9.jar to Preferences -> Ant -> Runtime -> Global Entries
 Otherwise, run the jdepend.antlibs task to copy jars to ANT_HOME/lib</echo>
     <mkdir dir="${target.web}/jdepend"/>
     <jdepend format="xml" outputfile="${target.web}/jdepend/jdepend-report.xml" fork="yes">
@@ -16,19 +16,19 @@ Otherwise, run the jdepend.antlibs task to copy jars to ANT_HOME/lib</echo>
       </classespath>
       <classpath>
         <fileset dir="${target.jar}" includes="**/*.jar"/>
-        <fileset dir="${support.tools}/jdepend26" includes="**/*.jar"/>
+        <fileset dir="${support.tools}/jdepend-2.9" includes="**/*.jar"/>
       </classpath>
     </jdepend>
     <style
         in="${target.web}/jdepend/jdepend-report.xml"
         out="${target.web}/jdepend/jdepend-report.html"
-        style="${support.tools}/jdepend26/jdepend.xsl"/>
+        style="${support.tools}/jdepend-2.9/jdepend.xsl"/>
   </target>
 
   <!-- This does not need to be done in Eclipse. Add it to Ant preferences instead -->
   <target name="jdepend.antlibs" description="Copy required jars to ant/lib">
-    <echo message="copy ${basedir}/${support.tools}/jdepend26/jdepend.jar"/>
-    <copy file="${support.tools}/jdepend26/jdepend.jar" todir="${ant.home}/lib"/>
+    <echo message="copy ${basedir}/${support.tools}/jdepend-2.9/jdepend-2.9.jar"/>
+    <copy file="${support.tools}/jdepend-2.9/jdepend-2.9.jar" todir="${ant.home}/lib"/>
   </target>
 
 </project>
