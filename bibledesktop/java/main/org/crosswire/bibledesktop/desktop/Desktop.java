@@ -682,7 +682,6 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
 
                 addBibleViewPane(view);
 
-                view.addHyperlinkListener(this);
                 view.setPassage(ref);
             }
             catch (NoSuchVerseException ex)

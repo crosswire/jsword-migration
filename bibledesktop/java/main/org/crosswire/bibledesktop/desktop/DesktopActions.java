@@ -12,14 +12,15 @@ import org.crosswire.bibledesktop.book.SitesPane;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.common.config.swing.ConfigEditorFactory;
 import org.crosswire.common.swing.ActionFactory;
-import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
 import org.crosswire.common.xml.SerializingContentHandler;
+import org.crosswire.common.xml.TransformingSAXEventProvider;
 import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
+import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.BooksEvent;
 import org.crosswire.jsword.book.BooksListener;
@@ -281,25 +282,28 @@ public class DesktopActions
             if (key == null)
             {
                 Reporter.informUser(getDesktop().getJFrame(), Msg.SOURCE_MISSING);
+                return;
             }
-            else
-            {
-                Book book = da.getBook();
 
-                String orig = book.getRawData(key);
+            Book book = da.getBook();
 
-                BookData bdata = book.getData(key);
-                
-                SAXEventProvider osissep = bdata.getSAXEventProvider();
-                SAXEventProvider htmlsep = converter.convert(osissep);
-                String html = XMLUtil.writeToString(htmlsep);
+            String orig = book.getRawData(key);
 
-                SerializingContentHandler osis = new SerializingContentHandler(true);
-                osissep.provideSAXEvents(osis);
+            BookData bdata = book.getData(key);
 
-                ViewSourcePane viewer = new ViewSourcePane(orig, osis.toString(), html);
-                viewer.showInFrame(getDesktop().getJFrame());
-            }
+            BookMetaData bmd = book.getBookMetaData();
+            boolean direction = bmd.isLeftToRight();
+
+            SAXEventProvider osissep = bdata.getSAXEventProvider();
+            TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider)converter.convert(osissep);
+            htmlsep.setParameter("direction", direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            String html = XMLUtil.writeToString(htmlsep);
+
+            SerializingContentHandler osis = new SerializingContentHandler(true);
+            osissep.provideSAXEvents(osis);
+
+            ViewSourcePane viewer = new ViewSourcePane(orig, osis.toString(), html);
+            viewer.showInFrame(getDesktop().getJFrame());
         }
         catch (Exception ex)
         {
@@ -416,9 +420,4 @@ public class DesktopActions
      * The Book installer window
      */
     private SitesPane sites;
-
-    /**
-     * The log stream
-     */
-    protected static final Logger log = Logger.getLogger(DesktopActions.class);
 }

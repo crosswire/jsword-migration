@@ -86,7 +86,7 @@ public class ViewSourcePane extends JPanel
         pnlButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         pnlButtons.add(new JButton(actions.getAction("SourceClip")), null); //$NON-NLS-1$
 
-        JTabbedPane tabMain = new JTabbedPane();
+        tabMain = new JTabbedPane();
         tabMain.add(pnlOrig, Msg.ORIG.toString());
         tabMain.add(pnlOsis, Msg.OSIS.toString());
         tabMain.add(pnlHtml, Msg.HTML.toString());
@@ -121,8 +121,8 @@ public class ViewSourcePane extends JPanel
      */
     public void doSourceClip()
     {
-        // TODO: make this copy the current tab's text
-        StringSelection ss = new StringSelection(txtHtml.getText());
+        JTextArea ta = (JTextArea) tabMain.getSelectedComponent();
+        StringSelection ss = new StringSelection(ta.getText());
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
     }
 
@@ -138,6 +138,7 @@ public class ViewSourcePane extends JPanel
     /*
      * GUI Components
      */
+    private JTabbedPane tabMain;
     private JTextArea txtOrig;
     private JTextArea txtOsis;
     private JTextArea txtHtml;

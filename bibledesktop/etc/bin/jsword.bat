@@ -21,7 +21,6 @@ for %%i in ("%JSWORD%\*.jar") do call "%JSWORD%\lcp.bat" %%i
 REM STEP 4 - Run JSword
 REM -Xmx256M
 REM "-Djava.endorsed.dirs=%JSWORD%\lib"
-REM "-Djsword.bible.dir=%JSWORD%\resource"
 REM -classpath "%JSWORD%\resource"
 "%JAVA_HOME%\bin\java.exe" -classpath "%LOCALCLASSPATH%" org.crosswire.bibledesktop.desktop.Desktop
 goto End

@@ -1,6 +1,7 @@
 package org.crosswire.bibledesktop.display.textpane;
 
 import java.awt.Component;
+import java.awt.ComponentOrientation;
 import java.awt.event.MouseListener;
 
 import javax.swing.JTextPane;
@@ -10,10 +11,12 @@ import javax.swing.text.html.HTMLEditorKit;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
+import org.crosswire.common.xml.TransformingSAXEventProvider;
 import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookException;
+import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.util.ConverterFactory;
 
@@ -48,6 +51,8 @@ public class TextPaneBookDataDisplay implements BookDataDisplay
      */
     public TextPaneBookDataDisplay()
     {
+        converter = ConverterFactory.getConverter();
+        txtView = new JTextPane();
         txtView.setEditable(false);
         txtView.setEditorKit(new HTMLEditorKit());
     }
@@ -66,6 +71,11 @@ public class TextPaneBookDataDisplay implements BookDataDisplay
             return;
         }
 
+        // Make sure Hebrew displays from Right to Left
+        BookMetaData bmd = book.getBookMetaData();
+        boolean direction = bmd.isLeftToRight();
+        txtView.applyComponentOrientation(direction ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
+
         BookData bdata = book.getData(key);
 
         try
@@ -77,7 +87,8 @@ public class TextPaneBookDataDisplay implements BookDataDisplay
             }
 
             SAXEventProvider osissep = bdata.getSAXEventProvider();
-            SAXEventProvider htmlsep = converter.convert(osissep);
+            TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider)converter.convert(osissep);
+            htmlsep.setParameter("direction", direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             String text = XMLUtil.writeToString(htmlsep);
 
             txtView.setText(text);
@@ -166,10 +177,10 @@ public class TextPaneBookDataDisplay implements BookDataDisplay
     /**
      * To convert OSIS to HTML
      */
-    private Converter converter = ConverterFactory.getConverter();
+    private Converter converter;
 
     /**
      * The display component
      */
-    private JTextPane txtView = new JTextPane();
+    private JTextPane txtView;
 }

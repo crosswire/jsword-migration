@@ -26,8 +26,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.util.Reporter;
@@ -201,9 +199,9 @@ public class DisplaySelectPane extends JPanel
 
         chkSRestrict = new JCheckBox(actions.getAction(RESTRICT_SEARCH));
         chkSRestrict.setSelected(false);
-        chkSRestrict.addChangeListener(new ChangeListener()
+        chkSRestrict.addItemListener(new ItemListener()
         {
-            public void stateChanged(ChangeEvent ev)
+            public void itemStateChanged(ItemEvent ev)
             {
                 boolean selected = chkSRestrict.isSelected();
                 txtSRestrict.setEnabled(selected);
@@ -246,9 +244,9 @@ public class DisplaySelectPane extends JPanel
 
         chkMRestrict = new JCheckBox(actions.getAction(RESTRICT_MATCH));
         chkMRestrict.setSelected(false);
-        chkMRestrict.addChangeListener(new ChangeListener()
+        chkMRestrict.addItemListener(new ItemListener()
         {
-            public void stateChanged(ChangeEvent ev)
+            public void itemStateChanged(ItemEvent ev)
             {
                 boolean selected = chkSRestrict.isSelected();
                 txtSRestrict.setEnabled(selected);

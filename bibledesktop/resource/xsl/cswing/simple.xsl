@@ -12,6 +12,9 @@
 
   <!-- The CSS stylesheet to use. The url must be absolute. -->
   <xsl:param name="css"/>
+  
+  <!-- The order of display. Hebrew is rtl (right to left) -->
+  <xsl:param name="direction" select="'ltr'"/>
 
   <!--
   The font that is passed in is of the form: font or font,style,size 
@@ -68,7 +71,7 @@
 
   <!--=======================================================================-->
   <xsl:template match="/osis">
-    <html>
+    <html dir="{$direction}">
       <head>
         <xsl:if test="$css != ''">
           <link rel="stylesheet" type="text/css" href="{$css}" title="styling" />
@@ -89,19 +92,36 @@
         <!-- If there are notes, output a table with notes in the 2nd column. -->
         <xsl:choose>
           <xsl:when test="//note">
-            <table width="100%">
-              <tr>
-                <td width="3%">&#160;</td>
-                <td valign="top" width="75%">
-                  <xsl:apply-templates/>
-                </td>
-                <td width="2%">&#160;</td>
-                <td valign="top" width="20%" style="background:#f4f4e8;">
-                  <p>&#160;</p>
-                  <xsl:apply-templates select="//note" mode="print-notes"/>
-                </td>
-              </tr>
-            </table>
+            <xsl:choose>
+              <xsl:when test="$direction != 'rtl'">
+	            <table cols="2" cellpadding="5" cellspacing="5" width="100%">
+	              <tr>
+	                <td valign="top" width="80%">
+	                  <xsl:apply-templates/>
+	                </td>
+	                <td valign="top" width="20%" style="background:#f4f4e8;">
+	                  <p>&#160;</p>
+	                  <xsl:apply-templates select="//note" mode="print-notes"/>
+	                </td>
+	              </tr>
+	            </table>
+              </xsl:when>
+              <xsl:otherwise>
+                <!-- reverse the table for Right to Left languages -->
+	            <table cols="2" cellpadding="5" cellspacing="5" width="100%">
+	              <!-- In a right to left, the alignment should be reversed too -->
+	              <tr align="right">
+	                <td valign="top" width="20%" style="background:#f4f4e8;">
+	                  <p>&#160;</p>
+	                  <xsl:apply-templates select="//note" mode="print-notes"/>
+	                </td>
+	                <td valign="top" width="80%">
+	                  <xsl:apply-templates/>
+	                </td>
+	              </tr>
+	            </table>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:when>
           <xsl:otherwise>
             <xsl:apply-templates/>
@@ -238,7 +258,7 @@
               <a href="{$strongs.hebrew.url}{$numeric-portion}" class="strongs"><xsl:apply-templates/></a>
             </xsl:when>
             <xsl:otherwise>
-              <a href="${strongs.greek.url}{$numeric-portion}" class="strongs"><xsl:apply-templates/></a>
+              <a href="{$strongs.greek.url}{$numeric-portion}" class="strongs"><xsl:apply-templates/></a>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:when>

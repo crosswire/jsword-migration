@@ -117,22 +117,6 @@ public class ConfigurableSwingConverter implements Converter
     /**
      * Accessor for the stylesheet we are transforming using
      */
-    public static String getRealFont()
-    {
-        return realfont;
-    }
-
-    /**
-     * Accessor for the stylesheet we are transforming using
-     */
-    public static void setRealFont(String realfont)
-    {
-        ConfigurableSwingConverter.realfont = realfont;
-    }
-
-    /**
-     * Accessor for the stylesheet we are transforming using
-     */
     public static String getResourceName()
     {
         return style;
@@ -145,8 +129,6 @@ public class ConfigurableSwingConverter implements Converter
     {
         ConfigurableSwingConverter.style = style;
     }
-
-    private static String realfont;
 
     /**
      * The font to be used in OSIS->HTML generation
