@@ -16,20 +16,17 @@
         reportLevel="low"
         sort="text"
         jvmargs="-Xmx512m">
-      <class location="${target.web}/jnlp/jsword-swing.jar"/>
-      <class location="${target.web}/jnlp/jsword.jar"/>
-      <auxClasspath path="${target.web}/jnlp/jsword-osis.jar"/>
-      <auxClasspath path="${target.web}/jnlp/commons-lang-2.0.jar"/>
-      <auxClasspath path="${target.web}/jnlp/commons-net-1.1.0.jar"/>
-      <auxClasspath path="${target.web}/jnlp/jaxb-api.jar"/>
-      <auxClasspath path="${target.web}/jnlp/jaxb-libs.jar"/>
-      <auxClasspath path="${target.web}/jnlp/jaxb-ri.jar"/>
-      <auxClasspath path="${target.web}/jnlp/jdom.jar"/>
-      <auxClasspath path="${target.web}/jnlp/log4j-1.2.7.jar"/>
-      <auxClasspath path="${target.web}/jnlp/lucene-1.3-final.jar"/>
-      <auxClasspath path="${target.web}/jnlp/winlaf-0.4.jar"/>
-      <auxClasspath path="${target.web}/jnlp/tar.jar"/>
-      <auxClasspath path="${target.web}/jnlp/jlfgr-1_0.jar"/>
+      <class location="${target.jar}/bibledesktop.jar"/>
+      <class location="${target.jar}/jsword.jar"/>
+      <class location="${target.jar}/common.jar"/>
+      <auxClasspath path="${target.jar}/commons-lang-2.0.jar"/>
+      <auxClasspath path="${target.jar}/commons-net-1.1.0.jar"/>
+      <auxClasspath path="${target.jar}/jdom.jar"/>
+      <auxClasspath path="${target.jar}/log4j-1.2.7.jar"/>
+      <auxClasspath path="${target.jar}/lucene-1.3-final.jar"/>
+      <auxClasspath path="${target.jar}/winlaf-0.4.jar"/>
+      <auxClasspath path="${target.jar}/tar.jar"/>
+      <auxClasspath path="${target.jar}/jlfgr-1_0.jar"/>
     </findbugs>
   </target>
 

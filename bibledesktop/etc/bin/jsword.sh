@@ -79,8 +79,7 @@ if [ -n "$CLASSPATH" ] ; then
   LOCALCLASSPATH="$CLASSPATH"
 fi
 
-# This is actually redundant because we are using the endorsed.dirs method
-# (which we need for JAXB purposes)
+# This is redundant if we are using the endorsed.dirs method
 for i in "${JSWORD}/"*.jar
 do
   # if the directory is empty, then it will return the input string
