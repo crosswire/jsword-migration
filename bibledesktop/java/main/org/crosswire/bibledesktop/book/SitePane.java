@@ -238,13 +238,14 @@ public class SitePane extends JPanel
                 try
                 {
                     // Is the book already installed? Then nothing to do.
-                    if (Books.installed().getBookMetaData(name.getName()) != null)
+                    BookMetaData bmd = Books.installed().getBookMetaData(name.getName());
+                    if (bmd != null && ! installer.isNewer(bmd))
                     {
                         Reporter.informUser(this, Msg.INSTALLED, name.getName());
                         return;
                     }
 
-                    float size = NetUtil.getSize(installer.toURL(name)) / 1024;
+                    float size = NetUtil.getSize(installer.toRemoteURL(name)) / 1024;
                     if (JOptionPane.showConfirmDialog(this, Msg.SIZE.toString(new Object[] {name.getName(), new Float(size)}),
                                     Msg.CONFIRMATION_TITLE.toString(),
                                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)

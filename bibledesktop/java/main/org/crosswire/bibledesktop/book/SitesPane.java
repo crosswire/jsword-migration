@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import org.crosswire.common.progress.swing.JobsProgressBar;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.jsword.book.install.InstallManager;
 import org.crosswire.jsword.book.install.Installer;
@@ -104,19 +105,11 @@ public class SitesPane extends JPanel
     {
         actions = new ActionFactory(SitesPane.class, this);
 
-        JButton btnOK = new JButton(actions.getAction(CLOSE));
-
-        JButton btnAdd = new JButton(actions.getAction(EDIT_SITE));
-
-        pnlButtons = new JPanel();
-        pnlButtons.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        pnlButtons.add(btnAdd, null);
-        pnlButtons.add(btnOK);
-
         tabMain = new JTabbedPane();
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         this.add(tabMain, BorderLayout.CENTER);
+        this.add(new JobsProgressBar(true), BorderLayout.SOUTH);
     }
 
     /**
