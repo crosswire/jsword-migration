@@ -28,6 +28,7 @@ import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.install.InstallException;
 import org.crosswire.jsword.book.install.Installer;
+import org.crosswire.jsword.util.IndexDownloader;
 
 /**
  * A panel for use within a SitesPane to display one set of Books that are
@@ -72,6 +73,9 @@ public class SitePane extends JPanel
         this(bookListInstaller, AVAILABLE_BOOKS_LABEL);
     }
 
+    /**
+     * Internal ctor
+     */
     private SitePane(Installer bookListInstaller, String labelAcronymn)
     {
         installer = bookListInstaller;
@@ -79,7 +83,7 @@ public class SitePane extends JPanel
         actions = new ActionFactory(SitePane.class, this);
 
         BookList bl = installer;
-        if (installer == null)
+        if (bl == null)
         {
             bl = Books.installed();
         }
@@ -92,10 +96,50 @@ public class SitePane extends JPanel
      */
     private void initialize(String labelAcronymn, BookList books)
     {
+        lblDesc = new JLabel();
+        lblDesc.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 0));
+
         Component left = createAvailablePanel(labelAcronymn, books);
         Component right = createSelectedPanel();
         this.setLayout(new BorderLayout());
+        this.add(lblDesc, BorderLayout.NORTH);
         this.add(createSplitPane(left, right), BorderLayout.CENTER);
+
+        updateDescription();
+    }
+
+    /**
+     * 
+     */
+    private void updateDescription()
+    {
+        String desc = "#ERROR#"; //$NON-NLS-1$
+
+        if (installer == null)
+        {
+            int bookCount = Books.installed().getBookMetaDatas().size();
+            desc = Msg.INSTALLED_DESC.toString(new Object[]
+            {
+                new Integer(bookCount)
+            });
+        }
+        else
+        {
+            int bookCount = installer.getBookMetaDatas().size();
+            if (bookCount == 0)
+            {
+                desc = Msg.NONE_AVAILABLE_DESC.toString();
+            }
+            else
+            {
+                desc = Msg.AVAILABLE_DESC.toString(new Object[]
+                {
+                    new Integer(bookCount)
+                });
+            }
+        }
+
+        lblDesc.setText(desc);
     }
 
     /**
@@ -186,6 +230,7 @@ public class SitePane extends JPanel
         if (installer != null)
         {
             panel.add(new JButton(actions.getAction(INSTALL)));
+            panel.add(new JButton(actions.getAction(INSTALL_SEARCH)));
             panel.add(new JButton(actions.getAction(REFRESH)));
         }
 //        else
@@ -239,7 +284,7 @@ public class SitePane extends JPanel
                 {
                     // Is the book already installed? Then nothing to do.
                     BookMetaData bmd = Books.installed().getBookMetaData(name.getName());
-                    if (bmd != null && ! installer.isNewer(bmd))
+                    if (bmd != null && !installer.isNewer(bmd))
                     {
                         Reporter.informUser(this, Msg.INSTALLED, name.getName());
                         return;
@@ -252,12 +297,33 @@ public class SitePane extends JPanel
                     {
                         installer.install(name);
                     }
-
                 }
                 catch (InstallException ex)
                 {
                     Reporter.informUser(this, ex);
                 }
+            }
+        }
+    }
+
+    /**
+     * Kick off the installer
+     */
+    public void doInstallSearch()
+    {
+        doInstall();
+
+        TreePath path = treAvailable.getSelectionPath();
+        if (path != null)
+        {
+            try
+            {
+                BookMetaData bmd = (BookMetaData) path.getLastPathComponent();
+                IndexDownloader.downloadIndex(bmd, installer);
+            }
+            catch (Exception ex)
+            {
+                Reporter.informUser(this, ex);
             }
         }
     }
@@ -285,6 +351,7 @@ public class SitePane extends JPanel
 
         //actions.getAction(DELETE).setEnabled(bookSelected);
         actions.getAction(INSTALL).setEnabled(bookSelected);
+        actions.getAction(INSTALL_SEARCH).setEnabled(bookSelected);
     }
 
     private static final String INSTALLED_BOOKS_LABEL = "InstalledBooksLabel"; //$NON-NLS-1$
@@ -292,6 +359,7 @@ public class SitePane extends JPanel
     private static final String SELECTED_BOOK_LABEL = "SelectedBookLabel"; //$NON-NLS-1$
     private static final String REFRESH = "Refresh"; //$NON-NLS-1$
     private static final String INSTALL = "Install"; //$NON-NLS-1$
+    private static final String INSTALL_SEARCH = "InstallSearch"; //$NON-NLS-1$
     //private static final String DELETE = "Delete"; //$NON-NLS-1$
 
     /**
@@ -307,9 +375,10 @@ public class SitePane extends JPanel
     /*
      * GUI Components
      */
-    private JTree treAvailable;
-    private JTable tblSelected;
-    private MapTableModel emptyTableModel;
+    private JTree treAvailable = null;
+    private JTable tblSelected = null;
+    private MapTableModel emptyTableModel = null;
+    private JLabel lblDesc = null;
 
     /**
      * SERIALUID(dms): A placeholder for the ultimate version id.

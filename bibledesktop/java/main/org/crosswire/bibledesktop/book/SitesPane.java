@@ -117,9 +117,6 @@ public class SitesPane extends JPanel
      */
     protected void addAllInstallers()
     {
-        // Add the panel for the locally installed books
-        tabMain.add(Msg.LOCAL_BOOKS.toString(), new SitePane());
-
         // Now add panels for book installation sites
         for (Iterator it = installers.keySet().iterator(); it.hasNext(); )
         {
@@ -129,6 +126,9 @@ public class SitesPane extends JPanel
             SitePane site = new SitePane(installer);
             tabMain.add(name, site);
         }
+
+        // Add the panel for the locally installed books
+        tabMain.add(Msg.LOCAL_BOOKS.toString(), new SitePane());
     }
 
     /**
