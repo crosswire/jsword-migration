@@ -2,7 +2,7 @@
 
   <import file="../common/core.xml"/>
   <property name="dependency"         value="bibledesktop-web"/>
-  <property name="dependency.jar"     value="../${dependency}/target/ant/jar"/>
+  <property name="dependency.jar"     value="../bibledesktop/target/ant/jar"/>
 
   <!--=======================================================================-->
   <property name="source.web"       value="${source.root}/web"/>
