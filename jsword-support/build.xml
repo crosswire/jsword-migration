@@ -1,0 +1,14 @@
+<project name="jsword" default="all">
+
+  <target name="cvsup" description="cvs update">
+    <cvs cvsRoot=":pserver:joe@cvs.crosswire.org:/cvs/jsword" dest="..">
+      <commandline>
+        <argument value="-q"/>
+        <argument value="update"/>
+        <argument value="-d"/>
+        <argument value="-P"/>
+      </commandline>
+    </cvs>
+  </target>
+
+</project>
