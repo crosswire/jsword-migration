@@ -32,8 +32,6 @@ import javax.swing.event.DocumentListener;
 
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
-import org.crosswire.common.swing.LookAndFeelUtil;
-import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.StringUtil;
 import org.crosswire.jsword.book.search.parse.IndexSearcher;
 import org.crosswire.jsword.book.search.parse.PassageLeftParamWord;
@@ -511,17 +509,18 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         updateSearchString();
     }
 
-    /**
-     * Quick test method
-     */
-    public static void main(String[] args)
-    {
-        LookAndFeelUtil.initialize();
-        AdvancedSearchPane adv = new AdvancedSearchPane();
-        String reply = adv.showInDialog(null, "Advanced Search", true, "test"); //$NON-NLS-1$ //$NON-NLS-2$
-        log.debug(reply);
-        System.exit(0);
-    }
+//    /**
+//     * Temporary driver.
+//     * @param args The command line arguments
+//     */
+//    public static void main(String[] args)
+//    {
+//        LookAndFeelUtil.initialize();
+//        AdvancedSearchPane adv = new AdvancedSearchPane();
+//        String reply = adv.showInDialog(null, "Advanced Search", true, "test"); //$NON-NLS-1$ //$NON-NLS-2$
+//        log.debug(reply);
+//        System.exit(0);
+//    }
 
     /*
      * Action constants
@@ -614,10 +613,10 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     private JTextArea txtSummary;
     private JScrollPane scrSummary;
 
-    /**
-     * The log stream
-     */
-    private static final Logger log = Logger.getLogger(AdvancedSearchPane.class);
+//    /**
+//     * The log stream
+//     */
+//    private static final Logger log = Logger.getLogger(AdvancedSearchPane.class);
 
     /**
      * Serialization ID

@@ -131,7 +131,7 @@
 	                </td>
 	                <td valign="top" width="20%" style="background:#f4f4e8;">
 	                  <p>&#160;</p>
-	                  <xsl:apply-templates select="//note" mode="print-notes"/>
+	                  <xsl:apply-templates select="//verse" mode="print-notes"/>
 	                </td>
 	              </tr>
 	            </table>
@@ -216,7 +216,7 @@
     <!-- Always output the verse -->
     <xsl:choose>
  	  <xsl:when test="$VLine = 'true'">
-        <div class="l"><xsl:call-template name="versenum"/><xsl:apply-templates/><xsl:text> </xsl:text></div>
+        <div class="l"><a name="{@osisID}"><xsl:call-template name="versenum"/></a><xsl:apply-templates/></div>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="versenum"/><xsl:apply-templates/>
@@ -234,7 +234,6 @@
         <xsl:value-of select="substring-after(substring-after(@osisID, '.'), '.')"/>
       </xsl:variable>
       <xsl:choose>
-        <!-- create anchors for verses if we allow notes -->
         <xsl:when test="$TinyVNum = 'true' and $Notes = 'true'">
       	  <a name="{@osisID}"><sup class="verse"><xsl:value-of select="$versenum"/></sup></a>
       	</xsl:when>
@@ -251,7 +250,24 @@
       	</xsl:otherwise>
       </xsl:choose>
     </xsl:if>
+    <xsl:if test="$VNum = 'false' and $Notes = 'true'">
+      <a name="{@osisID}"></a>
+    </xsl:if>
   </xsl:template>
+
+  <xsl:template match="verse" mode="print-notes">
+    <xsl:if test="./note">
+      <xsl:variable name="book" select="substring-before(@osisID, '.')"/>
+      <xsl:variable name="chapter" select="substring-before(substring-after(@osisID, '.'), '.')"/>
+      <xsl:variable name="versenum" select="substring-after(substring-after(@osisID, '.'), '.')"/>
+      <a href="#{@osisID}">
+        <xsl:value-of select="concat($book, '&#160;', $chapter, ':', $versenum)"/>
+      </a>
+      <xsl:apply-templates select="./note" mode="print-notes" />
+      <div><xsl:text>&#160;</xsl:text></div>
+    </xsl:if>
+  </xsl:template>
+
   <!--=======================================================================-->
   <!-- Avoid adding whitespace -->
   <xsl:template match="a">
@@ -259,28 +275,30 @@
   </xsl:template>
 
   <!--=======================================================================-->
+  <!-- Avoid adding whitespace -->
   <!-- When we encounter a note, we merely output a link to the note. -->
   <xsl:template match="note">
     <xsl:if test="$Notes = 'true'">
       <!-- If the preceeding sibling was a note, emit a separator -->
-      <xsl:if test="preceding-sibling::*[local-name() = 'note']">
-        <sup class="note">,&#160;</sup>
-      </xsl:if>
-      <a href="#note-{generate-id(.)}">
-        <sup class="note"><xsl:number level="any" from="/" format="a"/></sup>
-      </a>
+      <xsl:choose>
+        <xsl:when test="following-sibling::*[1][self::note]">
+          <sup class="note"><a href="#note-{generate-id(.)}"><xsl:number level="any" from="/osis//verse" format="a"/></a>, </sup>
+        </xsl:when>
+        <xsl:otherwise>
+          <sup class="note"><a href="#note-{generate-id(.)}"><xsl:number level="any" from="/osis//verse" format="a"/></a></sup>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:if>
   </xsl:template>
 
   <!--=======================================================================-->
   <xsl:template match="note" mode="print-notes">
     <div class="margin">
-      <b><xsl:number level="any" from="/" format="a"/></b>
+      <b><xsl:number level="any" from="/osis//verse" format="a"/></b>
       <a name="note-{generate-id(.)}">
         <xsl:text> </xsl:text>
       </a>
       <xsl:apply-templates/>
-      [<a href="#{ancestor::verse[1]/@osisID}">verse</a>]
     </div>
   </xsl:template>
 
@@ -488,15 +506,15 @@
   <!-- Avoid adding whitespace -->
   <!-- We add a single space to the end of the line because of a bug in Sun's rendering. -->
   <xsl:template match="l">
-    <div class="l"><xsl:apply-templates/><xsl:text> </xsl:text></div>
+    <div class="l"><xsl:apply-templates/></div>
   </xsl:template>
   
   <!-- Avoid adding whitespace -->
   <!-- While a BR is a break, if it is immediately followed by punctuation,
        indenting this rule can introduce whitespace.
-       We use <div class="l"><xsl:text> </xsl:text></div> here because <br/> does not work. Nor does <br>
+       We use <div class="l"></div> here because <br/> does not work. Nor does <br>
     -->
-  <xsl:template match="lb"><div class="l"><xsl:text> </xsl:text></div></xsl:template>
+  <xsl:template match="lb"><div class="l"></div></xsl:template>
   
   <!-- Avoid adding whitespace -->
   <xsl:template match="list">
@@ -657,28 +675,28 @@
   
   <xsl:template match="hi">
       <xsl:choose>
-        <xsl:when test="@rend = 'bold'">
+        <xsl:when test="@type = 'bold'">
           <strong><xsl:apply-templates/></strong>
         </xsl:when>
-        <xsl:when test="@rend = 'illuminated'">
+        <xsl:when test="@type = 'illuminated'">
           <strong><em><xsl:apply-templates/></em></strong>
         </xsl:when>
-        <xsl:when test="@rend = 'italic'">
+        <xsl:when test="@type = 'italic'">
           <em><xsl:apply-templates/></em>
         </xsl:when>
-        <xsl:when test="@rend = 'line-through'">
+        <xsl:when test="@type = 'line-through'">
           <!-- later -->
           <xsl:apply-templates/>
         </xsl:when>
-        <xsl:when test="@rend = 'normal'">
+        <xsl:when test="@type = 'normal'">
            <!-- later -->
           <xsl:apply-templates/>
         </xsl:when>
-        <xsl:when test="@rend = 'small-caps'">
+        <xsl:when test="@type = 'small-caps'">
           <!-- later -->
           <xsl:apply-templates/>
         </xsl:when>
-        <xsl:when test="@rend = 'underline'">
+        <xsl:when test="@type = 'underline'">
           <u><xsl:apply-templates/></u>
         </xsl:when>
         <xsl:otherwise>

@@ -96,6 +96,10 @@
     <introspect class="org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay" property="PageSize"/>
   </option>
 
+  <option key="BibleDisplay.RankedVerses" type="number">
+    <introspect class="org.crosswire.bibledesktop.book.DisplaySelectPane" property="NumRankedVerses"/>
+  </option>
+
   <option key="BibleDisplay.ConfigurableFont" type="font">
     <introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="Font"/>
   </option>

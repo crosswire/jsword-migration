@@ -7,12 +7,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import javax.swing.event.EventListenerList;
 import javax.swing.filechooser.FileFilter;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
@@ -55,19 +54,21 @@ import org.crosswire.jsword.passage.PassageKeyFactory;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class BibleViewPane extends JPanel implements Titleable, Clearable
+public class BibleViewPane extends JPanel implements Titleable, Clearable, TitleChangedListener
 {
     /**
      * Simple ctor
      */
     public BibleViewPane()
     {
+        listeners = new EventListenerList();
         pnlSelect = new DisplaySelectPane();
         KeySidebar sidebar = new KeySidebar(pnlSelect.getBook());
         BookDataDisplay display = new TabbedBookDataDisplay();
         pnlPassg = new SplitBookDataDisplay(sidebar, display);
         sidebar.addKeyChangeListener(pnlSelect);
         pnlSelect.addCommandListener(sidebar);
+        pnlSelect.addTitleChangedListener(this);
         pnlPassg.addKeyChangeListener(sidebar);
         init();
     }
@@ -270,12 +271,11 @@ public class BibleViewPane extends JPanel implements Titleable, Clearable
      */
     public void setKey(Key key)
     {
-        pnlSelect.setTitle(key.getName());
         pnlPassg.setBookData(pnlSelect.getBook(), key);
-        if (saved == null)
-        {
-            fireTitleChanged(new TitleChangedEvent(BibleViewPane.this, getTitle()));
-        }
+//        if (saved == null)
+//        {
+//            fireTitleChanged(new TitleChangedEvent(BibleViewPane.this, getTitle()));
+//        }
     }
 
     /**
@@ -294,77 +294,55 @@ public class BibleViewPane extends JPanel implements Titleable, Clearable
         return pnlSelect;
     }
 
-//    /**
-//     * Add a listener when someone clicks on a browser 'link'
-//     */
-//    public void addHyperlinkListener(HyperlinkListener li)
-//    {
-//        pnlPassg.addHyperlinkListener(li);
-//    }
-//
-//    /**
-//     * Remove a listener when someone clicks on a browser 'link'
-//     */
-//    public void removeHyperlinkListener(HyperlinkListener li)
-//    {
-//        pnlPassg.removeHyperlinkListener(li);
-//    }
-
     /**
-     * Add a listener to the list
+     * Add a TitleChangedEvent listener
      */
     public synchronized void addTitleChangedListener(TitleChangedListener li)
     {
-        List temp = new ArrayList();
-        if (listeners == null)
-        {
-            temp.add(li);
-            listeners = temp;
-        }
-        else
-        {
-            temp.addAll(listeners);
-
-            if (!temp.contains(li))
-            {
-                temp.add(li);
-                listeners = temp;
-            }
-        }
+        listeners.add(TitleChangedListener.class, li);
     }
 
     /**
-     * Remove a listener from the list
+     * Remove a TitleChangedEvent listener
      */
     public synchronized void removeTitleChangedListener(TitleChangedListener li)
     {
-        if (listeners != null && listeners.contains(li))
-        {
-            List temp = new ArrayList();
-            temp.addAll(listeners);
-            temp.remove(li);
-            listeners = temp;
-        }
+        listeners.remove(TitleChangedListener.class, li);
     }
 
     /**
-     * Inform the listeners that a title has changed
+     * Listen for changes to the title
+     * @param ev the event to throw
      */
     protected void fireTitleChanged(TitleChangedEvent ev)
     {
-        if (listeners != null)
+        // Guaranteed to return a non-null array
+        Object[] contents = listeners.getListenerList();
+
+        // Process the listeners last to first, notifying
+        // those that are interested in this event
+        for (int i = contents.length - 2; i >= 0; i -= 2)
         {
-            List temp = listeners;
-            int count = temp.size();
-            for (int i = 0; i < count; i++)
+            if (contents[i] == TitleChangedListener.class)
             {
-                ((TitleChangedListener) temp.get(i)).titleChanged(ev);
+                ((TitleChangedListener) contents[i + 1]).titleChanged(ev);
             }
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.common.swing.desktop.event.TitleChangedListener#titleChanged(org.crosswire.common.swing.desktop.event.TitleChangedEvent)
+     */
+    public void titleChanged(TitleChangedEvent ev)
+    {
+        if (saved == null)
+        {
+            fireTitleChanged(new TitleChangedEvent(BibleViewPane.this, getTitle()));
         }
     }
 
     protected File saved;
-    private transient List listeners;
+    private transient EventListenerList listeners;
     private DisplaySelectPane pnlSelect;
     protected SplitBookDataDisplay pnlPassg;
     private JFileChooser chooser = new JFileChooser();

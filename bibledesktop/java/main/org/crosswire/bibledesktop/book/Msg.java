@@ -47,6 +47,7 @@ class Msg extends MsgBase
     static final Msg SELECT_PASSAGE_TITLE = new Msg("DisplaySelectPane.SelectPassageTitle"); //$NON-NLS-1$
     static final Msg CLEAR = new Msg("DisplaySelectPane.Clear"); //$NON-NLS-1$
     static final Msg UNTITLED = new Msg("DisplaySelectPane.Untitled"); //$NON-NLS-1$
+    static final Msg NO_HITS = new Msg("DisplaySelectPane.NoHits"); //$NON-NLS-1$
     static final Msg ADVANCED_TITLE = new Msg("DisplaySelectPane.AdvancedTitle"); //$NON-NLS-1$
     static final Msg HELP_TEXT = new Msg("DisplaySelectPane.HelpText"); //$NON-NLS-1$
     static final Msg HELP_TITLE = new Msg("DisplaySelectPane.HelpTitle"); //$NON-NLS-1$

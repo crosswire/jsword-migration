@@ -7,10 +7,8 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.crosswire.biblemapper.model.LinkArray;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
-import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.raw.RawBook;
 
@@ -57,9 +55,8 @@ public class LinkArrayTest extends TestCase
     {
         RawBook.setDefaultCacheData(true);
 
-        List dicts = Books.installed().getBookMetaDatas(BookFilters.getBibles());
-        BookMetaData bmd = (BookMetaData) dicts.get(0);
-        Book book = bmd.getBook();
+        List dicts = Books.installed().getBooks(BookFilters.getBibles());
+        Book book = (Book) dicts.get(0);
 
         LinkArray la = new LinkArray(book);
 

@@ -374,20 +374,22 @@ public class Cookie implements Cloneable
         return true;
     }
 
-    /**
-    * Overrides the standard <code>java.lang.Object.clone</code>
-    * method to return a copy of this cookie.
-    */
+    
+    /* (non-Javadoc)
+     * @see java.lang.Object#clone()
+     */
     public Object clone()
     {
+        Object clone = null;
         try
         {
-            return super.clone();
+            clone = super.clone();
         }
         catch (CloneNotSupportedException e)
         {
-            throw new RuntimeException(e.getMessage());
+            assert false: e;
         }
+        return clone;
     }
 
     /** NAME= ... "$Name" style is reserved */

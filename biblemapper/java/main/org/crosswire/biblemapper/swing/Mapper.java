@@ -56,7 +56,6 @@ import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
-import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.passage.BibleInfo;
 import org.jdom.Document;
@@ -157,9 +156,8 @@ public class Mapper extends JFrame
 
             config.localToApplication();
 
-            List dicts = Books.installed().getBookMetaDatas(BookFilters.getBibles());
-            BookMetaData bmd = (BookMetaData) dicts.get(0);
-            Book book = bmd.getBook();
+            List dicts = Books.installed().getBooks(BookFilters.getBibles());
+            Book book = (Book) dicts.get(0);
 
             la = new LinkArray(book);
         }
@@ -912,7 +910,7 @@ public class Mapper extends JFrame
 
             if (reply == BookChooser.APPROVE_OPTION)
             {
-                Book book = chooser.getSelected().getBook();
+                Book book = chooser.getSelected();
                 la = new LinkArray(book);
                 lar.setLinkArray(la);
             }

@@ -15,8 +15,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -27,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.EventListenerList;
 
 import org.crosswire.bibledesktop.book.install.IndexResolver;
 import org.crosswire.bibledesktop.passage.KeyChangeEvent;
@@ -34,16 +33,21 @@ import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.swing.QuickHelpDialog;
+import org.crosswire.common.swing.desktop.event.TitleChangedEvent;
+import org.crosswire.common.swing.desktop.event.TitleChangedListener;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.IndexStatus;
+import org.crosswire.jsword.book.search.basic.DefaultSearchModifier;
+import org.crosswire.jsword.book.search.basic.DefaultSearchRequest;
 import org.crosswire.jsword.book.search.parse.IndexSearcher;
 import org.crosswire.jsword.book.search.parse.PhraseParamWord;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.passage.NoSuchVerseException;
+import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.PassageTally;
 import org.crosswire.jsword.passage.RestrictionType;
+import org.crosswire.jsword.passage.RocketPassage;
 
 /**
  * Passage Selection area.
@@ -84,6 +88,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     private void initialize()
     {
+        listeners = new EventListenerList();
+
         advanced = new AdvancedSearchPane();
 
         title = Msg.UNTITLED.toString(new Integer(base++));
@@ -98,12 +104,16 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         {
             selected.addPropertyChangeListener(pcl);
             cboBible.setToolTipText(selected.toString());
+            key = selected.createEmptyKeyList();
         }
         else
         {
             // The application has started and there are no installed bibles.
             // So make the combo box a reasonable size.
             cboBible.setPrototypeDisplayValue("                                                            "); //$NON-NLS-1$
+            // Should always get a key from book, unless we need a PassageTally
+            // But here we don't have a book yet.
+            key = new RocketPassage();
         }
         cboBible.setRenderer(new BookListCellRenderer());
         cboBible.addItemListener(new ItemListener()
@@ -204,7 +214,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     public Book getBook()
     {
-        return mdlBible.getSelectedBook();
+        return selected;
     }
 
     /**
@@ -212,17 +222,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     public void clear()
     {
-        if (isClear())
-        {
-            return;
-        }
-
-        txtKey.setText(""); //$NON-NLS-1$
-        txtSearch.setText(""); //$NON-NLS-1$
-
-        title = Msg.UNTITLED.toString(new Integer(base++));
-
-        updateDisplay();
+        setKey(selected == null ? new RocketPassage() : selected.createEmptyKeyList());
+        setTitle(CLEAR);
     }
 
     /**
@@ -262,8 +263,12 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     public void doPassageAction()
     {
-        setTitle(txtKey.getText());
-        updateDisplay();
+        setKey(txtKey.getText());
+        if (!key.isEmpty())
+        {
+            txtSearch.setText(""); //$NON-NLS-1$
+            setTitle(PASSAGE);
+        }
     }
 
     /**
@@ -271,8 +276,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     public void doSearchAction()
     {
-        Book book = mdlBible.getSelectedBook();
-        if (book == null)
+        if (selected == null)
         {
             noBookInstalled();
             return;
@@ -281,36 +285,42 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         try
         {
             String param = txtSearch.getText();
+            if (param == null || param.length() == 0)
+            {
+                return;
+            }
 
-            if (chkMatch.isSelected())
+            // We may want to do ranking for more than just
+            // "match"
+            boolean rank = chkMatch.isSelected();
+            if (rank)
             {
                 String quote = IndexSearcher.getPreferredSyntax(PhraseParamWord.class);
                 param = quote + param + quote;
             }
 
-            Key key = book.find(param);
+            DefaultSearchModifier modifier = new DefaultSearchModifier();
+            modifier.setRanked(rank);
+
+            Key results = selected.find(new DefaultSearchRequest(param, modifier));
 
             // we get PassageTallys for best match searches
-            if (key instanceof PassageTally)
+            if (results instanceof PassageTally || rank)
             {
-                if (chkMatch.isSelected())
-                {
-                    PassageTally tally = (PassageTally) key;
-                    tally.setOrdering(PassageTally.ORDER_TALLY);
-                    // TODO: Make the number of ranges in a tally be an option.
-                    tally.trimRanges(20, RestrictionType.NONE);
-                }
-                else
-                {
-                    // If match is not selected then show the entire result
-                    Key newKey = book.createEmptyKeyList();
-                    newKey.addAll(key);
-                }
+                PassageTally tally = (PassageTally) results;
+                tally.setOrdering(PassageTally.ORDER_TALLY);
+                tally.trimRanges(getNumRankedVerses(), RestrictionType.NONE);
             }
 
-            txtKey.setText(key.getName());
-            setTitle(param);
-            updateDisplay();
+            if (results.isEmpty())
+            {
+                Reporter.informUser(this, Msg.NO_HITS, new Object[] { param });
+            }
+            else
+            {
+                setTitle(SEARCH);
+                setKey(results);
+            }
         }
         catch (Exception ex)
         {
@@ -368,27 +378,13 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     private void updateDisplay()
     {
-        Book book = mdlBible.getSelectedBook();
-        if (book == null)
+        if (selected == null)
         {
             noBookInstalled();
             return;
         }
 
-        try
-        {
-            Key key = book.getKey(txtKey.getText());
-
-            fireCommandMade(new DisplaySelectEvent(this, key, book));
-        }
-        catch (NoSuchVerseException ex)
-        {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), Msg.BAD_VERSE.toString(), JOptionPane.ERROR_MESSAGE);
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(this, ex);
-        }
+        fireCommandMade(new DisplaySelectEvent(this, key, selected));
     }
 
     /**
@@ -399,26 +395,88 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         return title;
     }
 
-    /**
-     * Sets the default name
-     */
-    public void setTitle(String title)
+    public void setKey(String newKey)
     {
-        this.title = title;
+        if (selected == null)
+        {
+            noBookInstalled();
+            return;
+        }
+
+        try
+        {
+            setKey(selected.getKey(newKey));
+        }
+        catch (NoSuchKeyException e)
+        {
+            Reporter.informUser(this, e);
+        }
+    }
+
+    public void setKey(Key newKey)
+    {
+        if (newKey == null || newKey.isEmpty())
+        {
+            if (!key.isEmpty())
+            {
+                key = selected.createEmptyKeyList();
+                txtKey.setText(""); //$NON-NLS-1$
+                txtSearch.setText(""); //$NON-NLS-1$
+
+                updateDisplay();
+                setTitle(CLEAR);
+            }
+        }
+        else if (!newKey.equals(key))
+        {
+            key = newKey;
+            String text = key.getName();
+            txtKey.setText(text);
+            updateDisplay();
+            if (isClear())
+            {
+                setTitle(PASSAGE);
+                txtSearch.setText(""); //$NON-NLS-1$
+            }
+        }
     }
 
     /**
      * Sets the default name
      */
-    public void setText(String text)
+//    public void setTitle(String title)
+//    {
+//        this.title = title;
+//    }
+
+//    /**
+//     * Sets the default name
+//     */
+//    public void setText(String text)
+//    {
+//        String currentText = txtKey.getText();
+//        if (!currentText.equals(text))
+//        {
+//            txtKey.setText(text);
+//            setTitle(text);
+//            updateDisplay();
+//        }
+//    }
+//
+    /**
+     * @return Returns the numRankedVerses.
+     */
+    public static int getNumRankedVerses()
     {
-        String currentText = txtKey.getText();
-        if (!currentText.equals(text))
-        {
-            txtKey.setText(text);
-            setTitle(text);
-            updateDisplay();
-        }
+        return numRankedVerses;
+    }
+
+    /**
+     * @param newNumRankedVerses The numRankedVerses to set.
+     */
+    public static void setNumRankedVerses(int newNumRankedVerses)
+    {
+        numRankedVerses = newNumRankedVerses;
     }
 
     /**
@@ -444,15 +502,33 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
             return;
         }
 
-        try
-        {
-            Key key = selected.getKey(txtKey.getText());
+        fireVersionChanged(new DisplaySelectEvent(this, key, selected));
+    }
 
-            fireVersionChanged(new DisplaySelectEvent(this, key, selected));
-        }
-        catch (Exception ex)
+    private void setTitle(int newMode)
+    {
+        mode = newMode;
+        switch (mode)
         {
-            Reporter.informUser(this, ex);
+        case CLEAR:
+            title = Msg.UNTITLED.toString(new Integer(base++));
+            break;
+        case PASSAGE:
+            title = key.getName();
+            break;
+        case SEARCH:
+            title = txtSearch.getText();
+            break;
+        default:
+            assert false;
+        }
+        if (title.length() == 0)
+        {
+            setTitle(CLEAR);
+        }
+        else
+        {
+            fireTitleChanged(new TitleChangedEvent(this, title));
         }
     }
 
@@ -522,42 +598,59 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     public void keyChanged(KeyChangeEvent ev)
     {
-        String text = ev.getKey().getName();
-        setText(text);
+        setKey(ev.getKey());
     }
 
     /**
-     * Add a command listener
+     * Add a TitleChangedEvent listener
+     */
+    public synchronized void addTitleChangedListener(TitleChangedListener li)
+    {
+        listeners.add(TitleChangedListener.class, li);
+    }
+
+    /**
+     * Remove a TitleChangedEvent listener
+     */
+    public synchronized void removeTitleChangedListener(TitleChangedListener li)
+    {
+        listeners.remove(TitleChangedListener.class, li);
+    }
+
+    /**
+     * Listen for changes to the title
+     * @param ev the event to throw
+     */
+    protected void fireTitleChanged(TitleChangedEvent ev)
+    {
+        // Guaranteed to return a non-null array
+        Object[] contents = listeners.getListenerList();
+
+        // Process the listeners last to first, notifying
+        // those that are interested in this event
+        for (int i = contents.length - 2; i >= 0; i -= 2)
+        {
+            if (contents[i] == TitleChangedListener.class)
+            {
+                ((TitleChangedListener) contents[i + 1]).titleChanged(ev);
+            }
+        }
+    }
+
+    /**
+     * Add a DisplaySelectEvent listener
      */
     public synchronized void addCommandListener(DisplaySelectListener li)
     {
-        List temp = new ArrayList(2);
-
-        if (listeners != null)
-        {
-            temp.addAll(listeners);
-        }
-
-        if (!temp.contains(li))
-        {
-            temp.add(li);
-            listeners = temp;
-        }
+        listeners.add(DisplaySelectListener.class, li);
     }
 
     /**
-     * Remove a command listener
+     * Remove a DisplaySelectEvent listener
      */
     public synchronized void removeCommandListener(DisplaySelectListener li)
     {
-        if (listeners != null && listeners.contains(li))
-        {
-            List temp = new ArrayList();
-            temp.addAll(listeners);
-
-            temp.remove(li);
-            listeners = temp;
-        }
+        listeners.remove(DisplaySelectListener.class, li);
     }
 
     /**
@@ -565,12 +658,16 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     protected void fireCommandMade(DisplaySelectEvent ev)
     {
-        if (listeners != null)
+        // Guaranteed to return a non-null array
+        Object[] contents = listeners.getListenerList();
+
+        // Process the listeners last to first, notifying
+        // those that are interested in this event
+        for (int i = contents.length - 2; i >= 0; i -= 2)
         {
-            for (int i = 0; i < listeners.size(); i++)
+            if (contents[i] == DisplaySelectListener.class)
             {
-                DisplaySelectListener li = (DisplaySelectListener) listeners.get(i);
-                li.passageSelected(ev);
+                ((DisplaySelectListener) contents[i + 1]).passageSelected(ev);
             }
         }
     }
@@ -580,12 +677,16 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     protected void fireVersionChanged(DisplaySelectEvent ev)
     {
-        if (listeners != null)
+        // Guaranteed to return a non-null array
+        Object[] contents = listeners.getListenerList();
+
+        // Process the listeners last to first, notifying
+        // those that are interested in this event
+        for (int i = contents.length - 2; i >= 0; i -= 2)
         {
-            int count = listeners.size();
-            for (int i = 0; i < count; i++)
+            if (contents[i] == DisplaySelectListener.class)
             {
-                ((DisplaySelectListener) listeners.get(i)).bookChosen(ev);
+                ((DisplaySelectListener) contents[i + 1]).bookChosen(ev);
             }
         }
     }
@@ -612,8 +713,6 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
     private String title;
 
-    private transient List listeners;
-
     private QuickHelpDialog dlgHelp;
 
     private ActionFactory actions;
@@ -634,6 +733,29 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     private JButton btnKeyGo;
     private AdvancedSearchPane advanced;
     private JButton btnIndex;
+
+    /**
+     * The current state of the display: SEARCH, PASSAGE, CLEAR
+     */
+    private int mode;
+    private static final int CLEAR = 0;
+    private static final int PASSAGE = 1;
+    private static final int SEARCH = 2;
+
+    /**
+     * The current passage.
+     */
+    private Key key;
+
+    /**
+     * Who is interested in things this DisplaySelectPane does
+     */
+    private EventListenerList listeners;
+
+    /**
+     * How may hits to show when the search results are ranked.
+     */
+    private static int numRankedVerses = 20;
 
     /**
      * Serialization ID

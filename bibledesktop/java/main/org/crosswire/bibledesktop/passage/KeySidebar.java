@@ -19,7 +19,6 @@ import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageListType;
 import org.crosswire.jsword.passage.RestrictionType;
@@ -165,17 +164,17 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
             return;
         }
 
-        try
+        // Have to have a copy of the key
+        // since we allow it to be blurred and
+        // that would cause the shared location
+        // to get the change w/o seeing it.
+        if (newKey == null)
         {
-            // Have to have a copy of the key
-            // since we allow it to be blurred and
-            // that would cause the shared location
-            // to get the change w/o seeing it.
-            key = book.getKey(newKey.getName());
+            key = null;
         }
-        catch (NoSuchKeyException e)
+        else
         {
-            assert false;
+            key = (Key) newKey.clone();
         }
         partial = null;
         model.setPassage((Passage) key);

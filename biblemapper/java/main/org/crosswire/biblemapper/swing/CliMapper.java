@@ -8,7 +8,6 @@ import java.util.List;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookFilters;
-import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.search.parse.IndexSearcher;
 import org.crosswire.jsword.book.search.parse.PhraseParamWord;
@@ -66,9 +65,8 @@ public class CliMapper
             PrintWriter dbout = new PrintWriter(new FileOutputStream("c:\\database.csv"));
             PrintWriter xlout = new PrintWriter(new FileOutputStream("c:\\sheet.csv"));
 
-            List dicts = Books.installed().getBookMetaDatas(BookFilters.getBibles());
-            BookMetaData bmd = (BookMetaData) dicts.get(0);
-            Book book = bmd.getBook();
+            List dicts = Books.installed().getBooks(BookFilters.getBibles());
+            Book book = (Book) dicts.get(0);
             //Matcher engine = new Matcher(bible);
 
             Element links = new Element("links");
