@@ -73,13 +73,6 @@ import org.crosswire.jsword.passage.VerseRange;
  */
 public class PassageSelectionPane extends JPanel implements ActionListener
 {
-    private static final String BIBLE_TREE = "BibleTree"; //$NON-NLS-1$
-    private static final String ADD = "AddVerse"; //$NON-NLS-1$
-    private static final String DELETE = "DeleteVerse"; //$NON-NLS-1$
-    private static final String SELECTED_VERSES = "SelectedVerses"; //$NON-NLS-1$
-    private static final String VERSES = "Verses"; //$NON-NLS-1$
-    private static final String DONE = "Done"; //$NON-NLS-1$
-
     /**
      * Constructor for PassageSelectionPane.
      */
@@ -87,16 +80,16 @@ public class PassageSelectionPane extends JPanel implements ActionListener
     {
         try
         {
-            URL url_good = ResourceUtil.getResource("toolbarButtonGraphics/general/About24.gif"); //$NON-NLS-1$
-            if (url_good != null)
+            URL urlGood = ResourceUtil.getResource("toolbarButtonGraphics/general/About24.gif"); //$NON-NLS-1$
+            if (urlGood != null)
             {
-                ico_good = new ImageIcon(url_good);
+                icoGood = new ImageIcon(urlGood);
             }
             
-            URL url_bad = ResourceUtil.getResource("toolbarButtonGraphics/general/Stop24.gif"); //$NON-NLS-1$
-            if (url_bad != null)
+            URL urlBad = ResourceUtil.getResource("toolbarButtonGraphics/general/Stop24.gif"); //$NON-NLS-1$
+            if (urlBad != null)
             {
-                ico_bad = new ImageIcon(url_bad);
+                icoBad = new ImageIcon(urlBad);
             }
         }
         catch (MalformedURLException ex)
@@ -115,30 +108,33 @@ public class PassageSelectionPane extends JPanel implements ActionListener
         actions = BookActionFactory.instance();
         actions.addActionListener(this);
         
-        JLabel lbl_all = actions.createJLabel(BIBLE_TREE);
-        JLabel lbl_sel = actions.createJLabel(SELECTED_VERSES);
+        JLabel lblAll = actions.createJLabel(BIBLE_TREE);
+        JLabel lblSel = actions.createJLabel(SELECTED_VERSES);
 
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         this.setLayout(new GridBagLayout());
-        this.add(lbl_all, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 10, 5, 5), 0, 0));
-        this.add(createScrolledTree(lbl_all), new GridBagConstraints(0, 1, 1, 4, 0.5, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 10, 10, 2), 0, 0));
+        this.add(lblAll, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 10, 5, 5), 0, 0));
+        this.add(createScrolledTree(lblAll), new GridBagConstraints(0, 1, 1, 4, 0.5, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 10, 10, 2), 0, 0));
         this.add(new JPanel(), new GridBagConstraints(1, 1, 1, 1, 0.0, 0.5, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         this.add(new JButton(actions.getAction(DELETE)), new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
         this.add(new JButton(actions.getAction(ADD)), new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
         this.add(new JPanel(), new GridBagConstraints(1, 4, 1, 1, 0.0, 0.5, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(lbl_sel, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 5, 5, 10), 0, 0));
-        this.add(createScrolledList(lbl_sel), new GridBagConstraints(2, 1, 1, 4, 0.5, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 2, 10, 10), 0, 0));
+        this.add(lblSel, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 5, 5, 10), 0, 0));
+        this.add(createScrolledList(lblSel), new GridBagConstraints(2, 1, 1, 4, 0.5, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 2, 10, 10), 0, 0));
         this.add(createMessageLabel(), new GridBagConstraints(0, 5, 3, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 10, 5, 10), 0, 0));
         this.add(createDisplayPanel(), new GridBagConstraints(0, 6, 3, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 10, 0, 10), 0, 0));
     }
 
+    /**
+     * 
+     */
     private Component createScrolledTree(JLabel label)
     {
-        tre_all = new JTree();
-        tre_all.setModel(new WholeBibleTreeModel());
-        tre_all.setShowsRootHandles(true);
-        tre_all.setRootVisible(false);
-        tre_all.addTreeSelectionListener(new TreeSelectionListener()
+        treAll = new JTree();
+        treAll.setModel(new WholeBibleTreeModel());
+        treAll.setShowsRootHandles(true);
+        treAll.setRootVisible(false);
+        treAll.addTreeSelectionListener(new TreeSelectionListener()
         {
             public void valueChanged(TreeSelectionEvent ev)
             {
@@ -146,15 +142,18 @@ public class PassageSelectionPane extends JPanel implements ActionListener
             }
         });
     
-        label.setLabelFor(tre_all);
+        label.setLabelFor(treAll);
     
-        return new JScrollPane(tre_all);
+        return new JScrollPane(treAll);
     }
 
+    /**
+     * 
+     */
     private Component createScrolledList(JLabel label)
     {
-        lst_sel = new JList();
-        lst_sel.addListSelectionListener(new ListSelectionListener()
+        lstSel = new JList();
+        lstSel.addListSelectionListener(new ListSelectionListener()
         {
             public void valueChanged(ListSelectionEvent ev)
             {
@@ -162,31 +161,39 @@ public class PassageSelectionPane extends JPanel implements ActionListener
             }
         });
         
-        label.setLabelFor(lst_sel);
+        label.setLabelFor(lstSel);
         
-        return new JScrollPane(lst_sel);
+        return new JScrollPane(lstSel);
     }
 
+    /**
+     * 
+     */
     private Component createDisplayPanel()
     {
-        txt_display = new JTextField();
-        txt_display.getDocument().addDocumentListener(new CustomDocumentEvent());
+        txtDisplay = new JTextField();
+        txtDisplay.getDocument().addDocumentListener(new CustomDocumentEvent());
 
-        JLabel lbl_display = actions.createJLabel(VERSES);
-        lbl_display.setLabelFor(txt_display);
+        JLabel lblDisplay = actions.createJLabel(VERSES);
+        lblDisplay.setLabelFor(txtDisplay);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        panel.add(txt_display, BorderLayout.CENTER);
-        panel.add(lbl_display, BorderLayout.WEST);
+        panel.add(txtDisplay, BorderLayout.CENTER);
+        panel.add(lblDisplay, BorderLayout.WEST);
         return panel;
     }
+
+    /**
+     * 
+     */
     private Component createMessageLabel()
     {
-        lbl_message = new JLabel();
+        lblMessage = new JLabel();
         
-        return lbl_message;
+        return lblMessage;
     }
+
     /**
      * Called whenever the passage changes to update the text box.
      */
@@ -198,7 +205,7 @@ public class PassageSelectionPane extends JPanel implements ActionListener
         }
 
         changing = true;
-        txt_display.setText(ref.getName());
+        txtDisplay.setText(ref.getName());
         updateMessageSummary();
         changing = false;
     }
@@ -214,7 +221,7 @@ public class PassageSelectionPane extends JPanel implements ActionListener
         }
 
         changing = true;
-        String refstr = txt_display.getText();
+        String refstr = txtDisplay.getText();
         Passage temp = null;
         try
         {
@@ -239,8 +246,8 @@ public class PassageSelectionPane extends JPanel implements ActionListener
      */
     private void setValidPassage(boolean valid)
     {
-        lst_sel.setEnabled(valid);
-        tre_all.setEnabled(valid);
+        lstSel.setEnabled(valid);
+        treAll.setEnabled(valid);
         actions.getAction(ADD).setEnabled(valid);
         actions.getAction(DELETE).setEnabled(valid);
     }
@@ -251,8 +258,8 @@ public class PassageSelectionPane extends JPanel implements ActionListener
      */
     private void updateMessage(NoSuchVerseException ex)
     {
-        lbl_message.setText(Msg.ERROR.toString(ex.getMessage()));
-        lbl_message.setIcon(ico_bad);
+        lblMessage.setText(Msg.ERROR.toString(ex.getMessage()));
+        lblMessage.setIcon(icoBad);
     }
 
     /**
@@ -260,8 +267,8 @@ public class PassageSelectionPane extends JPanel implements ActionListener
      */
     private void updateMessageSummary()
     {
-        lbl_message.setText(Msg.SUMMARY.toString(ref.getOverview()));
-        lbl_message.setIcon(ico_good);
+        lblMessage.setText(Msg.SUMMARY.toString(ref.getOverview()));
+        lblMessage.setIcon(icoGood);
     }
 
     /**
@@ -276,8 +283,8 @@ public class PassageSelectionPane extends JPanel implements ActionListener
         {
             ref = PassageFactory.createPassage(refstr);
 
-            txt_display.setText(refstr);
-            lst_sel.setModel(new PassageListModel(ref, PassageListModel.LIST_RANGES, PassageConstants.RESTRICT_CHAPTER));
+            txtDisplay.setText(refstr);
+            lstSel.setModel(new PassageListModel(ref, PassageListModel.LIST_RANGES, PassageConstants.RESTRICT_CHAPTER));
 
             ref.addPassageListener(new CustomPassageListener());
             updateMessageSummary();
@@ -292,7 +299,7 @@ public class PassageSelectionPane extends JPanel implements ActionListener
         treeSelected();
         listSelected();
 
-        dlg_main = new JDialog(JOptionPane.getFrameForComponent(parent));
+        dlgMain = new JDialog(JOptionPane.getFrameForComponent(parent));
         JPanel pnl_action = new JPanel();
         KeyStroke esc = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
         bailout = true;
@@ -307,22 +314,22 @@ public class PassageSelectionPane extends JPanel implements ActionListener
         {
             public void actionPerformed(ActionEvent ev)
             {
-                dlg_main.dispose();
+                dlgMain.dispose();
             }
         };
 
-        dlg_main.getContentPane().setLayout(new BorderLayout());
-        dlg_main.getContentPane().add(this, BorderLayout.CENTER);
-        dlg_main.getContentPane().add(pnl_action, BorderLayout.SOUTH);
-        dlg_main.getRootPane().setDefaultButton(btn_go);
-        dlg_main.getRootPane().registerKeyboardAction(closer, esc, JComponent.WHEN_IN_FOCUSED_WINDOW);
-        dlg_main.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        dlg_main.setTitle(title);
-        dlg_main.setModal(modal);
+        dlgMain.getContentPane().setLayout(new BorderLayout());
+        dlgMain.getContentPane().add(this, BorderLayout.CENTER);
+        dlgMain.getContentPane().add(pnl_action, BorderLayout.SOUTH);
+        dlgMain.getRootPane().setDefaultButton(btn_go);
+        dlgMain.getRootPane().registerKeyboardAction(closer, esc, JComponent.WHEN_IN_FOCUSED_WINDOW);
+        dlgMain.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        dlgMain.setTitle(title);
+        dlgMain.setModal(modal);
 
-        GuiUtil.restrainedPack(dlg_main, 0.5f, 0.75f);
-        GuiUtil.centerWindow(dlg_main);
-        dlg_main.setVisible(true);
+        GuiUtil.restrainedPack(dlgMain, 0.5f, 0.75f);
+        GuiUtil.centerWindow(dlgMain);
+        dlgMain.setVisible(true);
 
         if (bailout)
         {
@@ -330,7 +337,7 @@ public class PassageSelectionPane extends JPanel implements ActionListener
         }
         else
         {
-            return txt_display.getText();
+            return txtDisplay.getText();
         }
     }
 
@@ -347,7 +354,7 @@ public class PassageSelectionPane extends JPanel implements ActionListener
      */
     protected void doAddVerse()
     {
-        TreePath[] selected = tre_all.getSelectionPaths();
+        TreePath[] selected = treAll.getSelectionPaths();
         if (selected != null)
         {
             for (int i=0; i<selected.length; i++)
@@ -364,7 +371,7 @@ public class PassageSelectionPane extends JPanel implements ActionListener
      */
     protected void doDeleteVerse()
     {
-        Object[] selected = lst_sel.getSelectedValues();
+        Object[] selected = lstSel.getSelectedValues();
         if (selected != null)
         {
             for (int i=0; i<selected.length; i++)
@@ -378,7 +385,7 @@ public class PassageSelectionPane extends JPanel implements ActionListener
     public void doDone()
     {
         bailout = false;
-        dlg_main.dispose();
+        dlgMain.dispose();
     }
 
     /**
@@ -386,7 +393,7 @@ public class PassageSelectionPane extends JPanel implements ActionListener
      */
     protected void treeSelected()
     {
-        TreePath[] selected = tre_all.getSelectionPaths();
+        TreePath[] selected = treAll.getSelectionPaths();
         actions.getAction(ADD).setEnabled(selected != null && selected.length > 0);
     }
 
@@ -395,15 +402,22 @@ public class PassageSelectionPane extends JPanel implements ActionListener
      */
     protected void listSelected()
     {
-        Object[] selected = lst_sel.getSelectedValues();
+        Object[] selected = lstSel.getSelectedValues();
         actions.getAction(DELETE).setEnabled(selected != null && selected.length > 0);
     }
+
+    private static final String BIBLE_TREE = "BibleTree"; //$NON-NLS-1$
+    private static final String ADD = "AddVerse"; //$NON-NLS-1$
+    private static final String DELETE = "DeleteVerse"; //$NON-NLS-1$
+    private static final String SELECTED_VERSES = "SelectedVerses"; //$NON-NLS-1$
+    private static final String VERSES = "Verses"; //$NON-NLS-1$
+    private static final String DONE = "Done"; //$NON-NLS-1$
 
     /**
      * If escape was pressed we don't want to update the parent
      */
     protected boolean bailout;
-    
+
     /**
      * Prevent us getting in an event cascade loop
      */
@@ -419,18 +433,18 @@ public class PassageSelectionPane extends JPanel implements ActionListener
      * EditSite.
      */
     private BookActionFactory actions;
-    
+
     /*
      * GUI Components
      */
-    private Icon ico_good;
-    private Icon ico_bad;
-    private JTree tre_all;
-    private JList lst_sel;
-    private JTextField txt_display;
-    private JLabel lbl_message;
-    protected JDialog dlg_main;
-    
+    private Icon icoGood;
+    private Icon icoBad;
+    private JTree treAll;
+    private JList lstSel;
+    private JTextField txtDisplay;
+    private JLabel lblMessage;
+    protected JDialog dlgMain;
+
     /**
      * Update the list whenever the textbox changes
      */
