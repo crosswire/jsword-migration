@@ -14,11 +14,11 @@
     <copy file="${support.tools}/checkstyle33/custom.xml" overwrite="true"
         tofile="${target.web}/checkstyle/custom.xml">
       <filterset>
-        <filter token="source.java" value="${source.java}"/> <!-- ${basedir}/ -->
+        <filter token="source.java" value="${basedir}/${source.java}"/>
         <filter token="target.checkstyle" value="${target.web}/checkstyle"/> <!-- ${basedir}/ -->
       </filterset>
     </copy>
-    <checkstyle config="${target.web}/checkstyle/custom.xml" failOnViolation="false">
+    <checkstyle config="${target.web}/checkstyle/custom.xml" failOnViolation="false" >
       <fileset refid="fileset.alljava"/>
       <formatter type="plain"/>
       <formatter type="xml" toFile="${target.web}/checkstyle/checkstyle_errors.xml"/>

@@ -154,7 +154,7 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="release.version">
+  <target name="release.version" depends="javadoc">
     <echo message="Building release ${version} to ${directory}"/>
     <!-- source packages -->
     <mkdir dir="${directory}"/>
@@ -185,10 +185,10 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="tools" depends="checkstyle">
+  <target name="tools" depends="">
     <!--
     temporarily removed to make things quicker:
-    javadoc, java2html, javancss, findbugs, pmd, cpd, jdepend
+    checkstyle, javadoc, java2html, javancss, findbugs, pmd, cpd, jdepend
     -->
   </target>
 
