@@ -68,10 +68,10 @@ public class SWConfig {
         return props != null ? enumToIterator( props.propertyNames() ) : null;
     }
 
-    private Iterator enumToIterator(Enumeration enum) {
+    private Iterator enumToIterator(Enumeration iter) {
         List list = new LinkedList();
-        while( enum.hasMoreElements() )
-            list.add( enum.nextElement() );
+        while( iter.hasMoreElements() )
+            list.add( iter.nextElement() );
         return list.iterator();
     }
 
