@@ -63,7 +63,7 @@ public class ViewSourcePane extends JPanel
     {
         actions = new ActionFactory(ViewSourcePane.class, this);
 
-        txtOrig = new JTextArea(orig, 24, 80);
+        JTextArea txtOrig = new JTextArea(orig, 24, 80);
         txtOrig.setEditable(false);
         txtOrig.setLineWrap(true);
         txtOrig.setWrapStyleWord(true);
@@ -71,17 +71,19 @@ public class ViewSourcePane extends JPanel
         pnlOrig.add(new JScrollPane(txtOrig), BorderLayout.CENTER);
         pnlOrig.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        txtOsis = new JTextArea(osis, 24, 80);
+        JTextArea txtOsis = new JTextArea(osis, 24, 80);
         txtOsis.setEditable(false);
         JPanel pnlOsis = new JPanel(new BorderLayout());
         pnlOsis.add(new JScrollPane(txtOsis), BorderLayout.CENTER);
         pnlOsis.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        txtHtml = new JTextArea(html, 24, 80);
+        JTextArea txtHtml = new JTextArea(html, 24, 80);
         txtHtml.setEditable(false);
         JPanel pnlHtml = new JPanel(new BorderLayout());
         pnlHtml.add(new JScrollPane(txtHtml), BorderLayout.CENTER);
         pnlHtml.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        
+        textAreas = new JTextArea[] { txtOrig, txtOsis, txtHtml };
 
         pnlButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         pnlButtons.add(new JButton(actions.getAction("SourceClip")), null); //$NON-NLS-1$
@@ -121,7 +123,8 @@ public class ViewSourcePane extends JPanel
      */
     public void doSourceClip()
     {
-        JTextArea ta = (JTextArea) tabMain.getSelectedComponent();
+        int i = tabMain.getSelectedIndex();
+        JTextArea ta = textAreas[i];
         StringSelection ss = new StringSelection(ta.getText());
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
     }
@@ -139,9 +142,7 @@ public class ViewSourcePane extends JPanel
      * GUI Components
      */
     private JTabbedPane tabMain;
-    private JTextArea txtOrig;
-    private JTextArea txtOsis;
-    private JTextArea txtHtml;
+    private JTextArea [] textAreas;
     private JPanel pnlButtons;
     private JDialog frame;
     private ActionFactory actions;

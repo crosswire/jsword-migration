@@ -240,25 +240,29 @@
   <!--=======================================================================-->
   <xsl:template match="w">
     <!-- FIXME: Handle all the other attributes besides lemma. -->
+    <!-- FIXME: Only handles one x-StrongsNumber when more than one present -->
       <xsl:variable name="siblings" select="../child::node()"/>
       <xsl:variable name="next-position" select="position() + 1"/>
       <xsl:choose>
         <xsl:when test="$strongs = 'true' and starts-with(@lemma, 'x-Strongs:')">
-          <xsl:variable name="orig-strongs-number" select="substring-after(@lemma, ':')"/>
-          <xsl:variable name="strongs-type" select="substring($orig-strongs-number, 1, 1)"/>
-          <xsl:variable name="numeric-portion" select="substring($orig-strongs-number, 2)"/>
-          <xsl:variable name="strongs-number">
-            <xsl:value-of select="$strongs-type"/>
-            <xsl:call-template name="trim-zeros-from-number">
-              <xsl:with-param name="number" select="$numeric-portion"/>
-            </xsl:call-template>
+          <xsl:variable name="orig-lemma" select="substring-after(@lemma, ':')"/>
+          <xsl:variable name="strongs-type" select="substring($orig-lemma, 1, 1)"/>
+          <xsl:variable name="first-lemma">
+            <xsl:choose>
+              <xsl:when test="contains($orig-lemma, '|')">
+                <xsl:value-of select="substring-before($orig-lemma, '|')"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="$orig-lemma"/>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:variable>
           <xsl:choose>
             <xsl:when test="$strongs-type = 'H'">
-              <a href="{$strongs.hebrew.url}{$numeric-portion}" class="strongs"><xsl:apply-templates/></a>
+              <a href="{$strongs.hebrew.url}{$first-lemma}" class="strongs"><xsl:apply-templates/></a>
             </xsl:when>
             <xsl:otherwise>
-              <a href="{$strongs.greek.url}{$numeric-portion}" class="strongs"><xsl:apply-templates/></a>
+              <a href="{$strongs.greek.url}{$first-lemma}" class="strongs"><xsl:apply-templates/></a>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:when>

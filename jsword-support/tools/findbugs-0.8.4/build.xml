@@ -49,13 +49,13 @@
       <auxClasspath path="${target.jar}/tar.jar"/>
       <auxClasspath path="${target.jar}/jlfgr-1_0.jar"/>
     </findbugs>
-	<delete failonerror="false">
+	  <delete failonerror="false">
       <fileset dir="${target.bugs.src}"/>
     </delete>
     <style
         in="${target.web}/findbugs/report.xml"
         out="${target.web}/findbugs/index.html"
-        style="findbugs.xsl">
+        style="${support.bugs}/findbugs.xsl">
       <!-- The messages.xml file is from plugin/coreplugin.jar -->
       <param name="messagefile" expression="messages.xml"/>
       <!-- expression="jar:file://${basedir}/${support.bugs}/plugin/coreplugin.jar!messages.xml"/> -->

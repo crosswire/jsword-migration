@@ -696,6 +696,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
             }
             else if (protocol.equals(DICTIONARY_PROTOCOL))
             {
+                // TODO: determine the right dictionary and switch to it.
                 reference.setWord(data);
             }
             else

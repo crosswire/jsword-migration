@@ -7,32 +7,33 @@
 
   <property name="basedir" value="@source.java@"/>
 
-  <!-- enforce package documentation -->
+  <!-- Checks for Javadoc Comments -->
   <module name="PackageHtml"/>
   <module name="NewlineAtEndOfFile"/>
-<module name="Translation"/>
+  <module name="Translation"/>
+
   <module name="TreeWalker">
 
     <property name="cacheFile" value="@target.checkstyle@/cachefile.dat"/>
 
-    <!-- JavaDoc checks -->
+    <!-- Checks for Javadoc Comments -->
     <module name="JavadocType">
       <property name="authorFormat" value="\S"/>
     </module>
-<!--
-<module name="JavadocType">
-   <property name="scope" value="public"/>
-</module>
-<module name="JavadocMethod">
-   <property name="scope" value="public"/>
-</module>
-<module name="JavadocVariable"/>
-<module name="JavadocStyle">
-   <property name="scope" value="public"/>
-</module>
--->
+	<!-- This would be a big change
+	<module name="JavadocType">
+      <property name="scope" value="public"/>
+	</module>
+	<module name="JavadocMethod">
+      <property name="scope" value="public"/>
+	</module>
+	<module name="JavadocVariable"/>
+	<module name="JavadocStyle">
+      <property name="scope" value="public"/>
+	</module>
+	-->
 
-    <!-- Naming conventions -->
+    <!-- Checks for Naming Conventions -->
     <module name="PackageName">
       <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]{1,11})*$"/>
     </module>
@@ -58,13 +59,16 @@
       <property name="format" value="[a-z][a-zA-Z0-9]*$"/>
     </module>
 
-    <!-- Imports -->
+    <!-- Checks for imports -->
     <module name="AvoidStarImport"/>
     <!-- <module name="ImportOrder"/> -->
     <module name="IllegalImport"/>
     <module name="RedundantImport"/>
     <module name="UnusedImports"/>
 
+	<!-- Checks for Size Violations -->
+    <!--    -->
+    
     <!--
     <module name="ExecutableStatementCount">
       <property name="max" value="20"/>
@@ -96,31 +100,28 @@
     </module>
     -->
 
-    <!-- Coding style -->
     <!-- Checks for Whitespace -->
-<!-- v3.4
-<module name="EmptyForInitializerPad">
+	<!-- v3.4 -->
+	<module name="EmptyForInitializerPad">
+	  <property name="option" value="space"/>
+    </module>
+	<module name="EmptyForIteratorPad">
       <property name="option" value="space"/>
-</module>
--->
-<module name="EmptyForIteratorPad">
-      <property name="option" value="space"/>
-</module>
-<!-- v3.4
-<module name="MethodParamPad"/>
--->
+	</module>
+	<!-- v3.4 -->
+	<module name="MethodParamPad"/>
     <module name="NoWhitespaceAfter">
       <property name="tokens" value="BNOT, DEC, DOT, INC, LNOT, UNARY_MINUS, UNARY_PLUS"/><!-- ARRAY_INIT, -->
-<property name="allowLineBreaks" value="false"/>
+	<property name="allowLineBreaks" value="false"/>
     </module>
     <module name="NoWhitespaceBefore"/>
     <module name="OperatorWrap"/> <!-- ? -->
     <module name="ParenPad">
       <property name="option" value="nospace"/>
     </module>
-<module name="TypecastParenPad">
+	<module name="TypecastParenPad">
       <property name="option" value="nospace"/>
-</module>
+	</module>
     <module name="TabCharacter"/>
     <module name="WhitespaceAfter"/>
     <module name="WhitespaceAround"/>
@@ -147,179 +148,175 @@
     <module name="RightCurly">
       <property name="option" value="alone"/>
     </module>
-<module name="AvoidNestedBlocks">
-    <property name="allowInSwitchCase" value="false"/>
-</module>
+	<module name="AvoidNestedBlocks">
+      <property name="allowInSwitchCase" value="false"/>
+	</module>
 
-    <!-- Coding Problem Checks -->
-<!-- JSword does not require trailing comma on arrays
-<module name="ArrayTrailingComma"/>
--->
-<!-- Not ready for this
-<module name="AvoidInlineConditionals"/>
--->
-<module name="CovariantEquals"/> 
-<module name="DoubleCheckedLocking"/>
+    <!-- Checks for Coding problems -->
+	<!-- JSword does not require trailing comma on arrays
+	<module name="ArrayTrailingComma"/>
+	-->
+	<!-- We are not ready for this
+	<module name="AvoidInlineConditionals"/>
+	-->
+	<module name="CovariantEquals"/> 
+	<module name="DoubleCheckedLocking"/>
     <module name="EmptyStatement"/>
     <module name="EqualsHashCode"/>
-<!-- Not ready for this
-<module name="FinalLocalVariable">
-    <property name="tokens" value="VARIABLE_DEF"/>
-    <property name="tokens" value="PARAMETER_DEF"/>
-</module>
--->
-    <!-- This is buggy, confusing static and non-static -->
+	<!-- We are not ready for this
+	<module name="FinalLocalVariable">
+      <property name="tokens" value="VARIABLE_DEF"/>
+      <property name="tokens" value="PARAMETER_DEF"/>
+	</module>
+	-->
     <module name="HiddenField">
       <property name="tokens" value="VARIABLE_DEF"/>
     </module>
     <module name="IllegalInstantiation">
       <property name="classes" value="java.lang.Boolean, java.lang.String"/>
     </module>
-<!-- Are there any features of Java that are not allowed? Not for JSword.
-<module name="IllegalToken"/>
--->
-<!-- Try me
-<module name="IllegalTokenText">
-    <property name="tokens" value="STRING_LITERAL"/>
-    <property name="format" value="a href"/>
-</module>
--->
-<module name="IllegalTokenText">
-    <property name="tokens" value="NUM_INT,NUM_LONG"/>
-    <property name="format" value="^0[^lx]"/>
-    <property name="ignoreCase" value="true"/>
-</module>
+	<!-- Are there any features of Java that are not allowed? Not for JSword.
+	<module name="IllegalToken"/>
+	-->
+	<!-- Example usage
+	<module name="IllegalTokenText">
+      <property name="tokens" value="STRING_LITERAL"/>
+      <property name="format" value="a href"/>
+	</module>
+	-->
+	<module name="IllegalTokenText">
+      <property name="tokens" value="NUM_INT,NUM_LONG"/>
+      <property name="format" value="^0[^lx]"/>
+      <property name="ignoreCase" value="true"/>
+	</module>
     <module name="InnerAssignment"/>
-<!-- JSword uses tables of numbers
-<module name="MagicNumber"/>
--->
-<module name="MissingSwitchDefault"/>
+	<!-- JSword uses tables of numbers
+	<module name="MagicNumber"/>
+	-->
+	<module name="MissingSwitchDefault"/>
     <!-- Buggy
     <module name="RedundantThrows"/>
     -->
     <module name="SimplifyBooleanExpression"/>
     <module name="SimplifyBooleanReturn"/>
-<module name="StringLiteralEquality"/>
-<module name="NestedIfDepth">
-    <property name="max" value="3"/>
-</module>
-<module name="NestedTryDepth">
-    <property name="max" value="3"/>
-</module>
-<module name="SuperClone"/>
-<module name="SuperFinalize"/>
-<!-- We are not ready for this
-<module name="IllegalCatch"/>
--->
-<module name="PackageDeclaration"/>
-<module name="JUnitTestCase"/>
-<!-- We are not ready for this
-<module name="ReturnCount">
-    <property name="max" value="3"/>
-</module>
--->
-<!-- We are not ready for this
-<module name="IllegalType"/>
--->
-<!-- JSword has its own conventions for declaration order 
-<module name="DeclarationOrder"/>
--->
-<!-- We are not ready for this
-<module name="ParameterAssignment"/>
--->
-<!-- We are not ready for this
-<module name="ExplicitInitialization"/>
--->
-<!-- v3.4
-<module name="DefaultComesLast"/>
--->
-<!-- v3.4
-<module name="MissingCtor"/>
--->
-<!-- v3.4
-<module name="FallThrough"/>
--->
-<!-- v3.4
-<module name="MultipleVariableDeclarations"/>
--->
-<!-- JSword does not require "this"
-<module name="RequireThis"/>  
--->
-<!-- v3.4
-<module name="UnnecessaryParentheses"/>
--->
+	<module name="StringLiteralEquality"/>
+	<module name="NestedIfDepth">
+      <property name="max" value="3"/>
+	</module>
+	<module name="NestedTryDepth">
+      <property name="max" value="3"/>
+	</module>
+	<module name="SuperClone"/>
+	<module name="SuperFinalize"/>
+	<!-- We are not ready for this
+	<module name="IllegalCatch"/>
+	-->
+	<module name="PackageDeclaration"/>
+	<module name="JUnitTestCase"/>
+	<!-- We are not ready for this
+	<module name="ReturnCount">
+      <property name="max" value="3"/>
+	</module>
+	-->
+	<!-- We are not ready for this
+	<module name="IllegalType"/>
+	-->
+	<!-- JSword has its own conventions for declaration order 
+	<module name="DeclarationOrder"/>
+	-->
+	<!-- We are not ready for this
+	<module name="ParameterAssignment"/>
+	-->
+	<!-- We are not ready for this
+	<module name="ExplicitInitialization"/>
+	-->
+	<!-- v3.4 -->
+	<module name="DefaultComesLast"/>
+	<!-- v3.4 We are not ready for this
+	<module name="MissingCtor"/>
+	-->
+	<!-- v3.4 -->
+	<module name="FallThrough"/>
+	<!-- v3.4 -->
+	<module name="MultipleVariableDeclarations"/>
+	<!-- JSword does not require "this"
+	<module name="RequireThis"/>  
+	-->
+	<!-- v3.4 -->
+	<module name="UnnecessaryParentheses"/>
 
     <!-- Class Design Checks -->  
     <module name="VisibilityModifier">
       <property name="protectedAllowed" value="true"/>
     </module>
-<!-- We are not ready for this
-<module name="FinalClass"/>
--->
-<module name="InterfaceIsType"/>
-<module name="HideUtilityClassConstructor"/>
-<!-- This would be a big change
-<module name="DesignForExtension"/>
--->
-<module name="MutableException"/>
-<!-- We are not ready for this
-<module name="ThrowsCount">
-    <property name="max" value="2"/>
-</module>
--->
-<!-- The ant task cpd does this
-<module name="StrictDuplicateCode"/>
--->
+	<!-- We are not ready for this
+	<module name="FinalClass"/>
+	-->
+	<module name="InterfaceIsType"/>
+	<module name="HideUtilityClassConstructor"/>
+	<!-- This would be a big change
+	<module name="DesignForExtension"/>
+	-->
+	<module name="MutableException"/>
+	<!-- We are not ready for this
+	<module name="ThrowsCount">
+      <property name="max" value="2"/>
+	</module>
+	-->
+	<!-- The ant task cpd does this
+	<module name="StrictDuplicateCode"/>
+	-->
 
-<!-- Metrics Checks
-<module name="BooleanExpressionComplexity">
-    <property name="max" value="3"/>
-</module>
-<module name="ClassDataAbstractionCoupling">
-    <property name="max" value="7"/>
-</module>
-<module name="ClassFanOutComplexity">
-    <property name="max" value="20"/>
-</module>
-<module name="CyclomaticComplexity">
-    <property name="max" value="10"/>
-</module>
-<module name="NPathComplexity">
-    <property name="max" value="200"/>
-</module>
--->
-<!-- Miscellaneous Checks -->
+	<!-- Metrics Checks
+	<module name="BooleanExpressionComplexity">
+      <property name="max" value="3"/>
+	</module>
+	<module name="ClassDataAbstractionCoupling">
+      <property name="max" value="7"/>
+	</module>
+	<module name="ClassFanOutComplexity">
+      <property name="max" value="20"/>
+	</module>
+	<module name="CyclomaticComplexity">
+      <property name="max" value="10"/>
+	</module>
+	<module name="NPathComplexity">
+      <property name="max" value="200"/>
+	</module>
+	-->
+	<!-- Miscellaneous Checks -->
     <module name="GenericIllegalRegexp">
       <property name="format" value="((public)|(protected))\s+void\s+finalize\(\s*\)"/>
     </module>
-<!-- Check to find trailing whitespace at the end of a line -->
-<!-- We are not ready for this
-<module name="GenericIllegalRegexp">
-    <property name="format" value="\s$"/>
--->
-<!-- v3.4
-    <property name="ignoreComments" value="true"/>
--->
-<!--
-</module>
--->
+	<!-- Check to find trailing whitespace at the end of a line -->
+	<!-- We are not ready for this
+	<module name="GenericIllegalRegexp">
+      <property name="format" value="\s$"/>
+	-->
+	<!-- v3.4 -->
+	<!--
+      <property name="ignoreComments" value="true"/>
+	</module>
+	-->
 
-    <!-- Work in progress -->
     <module name="TodoComment"/>
-<module name="UncommentedMain"/>
+	<module name="UncommentedMain">
+      <property name="excludedClasses" value="\.(Desktop|APIExamples)$"/>
+	</module>
     <module name="UpperEll"/>
-<module name="ArrayTypeStyle"/>
-<!-- This would be a big change.
-<module name="FinalParameters"/>
--->
-<!-- This would be too big
-<module name="Indentation"/>
--->
-<!-- v3.4
-<module name="TrailingComment">
-    <property name="format" value="^\\s*$"/>
-</module>
--->
+	<module name="ArrayTypeStyle"/>
+	<!-- This would be a big change
+	<module name="FinalParameters"/>
+	-->
+	<!-- This would be a big change
+	<module name="Indentation"/>
+	-->
+	<!-- v3.4 -->
+	<!-- This would be a big change
+	<module name="TrailingComment">
+      <property name="format" value="^\\s*$"/>
+	</module>
+	-->
 
   </module>
 

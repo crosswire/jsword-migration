@@ -5,7 +5,6 @@
 
   <!-- <rule ref="rulesets/basic.xml/EmptyCatchBlock"/> done better by checkstyle -->
   <!-- <rule ref="rulesets/basic.xml/EmptyIfStmt"/> done better by checkstyle -->
-  <rule ref="rulesets/basic.xml/DoubleCheckedLockingRule"/>
   <rule ref="rulesets/basic.xml/EmptyWhileStmt"/>
   <rule ref="rulesets/basic.xml/EmptyTryBlock"/>
   <rule ref="rulesets/basic.xml/EmptyFinallyBlock"/>
@@ -14,6 +13,7 @@
   <rule ref="rulesets/basic.xml/ForLoopShouldBeWhileLoop"/>
   <rule ref="rulesets/basic.xml/UnnecessaryConversionTemporaryRule"/>
   <rule ref="rulesets/basic.xml/OverrideBothEqualsAndHashcodeRule"/>
+  <rule ref="rulesets/basic.xml/DoubleCheckedLockingRule"/>
   <rule ref="rulesets/basic.xml/ReturnFromFinallyBlock"/>
   <rule ref="rulesets/basic.xml/EmptySynchronizedBlock"/>
   <rule ref="rulesets/basic.xml/UnnecessaryReturn"/>
@@ -38,7 +38,6 @@
   <rule ref="rulesets/unusedcode.xml/UnusedFormalParameter"/>
 
   <!-- <rule ref="rulesets/design.xml/UseSingletonRule"/> -->
-  <!-- <rule ref="rulesets/design.xml/LooseCouplingRule"/> -->
   <rule ref="rulesets/design.xml/SimplifyBooleanReturnsRule"/>
   <rule ref="rulesets/design.xml/SimplifyBooleanExpressions"/>
   <rule ref="rulesets/design.xml/SwitchStmtsShouldHaveDefault"/>
@@ -50,10 +49,13 @@
   <rule ref="rulesets/design.xml/FinalFieldCouldBeStatic"/>
   <rule ref="rulesets/design.xml/BooleanInstantiation"/>
   <rule ref="rulesets/design.xml/CloseConnectionRule"/>
-  <rule ref="rulesets/design.xml/ProperCloneImplementationRule"/>
   <rule ref="rulesets/design.xml/NonStaticInitializer"/>
   <rule ref="rulesets/design.xml/DefaultLabelNotLastInSwitchStmt"/>
   <rule ref="rulesets/design.xml/NonCaseLabelInSwitchStatement"/>
+  <!-- try me <rule ref="rulesets/design.xml/OptimizableToArrayCallRule"/> -->
+  <rule ref="rulesets/design.xml/BadComparisonRule"/>
+  <rule ref="rulesets/design.xml/EqualsNull"/>
+  <!-- <rule ref="rulesets/design.xml/ConfusingTernary"/> allow (test ? 1 : 2) -->
 
   <rule ref="rulesets/imports.xml/DuplicateImports"/>
   <rule ref="rulesets/imports.xml/DontImportJavaLang"/>
@@ -89,12 +91,20 @@
   <rule ref="rulesets/finalizers.xml/ExplicitCallToFinalize"/>
   <rule ref="rulesets/finalizers.xml/FinalizeShouldBeProtected"/>
 
-  <!-- <rule ref="rulesets/coupling.xml/ExcessiveImportsRule"/> -->
+  <rule ref="rulesets/clone.xml/ProperCloneImplementationRule"/>
+  <!-- try me <rule ref="rulesets/clone.xml/CloneThrowsCloneNotSupportedException"/> -->
+  <!-- try me <rule ref="rulesets/clone.xml/CloneMethodMustImplementCloneable"/> -->
+
   <!-- <rule ref="rulesets/coupling.xml/CouplingBetweenObjectsRule"/> 9 infringements, but silly fixing-->
+  <!-- <rule ref="rulesets/coupling.xml/ExcessiveImportsRule"/> -->
+  <rule ref="rulesets/coupling.xml/LooseCouplingRule"/>
 
   <rule ref="rulesets/strictexception.xml/AvoidCatchingThrowable"/>
   <!-- <rule ref="rulesets/strictexception.xml/SignatureDeclareThrowsException"/> -->
   <rule ref="rulesets/strictexception.xml/ExceptionTypeChecking"/>
+  <!-- try me <rule ref="rulesets/strictexception.xml/ExceptionAsFlowControlRule"/> -->
+  <!-- try me <rule ref="rulesets/strictexception.xml/AvoidCatchingNPERule"/> -->
+  <!-- try me <rule ref="rulesets/strictexception.xml/AvoidThrowingCertainExceptionTypesRule"/> -->
 
   <rule ref="rulesets/controversial.xml/UnnecessaryConstructorRule"/>
   <!-- <rule ref="rulesets/controversial.xml/NullAssignment"/> -->
