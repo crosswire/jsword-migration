@@ -9,7 +9,7 @@ import org.crosswire.jsword.book.Defaults;
 /**
  * The BibleModels class implements a number of swing DataModels
  * and gives access to the list of current Bibles.
- * 
+ *
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
  *
@@ -47,6 +47,8 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
     public BooksComboBoxModel(BookFilter filter)
     {
         super(filter);
+
+        postCacheData();
 
         if (getSize() > 0)
         {
@@ -106,10 +108,8 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.BooksListModel#cacheData()
      */
-    protected void cacheData()
+    protected final synchronized void postCacheData()
     {
-        super.cacheData();
-
         // Find the previously selected item
         boolean found = false;
         int size = getSize();
@@ -140,4 +140,9 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
      * The currently selected version
      */
     protected BookMetaData current;
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3906362740397388593L;
 }
