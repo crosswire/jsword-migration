@@ -22,10 +22,10 @@ import javax.swing.tree.TreePath;
 
 import org.crosswire.bibledesktop.book.BookListCellRenderer;
 import org.crosswire.bibledesktop.book.BooksComboBoxModel;
-import org.crosswire.bibledesktop.book.KeyTreeNode;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
 import org.crosswire.bibledesktop.display.FocusablePart;
+import org.crosswire.bibledesktop.passage.KeyTreeNode;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.xml.SAXEventProvider;
 import org.crosswire.common.xml.SerializingContentHandler;

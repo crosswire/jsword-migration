@@ -10,10 +10,10 @@ import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 
-import org.crosswire.bibledesktop.book.KeyTreeModel;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.proxy.ProxyBookDataDisplay;
 import org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay;
+import org.crosswire.bibledesktop.passage.KeyTreeModel;
 import org.crosswire.bibledesktop.passage.PassageGuiUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;

@@ -1,4 +1,4 @@
-package org.crosswire.bibledesktop.book;
+package org.crosswire.bibledesktop.passage;
 
 import java.util.Enumeration;
 import java.util.Vector;

@@ -6,8 +6,6 @@ import javax.swing.JList;
 import javax.swing.JTree;
 import javax.swing.tree.TreePath;
 
-import org.crosswire.bibledesktop.book.KeyTreeModel;
-import org.crosswire.bibledesktop.book.KeyTreeNode;
 import org.crosswire.jsword.passage.DefaultKeyList;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.KeyList;

@@ -1,9 +1,11 @@
-package org.crosswire.jsword.book.cache;
+package org.crosswire.bibledesktop.passage;
 
-import org.crosswire.common.util.MsgBase;
+import javax.swing.tree.DefaultTreeModel;
+
+import org.crosswire.jsword.passage.Key;
 
 /**
- * Compile safe Msg resource settings.
+ * A TreeModel that helps with working with Keys.
  * 
  * <p><table border='1' cellPadding='3' cellSpacing='0'>
  * <tr><td bgColor='white' class='TableRowColor'><font size='-7'>
@@ -26,15 +28,38 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-class Msg extends MsgBase
+public class KeyTreeModel extends DefaultTreeModel
 {
-    static final Msg CACHE_READONLY = new Msg("Can't build a cache using a read-only driver."); //$NON-NLS-1$
+    /**
+     * Simple ctor
+     * @param key The root TreeNode
+     */
+    public KeyTreeModel(Key key)
+    {
+        super(new KeyTreeNode(key, null));
+        this.key = key;
+    }
 
     /**
-     * Passthrough ctor
+     * What key is this tree editing
+     * @return Returns the key.
      */
-    private Msg(String name)
+    public Key getKey()
     {
-        super(name);
+        return key;
     }
+
+    /**
+     * Sets the key is this tree editing
+     */
+    public void setKey(Key key)
+    {
+        this.key = key;
+        setRoot(new KeyTreeNode(key, null));
+    }
+
+    /**
+     * The key that this tree is displaying.
+     */
+    private Key key;
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry sourcepath="/jsword-support/othersource/commons-lang-2.0-src.zip" kind="lib" path="jar/lang-2.0.0/commons-lang-2.0.jar"/>
-	<classpathentry sourcepath="/jsword-support/othersource/jdom-b10.zip" kind="lib" path="jar/jdom-1.0.b10/jdom.jar"/>
-	<classpathentry sourcepath="/jsword-support/othersource/junit-3.8.1-src.jar" kind="lib" path="jar/junit-3.8.1/junit.jar"/>
-	<classpathentry kind="src" path="/jsword"/>
-	<classpathentry kind="src" path="/common"/>
+	<classpathentry exported="true" kind="lib" path="jar/jlfgr-1.0/jlfgr-1_0.jar"/>
+	<classpathentry exported="true" kind="lib" path="jar/winlaf-0.4/winlaf-0.4.jar"/>
+	<classpathentry exported="true" sourcepath="/jsword-support/othersource/junit-3.8.1-src.jar" kind="lib" path="jar/junit-3.8.1/junit.jar"/>
+	<classpathentry exported="true" kind="src" path="/jsword"/>
+	<classpathentry exported="true" kind="src" path="/common"/>
 	<classpathentry kind="src" path="java/main"/>
 	<classpathentry kind="src" path="java/test"/>
 	<classpathentry exported="true" kind="lib" path="resource"/>
