@@ -109,7 +109,7 @@
     <mkdir dir="${target.web}/WEB-INF"/>
     <copy todir="${target.web}/WEB-INF" filtering="true">
       <filterset>
-        <filter token="webapp.jsword" value="${webapp.jsword}"/>
+        <filter token="ftp.base" value="${ftp.base}"/>
         <filter token="ftp.prefix" value="${ftp.prefix}"/>
       </filterset>
       <fileset dir="${source.web}/WEB-INF"/>

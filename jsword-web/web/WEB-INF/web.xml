@@ -10,8 +10,8 @@
   <description>Servlet interface to the Bible</description>
 
   <context-param>
-    <param-name>webapp.jsword</param-name>
-    <param-value>@webapp.jsword@</param-value>
+    <param-name>ftp.base</param-name>
+    <param-value>@ftp.base@</param-value>
   </context-param>
   <context-param>
     <param-name>ftp.prefix</param-name>

@@ -9,10 +9,10 @@
 <jsp:directive.page import="org.crosswire.jsword.view.web.DownloadSet" contentType="text/html"/>
 
 <jsp:scriptlet><![CDATA[
-  String webappJSword = application.getInitParameter("webapp.jsword");
-  if (webappJSword == null)
+  String ftpBase = application.getInitParameter("ftp.base");
+  if (ftpBase == null)
   {
-      throw new NullPointerException("webapp.jsword");
+      throw new NullPointerException("ftp.base");
   }
 
   String ftpPrefix = application.getInitParameter("ftp.prefix");
@@ -50,7 +50,7 @@
     <td>.tar.gz</td>
   </tr>
   <jsp:scriptlet><![CDATA[
-  DownloadSet[] dls = DownloadSet.getDownloadSets(webappJSword + "/release", ftpPrefix + "/release", false);
+  DownloadSet[] dls = DownloadSet.getDownloadSets(ftpBase + "/release", ftpPrefix + "/release", false);
   for (int i=0; i<dls.length; i++)
   {
   ]]></jsp:scriptlet>
@@ -91,7 +91,7 @@
     <td>.tar.gz</td>
   </tr>
   <jsp:scriptlet><![CDATA[
-  dls = DownloadSet.getDownloadSets(webappJSword + "/nightly", ftpPrefix + "/nightly", true);
+  dls = DownloadSet.getDownloadSets(ftpBase + "/nightly", ftpPrefix + "/nightly", true);
   for (int i=0; i<dls.length; i++)
   {
   ]]></jsp:scriptlet>
