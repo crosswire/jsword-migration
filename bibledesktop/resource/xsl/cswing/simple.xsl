@@ -2,8 +2,15 @@
 <xsl:stylesheet xmlns="http://www.w3.org/TR/REC-html40" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
   <xsl:output method="html" omit-xml-declaration="yes" indent="no"/>
-  <xsl:strip-space elements="*"/>
-
+  <!-- Be very careful about introducing whitespace into the document.
+       strip-space merely remove space between one tag and another tag.
+       This may cause significant whitespace to be removed.
+       
+       It is easy to have apply-templates on a line to itself which if
+       it encounters text before anything else will introduce whitespace.
+       With the browser we are using span will introduce whitespace,
+       but font does not. Therefore we use font as a span.
+    -->
   <xsl:param name="strongs.hebrew.url" select="'dict:'"/>
   <xsl:param name="strongs.greek.url" select="'dict:'"/>
 
@@ -82,7 +89,8 @@
           A.strongs { color: black; text-decoration: none; }
           SUP.verse { font-size: 75%; color: gray; }
           SUP.note { font-size: 75%; color: green; }
-          FONT.verse { }
+          FONT.jesus { color: red; }
+          FONT.speech { color: blue; }
           h3 { font-size: 110%; color: #666699; font-weight: bold; }
           h2 { font-size: 115%; color: #669966; font-weight: bold; }
           div.margin { font-size: 90%; }
@@ -132,13 +140,12 @@
   </xsl:template>
 
   <!--=======================================================================-->
+  <!-- Avoid adding whitespace -->
   <xsl:template match="osisCorpus">
     <xsl:for-each select="osisText">
       <!-- If this text has a header, apply templates to the header. -->
       <xsl:if test="preceding-sibling::*[1][self::header]">
-        <div class="corpus-text-header">
-          <xsl:apply-templates select="preceding-sibling::*[1][self::header]"/>
-        </div>
+        <div class="corpus-text-header"><xsl:apply-templates select="preceding-sibling::*[1][self::header]"/></div>
       </xsl:if>
       <xsl:apply-templates select="."/>
     </xsl:for-each>
@@ -187,10 +194,9 @@
   </xsl:template>
 
   <!--=======================================================================-->
+  <!-- Avoid adding whitespace -->
   <xsl:template match="a">
-    <a href="{@href}">
-      <xsl:apply-templates/>
-    </a>
+    <a href="{@href}"><xsl:apply-templates/></a>
   </xsl:template>
 
   <!--=======================================================================-->
@@ -223,6 +229,7 @@
   
   <!--=======================================================================-->
   <xsl:template match="p" mode="print-notes">
+    <!-- FIXME: This ignores text in the note. -->
     <!-- don't put para's in notes -->
   </xsl:template>
 
@@ -233,7 +240,7 @@
       <xsl:variable name="siblings" select="../child::node()"/>
       <xsl:variable name="next-position" select="position() + 1"/>
       <xsl:choose>
-        <xsl:when test="$strongs = 'true' and starts-with(@lemma, 'x-Strongs:')">
+        <xsl:when test="$strongs = 'true' and (starts-with(@lemma, 'x-Strongs:') or starts-with(@lemma, 'strong:'))">
           <xsl:variable name="orig-lemma" select="substring-after(@lemma, ':')"/>
           <xsl:variable name="strongs-type" select="substring($orig-lemma, 1, 1)"/>
           <xsl:variable name="first-lemma">
@@ -269,25 +276,23 @@
   </xsl:template>
 
   <!--=======================================================================-->
+  <!-- Avoid adding whitespace -->
   <xsl:template match="seg">
     <xsl:choose>
       <xsl:when test="starts-with(@type, 'color:')">
-        <font color="substring-before(substring-after(@type, 'color: '), ';')">
-          <xsl:apply-templates/>
-        </font>
+        <font color="substring-before(substring-after(@type, 'color: '), ';')"><xsl:apply-templates/></font>
       </xsl:when>
       <xsl:when test="starts-with(@type, 'font-size:')">
-        <font size="substring-before(substring-after(@type, 'font-size: '), ';')">
-          <xsl:apply-templates/>
-        </font>
+        <font size="substring-before(substring-after(@type, 'font-size: '), ';')"><xsl:apply-templates/></font>
       </xsl:when>
       <xsl:otherwise>
-        <p><xsl:apply-templates/></p>
+        <xsl:apply-templates/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   
   <!--=======================================================================-->
+  <!-- FIXME: Should we both expand and output?? -->
   <xsl:template match="abbr">
     <abbr class="abbr">
       <xsl:if test="@expansion">
@@ -300,26 +305,22 @@
   </xsl:template>
 
   <!--=======================================================================-->
+  <!-- Avoid adding whitespace -->
   <xsl:template match="speaker">
     <xsl:choose>
       <xsl:when test="@who='Jesus'">
-        <font color="red">
-          <xsl:apply-templates/>
-        </font>
+        <font class="jesus"><xsl:apply-templates/></font>
       </xsl:when>
       <xsl:otherwise>
-        <font color="blue">
-          <xsl:apply-templates/>
-        </font>
+        <font class="speech"><xsl:apply-templates/></font>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
   <!--=======================================================================-->
+  <!-- Avoid adding whitespace -->
   <xsl:template match="title">
-    <h2>
-      <xsl:apply-templates/>
-    </h2>
+    <h2><xsl:apply-templates/></h2>
   </xsl:template>
 
   <!--=======================================================================-->
@@ -332,24 +333,20 @@
   </xsl:template>
 
   <!--=======================================================================-->
+  <!-- Avoid adding whitespace -->
   <xsl:template match="reference">
-    <a href="bible://{@osisRef}">
-      <xsl:apply-templates/>
-    </a>
+    <a href="bible://{@osisRef}"><xsl:apply-templates/></a>
   </xsl:template>
   
   <!--=======================================================================-->
-
+  <!-- Avoid adding whitespace -->
   <xsl:template match="caption">
-    <div class="caption">
-      <xsl:apply-templates/>
-    </div>
+    <div class="caption"><xsl:apply-templates/></div>
   </xsl:template>
   
+  <!-- Avoid adding whitespace -->
   <xsl:template match="catchWord">
-    <span class="catchWord">
-      <xsl:apply-templates/>
-    </span>
+    <font class="catchWord"><xsl:apply-templates/></font>
   </xsl:template>
   
   <!--
@@ -357,22 +354,19 @@
       here.
   -->
   
+  <!-- Avoid adding whitespace -->
   <xsl:template match="closer">
-    <div class="closer">
-      <xsl:apply-templates/>
-    </div>
+    <div class="closer"><xsl:apply-templates/></div>
   </xsl:template>
   
+  <!-- Avoid adding whitespace -->
   <xsl:template match="date">
-    <span class="date">
-      <xsl:apply-templates/>
-    </span>
+    <font class="date"><xsl:apply-templates/></font>
   </xsl:template>
   
+  <!-- Avoid adding whitespace -->
   <xsl:template match="divineName">
-    <span class="divineName">
-      <xsl:apply-templates/>
-    </span>
+    <font class="divineName"><xsl:apply-templates/></font>
   </xsl:template>
   
   <xsl:template match="figure">
@@ -382,58 +376,52 @@
     </div>
   </xsl:template>
   
+  <!-- Avoid adding whitespace -->
   <xsl:template match="foreign">
-    <em class="foreign">
-      <xsl:apply-templates/>
-    </em>
+    <em class="foreign"><xsl:apply-templates/></em>
   </xsl:template>
   
   <!-- This is a subheading. -->
+  <!-- Avoid adding whitespace -->
   <xsl:template match="head//head">
-    <h5 class="head">
-      <xsl:apply-templates/>
-    </h5>
+    <h5 class="head"><xsl:apply-templates/></h5>
   </xsl:template>
   
   <!-- This is a top-level heading. -->
+  <!-- Avoid adding whitespace -->
   <xsl:template match="head">
-    <h4 class="head">
-      <xsl:apply-templates/>
-    </h4>
+    <h4 class="head"><xsl:apply-templates/></h4>
   </xsl:template>
   
   <xsl:template match="index">
     <a name="index{@id}" class="index"/>
   </xsl:template>
   
+  <!-- Avoid adding whitespace -->
   <xsl:template match="inscription">
-    <span class="inscription">
-      <xsl:apply-templates/>
-    </span>
+    <font class="inscription"><xsl:apply-templates/></font>
   </xsl:template>
   
+  <!-- Avoid adding whitespace -->
   <xsl:template match="item">
-    <li class="item">
-      <xsl:apply-templates/>
-    </li>
+    <li class="item"><xsl:apply-templates/></li>
   </xsl:template>
   
   <!--
       <item> and <label> are covered by <list> below and so do not appear here.
   -->
   
+  <!-- Avoid adding whitespace -->
   <xsl:template match="l">
-    <div class="l">
-      <xsl:apply-templates/>
-    </div>
+    <div class="l"><xsl:apply-templates/></div>
   </xsl:template>
   
+  <!-- Avoid adding whitespace -->
   <xsl:template match="lg">
-    <div class="lg">
-      <xsl:apply-templates/>
-    </div>
+    <div class="lg"><xsl:apply-templates/></div>
   </xsl:template>
   
+  <!-- Avoid adding whitespace -->
   <xsl:template match="list">
     <xsl:choose>
       <xsl:when test="label">
@@ -442,19 +430,13 @@
           <xsl:for-each select="node()">
             <xsl:choose>
               <xsl:when test="self::label">
-                <dt class="label">
-                  <xsl:apply-templates/>
-                </dt>
+                <dt class="label"><xsl:apply-templates/></dt>
               </xsl:when>
               <xsl:when test="self::item">
-                <dd class="item">
-                  <xsl:apply-templates/>
-                </dd>
+                <dd class="item"><xsl:apply-templates/></dd>
               </xsl:when>
               <xsl:when test="self::list">
-                <dd class="list-wrapper">
-                  <xsl:apply-templates select="."/>
-                </dd>
+                <dd class="list-wrapper"><xsl:apply-templates select="."/></dd>
               </xsl:when>
               <xsl:otherwise>
                 <xsl:apply-templates/>
@@ -470,14 +452,10 @@
           <xsl:for-each select="node()">
             <xsl:choose>
               <xsl:when test="self::item">
-                <li class="item">
-                  <xsl:apply-templates/>
-                </li>
+                <li class="item"><xsl:apply-templates/></li>
               </xsl:when>
               <xsl:when test="self::list">
-                <li class="list-wrapper">
-                  <xsl:apply-templates select="."/>
-                </li>
+                <li class="list-wrapper"><xsl:apply-templates select="."/></li>
               </xsl:when>
               <xsl:otherwise>
                 <xsl:apply-templates/>
@@ -489,10 +467,9 @@
     </xsl:choose>
   </xsl:template>
   
+  <!-- Avoid adding whitespace -->
   <xsl:template match="mentioned">
-    <span class="mentioned">
-      <xsl:apply-templates/>
-    </span>
+    <font class="mentioned"><xsl:apply-templates/></font>
   </xsl:template>
   
   <!--
@@ -502,9 +479,7 @@
   -->
   
   <xsl:template match="name">
-    <span class="name">
-      <xsl:apply-templates/>
-    </span>
+    <font class="name"><xsl:apply-templates/></font>
   </xsl:template>
   
   <xsl:template match="q">
@@ -530,52 +505,44 @@
     </blockquote>
   </xsl:template>
   
+  <!-- Avoid adding whitespace -->
   <xsl:template match="rdg">
-    <div class="rdg">
-      <xsl:apply-templates/>
-    </div>
+    <div class="rdg"><xsl:apply-templates/></div>
   </xsl:template>
 
   <!--
       <row> is handled near <table> below and so does not appear here.
   -->
   
+  <!-- Avoid adding whitespace -->
   <xsl:template match="salute">
-    <div class="salute">
-      <xsl:apply-templates/>
-    </div>
+    <div class="salute"><xsl:apply-templates/></div>
   </xsl:template>
   
+  <!-- Avoid adding whitespace -->
   <xsl:template match="signed">
-    <span class="signed">
-      <xsl:apply-templates/>
-    </span>
+    <font class="signed"><xsl:apply-templates/></font>
   </xsl:template>
 
+  <!-- Avoid adding whitespace -->
   <xsl:template match="speech">
-    <div class="speech">
-      <xsl:apply-templates/>
-    </div>
+    <div class="speech"><xsl:apply-templates/></div>
   </xsl:template>
   
+  <!-- Avoid adding whitespace -->
   <xsl:template match="table">
     <table class="table">
       <xsl:copy-of select="@rows|@cols"/>
       <xsl:if test="head">
-        <thead class="head">
-          <xsl:apply-templates select="head"/>
-        </thead>
+        <thead class="head"><xsl:apply-templates select="head"/></thead>
       </xsl:if>
-      <tbody>
-        <xsl:apply-templates select="row"/>
-      </tbody>
+      <tbody><xsl:apply-templates select="row"/></tbody>
     </table>
   </xsl:template>
   
+  <!-- Avoid adding whitespace -->
   <xsl:template match="row">
-    <tr class="row">
-      <xsl:apply-templates/>
-    </tr>
+    <tr class="row"><xsl:apply-templates/></tr>
   </xsl:template>
   
   <xsl:template match="cell">
@@ -606,22 +573,21 @@
     </xsl:element>
   </xsl:template>
 
+  <!-- Avoid adding whitespace -->
   <xsl:template match="transChange">
-    <span class="transChange">
-      <xsl:apply-templates/>
-    </span>
+    <font class="transChange"><xsl:apply-templates/></font>
   </xsl:template>
   
   <xsl:template match="hi">
       <xsl:choose>
         <xsl:when test="@rend = 'bold'">
-          <b><xsl:apply-templates/></b>
+          <strong><xsl:apply-templates/></strong>
         </xsl:when>
         <xsl:when test="@rend = 'illuminated'">
-          <b><i><xsl:apply-templates/></i></b>
+          <strong><em><xsl:apply-templates/></em></strong>
         </xsl:when>
         <xsl:when test="@rend = 'italic'">
-          <i><xsl:apply-templates/></i>
+          <em><xsl:apply-templates/></em>
         </xsl:when>
         <xsl:when test="@rend = 'line-through'">
           <!-- later -->
