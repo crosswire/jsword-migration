@@ -11,79 +11,90 @@
   <rule ref="rulesets/basic.xml/EmptySwitchStatements"/>
   <rule ref="rulesets/basic.xml/JumbledIncrementer"/>
   <rule ref="rulesets/basic.xml/ForLoopShouldBeWhileLoop"/>
-  <rule ref="rulesets/basic.xml/UnnecessaryConversionTemporaryRule"/>
-  <rule ref="rulesets/basic.xml/OverrideBothEqualsAndHashcodeRule"/>
-  <rule ref="rulesets/basic.xml/DoubleCheckedLockingRule"/>
+  <rule ref="rulesets/basic.xml/UnnecessaryConversionTemporary"/>
+  <rule ref="rulesets/basic.xml/OverrideBothEqualsAndHashcode"/>
+  <rule ref="rulesets/basic.xml/DoubleCheckedLocking"/>
   <rule ref="rulesets/basic.xml/ReturnFromFinallyBlock"/>
   <rule ref="rulesets/basic.xml/EmptySynchronizedBlock"/>
   <rule ref="rulesets/basic.xml/UnnecessaryReturn"/>
   <rule ref="rulesets/basic.xml/EmptyStaticInitializer"/>
   <rule ref="rulesets/basic.xml/UnconditionalIfStatement"/>
   <rule ref="rulesets/basic.xml/EmptyStatementNotInLoop"/>
+  <rule ref="rulesets/basic.xml/BooleanInstantiation"/>
 
-  <!-- <rule ref="rulesets/naming.xml/ShortVariable"/> -->
-  <!-- <rule ref="rulesets/naming.xml/LongVariable"/> -->
-  <rule ref="rulesets/naming.xml/ShortMethodNameRule"/>
-  <!-- <rule ref="rulesets/naming.xml/VariableNamingConventionsRule"/> -->
+  <!-- <rule ref="rulesets/naming.xml/ShortVariable"/> 687 reports -->
+  <!-- <rule ref="rulesets/naming.xml/LongVariable"/> 668 reports -->
+  <rule ref="rulesets/naming.xml/ShortMethodName"/>
+  <!-- <rule ref="rulesets/naming.xml/VariableNamingConventions"/> 159 reports -->
   <rule ref="rulesets/naming.xml/MethodNamingConventions"/>
-  <rule ref="rulesets/naming.xml/ClassNamingConventionsRule"/>
-  <!-- <rule ref="rulesets/naming.xml/AbstractNamingRule"/> errors on FooAbstractBlah wrongly -->
+  <rule ref="rulesets/naming.xml/ClassNamingConventions"/>
+  <!-- <rule ref="rulesets/naming.xml/AbstractNaming"/> Reports on JSword enumerations -->
   <rule ref="rulesets/naming.xml/AvoidDollarSigns"/>
   <rule ref="rulesets/naming.xml/MethodWithSameNameAsEnclosingClass"/>
   <rule ref="rulesets/naming.xml/SuspiciousHashcodeMethodName"/>
+  <rule ref="rulesets/naming.xml/SuspiciousConstantFieldName"/>
+  <rule ref="rulesets/naming.xml/SuspiciousEqualsMethodName"/>
 
   <rule ref="rulesets/unusedcode.xml/UnusedPrivateField"/>
   <rule ref="rulesets/unusedcode.xml/UnusedLocalVariable"/>
-  <rule ref="rulesets/unusedcode.xml/UnusedPrivateMethod"/>
+  <rule ref="rulesets/unusedcode.xml/UnusedPrivateMethod"/> Buggy -->
   <rule ref="rulesets/unusedcode.xml/UnusedFormalParameter"/>
 
-  <!-- <rule ref="rulesets/design.xml/UseSingletonRule"/> -->
-  <rule ref="rulesets/design.xml/SimplifyBooleanReturnsRule"/>
+  <rule ref="rulesets/design.xml/UseSingleton"/>
+  <rule ref="rulesets/design.xml/SimplifyBooleanReturns"/>
   <rule ref="rulesets/design.xml/SimplifyBooleanExpressions"/>
   <rule ref="rulesets/design.xml/SwitchStmtsShouldHaveDefault"/>
-  <!-- <rule ref="rulesets/design.xml/AvoidDeeplyNestedIfStmts"/> -->
-  <!-- <rule ref="rulesets/design.xml/AvoidReassigningParametersRule"/> 18 infringements, but silly fixing -->
-  <!-- <rule ref="rulesets/design.xml/SwitchDensity"/> -->
-  <!-- <rule ref="rulesets/design.xml/ConstructorCallsOverridableMethodRule"/> 64 infringements, might be worth working through -->
-  <rule ref="rulesets/design.xml/AccessorClassGenerationRule"/>
+  <!-- <rule ref="rulesets/design.xml/AvoidDeeplyNestedIfStmts"/> 6 reports -->
+  <!-- <rule ref="rulesets/design.xml/AvoidReassigningParameters"/> 33 infringements, but silly fixing -->
+  <rule ref="rulesets/design.xml/SwitchDensity"/>
+  <!-- <rule ref="rulesets/design.xml/ConstructorCallsOverridableMethod"/> 41 infringements, might be worth working through -->
+  <rule ref="rulesets/design.xml/AccessorClassGeneration"/>
   <rule ref="rulesets/design.xml/FinalFieldCouldBeStatic"/>
-  <rule ref="rulesets/design.xml/BooleanInstantiation"/>
-  <rule ref="rulesets/design.xml/CloseConnectionRule"/>
+  <rule ref="rulesets/design.xml/CloseConnection"/>
   <rule ref="rulesets/design.xml/NonStaticInitializer"/>
   <rule ref="rulesets/design.xml/DefaultLabelNotLastInSwitchStmt"/>
   <rule ref="rulesets/design.xml/NonCaseLabelInSwitchStatement"/>
-  <!-- try me <rule ref="rulesets/design.xml/OptimizableToArrayCallRule"/> -->
-  <rule ref="rulesets/design.xml/BadComparisonRule"/>
+  <rule ref="rulesets/design.xml/OptimizableToArrayCall"/>
+  <rule ref="rulesets/design.xml/BadComparison"/>
   <rule ref="rulesets/design.xml/EqualsNull"/>
   <!-- <rule ref="rulesets/design.xml/ConfusingTernary"/> allow (test ? 1 : 2) -->
+  <rule ref="rulesets/design.xml/InstantiationToGetClass"/>
+  <rule ref="rulesets/design.xml/IdempotentOperations"/>
+  <rule ref="rulesets/design.xml/SimpleDateFormatNeedsLocale"/>
+  <!-- <rule ref="rulesets/design.xml/ImmutableField"/> 257 reports. -->
+  <rule ref="rulesets/design.xml/UseLocaleWithCaseConversions"/>
+  <rule ref="rulesets/design.xml/AvoidProtectedFieldInFinalClass"/>
+  <rule ref="rulesets/design.xml/AssignmentToNonFinalStatic"/>
 
   <rule ref="rulesets/imports.xml/DuplicateImports"/>
   <rule ref="rulesets/imports.xml/DontImportJavaLang"/>
   <rule ref="rulesets/imports.xml/UnusedImports"/>
   <rule ref="rulesets/imports.xml/ImportFromSamePackage"/>
 
-  <!-- however *test is exempt from coding conventions so these are not run -->
+  <!-- however *test is exempt from coding conventions so these are not run
   <rule ref="rulesets/junit.xml/JUnitStaticSuite"/>
   <rule ref="rulesets/junit.xml/JUnitSpelling"/>
-  <!-- <rule ref="rulesets/junit.xml/JUnitAssertionsShouldIncludeMessageRule"/> -->
+  <rule ref="rulesets/junit.xml/JUnitAssertionsShouldIncludeMessage"/>
+  <rule ref="rulesets/junit.xml/JUnitTestsShouldIncludeAssert"/>
+-->
 
-  <!-- <rule ref="rulesets/strings.xml/AvoidDuplicateLiterals"/ 25 infringements, but silly fixing -->
-  <!-- <rule ref="rulesets/strings.xml/StringInstantiation"/> PasswordField new String(getPassword()) -->
+  <!-- <rule ref="rulesets/strings.xml/AvoidDuplicateLiterals"/> 2 reports, but silly fixing -->
+  <!-- <rule ref="rulesets/strings.xml/StringInstantiation"/> 5 reports. PasswordField new String(getPassword()) -->
   <rule ref="rulesets/strings.xml/StringToString"/>
+  <rule ref="rulesets/strings.xml/AvoidConcatenatingNonLiteralsInStringBuffer"/>
 
-  <!-- <rule ref="rulesets/braces.xml/IfStmtsMustUseBraces"/> 402 infringements -->
-  <rule ref="rulesets/braces.xml/WhileLoopsMustUseBracesRule"/>
-  <rule ref="rulesets/braces.xml/IfElseStmtsMustUseBracesRule"/>
-  <rule ref="rulesets/braces.xml/ForLoopsMustUseBracesRule"/>
+  <rule ref="rulesets/braces.xml/IfStmtsMustUseBraces"/>
+  <rule ref="rulesets/braces.xml/WhileLoopsMustUseBraces"/>
+  <rule ref="rulesets/braces.xml/IfElseStmtsMustUseBraces"/>
+  <rule ref="rulesets/braces.xml/ForLoopsMustUseBraces"/>
 
-  <!-- <rule ref="rulesets/codesize.xml/ExcessiveMethodLength"/> -->
-  <!-- <rule ref="rulesets/codesize.xml/ExcessiveParameterList"/> -->
-  <!-- <rule ref="rulesets/codesize.xml/ExcessiveClassLength"/> -->
-  <!-- <rule ref="rulesets/codesize.xml/CyclomaticComplexityRule"/> 32 infringements, maybe check comments? -->
-  <rule ref="rulesets/codesize.xml/ExcessivePublicCountRule"/>
+  <!-- <rule ref="rulesets/codesize.xml/ExcessiveMethodLength"/> 8 reports. -->
+  <rule ref="rulesets/codesize.xml/ExcessiveParameterList"/>
+  <!-- <rule ref="rulesets/codesize.xml/ExcessiveClassLength"/> 3 reports. -->
+  <!-- <rule ref="rulesets/codesize.xml/CyclomaticComplexity"/> 40 reports, maybe check comments? -->
+  <rule ref="rulesets/codesize.xml/ExcessivePublicCount"/>
 
-  <!-- <rule ref="rulesets/javabeans.xml/BeanMembersShouldSerialize"/> -->
-
+  <!-- <rule ref="rulesets/javabeans.xml/BeanMembersShouldSerialize"/> 652 reports. -->
   <rule ref="rulesets/finalizers.xml/EmptyFinalizer"/>
   <rule ref="rulesets/finalizers.xml/FinalizeOnlyCallsSuperFinalize"/>
   <rule ref="rulesets/finalizers.xml/FinalizeOverloaded"/>
@@ -91,28 +102,36 @@
   <rule ref="rulesets/finalizers.xml/ExplicitCallToFinalize"/>
   <rule ref="rulesets/finalizers.xml/FinalizeShouldBeProtected"/>
 
-  <rule ref="rulesets/clone.xml/ProperCloneImplementationRule"/>
+  <rule ref="rulesets/clone.xml/ProperCloneImplementation"/>
   <!-- try me <rule ref="rulesets/clone.xml/CloneThrowsCloneNotSupportedException"/> -->
   <!-- try me <rule ref="rulesets/clone.xml/CloneMethodMustImplementCloneable"/> -->
 
-  <!-- <rule ref="rulesets/coupling.xml/CouplingBetweenObjectsRule"/> 9 infringements, but silly fixing-->
-  <!-- <rule ref="rulesets/coupling.xml/ExcessiveImportsRule"/> -->
-  <rule ref="rulesets/coupling.xml/LooseCouplingRule"/>
+  <!-- <rule ref="rulesets/coupling.xml/CouplingBetweenObjects"/> 13 reports, but silly fixing-->
+  <!-- <rule ref="rulesets/coupling.xml/ExcessiveImports"/> 12 reports. -->
+  <rule ref="rulesets/coupling.xml/LooseCoupling"/>
 
   <rule ref="rulesets/strictexception.xml/AvoidCatchingThrowable"/>
-  <!-- <rule ref="rulesets/strictexception.xml/SignatureDeclareThrowsException"/> -->
+  <!-- <rule ref="rulesets/strictexception.xml/SignatureDeclareThrowsException"/> 3 reports. -->
   <rule ref="rulesets/strictexception.xml/ExceptionTypeChecking"/>
-  <!-- try me <rule ref="rulesets/strictexception.xml/ExceptionAsFlowControlRule"/> -->
-  <!-- try me <rule ref="rulesets/strictexception.xml/AvoidCatchingNPERule"/> -->
-  <!-- try me <rule ref="rulesets/strictexception.xml/AvoidThrowingCertainExceptionTypesRule"/> -->
+  <rule ref="rulesets/strictexception.xml/ExceptionAsFlowControl"/>
+  <!-- <rule ref="rulesets/strictexception.xml/AvoidCatchingNPE"/> 4 reports. -->
+  <!-- <rule ref="rulesets/strictexception.xml/AvoidThrowingCertainExceptionTypes"/> 10 reports -->
 
-  <rule ref="rulesets/controversial.xml/UnnecessaryConstructorRule"/>
-  <!-- <rule ref="rulesets/controversial.xml/NullAssignment"/> -->
-  <!-- <rule ref="rulesets/controversial.xml/OnlyOneReturn"/> 406 infringements -->
-  <!-- <rule ref="rulesets/controversial.xml/UnusedModifier"/> -->
-  <rule ref="rulesets/controversial.xml/AssignmentInOperandRule"/>
-  <!-- <rule ref="rulesets/controversial.xml/AtLeastOneConstructor"/> -->
-  <rule ref="rulesets/controversial.xml/DontImportSunRule"/>
-  <rule ref="rulesets/controversial.xml/SuspiciousOctalEscapeRule"/>
+  <!-- <rule ref="rulesets/controversial.xml/UnnecessaryConstructor"/> Not written very well. -->
+  <!-- <rule ref="rulesets/controversial.xml/NullAssignment"/> 68 reports -->
+  <!-- <rule ref="rulesets/controversial.xml/OnlyOneReturn"/> 558 reports -->
+  <!-- <rule ref="rulesets/controversial.xml/UnusedModifier"/> 197 reports -->
+  <rule ref="rulesets/controversial.xml/AssignmentInOperand"/>
+  <!-- <rule ref="rulesets/controversial.xml/AtLeastOneConstructor"/> 149 reports -->
+  <rule ref="rulesets/controversial.xml/DontImportSun"/>
+  <rule ref="rulesets/controversial.xml/SuspiciousOctalEscape"/>
 
+  <!-- <rule ref="rulesets/logging-java.xml/MoreThanOneLogger"/> Not written very well. -->
+  <!-- <rule ref="rulesets/logging-java.xml/LoggerIsNotStaticFinal"/> Not very smart. -->
+  <!-- <rule ref="rulesets/logging-java.xml/SystemPrintln"/> 17 reports in APIExamples. But, way too slow. 5+ minutes.-->
+  
+  <!-- <rule ref="rulesets/optimizations.xml/LocalVariableCouldBeFinal"/> 2171 reports! -->
+  <!-- <rule ref="rulesets/optimizations.xml/MethodArgumentCouldBeFinal"/> 2359 reports! -->
+  <!-- <rule ref="rulesets/optimizations.xml/AvoidInstantiatingObjectsInLoops"/> 88 reports. -->
+  
 </ruleset>

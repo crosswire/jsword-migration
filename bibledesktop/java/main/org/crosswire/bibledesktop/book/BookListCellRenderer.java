@@ -48,11 +48,6 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
      */
     public BookListCellRenderer()
     {
-        if (noFocus == null)
-        {
-            noFocus = BorderFactory.createEmptyBorder(1, 1, 1, 1);
-        }
-
         setOpaque(true);
         setBorder(noFocus);
     }
@@ -149,7 +144,7 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
     /**
      * border if we do not have focus
      */
-    private static Border noFocus;
+    private static Border noFocus = BorderFactory.createEmptyBorder(1, 1, 1, 1);
 
     /**
      * Make sure that book names are not too wide

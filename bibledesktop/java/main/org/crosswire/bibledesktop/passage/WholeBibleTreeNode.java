@@ -236,7 +236,9 @@ public class WholeBibleTreeNode implements TreeNode
     public int getIndex(TreeNode node)
     {
         if (!(node instanceof WholeBibleTreeNode))
+        {
             return -1;
+        }
 
         WholeBibleTreeNode vnode = (WholeBibleTreeNode) node;
 

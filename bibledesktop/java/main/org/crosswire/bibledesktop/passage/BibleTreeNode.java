@@ -87,7 +87,10 @@ public class BibleTreeNode implements TreeNode
     {
         try
         {
-            if (kids[i] != null) return kids[i];
+            if (kids[i] != null)
+            {
+                return kids[i];
+            }
 
             BookTreeNode node = new BookTreeNode(this, i + 1);
             node.setPassage(ref, false);
@@ -127,7 +130,9 @@ public class BibleTreeNode implements TreeNode
     public int getIndex(TreeNode node)
     {
         if (!(node instanceof BookTreeNode))
+        {
             return -1;
+        }
 
         BookTreeNode book = (BookTreeNode) node;
         return book.getBook();
@@ -162,7 +167,10 @@ public class BibleTreeNode implements TreeNode
      */
     public String toString()
     {
-        if (ref == null) return Msg.WHOLE_BIBLE.toString();
+        if (ref == null)
+        {
+            return Msg.WHOLE_BIBLE.toString();
+        }
 
         return Msg.PART_BIBLE.toString(ref.getOverview());
     }

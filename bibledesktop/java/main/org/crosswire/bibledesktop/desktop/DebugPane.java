@@ -145,13 +145,18 @@ public class DebugPane extends JPanel
     {
         StringBuffer reply = new StringBuffer();
 
-        reply.append('\n' + Msg.DEBUG_VIEWS.toString());
+        reply.append('\n');
+        reply.append(Msg.DEBUG_VIEWS.toString());
         int i = 0;
         Iterator it = desktop.getViews().iterator();
         while (it.hasNext())
         {
             BibleViewPane view = (BibleViewPane) it.next();
-            reply.append((i++) + ": " + view.getTitle() + ' ' + view.toString()); //$NON-NLS-1$ //$NON-NLS-2$
+            reply.append(i++);
+            reply.append(": "); //$NON-NLS-1$
+            reply.append(view.getTitle());
+            reply.append(' ');
+            reply.append(view.toString());
         }
 
         return reply.toString();

@@ -92,7 +92,10 @@ public class BookTreeNode extends BibleTreeNode
     {
         try
         {
-            if (kids[i] != null) return kids[i];
+            if (kids[i] != null)
+            {
+                return kids[i];
+            }
 
             ChapterTreeNode node = new ChapterTreeNode(this, book, i + 1);
             node.setPassage(ref, false);
@@ -123,7 +126,9 @@ public class BookTreeNode extends BibleTreeNode
     public int getIndex(TreeNode node)
     {
         if (!(node instanceof ChapterTreeNode))
+        {
             return -1;
+        }
 
         ChapterTreeNode chap = (ChapterTreeNode) node;
         return chap.getChapter();

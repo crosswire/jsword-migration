@@ -211,7 +211,7 @@ public class BooksListModel extends AbstractListModel
     /**
      * The log stream
      */
-    private static Logger log = Logger.getLogger(BooksListModel.class);
+    private static final Logger log = Logger.getLogger(BooksListModel.class);
 
     /**
      * Serialization ID

@@ -59,7 +59,7 @@ public class KeyTreeCellRenderer extends DefaultTreeCellRenderer
     /**
      * The log stream
      */
-    private static Logger log = Logger.getLogger(KeyTreeCellRenderer.class);
+    private static final Logger log = Logger.getLogger(KeyTreeCellRenderer.class);
 
     /**
      * Serialization ID
