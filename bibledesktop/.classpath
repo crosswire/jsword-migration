@@ -2,12 +2,13 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="jar/jlfgr-1.0/jlfgr-1_0.jar"/>
-	<classpathentry exported="true" kind="lib" path="jar/winlaf-0.4/winlaf-0.4.jar"/>
+	<classpathentry exported="true" sourcepath="/winlaf/code/src" kind="lib" path="jar/winlaf-0.4/winlaf-0.4.jar"/>
 	<classpathentry kind="src" path="/jsword"/>
 	<classpathentry kind="src" path="/common"/>
 	<classpathentry kind="src" path="java/main"/>
 	<classpathentry kind="src" path="java/limbo"/>
 	<classpathentry kind="src" path="java/test"/>
 	<classpathentry exported="true" kind="lib" path="resource"/>
+	<classpathentry kind="lib" path="jar/jdic-0.8.4.1/jdic.jar"/>
 	<classpathentry kind="output" path="target/eclipse/classes"/>
 </classpath>

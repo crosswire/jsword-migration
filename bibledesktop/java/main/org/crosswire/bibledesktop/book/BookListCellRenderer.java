@@ -12,6 +12,7 @@ import javax.swing.border.Border;
 
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.book.BookMetaData;
+import org.crosswire.jsword.book.BookType;
 
 /**
  * A custom list view that paints icons alongside the words.
@@ -92,7 +93,7 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
 
             setText(str);
             setToolTipText(null);
-            setIcon(ICON_SMALL);
+            setIcon(null);
 
             setEnabled(list.isEnabled());
             setFont(list.getFont());
@@ -105,7 +106,20 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
 
             setText(bmd.getName());
             setToolTipText(bmd.getFullName());
-            setIcon(ICON_SMALL);
+
+            BookType type = bmd.getType();
+            if (type.equals(BookType.BIBLE))
+            {
+                setIcon(ICON_BIBLE);
+            }
+            else if (type.equals(BookType.COMMENTARY))
+            {
+                setIcon(ICON_COMNT);
+            }
+            else if (type.equals(BookType.DICTIONARY))
+            {
+                setIcon(ICON_DICT);
+            }
 
             setEnabled(list.isEnabled());
             setFont(list.getFont());
@@ -118,7 +132,17 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
     /**
      * The small version icon
      */
-    private static final ImageIcon ICON_SMALL = GuiUtil.getIcon("images/Passage16.gif"); //$NON-NLS-1$
+    private static final ImageIcon ICON_BIBLE = GuiUtil.getIcon("images/book-b16.png"); //$NON-NLS-1$
+
+    /**
+     * The small version icon
+     */
+    private static final ImageIcon ICON_COMNT = GuiUtil.getIcon("images/book-c16.png"); //$NON-NLS-1$
+
+    /**
+     * The small version icon
+     */
+    private static final ImageIcon ICON_DICT = GuiUtil.getIcon("images/book-d16.png"); //$NON-NLS-1$
 
     /**
      * border if we do not have focus

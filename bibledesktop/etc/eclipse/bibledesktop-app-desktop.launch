@@ -8,6 +8,10 @@
 <listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
 </listAttribute>
 <stringAttribute key="org.eclipse.debug.ui.target_debug_perspective" value="perspective_default"/>
+<mapAttribute key="org.eclipse.debug.core.environmentVariables">
+<mapEntry key="PATH1" value="${resource_path:/bibledesktop/jar/jdic-0.8.4.1};${env_var:PATH}"/>
+<mapEntry key="PATH" value="C:\Share\joe\bibledesktop\jar\jdic-0.8.4.1;C:\Program Files\ActivePerl\bin\;C:\Program Files\j2sdk142\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\system32\WBEM;C:\Progra~1\Java\apache-ant-1.5.4\bin;C:\Progra~1\Perl\bin\;C:\PROGRA~1\Vision;C:\PROGRA~1\Vision\SYSTEM;C:\PROGRA~1\COMMON~1\Vision;C:\Program Files\Cygwin\bin;C:\Program Files\Common Files\GTK\2.0\bin"/>
+</mapAttribute>
 <booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
 <stringAttribute key="org.eclipse.debug.ui.target_run_perspective" value="perspective_default"/>
 </launchConfiguration>

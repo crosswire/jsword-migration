@@ -41,8 +41,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
-import org.crosswire.bibledesktop.book.CommentaryPane;
-import org.crosswire.bibledesktop.book.SidebarPane;
+import org.crosswire.bibledesktop.book.DictionaryPane;
 import org.crosswire.bibledesktop.book.TitleChangedEvent;
 import org.crosswire.bibledesktop.book.TitleChangedListener;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
@@ -143,14 +142,14 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
      */
     public Desktop()
     {
+        // Other jobs before we create any GUI
+        LookAndFeelUtil.tweakLookAndFeel();
+
         // Calling Project.instance() will set up the project's home directory
         //     ~/.jsword
         // This will set it as a place to look for overrides for
         // ResourceBundles, properties and other resources
         Project project = Project.instance();
-
-        // Other jobs before we create any GUI
-        LookAndFeelUtil.tweakLookAndFeel();
 
         // Create the frame but don't show it so anything that happens has
         // something to attach itself to
@@ -249,8 +248,9 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
 
         pnlTbar = new JToolBar();
         barStatus = new StatusBar();
-        barSide = new SidebarPane();
+        //barSide = new SidebarPane();
         //barBook = new ReferencedPane();
+        reference = new DictionaryPane();
         sptBooks = new JSplitPane();
     }
 
@@ -339,15 +339,20 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         pnlTbar.add(actions.getAction(DesktopActions.ABOUT)).addMouseListener(barStatus);
 
         //barBook.addHyperlinkListener(this);
-        barSide.addHyperlinkListener(this);
+        //barSide.addHyperlinkListener(this);
+        reference.addHyperlinkListener(this);
 
         sptBooks.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-        sptBooks.setOneTouchExpandable(true);
+        //sptBooks.setOneTouchExpandable(true);
         sptBooks.setDividerLocation(0.9D);
         //sptBooks.add(barBook, JSplitPane.RIGHT);
-        sptBooks.add(barSide, JSplitPane.RIGHT);
+        sptBooks.add(reference, JSplitPane.RIGHT);
         sptBooks.add(new JPanel(), JSplitPane.LEFT);
         sptBooks.setResizeWeight(0.9D);
+        sptBooks.setDividerSize(7);
+        sptBooks.setOpaque(false);
+        sptBooks.setBorder(null);
+        sptBooks.setBackground(sptBooks.getBackground().darker());
 
         frame.addWindowListener(new WindowAdapter()
         {
@@ -358,7 +363,7 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         });
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(new BorderLayout());
-        frame.getContentPane().add(pnlTbar, BorderLayout.NORTH);
+        //frame.getContentPane().add(pnlTbar, BorderLayout.NORTH);
         frame.getContentPane().add(barStatus, BorderLayout.SOUTH);
         frame.getContentPane().add(sptBooks, BorderLayout.CENTER);
         frame.setJMenuBar(barMenu);
@@ -688,13 +693,12 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
             }
             else if (protocol.equals(COMMENTARY_PROTOCOL))
             {
-                CommentaryPane comments = barSide.getCommentaryPane();
-                Key key = comments.getBook().getKey(data);
-                comments.setKey(key);
+                Key key = reference.getBook().getKey(data);
+                reference.setKey(key);
             }
             else if (protocol.equals(DICTIONARY_PROTOCOL))
             {
-                barSide.getDictionaryPane().setWord(data);
+                reference.setWord(data);
             }
             else
             {
@@ -980,7 +984,8 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     private JFrame frame;
     private JToolBar pnlTbar;
     private StatusBar barStatus;
-    private SidebarPane barSide;
+    //private SidebarPane barSide;
     //private ReferencedPane barBook = null;
+    private DictionaryPane reference = null;
     private JSplitPane sptBooks;
 }

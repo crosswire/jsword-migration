@@ -125,6 +125,8 @@ public class SplitBookDataDisplay implements BookDataDisplay
         split.add(child.getComponent(), JSplitPane.RIGHT);
         split.setOneTouchExpandable(true);
         split.setDividerLocation(0.0D);
+        split.setBorder(null);
+        split.setDividerSize(8);
 
         main = new JPanel(new BorderLayout());
         main.add(split, BorderLayout.CENTER);

@@ -1,24 +1,19 @@
-package org.crosswire.bibledesktop.display.textpane;
+package org.crosswire.bibledesktop.display.jdtb;
 
 import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.event.MouseListener;
+import java.net.URL;
 
-import javax.swing.JTextPane;
 import javax.swing.event.HyperlinkListener;
-import javax.swing.text.html.HTMLEditorKit;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.common.util.Reporter;
-import org.crosswire.common.xml.Converter;
-import org.crosswire.common.xml.SAXEventProvider;
-import org.crosswire.common.xml.TransformingSAXEventProvider;
-import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.util.ConverterFactory;
+import org.jdesktop.jdic.browser.WebBrowser;
 
 /**
  * A JDK JTextPane implementation of an OSIS displayer.
@@ -44,17 +39,22 @@ import org.crosswire.jsword.util.ConverterFactory;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  */
-public class TextPaneBookDataDisplay implements BookDataDisplay
+public class JDTBBookDataDisplay implements BookDataDisplay
 {
+    /**
+     * There has to be a better way to get to use custom URLs?
+     */
+    static
+    {
+        URL.setURLStreamHandlerFactory(new JDTBURLStreamHandlerFactory());
+    }
+
     /**
      * Simple ctor
      */
-    public TextPaneBookDataDisplay()
+    public JDTBBookDataDisplay()
     {
-        converter = ConverterFactory.getConverter();
-        txtView = new JTextPane();
-        txtView.setEditable(false);
-        txtView.setEditorKit(new HTMLEditorKit());
+        txtView = new WebBrowser();
     }
 
     /* (non-Javadoc)
@@ -65,33 +65,27 @@ public class TextPaneBookDataDisplay implements BookDataDisplay
         this.book = book;
         this.key = key;
 
-        if (book == null && key == null)
-        {
-            txtView.setText(""); //$NON-NLS-1$
-            return;
-        }
-
-        // Make sure Hebrew displays from Right to Left
-        BookMetaData bmd = book.getBookMetaData();
-        boolean direction = bmd.isLeftToRight();
-        txtView.applyComponentOrientation(direction ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
-
         try
         {
-            BookData bdata = book.getData(key);
-            if (bdata == null)
+            if (book == null && key == null)
             {
-                txtView.setText(""); //$NON-NLS-1$
+                txtView.setURL();
                 return;
             }
 
-            SAXEventProvider osissep = bdata.getSAXEventProvider();
-            TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
-            htmlsep.setParameter("direction", direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            String text = XMLUtil.writeToString(htmlsep);
+            // Make sure Hebrew displays from Right to Left
+            BookMetaData bmd = book.getBookMetaData();
+            boolean direction = bmd.isLeftToRight();
+            txtView.applyComponentOrientation(direction ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
 
-            txtView.setText(text);
-            txtView.select(0, 0);
+            BookData bdata = book.getData(key);
+            if (bdata == null)
+            {
+                txtView.setURL();
+                return;
+            }
+
+            txtView.setURL(JDTBURLConnection.createURL(book, key));
         }
         catch (Exception ex)
         {
@@ -112,7 +106,6 @@ public class TextPaneBookDataDisplay implements BookDataDisplay
      */
     public void copy()
     {
-        txtView.copy();
     }
 
     /* (non-Javadoc)
@@ -120,7 +113,6 @@ public class TextPaneBookDataDisplay implements BookDataDisplay
      */
     public void addHyperlinkListener(HyperlinkListener li)
     {
-        txtView.addHyperlinkListener(li);
     }
 
     /* (non-Javadoc)
@@ -128,7 +120,6 @@ public class TextPaneBookDataDisplay implements BookDataDisplay
      */
     public void removeHyperlinkListener(HyperlinkListener li)
     {
-        txtView.removeHyperlinkListener(li);
     }
 
     /**
@@ -174,12 +165,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay
     private Key key;
 
     /**
-     * To convert OSIS to HTML
-     */
-    private Converter converter;
-
-    /**
      * The display component
      */
-    private JTextPane txtView;
+    private WebBrowser txtView;
 }

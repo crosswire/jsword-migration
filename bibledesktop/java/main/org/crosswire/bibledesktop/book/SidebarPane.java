@@ -1,4 +1,3 @@
-
 package org.crosswire.bibledesktop.book;
 
 import java.awt.BorderLayout;
@@ -48,11 +47,13 @@ public class SidebarPane extends JPanel
     {
         split.setOrientation(JSplitPane.VERTICAL_SPLIT);
         split.setDividerLocation(150);
+        split.setDividerSize(7);
+        split.setBorder(null);
         split.add(comments, JSplitPane.TOP);
         split.add(dicts, JSplitPane.BOTTOM);
 
         this.setLayout(new BorderLayout());
-        this.add(split,  BorderLayout.CENTER);
+        this.add(split, BorderLayout.CENTER);
     }
 
     /**
@@ -93,4 +94,3 @@ public class SidebarPane extends JPanel
     private JSplitPane split = new JSplitPane();
     private DictionaryPane dicts = new DictionaryPane();
 }
-

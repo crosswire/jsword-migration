@@ -2,8 +2,12 @@ package org.crosswire.bibledesktop.book;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -16,15 +20,20 @@ import javax.swing.event.ListSelectionListener;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
 import org.crosswire.bibledesktop.passage.KeyListListModel;
+import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.BookMetaData;
+import org.crosswire.jsword.book.BookType;
 import org.crosswire.jsword.book.Defaults;
 import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.passage.KeyUtil;
 import org.crosswire.jsword.passage.NoSuchKeyException;
+import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PreferredKey;
+import org.crosswire.jsword.passage.Verse;
 
 /**
  * Builds a panel on which all the Dictionaries and their entries are visible.
@@ -82,6 +91,26 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
         });
         scrDicts.setViewportView(lstDicts);
 
+        set.setBookComboBox(cboBooks);
+        set.setChapterComboBox(cboChaps);
+        set.setVerseComboBox(cboVerse);
+        set.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent ev)
+            {
+                updateDisplay();
+            }
+        });
+
+        cboBooks.setToolTipText(Msg.SELECT_BOOK.toString());
+        cboChaps.setToolTipText(Msg.SELECT_CHAPTER.toString());
+        cboVerse.setToolTipText(Msg.SELECT_VERSE.toString());
+
+        pnlSelect.setLayout(new FlowLayout());
+        pnlSelect.add(cboBooks, null);
+        pnlSelect.add(cboChaps, null);
+        pnlSelect.add(cboVerse, null);
+
         lstEntries.addListSelectionListener(new ListSelectionListener()
         {
             public void valueChanged(ListSelectionEvent ev)
@@ -91,11 +120,13 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
         });
         scrEntries.setViewportView(lstEntries);
 
-        scrDisplay.setViewportView(txtdisplay.getComponent());
+        scrDisplay.setViewportView(display.getComponent());
 
         sptMain.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        sptMain.setTopComponent(scrEntries);
+        sptMain.setTopComponent(new JPanel());
         sptMain.setBottomComponent(scrDisplay);
+        sptMain.setBorder(null);
+        sptMain.setDividerSize(8);
 
         this.setLayout(new BorderLayout(5, 5));
         this.add(scrDicts, BorderLayout.NORTH);
@@ -124,7 +155,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
      */
     public void copy()
     {
-        txtdisplay.copy();
+        display.copy();
     }
 
     /* (non-Javadoc)
@@ -140,7 +171,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
      */
     public void addHyperlinkListener(HyperlinkListener li)
     {
-        txtdisplay.addHyperlinkListener(li);
+        display.addHyperlinkListener(li);
     }
 
     /* (non-Javadoc)
@@ -148,7 +179,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
      */
     public void removeHyperlinkListener(HyperlinkListener li)
     {
-        txtdisplay.removeHyperlinkListener(li);
+        display.removeHyperlinkListener(li);
     }
 
     /* (non-Javadoc)
@@ -184,6 +215,23 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
         }
     }
 
+    /**
+     * Accessor for the current passage
+     */
+    public void setKey(Key key)
+    {
+        if (key != null && key instanceof Passage)
+        {
+            Passage ref = (Passage) key;
+            if (ref.countVerses() > 0)
+            {
+                set.setVerse(ref.getVerseAt(0));
+            }
+        }
+
+        updateDisplay();
+    }
+
     /*
         // Code to search for a word
         for (Iterator it = Books.getBooks(filter).iterator(); it.hasNext();)
@@ -213,19 +261,52 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
         if (selected != null)
         {
             BookMetaData dmd = (BookMetaData) selected;
-            dict = dmd.getBook();
-            Key set = dict.getGlobalKeyList();
-
-            KeyListListModel model = new KeyListListModel(set);
-            lstEntries.setModel(model);
-
-            if (dict instanceof PreferredKey)
+            if (dmd.getType().equals(BookType.DICTIONARY))
             {
-                PreferredKey pref = (PreferredKey) dict;
-                Key key = pref.getPreferred();
+                dict = dmd.getBook();
+                Key key = dict.getGlobalKeyList();
 
-                lstEntries.setSelectedValue(key, true);
+                KeyListListModel model = new KeyListListModel(key);
+                lstEntries.setModel(model);
+
+                if (dict instanceof PreferredKey)
+                {
+                    PreferredKey pref = (PreferredKey) dict;
+                    Key prefkey = pref.getPreferred();
+
+                    lstEntries.setSelectedValue(prefkey, true);
+                }
+
+                sptMain.setTopComponent(scrEntries);
             }
+            else
+            {
+                sptMain.setTopComponent(pnlSelect);
+            }
+        }
+    }
+
+    /**
+     * 
+     */
+    protected void updateDisplay()
+    {
+        BookMetaData bmd = (BookMetaData) lstDicts.getSelectedValue();
+        if (bmd == null)
+        {
+            log.warn("no selected commentary"); //$NON-NLS-1$
+            return;
+        }
+
+        try
+        {
+            Verse verse = set.getVerse();
+            Key updated = KeyUtil.getKeyList(verse, getBook());
+            display.setBookData(bmd.getBook(), updated);
+        }
+        catch (Exception ex)
+        {
+            Reporter.informUser(this, ex);
         }
     }
 
@@ -239,7 +320,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
             Key key = (Key) lstEntries.getSelectedValue();
             if (key != null)
             {
-                txtdisplay.setBookData(dict, key);
+                display.setBookData(dict, key);
             }
         }
         catch (Exception ex)
@@ -251,16 +332,26 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
     /**
      * The display of OSIS data
      */
-    private BookDataDisplay txtdisplay = BookDataDisplayFactory.createBookDataDisplay();
+    private BookDataDisplay display = BookDataDisplayFactory.createBookDataDisplay();
 
-    private BookFilter filter = BookFilters.getDictionaries();
+    private BookFilter filter = BookFilters.either(BookFilters.getDictionaries(), BookFilters.getCommentaries());
     private BooksComboBoxModel mdlDicts = new BooksComboBoxModel(filter);
     private Book dict = null;
 
+    protected BibleComboBoxModelSet set = new BibleComboBoxModelSet();
+    private JComboBox cboBooks = new JComboBox();
+    private JComboBox cboChaps = new JComboBox();
+    private JComboBox cboVerse = new JComboBox();
+    private JPanel pnlSelect = new JPanel();
     private JScrollPane scrDicts = new JScrollPane();
     private JList lstDicts = new JList();
     private JSplitPane sptMain = new JSplitPane();
     private JScrollPane scrEntries = new JScrollPane();
     private JScrollPane scrDisplay = new JScrollPane();
     private JList lstEntries = new JList();
+
+    /**
+     * The log stream
+     */
+    private static final Logger log = Logger.getLogger(DictionaryPane.class);
 }
