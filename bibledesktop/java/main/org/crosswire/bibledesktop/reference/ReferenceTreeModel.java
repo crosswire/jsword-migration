@@ -1,13 +1,12 @@
 package org.crosswire.bibledesktop.reference;
 
+import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-
-import org.crosswire.common.util.EventListenerList;
 
 /**
  * A TreeModel for the ReferencePane.

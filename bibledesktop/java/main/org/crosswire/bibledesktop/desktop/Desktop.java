@@ -44,7 +44,6 @@ import org.crosswire.bibledesktop.book.TitleChangedEvent;
 import org.crosswire.bibledesktop.book.TitleChangedListener;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
-import org.crosswire.bibledesktop.util.SimpleSwingConverter;
 import org.crosswire.common.config.ChoiceFactory;
 import org.crosswire.common.config.Config;
 import org.crosswire.common.progress.Job;
@@ -822,11 +821,6 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
         String[] names = (String[]) keys.toArray(new String[keys.size()]);
         ChoiceFactory.getDataMap().put(CONV_KEY, names);
 
-        // The choice of simple XSL stylesheets
-        SimpleSwingConverter sstyle = new SimpleSwingConverter();
-        String[] sstyles = sstyle.getStyles();
-        ChoiceFactory.getDataMap().put(SWING_KEY, sstyles);
-
         // The choice of configurable XSL stylesheets
         ConfigurableSwingConverter cstyle = new ConfigurableSwingConverter();
         String[] cstyles = cstyle.getStyles();
@@ -898,7 +892,6 @@ public class Desktop implements TitleChangedListener, HyperlinkListener
     private static final String DESKTOP_KEY = "desktop"; //$NON-NLS-1$
     private static final String READINGS_KEY = "readings"; //$NON-NLS-1$
     private static final String CONV_KEY = "converters"; //$NON-NLS-1$
-    private static final String SWING_KEY = "swing-styles"; //$NON-NLS-1$
     private static final String CSWING_KEY = "cswing-styles"; //$NON-NLS-1$
     private static final String BIBLE_KEY = "bible-names"; //$NON-NLS-1$
     private static final String COMMENTARY_KEY = "commentary-names"; //$NON-NLS-1$

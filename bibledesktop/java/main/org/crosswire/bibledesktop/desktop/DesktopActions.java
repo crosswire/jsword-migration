@@ -1,11 +1,7 @@
 package org.crosswire.bibledesktop.desktop;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.URL;
-import java.text.MessageFormat;
 import java.util.Iterator;
 
 import javax.swing.Action;
@@ -70,7 +66,7 @@ public class DesktopActions
     public DesktopActions(Desktop desktop)
     {
         this.desktop = desktop;
-
+        converter = ConverterFactory.getConverter();
         actions = new ActionFactory(Desktop.class, this);
     }
 
@@ -82,41 +78,6 @@ public class DesktopActions
     public Action getAction(String key)
     {
         return actions.getAction(key);
-    }
-
-    /* (non-Javadoc)
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
-    public void actionPerformed(ActionEvent ev)
-    {
-        String action = ev.getActionCommand();
-
-        assert action != null;
-        assert action.length() != 0;
-
-        // Instead of cascading if/then/else
-        // use reflecton to do a direct lookup and call
-        try
-        {
-            Method doMethod = DesktopActions.class.getDeclaredMethod(METHOD_PREFIX+action, new Class[] { });
-            doMethod.invoke(this, null);
-        }
-        catch (NoSuchMethodException e1)
-        {
-            log.error(MessageFormat.format(UNKNOWN_ACTION_ERROR, new Object[] { action }));
-        }
-        catch (IllegalArgumentException e2)
-        {
-            log.error(UNEXPECTED_ERROR, e2);
-        }
-        catch (IllegalAccessException e3)
-        {
-            log.error(UNEXPECTED_ERROR, e3);
-        }
-        catch (InvocationTargetException e4)
-        {
-            log.error(UNEXPECTED_ERROR, e4);
-        }
     }
 
     /**
@@ -348,12 +309,7 @@ public class DesktopActions
      */
     public void doBooks()
     {
-        if (sites == null)
-        {
-            sites = new SitesPane();
-        }
-
-        sites.showInDialog(getDesktop().getJFrame());
+        getSites().showInDialog(getDesktop().getJFrame());
     }
 
     /**
@@ -433,11 +389,6 @@ public class DesktopActions
     static final String CONTENTS = "Contents"; //$NON-NLS-1$
     static final String ABOUT = "About"; //$NON-NLS-1$
 
-    // Enumeration of error strings used in this class
-    private static final String UNKNOWN_ACTION_ERROR = "Unknown action : {0}"; //$NON-NLS-1$
-    private static final String UNEXPECTED_ERROR = "Stupid Programmer Error"; //$NON-NLS-1$
-    private static final String METHOD_PREFIX = "do"; //$NON-NLS-1$
-
     /**
      * The desktop on which these actions work
      */
@@ -451,7 +402,7 @@ public class DesktopActions
     /**
      * To convert OSIS to HTML
      */
-    private Converter converter = ConverterFactory.getConverter();
+    private Converter converter;
 
     /**
      * The About window
@@ -466,5 +417,5 @@ public class DesktopActions
     /**
      * The log stream
      */
-    private static final Logger log = Logger.getLogger(DesktopActions.class);
+    protected static final Logger log = Logger.getLogger(DesktopActions.class);
 }

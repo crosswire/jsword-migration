@@ -58,8 +58,6 @@ public class Msg extends MsgBase
     static final Msg NOT_IMPLEMENTED = new Msg("DesktopActions.NotImplemented"); //$NON-NLS-1$
     static final Msg NO_PASSAGE = new Msg("DesktopActions.NoPassage"); //$NON-NLS-1$
     static final Msg SOURCE_MISSING = new Msg("DesktopActions.SourceMissing"); //$NON-NLS-1$
-    static final Msg OSIS = new Msg("DesktopActions.OSIS"); //$NON-NLS-1$
-    static final Msg HTML = new Msg("DesktopActions.HTML"); //$NON-NLS-1$
 
     // Strings for AboutPane and Splash
     // The splash image is of an English version of the application
@@ -114,6 +112,9 @@ public class Msg extends MsgBase
     // I18N: migrate this to an ActionFactory
     static final Msg CLOSE = new Msg("ViewSourcePane.Close"); //$NON-NLS-1$
     static final Msg TEXT_VIEWER = new Msg("ViewSourcePane.TextViewer"); //$NON-NLS-1$
+    static final Msg ORIG = new Msg("ViewSourcePane.ORIG"); //$NON-NLS-1$
+    static final Msg OSIS = new Msg("ViewSourcePane.OSIS"); //$NON-NLS-1$
+    static final Msg HTML = new Msg("ViewSourcePane.HTML"); //$NON-NLS-1$
 
     /**
      * Passthrough ctor

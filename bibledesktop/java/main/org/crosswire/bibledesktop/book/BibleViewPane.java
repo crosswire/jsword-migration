@@ -16,12 +16,12 @@ import javax.swing.JPanel;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.filechooser.FileFilter;
 
+import org.apache.commons.lang.StringUtils;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.splitlist.SplitBookDataDisplay;
 import org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
-import org.crosswire.common.util.StringUtil;
 import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchVerseException;
@@ -128,7 +128,7 @@ public class BibleViewPane extends JPanel
             String deft = pnlSelect.getDefaultName();
             if (deft.length() > shortlen)
             {
-                deft = StringUtil.shorten(deft, shortlen);
+                deft = StringUtils.abbreviate(deft, shortlen);
             }
 
             return deft;

@@ -30,9 +30,7 @@
     </instrument>
     <mkdir dir="${target.temp}/junit"/>
     <echo message="JUnit needs jars in ${ant.lib}. See the antlibs task."/>
-    <echo message="Using -Djsword.bible.dir=${basedir}/${target.swingui}/resource"/>
     <junit fork="yes" haltonfailure="no" printsummary="on" showoutput="yes">
-      <jvmarg value="-Djsword.bible.dir=${basedir}/${target.swingui}/resource"/>
       <test name="CommonAllTests" todir="${target.temp}/junit"/>
       <test name="JSwordAllTests" todir="${target.temp}/junit"/>
       <!--
