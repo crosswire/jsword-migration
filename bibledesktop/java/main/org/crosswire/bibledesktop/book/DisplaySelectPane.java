@@ -1,7 +1,5 @@
 package org.crosswire.bibledesktop.book;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -19,7 +17,6 @@ import java.beans.PropertyChangeListener;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -41,8 +38,6 @@ import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.IndexStatus;
 import org.crosswire.jsword.book.search.basic.DefaultSearchModifier;
 import org.crosswire.jsword.book.search.basic.DefaultSearchRequest;
-import org.crosswire.jsword.book.search.parse.IndexSearcher;
-import org.crosswire.jsword.book.search.parse.PhraseParamWord;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.PassageTally;
@@ -99,6 +94,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         // search() and version() rely on this returning only Bibles
         mdlBible = new BooksComboBoxModel(BookFilters.getBibles());
         JComboBox cboBible = new JComboBox(mdlBible);
+        cboBible.setPrototypeDisplayValue(" "); //$NON-NLS-1$
         selected = mdlBible.getSelectedBook();
         if (selected != null)
         {
@@ -109,8 +105,6 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         else
         {
             // The application has started and there are no installed bibles.
-            // So make the combo box a reasonable size.
-            cboBible.setPrototypeDisplayValue("                                                            "); //$NON-NLS-1$
             // Should always get a key from book, unless we need a PassageTally
             // But here we don't have a book yet.
             key = new RocketPassage();
@@ -148,12 +142,6 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         btnMenu.setBorderPainted(false);
         */
 
-        JPanel pnlBible = new JPanel();
-        pnlBible.setLayout(new BorderLayout());
-        pnlBible.add(lblBible, BorderLayout.WEST);
-        pnlBible.add(cboBible, BorderLayout.EAST); // CENTER);
-        // pnlBible.add(btnMenu, BorderLayout.EAST);
-
         JLabel lblKey = actions.createJLabel(VIEW_LABEL);
         txtKey = new JTextField();
         txtKey.setAction(actions.getAction(PASSAGE_FIELD));
@@ -169,42 +157,42 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         });
         btnKey = new JButton(actions.getAction(MORE));
         btnKey.setIcon(ICON_SELECT);
-        btnKey.setBorderPainted(false);
+        btnKey.setBorder(BorderFactory.createEmptyBorder(3,5,3,5));
         btnKeyGo = new JButton(actions.getAction(GO_PASSAGE));
+        btnKeyGo.setBorder(BorderFactory.createEmptyBorder(4,5,4,5));
 
         txtSearch = new JTextField();
         txtSearch.setAction(actions.getAction(SEARCH_FIELD));
         JLabel lblSearch = actions.createJLabel(SEARCH_LABEL);
         lblSearch.setLabelFor(txtSearch);
         btnSearch = new JButton(actions.getAction(GO_SEARCH));
+        btnSearch.setBorder(BorderFactory.createEmptyBorder(4,5,4,5));
 
         JButton btnHelp = new JButton(actions.getAction(HELP));
-        btnHelp.setBorder(BorderFactory.createLineBorder(SystemColor.control, 5));
-        btnHelp.setBackground(Color.yellow);
+        btnHelp.setBorder(BorderFactory.createEmptyBorder(2,5,2,5));
         btnHelp.setText(null);
         dlgHelp = new QuickHelpDialog(GuiUtil.getFrame(this), Msg.HELP_TITLE.toString(), Msg.HELP_TEXT.toString());
 
         btnAdvanced = new JButton(actions.getAction(ADVANCED));
-        btnAdvanced.setBorderPainted(false);
+        btnAdvanced.setBorder(BorderFactory.createEmptyBorder(3,5,3,5));
         btnIndex = new JButton(actions.getAction(INDEX));
-
-        chkMatch = new JCheckBox(actions.getAction(MATCH));
+        btnIndex.setBorder(BorderFactory.createEmptyBorder(3,15,3,15));
 
         this.setLayout(new GridBagLayout());
-        this.add(pnlBible, new GridBagConstraints(0, 0, 6, 1, 1.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(lblBible,    new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));
+        this.add(cboBible,    new GridBagConstraints(2, 0, 4, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 
-        this.add(lblKey, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));
-        this.add(txtKey, new GridBagConstraints(2, 1, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(3, 0, 0, 0), 0, 0));
-        this.add(btnKey, new GridBagConstraints(4, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(btnKeyGo, new GridBagConstraints(5, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(lblKey,      new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));
+        this.add(txtKey,      new GridBagConstraints(2, 1, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 0, 1, 2), 0, 0));
+        this.add(btnKey,      new GridBagConstraints(4, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 0, 2, 2), 0, 0));
+        this.add(btnKeyGo,    new GridBagConstraints(5, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 
-        this.add(btnHelp, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(lblSearch, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));
-        this.add(btnIndex, new GridBagConstraints(2, 2, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(txtSearch, new GridBagConstraints(2, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(chkMatch, new GridBagConstraints(3, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(btnAdvanced, new GridBagConstraints(4, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(btnSearch, new GridBagConstraints(5, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 2, 2, 2), 0, 0));
+        this.add(btnHelp,     new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(lblSearch,   new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));
+        this.add(btnIndex,    new GridBagConstraints(2, 2, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(2, 0, 2, 2), 0, 0));
+        this.add(txtSearch,   new GridBagConstraints(2, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 0, 3, 2), 0, 0));
+        this.add(btnAdvanced, new GridBagConstraints(4, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 0, 2, 2), 0, 0));
+        this.add(btnSearch,   new GridBagConstraints(5, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 
         enableComponents();
     }
@@ -290,26 +278,22 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
                 return;
             }
 
-            // We may want to do ranking for more than just
-            // "match"
-            boolean rank = chkMatch.isSelected();
-            if (rank)
-            {
-                String quote = IndexSearcher.getPreferredSyntax(PhraseParamWord.class);
-                param = quote + param + quote;
-            }
+            boolean rank = advanced.isRanked();
 
             DefaultSearchModifier modifier = new DefaultSearchModifier();
             modifier.setRanked(rank);
 
             Key results = selected.find(new DefaultSearchRequest(param, modifier));
 
-            // we get PassageTallys for best match searches
+            // we get PassageTallys for rank searches
             if (results instanceof PassageTally || rank)
             {
                 PassageTally tally = (PassageTally) results;
                 tally.setOrdering(PassageTally.ORDER_TALLY);
-                tally.trimRanges(getNumRankedVerses(), RestrictionType.NONE);
+                if (getNumRankedVerses() > 0)
+                {
+                    tally.trimRanges(getNumRankedVerses(), RestrictionType.NONE);
+                }
             }
 
             if (results.isEmpty())
@@ -341,11 +325,11 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     }
 
     /**
-     * Match is an action, but we don't need to do anything because match is
+     * Rank is an action, but we don't need to do anything because rank is
      * only used when search is clicked. But ActionFactory will complain if we
      * leave it out.
      */
-    public void doMatch()
+    public void doRank()
     {
         // Do nothing
     }
@@ -464,6 +448,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 //    }
 //
     /**
+     * Gets the number of verses that should be shown when a search result is
+     * ranked. A value of 0 means show all.
      * @return Returns the numRankedVerses.
      */
     public static int getNumRankedVerses()
@@ -472,11 +458,42 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     }
 
     /**
+     * Sets the number of verses that should be shown when a search result is
+     * ranked. This can be a value in the range of 0 to maxNumRankedVerses.
+     * Values outside this range are silently constrained to the range.
      * @param newNumRankedVerses The numRankedVerses to set.
      */
     public static void setNumRankedVerses(int newNumRankedVerses)
     {
+        if (newNumRankedVerses < 0)
+        {
+            newNumRankedVerses = 0;
+        }
+        else if (newNumRankedVerses > maxNumRankedVerses)
+        {
+            newNumRankedVerses = maxNumRankedVerses;
+        }
         numRankedVerses = newNumRankedVerses;
+    }
+
+    /**
+     * @return Returns the maxNumRankedVerses.
+     */
+    public static int getMaxNumRankedVerses()
+    {
+        return maxNumRankedVerses;
+    }
+
+    /**
+     * @param newMaxNumRankedVerses The maxNumRankedVerses to set.
+     */
+    public static void setMaxNumRankedVerses(int newMaxNumRankedVerses)
+    {
+        if (newMaxNumRankedVerses < numRankedVerses)
+        {
+            newMaxNumRankedVerses = numRankedVerses;
+        }
+        maxNumRankedVerses = newMaxNumRankedVerses;
     }
 
     /**
@@ -564,7 +581,6 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         txtSearch.setEnabled(searchable);
         txtSearch.setBackground(searchable ? SystemColor.text : SystemColor.control);
         txtSearch.setVisible(searchable);
-        chkMatch.setEnabled(searchable);
         btnAdvanced.setEnabled(searchable);
         btnSearch.setEnabled(searchable);
         txtKey.setEnabled(readable);
@@ -701,7 +717,6 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     private static final String GO_SEARCH = "GoSearch"; //$NON-NLS-1$
     private static final String SEARCH_FIELD = "SearchAction"; //$NON-NLS-1$
     private static final String ADVANCED = "Advanced"; //$NON-NLS-1$
-    private static final String MATCH = "Match"; //$NON-NLS-1$
     private static final String BIBLE = "Bible"; //$NON-NLS-1$
     private static final String INDEX = "Index"; //$NON-NLS-1$
 
@@ -726,7 +741,6 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     private PassageSelectionPane dlgSelect;
     private JTextField txtKey;
     private JTextField txtSearch;
-    private JCheckBox chkMatch;
     private JButton btnAdvanced;
     private JButton btnSearch;
     private JButton btnKey;
@@ -756,6 +770,11 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      * How may hits to show when the search results are ranked.
      */
     private static int numRankedVerses = 20;
+
+    /**
+     * What is the limit to which numRankedVerses can be set.
+     */
+    private static int maxNumRankedVerses = 200;
 
     /**
      * Serialization ID

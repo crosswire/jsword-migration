@@ -23,10 +23,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -110,6 +114,37 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         lblExcludes = actions.createJLabel(EXCLUDES);
         lblExcludes.setLabelFor(txtExcludes);
 
+        chkRank = new JCheckBox(actions.getAction(HEAD_RANK));
+        chkRank.setBackground(headBG);
+        chkRank.setForeground(headFG);
+        chkRank.setFont(headFont);
+        lblRank = actions.createJLabel(RANK);
+        setLabelRank(DisplaySelectPane.getNumRankedVerses());
+        lblRank.setVisible(false);
+        sliderRank = new JSlider(SwingConstants.HORIZONTAL,
+                    0, DisplaySelectPane.getMaxNumRankedVerses(), DisplaySelectPane.getNumRankedVerses());
+        sliderRank.setMajorTickSpacing(DisplaySelectPane.getMaxNumRankedVerses()/5);
+        sliderRank.setMinorTickSpacing(DisplaySelectPane.getMaxNumRankedVerses()/20);
+        sliderRank.setPaintTicks(true);
+        sliderRank.setPaintLabels(true);
+        sliderRank.setVisible(false);
+        sliderRank.addChangeListener(new ChangeListener()
+        {
+            public void stateChanged(ChangeEvent e)
+            {
+                JSlider source = (JSlider)e.getSource();
+                int val = source.getValue();
+                if (source.getValueIsAdjusting())
+                {
+                   setLabelRank(val);
+                }
+                else
+                {
+                    DisplaySelectPane.setNumRankedVerses(val);
+                }
+            }
+        });
+
         chkRestrict = new JCheckBox(actions.getAction(HEAD_RESTRICT));
         chkRestrict.setBackground(headBG);
         chkRestrict.setForeground(headFG);
@@ -191,37 +226,41 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
 
         this.setBorder(BorderFactory.createLineBorder(SystemColor.control, 5));
         this.setLayout(new GridBagLayout());
-        this.add(lblHeading, new GridBagConstraints(0, 1, 3, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
-        this.add(lblPhrase, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(txtPhrase, new GridBagConstraints(1, 2, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 5, 2, 5), 0, 0));
-        this.add(lblIncludes, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(txtIncludes, new GridBagConstraints(1, 3, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 5, 2, 5), 0, 0));
-        this.add(lblExcludes, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(txtExcludes, new GridBagConstraints(1, 4, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 5, 2, 5), 0, 0));
-        this.add(chkRestrict, new GridBagConstraints(0, 5, 3, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
-        this.add(lblPresets, new GridBagConstraints(0, 6, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(cboPresets, new GridBagConstraints(1, 6, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 5, 2, 5), 0, 0));
-        this.add(lblRestrict, new GridBagConstraints(0, 7, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(txtRestrict, new GridBagConstraints(1, 7, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 5, 2, 5), 0, 0));
-        this.add(btnRestrict, new GridBagConstraints(2, 7, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));
-//        this.add(chkHebGrk, new GridBagConstraints(0, 8, 3, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
-//        this.add(lblHebInc, new GridBagConstraints(0, 9, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-//        this.add(txtHebInc, new GridBagConstraints(1, 9, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(2, 5, 2, 5), 0, 0));
-//        this.add(lblHebExc, new GridBagConstraints(0, 10, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-//        this.add(txtHebExc, new GridBagConstraints(1, 10, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(2, 5, 2, 5), 0, 0));
-//        this.add(lblGrkInc, new GridBagConstraints(0, 11, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-//        this.add(txtGrkInc, new GridBagConstraints(1, 11, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(2, 5, 2, 5), 0, 0));
-//        this.add(lblGrkExc, new GridBagConstraints(0, 12, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-//        this.add(txtGrkExc, new GridBagConstraints(1, 12, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(2, 5, 2, 5), 0, 0));
-//        this.add(chkTime, new GridBagConstraints(0, 13, 3, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
-//        this.add(lblAfter, new GridBagConstraints(0, 14, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-//        this.add(txtAfter, new GridBagConstraints(1, 14, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(2, 5, 2, 5), 0, 0));
-//        this.add(lblBefore, new GridBagConstraints(0, 15, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-//        this.add(txtBefore, new GridBagConstraints(1, 15, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(2, 5, 2, 5), 0, 0));
-        this.add(chkSummary, new GridBagConstraints(0, 16, 3, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
-        this.add(lblSummary, new GridBagConstraints(0, 17, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(scrSummary, new GridBagConstraints(1, 17, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(2, 5, 2, 5), 0, 0));
-        this.add(btnGo, new GridBagConstraints(2, 18, 1, 1, 0.0, 0.0, GridBagConstraints.SOUTH, GridBagConstraints.NONE, new Insets(10, 0, 5, 5), 0, 0));
+        int gridy = 0;
+        this.add(lblHeading,  new GridBagConstraints(0, ++gridy, 3, 1, 0.0, 0.0, GridBagConstraints.WEST,   GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
+        this.add(lblPhrase,   new GridBagConstraints(0, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,   GridBagConstraints.NONE,       new Insets(0, 0, 0, 0), 0, 0));
+        this.add(txtPhrase,   new GridBagConstraints(1,   gridy, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 5, 2, 5), 0, 0));
+        this.add(lblIncludes, new GridBagConstraints(0, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,   GridBagConstraints.NONE,       new Insets(0, 0, 0, 0), 0, 0));
+        this.add(txtIncludes, new GridBagConstraints(1,   gridy, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 5, 2, 5), 0, 0));
+        this.add(lblExcludes, new GridBagConstraints(0, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,   GridBagConstraints.NONE,       new Insets(0, 0, 0, 0), 0, 0));
+        this.add(txtExcludes, new GridBagConstraints(1,   gridy, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 5, 2, 5), 0, 0));
+        this.add(chkRank,     new GridBagConstraints(0, ++gridy, 3, 1, 0.0, 0.0, GridBagConstraints.WEST,   GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
+        this.add(lblRank,     new GridBagConstraints(0, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,   GridBagConstraints.NONE,       new Insets(0, 0, 0, 0), 0, 0));
+        this.add(sliderRank,  new GridBagConstraints(1,   gridy, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
+        this.add(chkRestrict, new GridBagConstraints(0, ++gridy, 3, 1, 0.0, 0.0, GridBagConstraints.WEST,   GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
+        this.add(lblPresets,  new GridBagConstraints(0, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,   GridBagConstraints.NONE,       new Insets(0, 0, 0, 0), 0, 0));
+        this.add(cboPresets,  new GridBagConstraints(1,   gridy, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 5, 2, 5), 0, 0));
+        this.add(lblRestrict, new GridBagConstraints(0, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,   GridBagConstraints.NONE,       new Insets(0, 0, 0, 0), 0, 0));
+        this.add(txtRestrict, new GridBagConstraints(1,   gridy, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 5, 2, 5), 0, 0));
+        this.add(btnRestrict, new GridBagConstraints(2,   gridy, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE,       new Insets(0, 0, 0, 5), 0, 0));
+//        this.add(chkHebGrk,   new GridBagConstraints(0, ++gridy, 3, 1, 0.0, 0.0, GridBagConstraints.WEST,   GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
+//        this.add(lblHebInc,   new GridBagConstraints(0, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,   GridBagConstraints.NONE,       new Insets(0, 0, 0, 0), 0, 0));
+//        this.add(txtHebInc,   new GridBagConstraints(1,   gridy, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,       new Insets(2, 5, 2, 5), 0, 0));
+//        this.add(lblHebExc,   new GridBagConstraints(0, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,   GridBagConstraints.NONE,       new Insets(0, 0, 0, 0), 0, 0));
+//        this.add(txtHebExc,   new GridBagConstraints(1,   gridy, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,       new Insets(2, 5, 2, 5), 0, 0));
+//        this.add(lblGrkInc,   new GridBagConstraints(0, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,   GridBagConstraints.NONE,       new Insets(0, 0, 0, 0), 0, 0));
+//        this.add(txtGrkInc,   new GridBagConstraints(1,   gridy, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,       new Insets(2, 5, 2, 5), 0, 0));
+//        this.add(lblGrkExc,   new GridBagConstraints(0, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,   GridBagConstraints.NONE,       new Insets(0, 0, 0, 0), 0, 0));
+//        this.add(txtGrkExc,   new GridBagConstraints(1,   gridy, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,       new Insets(2, 5, 2, 5), 0, 0));
+//        this.add(chkTime,     new GridBagConstraints(0, ++gridy, 3, 1, 0.0, 0.0, GridBagConstraints.WEST,   GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
+//        this.add(lblAfter,    new GridBagConstraints(0, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,   GridBagConstraints.NONE,       new Insets(0, 0, 0, 0), 0, 0));
+//        this.add(txtAfter,    new GridBagConstraints(1,   gridy, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,       new Insets(2, 5, 2, 5), 0, 0));
+//        this.add(lblBefore,   new GridBagConstraints(0, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,   GridBagConstraints.NONE,       new Insets(0, 0, 0, 0), 0, 0));
+//        this.add(txtBefore,   new GridBagConstraints(1,   gridy, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,       new Insets(2, 5, 2, 5), 0, 0));
+        this.add(chkSummary,  new GridBagConstraints(0, ++gridy, 3, 1, 0.0, 0.0, GridBagConstraints.WEST,   GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
+        this.add(lblSummary,  new GridBagConstraints(0, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,   GridBagConstraints.NONE,       new Insets(0, 0, 0, 0), 0, 0));
+        this.add(scrSummary,  new GridBagConstraints(1,   gridy, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,       new Insets(2, 5, 2, 5), 0, 0));
+        this.add(btnGo,       new GridBagConstraints(2, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.SOUTH,  GridBagConstraints.NONE,       new Insets(10, 0, 5, 5), 0, 0));
     }
 
     /**
@@ -263,6 +302,43 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
             return null;
         }
         return txtSummary.getText();
+    }
+
+    public boolean isRanked()
+    {
+        return chkRank.isSelected();
+    }
+
+    public void setLabelRank(int val)
+    {
+        if (val == 0)
+        {
+            lblRank.setText(Msg.RANK.toString("All")); //$NON-NLS-1$
+        }
+        else if (val == 1)
+        {
+            lblRank.setText(Msg.RANK_ONE.toString());
+        }
+        else
+        {
+            lblRank.setText(Msg.RANK.toString(new Integer(val)));
+        }
+    }
+
+    /**
+     * Someone clicked the rank check button
+     */
+    public void doHeadRank()
+    {
+        boolean visible = chkRank.isSelected();
+
+        lblRank.setVisible(visible);
+        sliderRank.setVisible(visible);
+
+        if (dlgMain != null)
+        {
+            dlgMain.pack();
+        }
     }
 
     /**
@@ -406,6 +482,20 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
 
         StringBuffer search = new StringBuffer();
 
+        String restrict = txtRestrict.getText();
+        if (restrict != null && restrict.trim().length() > 0)
+        {
+            if (search.length() != 0)
+            {
+                search.append(SPACE);
+            }
+
+            search.append(plus);
+            search.append(open);
+            search.append(restrict);
+            search.append(close);
+        }
+
         String phrase = txtPhrase.getText();
         if (phrase != null && phrase.trim().length() > 0)
         {
@@ -441,20 +531,6 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
 
             search.append(minus);
             search.append(StringUtil.join(words, SPACE + minus));
-        }
-
-        String restrict = txtRestrict.getText();
-        if (restrict != null && restrict.trim().length() > 0)
-        {
-            if (search.length() != 0)
-            {
-                search.append(SPACE);
-            }
-
-            search.append(plus);
-            search.append(open);
-            search.append(restrict);
-            search.append(close);
         }
 
         txtSummary.setText(search.toString());
@@ -525,6 +601,8 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     private static final String DONE = "Done"; //$NON-NLS-1$
     private static final String PHRASE = "Phrase"; //$NON-NLS-1$
     private static final String RESTRICT = "Restrict"; //$NON-NLS-1$
+    private static final String HEAD_RANK = "HeadRank"; //$NON-NLS-1$
+    private static final String RANK = "RankSomeSlider"; //$NON-NLS-1$
     private static final String HEAD_RESTRICT = "HeadRestrict"; //$NON-NLS-1$
     private static final String HEAD_BASE = "HeadBase"; //$NON-NLS-1$
     private static final String INCLUDES = "Includes"; //$NON-NLS-1$
@@ -583,6 +661,9 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     private JLabel lblExcludes;
     private JTextField txtExcludes;
     private JLabel lblHeading;
+    private JCheckBox chkRank;
+    private JLabel lblRank;
+    private JSlider sliderRank;
     private JCheckBox chkRestrict;
     private JLabel lblRestrict;
     private JTextField txtRestrict;
