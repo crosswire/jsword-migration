@@ -36,13 +36,7 @@ import javax.swing.event.DocumentListener;
 
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
-import org.crosswire.common.util.StringUtil;
-import org.crosswire.jsword.book.search.parse.IndexSearcher;
-import org.crosswire.jsword.book.search.parse.PassageLeftParamWord;
-import org.crosswire.jsword.book.search.parse.PassageRightParamWord;
-import org.crosswire.jsword.book.search.parse.PhraseParamWord;
-import org.crosswire.jsword.book.search.parse.RemoveCommandWord;
-import org.crosswire.jsword.book.search.parse.RetainCommandWord;
+import org.crosswire.jsword.book.search.SearchType;
 
 /**
  * An advanced search dialog.
@@ -113,6 +107,16 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         txtExcludes.getDocument().addDocumentListener(this);
         lblExcludes = actions.createJLabel(EXCLUDES);
         lblExcludes.setLabelFor(txtExcludes);
+
+        txtSpell = new JTextField();
+        txtSpell.getDocument().addDocumentListener(this);
+        lblSpell = actions.createJLabel(SPELL);
+        lblSpell.setLabelFor(txtSpell);
+
+        txtStartsWith = new JTextField();
+        txtStartsWith.getDocument().addDocumentListener(this);
+        lblStartsWith = actions.createJLabel(STARTS_WITH);
+        lblStartsWith.setLabelFor(txtStartsWith);
 
         chkRank = new JCheckBox(actions.getAction(HEAD_RANK));
         chkRank.setBackground(headBG);
@@ -234,6 +238,10 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         this.add(txtIncludes, new GridBagConstraints(1,   gridy, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 5, 2, 5), 0, 0));
         this.add(lblExcludes, new GridBagConstraints(0, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,   GridBagConstraints.NONE,       new Insets(0, 0, 0, 0), 0, 0));
         this.add(txtExcludes, new GridBagConstraints(1,   gridy, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 5, 2, 5), 0, 0));
+        this.add(lblSpell,    new GridBagConstraints(0, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,   GridBagConstraints.NONE,       new Insets(0, 0, 0, 0), 0, 0));
+        this.add(txtSpell,    new GridBagConstraints(1,   gridy, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 5, 2, 5), 0, 0));
+        this.add(lblStartsWith, new GridBagConstraints(0, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,   GridBagConstraints.NONE,       new Insets(0, 0, 0, 0), 0, 0));
+        this.add(txtStartsWith, new GridBagConstraints(1,   gridy, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 5, 2, 5), 0, 0));
         this.add(chkRank,     new GridBagConstraints(0, ++gridy, 3, 1, 0.0, 0.0, GridBagConstraints.WEST,   GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
         this.add(lblRank,     new GridBagConstraints(0, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,   GridBagConstraints.NONE,       new Insets(0, 0, 0, 0), 0, 0));
         this.add(sliderRank,  new GridBagConstraints(1,   gridy, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
@@ -474,12 +482,6 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
      */
     private void updateSearchString()
     {
-        String quote = IndexSearcher.getPreferredSyntax(PhraseParamWord.class);
-        String plus = IndexSearcher.getPreferredSyntax(RetainCommandWord.class);
-        String minus = IndexSearcher.getPreferredSyntax(RemoveCommandWord.class);
-        String open = IndexSearcher.getPreferredSyntax(PassageLeftParamWord.class);
-        String close = IndexSearcher.getPreferredSyntax(PassageRightParamWord.class);
-
         StringBuffer search = new StringBuffer();
 
         String restrict = txtRestrict.getText();
@@ -490,19 +492,18 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
                 search.append(SPACE);
             }
 
-            search.append(plus);
-            search.append(open);
-            search.append(restrict);
-            search.append(close);
+            search.append(SearchType.RANGE.decorate(restrict));
         }
 
         String phrase = txtPhrase.getText();
         if (phrase != null && phrase.trim().length() > 0)
         {
+            if (search.length() != 0)
+            {
+                search.append(SPACE);
+            }
 
-            search.append(quote);
-            search.append(phrase);
-            search.append(quote);
+            search.append(SearchType.PHRASE.decorate(phrase));
         }
 
         String includes = txtIncludes.getText();
@@ -513,10 +514,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
                 search.append(SPACE);
             }
 
-            String[] words = includes.split(SPACE);
-
-            search.append(plus);
-            search.append(StringUtil.join(words, SPACE + plus));
+            search.append(SearchType.ALL_WORDS.decorate(includes));
         }
 
         String excludes = txtExcludes.getText();
@@ -527,10 +525,29 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
                 search.append(SPACE);
             }
 
-            String[] words = excludes.split(SPACE);
+            search.append(SearchType.NOT_WORDS.decorate(excludes));
+        }
 
-            search.append(minus);
-            search.append(StringUtil.join(words, SPACE + minus));
+        String spell = txtSpell.getText();
+        if (spell != null && spell.trim().length() > 0)
+        {
+            if (search.length() != 0)
+            {
+                search.append(SPACE);
+            }
+
+            search.append(SearchType.SPELL_WORDS.decorate(spell));
+        }
+
+        String startsWith = txtStartsWith.getText();
+        if (startsWith != null && startsWith.trim().length() > 0)
+        {
+            if (search.length() != 0)
+            {
+                search.append(SPACE);
+            }
+
+            search.append(SearchType.START_WORDS.decorate(startsWith));
         }
 
         txtSummary.setText(search.toString());
@@ -607,6 +624,8 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     private static final String HEAD_BASE = "HeadBase"; //$NON-NLS-1$
     private static final String INCLUDES = "Includes"; //$NON-NLS-1$
     private static final String EXCLUDES = "Excludes"; //$NON-NLS-1$
+    private static final String SPELL = "Spell"; //$NON-NLS-1$
+    private static final String STARTS_WITH = "StartsWith"; //$NON-NLS-1$
     private static final String PRESETS = "Presets"; //$NON-NLS-1$
     private static final String RESTRICT_SELECT = "RestrictSelect"; //$NON-NLS-1$
     private static final String HEAD_SUMMARY = "HeadSummary"; //$NON-NLS-1$
@@ -660,6 +679,10 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     private JTextField txtPhrase;
     private JLabel lblExcludes;
     private JTextField txtExcludes;
+    private JLabel lblSpell;
+    private JTextField txtSpell;
+    private JLabel lblStartsWith;
+    private JTextField txtStartsWith;
     private JLabel lblHeading;
     private JCheckBox chkRank;
     private JLabel lblRank;
