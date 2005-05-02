@@ -298,7 +298,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         JMenu menuGo = new JMenu(actions.getAction(DesktopActions.GO));
         menuGo.add(actions.getAction(DesktopActions.BACK)).addMouseListener(barStatus);
         menuGo.add(actions.getAction(DesktopActions.FORWARD)).addMouseListener(barStatus);
-        
+
         JMenu menuView = new JMenu(actions.getAction(DesktopActions.VIEW));
         JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.START_VERSE_ON_NEWLINE.getName()));
         toggle.setSelected(XSLTProperty.START_VERSE_ON_NEWLINE.getDefault());
@@ -461,7 +461,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
      */
     public void bookChosen(DisplaySelectEvent ev)
     {
-        // Do nothing        
+        // Do nothing
     }
 
     /* (non-Javadoc)
@@ -470,7 +470,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     public void passageSelected(DisplaySelectEvent ev)
     {
         Key key = ev.getKey();
-        if (key != null && ! key.isEmpty())
+        if (key != null && !key.isEmpty())
         {
             // add the string because keys are heavyweights
             history.add(key.getName());

@@ -127,8 +127,8 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         lblRank.setVisible(false);
         sliderRank = new JSlider(SwingConstants.HORIZONTAL,
                     0, DisplaySelectPane.getMaxNumRankedVerses(), DisplaySelectPane.getNumRankedVerses());
-        sliderRank.setMajorTickSpacing(DisplaySelectPane.getMaxNumRankedVerses()/5);
-        sliderRank.setMinorTickSpacing(DisplaySelectPane.getMaxNumRankedVerses()/20);
+        sliderRank.setMajorTickSpacing(DisplaySelectPane.getMaxNumRankedVerses() / 5);
+        sliderRank.setMinorTickSpacing(DisplaySelectPane.getMaxNumRankedVerses() / 20);
         sliderRank.setPaintTicks(true);
         sliderRank.setPaintLabels(true);
         sliderRank.setVisible(false);
@@ -136,7 +136,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         {
             public void stateChanged(ChangeEvent e)
             {
-                JSlider source = (JSlider)e.getSource();
+                JSlider source = (JSlider) e.getSource();
                 int val = source.getValue();
                 if (source.getValueIsAdjusting())
                 {

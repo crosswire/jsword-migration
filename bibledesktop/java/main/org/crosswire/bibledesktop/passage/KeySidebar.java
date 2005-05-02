@@ -95,14 +95,14 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
         actBlur5 = actions.getAction(BLUR5);
 
         JButton delete = new JButton(actDelete);
-        delete.setBorder(BorderFactory.createEmptyBorder(2,5,2,5));
+        delete.setBorder(BorderFactory.createEmptyBorder(2, 5, 2, 5));
         delete.setText(null);
         JButton blur1 = new JButton(actBlur1);
         blur1.setText(null);
-        blur1.setBorder(BorderFactory.createEmptyBorder(2,5,2,5));
+        blur1.setBorder(BorderFactory.createEmptyBorder(2, 5, 2, 5));
         JButton blur5 = new JButton(actBlur5);
         blur5.setText(null);
-        blur5.setBorder(BorderFactory.createEmptyBorder(2,5,2,5));
+        blur5.setBorder(BorderFactory.createEmptyBorder(2, 5, 2, 5));
 
         JPanel mutate = new JPanel(new FlowLayout());
         mutate.add(delete);
