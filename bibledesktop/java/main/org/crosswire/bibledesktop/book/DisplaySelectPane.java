@@ -284,24 +284,36 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
             modifier.setRanked(rank);
 
             Key results = selected.find(new DefaultSearchRequest(param, modifier));
+            int total = results.getChildCount();
+            int partial = total;
 
             // we get PassageTallys for rank searches
             if (results instanceof PassageTally || rank)
             {
                 PassageTally tally = (PassageTally) results;
                 tally.setOrdering(PassageTally.ORDER_TALLY);
-                if (getNumRankedVerses() > 0)
+                int rankCount = getNumRankedVerses();
+                if (rankCount > 0 && rankCount < total )
                 {
-                    tally.trimRanges(getNumRankedVerses(), RestrictionType.NONE);
+                    tally.trimRanges(rankCount, RestrictionType.NONE);
+                    partial = rankCount;
                 }
             }
 
-            if (results.isEmpty())
+            if (total == 0)
             {
                 Reporter.informUser(this, Msg.NO_HITS, new Object[] { param });
             }
             else
             {
+                if (total == partial)
+                {
+                    Reporter.informUser(this, Msg.HITS, new Object[] {param, new Integer(total)});
+                }
+                else
+                {
+                    Reporter.informUser(this, Msg.PARTIAL_HITS, new Object[] {param, Integer.toString(partial), Integer.toString(total)});
+                }
                 setTitle(SEARCH);
                 setKey(results);
             }
