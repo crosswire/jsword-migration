@@ -344,6 +344,7 @@
   
   <xsl:template name="lemma">
     <xsl:param name="lemma"/>
+    <xsl:param name="part" select="0"/>
     <xsl:variable name="orig-lemma" select="substring-after($lemma, ':')"/>
     <xsl:variable name="protocol">
       <xsl:choose>
@@ -365,14 +366,34 @@
         </xsl:when>
       </xsl:choose>
     </xsl:variable>
+    <xsl:variable name="sub">
+      <xsl:choose>
+        <xsl:when test="$separator != '' and $part = '0'">
+          <xsl:value-of select="$part + 1"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$part"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:choose>
       <xsl:when test="$separator = ''">
-        <sub class="strongs"><a href="{$protocol}{$orig-lemma}">S<xsl:number level="any" from="/osis//verse" format="1"/></a></sub>
+        <sub class="strongs"><a href="{$protocol}{$orig-lemma}">S<xsl:number level="any" from="/osis//verse" format="1"/><xsl:number value="$sub" format="a"/></a></sub>
       </xsl:when>
       <xsl:otherwise>
-        <sub class="strongs"><a href="{$protocol}{$orig-lemma}">S<xsl:number level="any" from="/osis//verse" format="1"/></a></sub>
+        <sub class="strongs"><a href="{$protocol}{substring-before($orig-lemma, $separator)}">S<xsl:number level="single" from="/osis//verse" format="1"/><xsl:number value="$sub" format="a"/></a>, </sub>
         <xsl:call-template name="lemma">
           <xsl:with-param name="lemma" select="substring-after($lemma, $separator)"/>
+          <xsl:with-param name="part">
+            <xsl:choose>
+              <xsl:when test="$sub">
+                <xsl:value-of select="$sub + 1"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="1"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:with-param>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
