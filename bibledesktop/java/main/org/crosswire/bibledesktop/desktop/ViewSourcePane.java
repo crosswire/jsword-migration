@@ -15,24 +15,22 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 import javax.swing.WindowConstants;
 import javax.swing.text.JTextComponent;
-import javax.swing.text.html.HTMLEditorKit;
 
 import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.swing.ActionFactory;
-import org.crosswire.common.swing.AntiAliasedTextPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.FormatType;
-import org.crosswire.common.xml.HTMLSerializingContentHandler;
+import org.crosswire.common.xml.PrettySerializingContentHandler;
 import org.crosswire.common.xml.SAXEventProvider;
 import org.crosswire.common.xml.TransformingSAXEventProvider;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookMetaData;
+import org.crosswire.jsword.book.BookType;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.util.ConverterFactory;
 import org.xml.sax.ContentHandler;
@@ -78,20 +76,27 @@ public class ViewSourcePane extends JPanel
 
             SAXEventProvider osissep = bdata.getSAXEventProvider();
 
-            ContentHandler osis = new HTMLSerializingContentHandler(FormatType.CLASSIC_INDENT);
+            // This really looks nice but its performance was terrible.
+//            ContentHandler osis = new HTMLSerializingContentHandler(FormatType.CLASSIC_INDENT);
+            ContentHandler osis = new PrettySerializingContentHandler(FormatType.CLASSIC_INDENT);
             osissep.provideSAXEvents(osis);
 
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
-            htmlsep.setParameter(XSLTProperty.STRONGS_NUMBERS.getName(), Boolean.toString(XSLTProperty.STRONGS_NUMBERS.getState()));
-            htmlsep.setParameter(XSLTProperty.MORPH.getName(), Boolean.toString(XSLTProperty.MORPH.getState()));
-            htmlsep.setParameter(XSLTProperty.START_VERSE_ON_NEWLINE.getName(), Boolean.toString(XSLTProperty.START_VERSE_ON_NEWLINE.getState()));
-            htmlsep.setParameter(XSLTProperty.VERSE_NUMBERS.getName(), Boolean.toString(XSLTProperty.VERSE_NUMBERS.getState()));
-            htmlsep.setParameter(XSLTProperty.TINY_VERSE_NUMBERS.getName(), Boolean.toString(XSLTProperty.TINY_VERSE_NUMBERS.getState()));
-            htmlsep.setParameter(XSLTProperty.NOTES.getName(), Boolean.toString(XSLTProperty.NOTES.getState()));
-            htmlsep.setParameter(XSLTProperty.XREF.getName(), Boolean.toString(XSLTProperty.XREF.getState()));
-            htmlsep.setParameter("direction", direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            if (bmd.getType() == BookType.BIBLE)
+            {
+                htmlsep.setParameter(XSLTProperty.STRONGS_NUMBERS.getName(), Boolean.toString(XSLTProperty.STRONGS_NUMBERS.getState()));
+                htmlsep.setParameter(XSLTProperty.MORPH.getName(), Boolean.toString(XSLTProperty.MORPH.getState()));
+                htmlsep.setParameter(XSLTProperty.START_VERSE_ON_NEWLINE.getName(), Boolean.toString(XSLTProperty.START_VERSE_ON_NEWLINE.getState()));
+                htmlsep.setParameter(XSLTProperty.VERSE_NUMBERS.getName(), Boolean.toString(XSLTProperty.VERSE_NUMBERS.getState()));
+                htmlsep.setParameter(XSLTProperty.TINY_VERSE_NUMBERS.getName(), Boolean.toString(XSLTProperty.TINY_VERSE_NUMBERS.getState()));
+                htmlsep.setParameter(XSLTProperty.NOTES.getName(), Boolean.toString(XSLTProperty.NOTES.getState()));
+                htmlsep.setParameter(XSLTProperty.XREF.getName(), Boolean.toString(XSLTProperty.XREF.getState()));
+                htmlsep.setParameter("direction", direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            }
 
-            ContentHandler html = new HTMLSerializingContentHandler(FormatType.CLASSIC_INDENT);
+            // This really looks nice but its performance was terrible.
+//            ContentHandler html = new HTMLSerializingContentHandler(FormatType.CLASSIC_INDENT);
+            ContentHandler html = new PrettySerializingContentHandler(FormatType.CLASSIC_INDENT);
             htmlsep.provideSAXEvents(html);
 
             init(orig, osis.toString(), html.toString());
@@ -100,17 +105,6 @@ public class ViewSourcePane extends JPanel
         {
             Reporter.informUser(null, ex);
         }
-    }
-
-    /**
-     * Construct a ViewSourcePane with some string contents
-     * @param orig The original contents of the text area
-     * @param osis The OSIS contents of the text area
-     * @param html The HTML contents of the text area
-     */
-    public ViewSourcePane(String orig, String osis, String html)
-    {
-        init(orig, osis, html);
     }
 
     /**
@@ -132,22 +126,36 @@ public class ViewSourcePane extends JPanel
         pnlOrig.add(new JScrollPane(txtOrig), BorderLayout.CENTER);
         pnlOrig.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        JTextPane txtOsis = new AntiAliasedTextPane();
+        // This really looks nice but its performance was terrible.
+//        JTextPane txtOsis = new AntiAliasedTextPane();
+//        txtOsis.setFont(userRequestedFont);
+//        txtOsis.setEditable(false);
+//        txtOsis.setEditorKit(new HTMLEditorKit());
+//        txtOsis.setText(osis);
+//        txtOsis.setCaretPosition(0);
+        JTextArea txtOsis = new JTextArea(html, 24, 80);
         txtOsis.setFont(userRequestedFont);
+        txtOsis.setLineWrap(true);
+        txtOsis.setWrapStyleWord(true);
+        txtOsis.setTabSize(2);
         txtOsis.setEditable(false);
-        txtOsis.setEditorKit(new HTMLEditorKit());
-        txtOsis.setText(osis);
-        txtOsis.setCaretPosition(0);
         JPanel pnlOsis = new JPanel(new BorderLayout());
         pnlOsis.add(new JScrollPane(txtOsis), BorderLayout.CENTER);
         pnlOsis.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        JTextPane txtHtml = new AntiAliasedTextPane();
+        // This really looks nice but its performance was terrible.
+//        JTextPane txtHtml = new AntiAliasedTextPane();
+//        txtHtml.setFont(userRequestedFont);
+//        txtHtml.setEditable(false);
+//        txtHtml.setEditorKit(new HTMLEditorKit());
+//        txtHtml.setText(html);
+//        txtHtml.setCaretPosition(0);
+        JTextArea txtHtml = new JTextArea(osis, 24, 80);
         txtHtml.setFont(userRequestedFont);
+        txtHtml.setLineWrap(true);
+        txtHtml.setWrapStyleWord(true);
+        txtHtml.setTabSize(2);
         txtHtml.setEditable(false);
-        txtHtml.setEditorKit(new HTMLEditorKit());
-        txtHtml.setText(html);
-        txtHtml.setCaretPosition(0);
         JPanel pnlHtml = new JPanel(new BorderLayout());
         pnlHtml.add(new JScrollPane(txtHtml), BorderLayout.CENTER);
         pnlHtml.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));

@@ -3,10 +3,13 @@ package org.crosswire.bibledesktop.display.tab;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
@@ -108,6 +111,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
 
         // Tabbed view or not we should clear out the old tabs
         tabMain.removeAll();
+        views.clear();
         displays.clear();
         displays.add(pnlView);
 
@@ -142,6 +146,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
             pnlNew.setBookData(book, first);
 
             Component display = pnlNew.getComponent();
+            views.put(display, pnlNew);
 
             tabMain.add(getTabName(first), display);
             tabMain.add(Msg.MORE.toString(), pnlMore);
@@ -291,6 +296,8 @@ public class TabbedBookDataDisplay implements BookDataDisplay
             pnlNew.setBookData(book, next);
 
             Component display = pnlNew.getComponent();
+            views.put(display, pnlNew);
+
             tabMain.add(getTabName(next), display);
 
             // Do we need a new more tab
@@ -311,11 +318,13 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * Accessor for the current TextComponent
      */
-    private BookDataDisplay getInnerDisplayPane()
+    public BookDataDisplay getInnerDisplayPane()
     {
         if (tabs)
         {
-            return (BookDataDisplay) tabMain.getSelectedComponent();
+            Object o = tabMain.getSelectedComponent();
+            JScrollPane sp = (JScrollPane) o;
+            return (BookDataDisplay) views.get(sp);
         }
         return pnlView;
     }
@@ -420,10 +429,15 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     private BookDataDisplay pnlView;
 
     /**
+     * An map of compnents to their views
+     */
+    private Map views = new HashMap();
+
+    /**
      * A list of all the InnerDisplayPanes so we can control listeners
      */
     private List displays = new ArrayList();
-
+    
     /**
      * Pointer to whichever of the above is currently in use
      */

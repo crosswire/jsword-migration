@@ -13,7 +13,9 @@ import javax.swing.ToolTipManager;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
 import org.crosswire.bibledesktop.book.install.SitesPane;
+import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.splitlist.SplitBookDataDisplay;
+import org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay;
 import org.crosswire.common.config.swing.ConfigEditorFactory;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.desktop.ViewVisitor;
@@ -299,10 +301,16 @@ public class DesktopActions
     {
         try
         {
+            // Limit view source to the current tab.
             BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
             SplitBookDataDisplay da = view.getPassagePane();
+            BookDataDisplay bdd = da.getBookDataDisplay();
+            if (bdd instanceof TabbedBookDataDisplay)
+            {
+                bdd = ((TabbedBookDataDisplay) bdd).getInnerDisplayPane();
+            }
 
-            Key key = da.getKey();
+            Key key = bdd.getKey();
 
             if (key == null)
             {
