@@ -112,6 +112,9 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         cboBible.setRenderer(new BookListCellRenderer());
         cboBible.addItemListener(new ItemListener()
         {
+            /* (non-Javadoc)
+             * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
+             */
             public void itemStateChanged(ItemEvent ev)
             {
                 if (ev.getStateChange() == ItemEvent.SELECTED)
@@ -122,17 +125,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
                 }
             }
         });
-        cboBible.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                JComboBox cbo = (JComboBox) e.getSource();
-                if (cbo.getSelectedIndex() == -1 && cbo.getItemCount() > 0)
-                {
-                    cbo.setSelectedIndex(0);
-                }
-            }
-        });
+        cboBible.addActionListener(new SelectedActionListener());
         JLabel lblBible = actions.createJLabel(BIBLE);
         lblBible.setLabelFor(cboBible);
 
@@ -293,7 +286,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
                 PassageTally tally = (PassageTally) results;
                 tally.setOrdering(PassageTally.ORDER_TALLY);
                 int rankCount = getNumRankedVerses();
-                if (rankCount > 0 && rankCount < total )
+                if (rankCount > 0 && rankCount < total)
                 {
                     tally.trimRanges(rankCount, RestrictionType.NONE);
                     partial = rankCount;
@@ -719,6 +712,24 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         }
     }
 
+    /**
+     *
+     */
+    private static final class SelectedActionListener implements ActionListener
+    {
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        public void actionPerformed(ActionEvent e)
+        {
+            JComboBox cbo = (JComboBox) e.getSource();
+            if (cbo.getSelectedIndex() == -1 && cbo.getItemCount() > 0)
+            {
+                cbo.setSelectedIndex(0);
+            }
+        }
+    }
+
     // For the Passage card
     private static final String VIEW_LABEL = "ViewLabel"; //$NON-NLS-1$
     private static final String PASSAGE_FIELD = "PassageAction"; //$NON-NLS-1$
@@ -742,9 +753,9 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
     private QuickHelpDialog dlgHelp;
 
-    private ActionFactory actions;
+    private transient ActionFactory actions;
 
-    private Book selected;
+    private transient Book selected;
 
     /*
      * GUI Components

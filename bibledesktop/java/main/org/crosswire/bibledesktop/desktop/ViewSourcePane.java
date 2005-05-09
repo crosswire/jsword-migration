@@ -222,7 +222,7 @@ public class ViewSourcePane extends JPanel
     private JTextComponent [] textAreas;
     private JPanel pnlButtons;
     private JDialog frame;
-    private ActionFactory actions;
+    private transient ActionFactory actions;
 
     private static Converter converter = ConverterFactory.getConverter();
 

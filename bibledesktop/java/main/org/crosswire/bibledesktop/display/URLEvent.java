@@ -51,7 +51,7 @@ public class URLEvent extends EventObject
     /**
      * @return Returns the url.
      */
-    public String getUrl()
+    public String getURL()
     {
         return url;
     }

@@ -267,7 +267,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
     /**
      * Shared settings
      */
-    private BibleComboBoxModelSet set;
+    private transient BibleComboBoxModelSet set;
 
     /**
      * What is currently selected?

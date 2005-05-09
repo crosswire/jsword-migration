@@ -150,7 +150,7 @@ public class Splash extends JWindow
         dispose();
     }
 
-    private CustomWorkListener listener = new CustomWorkListener();
+    private transient CustomWorkListener listener = new CustomWorkListener();
 
     private static final String SPLASH_FONT = "SanSerif"; //$NON-NLS-1$
 

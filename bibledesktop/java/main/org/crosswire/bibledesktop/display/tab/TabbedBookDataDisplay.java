@@ -437,7 +437,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
      * A list of all the InnerDisplayPanes so we can control listeners
      */
     private List displays = new ArrayList();
-    
+
     /**
      * Pointer to whichever of the above is currently in use
      */

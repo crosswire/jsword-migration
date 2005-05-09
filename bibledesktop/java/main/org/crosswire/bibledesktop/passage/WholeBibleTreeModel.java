@@ -27,7 +27,6 @@ import javax.swing.tree.DefaultTreeModel;
  * @author Joe Walker [joe at eireneh dot com]
  * @version $Id$
  * @see DefaultTreeModel
- * @see PassageTreeNode
  */
 public class WholeBibleTreeModel extends DefaultTreeModel
 {

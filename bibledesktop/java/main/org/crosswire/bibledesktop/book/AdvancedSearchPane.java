@@ -657,7 +657,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     /**
      * The ActionFactory holding the actions used by this Component.
      */
-    private ActionFactory actions;
+    private transient ActionFactory actions;
 
     /**
      * The entries in the restrictions preset

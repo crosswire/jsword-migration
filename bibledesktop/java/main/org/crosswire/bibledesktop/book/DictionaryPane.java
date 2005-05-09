@@ -359,11 +359,11 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
      */
     private BookDataDisplay display = BookDataDisplayFactory.createBookDataDisplay();
 
-    private BookFilter filter = BookFilters.either(BookFilters.getDictionaries(), BookFilters.getCommentaries());
+    private transient BookFilter filter = BookFilters.either(BookFilters.getDictionaries(), BookFilters.getCommentaries());
     private BooksComboBoxModel mdlDicts = new BooksComboBoxModel(filter);
-    private Book dict;
+    private transient Book dict;
 
-    protected BibleComboBoxModelSet set = new BibleComboBoxModelSet();
+    protected transient BibleComboBoxModelSet set = new BibleComboBoxModelSet();
     private JComboBox cboBooks = new JComboBox();
     private JComboBox cboChaps = new JComboBox();
     private JComboBox cboVerse = new JComboBox();

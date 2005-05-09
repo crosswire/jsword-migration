@@ -1,13 +1,7 @@
 package org.crosswire.bibledesktop.passage;
 
-import java.util.Iterator;
-
 import javax.swing.JList;
-import javax.swing.JTree;
-import javax.swing.tree.TreePath;
 
-import org.crosswire.jsword.passage.DefaultKeyList;
-import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.VerseRange;
 
@@ -66,36 +60,36 @@ public class PassageGuiUtil
     /**
      * @param tree The tree to delete selected verses from
      */
-    public static void deleteSelectedVersesFromTree(JTree tree)
-    {
-        Key selected = getSelectedKeys(tree);
-
-        KeyTreeModel mdl = (KeyTreeModel) tree.getModel();
-        Key root = mdl.getKey();
-
-        for (Iterator it = selected.iterator(); it.hasNext(); )
-        {
-            Key key = (Key) it.next();
-            root.removeAll(key);
-        }
-
-        mdl.setKey(root);
-    }
+//    public static void deleteSelectedVersesFromTree(JTree tree)
+//    {
+//        Key selected = getSelectedKeys(tree);
+//
+//        KeyTreeModel mdl = (KeyTreeModel) tree.getModel();
+//        Key root = mdl.getKey();
+//
+//        for (Iterator it = selected.iterator(); it.hasNext(); )
+//        {
+//            Key key = (Key) it.next();
+//            root.removeAll(key);
+//        }
+//
+//        mdl.setKey(root);
+//    }
 
     /**
      * @return The selected keys in the tree
      */
-    public static Key getSelectedKeys(JTree tree)
-    {
-        Key selected = new DefaultKeyList();
-        TreePath[] paths = tree.getSelectionPaths();
-
-        for (int i = 0; i < paths.length; i++)
-        {
-            KeyTreeNode node = (KeyTreeNode) paths[1].getLastPathComponent();
-            selected.addAll(node.getKey());
-        }
-
-        return selected;
-    }
+//    public static Key getSelectedKeys(JTree tree)
+//    {
+//        Key selected = new DefaultKeyList();
+//        TreePath[] paths = tree.getSelectionPaths();
+//
+//        for (int i = 0; i < paths.length; i++)
+//        {
+//            KeyTreeNode node = (KeyTreeNode) paths[1].getLastPathComponent();
+//            selected.addAll(node.getKey());
+//        }
+//
+//        return selected;
+//    }
 }

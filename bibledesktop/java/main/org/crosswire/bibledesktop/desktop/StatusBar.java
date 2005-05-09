@@ -102,7 +102,7 @@ public class StatusBar extends JComponent implements MouseListener, URLEventList
     public void enterURL(URLEvent ev)
     {
         String protocol = ev.getProtocol();
-        String url = ev.getUrl();
+        String url = ev.getURL();
         if (protocol.length() == 0)
         {
             lbl_message.setText(url); //$NON-NLS-1$

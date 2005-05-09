@@ -543,7 +543,7 @@ public class EditSitePane extends JPanel
     /**
      * The model that we are providing a view/controller for
      */
-    private InstallManager imanager;
+    private transient InstallManager imanager;
 
     /**
      * If we are editing an installer, we need to know it's original name
@@ -555,7 +555,7 @@ public class EditSitePane extends JPanel
      * If we are editing an installer, we need to know it's original value
      * in case someone clicks cancel.
      */
-    private Installer editInstaller;
+    private transient Installer editInstaller;
 
     /**
      * Edits to the type combo box mean different things depending on
@@ -567,7 +567,7 @@ public class EditSitePane extends JPanel
      * The ActionFactory holding the actions used by this
      * EditSite.
      */
-    private ActionFactory actions;
+    private transient ActionFactory actions;
 
     /*
      * GUI Components for the list of sites

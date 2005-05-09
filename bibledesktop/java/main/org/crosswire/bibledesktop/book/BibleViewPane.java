@@ -187,18 +187,28 @@ public class BibleViewPane extends JPanel implements Titleable, Clearable, Title
     {
         assert saved != null;
 
-        Writer out = new FileWriter(saved);
-        if (key instanceof Passage)
+        Writer out = null;
+        try
         {
-            Passage ref = (Passage) key;
-            ref.writeDescription(out);
+            out = new FileWriter(saved);
+            if (key instanceof Passage)
+            {
+                Passage ref = (Passage) key;
+                ref.writeDescription(out);
+            }
+            else
+            {
+                out.write(key.getName());
+                out.write("\n"); //$NON-NLS-1$
+            }
         }
-        else
+        finally
         {
-            out.write(key.getName());
-            out.write("\n"); //$NON-NLS-1$
+            if (out != null)
+            {
+                out.close();
+            }
         }
-        out.close();
     }
 
     /**
@@ -211,6 +221,8 @@ public class BibleViewPane extends JPanel implements Titleable, Clearable, Title
 
     /**
      * Open a saved verse list form disk
+     * @throws IOException 
+     * @throws NoSuchVerseException
      */
     public void open() throws NoSuchVerseException, IOException
     {
@@ -224,10 +236,20 @@ public class BibleViewPane extends JPanel implements Titleable, Clearable, Title
                 return;
             }
 
-            Reader in = new FileReader(saved);
-            Passage ref = PassageKeyFactory.readPassage(in);
-            setKey(ref);
-            in.close();
+            Reader in = null;
+            try
+            {
+                in = new FileReader(saved);
+                Passage ref = PassageKeyFactory.readPassage(in);
+                setKey(ref);
+            }
+            finally
+            {
+                if (in != null)
+                {
+                    in.close();
+                }
+            }
         }
     }
 

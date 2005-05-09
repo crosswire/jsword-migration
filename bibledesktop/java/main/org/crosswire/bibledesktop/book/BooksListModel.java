@@ -74,7 +74,7 @@ public class BooksListModel extends AbstractListModel
     /* (non-Javadoc)
      * @see javax.swing.ListModel#getSize()
      */
-    public int getSize()
+    public synchronized int getSize()
     {
         return books.size();
     }
@@ -109,7 +109,10 @@ public class BooksListModel extends AbstractListModel
      */
     public void setFilter(BookFilter filter)
     {
-        this.filter = filter;
+        synchronized (this)
+        {
+            this.filter = filter;
+        }
         cacheData();
 
         fireContentsChanged(this, 0, getSize());
@@ -188,17 +191,17 @@ public class BooksListModel extends AbstractListModel
     /**
      * The list of books in this tree
      */
-    private BookList bookList;
+    private transient BookList bookList;
 
     /**
      * The filter used to choose Bibles
      */
-    private BookFilter filter;
+    private transient BookFilter filter;
 
     /**
      * The listener
      */
-    private CustomListDataListener listener = new CustomListDataListener();
+    private transient CustomListDataListener listener = new CustomListDataListener();
 
     /**
      * The array of versions.

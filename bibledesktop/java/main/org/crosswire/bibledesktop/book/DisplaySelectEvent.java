@@ -71,7 +71,7 @@ public class DisplaySelectEvent extends EventObject
     /**
      * The new Book
      */
-    private Book book;
+    private transient Book book;
 
     /**
      * Serialization ID

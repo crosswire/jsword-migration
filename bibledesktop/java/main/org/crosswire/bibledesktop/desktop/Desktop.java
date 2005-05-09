@@ -493,7 +493,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     {
         barStatus.activateURL(ev);
         String protocol = ev.getProtocol();
-        String data = ev.getUrl();
+        String data = ev.getURL();
 
         try
         {
@@ -829,7 +829,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     /**
      * The configuration engine
      */
-    private Config config;
+    private transient Config config;
 
     /**
      * The default dimension for this frame
@@ -841,20 +841,20 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
      */
     protected static final Logger log = Logger.getLogger(Desktop.class);
 
-    protected DesktopActions actions;
+    protected transient DesktopActions actions;
 
     /**
      * The application icon
      */
     private static final ImageIcon ICON_APP = GuiUtil.getIcon("images/icon16.png"); //$NON-NLS-1$
 
-    private ViewManager views;
+    private transient ViewManager views;
     private JPanel corePanel;
     private ToolBar pnlTbar;
     private StatusBar barStatus;
     private DictionaryPane reference;
     private JSplitPane sptBooks;
-    private History history;
+    private transient History history;
 
     /**
      * Serialization ID

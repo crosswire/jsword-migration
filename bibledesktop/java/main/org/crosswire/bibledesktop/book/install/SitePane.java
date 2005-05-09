@@ -491,18 +491,18 @@ public class SitePane extends JPanel
     /**
      * From which we get our list of installable modules
      */
-    protected Installer installer;
+    protected transient Installer installer;
 
     /**
      * actions are held by this ActionFactory
      */
-    private ActionFactory actions;
+    private transient ActionFactory actions;
 
     /*
      * GUI Components
      */
     private JTree treAvailable;
-    private TextPaneBookMetaDataDisplay display;
+    private transient TextPaneBookMetaDataDisplay display;
     private JLabel lblDesc;
 
     /**

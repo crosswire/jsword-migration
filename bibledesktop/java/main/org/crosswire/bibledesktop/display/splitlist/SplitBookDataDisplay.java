@@ -202,7 +202,7 @@ public class SplitBookDataDisplay extends JPanel
     /**
      * Inform the command keyChangeListeners
      */
-    protected void fireKeyChanged(KeyChangeEvent ev)
+    protected synchronized void fireKeyChanged(KeyChangeEvent ev)
     {
         if (keyChangeListeners != null)
         {
@@ -227,7 +227,7 @@ public class SplitBookDataDisplay extends JPanel
     /**
      * What book are we currently viewing?
      */
-    private Book book;
+    private transient Book book;
 
     /**
      * The log stream

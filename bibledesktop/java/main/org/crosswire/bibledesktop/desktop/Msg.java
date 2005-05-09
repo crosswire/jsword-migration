@@ -66,8 +66,8 @@ public class Msg extends MsgBase
     static final Msg NO_PASSAGE = new Msg("DesktopActions.NoPassage"); //$NON-NLS-1$
     static final Msg SOURCE_MISSING = new Msg("DesktopActions.SourceMissing"); //$NON-NLS-1$
 
-    // Strings for ViewLayout
-    static final Msg UNTITLED = new Msg("ViewLayout.Untitled"); //$NON-NLS-1$
+    // Strings for AbstractViewLayout
+    static final Msg UNTITLED = new Msg("AbstractViewLayout.Untitled"); //$NON-NLS-1$
 
     // Strings for AboutPane and Splash
     // The splash image is of an English version of the application

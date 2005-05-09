@@ -135,7 +135,7 @@ public class InstallManagerComboBoxModel extends AbstractListModel implements Co
     /**
      * The install manager that we are representing
      */
-    private InstallManager imanager;
+    private transient InstallManager imanager;
 
     /**
      * Serialization ID

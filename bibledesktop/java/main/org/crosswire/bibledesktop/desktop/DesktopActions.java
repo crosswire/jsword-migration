@@ -399,15 +399,33 @@ public class DesktopActions
     {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         final boolean show = toggle.isSelected();
-        desktop.getViews().visit(new ViewVisitor()
+        desktop.getViews().visit(new ShowSideBarVisitor(show));
+    }
+
+    /**
+     *
+     */
+    private static final class ShowSideBarVisitor implements ViewVisitor
+    {
+        /**
+         * @param show
+         */
+        public ShowSideBarVisitor(boolean show)
         {
-            public void visitView(Component component)
-            {
-                BibleViewPane view = (BibleViewPane) component;
-                SplitBookDataDisplay sbDisplay = view.getPassagePane();
-                sbDisplay.showSidebar(show);
-            }
-        });
+            this.show = show;
+        }
+
+        /* (non-Javadoc)
+         * @see org.crosswire.common.swing.desktop.ViewVisitor#visitView(java.awt.Component)
+         */
+        public void visitView(Component component)
+        {
+            BibleViewPane view = (BibleViewPane) component;
+            SplitBookDataDisplay sbDisplay = view.getPassagePane();
+            sbDisplay.showSidebar(show);
+        }
+
+        private boolean show;
     }
 
     // Enumeration of all the keys to known actions
@@ -442,7 +460,7 @@ public class DesktopActions
     /**
      * The factory for actions that this class works with
      */
-    private ActionFactory actions;
+    private transient ActionFactory actions;
 
     /**
      * The About window

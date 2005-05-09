@@ -139,7 +139,7 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
     /**
      * The currently selected version
      */
-    protected Book current;
+    protected transient Book current;
 
     /**
      * Serialization ID

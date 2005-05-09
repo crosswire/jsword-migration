@@ -391,7 +391,7 @@ public class PassageSelectionPane extends JPanel
     /**
      * To convert strings into Biblical keys
      */
-    protected KeyFactory keyf = PassageKeyFactory.instance();
+    protected transient KeyFactory keyf = PassageKeyFactory.instance();
 
     /**
      * If escape was pressed we don't want to update the parent
@@ -411,13 +411,13 @@ public class PassageSelectionPane extends JPanel
     /**
      * The ActionFactory holding the actions used by this Component.
      */
-    private ActionFactory actions;
+    private transient ActionFactory actions;
 
     /*
      * GUI Components
      */
-    private Icon icoGood;
-    private Icon icoBad;
+    private transient Icon icoGood;
+    private transient Icon icoBad;
     private JTree treAll;
     private JList lstSel;
     private JTextField txtDisplay;

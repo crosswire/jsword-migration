@@ -62,13 +62,7 @@ public class ConfigurableSwingConverter implements Converter
         {
             String search = "xsl/cswing/" + NetUtil.INDEX_FILE; //$NON-NLS-1$
             URL index = ResourceUtil.getResource(search);
-            return NetUtil.listByIndexFile(index, new URLFilter()
-            {
-                public boolean accept(String name)
-                {
-                    return name.endsWith(FileUtil.EXTENSION_XSLT);
-                }
-            });
+            return NetUtil.listByIndexFile(index, new XSLTFilter());
         }
         catch (IOException ex)
         {
@@ -142,6 +136,20 @@ public class ConfigurableSwingConverter implements Converter
     public static void setResourceName(String style)
     {
         ConfigurableSwingConverter.style = style;
+    }
+
+    /**
+     *
+     */
+    private static final class XSLTFilter implements URLFilter
+    {
+        /* (non-Javadoc)
+         * @see org.crosswire.common.util.URLFilter#accept(java.lang.String)
+         */
+        public boolean accept(String name)
+        {
+            return name.endsWith(FileUtil.EXTENSION_XSLT);
+        }
     }
 
     /**

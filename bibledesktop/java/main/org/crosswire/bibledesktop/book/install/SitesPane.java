@@ -213,9 +213,9 @@ public class SitesPane extends JPanel
     /**
      * The current installer
      */
-    protected InstallManager imanager;
+    protected transient InstallManager imanager;
 
-    private ActionFactory actions;
+    private transient ActionFactory actions;
 
     /*
      * GUI Components

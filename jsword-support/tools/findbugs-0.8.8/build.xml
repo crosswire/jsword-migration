@@ -1,0 +1,35 @@
+<project name="findbugs" default="findbugs">
+
+  <!-- this should be overridden by the parent file -->
+  <property name="support.tools" value=".."/>
+
+  <property name="support.bugs" value="${support.tools}/findbugs-0.8.8"/>
+  <!-- Unified location of source -->
+  <property name="target.bugs.src" value="${target.temp}/findbugs/src"/>
+
+  <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
+    <classpath>
+      <fileset dir="${support.bugs}" includes="**/*.jar"/>
+    </classpath>
+  </taskdef>
+
+  <target name="findbugs">
+    <mkdir dir="${target.web}/findbugs"/>
+    <findbugs home="${support.bugs}"
+        output="html"
+        outputFile="${target.web}/findbugs/index.html"
+        reportLevel="low"
+        workHard="true"
+        jvmargs="-Xmx512m">
+      <class location="${target.jar}/bibledesktop.jar"/>
+      <class location="${target.jar}/jsword.jar"/>
+      <class location="${target.jar}/common.jar"/>
+      <auxClasspath path="${target.jar}/commons-net-1.3.0.jar"/>
+      <auxClasspath path="${target.jar}/jdom-1.0.jar"/>
+      <auxClasspath path="${target.jar}/lucene-1.4.3.jar"/>
+      <auxClasspath path="../common/jar/jaf-1.0.2/activation.jar"/>
+      <auxClasspath path="${target.jar}/jlfgr-1_0.jar"/>
+    </findbugs>
+  </target>
+
+</project>

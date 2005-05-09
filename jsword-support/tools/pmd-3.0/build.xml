@@ -1,0 +1,37 @@
+<project name="pmd" default="pmd">
+
+  <!-- this should be overridden by the parent file -->
+  <property name="support.tools" value=".."/>
+
+  <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask">
+	<classpath>
+	  <fileset dir="${support.tools}" includes="pmd*/**/*.jar"/>
+	</classpath>
+  </taskdef>
+
+  <target name="pmd">
+    <mkdir dir="${target.web}/pmd"/>
+    <pmd rulesetfiles="${basedir}/${support.tools}/pmd-3.0/ruleset.xml" shortFilenames="true">
+      <formatter type="html" toFile="${target.web}/pmd/index.html"/>
+      <fileset dir="..">
+        <patternset refid="pattern.alljava"/>
+      </fileset>
+    </pmd>
+  </target>
+
+  <taskdef name="cpd" classname="net.sourceforge.pmd.cpd.CPDTask">
+	<classpath>
+	  <fileset dir="${support.tools}" includes="pmd*/**/*.jar"/>
+	</classpath>
+  </taskdef>
+
+  <target name="cpd">
+    <mkdir dir="${target.web}/cpd"/>
+    <cpd minimumTokenCount="100" outputFile="${target.web}/cpd/report.txt">
+      <fileset dir="..">
+        <patternset refid="pattern.alljava"/>
+      </fileset>
+    </cpd>
+  </target>
+
+</project>

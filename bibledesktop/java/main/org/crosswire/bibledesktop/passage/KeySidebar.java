@@ -294,7 +294,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     /**
      * Inform the command keyChangeListeners
      */
-    protected void fireKeyChanged(KeyChangeEvent ev)
+    protected synchronized void fireKeyChanged(KeyChangeEvent ev)
     {
         if (keyChangeListeners != null)
         {
@@ -323,7 +323,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     /**
      * The book who's keys we are looking at
      */
-    private Book book;
+    private transient Book book;
 
     /**
      * The listener for KeyChangeEvents
