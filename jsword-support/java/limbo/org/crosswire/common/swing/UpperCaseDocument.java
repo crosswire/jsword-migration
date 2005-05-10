@@ -27,7 +27,6 @@ import javax.swing.text.PlainDocument;
  * </font></td></tr></table>
  * @see gnu.gpl.Licence
  * @author Joe Walker [joe at eireneh dot com]
- * @version $Id$
  * @see java.lang.Character#toUpperCase(char)
  */
 public class UpperCaseDocument extends PlainDocument

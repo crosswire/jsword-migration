@@ -5,7 +5,6 @@ import java.util.*;
 /**
  * A Little performance tool
  * @author Joe Walker
- * @version $Id$
  */
 public class Stopwatch
 {

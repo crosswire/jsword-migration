@@ -26,7 +26,6 @@ package org.crosswire.jsword.view.web;
  * 
  * @see gnu.gpl.Licence
  * @author Joe Walker [joe at eireneh dot com]
- * @version $Id$
  */
 public class DemoServletTest
 {

@@ -38,7 +38,6 @@ import org.mozilla.javascript.Scriptable;
  * </font></td></tr></table>
  * @see gnu.gpl.Licence
  * @author Joe Walker [joe at eireneh dot com]
- * @version $Id$
  */
 public class Main
 {

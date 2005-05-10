@@ -44,7 +44,6 @@ import org.crosswire.jsword.passage.RestrictionType;
  * </font></td></tr></table>
  * @see gnu.gpl.Licence
  * @author Joe Walker [joe at eireneh dot com]
- * @version $Id$
  */
 public class DemoServlet extends HttpServlet
 {

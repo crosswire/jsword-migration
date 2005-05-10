@@ -32,7 +32,6 @@ import org.w3c.dom.NodeList;
  * The copyright to this program is held by it's authors.
  * </font></td></tr></table>
  * @author Joe Walker
- * @version D0.I0.T0
  */
 public class XMLUtil
 {

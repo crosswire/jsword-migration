@@ -22,7 +22,6 @@ package org.crosswire.common.util;
  * </font></td></tr></table>
  * @see gnu.gpl.Licence
  * @author Joe Walker [joe at eireneh dot com]
- * @version $Id$
  */
 public class OldStringUtil
 {
