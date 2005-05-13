@@ -6,7 +6,7 @@
 
   <taskdef resource="checkstyletask.properties">
     <classpath>
-      <fileset dir="${support.style}" includes="**/checkstyle-all*.jar"/>
+      <fileset dir="${support.style}" includes="checkstyle-all*.jar"/>
     </classpath>
   </taskdef>
 
@@ -23,7 +23,8 @@
       <fileset refid="fileset.alljava"/>
       <formatter type="plain"/>
       <formatter type="xml" toFile="${target.web}/checkstyle/checkstyle_errors.xml"/>
-    </checkstyle>
+      <!-- Location of cache-file. -->
+      <property key="checkstyle.cache.file" file="${target.web}/cachefile.dat"/>    </checkstyle>
     <style
         in="${target.web}/checkstyle/checkstyle_errors.xml"
         out="${target.web}/checkstyle/index.html"

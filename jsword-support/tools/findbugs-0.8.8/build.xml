@@ -9,7 +9,7 @@
 
   <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
     <classpath>
-      <fileset dir="${support.bugs}" includes="**/*.jar"/>
+      <fileset dir="${support.bugs}/lib" includes="**/*.jar"/>
     </classpath>
   </taskdef>
 
