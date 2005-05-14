@@ -2,6 +2,7 @@
 <launchConfiguration type="org.eclipse.ant.AntLaunchConfigurationType">
 <booleanAttribute key="org.eclipse.ant.ui.DEFAULT_VM_INSTALL" value="false"/>
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="true"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-Dwebapp.jsword=${workspace_loc:/jsword-web/target/ant/web}"/>
 <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
 <listEntry value="org.eclipse.ui.externaltools.launchGroup"/>
 </listAttribute>
