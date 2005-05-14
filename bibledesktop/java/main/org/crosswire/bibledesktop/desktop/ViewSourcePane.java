@@ -137,7 +137,7 @@ public class ViewSourcePane extends JPanel
 //        txtOsis.setEditorKit(new HTMLEditorKit());
 //        txtOsis.setText(osis);
 //        txtOsis.setCaretPosition(0);
-        JTextArea txtOsis = new JTextArea(html, 24, 80);
+        JTextArea txtOsis = new JTextArea(osis, 24, 80);
         txtOsis.setFont(userRequestedFont);
         txtOsis.setLineWrap(true);
         txtOsis.setWrapStyleWord(true);
@@ -154,7 +154,7 @@ public class ViewSourcePane extends JPanel
 //        txtHtml.setEditorKit(new HTMLEditorKit());
 //        txtHtml.setText(html);
 //        txtHtml.setCaretPosition(0);
-        JTextArea txtHtml = new JTextArea(osis, 24, 80);
+        JTextArea txtHtml = new JTextArea(html, 24, 80);
         txtHtml.setFont(userRequestedFont);
         txtHtml.setLineWrap(true);
         txtHtml.setWrapStyleWord(true);

@@ -40,9 +40,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
-import org.crosswire.common.progress.swing.JobsViewPane;
 import org.crosswire.common.swing.ActionFactory;
-import org.crosswire.common.swing.ExceptionShelf;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.swing.MapTableModel;
 
@@ -59,15 +57,15 @@ public class AboutPane
     /**
      * Basic constructor
      */
-    public AboutPane(Desktop desktop)
+    public AboutPane()
     {
-        init(desktop);
+        init();
     }
 
     /**
      * Build the GUI components
      */
-    private void init(Desktop desktop)
+    private void init()
     {
         Icon icon = GuiUtil.getIcon(Msg.SPLASH_IMAGE.toString());
 
@@ -114,14 +112,6 @@ public class AboutPane
             // Add the splash
             tabMain.add(pnlSplash, Msg.getApplicationTitle());
 
-            // create and add the Exception shelf
-            ExceptionShelf pnlShelf = new ExceptionShelf();
-            JPanel pnlHshelf = new JPanel();
-            pnlHshelf.setLayout(new BorderLayout());
-            pnlHshelf.add(pnlShelf, BorderLayout.NORTH);
-            pnlHshelf.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-            tabMain.add(pnlHshelf, Msg.ERROR_TAB_TITLE.toString());
-
             // create and add the System Properties tab
             JTable tblProps = new JTable();
             MapTableModel mdlProps = new MapTableModel(System.getProperties());
@@ -137,14 +127,6 @@ public class AboutPane
             pnlProps.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
             tabMain.add(pnlProps, Msg.SYSTEM_PROPS_TAB_TITLE.toString());
 
-            // create and add the Tasks tab
-            JobsViewPane pnlJobs = new JobsViewPane();
-            tabMain.add(pnlJobs, Msg.TASK_TAB_TITLE.toString());
-
-            // create and add the Debug tab
-            //tabMain.add(pnlLogs, "Logs");
-            DebugPane pnlDebug = new DebugPane(desktop);
-            tabMain.add(pnlDebug, Msg.DEBUG_TAB_TITLE.toString());
         }
     }
 

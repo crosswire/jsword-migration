@@ -372,7 +372,7 @@ public class DesktopActions
     {
         if (atp == null)
         {
-            atp = new AboutPane(getDesktop());
+            atp = new AboutPane();
         }
 
         atp.showInDialog(getDesktop());
