@@ -24,7 +24,7 @@
       <formatter type="plain"/>
       <formatter type="xml" toFile="${target.web}/checkstyle/checkstyle_errors.xml"/>
       <!-- Location of cache-file. -->
-      <property key="checkstyle.cache.file" file="${target.web}/cachefile.dat"/>    </checkstyle>
+      <property key="checkstyle.cache.file" file="${support.style}/cachefile.dat"/>    </checkstyle>
     <style
         in="${target.web}/checkstyle/checkstyle_errors.xml"
         out="${target.web}/checkstyle/index.html"
