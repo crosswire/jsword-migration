@@ -36,7 +36,7 @@ import org.crosswire.jsword.book.install.InstallerListener;
  * A ListModel for a JList that uses the list of Installers given by the
  * InstallManager.
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */

@@ -28,7 +28,7 @@ import org.crosswire.jsword.passage.Key;
 /**
  * A KeyChangeEvent happens whenever a user changes a key.
  * 
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */

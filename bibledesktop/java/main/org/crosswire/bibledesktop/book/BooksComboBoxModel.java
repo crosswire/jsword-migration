@@ -31,7 +31,7 @@ import org.crosswire.jsword.book.Defaults;
  * The BibleModels class implements a number of swing DataModels
  * and gives access to the list of current Bibles.
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */

@@ -32,7 +32,7 @@ import org.crosswire.jsword.book.BookSet;
  * A Node for a book in a tree. It may be a property of a BookMetaData
  * or the BookMetaData itself.
  * 
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */

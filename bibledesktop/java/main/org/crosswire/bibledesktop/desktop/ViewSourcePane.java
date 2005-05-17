@@ -60,7 +60,7 @@ import org.xml.sax.ContentHandler;
  * ViewSourcePane allow viewing of some text in its own standalone frame.
  * The text to be viewed can be grabbed from a String, a URL, or a file.
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at gmail dot com]

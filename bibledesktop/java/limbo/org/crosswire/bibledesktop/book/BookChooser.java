@@ -48,7 +48,7 @@ import org.crosswire.jsword.book.BookFilter;
  * BookChooser is like JFileChooser except that it allows the user to
  * select one of the available Bibles.
  * 
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */

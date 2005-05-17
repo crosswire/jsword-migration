@@ -48,7 +48,7 @@ import org.crosswire.common.swing.MapTableModel;
  * AboutPane is a window that contains various advanced user tools in
  * one place.
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */

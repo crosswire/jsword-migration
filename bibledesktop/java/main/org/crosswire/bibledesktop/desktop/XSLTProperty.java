@@ -27,11 +27,11 @@ import java.io.Serializable;
 /**
  * Defines properties that control the behavior of translating OSIS to HTML.
  * 
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at hotmail dot com]
  */
-public class XSLTProperty implements Serializable
+public final class XSLTProperty implements Serializable
 {
 
     /**
@@ -131,7 +131,7 @@ public class XSLTProperty implements Serializable
      * Prevent subclasses from overriding canonical identity based Object methods
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public final boolean equals(Object o)
+    public boolean equals(Object o)
     {
         return super.equals(o);
     }
@@ -140,7 +140,7 @@ public class XSLTProperty implements Serializable
      * Prevent subclasses from overriding canonical identity based Object methods
      * @see java.lang.Object#hashCode()
      */
-    public final int hashCode()
+    public int hashCode()
     {
         return super.hashCode();
     }

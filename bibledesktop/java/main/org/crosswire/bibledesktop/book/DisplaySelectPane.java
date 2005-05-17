@@ -68,7 +68,7 @@ import org.crosswire.jsword.passage.RocketPassage;
 /**
  * Passage Selection area.
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
@@ -474,15 +474,16 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     public static void setNumRankedVerses(int newNumRankedVerses)
     {
-        if (newNumRankedVerses < 0)
+        int count = newNumRankedVerses;
+        if (count < 0)
         {
-            newNumRankedVerses = 0;
+            count = 0;
         }
-        else if (newNumRankedVerses > maxNumRankedVerses)
+        else if (count > maxNumRankedVerses)
         {
-            newNumRankedVerses = maxNumRankedVerses;
+            count = maxNumRankedVerses;
         }
-        numRankedVerses = newNumRankedVerses;
+        numRankedVerses = count;
     }
 
     /**
@@ -498,11 +499,12 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     public static void setMaxNumRankedVerses(int newMaxNumRankedVerses)
     {
-        if (newMaxNumRankedVerses < numRankedVerses)
+        int count = newMaxNumRankedVerses;
+        if (count < numRankedVerses)
         {
-            newMaxNumRankedVerses = numRankedVerses;
+            count = numRankedVerses;
         }
-        maxNumRankedVerses = newMaxNumRankedVerses;
+        maxNumRankedVerses = count;
     }
 
     /**

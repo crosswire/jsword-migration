@@ -63,7 +63,7 @@ import org.crosswire.jsword.book.search.IndexManagerFactory;
  * A panel for use within a SitesPane to display one set of Books that are
  * installed or could be installed.
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
@@ -239,8 +239,9 @@ public class SitePane extends JPanel
     }
 
     // provide for backward compatibility
-    private Book getBook(Object obj)
+    private Book getBook(Object anObj)
     {
+        Object obj = anObj;
         // new way
         if (obj instanceof DefaultMutableTreeNode)
         {

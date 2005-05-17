@@ -48,7 +48,7 @@ import org.crosswire.jsword.passage.RestrictionType;
 /**
  * A list view of a key range list.
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
@@ -200,7 +200,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
 
             if (selected.length > 0)
             {
-               partial = book.createEmptyKeyList();
+                partial = book.createEmptyKeyList();
 
                 for (int i = 0; i < selected.length; i++)
                 {

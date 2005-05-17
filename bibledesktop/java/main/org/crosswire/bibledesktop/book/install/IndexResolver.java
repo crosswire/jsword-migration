@@ -42,11 +42,11 @@ import org.crosswire.jsword.util.IndexDownloader;
  * A class to prompt the user to download or create a search index and to do
  * carry out the users wishes.
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class IndexResolver
+public final class IndexResolver
 {
     /**
      * Prevent instansiation
@@ -77,37 +77,37 @@ public class IndexResolver
 
         switch (choice)
         {
-            case 0: // download
-                Installer installer = selectInstaller(parent);
-                if (installer != null)
+        case 0: // download
+            Installer installer = selectInstaller(parent);
+            if (installer != null)
+            {
+                try
                 {
-                    try
-                    {
-                        IndexDownloader.downloadIndex(book, installer);
-                    }
-                    catch (Exception ex)
-                    {
-                        log.error("index download failed: ", ex); //$NON-NLS-1$
-                        //Reporter.informUser(parent, ex);
+                    IndexDownloader.downloadIndex(book, installer);
+                }
+                catch (Exception ex)
+                {
+                    log.error("index download failed: ", ex); //$NON-NLS-1$
+                    //Reporter.informUser(parent, ex);
 
-                        String gtitle = Msg.HOW_GENERATE_TITLE.toString();
-                        Msg gmsg = Msg.HOW_GENERATE;
-                        int yn = JOptionPane.showConfirmDialog(parent, gmsg, gtitle, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    String gtitle = Msg.HOW_GENERATE_TITLE.toString();
+                    Msg gmsg = Msg.HOW_GENERATE;
+                    int yn = JOptionPane.showConfirmDialog(parent, gmsg, gtitle, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-                        if (yn == JOptionPane.YES_OPTION)
-                        {
-                            IndexManagerFactory.getIndexManager().scheduleIndexCreation(book);
-                        }
+                    if (yn == JOptionPane.YES_OPTION)
+                    {
+                        IndexManagerFactory.getIndexManager().scheduleIndexCreation(book);
                     }
                 }
-                break;
+            }
+            break;
 
-            case 1: // generate
-                IndexManagerFactory.getIndexManager().scheduleIndexCreation(book);
-                break;
+        case 1: // generate
+            IndexManagerFactory.getIndexManager().scheduleIndexCreation(book);
+            break;
 
-            default: // cancel
-                break;
+        default: // cancel
+            break;
         }
     }
 

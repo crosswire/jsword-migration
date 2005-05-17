@@ -34,7 +34,7 @@ import org.crosswire.jsword.passage.Key;
  * <p>Useful for chaining a few BookDataDisplays together to add functionallity
  * component by component.</p>
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */

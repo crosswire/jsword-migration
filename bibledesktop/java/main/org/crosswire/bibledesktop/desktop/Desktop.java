@@ -102,7 +102,7 @@ import org.jdom.Document;
  * some tests already, then the window can grow quite a lot. Also do we
  * want to disable the Exit button if work is going on?</p>
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author Mark Goodwin [mark at thorubio dot org]

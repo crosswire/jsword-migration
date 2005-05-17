@@ -32,7 +32,7 @@ import javax.swing.tree.TreePath;
 /**
  * A TreeModel for the ReferencePane.
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  */
 public class ReferenceTreeModel implements TreeModel

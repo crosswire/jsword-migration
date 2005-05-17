@@ -32,7 +32,7 @@ import org.crosswire.common.swing.FixedSplitPane;
 /**
  * SidebarPane builds a panel containing a set of books in tabbed dialogs.
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */

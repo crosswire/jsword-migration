@@ -42,7 +42,7 @@ import org.crosswire.jsword.book.BooksListener;
  * because that is a protected method and the inner class is neither
  * in the same package or a sub class.
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */

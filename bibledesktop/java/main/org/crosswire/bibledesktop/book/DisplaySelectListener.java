@@ -27,7 +27,7 @@ import java.util.EventListener;
  * Implement DisplaySelectListener to recieve CommandEvents whenever someone makes
  * a command for you to execute.
  * 
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
@@ -37,11 +37,11 @@ public interface DisplaySelectListener extends EventListener
      * This method is called to indicate that a command has been made.
      * @param ev Describes the change
      */
-    public void passageSelected(DisplaySelectEvent ev);
+    void passageSelected(DisplaySelectEvent ev);
 
     /**
      * This method is called to indicate that a command has been made.
      * @param ev Describes the change
      */
-    public void bookChosen(DisplaySelectEvent ev);
+    void bookChosen(DisplaySelectEvent ev);
 }

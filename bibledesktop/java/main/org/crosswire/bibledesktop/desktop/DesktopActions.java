@@ -53,7 +53,7 @@ import org.crosswire.jsword.util.Project;
  *
  * Previously each of the "do" methods was a separate class.
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at gmail dot com]

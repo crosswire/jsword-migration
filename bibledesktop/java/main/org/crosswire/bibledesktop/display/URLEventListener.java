@@ -27,7 +27,7 @@ import java.util.EventListener;
  * Implement URLEventListener to recieve URLEvents whenever someone
  * activates an URL.
  * 
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
@@ -37,17 +37,17 @@ public interface URLEventListener extends EventListener
      * This method is called to indicate that an URL can be processed.
      * @param ev Describes the URL
      */
-    public void activateURL(URLEvent ev);
+    void activateURL(URLEvent ev);
 
     /**
      * This method is called to indicate that the mouse has entered the URL.
      * @param ev Describes the URL
      */
-    public void enterURL(URLEvent ev);
+    void enterURL(URLEvent ev);
 
     /**
      * This method is called to indicate that the mouse has left the URL.
      * @param ev Describes the URL
      */
-    public void leaveURL(URLEvent ev);
+    void leaveURL(URLEvent ev);
 }

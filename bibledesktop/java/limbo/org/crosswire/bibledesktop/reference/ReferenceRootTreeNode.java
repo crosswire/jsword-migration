@@ -38,7 +38,7 @@ import org.crosswire.jsword.book.BooksListener;
 /**
  * The root node in the ReferencePane Tree model.
  * 
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */

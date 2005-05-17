@@ -49,7 +49,7 @@ import org.crosswire.jsword.book.BookFilters;
  * deletion, renaming, and viewing the notes that are associated with the
  * generation of a version.
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */

@@ -41,7 +41,7 @@ import org.crosswire.jsword.book.BookType;
  * This was a simple modification of DefaultListCellRenderer however something
  * has made us implement ListCellRenderer directory and I'm not sure what.
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */

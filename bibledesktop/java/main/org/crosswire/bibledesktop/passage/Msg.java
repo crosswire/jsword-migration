@@ -26,11 +26,11 @@ import org.crosswire.common.util.MsgBase;
 /**
  * Compile safe Msg resource settings.
  * 
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-class Msg extends MsgBase
+final class Msg extends MsgBase
 {
     static final Msg WHOLE_BIBLE = new Msg("BibleTreeNode.WholeBible"); //$NON-NLS-1$
     static final Msg PART_BIBLE = new Msg("BibleTreeNode.PartBible"); //$NON-NLS-1$

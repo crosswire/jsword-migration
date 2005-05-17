@@ -57,7 +57,7 @@ import org.crosswire.jsword.passage.NoSuchKeyException;
 /**
  * Builds a panel on which all the Dictionaries and their entries are visible.
  * 
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */

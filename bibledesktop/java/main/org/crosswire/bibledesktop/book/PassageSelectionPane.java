@@ -70,7 +70,7 @@ import org.crosswire.jsword.passage.VerseRange;
 /**
  * A JPanel (or dialog) that presents a interactive GUI way to select passages.
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */

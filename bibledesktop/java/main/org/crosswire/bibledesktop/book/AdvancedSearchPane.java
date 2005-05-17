@@ -62,7 +62,7 @@ import org.crosswire.jsword.book.search.SearchType;
 /**
  * An advanced search dialog.
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
@@ -144,7 +144,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
                 int val = source.getValue();
                 if (source.getValueIsAdjusting())
                 {
-                   setLabelRank(val);
+                    setLabelRank(val);
                 }
                 else
                 {

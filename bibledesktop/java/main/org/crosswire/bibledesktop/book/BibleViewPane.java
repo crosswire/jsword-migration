@@ -54,7 +54,7 @@ import org.crosswire.jsword.passage.PassageKeyFactory;
  * A BibleViewPane consists of three areas for looking up passages,
  * for navigating and minipulating parts of passage and for viewing a passage.
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */

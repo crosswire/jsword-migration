@@ -30,11 +30,11 @@ import org.crosswire.jsword.passage.VerseRange;
  * A Simple extension to JList to customize it to hold a Passage and
  * provide Passage related actions.
  * 
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class PassageGuiUtil
+public final class PassageGuiUtil
 {
     /**
      * Prevent Instansiation

@@ -11,39 +11,25 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
-* DeckLayout is very similar to the awt CardLayout, except the
-* latter is supposed to have some focus problems. I've not
-* come across these before, and DeckLayout seems to be
-* broken anyway, so I don't use it at all.
-* <p>DeckLayout treats each component in the container as a card.
-* Only one card is visible at a time, and the container acts
-* like a deck of cards.
-* The ordering of cards is determined by the container's own
-* internal ordering of its component objects. DeckLayout
-* defines a set of methods that allow an application to flip
-* through the cards sequentially, or to show a specified card.
-* The addLayoutComponent method can be used to associate a
-* string identifier with a given card for faster random access.
-*
-* <table border='1' cellPadding='3' cellSpacing='0' width="100%">
-* <tr><td bgColor='white'class='TableRowColor'><font size='-7'>
-* Distribution Licence:<br />
-* Project B is free software; you can redistribute it
-* and/or modify it under the terms of the GNU General Public License,
-* version 2 as published by the Free Software Foundation.<br />
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-* General Public License for more details.<br />
-* The License is available on the internet
-* <a href='http://www.gnu.org/copyleft/gpl.html'>here</a>, by writing to
-* <i>Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
-* MA 02111-1307, USA</i>, Or locally at the Licence link below.<br />
-* The copyright to this program is held by it's authors.
-* </font></td></tr></table>
-* @author Joe Walker
-* @author Claude Duguay Copyright (c) 1998
-*/
+ * DeckLayout is very similar to the awt CardLayout, except the
+ * latter is supposed to have some focus problems. I've not
+ * come across these before, and DeckLayout seems to be
+ * broken anyway, so I don't use it at all.
+ * <p>DeckLayout treats each component in the container as a card.
+ * Only one card is visible at a time, and the container acts
+ * like a deck of cards.
+ * The ordering of cards is determined by the container's own
+ * internal ordering of its component objects. DeckLayout
+ * defines a set of methods that allow an application to flip
+ * through the cards sequentially, or to show a specified card.
+ * The addLayoutComponent method can be used to associate a
+ * string identifier with a given card for faster random access.
+ *
+ * @see gnu.gpl.License for license details.
+ *      The copyright to this program is held by it's authors.
+ * @author Joe Walker
+ * @author Claude Duguay Copyright (c) 1998
+ */
 public class DeckLayout extends AbstractLayout implements LayoutManager2, Serializable
 {
     /**

@@ -29,7 +29,7 @@ import org.crosswire.jsword.passage.Key;
 /**
  * An interface for all components that can display BookData.
  * 
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
@@ -38,24 +38,24 @@ public interface BookDataDisplay
     /**
      * Copy the selection to the clipboard
      */
-    public void copy();
+    void copy();
 
     /**
      * Add a listener for when someone clicks on a browser 'link'
      * @param listener The listener to add
      */
-    public void addURLEventListener(URLEventListener listener);
+    void addURLEventListener(URLEventListener listener);
 
     /**
      * Remove a listener for when someone clicks on a browser 'link'
      * @param listener The listener to remove
      */
-    public void removeURLEventListener(URLEventListener listener);
+    void removeURLEventListener(URLEventListener listener);
 
     /**
      * Accessor for the Swing component
      */
-    public Component getComponent();
+    Component getComponent();
 
     /**
      * Set the BookData to be displayed.
@@ -66,24 +66,24 @@ public interface BookDataDisplay
      * @param book The Book to read data from
      * @param key The key to read from the given book
      */
-    public void setBookData(Book book, Key key);
+    void setBookData(Book book, Key key);
 
     /**
      * Cause the BookData to be re-displayed.
      */
-    public void refresh();
+    void refresh();
 
     /**
      * The Book Key that we are displaying, or null if we are not displaying
      * anything
      * @return The current key
      */
-    public Key getKey();
+    Key getKey();
 
     /**
      * Accessor for the Book used in the current display, or null if we are not
      * displaying anything.
      * @return The current book
      */
-    public Book getBook();
+    Book getBook();
 }

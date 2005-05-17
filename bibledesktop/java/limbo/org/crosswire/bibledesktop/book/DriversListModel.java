@@ -42,7 +42,7 @@ import org.crosswire.jsword.book.Books;
  * <p>DriversListModel can be set to read-only mode where it will display only
  * the BookDrivers that can receive new Book data.</p>
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */

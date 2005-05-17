@@ -33,7 +33,7 @@ import org.crosswire.jsword.passage.RestrictionType;
  * The PassageListModel class gives access to a Passage via a
  * ListModel.
  *
- * @see gnu.gpl.Licence for license details.
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @see javax.swing.JList
