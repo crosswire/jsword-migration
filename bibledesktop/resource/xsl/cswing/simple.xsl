@@ -130,10 +130,10 @@
               <xsl:when test="$direction != 'rtl'">
 	            <table cols="2" cellpadding="5" cellspacing="5" width="100%">
 	              <tr>
-	                <td valign="top" width="80%">
+	                <td valign="top" style="width:80%">
 	                  <xsl:apply-templates/>
 	                </td>
-	                <td valign="top" width="20%" style="background:#f4f4e8;">
+	                <td valign="top" style="background:#f4f4e8; width:20%">
 	                  <p>&#160;</p>
 	                  <xsl:apply-templates select="//verse" mode="print-notes"/>
 	                </td>
