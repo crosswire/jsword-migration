@@ -21,6 +21,8 @@
  */
 package org.crosswire.bibledesktop.desktop;
 
+import gnu.gpl.License;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -38,9 +40,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
+import javax.swing.text.html.HTMLEditorKit;
 
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.AntiAliasedTextPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.swing.MapTableModel;
 
@@ -99,19 +104,46 @@ public class AboutPane
         pnlSplash.add(lblPicture, BorderLayout.CENTER);
         pnlSplash.add(lblInfo, BorderLayout.SOUTH);
 
+        JTabbedPane tabMain = new JTabbedPane();
+        pnlMain.add(tabMain, BorderLayout.CENTER);
+
+        // Add the splash
+        String appName = Msg.getApplicationTitle();
+        tabMain.add(pnlSplash, appName);
+
+        License license = new License(appName);
+//        Font fixedFont = new Font("Monospaced", 0, 18); //$NON-NLS-1$
+        JTextPane warranty = new AntiAliasedTextPane();
+        //warranty.setFont(fixedFont);
+        warranty.setEditable(false);
+        warranty.setEditorKit(new HTMLEditorKit());
+        warranty.setText(license.getWarranty());
+        warranty.setCaretPosition(0);
+        JScrollPane warrantyScr = new JScrollPane();
+        warrantyScr.setPreferredSize(new Dimension(500, 300));
+        warrantyScr.getViewport().add(warranty);
+        JPanel warrantyPnl = new JPanel(new BorderLayout());
+        warrantyPnl.add(warrantyScr, BorderLayout.CENTER);
+        warrantyPnl.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        tabMain.add(warrantyPnl, Msg.WARRANTY_TAB_TITLE.toString());
+
+        JTextPane details = new AntiAliasedTextPane();
+        //details.setFont(fixedFont);
+        details.setEditable(false);
+        details.setEditorKit(new HTMLEditorKit());
+        details.setText(license.getDetails());
+        details.setCaretPosition(0);
+        JScrollPane detailScr = new JScrollPane();
+        detailScr.setPreferredSize(new Dimension(500, 300));
+        detailScr.getViewport().add(details);
+        JPanel detailsPnl = new JPanel(new BorderLayout());
+        detailsPnl.add(detailScr, BorderLayout.CENTER);
+        detailsPnl.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        tabMain.add(detailsPnl, Msg.DETAILS_TAB_TITLE.toString());
+
         // Put in tabs if advanced
-        if (!advanced)
+        if (advanced)
         {
-            pnlMain.add(pnlSplash);
-        }
-        else
-        {
-            JTabbedPane tabMain = new JTabbedPane();
-            pnlMain.add(tabMain, BorderLayout.CENTER);
-
-            // Add the splash
-            tabMain.add(pnlSplash, Msg.getApplicationTitle());
-
             // create and add the System Properties tab
             JTable tblProps = new JTable();
             MapTableModel mdlProps = new MapTableModel(System.getProperties());
@@ -126,7 +158,6 @@ public class AboutPane
             pnlProps.add(scrProps, BorderLayout.CENTER);
             pnlProps.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
             tabMain.add(pnlProps, Msg.SYSTEM_PROPS_TAB_TITLE.toString());
-
         }
     }
 

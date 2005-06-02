@@ -77,6 +77,8 @@ public final class Msg extends MsgBase
     // The splash image is of an English version of the application
     static final Msg SPLASH_IMAGE = new Msg("Splash.SplashImage"); //$NON-NLS-1$
     static final Msg ABOUT_TITLE = new Msg("AboutPane.AboutTitle"); //$NON-NLS-1$
+    static final Msg WARRANTY_TAB_TITLE = new Msg("AboutPane.Warranty"); //$NON-NLS-1$
+    static final Msg DETAILS_TAB_TITLE = new Msg("AboutPane.Details"); //$NON-NLS-1$
     static final Msg TASK_TAB_TITLE = new Msg("AboutPane.TaskTabTitle"); //$NON-NLS-1$
     static final Msg ERROR_TAB_TITLE = new Msg("AboutPane.ErrorTabTitle"); //$NON-NLS-1$
     static final Msg SYSTEM_PROPS_TAB_TITLE = new Msg("AboutPane.SystemPropsTabTitle"); //$NON-NLS-1$
