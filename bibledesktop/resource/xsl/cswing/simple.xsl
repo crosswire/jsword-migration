@@ -145,11 +145,11 @@
 	            <table cols="2" cellpadding="5" cellspacing="5" width="100%">
 	              <!-- In a right to left, the alignment should be reversed too -->
 	              <tr align="right">
-	                <td valign="top" width="20%" style="background:#f4f4e8;">
+	                <td valign="top" style="background:#f4f4e8; width:20%">
 	                  <p>&#160;</p>
 	                  <xsl:apply-templates select="//note" mode="print-notes"/>
 	                </td>
-	                <td valign="top" width="80%">
+	                <td valign="top" style="width:80%">
 	                  <xsl:apply-templates/>
 	                </td>
 	              </tr>
