@@ -24,6 +24,8 @@ package org.crosswire.bibledesktop.passage;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.Action;
@@ -38,6 +40,7 @@ import javax.swing.event.ListSelectionListener;
 import org.crosswire.bibledesktop.book.DisplaySelectEvent;
 import org.crosswire.bibledesktop.book.DisplaySelectListener;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
@@ -137,13 +140,62 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
 
     /**
      * Blur (expand) the current key action by amount verses on each side.
-     * This bound by the boundaries of the Chapter.
+     * This bound by the default Blur Restriction.
      * @param amount The amount of blurring
      */
     private void doBlur(int amount)
     {
-        key.blur(amount, RestrictionType.CHAPTER);
-        fireKeyChanged(new KeyChangeEvent(this, key));
+        // Remember what was selected
+        List selected = new ArrayList(Arrays.asList(list.getSelectedValues()));
+
+        // Make sure that key changes are not visible until blur is done.
+        Key copy = (Key) key.clone();
+
+        // Either blur the entire unselected list or just the selected elements.
+        if (selected.isEmpty())
+        {
+            copy.blur(amount, RestrictionType.getDefaultBlurRestriction());
+        }
+        else
+        {
+            Iterator iter = selected.iterator();
+            while (iter.hasNext())
+            {
+                Key k = (Key) iter.next();
+                // Create a copy so the selection can be restored
+                Key keyCopy = (Key) k.clone();
+                keyCopy.blur(amount, RestrictionType.getDefaultBlurRestriction());
+                copy.addAll(keyCopy);
+            }
+        }
+        fireKeyChanged(new KeyChangeEvent(this, copy));
+
+        // Restore the selection
+        int total = model.getSize();
+        for (int i = 0; i < total; i++)
+        {
+            Key listedKey = (Key) model.getElementAt(i);
+            
+            // As keys are found, remove them
+            Iterator iter = selected.iterator();
+            while (iter.hasNext())
+            {
+                Key selectedKey = (Key) iter.next();
+                if (listedKey.contains(selectedKey))
+                {
+                    list.addSelectionInterval(i, i);
+                    iter.remove();
+                }
+            }
+            
+            // If the list is empty then we are done.
+            if (selected.size() == 0)
+            {
+                break;
+            }
+        }
+
+        GuiUtil.refresh(this);
     }
 
     /**
@@ -187,6 +239,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
         partial = null;
         model.setPassage((Passage) key);
         fireKeyChanged(new KeyChangeEvent(this, key));
+        setActive();
     }
 
     /**

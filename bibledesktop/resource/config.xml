@@ -126,7 +126,7 @@
     <introspect class="org.crosswire.jsword.passage.RestrictionType" property="BlurRestriction"/>
     <alternative number="0"/>
     <alternative number="1"/>
-    <alternative number="2"/>
+    <!-- Remove Book for now <alternative number="2"/> -->
   </option>
 
   <option key="Passages.BookCase" type="int-options">
