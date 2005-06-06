@@ -119,7 +119,9 @@
           FONT.transChange { font-style: italic; }
           h3 { font-size: 110%; color: #666699; font-weight: bold; }
           h2 { font-size: 115%; color: #669966; font-weight: bold; }
-          div.margin { font-size: 90%; }
+          div.margin { font-size:90%; }
+          TD.notes { width:100px; background:#f4f4e8; }
+          TD.text { }
         </style>
       </head>
       <body>
@@ -128,12 +130,12 @@
           <xsl:when test="$Notes = 'true' and //note">
             <xsl:choose>
               <xsl:when test="$direction != 'rtl'">
-	            <table cols="2" cellpadding="5" cellspacing="5" width="100%">
+	            <table cols="2" cellpadding="5" cellspacing="5">
 	              <tr>
-	                <td valign="top" style="width:80%">
+	                <td valign="top" class="text">
 	                  <xsl:apply-templates/>
 	                </td>
-	                <td valign="top" style="background:#f4f4e8; width:20%">
+	                <td valign="top" class="notes">
 	                  <p>&#160;</p>
 	                  <xsl:apply-templates select="//verse" mode="print-notes"/>
 	                </td>
@@ -142,14 +144,14 @@
               </xsl:when>
               <xsl:otherwise>
                 <!-- reverse the table for Right to Left languages -->
-	            <table cols="2" cellpadding="5" cellspacing="5" width="100%">
+	            <table cols="2" cellpadding="5" cellspacing="5">
 	              <!-- In a right to left, the alignment should be reversed too -->
 	              <tr align="right">
-	                <td valign="top" style="background:#f4f4e8; width:20%">
+	                <td valign="top" class="notes">
 	                  <p>&#160;</p>
 	                  <xsl:apply-templates select="//note" mode="print-notes"/>
 	                </td>
-	                <td valign="top" style="width:80%">
+	                <td valign="top" class="text">
 	                  <xsl:apply-templates/>
 	                </td>
 	              </tr>
