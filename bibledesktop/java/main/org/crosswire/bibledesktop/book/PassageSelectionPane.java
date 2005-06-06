@@ -52,7 +52,7 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
 
-import org.crosswire.bibledesktop.passage.PassageListModel;
+import org.crosswire.bibledesktop.passage.RangeListModel;
 import org.crosswire.bibledesktop.passage.WholeBibleTreeModel;
 import org.crosswire.bibledesktop.passage.WholeBibleTreeNode;
 import org.crosswire.common.swing.ActionFactory;
@@ -62,7 +62,6 @@ import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageEvent;
 import org.crosswire.jsword.passage.PassageKeyFactory;
-import org.crosswire.jsword.passage.PassageListType;
 import org.crosswire.jsword.passage.PassageListener;
 import org.crosswire.jsword.passage.RestrictionType;
 import org.crosswire.jsword.passage.VerseRange;
@@ -139,7 +138,8 @@ public class PassageSelectionPane extends JPanel
      */
     private Component createScrolledList(JLabel label)
     {
-        lstSel = new JList();
+        model = new RangeListModel(RestrictionType.CHAPTER);
+        lstSel = new JList(model);
         lstSel.addListSelectionListener(new ListSelectionListener()
         {
             public void valueChanged(ListSelectionEvent ev)
@@ -215,6 +215,7 @@ public class PassageSelectionPane extends JPanel
             Passage temp = (Passage) keyf.getKey(refstr);
             ref.clear();
             ref.addAll(temp);
+            model.setPassage(ref);
 
             setValidPassage(true);
             updateMessageSummary();
@@ -271,7 +272,6 @@ public class PassageSelectionPane extends JPanel
             ref = (Passage) keyf.getKey(refstr);
 
             txtDisplay.setText(refstr);
-            lstSel.setModel(new PassageListModel(ref, PassageListType.RANGES, RestrictionType.CHAPTER));
 
             ref.addPassageListener(new CustomPassageListener());
             updateMessageSummary();
@@ -339,6 +339,7 @@ public class PassageSelectionPane extends JPanel
                 VerseRange range = node.getVerseRange();
                 ref.add(range);
             }
+            model.setPassage(ref);
         }
     }
 
@@ -355,6 +356,7 @@ public class PassageSelectionPane extends JPanel
                 VerseRange range = (VerseRange) selected[i];
                 ref.remove(range);
             }
+            model.setPassage(ref);
         }
     }
 
@@ -424,6 +426,7 @@ public class PassageSelectionPane extends JPanel
     private transient Icon icoBad;
     private JTree treAll;
     private JList lstSel;
+    private RangeListModel model;
     private JTextField txtDisplay;
     private JLabel lblMessage;
     protected JDialog dlgMain;

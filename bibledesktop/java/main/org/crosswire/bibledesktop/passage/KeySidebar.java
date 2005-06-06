@@ -45,7 +45,6 @@ import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
-import org.crosswire.jsword.passage.PassageListType;
 import org.crosswire.jsword.passage.RestrictionType;
 
 /**
@@ -74,9 +73,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     {
         setLayout(new BorderLayout());
 
-        model = new PassageListModel();
-        model.setMode(PassageListType.RANGES);
-        model.setRestriction(RestrictionType.CHAPTER);
+        model = new RangeListModel(RestrictionType.CHAPTER);
 
         list = new JList(model);
         list.addListSelectionListener(new ListSelectionListener()
@@ -175,7 +172,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
         for (int i = 0; i < total; i++)
         {
             Key listedKey = (Key) model.getElementAt(i);
-            
+
             // As keys are found, remove them
             Iterator iter = selected.iterator();
             while (iter.hasNext())
@@ -187,7 +184,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
                     iter.remove();
                 }
             }
-            
+
             // If the list is empty then we are done.
             if (selected.size() == 0)
             {
@@ -391,7 +388,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
      * GUI Components
      */
     private JList list;
-    private PassageListModel model;
+    private RangeListModel model;
     private Action actDelete;
     private Action actBlur1;
     private Action actBlur5;
