@@ -264,7 +264,8 @@ public class SitePane extends JPanel
         if (installer != null)
         {
             panel.add(new JButton(actions.getAction(INSTALL)));
-            panel.add(new JButton(actions.getAction(INSTALL_SEARCH)));
+            // LATER(DMS): Put back when this works
+            //panel.add(new JButton(actions.getAction(INSTALL_SEARCH)));
             panel.add(new JButton(actions.getAction(REFRESH)));
         }
         else

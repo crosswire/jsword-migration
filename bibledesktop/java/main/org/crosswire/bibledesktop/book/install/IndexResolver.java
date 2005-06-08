@@ -55,15 +55,15 @@ public final class IndexResolver
     {
     }
 
-    /**
-     * The options that we show to the user for how to get a search index
-     */
-    private static Object[] options = new Object[]
-    {
-        Msg.OPTION_DOWNLOAD,
-        Msg.OPTION_GENERATE,
-        Msg.OPTION_CANCEL,
-    };
+//    /**
+//     * The options that we show to the user for how to get a search index
+//     */
+//    private static Object[] options = new Object[]
+//    {
+//        Msg.OPTION_DOWNLOAD,
+//        Msg.OPTION_GENERATE,
+//        Msg.OPTION_CANCEL,
+//    };
 
     /**
      * @param parent
@@ -71,9 +71,12 @@ public final class IndexResolver
      */
     public static void scheduleIndex(Book book, Component parent)
     {
-        String title = Msg.HOW_MESSAGE_TITLE.toString();
-        Msg msg = Msg.HOW_MESSAGE;
-        int choice = JOptionPane.showOptionDialog(parent, msg, title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        // LATER(DMS): Enable this when we have indexes to download
+//        String title = Msg.HOW_MESSAGE_TITLE.toString();
+//        Msg msg = Msg.HOW_MESSAGE;
+//        int choice = JOptionPane.showOptionDialog(parent, msg, title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+        int choice = 1;
 
         switch (choice)
         {
