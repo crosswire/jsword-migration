@@ -35,6 +35,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JTabbedPane;
 
 import org.crosswire.common.progress.swing.JobsProgressBar;
@@ -174,7 +175,9 @@ public class SitesPane extends JPanel
         dlgMain.getContentPane().add(this, BorderLayout.CENTER);
         dlgMain.getContentPane().add(createButtons(), BorderLayout.SOUTH);
         dlgMain.setTitle(Msg.AVAILABLE_BOOKS.toString());
-        dlgMain.setModal(true);
+        dlgMain.getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
+        dlgMain.setResizable(true);
+        //dlgMain.setModal(true);
         dlgMain.addWindowListener(new WindowAdapter()
         {
             public void windowClosed(WindowEvent ev)
@@ -184,6 +187,7 @@ public class SitesPane extends JPanel
         });
         dlgMain.setLocationRelativeTo(parent);
         dlgMain.setVisible(true);
+        dlgMain.toFront();
     }
 
     /**

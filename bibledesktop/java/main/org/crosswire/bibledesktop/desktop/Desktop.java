@@ -47,6 +47,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSplitPane;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
@@ -126,16 +127,26 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
                     ExceptionPane.setHelpDeskListener(true);
                     LookAndFeelUtil.initialize();
 
-                    Desktop desktop = new Desktop();
+                    final Splash splash = new Splash();
+
+                    final Desktop desktop = new Desktop();
 
                     // change the size and location before showing the application.
                     GuiUtil.setSize(desktop, getDefaultSize());
                     GuiUtil.centerWindow(desktop);
 
-                    // Don't use pack.
-                    // It uses preferred dimensions, which are not used here.
-                    desktop.toFront();
-                    desktop.setVisible(true);
+                    // Now bring up the app and offer to install books if the user has none.
+                    SwingUtilities.invokeLater(new Runnable()
+                        {
+                            public void run()
+                            {
+                                splash.close();
+                                desktop.setVisible(true);
+                                desktop.establishPreferredSize();
+                                desktop.pack();
+                                desktop.checkForBooks();
+                            }
+                        });
                 }
             };
             t.start();
@@ -160,10 +171,34 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         // ResourceBundles, properties and other resources
         Project project = Project.instance();
 
+        // Splash screen
+        URL predicturl = project.getWritablePropertiesURL(SPLASH_PROPS);
+        Job startJob = JobManager.createJob(Msg.STARTUP_TITLE.toString(), predicturl, true);
+
         // Load the configuration.
-        // This has to be done before any gui components are created are created.
+        // This has to be done before any gui components are created.
+        // (Other than the splash)
         // This includes code that is invoked by it.
+        startJob.setProgress(Msg.STARTUP_CONFIG.toString());
         generateConfig();
+
+        // Make this be the root frame of optiondialogs
+        JOptionPane.setRootFrame(this);
+
+        // Grab errors
+        Reporter.grabAWTExecptions(true);
+
+        // Create the Desktop Actions
+        actions = new DesktopActions(this);
+
+        startJob.setProgress(Msg.STARTUP_GENERATE.toString());
+        createComponents();
+
+        // Configuration
+        startJob.setProgress(Msg.STARTUP_GENERAL_CONFIG.toString());
+        // GUI setup
+        debug();
+        init();
 
         // Listen for book changes so that the Options can be kept current
         BooksListener cbl = new BooksListener()
@@ -180,52 +215,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         };
         Books.installed().addBooksListener(cbl);
 
-        // Make this be the root frame of optiondialogs
-        JOptionPane.setRootFrame(this);
-
-        // Grab errors
-        Reporter.grabAWTExecptions(true);
-
-        // Splash screen
-        URL predicturl = project.getWritablePropertiesURL(SPLASH_PROPS);
-        Splash splash = new Splash();
-        Job startJob = JobManager.createJob(Msg.STARTUP_TITLE.toString(), predicturl, true);
-        splash.pack();
-
-        // Create the Desktop Actions
-        actions = new DesktopActions(this);
-
-        startJob.setProgress(Msg.STARTUP_CONFIG.toString());
-
-        startJob.setProgress(Msg.STARTUP_GENERATE.toString());
-        createComponents();
-
-        // GUI setup
-        debug();
-        init();
-
-        // This is technically overkill, but it does hide the reference pane if
-        // there are no reference works
-        refreshBooks();
-
-        // Configuration
-        startJob.setProgress(Msg.STARTUP_GENERAL_CONFIG.toString());
-
         startJob.done();
-        splash.close();
-
-        // News users probably wont have any Bibles installedso we give them a
-        // hand getting to the installation diallog.
-        List bibles = Books.installed().getBooks(BookFilters.getBibles());
-        if (bibles.size() == 0)
-        {
-            int reply = JOptionPane.showConfirmDialog(this, Msg.NO_BIBLES_MESSAGE, Msg.NO_BIBLES_TITLE.toString(), JOptionPane.OK_CANCEL_OPTION,
-                            JOptionPane.QUESTION_MESSAGE);
-            if (reply == JOptionPane.OK_OPTION)
-            {
-                actions.doBooks();
-            }
-        }
     }
 
     /**
@@ -426,6 +416,17 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         setIconImage(ICON_APP.getImage());
         setEnabled(true);
         setTitle(Msg.getApplicationTitle());
+    }
+    
+    /**
+     * Get the size of the content panel and make that the preferred size.
+     */
+    public void establishPreferredSize()
+    {
+        JComponent contentPane = (JComponent) getContentPane();
+        contentPane.setPreferredSize(contentPane.getSize());
+        
+        log.warn("The size of the contentpane is: " + contentPane.getSize()); //$NON-NLS-1$
     }
 
     /**
@@ -697,6 +698,22 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
             throw new LucidRuntimeException(Msg.CONFIG_SAVE_FAILED, ex, new Object[] { configUrl });
         }
 
+    }
+
+    public void checkForBooks()
+    {
+        // News users probably wont have any Bibles installed so we give them a
+        // hand getting to the installation dialog.
+        List bibles = Books.installed().getBooks(BookFilters.getBibles());
+        if (bibles.size() == 0)
+        {
+            int reply = JOptionPane.showConfirmDialog(this, Msg.NO_BIBLES_MESSAGE, Msg.NO_BIBLES_TITLE.toString(), JOptionPane.OK_CANCEL_OPTION,
+                            JOptionPane.QUESTION_MESSAGE);
+            if (reply == JOptionPane.OK_OPTION)
+            {
+                actions.doBooks();
+            }
+        }
     }
 
     /**
