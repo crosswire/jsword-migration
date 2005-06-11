@@ -329,9 +329,9 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.STATUS_TOGGLE));
         toggle.setSelected(true);
         menuView.add(toggle).addMouseListener(barStatus);
-        toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.SIDEBAR_TOGGLE));
-        toggle.setSelected(true);
-        menuView.add(toggle).addMouseListener(barStatus);
+        sidebarToggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.SIDEBAR_TOGGLE));
+        sidebarToggle.setSelected(isSidebarShowing());
+        menuView.add(sidebarToggle).addMouseListener(barStatus);
         menuView.addSeparator();
         menuView.add(actions.getAction(DesktopActions.VIEW_SOURCE)).addMouseListener(barStatus);
         menuView.setToolTipText(null);
@@ -417,7 +417,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         setEnabled(true);
         setTitle(Msg.getApplicationTitle());
     }
-    
+
     /**
      * Get the size of the content panel and make that the preferred size.
      */
@@ -425,7 +425,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     {
         JComponent contentPane = (JComponent) getContentPane();
         contentPane.setPreferredSize(contentPane.getSize());
-        
+
         log.warn("The size of the contentpane is: " + contentPane.getSize()); //$NON-NLS-1$
     }
 
@@ -439,7 +439,8 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
 
     public Component createView()
     {
-        BibleViewPane view = new BibleViewPane();
+        boolean show = sidebarToggle == null ? isSidebarShowing() : sidebarToggle.isSelected();
+        BibleViewPane view = new BibleViewPane(show);
         BookDataDisplay display = view.getPassagePane().getBookDataDisplay();
         display.addURLEventListener(this);
         display.addURLEventListener(barStatus);
@@ -717,6 +718,22 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     }
 
     /**
+     * @param show Whether to show the KeySidebar at start up.
+     */
+    public static void setSidebarShowing(boolean show)
+    {
+        sidebarShowing = show;
+    }
+
+    /**
+     * @return Whether to show the KeySidebar at start up.
+     */
+    public static boolean isSidebarShowing()
+    {
+        return sidebarShowing;
+    }
+
+    /**
      * @param maxHeight The maxHeight to set.
      */
     public static void setMaxHeight(int maxHeight)
@@ -853,6 +870,11 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     private transient Config config;
 
     /**
+     * Whether to show the Key Sidebar at startup
+     */
+    private static boolean sidebarShowing;
+
+    /**
      * The default dimension for this frame
      */
     private static Dimension defaultSize = new Dimension(1280, 960);
@@ -872,6 +894,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     private transient ViewManager views;
     private JPanel corePanel;
     private ToolBar pnlTbar;
+    private JCheckBoxMenuItem sidebarToggle;
     private StatusBar barStatus;
     private DictionaryPane reference;
     private JSplitPane sptBooks;

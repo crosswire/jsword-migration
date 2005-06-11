@@ -46,6 +46,7 @@ import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.RestrictionType;
+import org.crosswire.jsword.passage.VerseRange;
 
 /**
  * A list view of a key range list.
@@ -200,8 +201,22 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
      */
     public void doDeleteSelected()
     {
-        PassageGuiUtil.deleteSelectedVersesFromList(list);
+        RangeListModel rlm = (RangeListModel) list.getModel();
+
+        Passage ref = rlm.getPassage();
+        Object[] selected = list.getSelectedValues();
+        for (int i = 0; i < selected.length; i++)
+        {
+            VerseRange range = (VerseRange) selected[i];
+            ref.remove(range);
+        }
+
+        list.setSelectedIndices(new int[0]);
+
+        partial = null;
+        model.setPassage((Passage) key);
         fireKeyChanged(new KeyChangeEvent(this, key));
+        setActive();
     }
 
     public Key getKey()
@@ -231,7 +246,10 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
         }
         else
         {
-            key = (Key) newKey.clone();
+            if (key != newKey)
+            {
+                key = (Key) newKey.clone();
+            }
         }
         partial = null;
         model.setPassage((Passage) key);

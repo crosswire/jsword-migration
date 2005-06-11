@@ -46,11 +46,11 @@ import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookList;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.BookSet;
-import org.crosswire.jsword.book.BookType;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.BooksEvent;
 import org.crosswire.jsword.book.BooksListener;
@@ -454,7 +454,7 @@ public class SitePane extends JPanel
         actions.getAction(DELETE).setEnabled(bookSelected && book.getDriver().isDeletable(book));
         actions.getAction(UNINDEX).setEnabled(bookSelected && imanager.isIndexed(book));
         actions.getAction(INSTALL).setEnabled(bookSelected);
-        actions.getAction(INSTALL_SEARCH).setEnabled(bookSelected && book.getType() == BookType.BIBLE);
+        actions.getAction(INSTALL_SEARCH).setEnabled(bookSelected && book.getType() == BookCategory.BIBLE);
     }
 
     public void setTreeModel(BookList books)
@@ -495,7 +495,7 @@ public class SitePane extends JPanel
     private static final String UNINDEX = "Unindex"; //$NON-NLS-1$
 
     /**
-     * From which we get our list of installable modules
+     * From which we get our list of installable books
      */
     protected transient Installer installer;
 

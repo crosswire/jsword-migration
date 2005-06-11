@@ -23,8 +23,8 @@ package org.crosswire.bibledesktop.passage;
 
 import java.awt.Component;
 import java.io.Serializable;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JLabel;
 import javax.swing.JList;

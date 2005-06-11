@@ -33,8 +33,8 @@ import javax.swing.border.Border;
 
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.book.BookMetaData;
-import org.crosswire.jsword.book.BookType;
 
 /**
  * A custom list view that paints icons alongside the words.
@@ -108,16 +108,16 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
             setText(displayName);
             setToolTipText(displayName);
 
-            BookType type = book.getType();
-            if (type.equals(BookType.BIBLE))
+            BookCategory type = book.getType();
+            if (type.equals(BookCategory.BIBLE))
             {
                 setIcon(ICON_BIBLE);
             }
-            else if (type.equals(BookType.COMMENTARY))
+            else if (type.equals(BookCategory.COMMENTARY))
             {
                 setIcon(ICON_COMNT);
             }
-            else if (type.equals(BookType.DICTIONARY))
+            else if (type.equals(BookCategory.DICTIONARY))
             {
                 setIcon(ICON_DICT);
             }

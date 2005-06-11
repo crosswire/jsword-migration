@@ -48,9 +48,9 @@ public final class PassageGuiUtil
      */
     public static void deleteSelectedVersesFromList(JList list)
     {
-        PassageListModel plm = (PassageListModel) list.getModel();
+        RangeListModel rlm = (RangeListModel) list.getModel();
 
-        Passage ref = plm.getPassage();
+        Passage ref = rlm.getPassage();
         Object[] selected = list.getSelectedValues();
         for (int i = 0; i < selected.length; i++)
         {

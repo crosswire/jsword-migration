@@ -45,9 +45,9 @@ import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
-import org.crosswire.jsword.book.BookType;
 import org.crosswire.jsword.book.Defaults;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchKeyException;
@@ -290,7 +290,7 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
         if (selected != null)
         {
             Book book = (Book) selected;
-            if (book.getType().equals(BookType.DICTIONARY))
+            if (book.getType().equals(BookCategory.DICTIONARY))
             {
                 dict = book;
                 Key key = dict.getGlobalKeyList();

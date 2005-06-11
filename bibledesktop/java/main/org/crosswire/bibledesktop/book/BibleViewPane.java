@@ -63,13 +63,14 @@ public class BibleViewPane extends JPanel implements Titleable, Clearable, Title
     /**
      * Simple ctor
      */
-    public BibleViewPane()
+    public BibleViewPane(boolean showSidebar)
     {
         listeners = new EventListenerList();
         pnlSelect = new DisplaySelectPane();
         KeySidebar sidebar = new KeySidebar(pnlSelect.getBook());
         BookDataDisplay display = new TabbedBookDataDisplay();
         pnlPassg = new SplitBookDataDisplay(sidebar, display);
+        pnlPassg.showSidebar(showSidebar);
         sidebar.addKeyChangeListener(pnlSelect);
         pnlSelect.addCommandListener(sidebar);
         pnlSelect.addTitleChangedListener(this);

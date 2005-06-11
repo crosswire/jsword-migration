@@ -35,7 +35,7 @@
 
     <!-- Checks for Naming Conventions -->
     <module name="AbstractClassName">
-      <property name="format" value="^Abstract.*$|^.*Factory$|^.*Type$"/>
+      <property name="format" value="^Abstract.*$|^.*Factory$|^.*Type$|^.*Category$"/>
     </module>
     <!-- Allow "log" and "instance" otherwise only upper case valid variables with _ -->
     <module name="ConstantName">

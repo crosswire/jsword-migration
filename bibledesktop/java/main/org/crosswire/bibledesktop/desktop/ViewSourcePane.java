@@ -49,9 +49,9 @@ import org.crosswire.common.xml.PrettySerializingContentHandler;
 import org.crosswire.common.xml.SAXEventProvider;
 import org.crosswire.common.xml.TransformingSAXEventProvider;
 import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookMetaData;
-import org.crosswire.jsword.book.BookType;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.util.ConverterFactory;
 import org.xml.sax.ContentHandler;
@@ -86,7 +86,7 @@ public class ViewSourcePane extends JPanel
             osissep.provideSAXEvents(osis);
 
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
-            if (bmd.getType() == BookType.BIBLE)
+            if (bmd.getType() == BookCategory.BIBLE)
             {
                 htmlsep.setParameter(XSLTProperty.STRONGS_NUMBERS.getName(), Boolean.toString(XSLTProperty.STRONGS_NUMBERS.getState()));
                 htmlsep.setParameter(XSLTProperty.MORPH.getName(), Boolean.toString(XSLTProperty.MORPH.getState()));

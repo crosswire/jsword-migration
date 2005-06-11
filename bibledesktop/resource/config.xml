@@ -88,8 +88,8 @@
     <map name="cswing-styles"/>
   </option>
 
-  <option key="BibleDisplay.AntiAliasDisplay" type="boolean">
-    <introspect class="org.crosswire.common.swing.AntiAliasedTextPane" property="AntiAliasing"/>
+  <option key="BibleDisplay.Sidebar" type="boolean">
+    <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="SidebarShowing"/>
   </option>
 
   <option key="BibleDisplay.VersesPerTab" type="number">
@@ -100,15 +100,19 @@
     <introspect class="org.crosswire.bibledesktop.book.DisplaySelectPane" property="NumRankedVerses"/>
   </option>
 
+  <option key="BibleDisplay.AntiAliasDisplay" type="boolean">
+    <introspect class="org.crosswire.common.swing.AntiAliasedTextPane" property="AntiAliasing"/>
+  </option>
+
   <option key="BibleDisplay.ConfigurableFont" type="font">
     <introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="Font"/>
   </option>
 
-  <option key="SwordModule.ModuleSearchPath" type="path">
+  <option key="SwordBook.BookSearchPath" type="path">
     <introspect class="org.crosswire.jsword.book.sword.SwordBookDriver" property="SwordPath"/>
   </option>
 
-  <option key="SwordModule.DownloadDirectory" type="directory">
+  <option key="SwordBook.DownloadDirectory" type="directory">
     <introspect class="org.crosswire.jsword.book.sword.SwordBookDriver" property="DownloadDir"/>
   </option>
 
