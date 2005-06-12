@@ -162,7 +162,7 @@ public class MapperPane extends JPanel implements Scrollable
 
                 Color col = versecolor.getForeground();
                 g.setColor(col);
-                g.drawString(BibleInfo.getShortBookName(b), pos[X], pos[Y]);
+                g.drawString(BibleInfo.getBookName(b), pos[X], pos[Y]);
 
                 col = versecolor.getColor(b, 1, 1);
                 g.setColor(col);

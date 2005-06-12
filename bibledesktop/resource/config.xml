@@ -126,6 +126,10 @@
     <introspect class="org.crosswire.jsword.passage.PassageUtil" property="PersistentNaming"/>
   </option>
 
+  <option key="Passages.FullBookName" type="boolean">
+    <introspect class="org.crosswire.jsword.passage.BibleInfo" property="FullBookName"/>
+  </option>
+
   <option key="Passages.BlurringRules" type="int-options">
     <introspect class="org.crosswire.jsword.passage.RestrictionType" property="BlurRestriction"/>
     <alternative number="0"/>
@@ -138,7 +142,6 @@
     <alternative number="0"/>
     <alternative number="1"/>
     <alternative number="2"/>
-    <alternative number="3"/>
   </option>
 
 <!-- Useful only to developers. Developers may uncomment this.

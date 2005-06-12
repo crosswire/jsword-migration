@@ -229,7 +229,7 @@ public class VBAExport
                 x = (int) (map.getPositionDimension(b, 1, 0) * x_mag);
                 y = (int) (map.getPositionDimension(b, 1, 1) * y_mag);
 
-                out.println("  RouteStart "+x+"#, "+y+"#, \""+BibleInfo.getShortBookName(b)+"\"");
+                out.println("  RouteStart "+x+"#, "+y+"#, \""+BibleInfo.getBookName(b)+"\"");
 
                 int cib = BibleInfo.chaptersInBook(b);
                 for (int c=2; c<=cib; c++)
