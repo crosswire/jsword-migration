@@ -33,8 +33,17 @@
   <!-- Whether to have linking cross references or not -->
   <xsl:param name="XRef" select="'true'"/>
 
-  <!-- Whether to output verse numbers or not -->
+  <!-- Whether to output no Verse numbers -->
+  <xsl:param name="NoVNum" select="'false'"/>
+
+  <!-- Whether to output Verse numbers or not -->
   <xsl:param name="VNum" select="'true'"/>
+
+  <!-- Whether to output Chapter and Verse numbers or not -->
+  <xsl:param name="CVNum" select="'false'"/>
+
+  <!-- Whether to output Book, Chapter and Verse numbers or not -->
+  <xsl:param name="BCVNum" select="'false'"/>
 
   <!-- Whether to output superscript verse numbers or normal size ones -->
   <xsl:param name="TinyVNum" select="'true'"/>
@@ -235,9 +244,22 @@
 
   <xsl:template name="versenum">
     <!-- Are verse numbers wanted? -->
-    <xsl:if test="$VNum = 'true'">
+    <xsl:if test="$NoVNum = 'false'">
+      <xsl:variable name="book" select="substring-before(@osisID, '.')"/>
+      <xsl:variable name="chapter" select="substring-before(substring-after(@osisID, '.'), '.')"/>
+      <xsl:variable name="verse" select="substring-after(substring-after(@osisID, '.'), '.')"/>
       <xsl:variable name="versenum">
-        <xsl:value-of select="substring-after(substring-after(@osisID, '.'), '.')"/>
+        <xsl:choose>
+          <xsl:when test="$BCVNum = 'true'">
+          	<xsl:value-of select="concat($book, '&#160;', $chapter, ':', $verse)"/>
+          </xsl:when>
+          <xsl:when test="$CVNum = 'true'">
+          	<xsl:value-of select="concat($chapter, ':', $verse)"/>
+          </xsl:when>
+          <xsl:otherwise>
+          	<xsl:value-of select="$verse"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:variable>
       <xsl:choose>
         <xsl:when test="$TinyVNum = 'true' and $Notes = 'true'">
@@ -247,11 +269,11 @@
       	  <sup class="verse"><xsl:value-of select="$versenum"/></sup>
       	</xsl:when>
         <xsl:when test="$TinyVNum = 'false' and $Notes = 'true'">
-      	  <a name="{@osisID}"><xsl:value-of select="$versenum"/></a>
+      	  <a name="{@osisID}">(<xsl:value-of select="$versenum"/>)</a>
       	  <xsl:text> </xsl:text>
       	</xsl:when>
       	<xsl:otherwise>
-      	  <xsl:value-of select="$versenum"/>
+      	  (<xsl:value-of select="$versenum"/>)
       	  <xsl:text> </xsl:text>
       	</xsl:otherwise>
       </xsl:choose>

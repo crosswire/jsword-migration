@@ -1,6 +1,6 @@
 /**
  * Distribution License:
- * JSword is free software; you can redistribute it and/or modify it under
+ * BibleDesktop is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 2 as published by
  * the Free Software Foundation. This program is distributed in the hope
  * that it will be useful, but WITHOUT ANY WARRANTY; without even the
@@ -92,11 +92,13 @@ public class ViewSourcePane extends JPanel
                 htmlsep.setParameter(XSLTProperty.MORPH.getName(), Boolean.toString(XSLTProperty.MORPH.getState()));
                 htmlsep.setParameter(XSLTProperty.START_VERSE_ON_NEWLINE.getName(), Boolean.toString(XSLTProperty.START_VERSE_ON_NEWLINE.getState()));
                 htmlsep.setParameter(XSLTProperty.VERSE_NUMBERS.getName(), Boolean.toString(XSLTProperty.VERSE_NUMBERS.getState()));
+                htmlsep.setParameter(XSLTProperty.CV.getName(), Boolean.toString(XSLTProperty.CV.getState()));
+                htmlsep.setParameter(XSLTProperty.BCV.getName(), Boolean.toString(XSLTProperty.BCV.getState()));
                 htmlsep.setParameter(XSLTProperty.TINY_VERSE_NUMBERS.getName(), Boolean.toString(XSLTProperty.TINY_VERSE_NUMBERS.getState()));
                 htmlsep.setParameter(XSLTProperty.NOTES.getName(), Boolean.toString(XSLTProperty.NOTES.getState()));
                 htmlsep.setParameter(XSLTProperty.XREF.getName(), Boolean.toString(XSLTProperty.XREF.getState()));
-                htmlsep.setParameter("direction", direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             }
+            htmlsep.setParameter("direction", direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
             // This really looks nice but its performance was terrible.
 //            ContentHandler html = new HTMLSerializingContentHandler(FormatType.CLASSIC_INDENT);

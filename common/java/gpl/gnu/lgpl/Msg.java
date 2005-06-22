@@ -1,6 +1,6 @@
 /**
  * Distribution License:
- * BibleDesktop is free software; you can redistribute it and/or modify it under
+ * JSword is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 2 as published by
  * the Free Software Foundation. This program is distributed in the hope
  * that it will be useful, but WITHOUT ANY WARRANTY; without even the
@@ -19,27 +19,27 @@
  *
  * ID: $Id$
  */
-package org.crosswire.bibledesktop.display.jdtb;
+package gnu.lgpl;
 
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLStreamHandler;
+import org.crosswire.common.util.MsgBase;
 
 /**
- * .
+ * Compile safe Msg resource settings.
  * 
  * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
- * @author Joe Walker [joe at eireneh dot com]
+ * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class JDTBURLStreamHandler extends URLStreamHandler
+public final class Msg extends MsgBase
 {
-    /* (non-Javadoc)
-     * @see java.net.URLStreamHandler#openConnection(java.net.URL)
+    static final Msg WARRANTY = new Msg("License.warranty"); //$NON-NLS-1$
+    static final Msg DETAILS = new Msg("License.details"); //$NON-NLS-1$
+
+    /**
+     * Passthrough ctor
      */
-    protected URLConnection openConnection(URL url) throws IOException
+    private Msg(String name)
     {
-        return new JDTBURLConnection(url);
+        super(name);
     }
 }

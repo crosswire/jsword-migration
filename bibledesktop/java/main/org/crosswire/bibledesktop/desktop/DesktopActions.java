@@ -1,6 +1,6 @@
 /**
  * Distribution License:
- * JSword is free software; you can redistribute it and/or modify it under
+ * BibleDesktop is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 2 as published by
  * the Free Software Foundation. This program is distributed in the hope
  * that it will be useful, but WITHOUT ANY WARRANTY; without even the
@@ -259,10 +259,12 @@ public class DesktopActions
         da.getBookDataDisplay().refresh();
     }
 
-    public void doVNum(ActionEvent ev)
+    public void doVNum()
     {
-        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
-        XSLTProperty.VERSE_NUMBERS.setState(toggle.isSelected());
+        XSLTProperty.VERSE_NUMBERS.setState(true);
+        XSLTProperty.CV.setState(false);
+        XSLTProperty.BCV.setState(false);
+        XSLTProperty.NO_VERSE_NUMBERS.setState(false);
         BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
         SplitBookDataDisplay da = view.getPassagePane();
         da.getBookDataDisplay().refresh();
@@ -272,6 +274,28 @@ public class DesktopActions
     {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         XSLTProperty.TINY_VERSE_NUMBERS.setState(toggle.isSelected());
+        BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
+        SplitBookDataDisplay da = view.getPassagePane();
+        da.getBookDataDisplay().refresh();
+    }
+
+    public void doBCVNum()
+    {
+        XSLTProperty.VERSE_NUMBERS.setState(false);
+        XSLTProperty.CV.setState(false);
+        XSLTProperty.BCV.setState(true);
+        XSLTProperty.NO_VERSE_NUMBERS.setState(false);
+        BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
+        SplitBookDataDisplay da = view.getPassagePane();
+        da.getBookDataDisplay().refresh();
+    }
+
+    public void doCVNum()
+    {
+        XSLTProperty.VERSE_NUMBERS.setState(false);
+        XSLTProperty.CV.setState(true);
+        XSLTProperty.BCV.setState(false);
+        XSLTProperty.NO_VERSE_NUMBERS.setState(false);
         BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
         SplitBookDataDisplay da = view.getPassagePane();
         da.getBookDataDisplay().refresh();
@@ -450,6 +474,7 @@ public class DesktopActions
     static final String TOOLTIP_TOGGLE = "ToolTipToggle"; //$NON-NLS-1$
     static final String STATUS_TOGGLE = "StatusToggle"; //$NON-NLS-1$
     static final String SIDEBAR_TOGGLE = "SidebarToggle"; //$NON-NLS-1$
+    static final String VERSE = "Verse"; //$NON-NLS-1$
     static final String VIEW_SOURCE = "ViewSource"; //$NON-NLS-1$
     static final String BOOKS = "Books"; //$NON-NLS-1$
     static final String OPTIONS = "Options"; //$NON-NLS-1$

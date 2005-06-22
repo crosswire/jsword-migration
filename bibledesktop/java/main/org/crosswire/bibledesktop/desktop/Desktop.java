@@ -1,6 +1,6 @@
 /**
  * Distribution License:
- * JSword is free software; you can redistribute it and/or modify it under
+ * BibleDesktop is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 2 as published by
  * the Free Software Foundation. This program is distributed in the hope
  * that it will be useful, but WITHOUT ANY WARRANTY; without even the
@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
@@ -46,6 +47,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
@@ -95,13 +97,7 @@ import org.crosswire.jsword.util.Project;
 import org.jdom.Document;
 
 /**
- * A container for various tools, particularly the BibleGenerator and
- * the Tester. These tools are generally only of use to developers, and
- * not to end users.
- *
- * <p>2 Things to think about, if you change the LaF when you have run
- * some tests already, then the window can grow quite a lot. Also do we
- * want to disable the Exit button if work is going on?</p>
+ * The Desktop is the user's view of BibleDesktop.
  *
  * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
@@ -235,7 +231,6 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     private void createComponents()
     {
         barStatus = new StatusBar();
-        pnlTbar = new ToolBar(this);
         //barSide = new SidebarPane();
         //barBook = new ReferencedPane();
         reference = new DictionaryPane();
@@ -249,6 +244,109 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
      * Initialize the GUI, and display it.
      */
     private void init()
+    {
+        addWindowListener(new WindowAdapter()
+        {
+            public void windowClosed(WindowEvent ev)
+            {
+                actions.getAction(DesktopActions.EXIT).actionPerformed(new ActionEvent(this, 0, EMPTY_STRING));
+            }
+        });
+
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        TDIViewLayout tdi = (TDIViewLayout) LayoutType.TDI.getLayout();
+        tdi.addPopup(createPopupMenu());
+
+        //barBook.addHyperlinkListener(this);
+        //barSide.addHyperlinkListener(this);
+        reference.addURLEventListener(this);
+
+        sptBooks.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+        sptBooks.setRightComponent(reference);
+        sptBooks.setLeftComponent(views.getDesktop());
+        sptBooks.setResizeWeight(0.8D);
+        sptBooks.setDividerSize(7);
+        sptBooks.setOpaque(true);
+        sptBooks.setBorder(null);
+
+        // The toolbar needs to be in the outermost container, on the border
+        // And the only other item in that container can be CENTER
+        JComponent contentPane = (JComponent) getContentPane();
+        contentPane.setLayout(new BorderLayout());
+        ToolBar toolbar = createToolBar();
+        contentPane.add(toolbar, BorderLayout.NORTH);
+
+        // Put everything else in its own panel
+        corePanel = new JPanel(new BorderLayout());
+        corePanel.add(barStatus, BorderLayout.SOUTH);
+        corePanel.add(sptBooks, BorderLayout.CENTER);
+        contentPane.add(corePanel, BorderLayout.CENTER);
+        setJMenuBar(createMenuBar(toolbar));
+
+        setIconImage(ICON_APP.getImage());
+        setEnabled(true);
+        setTitle(Msg.getApplicationTitle());
+    }
+
+    private JMenuBar createMenuBar(ToolBar toolbar)
+    {
+        JMenuBar barMenu = new JMenuBar();
+        barMenu.add(createFileMenu());
+        barMenu.add(createEditMenu());
+        barMenu.add(createViewMenu(toolbar));
+        barMenu.add(createGoMenu());
+        barMenu.add(createToolsMenu());
+        barMenu.add(createHelpMenu());
+        return barMenu;
+    }
+
+    private JPopupMenu createPopupMenu()
+    {
+        JPopupMenu popup = new JPopupMenu();
+        popup.add(views.getContextAction(ViewManager.NEW_TAB)).addMouseListener(barStatus);
+        popup.add(views.getContextAction(ViewManager.CLOSE_VIEW)).addMouseListener(barStatus);
+        popup.add(views.getContextAction(ViewManager.CLEAR_VIEW)).addMouseListener(barStatus);
+        popup.add(views.getContextAction(ViewManager.CLOSE_OTHER_VIEWS)).addMouseListener(barStatus);
+        popup.add(views.getContextAction(ViewManager.CLOSE_ALL_VIEWS)).addMouseListener(barStatus);
+        popup.addSeparator();
+        popup.add(actions.getAction(DesktopActions.OPEN)).addMouseListener(barStatus);
+        popup.add(actions.getAction(DesktopActions.SAVE)).addMouseListener(barStatus);
+        popup.add(actions.getAction(DesktopActions.SAVE_AS)).addMouseListener(barStatus);
+        popup.add(actions.getAction(DesktopActions.SAVE_ALL)).addMouseListener(barStatus);
+        return popup;
+    }
+
+    private ToolBar createToolBar()
+    {
+        ToolBar toolbar = new ToolBar(this);
+        toolbar.setRollover(true);
+        toolbar.setFloatable(true);
+
+        toolbar.add(views.getContextAction(ViewManager.NEW_TAB)).addMouseListener(barStatus);
+        toolbar.add(actions.getAction(DesktopActions.OPEN)).addMouseListener(barStatus);
+        toolbar.add(actions.getAction(DesktopActions.SAVE)).addMouseListener(barStatus);
+        toolbar.addSeparator();
+        //toolbar.add(actions.getAction(DesktopActions.CUT)).addMouseListener(barStatus);
+        toolbar.add(actions.getAction(DesktopActions.COPY)).addMouseListener(barStatus);
+        //toolbar.add(actions.getAction(DesktopActions.PASTE)).addMouseListener(barStatus);
+        toolbar.addSeparator();
+        toolbar.add(actions.getAction(DesktopActions.BACK)).addMouseListener(barStatus);
+        toolbar.add(actions.getAction(DesktopActions.FORWARD)).addMouseListener(barStatus);
+        toolbar.addSeparator();
+        //toolbar.add(actions.getAction("Generate")).addMouseListener(barStatus);
+        //toolbar.add(actions.getAction("Diff")).addMouseListener(barStatus);
+        //toolbar.addSeparator();
+        toolbar.add(actions.getAction(DesktopActions.CONTENTS)).addMouseListener(barStatus);
+        toolbar.add(actions.getAction(DesktopActions.ABOUT)).addMouseListener(barStatus);
+
+        return toolbar;
+    }
+    /**
+     * Create the file menu
+     * @return the file menu
+     */
+    private JMenu createFileMenu()
     {
         JMenu menuFile = new JMenu(actions.getAction(DesktopActions.FILE));
         menuFile.add(views.getContextAction(ViewManager.NEW_TAB)).addMouseListener(barStatus);
@@ -267,42 +365,61 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         menuFile.addSeparator();
         menuFile.add(actions.getAction(DesktopActions.EXIT)).addMouseListener(barStatus);
         menuFile.setToolTipText(null);
+        return menuFile;
+    }
 
-        JPopupMenu popup = new JPopupMenu();
-        popup.add(views.getContextAction(ViewManager.NEW_TAB)).addMouseListener(barStatus);
-        popup.add(views.getContextAction(ViewManager.CLOSE_VIEW)).addMouseListener(barStatus);
-        popup.add(views.getContextAction(ViewManager.CLEAR_VIEW)).addMouseListener(barStatus);
-        popup.add(views.getContextAction(ViewManager.CLOSE_OTHER_VIEWS)).addMouseListener(barStatus);
-        popup.add(views.getContextAction(ViewManager.CLOSE_ALL_VIEWS)).addMouseListener(barStatus);
-        popup.addSeparator();
-        popup.add(actions.getAction(DesktopActions.OPEN)).addMouseListener(barStatus);
-        popup.add(actions.getAction(DesktopActions.SAVE)).addMouseListener(barStatus);
-        popup.add(actions.getAction(DesktopActions.SAVE_AS)).addMouseListener(barStatus);
-        popup.add(actions.getAction(DesktopActions.SAVE_ALL)).addMouseListener(barStatus);
-
-        TDIViewLayout tdi = (TDIViewLayout) LayoutType.TDI.getLayout();
-        tdi.addPopup(popup);
-
+    private JMenu createEditMenu()
+    {
         JMenu menuEdit = new JMenu(actions.getAction(DesktopActions.EDIT));
         //menuEdit.add(actions.getAction(DesktopActions.CUT)).addMouseListener(barStatus);
         menuEdit.add(actions.getAction(DesktopActions.COPY)).addMouseListener(barStatus);
         //menuEdit.add(actions.getAction(DesktopActions.PASTE)).addMouseListener(barStatus);
         menuEdit.setToolTipText(null);
+        return menuEdit;
+    }
 
+    private JMenu createGoMenu()
+    {
         JMenu menuGo = new JMenu(actions.getAction(DesktopActions.GO));
         menuGo.add(actions.getAction(DesktopActions.BACK)).addMouseListener(barStatus);
         menuGo.add(actions.getAction(DesktopActions.FORWARD)).addMouseListener(barStatus);
-
+        return menuGo;
+    }
+    /**
+     * Create the view menu.
+     * @return the view menu.
+     */
+    private JMenu createViewMenu(ToolBar toolbar)
+    {
         JMenu menuView = new JMenu(actions.getAction(DesktopActions.VIEW));
-        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.START_VERSE_ON_NEWLINE.getName()));
-        toggle.setSelected(XSLTProperty.START_VERSE_ON_NEWLINE.getDefault());
-        menuView.add(toggle).addMouseListener(barStatus);
-        toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.VERSE_NUMBERS.getName()));
-        toggle.setSelected(XSLTProperty.VERSE_NUMBERS.getDefault());
-        menuView.add(toggle).addMouseListener(barStatus);
+        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.TINY_VERSE_NUMBERS.getName()));
         toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.TINY_VERSE_NUMBERS.getName()));
         toggle.setSelected(XSLTProperty.TINY_VERSE_NUMBERS.getDefault());
         menuView.add(toggle).addMouseListener(barStatus);
+        toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.START_VERSE_ON_NEWLINE.getName()));
+        toggle.setSelected(XSLTProperty.START_VERSE_ON_NEWLINE.getDefault());
+        menuView.add(toggle).addMouseListener(barStatus);
+        JMenu verseMenu = new JMenu(actions.getAction(DesktopActions.VERSE));
+        menuView.add(verseMenu);
+        ButtonGroup grpNumbering = new ButtonGroup();
+        JRadioButtonMenuItem radio = new JRadioButtonMenuItem(actions.getAction(XSLTProperty.VERSE_NUMBERS.getName()));
+        grpNumbering.add(radio);
+        radio.setSelected(XSLTProperty.VERSE_NUMBERS.getDefault());
+        verseMenu.add(radio).addMouseListener(barStatus);
+        radio = new JRadioButtonMenuItem(actions.getAction(XSLTProperty.CV.getName()));
+        grpNumbering.add(radio);
+        radio.setSelected(XSLTProperty.CV.getDefault());
+        verseMenu.add(radio).addMouseListener(barStatus);
+        radio = new JRadioButtonMenuItem(actions.getAction(XSLTProperty.BCV.getName()));
+        grpNumbering.add(radio);
+        radio.setSelected(XSLTProperty.BCV.getDefault());
+        verseMenu.add(radio).addMouseListener(barStatus);
+        radio = new JRadioButtonMenuItem(actions.getAction(XSLTProperty.NO_VERSE_NUMBERS.getName()));
+        grpNumbering.add(radio);
+        radio.setSelected(XSLTProperty.NO_VERSE_NUMBERS.getDefault());
+        verseMenu.add(radio).addMouseListener(barStatus);
+
+        menuView.addSeparator();        
         toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.NOTES.getName()));
         toggle.setSelected(XSLTProperty.NOTES.getDefault());
         menuView.add(toggle).addMouseListener(barStatus);
@@ -320,9 +437,9 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         menuView.add(views.getMdiView()).addMouseListener(barStatus);
         //menuView.add(chkViewTbar);
         menuView.addSeparator();
-        menuView.add(pnlTbar.getShowToggle()).addMouseListener(barStatus);
-        menuView.add(pnlTbar.getTextToggle()).addMouseListener(barStatus);
-        menuView.add(pnlTbar.getIconSizeToggle()).addMouseListener(barStatus);
+        menuView.add(toolbar.getShowToggle()).addMouseListener(barStatus);
+        menuView.add(toolbar.getTextToggle()).addMouseListener(barStatus);
+        menuView.add(toolbar.getIconSizeToggle()).addMouseListener(barStatus);
         toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.TOOLTIP_TOGGLE));
         toggle.setSelected(true);
         menuView.add(toggle).addMouseListener(barStatus);
@@ -335,7 +452,11 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         menuView.addSeparator();
         menuView.add(actions.getAction(DesktopActions.VIEW_SOURCE)).addMouseListener(barStatus);
         menuView.setToolTipText(null);
+        return menuView;
+    }
 
+    private JMenu createToolsMenu()
+    {
         JMenu menuTools = new JMenu(actions.getAction(DesktopActions.TOOLS));
         //menuTools.add(actions.getAction(DesktopActions.GENERATE)).addMouseListener(barStatus);
         //menuTools.add(actions.getAction(DesktopActions.DIFF)).addMouseListener(barStatus);
@@ -343,81 +464,18 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         menuTools.add(actions.getAction(DesktopActions.BOOKS)).addMouseListener(barStatus);
         menuTools.add(actions.getAction(DesktopActions.OPTIONS)).addMouseListener(barStatus);
         menuTools.setToolTipText(null);
+        return menuTools;
+    }
 
+    private JMenu createHelpMenu()
+    {
         JMenu menuHelp = new JMenu(actions.getAction(DesktopActions.HELP));
         menuHelp.add(actions.getAction(DesktopActions.CONTENTS)).addMouseListener(barStatus);
         menuHelp.addSeparator();
         menuHelp.add(actions.getAction(DesktopActions.ABOUT)).addMouseListener(barStatus);
         menuHelp.setToolTipText(null);
-
-        JMenuBar barMenu = new JMenuBar();
-        barMenu.add(menuFile);
-        barMenu.add(menuEdit);
-        barMenu.add(menuView);
-        barMenu.add(menuTools);
-        barMenu.add(menuTools);
-        barMenu.add(menuHelp);
-
-        pnlTbar.setRollover(true);
-        pnlTbar.setFloatable(true);
-
-        pnlTbar.add(views.getContextAction(ViewManager.NEW_TAB)).addMouseListener(barStatus);
-        pnlTbar.add(actions.getAction(DesktopActions.OPEN)).addMouseListener(barStatus);
-        pnlTbar.add(actions.getAction(DesktopActions.SAVE)).addMouseListener(barStatus);
-        pnlTbar.addSeparator();
-        //pnlTbar.add(actions.getAction(DesktopActions.CUT)).addMouseListener(barStatus);
-        pnlTbar.add(actions.getAction(DesktopActions.COPY)).addMouseListener(barStatus);
-        //pnlTbar.add(actions.getAction(DesktopActions.PASTE)).addMouseListener(barStatus);
-        pnlTbar.addSeparator();
-        pnlTbar.add(actions.getAction(DesktopActions.BACK)).addMouseListener(barStatus);
-        pnlTbar.add(actions.getAction(DesktopActions.FORWARD)).addMouseListener(barStatus);
-        pnlTbar.addSeparator();
-        //pnlTbar.add(actions.getAction("Generate")).addMouseListener(barStatus);
-        //pnlTbar.add(actions.getAction("Diff")).addMouseListener(barStatus);
-        //pnlTbar.addSeparator();
-        pnlTbar.add(actions.getAction(DesktopActions.CONTENTS)).addMouseListener(barStatus);
-        pnlTbar.add(actions.getAction(DesktopActions.ABOUT)).addMouseListener(barStatus);
-
-        //barBook.addHyperlinkListener(this);
-        //barSide.addHyperlinkListener(this);
-        reference.addURLEventListener(this);
-
-        sptBooks.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-        sptBooks.setRightComponent(reference);
-        sptBooks.setLeftComponent(views.getDesktop());
-        sptBooks.setResizeWeight(0.8D);
-        sptBooks.setDividerSize(7);
-        sptBooks.setOpaque(true);
-        sptBooks.setBorder(null);
-
-        addWindowListener(new WindowAdapter()
-        {
-            public void windowClosed(WindowEvent ev)
-            {
-                actions.getAction(DesktopActions.EXIT).actionPerformed(new ActionEvent(this, 0, EMPTY_STRING));
-            }
-        });
-
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-
-        // The toolbar needs to be in the outermost container, on the border
-        // And the only other item in that container can be CENTER
-        final JComponent contentPane = (JComponent) getContentPane();
-        contentPane.setLayout(new BorderLayout());
-        contentPane.add(pnlTbar, BorderLayout.NORTH);
-
-        // Put everything else in its own panel
-        corePanel = new JPanel(new BorderLayout());
-        corePanel.add(barStatus, BorderLayout.SOUTH);
-        corePanel.add(sptBooks, BorderLayout.CENTER);
-        contentPane.add(corePanel, BorderLayout.CENTER);
-        setJMenuBar(barMenu);
-
-        setIconImage(ICON_APP.getImage());
-        setEnabled(true);
-        setTitle(Msg.getApplicationTitle());
+        return menuHelp;
     }
-
     /**
      * Get the size of the content panel and make that the preferred size.
      */
@@ -893,7 +951,6 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
 
     private transient ViewManager views;
     private JPanel corePanel;
-    private ToolBar pnlTbar;
     private JCheckBoxMenuItem sidebarToggle;
     private StatusBar barStatus;
     private DictionaryPane reference;

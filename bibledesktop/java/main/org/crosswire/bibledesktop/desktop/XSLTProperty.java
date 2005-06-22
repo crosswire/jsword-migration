@@ -1,6 +1,6 @@
 /**
  * Distribution License:
- * JSword is free software; you can redistribute it and/or modify it under
+ * BibleDesktop is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 2 as published by
  * the Free Software Foundation. This program is distributed in the hope
  * that it will be useful, but WITHOUT ANY WARRANTY; without even the
@@ -53,6 +53,21 @@ public final class XSLTProperty implements Serializable
      * Show verse numbers
      */
     public static final XSLTProperty VERSE_NUMBERS = new XSLTProperty("VNum", true); //$NON-NLS-1$
+
+    /**
+     * Show chapter and verse numbers.
+     */
+    public static final XSLTProperty CV = new XSLTProperty("CVNum", false); //$NON-NLS-1$
+
+    /**
+     * Show book, chapter and verse numbers.
+     */
+    public static final XSLTProperty BCV = new XSLTProperty("BCVNum", false); //$NON-NLS-1$
+
+    /**
+     * Show no verse numbers
+     */
+    public static final XSLTProperty NO_VERSE_NUMBERS = new XSLTProperty("NoVNum", false); //$NON-NLS-1$
 
     /**
      * Show verse numbers as a superscript.
@@ -183,6 +198,9 @@ public final class XSLTProperty implements Serializable
         MORPH,
         START_VERSE_ON_NEWLINE,
         VERSE_NUMBERS,
+        CV,
+        BCV,
+        NO_VERSE_NUMBERS,
         TINY_VERSE_NUMBERS,
         NOTES,
         XREF,
