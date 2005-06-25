@@ -588,6 +588,17 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
                     }
                 }
 
+                // If we didn't find a view and BibleViews are reused,
+                // then pretend that the selected view is clear.
+                if (isBibleViewReused())
+                {
+                    BibleViewPane view = (BibleViewPane) views.getSelected();
+                    if (view != null)
+                    {
+                        clearView = view;
+                    }
+                }
+
                 // Do we have an empty view we can use?
                 if (clearView != null)
                 {
@@ -595,6 +606,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
                     if (book != null)
                     {
                         Key key = book.getKey(data);
+                        clearView.setKey(book.createEmptyKeyList()); // force it to be a clear view, if it is not really.
                         clearView.setKey(key);
                         views.select(clearView);
                     }
@@ -792,6 +804,22 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     }
 
     /**
+     * @param reuse Whether reuse the current BibleView.
+     */
+    public static void setBibleViewReused(boolean reuse)
+    {
+        reuseBibleView = reuse;
+    }
+
+    /**
+     * @return Whether links use the current BibleView.
+     */
+    public static boolean isBibleViewReused()
+    {
+        return reuseBibleView;
+    }
+
+    /**
      * @param maxHeight The maxHeight to set.
      */
     public static void setMaxHeight(int maxHeight)
@@ -931,6 +959,11 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
      * Whether to show the Key Sidebar at startup
      */
     private static boolean sidebarShowing;
+
+    /**
+     * Whether to current BibleView should be used for links
+     */
+    private static boolean reuseBibleView = true;
 
     /**
      * The default dimension for this frame

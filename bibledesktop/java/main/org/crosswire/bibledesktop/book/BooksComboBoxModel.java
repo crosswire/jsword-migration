@@ -89,6 +89,7 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
     public void setSelectedItem(Object selected)
     {
         this.current = (Book) selected;
+        Defaults.setCurrentBook(current);
         fireContentsChanged(this, -1, -1);
     }
 

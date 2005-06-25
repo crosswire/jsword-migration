@@ -33,6 +33,10 @@
 
 <config>
 
+  <option key="Bibles.RetainCurrent" type="boolean">
+    <introspect class="org.crosswire.jsword.book.Defaults" property="CurrentBible"/>
+  </option>
+
   <option key="Bibles.DefaultBible" type="string-options">
     <introspect class="org.crosswire.jsword.book.Defaults" property="BibleByName"/>
     <map name="bible-names"/>
@@ -83,9 +87,15 @@
   </option>
 -->
 
+<!-- We only provide one style sheet at this time
   <option key="BibleDisplay.ConfigurableStylesheet" type="string-options">
     <introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="ResourceName"/>
     <map name="cswing-styles"/>
+  </option>
+-->
+
+  <option key="BibleDisplay.Reuse" type="boolean">
+    <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="BibleViewReused"/>
   </option>
 
   <option key="BibleDisplay.Sidebar" type="boolean">
