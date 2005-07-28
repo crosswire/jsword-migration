@@ -23,39 +23,53 @@
 <h2>Obtain and install Sun's Java 1.4.2_x</h2>
 <p>
   To develop JSword with Eclipse, you will need to tell it to use
-  Sun's Java 1.4.2. I recommend using the most recent point release
-  which at the time of this writing was 1.4.2_07. You can find instructions
-  on installing Sun's for Linux under
-  <a name="linuxjava" href="linuxjava.html">Installing Java under Fedora Core 3</a>.
+  Sun's Java 1.4.2. We recommend using the most recent point release
+  which at the time of this writing was 1.4.2_08. You can get Sun's Java 
+  <a href="http://java.sun.com/j2se/1.4.2/download.html">here</a>.
+  You can find instructions on installing Sun's Java for Linux under
+  <a name="linuxjava" href="linuxjava.html">Installing Java under Fedora Core 3/4</a>.
+</p>
+<p>
+  We develop under 1.4.2, but routinely test against 1.5. We will move to 1.5
+  when it is well supported on all the platforms to which we deploy. Currently
+  these are Windows, Mac and Linux.
 </p>
 
-<h2>Obtain and install Eclipse 3.x</h2>
+<h2>Obtain and install Eclipse 3.1</h2>
 <p>
   Any version of Eclipse 3 will work well. The screenshots that
-  are provided are from 3.1M5a, Linux, GTK version, running under
+  are provided are from 3.1, Linux, GTK version, running under
   the Gnome desktop.
 </p>
 <p>
-  You can get Eclipse from here:
+  You can get Eclipse for Windows from here:
   <a href="http://www.eclipse.org/downloads">http://www.eclipse.org/downloads</a>.
   The download will be about 90M, so it is best to have a broadband connection.
   With Windows, you will only have one choice. If you are running linux, you will
-  have a choice between Motif and GTK versions. I don't know if there is any practical
-  difference. The screenshots are from the GTK version.
+  have a choice between Motif and GTK versions and if you are running Fedora Core 4,
+  Eclipse is provided in the distribution as a native GTK build. The screenshots are from the GTK version.
+</p>
+<p>
+  You can istall Eclipse for Fedora Core 3/4 as an rpm from here:
+  <a href="http://www.eclipse.org/downloads">http://www.eclipse.org/downloads</a>.
 </p>
 
 <h2>Installing Eclipse</h2>
 <p>
-  As root, install the program to a directory of your choice. Do not install it to a
-  directory containing an existing <q>eclipse</q> directory. Either rename the
-  <q>eclipse</q> directory, delete it or choose a different Eclipse location.
-  I use <code>/usr/java</code> on linux and <code>c:\java</code> on Windows.
+  As root on Linux or an administrator on Windows, install the program to a directory of your choice.
+  Do not install it to a directory containing an existing <q>eclipse</q> directory.
+  Either rename the <q>eclipse</q> directory, delete it or choose a different Eclipse location.
+  For example, you might use <code>/usr/java</code> on linux and <code>c:\java</code> on Windows.
   It will create the Eclipse installation in that directory. For Windows, just unzip
   it to the c:\java directory. For linux, in the /usr/java directory, run
-  <code>gtar zxvf eclipse-SDK-3.1M5a-linux-gtk.tar.gz</code>.
+  <code>gtar zxvf eclipse-SDK-3.1-linux-gtk.tar.gz</code>.
 </p>
 
-<h2>Launching Eclipse 3.x under Linux</h2>
+<h2>Launching Eclipse 3.1 under Linux</h2>
+<p>
+  If you choose to use Eclipse that comes with Fedora Core 4, you can disregard these
+  instructions. That build will install a launcher on one of the menus.
+</p>
 <p>
   Perhaps the best way to run Eclipse from inside the Gnome desktop is to create a
   Launcher for it. This is not an endorsement of the Gnome desktop. I don't have any
