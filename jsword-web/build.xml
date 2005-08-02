@@ -71,7 +71,7 @@
     <mkdir dir="${target.web}/api"/>
     <javadoc
         sourcepathref="path.alljava"
-        packagenames="org.crosswire.*,gnu.gpl.*"
+        packagenames="org.crosswire.*,gnu.?gpl.*"
         classpathref="runtime.jarpath"
         stylesheetfile="${source.etc}/javadoc/stylesheet.css"
         destdir="${target.web}/api"
