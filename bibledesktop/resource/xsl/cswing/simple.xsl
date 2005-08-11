@@ -101,6 +101,10 @@
           FONT.jesus { color: red; }
           FONT.speech { color: blue; }
           FONT.transChange { font-style: italic; }
+          FONT.strike { text-decoration: line-through; }
+          FONT.small-caps { font-variant: small-caps; }
+          FONT.normal { font-variant: normal; }
+          FONT.caps { text-transform: uppercase; }
           h3 { font-size: 110%; color: #666699; font-weight: bold; }
           h2 { font-size: 115%; color: #669966; font-weight: bold; }
           div.margin { font-size:90%; }
@@ -759,19 +763,19 @@
           <em><xsl:apply-templates/></em>
         </xsl:when>
         <xsl:when test="@type = 'line-through'">
-          <!-- later -->
-          <xsl:apply-templates/>
+          <font class="strike"><xsl:apply-templates/></font>
         </xsl:when>
         <xsl:when test="@type = 'normal'">
-           <!-- later -->
-          <xsl:apply-templates/>
+          <font class="normal"><xsl:apply-templates/></font>
         </xsl:when>
         <xsl:when test="@type = 'small-caps'">
-          <!-- later -->
-          <xsl:apply-templates/>
+          <font class="small-caps"><xsl:apply-templates/></font>
         </xsl:when>
         <xsl:when test="@type = 'underline'">
           <u><xsl:apply-templates/></u>
+        </xsl:when>
+        <xsl:when test="@type = 'x-caps'">
+          <font class="caps"><xsl:apply-templates/></font>
         </xsl:when>
         <xsl:otherwise>
           <xsl:apply-templates/>
