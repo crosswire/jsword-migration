@@ -1,5 +1,10 @@
 <?xml version="1.0"?>
-<xsl:stylesheet xmlns="http://www.w3.org/TR/REC-html40" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet
+  xmlns="http://www.w3.org/TR/REC-html40"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  version="1.0"
+  xmlns:jsword="http://xml.apache.org/xalan/java"
+  extension-element-prefixes="jsword">
 
   <xsl:output method="html" omit-xml-declaration="yes" indent="no"/>
   <!-- Be very careful about introducing whitespace into the document.
@@ -76,36 +81,6 @@
     <xsl:if test="$styling = '2' or $styling = '3'"> font-style: italic;</xsl:if>
   </xsl:variable>
   <xsl:variable name="fontspec" select="concat($fontfamily, $fontsize, $fontweight, $fontstyle)"/>
-
-  <!--
-  For now, we assume that all the works inside a corpus are of the
-  same type.
-  -->
-  <xsl:variable name="osis-id-type" select="substring-before((//osisText)[1]/@osisIDWork, '.')"/>
-
-  <xsl:variable name="page-div-type">
-    <xsl:choose>
-      <!--
-      KJV is a special case. It should be Bible.KJV, but some OSIS
-      transcriptions just use KJV instead.
-      -->
-      <xsl:when test="$osis-id-type = 'Bible' or $osis-id-type = 'KJV'">
-        <xsl:text>chapter</xsl:text>
-      </xsl:when>
-      <xsl:when test="$osis-id-type = 'Dictionary'">
-        <xsl:text>x-lexeme</xsl:text>
-      </xsl:when>
-      <xsl:when test="$osis-id-type = 'Lexicon'">
-        <xsl:text>x-lemma</xsl:text>
-      </xsl:when>
-      <xsl:when test="$osis-id-type = 'Morph'">
-        <xsl:text>x-tag</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>FIXME</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
 
   <!--=======================================================================-->
   <xsl:template match="/osis">
@@ -285,11 +260,9 @@
 
   <xsl:template match="verse" mode="print-notes">
     <xsl:if test="./note">
-      <xsl:variable name="book" select="substring-before(@osisID, '.')"/>
-      <xsl:variable name="chapter" select="substring-before(substring-after(@osisID, '.'), '.')"/>
-      <xsl:variable name="versenum" select="substring-after(substring-after(@osisID, '.'), '.')"/>
+      <xsl:variable name="verse" select="jsword:org.crosswire.jsword.passage.VerseFactory.fromString(@osisID)"/>
       <a href="#{@osisID}">
-        <xsl:value-of select="concat($book, '&#160;', $chapter, ':', $versenum)"/>
+        <xsl:value-of select="jsword:getName($verse)"/>
       </a>
       <xsl:apply-templates select="./note" mode="print-notes" />
       <div><xsl:text>&#160;</xsl:text></div>
