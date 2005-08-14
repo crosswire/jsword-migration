@@ -1,5 +1,35 @@
 <?xml version="1.0"?>
-<xsl:stylesheet
+<!--
+ * Distribution License:
+ * JSword is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License, version 2.1 as published by
+ * the Free Software Foundation. This program is distributed in the hope
+ * that it will be useful, but WITHOUT ANY WARRANTY; without even the
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * The License is available on the internet at:
+ *       http://www.gnu.org/copyleft/lgpl.html
+ * or by writing to:
+ *      Free Software Foundation, Inc.
+ *      59 Temple Place - Suite 330
+ *      Boston, MA 02111-1307, USA
+ *
+ * Copyright: 2005
+ *     The copyright to this program is held by it's authors.
+ *
+ * ID: $Id$
+ -->
+ <!--
+ * Transforms OSIS to HTML for viewing within JSword browsers.
+ * Note: There are custom protocols which the browser must handle.
+ * 
+ * @see gnu.lgpl.License for license details.
+ *      The copyright to this program is held by it's authors.
+ * @author Joe Walker [joe at eireneh dot com]
+ * @author DM Smith [dmsmith555 at yahoo dot com]
+ -->
+ <xsl:stylesheet
   xmlns="http://www.w3.org/TR/REC-html40"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   version="1.0"
@@ -81,6 +111,9 @@
     <xsl:if test="$styling = '2' or $styling = '3'"> font-style: italic;</xsl:if>
   </xsl:variable>
   <xsl:variable name="fontspec" select="concat($fontfamily, $fontsize, $fontweight, $fontstyle)"/>
+
+  <!-- Create a global key factory from which OSIS ids will be generated -->
+  <xsl:variable name="keyf" select="jsword:org.crosswire.jsword.passage.PassageKeyFactory.instance()"/>
 
   <!--=======================================================================-->
   <xsl:template match="/osis">
@@ -196,7 +229,8 @@
   </xsl:template>
 
   <!--=======================================================================-->
-  <xsl:template match="verse">
+  <!-- Handle verses as containers and as a start verse.                     -->
+  <xsl:template match="verse[not(@eID)]">
     <!-- If the verse don't start on their own line and -->
     <!-- the verse is not the first verse of a set of siblings, -->
     <!-- output an extra space. -->
@@ -224,9 +258,21 @@
   <xsl:template name="versenum">
     <!-- Are verse numbers wanted? -->
     <xsl:if test="$NoVNum = 'false'">
-      <xsl:variable name="book" select="substring-before(@osisID, '.')"/>
-      <xsl:variable name="chapter" select="substring-before(substring-after(@osisID, '.'), '.')"/>
-      <xsl:variable name="verse" select="substring-after(substring-after(@osisID, '.'), '.')"/>
+      <!-- An osisID can be a space separated list of them -->
+      <xsl:variable name="firstOsisID" select="substring-before(concat(@osisID, ' '), ' ')"/>
+      <xsl:variable name="book" select="substring-before($firstOsisID, '.')"/>
+      <xsl:variable name="chapter" select="substring-before(substring-after($firstOsisID, '.'), '.')"/>
+      <!-- If n is present use it for the number -->
+      <xsl:variable name="verse">
+        <xsl:choose>
+          <xsl:when test="@n">
+            <xsl:value-of select="@n"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="substring-after(substring-after($firstOsisID, '.'), '.')"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
       <xsl:variable name="versenum">
         <xsl:choose>
           <xsl:when test="$BCVNum = 'true'">
@@ -264,9 +310,9 @@
 
   <xsl:template match="verse" mode="print-notes">
     <xsl:if test="./note">
-      <xsl:variable name="verse" select="jsword:org.crosswire.jsword.passage.VerseFactory.fromString(@osisID)"/>
-      <a href="#{@osisID}">
-        <xsl:value-of select="jsword:getName($verse)"/>
+      <xsl:variable name="passage" select="jsword:getValidKey($keyf, @osisID)"/>
+      <a href="#{substring-before(concat(@osisID, ' '), ' ')}">
+        <xsl:value-of select="jsword:getName($passage)"/>
       </a>
       <xsl:apply-templates select="./note" mode="print-notes" />
       <div><xsl:text>&#160;</xsl:text></div>
