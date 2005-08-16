@@ -1,0 +1,17 @@
+Instructions on how to upgrade findbugs.
+
+Obtain the most recent version of findbugs from:
+   http://sourceforge.net/projects/findbugs
+
+Unzip the file into this directory.
+
+In the new directory, remove the following:
+   bin
+   doc
+   src
+
+Change the references to the old directory to the new directory in the following files:
+   build.xml
+
+In CVS remove the old findbugs directory.
+

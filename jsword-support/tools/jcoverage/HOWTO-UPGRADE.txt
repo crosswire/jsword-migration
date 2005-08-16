@@ -1,0 +1,10 @@
+Instructions on how to upgrade jcoverage.
+Obtain the most recent version of jcoverage from
+   http://www.jcoverage.com/downloads.html
+
+Unzip the file into this directory.
+
+In the new directory, remove the following:
+   examples
+
+In CVS remove the old jcoverage directory.

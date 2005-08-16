@@ -1,0 +1,19 @@
+Instructions on how to upgrade javancss.
+
+Obtain the most recent version of javancss from:
+   http://www.kclee.de/clemens/java/javancss
+
+Unzip the file into this directory.
+
+In the new directory, remove the following:
+   bin
+   doc
+   icons
+   src
+   test
+
+Change the references to the old directory to the new directory in the following files:
+   build.xml
+
+In CVS remove the old javancss directory.
+

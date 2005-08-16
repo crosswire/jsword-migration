@@ -1,0 +1,13 @@
+Instructions on how to upgrade pmd.
+Obtain the most recent version of pmd from
+   http://sourceforge.net/projects/pmd
+
+Unzip the file into this directory.
+In the new directory, remove the following:
+   bin
+   docs
+
+In CVS remove the old pmd directory.
+
+Determine what has changed in pmd and update ruleset.xml appropriately.
+

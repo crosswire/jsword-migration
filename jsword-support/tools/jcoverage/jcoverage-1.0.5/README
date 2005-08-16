@@ -1,0 +1,105 @@
+COPYRIGHT
+
+jcoverage is copyright (c)2003 jcoverage ltd, and is normally licensed
+under the GNU General Public License (GPL) for the instrumentation of
+other GPL programs.
+
+
+LICENSE
+
+jcoverage is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation; either version 2 of the License, or (at your
+option) any later version. Please review the file COPYING included in
+this distribution for further details.
+
+jcoverage is also available under a commercial non-GPL
+license. Commercial users must purchase a licensed copy of jcoverage
+for each user. For details of our licensing policy, please visit,
+http://jcoverage.com/license.html. Questions about our licensing
+policy should be sent to licensing@jcoverage.com. Commerical customers
+can purchase non-GPL licenses online at
+http://jcoverage.com/purchase.html. General sales enquires can be
+directed to sales@jcoverage.com.
+
+
+WARRANTY
+
+jcoverage is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.
+
+
+MAILING LISTS
+
+We recommend that you join the jcoverage-announce mailing list run by
+jcoverage ltd. This is a low volume moderated mailing list, used only
+by jcoverage ltd, for release announcements. To subscribe (or
+unsubscribe) to the jcoverage-announce mailing list please visit:
+http://mailman.jcoverage.com/mailman/listinfo/jcoverage-announce.
+
+We also recommend that all regular users should join the
+jcoverage-user mailing list. This is a forum setup by jcoverage ltd,
+for all users of jcoverage to share experience and general discussion
+of jcoverage. To subscribe (or unsubscribe) to the jcoverage-user
+mailing list please visit:
+http://mailman.jcoverage.com/mailman/listinfo/jcoverage-user. In an
+effort to reduce spam, all first posters will be moderated on
+jcoverage-user.
+
+For developers and contributors to jcoverage we recommend that you
+join the jcoverage-devel mailing list. To subscribe (or unsubscribe)
+to the jcoverage-devel mailing list please visit:
+http://mailman.jcoverage.com/mailman/listinfo/jcoverage-devel. In an
+effort to reduce spam, all first posters will be moderated on
+jcoverage-devel.
+
+
+SUPPORT
+
+GPL licensees of jcoverage are provided "AS IS" and are not entitled
+to any support. We recommend that GPL licensees should use the
+community jcoverage-user mailing list for any support issues that they
+may have. Community bug reports can be filed at
+http://bugzilla.jcoverage.com/.
+
+Commercial licensees are entitled to 30 days of installation
+support. There after, support is available on a per incident or annual
+basis. Please contact sales@jcoverage.com, with your requirements. Bug
+reports from commercial licencees should be made by the licensee's
+named representative via http://bugzilla.jcoverage.com/.
+
+
+FEEDBACK AND ENHANCEMENT REQUESTS
+
+jcoverage ltd welcomes your feedback on jcoverage. You can send
+feedback directly to the jcoverage team via feedback@jcoverage.com.
+
+Community enhancement requests should in the first instance be
+discussed on the jcoverage-user mailing list, and via
+http://bugzilla.jcoverage.com/.
+
+
+DOCUMENTATION
+
+A user manual in PDF format is included in this release,
+jcoverage.pdf. To obtain a PDF viewer please visit
+http://www.adobe.com/, and click on "Get Acrobat Reader".
+
+
+EXAMPLES
+
+Simple examples of using jcoverage, including its integration with Ant
+can be found in the "examples" directory.
+
+
+THIRD PARTY DEPENDENCIES
+
+jcoverage is dependant on the following third party libraries, which
+are included in the jcoverage binary distribution.
+
+bcel    5.1     http://jakarta.apache.org/bcel/
+log4j   1.2.8   http://jakarta.apache.org/log4j/
+getopt  1.0.9   http://gnu.org/
+oro     2.0.7   http://jakarta.apache.org/oro/

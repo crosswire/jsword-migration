@@ -1,0 +1,19 @@
+Instructions on how to upgrade java2html.
+
+Obtain the most recent version of java2html from:
+   http://www.java2html.com
+
+Create a directory in java2html with the name java2html-x.x.x
+where x.x.x is the version number of java2html.
+
+Unzip the file into this directory.
+
+In the new directory, remove the following (only j2h.jar is needed):
+   api_examples
+   docsapi
+   *.bat
+   *.html
+   j2h
+
+In CVS remove the old java2html directory.
+

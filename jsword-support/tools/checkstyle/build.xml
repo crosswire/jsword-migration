@@ -1,0 +1,35 @@
+<project name="checkstyle" default="checkstyle">
+
+  <property name="support.style" value="${support.tools}/checkstyle"/>
+  <property name="version.style" value="4.0-beta5"/>
+
+  <!-- this should be overridden by the parent file -->
+  <property name="support.tools" value=".."/>
+
+  <taskdef resource="checkstyletask.properties">
+    <classpath>
+      <fileset dir="${support.style}/checkstyle-${version.style}" includes="**/checkstyle-all*.jar"/>
+    </classpath>
+  </taskdef>
+
+  <target name="checkstyle">
+    <mkdir dir="${target.web}/checkstyle"/>
+    <copy file="${support.style}/custom.xml" overwrite="true"
+        tofile="${target.web}/checkstyle/custom.xml">
+      <filterset>
+        <filter token="source.java" value="${basedir}/${source.java}"/>
+        <filter token="target.checkstyle" value="${webapp.jsword}/checkstyle"/>
+      </filterset>
+    </copy>
+    <checkstyle config="${target.web}/checkstyle/custom.xml" failOnViolation="false" >
+      <fileset refid="fileset.alljava"/>
+      <formatter type="plain"/>
+      <formatter type="xml" toFile="${target.web}/checkstyle/checkstyle_errors.xml"/>
+    </checkstyle>
+    <style
+        in="${target.web}/checkstyle/checkstyle_errors.xml"
+        out="${target.web}/checkstyle/index.html"
+        style="${support.style}/checkstyle-${version.style}/contrib/checkstyle-simple.xsl"/>
+  </target>
+
+</project>

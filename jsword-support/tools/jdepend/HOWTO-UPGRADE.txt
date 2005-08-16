@@ -1,0 +1,23 @@
+Instructions on how to upgrade jdepend.
+Obtain the most recent version of jdepend from
+   http://www.clarkware.com/software/JDepend.html
+
+Unzip the file into this directory.
+In the new directory, remove the following:
+   contrib
+   docs
+   sample
+   src
+   test
+
+Change the references to the old directory to the new directory in the following files:
+   build.xml
+
+In CVS remove the old jdepend directory.
+
+You may need to tell ant where to find the jdepend jar.
+This varies by ide or whether ant is run standalone.
+See build.xml for further info.
+
+If you have copied the jdepend jar to ANT_HOME/lib,
+you will want to delete the older one.

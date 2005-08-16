@@ -1,0 +1,22 @@
+Instructions on how to upgrade checkstyle.
+
+Obtain the most recent version of checkstyle from:
+   http://sourceforge.net/projects/checkstyle
+
+Unzip the file into this directory.
+
+In the new directory, remove the following:
+   contrib/bcel
+   contrib/examples
+   contrib/j2ee
+   contrib/usage
+   docs
+   build.xml
+
+Change the references to the old directory to the new directory in the following files:
+   build.xml
+
+In CVS remove the old checkstyle directory.
+
+Determine what has changed in checkstyle and update custom.xml appropriately.
+
