@@ -22,6 +22,7 @@
 package org.crosswire.bibledesktop.book;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -29,9 +30,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 
-import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
-import javax.swing.JPanel;
+import javax.swing.UIManager;
 import javax.swing.event.EventListenerList;
 import javax.swing.filechooser.FileFilter;
 
@@ -40,6 +40,7 @@ import org.crosswire.bibledesktop.display.splitlist.SplitBookDataDisplay;
 import org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay;
 import org.crosswire.bibledesktop.passage.KeySidebar;
 import org.crosswire.common.swing.desktop.Clearable;
+import org.crosswire.common.swing.desktop.TabbedPanePanel;
 import org.crosswire.common.swing.desktop.Titleable;
 import org.crosswire.common.swing.desktop.event.TitleChangedEvent;
 import org.crosswire.common.swing.desktop.event.TitleChangedListener;
@@ -58,7 +59,7 @@ import org.crosswire.jsword.passage.PassageKeyFactory;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class BibleViewPane extends JPanel implements Titleable, Clearable, TitleChangedListener
+public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearable, TitleChangedListener
 {
     /**
      * Simple ctor
@@ -106,8 +107,10 @@ public class BibleViewPane extends JPanel implements Titleable, Clearable, Title
             }
         });
 
-        this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        pnlSelect.setBorder(UIManager.getBorder("SelectPanel.border")); //$NON-NLS-1$
+
         this.setLayout(new BorderLayout());
+        this.setMinimumSize(new Dimension(0, 0));
         this.add(pnlSelect, BorderLayout.NORTH);
         this.add(pnlPassg, BorderLayout.CENTER);
     }

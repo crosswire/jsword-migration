@@ -21,13 +21,12 @@
  */
 package org.crosswire.bibledesktop.book;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -62,7 +61,7 @@ import org.crosswire.jsword.passage.Verse;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class DictionaryPane extends JPanel implements BookDataDisplay
+public class DictionaryPane extends JSplitPane implements BookDataDisplay
 {
     /**
      * Setup the GUI 
@@ -136,12 +135,24 @@ public class DictionaryPane extends JPanel implements BookDataDisplay
         sptMain.setTopComponent(new JPanel());
         sptMain.setBottomComponent(scrDisplay);
         sptMain.setBorder(null);
-        sptMain.setDividerSize(8);
 
-        this.setLayout(new BorderLayout(5, 5));
-        this.add(scrDicts, BorderLayout.NORTH);
-        this.add(sptMain, BorderLayout.CENTER);
-        this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        Object sptMainUI = sptMain.getUI();
+        if (sptMainUI instanceof javax.swing.plaf.basic.BasicSplitPaneUI)
+        {
+            ((javax.swing.plaf.basic.BasicSplitPaneUI) sptMainUI).getDivider().setBorder(null);
+        }
+
+        this.setMinimumSize(new Dimension(0, 0));
+        this.setOrientation(JSplitPane.VERTICAL_SPLIT);
+        this.setTopComponent(scrDicts);
+        this.setBottomComponent(sptMain);
+        this.setBorder(null);
+
+        Object thisUI = this.getUI();
+        if (thisUI instanceof javax.swing.plaf.basic.BasicSplitPaneUI)
+        {
+            ((javax.swing.plaf.basic.BasicSplitPaneUI) thisUI).getDivider().setBorder(null);
+        }
     }
 
     /* (non-Javadoc)

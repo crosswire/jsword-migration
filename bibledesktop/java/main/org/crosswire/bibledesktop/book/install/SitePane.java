@@ -43,7 +43,6 @@ import javax.swing.tree.TreeSelectionModel;
 
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.FixedSplitPane;
-import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
@@ -66,6 +65,7 @@ import org.crosswire.jsword.book.search.IndexManagerFactory;
  * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
+ * @author DM Smith [dmsmith555 at yahoo dot com]
  */
 public class SitePane extends JPanel
 {
@@ -393,7 +393,7 @@ public class SitePane extends JPanel
                 return;
             }
 
-            float size = NetUtil.getSize(installer.toRemoteURL(name)) / 1024.0F;
+            float size = installer.getSize(name) / 1024.0F;
             if (JOptionPane.showConfirmDialog(this, Msg.SIZE.toString(new Object[] {name.getName(), new Float(size)}),
                             Msg.CONFIRMATION_TITLE.toString(),
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)

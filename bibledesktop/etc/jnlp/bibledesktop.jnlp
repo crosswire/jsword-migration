@@ -30,7 +30,10 @@
     <jar href="jsword.jar"/>
     <jar href="common.jar"/>
     <jar href="jdom-1.0.jar"/>
-    <jar href="commons-net-1.3.0.jar"/>
+    <jar href="commons-codec-1.3.jar"/>
+    <jar href="commons-httpclient-3.0-rc3.jar"/>
+    <jar href="commons-logging.jar"/>
+    <jar href="commons-net-1.4.0.jar"/>
     <jar href="lucene-1.4.3.jar"/>
     <jar href="jlfgr-1_0.jar"/>
     <property name="apple.laf.useScreenMenuBar" value="true"/>

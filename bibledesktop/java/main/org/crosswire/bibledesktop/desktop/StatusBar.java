@@ -33,6 +33,8 @@ import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 import org.crosswire.bibledesktop.display.URLEvent;
 import org.crosswire.bibledesktop.display.URLEventListener;
@@ -67,10 +69,8 @@ public class StatusBar extends JComponent implements MouseListener, URLEventList
      */
     private void initialize()
     {
-        lbl_message.setBorder(BorderFactory.createEtchedBorder());
         lbl_message.setText(Msg.STATUS_DEFAULT.toString());
 
-        pnl_progr.setBorder(BorderFactory.createEtchedBorder());
         Font font = pnl_progr.getFont();
         pnl_progr.setFont(font.deriveFont(6.0F));
 
@@ -80,15 +80,19 @@ public class StatusBar extends JComponent implements MouseListener, URLEventList
         pnl_progr.setPreferredSize(dim);
         */
 
-        lbl_name.setBorder(BorderFactory.createEtchedBorder());
         lbl_name.setText(' ' + Msg.getVersionedApplicationTitle() + ' ');
 
-        this.setBorder(BorderFactory.createLoweredBevelBorder());
+        this.setBorder(BorderFactory.createEtchedBorder());
         this.setLayout(new GridBagLayout());
 
-        this.add(lbl_message, new GridBagConstraints(0, 0, 1, 1, 0.5, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(pnl_progr,   new GridBagConstraints(1, 0, 1, 1, 0.5, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(lbl_name,    new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        JSeparator separator = new JSeparator(SwingConstants.VERTICAL);
+        JSeparator separator2 = new JSeparator(SwingConstants.VERTICAL);
+
+        this.add(lbl_message, new GridBagConstraints(0, 0, 1, 1, 0.5, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(separator,   new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(pnl_progr,   new GridBagConstraints(2, 0, 1, 1, 0.5, 0.0, GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(separator2,  new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(lbl_name,    new GridBagConstraints(4, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));        
     }
 
     /* (non-Javadoc)

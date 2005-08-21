@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
@@ -266,9 +267,14 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         sptBooks.setRightComponent(reference);
         sptBooks.setLeftComponent(views.getDesktop());
         sptBooks.setResizeWeight(0.8D);
-        sptBooks.setDividerSize(7);
         sptBooks.setOpaque(true);
         sptBooks.setBorder(null);
+
+        Object splitPaneUI = sptBooks.getUI();
+        if (splitPaneUI instanceof javax.swing.plaf.basic.BasicSplitPaneUI)
+        {
+            ((javax.swing.plaf.basic.BasicSplitPaneUI) splitPaneUI).getDivider().setBorder(null);
+        }
 
         // The toolbar needs to be in the outermost container, on the border
         // And the only other item in that container can be CENTER
@@ -277,10 +283,14 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         ToolBar toolbar = createToolBar();
         contentPane.add(toolbar, BorderLayout.NORTH);
 
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(1, 5, 1, 5));
+        mainPanel.add(sptBooks, BorderLayout.CENTER);
+
         // Put everything else in its own panel
         corePanel = new JPanel(new BorderLayout());
+        corePanel.add(mainPanel, BorderLayout.CENTER);
         corePanel.add(barStatus, BorderLayout.SOUTH);
-        corePanel.add(sptBooks, BorderLayout.CENTER);
         contentPane.add(corePanel, BorderLayout.CENTER);
         setJMenuBar(createMenuBar(toolbar));
 
