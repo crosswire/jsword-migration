@@ -299,7 +299,7 @@
 
     <module name="TodoComment"/>
     <module name="UncommentedMain">
-      <property name="excludedClasses" value="\.(Desktop|APIExamples)$"/>
+      <property name="excludedClasses" value="\.(Desktop|APIExamples|XalanProcess)$"/>
     </module>
     <module name="UpperEll"/>
     <module name="ArrayTypeStyle"/>

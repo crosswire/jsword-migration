@@ -31,7 +31,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.beans.IntrospectionException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -55,10 +54,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.crosswire.common.swing.ActionFactory;
-import org.crosswire.common.swing.BeanPanel;
 import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.swing.GuiUtil;
-import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.install.InstallManager;
 import org.crosswire.jsword.book.install.Installer;
 import org.crosswire.jsword.book.install.InstallerFactory;
@@ -173,7 +170,7 @@ public class EditSitePane extends JPanel
         pnlBtn2.add(btnSave, null);
         pnlBtn2.add(btnReset, null);
 
-        pnlBean = new BeanPanel();
+        siteEditorPane = new JPanel();
         JPanel pnlMain = new JPanel();
         pnlMain.setLayout(new GridBagLayout());
         pnlMain.add(lblMesg, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
@@ -186,7 +183,7 @@ public class EditSitePane extends JPanel
             pnlMain.add(cboType, new GridBagConstraints(1, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
         }
         pnlMain.add(new JSeparator(), new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
-        pnlMain.add(pnlBean, new GridBagConstraints(0, 4, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+        pnlMain.add(siteEditorPane, new GridBagConstraints(0, 4, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         pnlMain.add(pnlBtn2, new GridBagConstraints(0, 5, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         JSplitPane sptMain = new FixedSplitPane();
@@ -287,7 +284,7 @@ public class EditSitePane extends JPanel
             InstallerFactory ifactory = imanager.getInstallerFactory(type);
             Installer installer = ifactory.createInstaller();
 
-            setBean(installer);
+            setInstaller(installer);
         }
     }
 
@@ -313,7 +310,10 @@ public class EditSitePane extends JPanel
         // Since setting the display undoes any work done to set the edit state
         // of the bean panel we need to redo it here. Since we are always in
         // display mode at this point, this is fairly easy.
-        pnlBean.setEditable(false);
+        if (siteEditor != null)
+        {
+            siteEditor.setEditable(false);
+        }
     }
 
     /**
@@ -401,8 +401,9 @@ public class EditSitePane extends JPanel
     public void doSave()
     {
         String name = txtName.getText();
-        Installer installer = (Installer) pnlBean.getBean();
+        Installer installer = siteEditor.getInstaller();
         imanager.addInstaller(name, installer);
+        siteEditor.save();
 
         clear();
         editName = null;
@@ -432,7 +433,11 @@ public class EditSitePane extends JPanel
 
             txtName.setEditable(false);
             cboType.setEnabled(false);
-            pnlBean.setEditable(false);
+
+            if (siteEditor != null)
+            {
+                siteEditor.setEditable(false);
+            }
 
             break;
 
@@ -445,13 +450,16 @@ public class EditSitePane extends JPanel
 
             actions.getAction(RESET).setEnabled(true);
             actions.getAction(SAVE).setEnabled(state == STATE_EDIT_OK);
-            pnlBean.setEditable(true);
 
             actions.getAction(CLOSE).setEnabled(false);
 
             txtName.setEditable(true);
             cboType.setEnabled(true);
-            pnlBean.setEditable(true);
+
+            if (siteEditor != null)
+            {
+                siteEditor.setEditable(true);
+            }
 
             break;
 
@@ -481,7 +489,7 @@ public class EditSitePane extends JPanel
         cboType.setSelectedItem(type);
         userInitiated = true;
 
-        setBean(installer);
+        setInstaller(installer);
     }
 
     /**
@@ -489,15 +497,8 @@ public class EditSitePane extends JPanel
      */
     private void clear()
     {
-        try
-        {
-            txtName.setText(EMPTY_STRING);
-            pnlBean.setBean(null);
-        }
-        catch (IntrospectionException ex)
-        {
-            Reporter.informUser(this, ex);
-        }
+        txtName.setText(EMPTY_STRING);
+        setInstaller(null);
     }
 
     /**
@@ -505,15 +506,14 @@ public class EditSitePane extends JPanel
      * installer.
      * @param installer The new installer to introspect
      */
-    private void setBean(Installer installer)
+    private void setInstaller(Installer installer)
     {
-        try
+        siteEditorPane.removeAll();
+        siteEditor = null;
+        if (installer != null)
         {
-            pnlBean.setBean(installer);
-        }
-        catch (IntrospectionException ex)
-        {
-            Reporter.informUser(this, ex);
+            siteEditor = SiteEditorFactory.createSiteEditor(installer);
+            siteEditorPane.add((Component) siteEditor);
         }
 
         GuiUtil.refresh(this);
@@ -585,7 +585,8 @@ public class EditSitePane extends JPanel
     private JLabel lblMesg;
     private JTextField txtName;
     private JComboBox cboType;
-    private BeanPanel pnlBean;
+    private JPanel siteEditorPane;
+    private SiteEditor siteEditor;
 
     /*
      * Components for the dialog box including the button bar at the bottom.

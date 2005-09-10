@@ -65,6 +65,11 @@ final class Msg extends MsgBase
     static final Msg OPTION_GENERATE = new Msg("IndexResolver.OptionGenerate"); //$NON-NLS-1$
     static final Msg OPTION_CANCEL = new Msg("IndexResolver.OptionCancel"); //$NON-NLS-1$
 
+    static final Msg HOST = new Msg("SwordSiteEditor.Host"); //$NON-NLS-1$
+    static final Msg DIRECTORY = new Msg("SwordSiteEditor.Directory"); //$NON-NLS-1$
+    static final Msg PROXY_HOST = new Msg("SwordSiteEditor.ProxyHost"); //$NON-NLS-1$
+    static final Msg PROXY_PORT = new Msg("SwordSiteEditor.ProxyPort"); //$NON-NLS-1$
+
     /**
      * Passthrough ctor
      */
