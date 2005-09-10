@@ -331,12 +331,13 @@
   <xsl:template match="note">
     <xsl:if test="$Notes = 'true'">
       <!-- If the preceeding sibling was a note, emit a separator -->
+      <!-- TODO(DMS): If n="xxx" is present and within this verse xxx was already seen, then skip it. -->
       <xsl:choose>
         <xsl:when test="following-sibling::*[1][self::note]">
-          <sup class="note"><a href="#note-{generate-id(.)}"><xsl:number level="any" from="/osis//verse" format="a"/></a>, </sup>
+          <sup class="note"><a href="#note-{generate-id(.)}"><xsl:call-template name="generateNoteXref"/></a>, </sup>
         </xsl:when>
         <xsl:otherwise>
-          <sup class="note"><a href="#note-{generate-id(.)}"><xsl:number level="any" from="/osis//verse" format="a"/></a></sup>
+          <sup class="note"><a href="#note-{generate-id(.)}"><xsl:call-template name="generateNoteXref"/></a></sup>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
@@ -345,12 +346,27 @@
   <!--=======================================================================-->
   <xsl:template match="note" mode="print-notes">
     <div class="margin">
-      <b><xsl:number level="any" from="/osis//verse" format="a"/></b>
+      <b><xsl:call-template name="generateNoteXref"/></b>
       <a name="note-{generate-id(.)}">
         <xsl:text> </xsl:text>
       </a>
       <xsl:apply-templates/>
     </div>
+  </xsl:template>
+
+  <!--
+    == If the n attribute is present then use that for the cross ref otherwise create a letter.
+    == Note: numbering restarts with each verse.
+    -->
+  <xsl:template name="generateNoteXref">
+  	<xsl:choose>
+  	  <xsl:when test="@n">
+  	    <xsl:value-of select="@n"/>
+  	  </xsl:when>
+  	  <xsl:otherwise>
+  	    <xsl:number level="any" from="/osis//verse" format="a"/>
+  	  </xsl:otherwise>
+  	</xsl:choose>
   </xsl:template>
 
   <!--=======================================================================-->
