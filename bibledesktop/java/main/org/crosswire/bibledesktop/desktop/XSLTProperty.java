@@ -23,6 +23,8 @@ package org.crosswire.bibledesktop.desktop;
 
 import java.io.Serializable;
 
+import org.crosswire.common.xml.TransformingSAXEventProvider;
+
 
 /**
  * Defines properties that control the behavior of translating OSIS to HTML.
@@ -115,6 +117,19 @@ public final class XSLTProperty implements Serializable
     public void setState(boolean newState)
     {
         state = newState;
+    }
+    
+    public void setProperty(TransformingSAXEventProvider provider)
+    {
+        provider.setParameter(name, Boolean.toString(state));
+    }
+
+    public static void setProperties(TransformingSAXEventProvider provider)
+    {
+        for (int i = 0; i < VALUES.length; i++)
+        {
+            VALUES[i].setProperty(provider);
+        }
     }
 
     /**

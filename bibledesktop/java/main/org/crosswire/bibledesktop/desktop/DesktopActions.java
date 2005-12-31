@@ -301,6 +301,17 @@ public class DesktopActions
         da.getBookDataDisplay().refresh();
     }
 
+    public void doNoVNum()
+    {
+        XSLTProperty.VERSE_NUMBERS.setState(false);
+        XSLTProperty.CV.setState(false);
+        XSLTProperty.BCV.setState(false);
+        XSLTProperty.NO_VERSE_NUMBERS.setState(true);
+        BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
+        SplitBookDataDisplay da = view.getPassagePane();
+        da.getBookDataDisplay().refresh();
+    }
+
     public void doNotes(ActionEvent ev)
     {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
