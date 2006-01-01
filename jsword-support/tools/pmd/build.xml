@@ -1,22 +1,36 @@
 <project name="pmd" default="pmd">
 
+  <property name="pmd" value="${support.tools}/pmd"/>
+  <property name="version.pmd" value="3.4"/>
+
   <!-- this should be overridden by the parent file -->
   <property name="support.tools" value=".."/>
 
   <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask">
 	<classpath>
-	  <fileset dir="${support.tools}/pmd" includes="**/*.jar"/>
+	  <fileset dir="${pmd}/pmd-${version.pmd}" includes="*/*.jar"/>
 	</classpath>
   </taskdef>
 
   <target name="pmd">
     <mkdir dir="${target.web}/pmd"/>
-    <pmd rulesetfiles="${basedir}/${support.tools}/pmd/ruleset.xml" shortFilenames="true">
-      <formatter type="html" toFile="${target.web}/pmd/index.html"/>
+    <!--
+    <pmd rulesetfiles="${basedir}/${pmd}/ruleset.xml" shortFilenames="true">
+      <formatter type="xml" toFile="${target.web}/pmd/report_pmd.xml"/>
       <fileset dir="..">
         <patternset refid="pattern.alljava"/>
       </fileset>
     </pmd>
+    -->
+    <xslt in="${target.web}/pmd/report_pmd.xml"
+          style="${pmd}/pmd-${version.pmd}/etc/xslt/wz-pmd-report.xslt"
+          out="${target.web}/pmd/wz-report_pmd.html" />
+    <xslt in="${target.web}/pmd/report_pmd.xml"
+          style="${pmd}/pmd-${version.pmd}/etc/xslt/pmd-report.xslt"
+          out="${target.web}/pmd/report_pmd.html" />
+    <xslt in="${target.web}/pmd/report_pmd.xml"
+          style="${pmd}/pmd-report-per-class.xslt"
+          out="${target.web}/pmd/report_pmd_per_class.html" />
   </target>
 
   <taskdef name="cpd" classname="net.sourceforge.pmd.cpd.CPDTask">

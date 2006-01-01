@@ -1,40 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
-		<attributes>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="jar/jlfgr-1.0/jlfgr-1_0.jar">
-		<attributes>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="jar/jdic-0.8.4.1/jdic.jar">
-		<attributes>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="/jsword">
-		<attributes>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="/common">
-		<attributes>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="java/main">
-		<attributes>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="java/limbo">
-		<attributes>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="java/test">
-		<attributes>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="resource">
-		<attributes>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="jar/jlfgr-1.0/jlfgr-1_0.jar"/>
+	<classpathentry kind="src" path="/jsword"/>
+	<classpathentry kind="src" path="/common"/>
+	<classpathentry kind="src" path="java/main"/>
+	<classpathentry kind="src" path="java/limbo"/>
+	<classpathentry kind="src" path="java/test"/>
+	<classpathentry exported="true" kind="lib" path="resource"/>
 	<classpathentry kind="output" path="target/eclipse/classes"/>
 </classpath>

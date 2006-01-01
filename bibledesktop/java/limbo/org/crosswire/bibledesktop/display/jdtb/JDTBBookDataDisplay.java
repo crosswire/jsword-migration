@@ -22,8 +22,6 @@
 package org.crosswire.bibledesktop.display.jdtb;
 
 import java.awt.Component;
-import java.awt.ComponentOrientation;
-import java.awt.event.MouseListener;
 import java.net.URL;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
@@ -31,9 +29,8 @@ import org.crosswire.bibledesktop.display.URLEventListener;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
-import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.passage.Key;
-import org.jdesktop.jdic.browser.WebBrowser;
+//import org.jdesktop.jdic.browser.WebBrowser;
 
 /**
  * A JDK JTextPane implementation of an OSIS displayer.
@@ -57,7 +54,7 @@ public class JDTBBookDataDisplay implements BookDataDisplay
      */
     public JDTBBookDataDisplay()
     {
-        txtView = new WebBrowser();
+//        txtView = new WebBrowser();
     }
 
     /* (non-Javadoc)
@@ -80,23 +77,23 @@ public class JDTBBookDataDisplay implements BookDataDisplay
         {
             if (book == null && key == null)
             {
-                txtView.setURL();
+//                txtView.setURL();
                 return;
             }
 
             // Make sure Hebrew displays from Right to Left
-            BookMetaData bmd = book.getBookMetaData();
-            boolean direction = bmd.isLeftToRight();
-            txtView.applyComponentOrientation(direction ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
+//            BookMetaData bmd = book.getBookMetaData();
+//            boolean direction = bmd.isLeftToRight();
+//            txtView.applyComponentOrientation(direction ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
 
             BookData bdata = book.getData(key);
             if (bdata == null)
             {
-                txtView.setURL();
+//                txtView.setURL();
                 return;
             }
 
-            txtView.setURL(JDTBURLConnection.createURL(book, key));
+//            txtView.setURL(JDTBURLConnection.createURL(book, key));
         }
         catch (Exception ex)
         {
@@ -109,7 +106,7 @@ public class JDTBBookDataDisplay implements BookDataDisplay
      */
     public Component getComponent()
     {
-        return txtView;
+        return null; // txtView;
     }
 
     /* (non-Javadoc)
@@ -136,19 +133,19 @@ public class JDTBBookDataDisplay implements BookDataDisplay
     /**
      * Forward the mouse listener to our child components
      */
-    public void removeMouseListener(MouseListener li)
+/*    public void removeMouseListener(MouseListener li)
     {
-        txtView.removeMouseListener(li);
+//        txtView.removeMouseListener(li);
     }
-
+*/
     /**
      * Forward the mouse listener to our child components
      */
-    public void addMouseListener(MouseListener li)
+/*    public void addMouseListener(MouseListener li)
     {
-        txtView.addMouseListener(li);
+//        txtView.addMouseListener(li);
     }
-
+*/
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getKey()
      */
@@ -178,5 +175,5 @@ public class JDTBBookDataDisplay implements BookDataDisplay
     /**
      * The display component
      */
-    private WebBrowser txtView;
+//    private WebBrowser txtView;
 }

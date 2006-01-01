@@ -71,9 +71,9 @@ Section -Main SEC0000
     File ..\..\target\ant\installed\bibledesktop.jar
     File ..\..\target\ant\installed\common.jar
     File ..\..\target\ant\installed\commons-codec-1.3.jar
-    File ..\..\target\ant\installed\commons-httpclient-3.0-rc3.jar
+    File ..\..\target\ant\installed\commons-httpclient-3.0.jar
     File ..\..\target\ant\installed\commons-logging.jar
-    File ..\..\target\ant\installed\commons-net-1.4.0.jar
+    File ..\..\target\ant\installed\commons-net-1.4.1.jar
     File ..\..\target\ant\installed\jdom-1.0.jar
     File ..\..\target\ant\installed\jlfgr-1_0.jar
     File ..\..\target\ant\installed\jsword.jar

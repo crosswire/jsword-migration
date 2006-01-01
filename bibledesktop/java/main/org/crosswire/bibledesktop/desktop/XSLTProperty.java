@@ -118,7 +118,7 @@ public final class XSLTProperty implements Serializable
     {
         state = newState;
     }
-    
+
     public void setProperty(TransformingSAXEventProvider provider)
     {
         provider.setParameter(name, Boolean.toString(state));
