@@ -160,9 +160,23 @@
     <!-- source packages -->
     <mkdir dir="${directory}"/>
     <zip zipfile="${directory}/jsword-${version}-src.zip">
-      <zipfileset prefix="jsword" dir="../jsword" excludes="target/**"/>
-      <zipfileset prefix="common" dir="../common" excludes="target/**"/>
-      <zipfileset prefix="bibledesktop" dir="../bibledesktop" excludes="target/**"/>
+      <zipfileset prefix="jsword" dir="../jsword">
+        <exclude name="target/**"/>
+        <exclude name="jar/*src.jar"/>
+        <exclude name="java/limbo/**"/>
+        <exclude name="java/jswordtest/**"/>
+      </zipfileset>
+      <zipfileset prefix="common" dir="../common">
+        <exclude name="target/**"/>
+        <exclude name="jar/*src.jar"/>
+        <exclude name="java/limbo/**"/>
+        <exclude name="java/test/**"/>
+      </zipfileset>
+      <zipfileset prefix="bibledesktop" dir="../bibledesktop">
+        <exclude name="target/**"/>
+        <exclude name="java/limbo/**"/>
+        <exclude name="java/test/**"/>
+      </zipfileset>
     </zip>
     <tar tarfile="${directory}/jsword-${version}-src.tar.gz" compression="gzip">
       <tarfileset prefix="jsword" dir="../jsword" excludes="target/**"/>
