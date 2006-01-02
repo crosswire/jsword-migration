@@ -162,18 +162,19 @@
     <zip zipfile="${directory}/jsword-${version}-src.zip">
       <zipfileset prefix="jsword" dir="../jsword">
         <exclude name="target/**"/>
-        <exclude name="jar/*src.jar"/>
+        <exclude name="jar/*.zip"/>
         <exclude name="java/limbo/**"/>
         <exclude name="java/jswordtest/**"/>
       </zipfileset>
       <zipfileset prefix="common" dir="../common">
         <exclude name="target/**"/>
-        <exclude name="jar/*src.jar"/>
+        <exclude name="jar/*.zip"/>
         <exclude name="java/limbo/**"/>
         <exclude name="java/test/**"/>
       </zipfileset>
       <zipfileset prefix="bibledesktop" dir="../bibledesktop">
         <exclude name="target/**"/>
+        <exclude name="etc/installer/**"/>
         <exclude name="java/limbo/**"/>
         <exclude name="java/test/**"/>
       </zipfileset>
