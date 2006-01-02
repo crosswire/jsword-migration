@@ -181,9 +181,25 @@
       </zipfileset>
     </zip>
     <tar tarfile="${directory}/jsword-${version}-src.tar.gz" compression="gzip">
-      <tarfileset prefix="jsword" dir="../jsword" excludes="target/**"/>
-      <tarfileset prefix="common" dir="../common" excludes="target/**"/>
-      <tarfileset prefix="bibledesktop" dir="../bibledesktop" excludes="target/**"/>
+      <tarfileset prefix="jsword" dir="../jsword">
+        <exclude name="target/**"/>
+        <exclude name="jar/**"/>
+        <exclude name="java/limbo/**"/>
+        <exclude name="java/jswordtest/**"/>
+      </tarfileset>
+      <tarfileset prefix="common" dir="../common">
+        <exclude name="target/**"/>
+        <exclude name="jar/**"/>
+        <exclude name="java/limbo/**"/>
+        <exclude name="java/test/**"/>
+      </tarfileset>
+      <tarfileset prefix="bibledesktop" dir="../bibledesktop">
+        <exclude name="target/**"/>
+        <exclude name="jar/**"/>
+        <exclude name="etc/installer/**"/>
+        <exclude name="java/limbo/**"/>
+        <exclude name="java/test/**"/>
+      </tarfileset>
     </tar>
     <!-- binary packages -->
     <zip zipfile="${directory}/jsword-${version}-bin.zip">
