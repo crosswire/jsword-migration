@@ -14,23 +14,16 @@
 
   <target name="pmd">
     <mkdir dir="${target.web}/pmd"/>
-    <!--
+
     <pmd rulesetfiles="${basedir}/${pmd}/ruleset.xml" shortFilenames="true">
       <formatter type="xml" toFile="${target.web}/pmd/report_pmd.xml"/>
       <fileset dir="..">
         <patternset refid="pattern.alljava"/>
       </fileset>
     </pmd>
-    -->
-    <xslt in="${target.web}/pmd/report_pmd.xml"
-          style="${pmd}/pmd-${version.pmd}/etc/xslt/wz-pmd-report.xslt"
-          out="${target.web}/pmd/wz-report_pmd.html" />
-    <xslt in="${target.web}/pmd/report_pmd.xml"
-          style="${pmd}/pmd-${version.pmd}/etc/xslt/pmd-report.xslt"
-          out="${target.web}/pmd/report_pmd.html" />
     <xslt in="${target.web}/pmd/report_pmd.xml"
           style="${pmd}/pmd-report-per-class.xslt"
-          out="${target.web}/pmd/report_pmd_per_class.html" />
+          out="${target.web}/pmd/index.html" />
   </target>
 
   <taskdef name="cpd" classname="net.sourceforge.pmd.cpd.CPDTask">
