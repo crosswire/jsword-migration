@@ -12,6 +12,7 @@ In the new directory, remove the following:
    contrib/usage
    docs
    build.xml
+   all jars but checkstyle-all-*.jar
 
 Change the references to the old directory to the new directory in the following files:
    build.xml
@@ -20,3 +21,9 @@ In CVS remove the old checkstyle directory.
 
 Determine what has changed in checkstyle and update custom.xml appropriately.
 
+You may need to tell ant where to find the checkstyle-all jar.
+This varies by ide or whether ant is run standalone.
+See build.xml for further info.
+
+If you have copied the checkstyle-all jar to ANT_HOME/lib,
+you will want to delete the older one.

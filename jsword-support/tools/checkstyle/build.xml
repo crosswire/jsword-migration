@@ -1,18 +1,19 @@
 <project name="checkstyle" default="checkstyle">
 
   <property name="support.style" value="${support.tools}/checkstyle"/>
-  <property name="version.style" value="4.0-beta5"/>
+  <property name="version.style" value="4.1"/>
 
   <!-- this should be overridden by the parent file -->
   <property name="support.tools" value=".."/>
 
-  <taskdef resource="checkstyletask.properties">
-    <classpath>
-      <fileset dir="${support.style}/checkstyle-${version.style}" includes="**/checkstyle-all*.jar"/>
-    </classpath>
-  </taskdef>
+  <taskdef resource="checkstyletask.properties"/>
 
   <target name="checkstyle">
+    <echo>CheckStyle may fail if checkstyle-all-${version.style}.jar is not visible to Ant.
+To make it visible you need to do one of two things depending
+on whether you are running ant in Eclipse or not.
+In Eclipse, add checkstyle-all-${version.style}.jar to Preferences -> Ant -> Runtime -> Global Entries
+Otherwise, run the checkstyle.antlibs task to copy jars to ANT_HOME/lib</echo>
     <mkdir dir="${target.web}/checkstyle"/>
     <copy file="${support.style}/custom.xml" overwrite="true"
         tofile="${target.web}/checkstyle/custom.xml">
@@ -30,6 +31,12 @@
         in="${target.web}/checkstyle/checkstyle_errors.xml"
         out="${target.web}/checkstyle/index.html"
         style="${support.style}/checkstyle-${version.style}/contrib/checkstyle-simple.xsl"/>
+  </target>
+
+  <!-- This does not need to be done in Eclipse. Add it to Ant preferences instead -->
+  <target name="checkstyle.antlibs" description="Copy required jars to ant/lib">
+    <echo message="copy ${basedir}/${support.style}/checkstyle-${version.style}/checkstyle-${version.style}.jar"/>
+    <copy file="${support.tools}/${support.style}/checkstyle-${version.style}/checkstyle-all-${version.style}.jar" todir="${ant.home}/lib"/>
   </target>
 
 </project>
