@@ -108,7 +108,7 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
             setText(displayName);
             setToolTipText(displayName);
 
-            BookCategory type = book.getType();
+            BookCategory type = book.getBookCategory();
             if (type.equals(BookCategory.BIBLE))
             {
                 setIcon(ICON_BIBLE);
@@ -118,6 +118,14 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
                 setIcon(ICON_COMNT);
             }
             else if (type.equals(BookCategory.DICTIONARY))
+            {
+                setIcon(ICON_DICT);
+            }
+            else if (type.equals(BookCategory.GLOSSARY))
+            {
+                setIcon(ICON_DICT);
+            }
+            else if (type.equals(BookCategory.DAILY_DEVOTIONS))
             {
                 setIcon(ICON_DICT);
             }

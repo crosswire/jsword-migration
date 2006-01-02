@@ -234,7 +234,7 @@ public class SitePane extends JPanel
     {
         // return new BooksTreeModel(books);
         BookSet bmds = new BookSet(books.getBooks());
-        TreeNode bookRoot = new BookNode("root", bmds, new Object[] { BookMetaData.KEY_TYPE, BookMetaData.KEY_LANGUAGE }, 0); //$NON-NLS-1$
+        TreeNode bookRoot = new BookNode("root", bmds, new Object[] { BookMetaData.KEY_CATEGORY, BookMetaData.KEY_LANGUAGE }, 0); //$NON-NLS-1$
         return new DefaultTreeModel(bookRoot);
     }
 
@@ -454,7 +454,7 @@ public class SitePane extends JPanel
         actions.getAction(DELETE).setEnabled(bookSelected && book.getDriver().isDeletable(book));
         actions.getAction(UNINDEX).setEnabled(bookSelected && imanager.isIndexed(book));
         actions.getAction(INSTALL).setEnabled(bookSelected);
-        actions.getAction(INSTALL_SEARCH).setEnabled(bookSelected && book.getType() == BookCategory.BIBLE);
+        actions.getAction(INSTALL_SEARCH).setEnabled(bookSelected && book.getBookCategory() == BookCategory.BIBLE);
     }
 
     public void setTreeModel(BookList books)

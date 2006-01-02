@@ -301,7 +301,10 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
         if (selected != null)
         {
             Book book = (Book) selected;
-            if (book.getType().equals(BookCategory.DICTIONARY))
+            BookCategory category = book.getBookCategory();
+            if (category.equals(BookCategory.DICTIONARY)
+                || category.equals(BookCategory.GLOSSARY)
+                || category.equals(BookCategory.DAILY_DEVOTIONS))
             {
                 dict = book;
                 Key key = dict.getGlobalKeyList();
