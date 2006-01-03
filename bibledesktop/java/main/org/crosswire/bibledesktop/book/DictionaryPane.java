@@ -71,7 +71,7 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
         init();
 
         // This must come after the setViewportView() calls so scrolling works
-        lstDicts.setSelectedValue(Defaults.getDictionary(), true);
+        lstDicts.setSelectedValue(Defaults.getDailyDevotional(), true);
     }
 
     /**
@@ -377,7 +377,12 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
      */
     private BookDataDisplay display = BookDataDisplayFactory.createBookDataDisplay();
 
-    private transient BookFilter filter = BookFilters.either(BookFilters.getDictionaries(), BookFilters.getCommentaries());
+    private transient BookFilter filter =
+        BookFilters.either(
+                           BookFilters.either(BookFilters.getDictionaries(),
+                                              BookFilters.getCommentaries()),
+                           BookFilters.getDailyDevotionals()
+                           );
     private BooksComboBoxModel mdlDicts = new BooksComboBoxModel(filter);
     private transient Book dict;
 

@@ -123,11 +123,11 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
             }
             else if (type.equals(BookCategory.GLOSSARY))
             {
-                setIcon(ICON_DICT);
+                setIcon(ICON_GLOSS);
             }
             else if (type.equals(BookCategory.DAILY_DEVOTIONS))
             {
-                setIcon(ICON_DICT);
+                setIcon(ICON_READ);
             }
 
             setEnabled(list.isEnabled());
@@ -152,6 +152,16 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
      * The small version icon
      */
     private static final ImageIcon ICON_DICT = GuiUtil.getIcon("images/book-d16.png"); //$NON-NLS-1$
+
+    /**
+     * The small version icon
+     */
+    private static final ImageIcon ICON_READ = GuiUtil.getIcon("images/book-r16.png"); //$NON-NLS-1$
+
+    /**
+     * The small version icon
+     */
+    private static final ImageIcon ICON_GLOSS = GuiUtil.getIcon("images/book-g16.png"); //$NON-NLS-1$
 
     /**
      * border if we do not have focus

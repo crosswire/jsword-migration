@@ -73,20 +73,22 @@
     <!-- set up in OptionsAction.refreshBooks() along with dict and commentary versions -->
   </option>
 
+  <option key="Bibles.DefaultDailyDevotional" type="string-options">
+    <introspect class="org.crosswire.jsword.book.Defaults" property="DailyDevotionalByName"/>
+    <map name="daily-devotional-names"/>
+  </option>
+
+<!-- Does not mean anything right now
   <option key="Bibles.DefaultDictionary" type="string-options">
     <introspect class="org.crosswire.jsword.book.Defaults" property="DictionaryByName"/>
     <map name="dictionary-names"/>
   </option>
+-->
 
+<!-- Does not mean anything right now
   <option key="Bibles.DefaultCommentary" type="string-options">
     <introspect class="org.crosswire.jsword.book.Defaults" property="CommentaryByName"/>
     <map name="commentary-names"/>
-  </option>
-
-<!-- Currently there is only one, so nothing to pick from
-  <option key="Bibles.ReadingsSet" type="string-options">
-    <introspect class="org.crosswire.jsword.book.readings.ReadingsBookDriver" property="ReadingsSet"/>
-    <map name="readings"/>
   </option>
 -->
 
@@ -105,10 +107,12 @@
     <map name="greekparse-names"/>
   </option>
 
+<!-- There are no Hebrew parsing guides at this time.
   <option key="Bibles.DefaultHebrewParse" type="string-options">
     <introspect class="org.crosswire.jsword.book.Defaults" property="HebrewParseByName"/>
     <map name="hebrewparse-names"/>
   </option>
+-->
 
 <!-- At this time we only have one converter
   <option key="BibleDisplay.Converter" type="string-options">

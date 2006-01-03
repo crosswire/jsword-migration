@@ -59,7 +59,7 @@ public class PassageListCellRenderer implements ListCellRenderer, Serializable
 
         label.setBorder(border);
         label.setOpaque(true);
-        label.setIcon(GuiUtil.getIcon("images/Passage16.gif")); //$NON-NLS-1$
+        label.setIcon(GuiUtil.getIcon("images/Passage16.png")); //$NON-NLS-1$
     }
 
     /**
