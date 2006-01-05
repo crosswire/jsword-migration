@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE jnlp PUBLIC "-//Sun Microsystems, Inc//DTD JNLP Descriptor 1.0//EN" "jnlp.dtd">
 
-<jnlp spec="1.0+" codebase="http://www.crosswire.org/bibledesktop/stable" href="bibledesktop.jnlp">
+<jnlp spec="1.0+" codebase="file:///E:\Eclipse\JSword\bibledesktop/target/ant/installed" href="bibledesktop.jnlp">
 
   <information>
     <title>Bible Desktop</title>
     <vendor>Crosswire Bible Society</vendor>
-    <homepage href="http://www.crosswire.org/bibledesktop"/>
+    <homepage href="file:///E:\Eclipse\JSword\bibledesktop/target/ant/installed"/>
     <description>Bible Desktop - Bible Study Software based on the Sword project</description>
     <description kind="short">Bible Desktop is a Bible study package available over the internet</description>
     <description kind="tooltip">Bible Desktop Application</description>
@@ -30,7 +30,10 @@
     <jar href="jsword.jar"/>
     <jar href="common.jar"/>
     <jar href="jdom-1.0.jar"/>
-    <jar href="commons-net-1.3.0.jar"/>
+    <jar href="commons-codec-1.3.jar"/>
+    <jar href="commons-httpclient-3.0.jar"/>
+    <jar href="commons-logging.jar"/>
+    <jar href="commons-net-1.4.1.jar"/>
     <jar href="lucene-1.4.3.jar"/>
     <jar href="jlfgr-1_0.jar"/>
     <property name="apple.laf.useScreenMenuBar" value="true"/>

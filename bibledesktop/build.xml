@@ -47,8 +47,11 @@
       <fileset dir="${source.etc}/jnlp">
         <include name="bibledesktop.jnlp"/>
         <include name="*.gif"/>
-	  </fileset>
+	    </fileset>
       <fileset dir="${source.etc}/bin"/>
+      <fileset dir="${source.etc}/installer">
+        <include name="*.exe"/>
+      </fileset>
     </copy>
     <chmod perm="a+x">
       <fileset dir="${jnlp.uninstalled}">
