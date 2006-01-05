@@ -235,7 +235,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         //barSide = new SidebarPane();
         //barBook = new ReferencedPane();
         reference = new DictionaryPane();
-        sptBooks = new FixedSplitPane();
+        sptBooks = new FixedSplitPane(false);
         views = new ViewManager(this);
         views.addViewEventListener(this);
         history = new History();
@@ -269,12 +269,6 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         sptBooks.setResizeWeight(0.8D);
         sptBooks.setOpaque(true);
         sptBooks.setBorder(null);
-
-        Object splitPaneUI = sptBooks.getUI();
-        if (splitPaneUI instanceof javax.swing.plaf.basic.BasicSplitPaneUI)
-        {
-            ((javax.swing.plaf.basic.BasicSplitPaneUI) splitPaneUI).getDivider().setBorder(null);
-        }
 
         // The toolbar needs to be in the outermost container, on the border
         // And the only other item in that container can be CENTER

@@ -22,7 +22,6 @@
 package org.crosswire.bibledesktop.book;
 
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,6 +59,7 @@ import org.crosswire.jsword.passage.Verse;
  * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
+ * @author DM Smith [dmsmith555 at yahoo dot com]
  */
 public class DictionaryPane extends JSplitPane implements BookDataDisplay
 {
@@ -79,6 +79,17 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
      */
     private void init()
     {
+        display = BookDataDisplayFactory.createBookDataDisplay();
+
+        BookFilter filter =
+            BookFilters.either(
+                               BookFilters.either(BookFilters.getDictionaries(),
+                                                  BookFilters.getCommentaries()),
+                               BookFilters.getDailyDevotionals()
+                               );
+        BooksComboBoxModel mdlDicts = new BooksComboBoxModel(filter);
+
+        lstDicts = new JList();
         lstDicts.setVisibleRowCount(6);
         lstDicts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         lstDicts.setModel(mdlDicts);
@@ -96,8 +107,14 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
                 newDictionary();
             }
         });
+
+        JScrollPane scrDicts = new JScrollPane();
         scrDicts.setViewportView(lstDicts);
 
+        set = new BibleComboBoxModelSet();
+        JComboBox cboBooks = new JComboBox();
+        JComboBox cboChaps = new JComboBox();
+        JComboBox cboVerse = new JComboBox();
         set.setBookComboBox(cboBooks);
         set.setChapterComboBox(cboChaps);
         set.setVerseComboBox(cboVerse);
@@ -113,11 +130,13 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
         cboChaps.setToolTipText(Msg.SELECT_CHAPTER.toString());
         cboVerse.setToolTipText(Msg.SELECT_VERSE.toString());
 
+        pnlSelect = new JPanel();
         pnlSelect.setLayout(new FlowLayout());
         pnlSelect.add(cboBooks, null);
         pnlSelect.add(cboChaps, null);
         pnlSelect.add(cboVerse, null);
 
+        lstEntries = new JList();
         lstEntries.addListSelectionListener(new ListSelectionListener()
         {
             public void valueChanged(ListSelectionEvent ev)
@@ -125,24 +144,21 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
                 newEntry();
             }
         });
+        scrEntries = new JScrollPane();
         scrEntries.setViewportView(lstEntries);
 
+        JScrollPane scrDisplay = new JScrollPane();
         scrDisplay.setViewportView(display.getComponent());
 
+        sptMain = new FixedSplitPane(false);
         sptMain.setOrientation(JSplitPane.VERTICAL_SPLIT);
         // Make the top 20% of the total
         sptMain.setResizeWeight(0.2D);
         sptMain.setTopComponent(new JPanel());
         sptMain.setBottomComponent(scrDisplay);
-        sptMain.setBorder(null);
 
-        Object sptMainUI = sptMain.getUI();
-        if (sptMainUI instanceof javax.swing.plaf.basic.BasicSplitPaneUI)
-        {
-            ((javax.swing.plaf.basic.BasicSplitPaneUI) sptMainUI).getDivider().setBorder(null);
-        }
-
-        this.setMinimumSize(new Dimension(0, 0));
+//        this.setResizeWeight(0.1D);
+//        this.setMinimumSize(new Dimension(0, 0));
         this.setOrientation(JSplitPane.VERTICAL_SPLIT);
         this.setTopComponent(scrDicts);
         this.setBottomComponent(sptMain);
@@ -302,6 +318,8 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
         {
             Book book = (Book) selected;
             BookCategory category = book.getBookCategory();
+            //divider snaps back to its starting point when a new component is set
+            int dividerLocation = sptMain.getDividerLocation();
             if (category.equals(BookCategory.DICTIONARY)
                 || category.equals(BookCategory.GLOSSARY)
                 || category.equals(BookCategory.DAILY_DEVOTIONS))
@@ -319,7 +337,6 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
 
                     lstEntries.setSelectedValue(prefkey, true);
                 }
-
                 sptMain.setTopComponent(scrEntries);
             }
             else
@@ -327,6 +344,7 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
                 updateDisplay();
                 sptMain.setTopComponent(pnlSelect);
             }
+            sptMain.setDividerLocation(dividerLocation);
         }
     }
 
@@ -375,28 +393,14 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
     /**
      * The display of OSIS data
      */
-    private BookDataDisplay display = BookDataDisplayFactory.createBookDataDisplay();
-
-    private transient BookFilter filter =
-        BookFilters.either(
-                           BookFilters.either(BookFilters.getDictionaries(),
-                                              BookFilters.getCommentaries()),
-                           BookFilters.getDailyDevotionals()
-                           );
-    private BooksComboBoxModel mdlDicts = new BooksComboBoxModel(filter);
+    private BookDataDisplay display;
     private transient Book dict;
-
-    protected transient BibleComboBoxModelSet set = new BibleComboBoxModelSet();
-    private JComboBox cboBooks = new JComboBox();
-    private JComboBox cboChaps = new JComboBox();
-    private JComboBox cboVerse = new JComboBox();
-    private JPanel pnlSelect = new JPanel();
-    private JScrollPane scrDicts = new JScrollPane();
-    private JList lstDicts = new JList();
-    private JSplitPane sptMain = new FixedSplitPane();
-    private JScrollPane scrEntries = new JScrollPane();
-    private JScrollPane scrDisplay = new JScrollPane();
-    private JList lstEntries = new JList();
+    protected transient BibleComboBoxModelSet set;
+    private JPanel pnlSelect;
+    private JList lstDicts;
+    private JSplitPane sptMain;
+    private JScrollPane scrEntries;
+    private JList lstEntries;
 
     /**
      * The log stream
