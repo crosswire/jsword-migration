@@ -50,7 +50,7 @@
 	    </fileset>
       <fileset dir="${source.etc}/bin"/>
       <fileset dir="${source.etc}/installer">
-        <include name="*.exe"/>
+        <include name="bibledesktop.exe"/>
       </fileset>
     </copy>
     <chmod perm="a+x">
