@@ -1,91 +1,97 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>Installing Java under Fedora Core 3</title>
-</head>
-<body>
-<h1>Installing Java under Fedora Core 3</h1>
-<h3>This will need to be done as root. If you don't have root access, ask your system administrator to do this for you</h3>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Obtain and Install Java for Linux</title>
+<style type="text/css">
+  .instruction {
+	margin-left: 1em;
+	margin-right: 2em;
+	padding: .5em;
 
-For whatever reason, JSword and Bible Desktop does not work with /usr/bin/java, which is GNU's java.  Actually it is a link to /etc/alternatives/java which is a link to a shell script which runs GNU's java. You will need to download and install Sun's Java.  As open source, Fedora does not come with Sun's Java, which is a licensed product. 
+	background-color: #e4e7ea;
+	border: 1px inset #163858;
+	font-family: monospace;
+  }
+</style>
+  </head>
 
+  <body>
+    <h1>Obtain and Install Java for Linux</h1>
+<p>
+  Sun's Java is proprietary and not open source. But it is what we use for BibleDesktop and JSword.
+  At this time there is no open source Java that will run our application.
+  For that reason, you will need to get Sun's Java from them and install it. However, Sun's Java RPM
+  does not install correctly. To install it correctly you will need to use JPackage's Java Package.
+</p>
+<p>
+  The following steps will allow you to install Sun's Java correctly.
+</p>
 <ol>
-<li>Download Java 1.4 (Java 1.5 does not work yet)<br/>
-   http://java.sun.com/j2se/1.4.2/download.html
-   <ol type="a">
-   <li>You need the Java Software Development Kit, if you plan to help develop Bible Desktop or the JSword API.<br/>
-      Click on the <q>Download J2SE SDK for Other Platforms</q> link.<br/>
-      Agree to the licensing agreement.<br/>
-      Under Linux Platform, click on the <q>RPM in self-extracting file (...)</q> link.</li>
-   <li>Otherwise, you only need the Java Runtime Engine.<br/>
-      Click on the <q>Download J2SE JRE for Other Platforms</q> link.<br/>
-      Agree to the licensing agreement.<br/>
-      Under Linux Platform, click on the <q>RPM in self-extracting file (...)</q> link.<br/>
-      Save it to a location of your choosing.</li>
-   </ol></li>
-<li>Unpack the bin file.
-   <ol type="a">
-   <li>Open a terminal.</li>
-   <li>cd to the directory containing the download file.</li>
-   <li>execute the file. The command will be something like<br/>
-      <kbd>sh j2re-1_4_2_07-linux-i586-rpm.bin</kbd><br/>
-      or<br/>
-      sh j2sdk-1_4_2_07-linux-i586-rpm.bin<br/>
-      Note: the 07 is the point release and yours may be different<br/>
-      Bible Desktop should work with any version of Sun's Java 1.4.</li>
-   <li>Page through the license agreement (same one you already read) and when prompted, type yes.</li>
-   <li>This will create an rpm with -rpm.bin replaced with .rpm</li>
-   </ol></li>
-<li>Install Java 1.4
-   <ol type="a">
-   <li>Become root with <kbd>su -</kbd></li>
-   <li>In the same directory as the unpacked rpm, install it with rpm.<br/>
-      rpm -ihv j2re-1_4_2_07-linux-i586-rpm.bin<br/>
-      or<br/>
-      rpm -ihv j2sdk-1_4_2_07-linux-i586-rpm.bin</li>
-   </ol></li>
-<li>Fedora uses <q>alternatives</q> to manage multiple versions of java.<br/>
-   Make the Java you downloaded an alternative.<br/>
-   This must be done as root.<br/>
-   <ol type="a">
-   <li>Add it as an alternative:<br/>
-      At the command line execute the following command:<br/>
-      alternatives --install /usr/bin/java java /usr/java/j2re1.4.2_07/bin/java 300<br/>
-      or<br/>
-      alternatives --install /usr/bin/java java /usr/java/j2sdk1.4.2_07/bin/java 301<br/>
-      The number on the end is the priority to give to the alternative.<br/>
-      The highest numbered version is considered the <em>best</em> one.</li>
-   <li>Then make this the default.<br/>
-      alternative --config java<br/>
-      This will display a numbered list of the java <q>alternatives</q> and let you change the default.</li>
-   <li>Confirm the change.<br/>
-      alternative --display java</li>
-   <li>If you installed the sdk repeat a) - c) for javac<br/>
-      alternatives --install /usr/bin/javac javac /usr/java/j2sdk1.4.2_07/bin/javac 301<br/>
-      alternative --config java<br/>
-      alternative --display java</li>
-   </ol></li>
-<li>Make JAVA_HOME and JRE_HOME be defined for everyone.<br/>
-   Create /etc/profile.d/java.sh and /etc/profile.d/java.csh<br/>
-   This must be done as root.<br/>
-   These are instructions for java.sh. java.csh is left as an exercise to the reader.<br/>
-   <ol type="a">
-   <li>If you installed the JRE use the following lines:<br/>
-      export JAVA_HOME=/usr/java/j2re1.4.2_07<br/>
-      export J2RE_HOME=$JAVA_HOME<br/>
-      export PATH=$JAVA_HOME/bin:$J2RE_HOME/bin:$PATH</li>
-   <li>If you installed the SDK use the following lines:<br/>
-      export JAVA_HOME=/usr/java/j2sdk1.4.2_07<br/>
-      export J2RE_HOME=$JAVA_HOME/jre<br/>
-      export PATH=$JAVA_HOME/bin:$J2RE_HOME/bin:$PATH</li>
-   <li>If you installed both the SDK and the JRE use the following lines:<br/>
-      <code>export JAVA_HOME=/usr/java/j2sdk1.4.2_07</code><br/>
-      export J2RE_HOME=/usr/java/j2re1.4.2_07<br/>
-      export PATH=$JAVA_HOME/bin:$J2RE_HOME/bin:$PATH</li>
-   </ol></li>
-<li>Reboot to automatically add JAVA_HOME and J2RE to your PATH.</li>
-</ol>
-</body>
+  <li>With these steps you will be building a RPM. So, if you have not already done so, install rpm-build.
+      <p class="instruction root">su -c "yum install rpm-build"</p>
+  </li>
+  <li>If you have not done so create a build tree like the following in your home directory:
+    <pre xml:space="preserve">        rpm
+        |-- BUILD
+        |-- RPMS
+        |   |-- i386
+        |   |-- i586
+        |   `-- noarch
+        |-- SOURCES
+        |-- SPECS
+        |-- SRPMS
+        `-- tmp
+    </pre>
+    You can do this with the following commands:
+    <p class="instruction">
+        mkdir ~/rpm               <br/>
+        mkdir ~/rpm/BUILD         <br/>
+        mkdir ~/rpm/RPMS          <br/>
+        mkdir ~/rpm/RPMS/i386     <br/>
+        mkdir ~/rpm/RPMS/i586     <br/>
+        mkdir ~/rpm/RPMS/noarch   <br/>
+        mkdir ~/rpm/SOURCES       <br/>
+        mkdir ~/rpm/SPECS         <br/>
+        mkdir ~/rpm/SRPMS         <br/>
+        mkdir ~/rpm/tmp
+    </p>
+  </li>
+  <li>Create a good .rpmmacros file:
+    <p>
+      <pre xml:space="preserve">%_topdir        %(echo ${HOME}/rpm)
+%_tmppath       %{_topdir}/tmp
+
+# Change the following to work for you
+%packager       Firstname Lastname &lt;your.address@here&gt;
+
+# Uncomment to have built RPMs land in <code>RPMS/</code> instead of <code>RPMS/&lt;arch&gt;/
+#%_rpmfilename  %%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm
+</code></pre>
+    </p>
+  </li>
+  <li>Obtain JPackage's <a href="http://www.jpackage.org/rpm.php?id=3033">Java 1.5.0 Source</a> RPM.<br/>
+      Click on the link that looks something like <quote>java-1.5.0-sun-1.5.0.05-1jpp.nosrc.rpm.</quote><br/>
+      and save the file to your home directory.<br/>
+  </li>
+  <li>Obtain the corresponding Java package from Sun. For example, if you downloaded from JPackage
+      <p class="instruction"><quote>java-1.5.0-sun-1.5.0.05-1jpp.nosrc.rpm.</quote></p>
+      then you will want to download from Sun.
+      <p class="instruction"><quote>jdk-1_5_0_05-linux-i586.bin</quote></p>
+      <p>If this is the most recent version of Sun's Java then you can get it from:</p>
+      <p class="instruction"><a href="http://java.sun.com/j2se/1.5.0/download.jsp">http://java.sun.com/j2se/1.5.0/download.jsp</a></p>
+      <p>otherwise, you will need to get it from Sun's Java Product Archive:</p>
+      <p class="instruction"><a href="http://java.sun.com/products/archive">http://java.sun.com/products/archive</a></p>
+      <p>Save this file to your ~/rpm/SOURCES.</p>
+  </li>
+  <li>Rebuild the JPackage Java 1.5.0 Source RPM.
+      <p class="instruction">rpmbuild --rebuild java-1.5.0-sun-1.5.0.05-1jpp.nosrc.rpm</p>
+      <p>There will be lots of output!</>
+  </li>
+  <li>Install the newly created unsigned RPMs. (This will require temporarily changing /etc/yum.conf so that gpgcheck=0. Remember to set it back when you are done!) These will be below ~/rpm/RPMS. If ~/rpm/RPMS/i586 then the command would be:
+      <p class="instruction root">cd ~/rpm/RPMS/i586<br/>su -c "yum localinstall java*.rpm"</p>
+  </li>
+  <li>Make javaws available with: (Do this if /usr/bin/javaws does not exist)
+      <p class="instruction">su -c "ln -s /etc/alternatives/javaws /usr/bin/javaws"</p>
+  </li>
+  </body>
 </html>
