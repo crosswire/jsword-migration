@@ -23,9 +23,9 @@
         reportLevel="low"
         workHard="true"
         jvmargs="-Xmx512m">
-      <class location="${target.jar}/bibledesktop.jar"/>
-      <class location="${target.jar}/jsword.jar"/>
-      <class location="${target.jar}/common.jar"/>
+      <class location="${target.jar}/bibledesktop-${release.version}.jar"/>
+      <class location="${target.jar}/jsword-${release.version}.jar"/>
+      <class location="${target.jar}/jsword-common-${release.version}.jar"/>
       <auxClasspath path="${target.jar}/commons-net-1.4.1.jar"/>
       <auxClasspath path="${target.jar}/commons-httpclient-3.0.jar"/>
       <auxClasspath path="${target.jar}/jdom-1.0.jar"/>

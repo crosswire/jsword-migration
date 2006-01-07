@@ -7,12 +7,12 @@
 <JVMSearchPath>exepath</JVMSearchPath>
 <JVMSearchPath>jview</JVMSearchPath>
 <classPath>activation.jar</classPath>
-<classPath>bibledesktop.jar</classPath>
-<classPath>common.jar</classPath>
+<classPath>bibledesktop-1.0.jar</classPath>
+<classPath>jsword-common-1.0.jar</classPath>
 <classPath>commons-net-1.3.0.jar</classPath>
 <classPath>jdom-1.0.jar</classPath>
 <classPath>jlfgr-1_0.jar</classPath>
-<classPath>jsword.jar</classPath>
+<classPath>jsword-1.0.jar</classPath>
 <classPath>lucene-1.4.3.jar</classPath>
 <embeddedJar>false</embeddedJar>
 <executableName>bibledesktop.exe</executableName>

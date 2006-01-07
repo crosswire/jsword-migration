@@ -26,9 +26,9 @@
 
   <resources>
     <j2se version="1.4+" max-heap-size="512m"/>
-    <jar href="bibledesktop.jar"/>
-    <jar href="jsword.jar"/>
-    <jar href="common.jar"/>
+    <jar href="bibledesktop-1.0.jar"/>
+    <jar href="jsword-1.0.jar"/>
+    <jar href="jsword-common-1.0.jar"/>
     <jar href="jdom-1.0.jar"/>
     <jar href="commons-codec-1.3.jar"/>
     <jar href="commons-httpclient-3.0.jar"/>

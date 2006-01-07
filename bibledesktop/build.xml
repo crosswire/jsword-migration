@@ -30,13 +30,13 @@
   <target name="install" depends="build, keygen" description="Prepares for web based jnlp deploy">
     <echo message="Building JNLP: uninstalled files in: ${jnlp.uninstalled} and installed in ${jnlp.installed}"/>
     <!-- sign the jars to a temporary location so they can be reused -->
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="bibledesktop.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="common.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="bibledesktop-${release.version}.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jsword-common-${release.version}.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-codec-1.3.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-httpclient-3.0.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-logging.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-net-1.4.1.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jsword.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jsword-${release.version}.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jdom-1.0.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jlfgr-1_0.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="lucene-1.4.3.jar"/>
@@ -82,8 +82,9 @@
         <include name="**/*.jnlp"/>
       </fileset>
       <filterset>
-        <filter token="jnlp.homepage" value="${jnlp.homepage}"/>
-        <filter token="jnlp.codebase" value="${jnlp.codebase}"/>
+        <filter token="jnlp.homepage"   value="${jnlp.homepage}"/>
+        <filter token="jnlp.codebase"   value="${jnlp.codebase}"/>
+        <filter token="release.version" value="${release.version}"/>
       </filterset>
     </copy>
     <copy todir="${jnlp.installed}" filtering="false">
