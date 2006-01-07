@@ -11,7 +11,7 @@
   <property name="jnlp.hostname"    value="localhost:8080"/> <!-- override -->
   <property name="ftp.base"         value="${basedir}/${target.root}/download"/> <!-- override -->
   <property name="ftp.prefix"       value="../download"/> <!-- override -->
-  <property name="jnlp.installed"   value="../${dependency}/target/ant/web/nightly"/> <!-- override -->
+  <property name="jnlp.installed"   value="../bibledesktop/target/ant/installed"/> <!-- override -->
 
   <property name="nightly.dir"      value="${ftp.base}/nightly"/>
   <property name="release.dir"      value="${ftp.base}/release"/>
@@ -89,9 +89,7 @@
   </target>
 
   <!--=======================================================================-->
-  <!-- <target name="tools" depends="java2html,checkstyle,javancss,findbugs,pmd,cpd,jdepend"> -->
-  <target name="tools" depends="java2html,checkstyle,javancss,pmd,cpd,jdepend">
-  </target>
+  <target name="tools" depends="java2html,checkstyle,javancss,findbugs,pmd,cpd,jdepend"/>
 
   <!--=======================================================================-->
   <target name="install" depends="install.dependency, webapp, tools, release.nightly" description="Install all the files">

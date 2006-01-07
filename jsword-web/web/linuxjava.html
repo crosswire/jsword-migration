@@ -1,5 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>Obtain and Install Java for Linux</title>
 <style type="text/css">
@@ -24,7 +26,8 @@
   does not install correctly. To install it correctly you will need to use JPackage's Java Package.
 </p>
 <p>
-  The following steps will allow you to install Sun's Java correctly.
+  The following steps will allow you to install Sun's Java correctly. Below is how to install Java 1.5
+  but the same can be done for Java 1.4.2.
 </p>
 <ol>
   <li>With these steps you will be building a RPM. So, if you have not already done so, install rpm-build.
@@ -85,7 +88,7 @@
   </li>
   <li>Rebuild the JPackage Java 1.5.0 Source RPM.
       <p class="instruction">rpmbuild --rebuild java-1.5.0-sun-1.5.0.05-1jpp.nosrc.rpm</p>
-      <p>There will be lots of output!</>
+      <p>There will be lots of output!</p>
   </li>
   <li>Install the newly created unsigned RPMs. (This will require temporarily changing /etc/yum.conf so that gpgcheck=0. Remember to set it back when you are done!) These will be below ~/rpm/RPMS. If ~/rpm/RPMS/i586 then the command would be:
       <p class="instruction root">cd ~/rpm/RPMS/i586<br/>su -c "yum localinstall java*.rpm"</p>
@@ -93,5 +96,6 @@
   <li>Make javaws available with: (Do this if /usr/bin/javaws does not exist)
       <p class="instruction">su -c "ln -s /etc/alternatives/javaws /usr/bin/javaws"</p>
   </li>
+  </ol>
   </body>
 </html>
