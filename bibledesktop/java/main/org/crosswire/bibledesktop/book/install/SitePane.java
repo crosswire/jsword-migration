@@ -32,6 +32,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
+import javax.swing.ToolTipManager;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -209,6 +210,10 @@ public class SitePane extends JPanel
     private Component createScrolledTree(BookList books)
     {
         treAvailable = new JTree();
+        // Turn on tooltips so that they will show
+        ToolTipManager.sharedInstance().registerComponent(treAvailable);
+        treAvailable.setCellRenderer(new BookTreeCellRenderer());
+
         setTreeModel(books);
         // Add lines if viewed in Java Look & Feel
         treAvailable.putClientProperty("JTree.lineStyle", "Angled"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -450,11 +455,12 @@ public class SitePane extends JPanel
         }
         display.setBook(book);
 
+        boolean canInstall = bookSelected && book.isSupported() && !book.isEnciphered();
         IndexManager imanager = IndexManagerFactory.getIndexManager();
         actions.getAction(DELETE).setEnabled(bookSelected && book.getDriver().isDeletable(book));
         actions.getAction(UNINDEX).setEnabled(bookSelected && imanager.isIndexed(book));
-        actions.getAction(INSTALL).setEnabled(bookSelected);
-        actions.getAction(INSTALL_SEARCH).setEnabled(bookSelected && book.getBookCategory() == BookCategory.BIBLE);
+        actions.getAction(INSTALL).setEnabled(canInstall);
+        actions.getAction(INSTALL_SEARCH).setEnabled(canInstall && book.getBookCategory() == BookCategory.BIBLE);
     }
 
     public void setTreeModel(BookList books)

@@ -35,9 +35,9 @@ import org.crosswire.jsword.book.install.sword.AbstractSwordInstaller;
 /**
  * A representation of a Sword SiteEditor.
  * 
- * @see gnu.gpl.License
+ * @see gnu.gpl.License for license details.
+ *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at yahoo dot com]
- * @version $Id$
  */
 public class SwordSiteEditor extends JPanel implements SiteEditor
 {

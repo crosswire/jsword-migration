@@ -24,16 +24,12 @@ package org.crosswire.bibledesktop.book;
 import java.awt.Component;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
-import org.crosswire.common.swing.GuiUtil;
-import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.book.BookMetaData;
 
 /**
@@ -102,34 +98,13 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
 
         if (value instanceof BookMetaData)
         {
-            Book book = (Book) value;
+            BookMetaData book = (BookMetaData) value;
 
             String displayName = book.toString();
             setText(displayName);
             setToolTipText(displayName);
 
-            BookCategory type = book.getBookCategory();
-            if (type.equals(BookCategory.BIBLE))
-            {
-                setIcon(ICON_BIBLE);
-            }
-            else if (type.equals(BookCategory.COMMENTARY))
-            {
-                setIcon(ICON_COMNT);
-            }
-            else if (type.equals(BookCategory.DICTIONARY))
-            {
-                setIcon(ICON_DICT);
-            }
-            else if (type.equals(BookCategory.GLOSSARY))
-            {
-                setIcon(ICON_GLOSS);
-            }
-            else if (type.equals(BookCategory.DAILY_DEVOTIONS))
-            {
-                setIcon(ICON_READ);
-            }
-
+            setIcon(BookIcon.getIcon(book));
             setEnabled(list.isEnabled());
             setFont(list.getFont());
             setBorder(focus ? UIManager.getBorder("List.focusCellHighlightBorder") : noFocus); //$NON-NLS-1$
@@ -137,31 +112,6 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
 
         return this;
     }
-
-    /**
-     * The small version icon
-     */
-    private static final ImageIcon ICON_BIBLE = GuiUtil.getIcon("images/book-b16.png"); //$NON-NLS-1$
-
-    /**
-     * The small version icon
-     */
-    private static final ImageIcon ICON_COMNT = GuiUtil.getIcon("images/book-c16.png"); //$NON-NLS-1$
-
-    /**
-     * The small version icon
-     */
-    private static final ImageIcon ICON_DICT = GuiUtil.getIcon("images/book-d16.png"); //$NON-NLS-1$
-
-    /**
-     * The small version icon
-     */
-    private static final ImageIcon ICON_READ = GuiUtil.getIcon("images/book-r16.png"); //$NON-NLS-1$
-
-    /**
-     * The small version icon
-     */
-    private static final ImageIcon ICON_GLOSS = GuiUtil.getIcon("images/book-g16.png"); //$NON-NLS-1$
 
     /**
      * border if we do not have focus

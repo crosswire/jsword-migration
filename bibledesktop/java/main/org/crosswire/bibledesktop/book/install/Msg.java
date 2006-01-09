@@ -70,6 +70,10 @@ final class Msg extends MsgBase
     static final Msg PROXY_HOST = new Msg("SwordSiteEditor.ProxyHost"); //$NON-NLS-1$
     static final Msg PROXY_PORT = new Msg("SwordSiteEditor.ProxyPort"); //$NON-NLS-1$
 
+    static final Msg BOOK_LOCKED = new Msg("BookTreeCellRenderer.BookLocked"); //$NON-NLS-1$
+    static final Msg BOOK_UNSUPPORTED = new Msg("BookTreeCellRenderer.BookUnsupported"); //$NON-NLS-1$
+    static final Msg BOOK_QUESTIONABLE = new Msg("BookTreeCellRenderer.BookQuestionable"); //$NON-NLS-1$
+
     /**
      * Passthrough ctor
      */
