@@ -9,7 +9,7 @@
 <jsp:directive.page import="org.crosswire.jsword.view.web.DownloadSet" contentType="text/html"/>
 
 <jsp:scriptlet><![CDATA[
-  String scm = "CVS";
+  String scm = "SVN";
 
   String ftpBase = application.getInitParameter("ftp.base");
   if (ftpBase == null)

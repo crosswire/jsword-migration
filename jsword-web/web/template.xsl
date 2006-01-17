@@ -90,7 +90,7 @@
           </ul>
           <p>Getting-Involved</p>
           <ul>
-            <li><a href="cvs.html">CVS</a></li>
+            <li><a href="svn.html">SVN</a></li>
             <li><a href="maillists.html">Mailing Lists</a></li>
             <li><a href="/bugs">Bug Tracking</a></li>
           </ul>
