@@ -15,5 +15,5 @@ In the new directory, remove the following (only j2h.jar is needed):
    *.html
    j2h
 
-In CVS remove the old java2html directory.
+In SVN remove the old java2html directory.
 

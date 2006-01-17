@@ -13,7 +13,7 @@ In the new directory, remove the following:
 Change the references to the old directory to the new directory in the following files:
    build.xml
 
-In CVS remove the old jdepend directory.
+In SVN remove the old jdepend directory.
 
 You may need to tell ant where to find the jdepend jar.
 This varies by ide or whether ant is run standalone.

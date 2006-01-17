@@ -7,7 +7,7 @@ In the new directory, remove the following:
    bin
    docs
 
-In CVS remove the old pmd directory.
+In SVN remove the old pmd directory.
 
 Determine what has changed in pmd and update ruleset.xml appropriately.
 

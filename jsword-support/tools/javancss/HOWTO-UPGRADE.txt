@@ -15,5 +15,5 @@ In the new directory, remove the following:
 Change the references to the old directory to the new directory in the following files:
    build.xml
 
-In CVS remove the old javancss directory.
+In SVN remove the old javancss directory.
 

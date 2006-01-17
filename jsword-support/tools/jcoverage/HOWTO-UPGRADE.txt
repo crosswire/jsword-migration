@@ -7,4 +7,4 @@ Unzip the file into this directory.
 In the new directory, remove the following:
    examples
 
-In CVS remove the old jcoverage directory.
+In SVN remove the old jcoverage directory.
