@@ -23,7 +23,7 @@
     <pathelement path="../common/java/core"/>
     <pathelement path="../common/java/gpl"/>
     <pathelement path="../common/java/swing"/>
-    <pathelement path="../jsword/java/jsword"/>
+    <pathelement path="../jsword/java/main"/>
     <pathelement path="../bibledesktop/java/main"/>
     <pathelement path="../jsword-web/java/main"/>
   </path>
@@ -32,7 +32,7 @@
     <include name="common/java/core/**/*.java"/>
     <include name="common/java/gpl/**/*.java"/>
     <include name="common/java/swing/**/*.java"/>
-    <include name="jsword/java/jsword/**/*.java"/>
+    <include name="jsword/java/main/**/*.java"/>
     <include name="bibledesktop/java/main/**/*.java"/>
     <include name="jsword-web/java/main/**/*.java"/>
   </patternset>
@@ -71,11 +71,11 @@
     <mkdir dir="${target.web}/api"/>
     <javadoc
         sourcepathref="path.alljava"
-        packagenames="org.crosswire.*,gnu.gpl.*,gnu.gpl.*"
+        packagenames="org.crosswire.*,gnu.gpl.*,gnu.lgpl.*"
         classpathref="runtime.jarpath"
         stylesheetfile="${source.etc}/javadoc/stylesheet.css"
         destdir="${target.web}/api"
-        overview="../jsword/java/jsword/overview.html"
+        overview="../jsword/java/main/overview.html"
         private="true"
         author="true"
         use="true"
@@ -162,7 +162,7 @@
         <exclude name="target/**"/>
         <exclude name="jar/**"/>
         <exclude name="java/limbo/**"/>
-        <exclude name="java/jswordtest/**"/>
+        <exclude name="java/test/**"/>
       </zipfileset>
       <zipfileset prefix="common" dir="../common">
         <exclude name="target/**"/>
@@ -183,7 +183,7 @@
         <exclude name="target/**"/>
         <exclude name="jar/**"/>
         <exclude name="java/limbo/**"/>
-        <exclude name="java/jswordtest/**"/>
+        <exclude name="java/test/**"/>
       </tarfileset>
       <tarfileset prefix="common" dir="../common">
         <exclude name="target/**"/>
