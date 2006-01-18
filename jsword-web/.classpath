@@ -9,5 +9,5 @@
 	<classpathentry kind="src" path="java/test"/>
 	<classpathentry kind="src" path="java/limbo"/>
 	<classpathentry exported="true" kind="lib" path="resources"/>
-	<classpathentry kind="output" path="target/eclipse/classes"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>
