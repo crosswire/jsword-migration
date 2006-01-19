@@ -3,18 +3,18 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="jar/jlfgr-1.0/jlfgr-1_0.jar"/>
 	<classpathentry exported="true" kind="lib" path="jar/blogapps-1.0/blogapps-1.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="jar/gnu-regex-1.1.4/gnu-regexp-1.1.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="jar/rome-0.7/rome-0.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="jar/werx-051405/werx-051405.jar"/>
-	<classpathentry exported="true" kind="lib" path="jar/xmlrpc-2.0.1/xmlrpc-2.0.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="jar/kafenio-0.8.5/kafenio-0.8.5.jar"/>
-	<classpathentry exported="true" kind="lib" path="jar/kafenio-0.8.5/kafenio-config-0.8.5.jar"/>
-	<classpathentry exported="true" kind="lib" path="jar/kafenio-0.8.5/kafenio-icons-0.8.5.jar"/>
+	<classpathentry exported="true" sourcepath="jar/gnu-regex-1.1.4/gnu.regexp-1.1.4.zip" kind="lib" path="jar/gnu-regex-1.1.4/gnu-regexp-1.1.4.jar"/>
+	<classpathentry exported="true" sourcepath="jar/rome-0.7/rome-0.7-src.zip" kind="lib" path="jar/rome-0.7/rome-0.7.jar"/>
+	<classpathentry exported="true" sourcepath="jar/werx-051405/werx-051405.zip" kind="lib" path="jar/werx-051405/werx-051405.jar"/>
+	<classpathentry exported="true" sourcepath="jar/xmlrpc-2.0.1/xmlrpc-2.0.1-sources.zip" kind="lib" path="jar/xmlrpc-2.0.1/xmlrpc-2.0.1.jar"/>
+	<classpathentry exported="true" sourcepath="jar/kafenio-0.8.5/kafenio-src_0_8_5.zip" kind="lib" path="jar/kafenio-0.8.5/kafenio-0.8.5.jar"/>
+	<classpathentry exported="true" sourcepath="jar/kafenio-0.8.5/kafenio-src_0_8_5.zip" kind="lib" path="jar/kafenio-0.8.5/kafenio-config-0.8.5.jar"/>
+	<classpathentry exported="true" sourcepath="jar/kafenio-0.8.5/kafenio-src_0_8_5.zip" kind="lib" path="jar/kafenio-0.8.5/kafenio-icons-0.8.5.jar"/>
 	<classpathentry exported="true" kind="src" path="/jsword"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/common-swing"/>
-	<classpathentry kind="src" path="resources"/>
-	<classpathentry kind="src" path="src/limbo/java"/>
+	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="src" path="src/limbo/java"/>
 	<classpathentry kind="output" path="target/eclipse/classes"/>
 </classpath>
