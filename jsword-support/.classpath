@@ -4,6 +4,6 @@
 	<classpathentry kind="src" path="/jsword"/>
 	<classpathentry kind="src" path="/common"/>
 	<classpathentry kind="src" path="/bibledesktop"/>
-	<classpathentry kind="src" path="src/limbo"/>
+	<classpathentry kind="src" path="src/limbo/java"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
