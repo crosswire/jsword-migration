@@ -5,9 +5,9 @@
 	<classpathentry kind="src" path="/jsword"/>
 	<classpathentry kind="src" path="/common"/>
 	<classpathentry kind="src" path="/bibledesktop"/>
-	<classpathentry exported="true" kind="lib" path="resources"/>
-	<classpathentry kind="src" path="src/limbo/java"/>
+	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="src" path="src/limbo/java"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
