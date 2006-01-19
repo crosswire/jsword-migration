@@ -35,9 +35,11 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 import org.crosswire.bibledesktop.display.URLEvent;
 import org.crosswire.bibledesktop.display.URLEventListener;
+import org.crosswire.bibledesktop.signal.StatusSignal;
 import org.crosswire.common.progress.swing.JobsProgressBar;
 
 /**
@@ -129,6 +131,34 @@ public class StatusBar extends JComponent implements MouseListener, URLEventList
     }
 
     /**
+     * Sets the text to display
+     * @param txt The text
+     */
+    public void setText(String txt)
+    {
+        if (txt == null)
+        {
+            txt = Msg.STATUS_DEFAULT.toString();
+        }
+        lbl_message.setText(txt);
+    }
+
+    /**
+     * Catches status signals and displays new text
+     * @param signal The signal with the status text
+     */
+    public void channel(final StatusSignal signal)
+    {
+        SwingUtilities.invokeLater(new Runnable()
+        {
+            public void run()
+            {
+                lbl_message.setText(signal.getMessage());
+            }
+        });
+    }
+
+    /**
      * When the mouse points at something that has registered with us
      * to be shown on the statusbar
      * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
@@ -196,7 +226,7 @@ public class StatusBar extends JComponent implements MouseListener, URLEventList
     /**
      * Where the help messages go
      */
-    private JLabel lbl_message = new JLabel();
+    protected JLabel lbl_message = new JLabel();
 
     /**
      * Where the product name goes

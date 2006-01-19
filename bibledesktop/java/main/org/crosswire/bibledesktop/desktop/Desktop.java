@@ -61,6 +61,7 @@ import org.crosswire.bibledesktop.book.DisplaySelectPane;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.URLEvent;
 import org.crosswire.bibledesktop.display.URLEventListener;
+import org.crosswire.bibledesktop.journal.BlogClientFrame;
 import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.config.ChoiceFactory;
 import org.crosswire.common.config.Config;
@@ -96,6 +97,8 @@ import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.util.ConverterFactory;
 import org.crosswire.jsword.util.Project;
 import org.jdom.Document;
+import org.werx.framework.bus.BusStart;
+import org.werx.framework.bus.ReflectionBus;
 
 /**
  * The Desktop is the user's view of BibleDesktop.
@@ -121,6 +124,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
             {
                 public void run()
                 {
+                    new BusStart();
                     ExceptionPane.setHelpDeskListener(true);
                     LookAndFeelUtil.initialize();
 
@@ -197,6 +201,8 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         debug();
         init();
 
+        ReflectionBus.plug(this);
+
         // Listen for book changes so that the Options can be kept current
         BooksListener cbl = new BooksListener()
         {
@@ -232,10 +238,15 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     private void createComponents()
     {
         barStatus = new StatusBar();
+        ReflectionBus.plug(barStatus);
+
         //barSide = new SidebarPane();
         //barBook = new ReferencedPane();
         reference = new DictionaryPane();
         sptBooks = new FixedSplitPane(false);
+        sptBlog = new FixedSplitPane(false);
+        blogPanel = BlogClientFrame.getInstance();
+
         views = new ViewManager(this);
         views.addViewEventListener(this);
         history = new History();
@@ -270,6 +281,13 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         sptBooks.setOpaque(true);
         sptBooks.setBorder(null);
 
+        sptBlog.setOrientation(JSplitPane.VERTICAL_SPLIT);
+        sptBlog.setTopComponent(sptBooks);
+        sptBlog.setBottomComponent(blogPanel);
+        sptBlog.setResizeWeight(0.8D);
+        sptBlog.setOpaque(true);
+        sptBlog.setBorder(null);
+
         // The toolbar needs to be in the outermost container, on the border
         // And the only other item in that container can be CENTER
         JComponent contentPane = (JComponent) getContentPane();
@@ -277,9 +295,16 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         ToolBar toolbar = createToolBar();
         contentPane.add(toolbar, BorderLayout.NORTH);
 
-        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(1, 5, 1, 5));
-        mainPanel.add(sptBooks, BorderLayout.CENTER);
+        if (webJournalShowing)
+        {
+            mainPanel.add(sptBlog, BorderLayout.CENTER);
+        }
+        else
+        {
+            mainPanel.add(sptBooks, BorderLayout.CENTER);
+        }
 
         // Put everything else in its own panel
         corePanel = new JPanel(new BorderLayout());
@@ -449,6 +474,9 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         menuView.add(toggle).addMouseListener(barStatus);
         toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.STATUS_TOGGLE));
         toggle.setSelected(true);
+        menuView.add(toggle).addMouseListener(barStatus);
+        toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.JOURNAL_TOGGLE));
+        toggle.setSelected(isWebJournalShowing());
         menuView.add(toggle).addMouseListener(barStatus);
         sidebarToggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.SIDEBAR_TOGGLE));
         sidebarToggle.setSelected(isSidebarShowing());
@@ -718,6 +746,26 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     }
 
     /**
+     * Show or hide the web journal.
+     * @param show boolean
+     */
+    public void showWebJournal(boolean show)
+    {
+        if (show)
+        {
+            mainPanel.remove(sptBooks);
+            sptBlog.setTopComponent(sptBooks);
+            mainPanel.add(sptBlog, BorderLayout.CENTER);
+        }
+        else
+        {
+            mainPanel.remove(sptBlog);
+            mainPanel.add(sptBooks, BorderLayout.CENTER);
+        }
+        validate();
+    }
+
+    /**
      * Are the close buttons enabled?
      * @param enabled The enabled state
      */
@@ -805,6 +853,22 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     public static boolean isSidebarShowing()
     {
         return sidebarShowing;
+    }
+
+    /**
+     * @param show Whether to show the web journal at start up.
+     */
+    public static void setWebJournalShowing(boolean show)
+    {
+        webJournalShowing = show;
+    }
+
+    /**
+     * @return Whether to show the web journal at start up.
+     */
+    public static boolean isWebJournalShowing()
+    {
+        return webJournalShowing;
     }
 
     /**
@@ -965,6 +1029,11 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     private static boolean sidebarShowing;
 
     /**
+     * Whether to show the web journal at startup
+     */
+    private static boolean webJournalShowing = true;
+
+    /**
      * Whether to current BibleView should be used for links
      */
     private static boolean reuseBibleView = true;
@@ -988,10 +1057,13 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
 
     private transient ViewManager views;
     private JPanel corePanel;
+    private BlogClientFrame blogPanel;
+    private JSplitPane sptBlog;
     private JCheckBoxMenuItem sidebarToggle;
     private StatusBar barStatus;
     private DictionaryPane reference;
     private JSplitPane sptBooks;
+    private JPanel mainPanel;
     private transient History history;
 
     /**

@@ -442,6 +442,15 @@ public class DesktopActions
     }
 
     /**
+     * Show web journal or not.
+     */
+    public void doJournalToggle(ActionEvent ev)
+    {
+        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
+        desktop.showWebJournal(toggle.isSelected());
+    }
+
+    /**
      *
      */
     private static final class ShowSideBarVisitor implements ViewVisitor
@@ -485,6 +494,7 @@ public class DesktopActions
     static final String TOOLTIP_TOGGLE = "ToolTipToggle"; //$NON-NLS-1$
     static final String STATUS_TOGGLE = "StatusToggle"; //$NON-NLS-1$
     static final String SIDEBAR_TOGGLE = "SidebarToggle"; //$NON-NLS-1$
+    static final String JOURNAL_TOGGLE = "JournalToggle"; //$NON-NLS-1$
     static final String VERSE = "Verse"; //$NON-NLS-1$
     static final String VIEW_SOURCE = "ViewSource"; //$NON-NLS-1$
     static final String BOOKS = "Books"; //$NON-NLS-1$
