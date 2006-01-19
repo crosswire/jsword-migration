@@ -47,7 +47,6 @@ import org.crosswire.bibledesktop.signal.LoadEntrySignal;
 import org.crosswire.bibledesktop.signal.ResizeJournalSignal;
 import org.crosswire.bibledesktop.signal.SaveConfigSignal;
 import org.crosswire.bibledesktop.signal.StatusSignal;
-import org.crosswire.common.swing.GriddedPanel;
 import org.werx.framework.bus.ReflectionBus;
 
 import com.manning.blogapps.chapter08.blogclient.Blog;

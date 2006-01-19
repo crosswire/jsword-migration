@@ -31,7 +31,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import org.crosswire.bibledesktop.signal.LoadEntrySignal;
-import org.crosswire.common.swing.GriddedPanel;
 import org.werx.framework.bus.ReflectionBus;
 
 import com.manning.blogapps.chapter08.blogclient.Blog;
