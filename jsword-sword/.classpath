@@ -4,6 +4,7 @@
 	<classpathentry kind="src" path="/jsword"/>
 	<classpathentry kind="src" path="/common"/>
 	<classpathentry kind="src" path="/bibledesktop"/>
-	<classpathentry kind="src" path="java/main"/>
+	<classpathentry kind="src" path="src/main"/>
+	<classpathentry kind="src" path="src/test"/>
 	<classpathentry kind="output" path="target/eclipse/classes"/>
 </classpath>
