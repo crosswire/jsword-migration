@@ -7,6 +7,13 @@
 	<classpathentry kind="src" path="java/main"/>
 	<classpathentry kind="src" path="java/limbo"/>
 	<classpathentry kind="src" path="java/test"/>
-	<classpathentry exported="true" kind="lib" path="resources"/>
+	<classpathentry kind="lib" path="jar/blogapps-1.0/blogapps-1.0.jar"/>
+	<classpathentry kind="lib" path="jar/gnu-regex-1.1.4/gnu-regexp-1.1.4.jar"/>
+	<classpathentry kind="lib" path="jar/rome-0.7/rome-0.7.jar"/>
+	<classpathentry kind="lib" path="jar/werx-051405/werx-051405.jar"/>
+	<classpathentry kind="lib" path="jar/xmlrpc-2.0.1/xmlrpc-2.0.1.jar"/>
+	<classpathentry kind="lib" path="jar/kafenio-0.8.5/kafenio-0.8.5.jar"/>
+	<classpathentry kind="lib" path="jar/kafenio-0.8.5/kafenio-config-0.8.5.jar"/>
+	<classpathentry kind="lib" path="jar/kafenio-0.8.5/kafenio-icons-0.8.5.jar"/>
 	<classpathentry kind="output" path="target/eclipse/classes"/>
 </classpath>
