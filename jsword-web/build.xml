@@ -19,22 +19,22 @@
 
   <!--=======================================================================-->
   <path id="path.alljava">
-    <pathelement path="../common/java/config"/>
-    <pathelement path="../common/java/core"/>
-    <pathelement path="../common/java/gpl"/>
-    <pathelement path="../common/java/swing"/>
-    <pathelement path="../jsword/java/main"/>
-    <pathelement path="../bibledesktop/java/main"/>
-    <pathelement path="../jsword-web/java/main"/>
+    <pathelement path="../common/src/config"/>
+    <pathelement path="../common/src/core"/>
+    <pathelement path="../common/src/gpl"/>
+    <pathelement path="../common/src/swing"/>
+    <pathelement path="../jsword/src/main"/>
+    <pathelement path="../bibledesktop/src/main"/>
+    <pathelement path="../jsword-web/src/main"/>
   </path>
   <patternset id="pattern.alljava">
-    <include name="common/java/config/**/*.java"/>
-    <include name="common/java/core/**/*.java"/>
-    <include name="common/java/gpl/**/*.java"/>
-    <include name="common/java/swing/**/*.java"/>
-    <include name="jsword/java/main/**/*.java"/>
-    <include name="bibledesktop/java/main/**/*.java"/>
-    <include name="jsword-web/java/main/**/*.java"/>
+    <include name="common/src/config/**/*.java"/>
+    <include name="common/src/core/**/*.java"/>
+    <include name="common/src/gpl/**/*.java"/>
+    <include name="common/src/swing/**/*.java"/>
+    <include name="jsword/src/main/**/*.java"/>
+    <include name="bibledesktop/src/main/**/*.java"/>
+    <include name="jsword-web/src/main/**/*.java"/>
   </patternset>
   <fileset id="fileset.alljava" dir="..">
     <patternset refid="pattern.alljava"/>
@@ -75,7 +75,7 @@
         classpathref="runtime.jarpath"
         stylesheetfile="${source.etc}/javadoc/stylesheet.css"
         destdir="${target.web}/api"
-        overview="../jsword/java/main/overview.html"
+        overview="../jsword/src/main/overview.html"
         private="true"
         author="true"
         use="true"
@@ -161,42 +161,42 @@
       <zipfileset prefix="jsword" dir="../jsword">
         <exclude name="target/**"/>
         <exclude name="jar/**"/>
-        <exclude name="java/limbo/**"/>
-        <exclude name="java/test/**"/>
+        <exclude name="src/limbo/**"/>
+        <exclude name="src/test/**"/>
       </zipfileset>
       <zipfileset prefix="common" dir="../common">
         <exclude name="target/**"/>
         <exclude name="jar/**"/>
-        <exclude name="java/limbo/**"/>
-        <exclude name="java/test/**"/>
+        <exclude name="src/limbo/**"/>
+        <exclude name="src/test/**"/>
       </zipfileset>
       <zipfileset prefix="bibledesktop" dir="../bibledesktop">
         <exclude name="target/**"/>
         <exclude name="jar/**"/>
         <exclude name="etc/installer/**"/>
-        <exclude name="java/limbo/**"/>
-        <exclude name="java/test/**"/>
+        <exclude name="src/limbo/**"/>
+        <exclude name="src/test/**"/>
       </zipfileset>
     </zip>
     <tar tarfile="${directory}/jsword-${version}-src.tar.gz" compression="gzip">
       <tarfileset prefix="jsword" dir="../jsword">
         <exclude name="target/**"/>
         <exclude name="jar/**"/>
-        <exclude name="java/limbo/**"/>
-        <exclude name="java/test/**"/>
+        <exclude name="src/limbo/**"/>
+        <exclude name="src/test/**"/>
       </tarfileset>
       <tarfileset prefix="common" dir="../common">
         <exclude name="target/**"/>
         <exclude name="jar/**"/>
-        <exclude name="java/limbo/**"/>
-        <exclude name="java/test/**"/>
+        <exclude name="src/limbo/**"/>
+        <exclude name="src/test/**"/>
       </tarfileset>
       <tarfileset prefix="bibledesktop" dir="../bibledesktop">
         <exclude name="target/**"/>
         <exclude name="jar/**"/>
         <exclude name="etc/installer/**"/>
-        <exclude name="java/limbo/**"/>
-        <exclude name="java/test/**"/>
+        <exclude name="src/limbo/**"/>
+        <exclude name="src/test/**"/>
       </tarfileset>
     </tar>
     <!-- binary packages -->
