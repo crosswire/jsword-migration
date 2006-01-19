@@ -41,6 +41,7 @@ import org.crosswire.sword.frontend.im.NullIM;
 import org.crosswire.sword.frontend.im.SWInputMethod;
 
 public class MainFrame extends JFrame {
+    private static final long serialVersionUID = 1L;
     JPanel contentPane;
     BorderLayout borderLayout1 = new BorderLayout();
     JPanel jPanel1 = new JPanel();
