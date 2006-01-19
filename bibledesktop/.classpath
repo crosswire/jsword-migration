@@ -12,9 +12,9 @@
 	<classpathentry kind="lib" path="jar/kafenio-0.8.5/kafenio-0.8.5.jar"/>
 	<classpathentry kind="lib" path="jar/kafenio-0.8.5/kafenio-config-0.8.5.jar"/>
 	<classpathentry kind="lib" path="jar/kafenio-0.8.5/kafenio-icons-0.8.5.jar"/>
-	<classpathentry kind="src" path="src/limbo"/>
-	<classpathentry kind="src" path="src/main"/>
-	<classpathentry kind="src" path="src/test"/>
 	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="src" path="src/limbo/java"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="output" path="target/eclipse/classes"/>
 </classpath>
