@@ -19,34 +19,32 @@
 
   <!--=======================================================================-->
   <path id="path.alljava">
-    <pathelement path="../common/src/config"/>
-    <pathelement path="../common/src/core"/>
-    <pathelement path="../common/src/gpl"/>
-    <pathelement path="../common/src/swing"/>
-    <pathelement path="../jsword/src/main"/>
-    <pathelement path="../bibledesktop/src/main"/>
-    <pathelement path="../jsword-web/src/main"/>
+    <pathelement path="../common/src/main/java"/>
+    <pathelement path="../common-swing/src/main/java"/>
+    <pathelement path="../jsword/src/main/java"/>
+    <pathelement path="../bibledesktop/src/main/java"/>
+    <pathelement path="../jsword-web/src/main/java"/>
   </path>
   <patternset id="pattern.alljava">
-    <include name="common/src/config/**/*.java"/>
-    <include name="common/src/core/**/*.java"/>
-    <include name="common/src/gpl/**/*.java"/>
-    <include name="common/src/swing/**/*.java"/>
-    <include name="jsword/src/main/**/*.java"/>
-    <include name="bibledesktop/src/main/**/*.java"/>
-    <include name="jsword-web/src/main/**/*.java"/>
+    <include name="common/src/main/java/**/*.java"/>
+    <include name="common-swing/src/main/java/**/*.java"/>
+    <include name="jsword/src/main/java/**/*.java"/>
+    <include name="bibledesktop/src/main/java/**/*.java"/>
+    <include name="jsword-web/src/main/java/**/*.java"/>
   </patternset>
   <fileset id="fileset.alljava" dir="..">
     <patternset refid="pattern.alljava"/>
   </fileset>
   <path id="path.allclasses">
     <pathelement path="../common/${target.classes}"/>
+    <pathelement path="../common-swing/${target.classes}"/>
     <pathelement path="../jsword/${target.classes}"/>
     <pathelement path="../bibledesktop/${target.classes}"/>
     <pathelement path="../jsword-web/${target.classes}"/>
   </path>
   <patternset id="pattern.allclasses">
     <include name="common/${target.classes}/**/*.class"/>
+    <include name="common-swing/${target.classes}/**/*.class"/>
     <include name="jsword/${target.classes}/**/*.class"/>
     <include name="bibledesktop/${target.classes}/**/*.class"/>
     <include name="jsword-web/${target.classes}/**/*.class"/>
@@ -65,6 +63,10 @@
   <import file="${support.tools}/pmd/build.xml"/>
   <!-- ignored <import file="${support.tools}/tomcat/build.xml"/> -->
 
+  <target name="init.extra" description="Extra stuff to do when initializing">
+    <mkdir dir="${webapp.jsword}"/>
+  </target>
+
   <target name="javadoc" description="Create JavaDoc">
     <!-- This is not incremental. Empty it so it can remove unused docs. -->
     <delete dir="${target.web}/api"/>
@@ -75,7 +77,7 @@
         classpathref="runtime.jarpath"
         stylesheetfile="${source.etc}/javadoc/stylesheet.css"
         destdir="${target.web}/api"
-        overview="../jsword/src/main/overview.html"
+        overview="../jsword/src/main/java/overview.html"
         private="true"
         author="true"
         use="true"
@@ -164,6 +166,12 @@
         <exclude name="src/limbo/**"/>
         <exclude name="src/test/**"/>
       </zipfileset>
+      <zipfileset prefix="common" dir="../common-swing">
+        <exclude name="target/**"/>
+        <exclude name="jar/**"/>
+        <exclude name="src/limbo/**"/>
+        <exclude name="src/test/**"/>
+      </zipfileset>
       <zipfileset prefix="common" dir="../common">
         <exclude name="target/**"/>
         <exclude name="jar/**"/>
@@ -185,6 +193,12 @@
         <exclude name="src/limbo/**"/>
         <exclude name="src/test/**"/>
       </tarfileset>
+        <tarfileset prefix="common" dir="../common-swing">
+          <exclude name="target/**"/>
+          <exclude name="jar/**"/>
+          <exclude name="src/limbo/**"/>
+          <exclude name="src/test/**"/>
+        </tarfileset>
       <tarfileset prefix="common" dir="../common">
         <exclude name="target/**"/>
         <exclude name="jar/**"/>
