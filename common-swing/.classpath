@@ -4,5 +4,5 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/common"/>
 	<classpathentry kind="src" path="src/limbo/java"/>
-	<classpathentry kind="output" path="target/classes"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>
