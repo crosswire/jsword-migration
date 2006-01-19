@@ -37,7 +37,7 @@
   key CDATA #REQUIRED
   static (true|false) 'true'
   priority NMTOKEN '5'
-  type (string|boolean|int-options|string-options|string-array|file|path|directory|number|font|class|custom) #REQUIRED
+  type (string|boolean|int-options|string-options|string-array|file|path|directory|number|font|class|custom|password) #REQUIRED
   class CDATA #IMPLIED
   separator CDATA #IMPLIED
 >
@@ -247,5 +247,23 @@
     <introspect class="org.crosswire.bibledesktop.desktop.AboutPane" property="Advanced"/>
   </option>
 -->
+
+  <option key="WebJournal.Url" type="string" priority="1">
+    <introspect class="org.crosswire.bibledesktop.journal.BlogClientFrame" property="Url"/>
+  </option>
+
+  <option key="WebJournal.UserName" type="string">
+    <introspect class="org.crosswire.bibledesktop.journal.BlogClientFrame" property="UserName"/>
+  </option>
+  
+  <option key="WebJournal.Password" type="password">
+    <introspect class="org.crosswire.bibledesktop.journal.BlogClientFrame" property="Password"/>
+  </option>
+  
+  <option key="WebJournal.Type" type="int-options">
+    <introspect class="org.crosswire.bibledesktop.journal.BlogClientFrame" property="Type"/>
+    <alternative number="0" />
+    <alternative number="1" />
+  </option>
 
 </config>
