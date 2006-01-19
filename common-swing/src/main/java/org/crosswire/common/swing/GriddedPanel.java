@@ -30,7 +30,7 @@ import javax.swing.JPanel;
  */
 public class GriddedPanel extends JPanel
 {
-    /**
+	/**
      * Creates a grid bag layout panel using a default insets constraints.
      */
     public GriddedPanel()
@@ -176,5 +176,10 @@ public class GriddedPanel extends JPanel
     private static final int C_WEST = GridBagConstraints.WEST;
     private static final int C_WIDTH = 1;
     private static final int C_HEIGHT = 1;
+
+    /**
+	 * Serialization ID
+	 */
+	private static final long serialVersionUID = 5924150977979727523L;
 }
 
