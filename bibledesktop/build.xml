@@ -39,7 +39,14 @@
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jsword-${release.version}.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jdom-1.0.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jlfgr-1_0.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="lucene-1.4.3.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="blogapps-1.0.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="gnu-regexp-1.1.4.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="kafenio-0.8.5.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="kafenio-config-0.8.5.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="kafenio-icons-0.8.5.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="rome-0.7.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="werx-051405.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="xmlrpc-2.0.1.jar"/>
     <!-- Copy the files needed for the distribution -->
     <mkdir dir="${jnlp.uninstalled}"/>
     <copy todir="${jnlp.uninstalled}">
