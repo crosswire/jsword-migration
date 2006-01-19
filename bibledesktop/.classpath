@@ -4,9 +4,6 @@
 	<classpathentry exported="true" kind="lib" path="jar/jlfgr-1.0/jlfgr-1_0.jar"/>
 	<classpathentry kind="src" path="/jsword"/>
 	<classpathentry kind="src" path="/common"/>
-	<classpathentry kind="src" path="java/main"/>
-	<classpathentry kind="src" path="java/limbo"/>
-	<classpathentry kind="src" path="java/test"/>
 	<classpathentry kind="lib" path="jar/blogapps-1.0/blogapps-1.0.jar"/>
 	<classpathentry kind="lib" path="jar/gnu-regex-1.1.4/gnu-regexp-1.1.4.jar"/>
 	<classpathentry kind="lib" path="jar/rome-0.7/rome-0.7.jar"/>
