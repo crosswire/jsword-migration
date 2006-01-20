@@ -3,6 +3,6 @@
   <!-- This build uses the core build targets -->
   <import file="../common/core.xml"/>
   <property name="dependency" value="common"/>
-  <property name="dependency.jar" value="../${dependency}/target/ant/jar"/>
+  <property name="dependency.jar" value="../${dependency}/${target.jar}"/>
 
 </project>

@@ -1,12 +1,12 @@
 <project name="jsword-web" default="all">
 
   <import file="../common/core.xml"/>
-  <property name="dependency"       value="bibledesktop"/>
-  <property name="dependency.jar"   value="../${dependency}/target/ant/jar"/>
-  <property name="dependency.install" value="../${dependency}/target/ant/${dependency}"/>
+  <property name="dependency"         value="bibledesktop"/>
+  <property name="dependency.jar"     value="../${dependency}/${target.jar}"/>
+  <property name="dependency.install" value="../${dependency}/${target.root}/${dependency}"/>
 
   <!--=======================================================================-->
-  <property name="source.web"       value="${source.root}/web"/>
+  <property name="source.web"          value="${source.root}/web"/>
   <property name="webapp.bibledesktop" value="${target.root}/web"/> <!-- override -->
 
   <!--=======================================================================-->

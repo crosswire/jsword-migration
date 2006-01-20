@@ -2,7 +2,7 @@
 
   <import file="../common/core.xml"/>
   <property name="dependency"         value="bibledesktop-web"/>
-  <property name="dependency.jar"     value="../bibledesktop/target/ant/jar"/>
+  <property name="dependency.jar"     value="../bibledesktop/${target.jar}"/>
 
   <!--=======================================================================-->
   <property name="source.web"       value="${source.root}/web"/>
@@ -11,7 +11,7 @@
   <property name="jnlp.hostname"    value="localhost:8080"/> <!-- override -->
   <property name="ftp.base"         value="${basedir}/${target.root}/download"/> <!-- override -->
   <property name="ftp.prefix"       value="../download"/> <!-- override -->
-  <property name="jnlp.installed"   value="../bibledesktop/target/ant/installed"/> <!-- override -->
+  <property name="jnlp.installed"   value="../bibledesktop/target/installed"/> <!-- override -->
 
   <property name="nightly.dir"      value="${ftp.base}/nightly"/>
   <property name="release.dir"      value="${ftp.base}/release"/>
@@ -62,10 +62,6 @@
   <import file="${support.tools}/findbugs/build.xml"/>
   <import file="${support.tools}/pmd/build.xml"/>
   <!-- ignored <import file="${support.tools}/tomcat/build.xml"/> -->
-
-  <target name="init.extra" description="Extra stuff to do when initializing">
-    <mkdir dir="${webapp.jsword}"/>
-  </target>
 
   <target name="javadoc" description="Create JavaDoc">
     <!-- This is not incremental. Empty it so it can remove unused docs. -->
@@ -141,7 +137,7 @@
       <format property="today" pattern="yyyyMMdd"/>
     </tstamp>
     <antcall target="release.version">
-      <param name="version" value="${today}"/>
+      <param name="version" value="${release.version}-${today}"/>
       <param name="directory" value="${nightly.dir}"/>
     </antcall>
   </target>
@@ -149,7 +145,7 @@
   <!--=======================================================================-->
   <target name="release.final">
     <antcall target="release.version">
-      <param name="version" value="${product.version}"/>
+      <param name="version" value="${release.version}"/>
       <param name="directory" value="${release.dir}"/>
     </antcall>
   </target>
@@ -160,58 +156,24 @@
     <!-- source packages -->
     <mkdir dir="${directory}"/>
     <zip zipfile="${directory}/jsword-${version}-src.zip">
-      <zipfileset prefix="jsword" dir="../jsword">
-        <exclude name="target/**"/>
-        <exclude name="jar/**"/>
-        <exclude name="src/limbo/**"/>
-        <exclude name="src/test/**"/>
-      </zipfileset>
-      <zipfileset prefix="common" dir="../common-swing">
-        <exclude name="target/**"/>
-        <exclude name="jar/**"/>
-        <exclude name="src/limbo/**"/>
-        <exclude name="src/test/**"/>
-      </zipfileset>
-      <zipfileset prefix="common" dir="../common">
-        <exclude name="target/**"/>
-        <exclude name="jar/**"/>
-        <exclude name="src/limbo/**"/>
-        <exclude name="src/test/**"/>
-      </zipfileset>
-      <zipfileset prefix="bibledesktop" dir="../bibledesktop">
-        <exclude name="target/**"/>
-        <exclude name="jar/**"/>
-        <exclude name="etc/installer/**"/>
-        <exclude name="src/limbo/**"/>
-        <exclude name="src/test/**"/>
-      </zipfileset>
+      <zipfileset prefix="jsword-${version}/jsword"       dir="../jsword/src/main/java"/>
+      <zipfileset prefix="jsword-${version}/jsword"       dir="../jsword/src/main/resources"/>
+      <zipfileset prefix="jsword-${version}/common-swing" dir="../common-swing/src/main/java"/>
+      <!-- <zipfileset prefix="jsword-${version}/common-swing" dir="../common-swing/src/main/resources"/> -->
+      <zipfileset prefix="jsword-${version}/common"       dir="../common/src/main/java"/>
+      <zipfileset prefix="jsword-${version}/common"       dir="../common/src/main/resources"/>
+      <zipfileset prefix="jsword-${version}/bibledesktop" dir="../bibledesktop/src/main/java"/>
+      <zipfileset prefix="jsword-${version}/bibledesktop" dir="../bibledesktop/src/main/resources"/>
     </zip>
     <tar tarfile="${directory}/jsword-${version}-src.tar.gz" compression="gzip">
-      <tarfileset prefix="jsword" dir="../jsword">
-        <exclude name="target/**"/>
-        <exclude name="jar/**"/>
-        <exclude name="src/limbo/**"/>
-        <exclude name="src/test/**"/>
-      </tarfileset>
-        <tarfileset prefix="common" dir="../common-swing">
-          <exclude name="target/**"/>
-          <exclude name="jar/**"/>
-          <exclude name="src/limbo/**"/>
-          <exclude name="src/test/**"/>
-        </tarfileset>
-      <tarfileset prefix="common" dir="../common">
-        <exclude name="target/**"/>
-        <exclude name="jar/**"/>
-        <exclude name="src/limbo/**"/>
-        <exclude name="src/test/**"/>
-      </tarfileset>
-      <tarfileset prefix="bibledesktop" dir="../bibledesktop">
-        <exclude name="target/**"/>
-        <exclude name="jar/**"/>
-        <exclude name="etc/installer/**"/>
-        <exclude name="src/limbo/**"/>
-        <exclude name="src/test/**"/>
-      </tarfileset>
+      <tarfileset prefix="jsword-${version}/jsword"       dir="../jsword/src/main/java"/>
+      <tarfileset prefix="jsword-${version}/jsword"       dir="../jsword/src/main/resources"/>
+      <tarfileset prefix="jsword-${version}/common-swing" dir="../common-swing/src/main/java"/>
+      <!-- <tarfileset prefix="jsword-${version}/common-swing" dir="../common-swing/src/main/resources"/> -->
+      <tarfileset prefix="jsword-${version}/common"       dir="../common/src/main/java"/>
+      <tarfileset prefix="jsword-${version}/common"       dir="../common/src/main/resources"/>
+      <tarfileset prefix="jsword-${version}/bibledesktop" dir="../bibledesktop/src/main/java"/>
+      <tarfileset prefix="jsword-${version}/bibledesktop" dir="../bibledesktop/src/main/resources"/>
     </tar>
     <!-- binary packages -->
     <zip zipfile="${directory}/jsword-${version}-bin.zip">
