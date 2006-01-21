@@ -55,7 +55,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 
-import org.crosswire.bibledesktop.book.BookChooser;
 import org.crosswire.biblemapper.model.AdjustOriginRule;
 import org.crosswire.biblemapper.model.AntiGravityRule;
 import org.crosswire.biblemapper.model.BrownianRule;
@@ -70,7 +69,6 @@ import org.crosswire.biblemapper.model.Rule;
 import org.crosswire.biblemapper.model.VBAExport;
 import org.crosswire.common.config.Config;
 import org.crosswire.common.swing.ExceptionPane;
-import org.crosswire.common.swing.ExtensionFileFilter;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.util.ResourceUtil;
