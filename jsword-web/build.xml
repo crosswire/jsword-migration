@@ -157,7 +157,7 @@
     <mkdir dir="${directory}"/>
     <zip zipfile="${directory}/jsword-${version}-src.zip">
       <zipfileset prefix="jsword-${version}/jsword"       dir="../jsword/src/main/java"/>
-      <zipfileset prefix="jsword-${version}/jsword"       dir="../jsword/src/main/resources"/>
+      <!-- <zipfileset prefix="jsword-${version}/jsword"       dir="../jsword/src/main/resources"/> -->
       <zipfileset prefix="jsword-${version}/common-swing" dir="../common-swing/src/main/java"/>
       <!-- <zipfileset prefix="jsword-${version}/common-swing" dir="../common-swing/src/main/resources"/> -->
       <zipfileset prefix="jsword-${version}/common"       dir="../common/src/main/java"/>
@@ -167,7 +167,7 @@
     </zip>
     <tar tarfile="${directory}/jsword-${version}-src.tar.gz" compression="gzip">
       <tarfileset prefix="jsword-${version}/jsword"       dir="../jsword/src/main/java"/>
-      <tarfileset prefix="jsword-${version}/jsword"       dir="../jsword/src/main/resources"/>
+      <!-- <tarfileset prefix="jsword-${version}/jsword"       dir="../jsword/src/main/resources"/> -->
       <tarfileset prefix="jsword-${version}/common-swing" dir="../common-swing/src/main/java"/>
       <!-- <tarfileset prefix="jsword-${version}/common-swing" dir="../common-swing/src/main/resources"/> -->
       <tarfileset prefix="jsword-${version}/common"       dir="../common/src/main/java"/>
