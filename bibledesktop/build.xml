@@ -39,6 +39,7 @@
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-logging.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-net-1.4.1.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jdom-1.0.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="javatar-2.5.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jlfgr-1_0.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="lucene-1.4.3.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="blogapps-1.0.jar"/>
