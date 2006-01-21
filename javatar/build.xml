@@ -1,0 +1,13 @@
+<project name="javatar" default="all">
+
+  <!-- This build uses the core build targets -->
+  <property name="release.version" value="2.5"/>
+  <import file="../common/core.xml"/>
+
+  <target name="install"
+          depends="build"
+          unless="jar.uptodate"
+          description="Install the built project.">
+    <copy verbose="${verbose.copy}" todir="../common/jar/${ant.project.name}-${release.version}" file="${target.jar}/${ant.project.name}-${release.version}.jar"/>
+  </target>
+</project>
