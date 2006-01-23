@@ -111,6 +111,14 @@ public class JobsViewPane extends JPanel implements WorkListener
         SwingUtilities.invokeLater(new JobRunner(this, ev));
     }
 
+    /* (non-Javadoc)
+     * @see org.crosswire.common.progress.WorkListener#workStateChanged(org.crosswire.common.progress.WorkEvent)
+     */
+    public void workStateChanged(WorkEvent ev)
+    {
+        // Not needed
+    }
+
     /**
      * Create a new set of components for the new Job
      */

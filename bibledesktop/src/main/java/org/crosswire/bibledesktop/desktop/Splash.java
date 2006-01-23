@@ -179,5 +179,13 @@ public class Splash extends JWindow
                 Splash.this.pack();
             }
         }
+        
+        /* (non-Javadoc)
+         * @see org.crosswire.common.progress.WorkListener#workStateChanged(org.crosswire.common.progress.WorkEvent)
+         */
+        public void workStateChanged(WorkEvent ev)
+        {
+            // we don't care about these events.
+        }
     }
 }

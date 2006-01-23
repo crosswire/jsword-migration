@@ -29,8 +29,6 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -58,7 +56,7 @@ import org.crosswire.common.util.Logger;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class JobsProgressBar extends JPanel implements WorkListener, PropertyChangeListener
+public class JobsProgressBar extends JPanel implements WorkListener
 {
     /**
      * Simple ctor
@@ -111,12 +109,22 @@ public class JobsProgressBar extends JPanel implements WorkListener, PropertyCha
         });
     }
 
+    /* (non-Javadoc)
+     * @see org.crosswire.common.progress.WorkListener#workStateChanged(org.crosswire.common.progress.WorkEvent)
+     */
+    public void workStateChanged(WorkEvent ev)
+    {
+        Job job = (Job) ev.getSource();
+        JobData jobdata = (JobData) jobs.get(job);
+        jobdata.workStateChanged(ev);
+    }
+
     /**
      * Create a new set of components for the new Job
      */
     protected synchronized void addJob(Job job)
     {
-        job.addPropertyChangeListener(this);
+        job.addWorkListener(this);
 
         int i = findEmptyPosition();
         log.debug("adding job to panel at " + i + ": " + job.getJobDescription()); //$NON-NLS-1$ //$NON-NLS-2$
@@ -150,13 +158,6 @@ public class JobsProgressBar extends JPanel implements WorkListener, PropertyCha
         GuiUtil.refresh(this);
     }
 
-    public void propertyChange(PropertyChangeEvent evt)
-    {
-        Job job = (Job) evt.getSource();
-        JobData jobdata = (JobData) jobs.get(job);
-        jobdata.propertyChange(evt);
-    }
-
     /**
      * Update the job details because it has just progressed
      */
@@ -174,7 +175,7 @@ public class JobsProgressBar extends JPanel implements WorkListener, PropertyCha
      */
     protected synchronized void removeJob(Job job)
     {
-        job.addPropertyChangeListener(this);
+        job.removeWorkListener(this);
 
         JobData jobdata = (JobData) jobs.get(job);
 
@@ -239,7 +240,7 @@ public class JobsProgressBar extends JPanel implements WorkListener, PropertyCha
     /**
      * A simple struct to group information about a Job
      */
-    private static class JobData implements PropertyChangeListener
+    private static class JobData implements WorkListener
     {
         /**
          * Simple ctor
@@ -306,12 +307,23 @@ public class JobsProgressBar extends JPanel implements WorkListener, PropertyCha
             return index;
         }
 
-        public void propertyChange(PropertyChangeEvent evt)
+        /* (non-Javadoc)
+         * @see org.crosswire.common.progress.WorkListener#workStateChanged(org.crosswire.common.progress.WorkEvent)
+         */
+        public void workStateChanged(WorkEvent evt)
         {
             if (cancelButton != null)
             {
                 cancelButton.setEnabled(job.isInterruptable());
             }
+        }
+
+        /* (non-Javadoc)
+         * @see org.crosswire.common.progress.WorkListener#workProgressed(org.crosswire.common.progress.WorkEvent)
+         */
+        public void workProgressed(WorkEvent ev)
+        {
+            // Don't care about progress
         }
 
         /**
