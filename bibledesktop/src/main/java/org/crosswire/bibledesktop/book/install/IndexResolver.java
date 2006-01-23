@@ -33,9 +33,9 @@ import javax.swing.JPanel;
 
 import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.index.IndexManagerFactory;
 import org.crosswire.jsword.book.install.InstallManager;
 import org.crosswire.jsword.book.install.Installer;
+import org.crosswire.jsword.index.IndexManagerFactory;
 import org.crosswire.jsword.util.IndexDownloader;
 
 /**

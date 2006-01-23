@@ -57,7 +57,7 @@ import javax.swing.event.DocumentListener;
 
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
-import org.crosswire.jsword.book.search.SearchType;
+import org.crosswire.jsword.index.search.SearchType;
 
 /**
  * An advanced search dialog.
