@@ -54,10 +54,10 @@ import org.crosswire.jsword.book.BookSet;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.BooksEvent;
 import org.crosswire.jsword.book.BooksListener;
+import org.crosswire.jsword.book.index.IndexManager;
+import org.crosswire.jsword.book.index.IndexManagerFactory;
 import org.crosswire.jsword.book.install.InstallException;
 import org.crosswire.jsword.book.install.Installer;
-import org.crosswire.jsword.book.search.IndexManager;
-import org.crosswire.jsword.book.search.IndexManagerFactory;
 
 /**
  * A panel for use within a SitesPane to display one set of Books that are

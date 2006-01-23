@@ -32,8 +32,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -56,7 +54,9 @@ import org.crosswire.common.swing.desktop.event.TitleChangedListener;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
-import org.crosswire.jsword.book.IndexStatus;
+import org.crosswire.jsword.book.index.IndexStatus;
+import org.crosswire.jsword.book.index.IndexStatusEvent;
+import org.crosswire.jsword.book.index.IndexStatusListener;
 import org.crosswire.jsword.book.search.basic.DefaultSearchModifier;
 import org.crosswire.jsword.book.search.basic.DefaultSearchRequest;
 import org.crosswire.jsword.passage.Key;
@@ -102,7 +102,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         selected = mdlBible.getSelectedBook();
         if (selected != null)
         {
-            selected.addPropertyChangeListener(pcl);
+            selected.addIndexStatusListener(isl);
             cboBible.setToolTipText(selected.toString());
             key = selected.createEmptyKeyList();
         }
@@ -516,8 +516,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
         if (selected != null && selected != newSelected)
         {
-            selected.removePropertyChangeListener(pcl);
-            newSelected.addPropertyChangeListener(pcl);
+            selected.removeIndexStatusListener(isl);
+            newSelected.addIndexStatusListener(isl);
         }
 
         selected = newSelected;
@@ -563,9 +563,9 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     /**
      * Keep the selection up to date with indexing.
      */
-    private PropertyChangeListener pcl = new PropertyChangeListener()
+    private IndexStatusListener isl = new IndexStatusListener()
     {
-        public void propertyChange(PropertyChangeEvent ev)
+        public void statusChanged(IndexStatusEvent ev)
         {
             enableComponents();
         }
