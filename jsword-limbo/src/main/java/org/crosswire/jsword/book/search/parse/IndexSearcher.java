@@ -31,6 +31,7 @@ import java.util.Properties;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.jsword.book.BookException;
+import org.crosswire.jsword.book.query.Query;
 import org.crosswire.jsword.book.search.Index;
 import org.crosswire.jsword.book.search.SearchRequest;
 import org.crosswire.jsword.book.search.Searcher;
@@ -64,6 +65,14 @@ public class IndexSearcher implements Searcher
     {
         this.index = newindex;
         this.commands = getWordMap();
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.jsword.book.search.Searcher#search(java.lang.String)
+     */
+    public Key search(Query request) throws BookException
+    {
+        return request.find(index);
     }
 
     /* (non-Javadoc)
