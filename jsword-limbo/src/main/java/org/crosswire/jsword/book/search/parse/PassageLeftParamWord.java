@@ -24,7 +24,7 @@ package org.crosswire.jsword.book.search.parse;
 import java.util.Iterator;
 
 import org.crosswire.jsword.book.BookException;
-import org.crosswire.jsword.book.search.Index;
+import org.crosswire.jsword.index.Index;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 

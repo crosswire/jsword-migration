@@ -398,5 +398,12 @@ public class GeneratorPane extends EirPanel
                 }
             });
         }
+
+        /* (non-Javadoc)
+         * @see org.crosswire.common.progress.WorkListener#workStateChanged(org.crosswire.common.progress.WorkEvent)
+         */
+        public void workStateChanged(WorkEvent ev)
+        {
+        }
     }
 }

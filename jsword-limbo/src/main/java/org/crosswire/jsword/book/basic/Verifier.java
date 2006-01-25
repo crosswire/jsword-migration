@@ -30,7 +30,7 @@ import org.crosswire.common.progress.JobManager;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookException;
-import org.crosswire.jsword.book.search.basic.DefaultSearchRequest;
+import org.crosswire.jsword.index.search.DefaultSearchRequest;
 import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.KeyUtil;

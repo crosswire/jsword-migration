@@ -31,11 +31,11 @@ import java.util.Properties;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.jsword.book.BookException;
-import org.crosswire.jsword.book.query.Query;
-import org.crosswire.jsword.book.search.Index;
-import org.crosswire.jsword.book.search.SearchRequest;
-import org.crosswire.jsword.book.search.Searcher;
-import org.crosswire.jsword.book.search.basic.DefaultSearchRequest;
+import org.crosswire.jsword.index.Index;
+import org.crosswire.jsword.index.query.Query;
+import org.crosswire.jsword.index.search.DefaultSearchRequest;
+import org.crosswire.jsword.index.search.SearchRequest;
+import org.crosswire.jsword.index.search.Searcher;
 import org.crosswire.jsword.passage.Key;
 
 /**

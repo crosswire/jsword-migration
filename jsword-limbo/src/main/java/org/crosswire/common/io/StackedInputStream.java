@@ -117,8 +117,11 @@ public class StackedInputStream extends InputStream
      */
     public int size()
     {
-        if (current == null)	return 0;
-        else					return list.size() + 1;
+        if (current == null)
+        {
+            return 0;
+        }
+        return list.size() + 1;
     }
 
     /**

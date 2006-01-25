@@ -23,7 +23,7 @@ package org.crosswire.jsword.book.search.parse;
 
 import org.crosswire.common.util.MsgBase;
 import org.crosswire.jsword.book.BookException;
-import org.crosswire.jsword.book.search.Index;
+import org.crosswire.jsword.index.Index;
 import org.crosswire.jsword.passage.Key;
 
 /**

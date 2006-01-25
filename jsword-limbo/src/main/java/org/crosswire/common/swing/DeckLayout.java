@@ -401,7 +401,7 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
 
     /**
      * @param name
-     * @return
+     * @return return the named component
      */
     public Component getComponent(String name)
     {
@@ -411,7 +411,7 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
     /**
      * @param parent
      * @param index
-     * @return
+     * @return return the name of the component
      */
     public String getName(Container parent, int index)
     {
@@ -434,7 +434,7 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
     /**
      * @param parent
      * @param name
-     * @return
+     * @return the index of the component
      */
     public int getIndex(Container parent, String name)
     {

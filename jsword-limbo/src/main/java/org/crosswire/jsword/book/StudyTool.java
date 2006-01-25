@@ -27,7 +27,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.crosswire.common.util.Logger;
-import org.crosswire.jsword.book.search.basic.DefaultSearchRequest;
+import org.crosswire.jsword.index.search.DefaultSearchRequest;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.jdom.Element;

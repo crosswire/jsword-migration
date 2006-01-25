@@ -49,7 +49,7 @@ import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.SentenceUtil;
 import org.crosswire.jsword.book.search.Grammar;
 import org.crosswire.jsword.book.search.Thesaurus;
-import org.crosswire.jsword.book.search.basic.AbstractIndex;
+import org.crosswire.jsword.index.AbstractIndex;
 import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.KeyUtil;

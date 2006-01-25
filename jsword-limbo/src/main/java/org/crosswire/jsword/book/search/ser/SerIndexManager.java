@@ -34,8 +34,8 @@ import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookMetaData;
-import org.crosswire.jsword.book.search.Index;
-import org.crosswire.jsword.book.search.IndexManager;
+import org.crosswire.jsword.index.Index;
+import org.crosswire.jsword.index.IndexManager;
 import org.crosswire.jsword.util.Project;
 
 /**
