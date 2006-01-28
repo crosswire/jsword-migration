@@ -111,7 +111,9 @@ public class DownloadSet implements Comparable
      */
     public String getDateString() throws ParseException
     {
-        Date date = DF_DISK.parse(setname);
+        // The setname may either be a VERSION_DATE or x.x.x.x-VERSION_DATE.
+        String setdate = setname.substring(setname.length() - VERSION_DATE.length());
+        Date date = DF_DISK.parse(setdate);
         return DF_USER.format(date);
     }
 
@@ -150,7 +152,8 @@ public class DownloadSet implements Comparable
     private static final String TEST_SUFFIX = BIN_ZIP;
 
     private static final NumberFormat NF = NumberFormat.getNumberInstance();
-    private static final DateFormat DF_DISK = new SimpleDateFormat("yyyyMMdd"); //$NON-NLS-1$
+    private static final String VERSION_DATE = "yyyyMMdd"; //$NON-NLS-1$
+    private static final DateFormat DF_DISK = new SimpleDateFormat(VERSION_DATE);
     private static final DateFormat DF_USER = new SimpleDateFormat("dd MMM yyyy"); //$NON-NLS-1$
     static
     {
