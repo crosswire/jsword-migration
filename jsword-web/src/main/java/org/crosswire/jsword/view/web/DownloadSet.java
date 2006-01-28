@@ -92,8 +92,11 @@ public class DownloadSet implements Comparable
         {
             try
             {
-                Date thisdate = DF_DISK.parse(this.setname);
-                Date thatdate = DF_DISK.parse(that.setname);
+                // The setname may either be a VERSION_DATE or x.x.x.x-VERSION_DATE.
+                String thisSetdate = this.setname.substring(this.setname.length() - VERSION_DATE.length());
+                Date thisdate = DF_DISK.parse(thisSetdate);
+                String thatSetdate = that.setname.substring(that.setname.length() - VERSION_DATE.length());
+                Date thatdate = DF_DISK.parse(thatSetdate);
 
                 return thisdate.compareTo(thatdate);
             }
