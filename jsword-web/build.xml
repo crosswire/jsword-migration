@@ -1,6 +1,6 @@
 <project name="jsword-web" default="all">
 
-  <import file="../common/core.xml"/>
+  <import   file="../common/core.xml"/>
   <property name="dependency"         value="bibledesktop-web"/>
   <property name="dependency.jar"     value="../bibledesktop/${target.jar}"/>
 
