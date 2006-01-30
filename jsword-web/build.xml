@@ -1,6 +1,6 @@
 <project name="jsword-web" default="all">
 
-  <import   file="../common/core.xml"/>
+  <import file="../common/core.xml"/>
   <property name="dependency"         value="bibledesktop-web"/>
   <property name="dependency.jar"     value="../bibledesktop/${target.jar}"/>
 
@@ -90,7 +90,23 @@
   <target name="tools" depends="java2html,checkstyle,javancss,findbugs,pmd,cpd,jdepend"/>
 
   <!--=======================================================================-->
-  <target name="install" depends="install.dependency, webapp, tools, release.nightly" description="Install all the files">
+  <target name="install"
+          depends="install.dependency, install.check"
+          unless="release.uptodate"
+          description="Install all the files">
+    <antcall target="do.install"/>
+  </target>
+  <target name="do.install"
+          depends="webapp, tools, release.nightly">
+    <!-- Create a flag file used to determine whether this task finished successfully -->
+    <touch file="${target.root}/.flagfile"/>
+  </target>
+  <target name="install.check">
+    <uptodate property="release.uptodate"
+        targetfile="${target.root}/.flagfile">
+      <srcfiles dir="${target.web}/WEB-INF/lib" includes="*"/>
+    </uptodate>
+    <echo message="release.uptodate result: ${release.uptodate}"/>
   </target>
 
   <!--=======================================================================-->

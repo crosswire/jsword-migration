@@ -27,7 +27,10 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="install" depends="build, keygen" description="Prepares for web based jnlp deploy">
+  <target name="install"
+          depends="build, keygen, install.check"
+          unless="install.uptodate"
+          description="Prepares for web based jnlp deploy">
     <echo message="Building JNLP: uninstalled files in: ${jnlp.uninstalled} and installed in ${jnlp.installed}"/>
     <!-- sign the jars to a temporary location so they can be reused -->
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="bibledesktop-${release.version}.jar"/>
@@ -50,9 +53,13 @@
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="rome-0.7.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="werx-051405.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="xmlrpc-2.0.1.jar"/>
+
+    <!-- Create a flag file used to determine whether the set of jars needs to be signed -->
+    <touch file="${target.root}/.flagfile"/>
     <!-- Copy the files needed for the distribution -->
     <mkdir dir="${jnlp.uninstalled}"/>
-    <copy todir="${jnlp.uninstalled}">
+    <copy todir="${jnlp.uninstalled}"
+          preservelastmodified="true">
       <fileset dir="${target.signed}"/>
       <fileset dir="${source.etc}/jnlp">
         <include name="bibledesktop.jnlp"/>
@@ -83,11 +90,13 @@
   	-->
     <!--
     Attempt a local deploy, we might be able to get the jnlp file to work
-    locally on a relative path, but in the mean time there is always the *.bat
+    locally on a relative path, but in the mean time there is always the *.exe
     and *.sh startup files.
     -->
     <mkdir dir="${jnlp.installed}"/>
-    <copy todir="${jnlp.installed}" filtering="true">
+    <copy todir="${jnlp.installed}"
+          filtering="true"
+          preservelastmodified="true">
       <fileset dir="${jnlp.uninstalled}">
         <include name="**/*.jnlp"/>
       </fileset>
@@ -97,11 +106,21 @@
         <filter token="release.version" value="${release.version}"/>
       </filterset>
     </copy>
-    <copy todir="${jnlp.installed}" filtering="false">
+    <copy todir="${jnlp.installed}"
+          filtering="false"
+          preservelastmodified="true">
       <fileset dir="${jnlp.uninstalled}">
         <exclude name="**/*.jnlp"/>
       </fileset>
     </copy>
+  </target>
+
+  <target name="install.check">
+    <uptodate property="install.uptodate"
+        targetfile="${target.root}/.flagfile">
+      <srcfiles dir="${target.jar}"/>
+    </uptodate>
+    <echo message="install.uptodate result: ${install.uptodate}"/>
   </target>
 
 </project>
