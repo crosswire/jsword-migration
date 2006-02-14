@@ -30,20 +30,21 @@
  * @author DM Smith [dmsmith555 at yahoo dot com]
  -->
  <xsl:stylesheet
-  xmlns="http://www.w3.org/TR/REC-html40"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   version="1.0"
   xmlns:jsword="http://xml.apache.org/xalan/java"
   extension-element-prefixes="jsword">
 
-  <xsl:output method="html" omit-xml-declaration="yes" indent="no"/>
+  <!--  Version 3.0 is necessary to get br to work correctly. -->
+  <xsl:output method="html" version="3.0" omit-xml-declaration="yes" indent="no"/>
+
   <!-- Be very careful about introducing whitespace into the document.
        strip-space merely remove space between one tag and another tag.
        This may cause significant whitespace to be removed.
        
        It is easy to have apply-templates on a line to itself which if
        it encounters text before anything else will introduce whitespace.
-       With the browser we are using span will introduce whitespace,
+       With the browser we are using, span will introduce whitespace
        but font does not. Therefore we use font as a span.
     -->
   <!-- gdef and hdef refer to hebrew and greek definitions keyed by strongs -->
@@ -495,10 +496,10 @@
   <xsl:template match="seg">
     <xsl:choose>
       <xsl:when test="starts-with(@type, 'color:')">
-        <font color="substring-before(substring-after(@type, 'color: '), ';')"><xsl:apply-templates/></font>
+        <font color="{substring-before(substring-after(@type, 'color: '), ';')}"><xsl:apply-templates/></font>
       </xsl:when>
       <xsl:when test="starts-with(@type, 'font-size:')">
-        <font size="substring-before(substring-after(@type, 'font-size: '), ';')"><xsl:apply-templates/></font>
+        <font size="{substring-before(substring-after(@type, 'font-size: '), ';')}"><xsl:apply-templates/></font>
       </xsl:when>
       <xsl:when test="@type = 'x-variant'">
         <xsl:if test="@subType = 'x-class:1'">
@@ -652,9 +653,8 @@
   <!-- Avoid adding whitespace -->
   <!-- While a BR is a break, if it is immediately followed by punctuation,
        indenting this rule can introduce whitespace.
-       We use <div class="l"></div> here because <br/> does not work. Nor does <br>
     -->
-  <xsl:template match="lb"><div class="l"></div></xsl:template>
+  <xsl:template match="lb"><br/></xsl:template>
   
   <!-- Avoid adding whitespace -->
   <xsl:template match="list">
