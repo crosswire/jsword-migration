@@ -62,6 +62,7 @@ import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.URLEvent;
 import org.crosswire.bibledesktop.display.URLEventListener;
 import org.crosswire.bibledesktop.journal.BlogClientFrame;
+import org.crosswire.bibledesktop.signal.ResizeJournalSignal;
 import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.config.ChoiceFactory;
 import org.crosswire.common.config.Config;
@@ -316,6 +317,14 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         setIconImage(ICON_APP.getImage());
         setEnabled(true);
         setTitle(Msg.getApplicationTitle());
+    }
+    
+    /**
+     * Cause the Journal to reset itself to preferred size
+     */
+    public void channel(ResizeJournalSignal signal)
+    {
+        sptBlog.resetToPreferredSizes();
     }
 
     private JMenuBar createMenuBar(ToolBar toolbar)

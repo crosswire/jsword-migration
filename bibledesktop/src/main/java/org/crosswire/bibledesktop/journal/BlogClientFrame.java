@@ -317,7 +317,7 @@ public class BlogClientFrame extends JPanel
         }
     }
 
-    private void setEnabledRecursive(final Container cont, final boolean enabled)
+    void setEnabledRecursive(final Container cont, final boolean enabled)
     {
         cont.setEnabled(enabled);
 
@@ -338,6 +338,7 @@ public class BlogClientFrame extends JPanel
     private static BlogType type = BlogType.META_WEBLOG;
 
     private static final BlogClientFrame SELF = new BlogClientFrame();
+    private static final long serialVersionUID = 1L;
 
     private GriddedPanel disconnectedPanel;
     private Component curPanel;

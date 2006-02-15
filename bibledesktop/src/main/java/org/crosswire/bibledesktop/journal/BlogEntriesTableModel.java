@@ -87,4 +87,6 @@ public class BlogEntriesTableModel extends DefaultTableModel
     }
 
     private List entries = new ArrayList();
+
+    private static final long serialVersionUID = 1L;
 }
