@@ -190,49 +190,79 @@
   </xsl:template>
 
   <!--=======================================================================-->
+  <!--
+    == An OSIS document may contain more that one work.
+    == Each work is held in an osisCorpus element.
+    == If there is only one work, then this element will (should) be absent.
+    == Process each document in turn.
+    == It might be reasonable to dig into the header element of each work
+    == and get its title.
+    == Otherwise, we ignore the header and work elements and just process
+    == the osisText elements.
+    -->
   <!-- Avoid adding whitespace -->
   <xsl:template match="osisCorpus">
-    <xsl:for-each select="osisText">
-      <!-- If this text has a header, apply templates to the header. -->
-      <xsl:if test="preceding-sibling::*[1][self::header]">
-        <div class="corpus-text-header"><xsl:apply-templates select="preceding-sibling::*[1][self::header]"/></div>
-      </xsl:if>
-      <xsl:apply-templates select="."/>
-    </xsl:for-each>
+    <xsl:apply-templates select="osisText"/>
   </xsl:template>
 
   <!--=======================================================================-->
+  <!--
+    == Each work has an osisText element.
+    == We ignore the header and work elements an process its div elements.
+    == While divs can be milestoned, the osisText element requires container
+    == divs.
+    -->
   <xsl:template match="osisText">
-    <xsl:apply-templates/>
+    <xsl:apply-templates select="div"/>
   </xsl:template>
+  
+  <!-- Ignore headers and its elements -->
+  <xsl:template match="header"/>
+  <xsl:template match="revisionDesc"/>
+  <xsl:template match="work"/>
+  <!-- <xsl:template match="title"/> who's parent is work -->
+  <xsl:template match="contributor"/>
+  <xsl:template match="creator"/>
+  <xsl:template match="subject"/>
+  <!-- <xsl:template match="date"/> who's parent is work -->
+  <xsl:template match="description"/>
+  <xsl:template match="publisher"/>
+  <xsl:template match="type"/>
+  <xsl:template match="format"/>
+  <xsl:template match="identifier"/>
+  <xsl:template match="source"/>
+  <xsl:template match="language"/>
+  <xsl:template match="relation"/>
+  <xsl:template match="coverage"/>
+  <xsl:template match="rights"/>
+  <xsl:template match="scope"/>
+  <xsl:template match="workPrefix"/>
+  <xsl:template match="castList"/>
+  <xsl:template match="castGroup"/>
+  <xsl:template match="castItem"/>
+  <xsl:template match="actor"/>
+  <xsl:template match="role"/>
+  <xsl:template match="roleDesc"/>
+  <xsl:template match="teiHeader"/>
+  <xsl:template match="refSystem"/>
+
+
+  <!-- Ignore titlePage -->
+  <xsl:template match="titlePage"/>
 
   <!--=======================================================================-->
+  <!-- 
+    == Div provides the major containers for a work.
+    == Divs are milestoneable.
+    -->
   <xsl:template match="div">
-    <xsl:if test="@divTitle">
-      <h1><xsl:value-of select="@divTitle"/></h1>
-    </xsl:if>
-    <xsl:if test="@type = 'testament'">
-      <h2>
-        <xsl:choose>
-          <xsl:when test="preceding::div[@type = 'testament']">
-           <xsl:text>New Testament</xsl:text>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:text>Old Testament</xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
-      </h2>
-    </xsl:if>
     <xsl:apply-templates/>
-    <xsl:if test="@divTitle">
-      <p>&#0160;</p>
-    </xsl:if>
   </xsl:template>
 
   <!--=======================================================================-->
   <!-- Handle verses as containers and as a start verse.                     -->
   <xsl:template match="verse[not(@eID)]">
-    <!-- If the verse don't start on their own line and -->
+    <!-- If the verse doesn't start on its own line and -->
     <!-- the verse is not the first verse of a set of siblings, -->
     <!-- output an extra space. -->
     <xsl:if test="$VLine = 'false' and preceding-sibling::*[local-name() = 'verse']">
@@ -347,7 +377,7 @@
   <!--=======================================================================-->
   <xsl:template match="note" mode="print-notes">
     <div class="margin">
-      <b><xsl:call-template name="generateNoteXref"/></b>
+      <strong><xsl:call-template name="generateNoteXref"/></strong>
       <a name="note-{generate-id(.)}">
         <xsl:text> </xsl:text>
       </a>
@@ -584,7 +614,7 @@
   
   <!-- Avoid adding whitespace -->
   <xsl:template match="closer">
-    <div class="closer"><xsl:apply-templates/></div>
+    <font class="closer"><xsl:apply-templates/></font>
   </xsl:template>
   
   <!-- Avoid adding whitespace -->
@@ -712,37 +742,67 @@
             <milestoneEnd> here, since I have no idea what they are supposed
             to do, based on the spec.
   -->
+  <!-- Milestones represent characteristics of the original manuscript.
+    == that are being preserved. For this reason, most are ignored.
+    ==
+    == The defined types are:
+    == column   Marks the end of a column where there is a multi-column display.
+    == footer   Marks the footer region of a page.
+    == halfLine Used to mark half-line units if not otherwise encoded.
+    == header   Marks the header region of a page.
+    == line     Marks line breaks, particularly important in recording appearance of an original text, such as a manuscript.
+    == pb       Marks a page break in a text.
+    == screen   Marks a preferred place for breaks in an on-screen rendering of the text.
+    == cQuote   Marks the location of a continuation quote mark, with marker containing the publishers mark.
+    -->
+  <xsl:template match="milestone[@type = 'cQuote']">
+    <xsl:value-of select="@marker"/>
+  </xsl:template>
+
+  <!--
+    == Milestone start and end are deprecated.
+    == At this point we expect them to not be in the document.
+    == These have been replace with milestoneable elements.
+    -->
+  <xsl:template match="milestoneStart"/>
+  <xsl:template match="milestoneEnd"/>
   
   <xsl:template match="name">
     <font class="name"><xsl:apply-templates/></font>
   </xsl:template>
-  
-  <xsl:template match="q">
-    <!--
-        FIXME: Should I use <span> here?  The spec says that this can be used
-               as an embedded quote or a block quote, but there seems to be no
-               way to figure out which it is based on context.  Currently I've
-               got it as a <blockquote> because it has block-level elements in
-               it.
-        
-        FIXME: Should I include the speaker in the text, e.g.:
-               
-                   {@who}: {text()}
-               
-               ?  I'm not sure.  Currently I've just got it as a "title"
-               attribute on the <span>.
-    -->
-    <blockquote class="q">
-      <xsl:if test="@who">
-        <xsl:attribute name="title"><xsl:value-of select="@who"/></xsl:attribute>
-      </xsl:if>
-      <xsl:apply-templates/>
-    </blockquote>
+
+  <!-- If there is a milestoned q then just output a quotation mark -->
+  <xsl:template match="q[@sID or @eID]">
+    <xsl:choose>
+      <xsl:when test="@marker"><xsl:value-of select="@marker"/></xsl:when>
+      <!-- The chosen mark should be based on the work's author's locale. -->
+      <xsl:otherwise>"</xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
+  <xsl:template match="q[@type = 'blockquote']">
+    <blockquote class="q"><xsl:value-of select="@marker"/><xsl:apply-templates/><xsl:value-of select="@marker"/></blockquote>
+  </xsl:template>
+
+  <xsl:template match="q[@type = 'citation']">
+    <blockquote class="q"><xsl:value-of select="@marker"/><xsl:apply-templates/><xsl:value-of select="@marker"/></blockquote>
+  </xsl:template>
+
+  <xsl:template match="q[@type = 'embedded']">
+    <xsl:choose>
+      <xsl:when test="@marker">
+      <font class="q"><xsl:value-of select="@marker"/><xsl:apply-templates/><xsl:value-of select="@marker"/></font>
+      </xsl:when>
+      <xsl:otherwise>
+        <quote class="q"><xsl:apply-templates/></quote>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
+  <!-- An alternate reading. -->
   <!-- Avoid adding whitespace -->
   <xsl:template match="rdg">
-    <div class="rdg"><xsl:apply-templates/></div>
+    <font class="rdg"><xsl:apply-templates/></font>
   </xsl:template>
 
   <!--
@@ -751,7 +811,7 @@
   
   <!-- Avoid adding whitespace -->
   <xsl:template match="salute">
-    <div class="salute"><xsl:apply-templates/></div>
+    <font class="salute"><xsl:apply-templates/></font>
   </xsl:template>
   
   <!-- Avoid adding whitespace -->
