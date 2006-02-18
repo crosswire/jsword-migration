@@ -208,7 +208,7 @@
   <!--=======================================================================-->
   <!--
     == Each work has an osisText element.
-    == We ignore the header and work elements an process its div elements.
+    == We ignore the header and work elements and process its div elements.
     == While divs can be milestoned, the osisText element requires container
     == divs.
     -->
@@ -875,8 +875,14 @@
   
   <xsl:template match="hi">
       <xsl:choose>
+        <xsl:when test="@type = 'acrostic'">
+          <font class="acrostic"><xsl:apply-templates/></font>
+        </xsl:when>
         <xsl:when test="@type = 'bold'">
           <strong><xsl:apply-templates/></strong>
+        </xsl:when>
+        <xsl:when test="@type = 'emphasis'">
+          <em><xsl:apply-templates/></em>
         </xsl:when>
         <xsl:when test="@type = 'illuminated'">
           <strong><em><xsl:apply-templates/></em></strong>
@@ -892,6 +898,12 @@
         </xsl:when>
         <xsl:when test="@type = 'small-caps'">
           <font class="small-caps"><xsl:apply-templates/></font>
+        </xsl:when>
+        <xsl:when test="@type = 'sub'">
+          <sub><xsl:apply-templates/></sub>
+        </xsl:when>
+        <xsl:when test="@type = 'super'">
+          <sup><xsl:apply-templates/></sup>
         </xsl:when>
         <xsl:when test="@type = 'underline'">
           <u><xsl:apply-templates/></u>
