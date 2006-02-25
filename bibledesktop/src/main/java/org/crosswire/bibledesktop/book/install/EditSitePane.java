@@ -171,6 +171,7 @@ public class EditSitePane extends JPanel
         pnlBtn2.add(btnReset, null);
 
         siteEditorPane = new JPanel();
+        siteEditorPane.setLayout(new GridBagLayout());
         JPanel pnlMain = new JPanel();
         pnlMain.setLayout(new GridBagLayout());
         pnlMain.add(lblMesg, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
@@ -513,7 +514,7 @@ public class EditSitePane extends JPanel
         if (installer != null)
         {
             siteEditor = SiteEditorFactory.createSiteEditor(installer);
-            siteEditorPane.add((Component) siteEditor);
+            siteEditorPane.add((Component) siteEditor,new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         }
 
         GuiUtil.refresh(this);
