@@ -56,7 +56,7 @@ Section "MainSection" SEC01
   CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.exe"
   CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.exe"
-  File ..\..\target\ant\installed\*.jar
+  File ..\..\target\installed\*.jar
 SectionEnd
 
 Section -AdditionalIcons

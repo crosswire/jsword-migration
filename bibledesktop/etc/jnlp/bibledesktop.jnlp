@@ -25,7 +25,7 @@
   </security>
 
   <resources>
-    <j2se version="1.4+" max-heap-size="512m"/>
+    <j2se version="1.5+" max-heap-size="512m"/>
     <jar href="bibledesktop-@release.version@.jar"/>
     <jar href="jsword-@release.version@.jar"/>
     <jar href="jsword-common-@release.version@.jar"/>
