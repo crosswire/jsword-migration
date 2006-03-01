@@ -248,6 +248,7 @@
   </option>
 -->
 
+<!--  Temporarily remove Blog code
   <option key="WebJournal.Url" type="string" priority="1">
     <introspect class="org.crosswire.bibledesktop.journal.BlogClientFrame" property="Url"/>
   </option>
@@ -265,5 +266,5 @@
     <alternative number="0" />
     <alternative number="1" />
   </option>
-
+ -->
 </config>

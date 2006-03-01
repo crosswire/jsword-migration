@@ -514,7 +514,7 @@ public class EditSitePane extends JPanel
         if (installer != null)
         {
             siteEditor = SiteEditorFactory.createSiteEditor(installer);
-            siteEditorPane.add((Component) siteEditor,new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+            siteEditorPane.add((Component) siteEditor, new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         }
 
         GuiUtil.refresh(this);

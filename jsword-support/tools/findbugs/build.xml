@@ -31,7 +31,7 @@
       <auxClasspath path="${target.jar}/commons-httpclient-3.0.jar"/>
       <auxClasspath path="${target.jar}/javatar-2.5.jar"/>
       <auxClasspath path="${target.jar}/jdom-1.0.jar"/>
-      <auxClasspath path="${target.jar}/lucene-1.9-final.jar"/>
+      <auxClasspath path="${target.jar}/lucene-core-1.9-final.jar"/>
       <auxClasspath path="../common/jar/jaf-1.0.2/activation.jar"/>
       <auxClasspath path="${target.jar}/jlfgr-1_0.jar"/>
       <auxClasspath path="${target.jar}/blogapps-1.0.jar"/>

@@ -61,8 +61,6 @@ import org.crosswire.bibledesktop.book.DisplaySelectPane;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.URLEvent;
 import org.crosswire.bibledesktop.display.URLEventListener;
-import org.crosswire.bibledesktop.journal.BlogClientFrame;
-import org.crosswire.bibledesktop.signal.ResizeJournalSignal;
 import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.config.ChoiceFactory;
 import org.crosswire.common.config.Config;
@@ -98,8 +96,6 @@ import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.util.ConverterFactory;
 import org.crosswire.jsword.util.Project;
 import org.jdom.Document;
-import org.werx.framework.bus.BusStart;
-import org.werx.framework.bus.ReflectionBus;
 
 /**
  * The Desktop is the user's view of BibleDesktop.
@@ -125,7 +121,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
             {
                 public void run()
                 {
-                    new BusStart();
+//                    new BusStart();
                     ExceptionPane.setHelpDeskListener(true);
                     LookAndFeelUtil.initialize();
 
@@ -202,7 +198,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         debug();
         init();
 
-        ReflectionBus.plug(this);
+//        ReflectionBus.plug(this);
 
         // Listen for book changes so that the Options can be kept current
         BooksListener cbl = new BooksListener()
@@ -239,14 +235,14 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     private void createComponents()
     {
         barStatus = new StatusBar();
-        ReflectionBus.plug(barStatus);
+//        ReflectionBus.plug(barStatus);
 
         //barSide = new SidebarPane();
         //barBook = new ReferencedPane();
         reference = new DictionaryPane();
         sptBooks = new FixedSplitPane(false);
         sptBlog = new FixedSplitPane(false);
-        blogPanel = BlogClientFrame.getInstance();
+//        blogPanel = BlogClientFrame.getInstance();
 
         views = new ViewManager(this);
         views.addViewEventListener(this);
@@ -282,12 +278,12 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         sptBooks.setOpaque(true);
         sptBooks.setBorder(null);
 
-        sptBlog.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        sptBlog.setTopComponent(sptBooks);
-        sptBlog.setBottomComponent(blogPanel);
-        sptBlog.setResizeWeight(0.8D);
-        sptBlog.setOpaque(true);
-        sptBlog.setBorder(null);
+//        sptBlog.setOrientation(JSplitPane.VERTICAL_SPLIT);
+//        sptBlog.setTopComponent(sptBooks);
+//        sptBlog.setBottomComponent(blogPanel);
+//        sptBlog.setResizeWeight(0.8D);
+//        sptBlog.setOpaque(true);
+//        sptBlog.setBorder(null);
 
         // The toolbar needs to be in the outermost container, on the border
         // And the only other item in that container can be CENTER
@@ -298,14 +294,14 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
 
         mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(1, 5, 1, 5));
-        if (webJournalShowing)
-        {
-            mainPanel.add(sptBlog, BorderLayout.CENTER);
-        }
-        else
-        {
+//        if (webJournalShowing)
+//        {
+//            mainPanel.add(sptBlog, BorderLayout.CENTER);
+//        }
+//        else
+//        {
             mainPanel.add(sptBooks, BorderLayout.CENTER);
-        }
+//        }
 
         // Put everything else in its own panel
         corePanel = new JPanel(new BorderLayout());
@@ -318,14 +314,14 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         setEnabled(true);
         setTitle(Msg.getApplicationTitle());
     }
-    
+
     /**
      * Cause the Journal to reset itself to preferred size
      */
-    public void channel(ResizeJournalSignal signal)
-    {
-        sptBlog.resetToPreferredSizes();
-    }
+//    public void channel(ResizeJournalSignal signal)
+//    {
+//        sptBlog.resetToPreferredSizes();
+//    }
 
     private JMenuBar createMenuBar(ToolBar toolbar)
     {
@@ -1066,7 +1062,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
 
     private transient ViewManager views;
     private JPanel corePanel;
-    private BlogClientFrame blogPanel;
+//    private BlogClientFrame blogPanel;
     private JSplitPane sptBlog;
     private JCheckBoxMenuItem sidebarToggle;
     private StatusBar barStatus;
