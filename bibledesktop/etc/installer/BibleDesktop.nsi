@@ -8,8 +8,8 @@
 !define CLASS "org.crosswire.bibledesktop.desktop.Desktop"
 !define JAVALIB "$EXEDIR"
 
-!define JRE_VERSION "1.4.2"
-!define JRE_URL "http://dlc.sun.com/jdk/j2re-1_4_2_07-windows-i586-p.exe"
+!define JRE_VERSION "1.5.0"
+!define JRE_URL "http://dlc.sun.com/jdk/jre-1_5_0_01-windows-i586-p.exe"
 
 SetCompressor lzma
 
