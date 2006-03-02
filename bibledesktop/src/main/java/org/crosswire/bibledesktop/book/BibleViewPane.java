@@ -393,6 +393,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
         /* (non-Javadoc)
          * @see javax.swing.filechooser.FileFilter#accept(java.io.File)
          */
+        @Override
         public boolean accept(File file)
         {
             return file.getName().endsWith(EXTENSION);
@@ -401,6 +402,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
         /* (non-Javadoc)
          * @see javax.swing.filechooser.FileFilter#getDescription()
          */
+        @Override
         public String getDescription()
         {
             return Msg.VERSE_LIST_DESC.toString(EXTENSION);

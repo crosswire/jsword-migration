@@ -71,6 +71,7 @@ public class ReferenceRootTreeNode implements TreeNode
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString()
     {
         return "Reference Works"; //$NON-NLS-1$

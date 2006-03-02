@@ -35,6 +35,7 @@ public class DirectoryField extends FileField
     /* (non-Javadoc)
      * @see org.crosswire.common.config.swing.FileField#doBrowse()
      */
+    @Override
     public void doBrowse()
     {
         JFileChooser chooser = new JFileChooser(text.getText());

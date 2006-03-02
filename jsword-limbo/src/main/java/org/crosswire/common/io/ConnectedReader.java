@@ -33,6 +33,7 @@ public class ConnectedReader extends Reader
      * Override to pass out to the current Stream.
      * @return The byte read, as normal.
      */
+    @Override
     public int read() throws IOException
     {
         if (out != null)
@@ -45,6 +46,7 @@ public class ConnectedReader extends Reader
      * Override to pass out to the current Stream.
      * @return The byte read, as normal.
      */
+    @Override
     public int read(char[] cbuf, int off, int len) throws IOException
     {
         if (out != null)
@@ -56,6 +58,7 @@ public class ConnectedReader extends Reader
     /**
      * Shutdown
      */
+    @Override
     public void close() throws IOException
     {
         in.close();

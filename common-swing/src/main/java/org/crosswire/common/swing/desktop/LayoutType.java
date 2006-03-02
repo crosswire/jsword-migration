@@ -46,6 +46,7 @@ public abstract class LayoutType implements Serializable
         /* (non-Javadoc)
          * @see org.crosswire.common.swing.desktop.LayoutType#createLayout()
          */
+        @Override
         public AbstractViewLayout createLayout()
         {
             return new TDIViewLayout();
@@ -65,6 +66,7 @@ public abstract class LayoutType implements Serializable
         /* (non-Javadoc)
          * @see org.crosswire.common.swing.desktop.LayoutType#createLayout()
          */
+        @Override
         public AbstractViewLayout createLayout()
         {
             return new MDIViewLayout();
@@ -153,6 +155,7 @@ public abstract class LayoutType implements Serializable
      * Prevent subclasses from overriding canonical identity based Object methods
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public final boolean equals(Object o)
     {
         return super.equals(o);
@@ -162,6 +165,7 @@ public abstract class LayoutType implements Serializable
      * Prevent subclasses from overriding canonical identity based Object methods
      * @see java.lang.Object#hashCode()
      */
+    @Override
     public final int hashCode()
     {
         return super.hashCode();
@@ -170,6 +174,7 @@ public abstract class LayoutType implements Serializable
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString()
     {
         return name;

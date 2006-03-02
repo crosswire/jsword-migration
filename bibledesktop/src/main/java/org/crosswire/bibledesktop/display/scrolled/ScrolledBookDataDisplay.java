@@ -52,6 +52,7 @@ public class ScrolledBookDataDisplay extends ProxyBookDataDisplay implements Boo
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getComponent()
      */
+    @Override
     public Component getComponent()
     {
         return scrView;

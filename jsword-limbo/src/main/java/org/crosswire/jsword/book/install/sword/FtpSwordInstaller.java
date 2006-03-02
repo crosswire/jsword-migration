@@ -66,6 +66,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller implements Compara
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.install.Installer#getURL()
      */
+    @Override
     public String getInstallerDefinition()
     {
         return PROTOCOL_SWORD + "://" + username + ":" + password + "@" + host + directory; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -98,6 +99,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller implements Compara
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.install.sword.AbstractSwordInstaller#download(java.lang.String, java.lang.String, java.net.URL)
      */
+    @Override
     protected void download(Job job, String dir, String file, URL dest) throws InstallException
     {
         FTPClient ftp = new FTPClient();
@@ -218,6 +220,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller implements Compara
      * @see FtpSwordInstaller#getInstallerDefinition()
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString()
     {
         return getInstallerDefinition();
@@ -226,6 +229,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller implements Compara
     /* (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public boolean equals(Object object)
     {
         if (!(object instanceof FtpSwordInstaller))
@@ -255,6 +259,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller implements Compara
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
+    @Override
     public int hashCode()
     {
         return super.hashCode() + username.hashCode() + password.hashCode();

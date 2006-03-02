@@ -244,6 +244,7 @@ public class MapField extends JPanel implements Field
         /* (non-Javadoc)
          * @see javax.swing.table.TableModel#getColumnName(int)
          */
+        @Override
         public String getColumnName(int col)
         {
             return (col == 0) ? Msg.NAME.toString() : Msg.CLASS.toString();
@@ -252,6 +253,7 @@ public class MapField extends JPanel implements Field
         /* (non-Javadoc)
          * @see javax.swing.table.TableModel#isCellEditable(int, int)
          */
+        @Override
         public boolean isCellEditable(int row, int col)
         {
             return false;

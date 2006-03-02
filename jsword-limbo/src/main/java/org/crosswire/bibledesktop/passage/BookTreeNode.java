@@ -53,6 +53,7 @@ public class BookTreeNode extends BibleTreeNode
     /**
      * This constructor is for when we are really a BookTreeNode
      */
+    @Override
     public void setPassage(Passage ref, boolean filter)
     {
         this.ref = ref;
@@ -92,6 +93,7 @@ public class BookTreeNode extends BibleTreeNode
     /**
      * Returns the child <code>TreeNode</code> at index i
      */
+    @Override
     public TreeNode getChildAt(int i)
     {
         try
@@ -117,6 +119,7 @@ public class BookTreeNode extends BibleTreeNode
     /**
      * Returns the parent <code>TreeNode</code> of the receiver.
      */
+    @Override
     public TreeNode getParent()
     {
         return parent;
@@ -127,6 +130,7 @@ public class BookTreeNode extends BibleTreeNode
      * If the receiver does not contain <code>node</code>, -1 will be
      * returned.
      */
+    @Override
     public int getIndex(TreeNode node)
     {
         if (!(node instanceof ChapterTreeNode))
@@ -141,6 +145,7 @@ public class BookTreeNode extends BibleTreeNode
     /**
      * How we appear in the Tree
      */
+    @Override
     public String toString()
     {
         try

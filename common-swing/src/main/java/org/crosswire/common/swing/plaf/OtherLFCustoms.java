@@ -45,6 +45,7 @@ public class OtherLFCustoms extends AbstractLFCustoms
     /**
      * Install other platform specific UI defaults that we're not aware of.
      */
+    @Override
     protected void initPlatformUIDefaults()
     {
         Border tabbedPanePanelBorder = BorderFactory.createEtchedBorder();

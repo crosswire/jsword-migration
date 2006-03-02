@@ -180,6 +180,7 @@ public class Strongs
      * Default to returning the OLB name for this number
      * @return A descriptive String
      */
+    @Override
     public String toString()
     {
         return getOLBName();

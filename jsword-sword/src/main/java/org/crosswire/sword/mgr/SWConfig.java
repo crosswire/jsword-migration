@@ -158,6 +158,7 @@ public class SWConfig {
          * taking into account that some properties may have multiple
          * values.
          */
+        @Override
         public Object put(Object key, Object value) {
             // if the key isn't a String it's not one of the properties
             // we are looking for, so return without setting it.
@@ -203,6 +204,7 @@ public class SWConfig {
          * taking into account that some properties may have multiple
          * values.
          */
+        @Override
         public String getProperty(String key, String defaultValue) {
             String value = getProperty( key );
             if( value != null )
@@ -217,6 +219,7 @@ public class SWConfig {
          * taking into account that some properties may have multiple
          * values.
          */
+        @Override
         public String getProperty(String key) {
             Object value = get(key);
             // if the value associated with the key is a List

@@ -91,6 +91,7 @@ public class DocumentWriter extends Writer
     /* (non-Javadoc)
      * @see java.io.Writer#write(char[], int, int)
      */
+    @Override
     public void write(char[] cbuf, int off, int len)
     {
         synchronized (lock)
@@ -103,6 +104,7 @@ public class DocumentWriter extends Writer
     /* (non-Javadoc)
      * @see java.io.Writer#write(int)
      */
+    @Override
     public void write(int c)
     {
         synchronized (lock)
@@ -115,6 +117,7 @@ public class DocumentWriter extends Writer
     /* (non-Javadoc)
      * @see java.io.Writer#write(char[])
      */
+    @Override
     public void write(char[] cbuf)
     {
         synchronized (lock)
@@ -127,6 +130,7 @@ public class DocumentWriter extends Writer
     /* (non-Javadoc)
      * @see java.io.Writer#write(java.lang.String)
      */
+    @Override
     public void write(String str)
     {
         synchronized (lock)
@@ -139,6 +143,7 @@ public class DocumentWriter extends Writer
     /* (non-Javadoc)
      * @see java.io.Writer#write(java.lang.String, int, int)
      */
+    @Override
     public void write(String str, int off, int len)
     {
         synchronized (lock)
@@ -164,6 +169,7 @@ public class DocumentWriter extends Writer
     /* (non-Javadoc)
      * @see java.io.Writer#flush()
      */
+    @Override
     public void flush() throws IOException
     {
         if (updater != null)
@@ -191,6 +197,7 @@ public class DocumentWriter extends Writer
     /* (non-Javadoc)
      * @see java.io.Writer#close()
      */
+    @Override
     public void close()
     {
         closed = true;

@@ -58,6 +58,7 @@ public class TDIViewLayout extends AbstractViewLayout
     /* (non-Javadoc)
      * @see org.crosswire.common.swing.desktop.AbstractViewLayout#addView(java.awt.Component)
      */
+    @Override
     public void addView(Component component)
     {
         int viewCount = getViewCount();
@@ -86,6 +87,7 @@ public class TDIViewLayout extends AbstractViewLayout
     /* (non-Javadoc)
      * @see org.crosswire.common.swing.desktop.AbstractViewLayout#removeView(java.awt.Component)
      */
+    @Override
     public void removeView(Component component)
     {
         int viewCount = getViewCount();
@@ -118,6 +120,7 @@ public class TDIViewLayout extends AbstractViewLayout
     /* (non-Javadoc)
      * @see org.crosswire.common.swing.desktop.AbstractViewLayout#forceRemoveView(java.awt.Component)
      */
+    @Override
     protected void forceRemoveView(Component component)
     {
         int viewCount = getViewCount();
@@ -147,6 +150,7 @@ public class TDIViewLayout extends AbstractViewLayout
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.desktop.ViewLayout#update(org.crosswire.bibledesktop.book.BibleViewPane)
      */
+    @Override
     public void updateTitle(Component component)
     {
         if (getViewCount() > 1)
@@ -159,6 +163,7 @@ public class TDIViewLayout extends AbstractViewLayout
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.desktop.ViewLayout#getSelected()
      */
+    @Override
     public Component getSelected()
     {
         if (getViewCount() == 1)
@@ -172,6 +177,7 @@ public class TDIViewLayout extends AbstractViewLayout
     /* (non-Javadoc)
      * @see org.crosswire.common.swing.desktop.AbstractViewLayout#select(java.awt.Component)
      */
+    @Override
     public void select(Component component)
     {
         // If we don't have tabs then it is selected.

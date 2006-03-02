@@ -41,6 +41,7 @@ public class WordsTest extends TestCase
 
     private IndexSearcher engine = null;
 
+    @Override
     protected void setUp() throws Exception
     {
         Map commands = IndexSearcher.getWordMap();
@@ -57,6 +58,7 @@ public class WordsTest extends TestCase
         engine.setSearchMap(commands);        
     }
 
+    @Override
     protected void tearDown() throws Exception
     {
     }

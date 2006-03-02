@@ -48,6 +48,7 @@ public class TabbedConfigEditor extends AbstractConfigEditor
      * any field initializers will be called AFTER THIS METHOD EXECUTES
      * so don't use field initializers.
      */
+    @Override
     protected void initializeGUI()
     {
         JComponent bar = new ButtonPane(this);
@@ -61,6 +62,7 @@ public class TabbedConfigEditor extends AbstractConfigEditor
     /**
      * Update the tree structure
      */
+    @Override
     protected void updateTree()
     {
         if (tab != null)

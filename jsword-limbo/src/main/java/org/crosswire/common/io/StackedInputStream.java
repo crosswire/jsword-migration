@@ -63,6 +63,7 @@ public class StackedInputStream extends InputStream
      * Override to pass out to the current Stream.
      * @return The byte read, as normal.
      */
+    @Override
     public int read() throws IOException
     {
         while (true)
@@ -87,6 +88,7 @@ public class StackedInputStream extends InputStream
      * If someone closes the StackedInputStream then we go round
      * and close all the Streams on the stack.
      */
+    @Override
     public void close() throws IOException
     {
         // Close each InputStream catching and noting IOExceptions
@@ -128,6 +130,7 @@ public class StackedInputStream extends InputStream
      * Primarily for debugging. Reports on th state of the Stream.
      * @return A String containing the report.
      */
+    @Override
     public String toString()
     {
         String retcode = ""; //$NON-NLS-1$

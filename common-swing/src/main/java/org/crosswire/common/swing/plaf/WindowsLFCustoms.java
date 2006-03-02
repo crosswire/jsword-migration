@@ -48,6 +48,7 @@ public class WindowsLFCustoms extends AbstractLFCustoms
     /**
      * Install Windows platform specific UI defaults.
      */
+    @Override
     protected void initPlatformUIDefaults()
     {
         Border tabbedPanePanelBorder = null;

@@ -70,6 +70,7 @@ public class RemoterException extends LucidException
     /**
      * Accessor for the cause of this exception
      */
+    @Override
     public Throwable getCause()
     {
         return cause;

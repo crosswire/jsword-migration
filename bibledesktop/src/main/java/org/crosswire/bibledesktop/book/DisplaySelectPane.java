@@ -144,6 +144,10 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         txtKey.setAction(actions.getAction(PASSAGE_FIELD));
         txtKey.addKeyListener(new KeyAdapter()
         {
+            /* (non-Javadoc)
+             * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+             */
+            @Override
             public void keyTyped(KeyEvent ev)
             {
                 if (ev.getKeyChar() == '\n' && ev.getModifiers() == Toolkit.getDefaultToolkit().getMenuShortcutKeyMask())

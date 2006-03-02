@@ -15,6 +15,7 @@ public class NullIM extends SWInputMethod {
         super(name);
     }
 
+    @Override
     public String translate(char ch) {
         return new String() + ch;
     }

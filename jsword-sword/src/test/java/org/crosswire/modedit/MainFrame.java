@@ -122,6 +122,7 @@ public class MainFrame extends JFrame {
         jTextArea1.setText(""); //$NON-NLS-1$
         jTextArea1.setLineWrap(true);
         jTextArea1.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyTyped(KeyEvent e) {
                 jTextArea1_keyTyped(e);
             }
@@ -203,6 +204,7 @@ public class MainFrame extends JFrame {
         imComboBox.addItem(new HebrewMCIM("Michigan-Claremont")); //$NON-NLS-1$
     }
     /**Overridden so we can exit when window is closed*/
+    @Override
     protected void processWindowEvent(WindowEvent e) {
         super.processWindowEvent(e);
         if (e.getID() == WindowEvent.WINDOW_CLOSING) {

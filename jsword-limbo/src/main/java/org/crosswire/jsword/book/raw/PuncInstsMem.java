@@ -64,6 +64,7 @@ public class PuncInstsMem extends InstsMem
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.raw.Mem#load(java.io.InputStream)
      */
+    @Override
     public void load(InputStream in) throws IOException
     {
         DataInputStream din = new DataInputStream(in);
@@ -90,6 +91,7 @@ public class PuncInstsMem extends InstsMem
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.raw.Mem#save(java.io.OutputStream)
      */
+    @Override
     public void save(OutputStream out) throws IOException
     {
         DataOutputStream dout = new DataOutputStream(out);

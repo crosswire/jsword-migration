@@ -72,6 +72,7 @@ public class WizardConfigEditor extends AbstractConfigEditor
      * any field initializers will be called AFTER THIS METHOD EXECUTES
      * so don't use field initializers.
      */
+    @Override
     protected void initializeGUI()
     {
         actions = new ActionFactory(WizardConfigEditor.class, this);
@@ -139,6 +140,7 @@ public class WizardConfigEditor extends AbstractConfigEditor
      * Now this wasn't created with JBuilder but maybe just maybe by
      * calling my method this, JBuilder may grok it.
      */
+    @Override
     protected void updateTree()
     {
     }

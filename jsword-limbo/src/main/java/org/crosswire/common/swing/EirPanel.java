@@ -86,6 +86,7 @@ public class EirPanel extends JPanel
         dlgMain.setModal(modal);
         dlgMain.addWindowListener(new WindowAdapter()
         {
+            @Override
             public void windowClosed(WindowEvent ev)
             {
                 close();

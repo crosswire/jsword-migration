@@ -147,6 +147,7 @@ public final class WholeBibleTreeNode implements TreeNode
     /**
      * How we appear in the Tree
      */
+    @Override
     public String toString()
     {
         try

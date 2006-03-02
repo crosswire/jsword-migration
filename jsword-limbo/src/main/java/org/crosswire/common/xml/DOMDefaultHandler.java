@@ -42,6 +42,7 @@ public class DOMDefaultHandler extends DefaultHandler
     /**
      * Processing instruction
      */
+    @Override
     public void processingInstruction(String target, String data)
     {
         if (base == null)
@@ -53,6 +54,7 @@ public class DOMDefaultHandler extends DefaultHandler
     /**
      * Start document.
      */
+    @Override
     public void startDocument()
     {
         // TODO(joe): what should I do here?
@@ -62,6 +64,7 @@ public class DOMDefaultHandler extends DefaultHandler
     /* (non-Javadoc)
      * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
+    @Override
     public void startElement(String uri, String name, String qName, Attributes attrs) throws SAXException
     {
         Element ele = doc.createElement(name);
@@ -83,6 +86,7 @@ public class DOMDefaultHandler extends DefaultHandler
     /**
      * Some text data
      */
+    @Override
     public void characters(char[] ch, int start, int length)
     {
         current.appendChild(doc.createTextNode(new String(ch, start, length)));
@@ -91,6 +95,7 @@ public class DOMDefaultHandler extends DefaultHandler
     /**
      * Ignorable whitespace
      */
+    @Override
     public void ignorableWhitespace(char[] ch, int start, int length)
     {
         current.appendChild(doc.createTextNode(new String(ch, start, length)));
@@ -99,6 +104,7 @@ public class DOMDefaultHandler extends DefaultHandler
     /* (non-Javadoc)
      * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
      */
+    @Override
     public void endElement(String uri, String localName, String qName)
     {
         current = (Node) stack.pop();
@@ -107,6 +113,7 @@ public class DOMDefaultHandler extends DefaultHandler
     /**
      * End document
      */
+    @Override
     public void endDocument()
     {
     }
@@ -114,6 +121,7 @@ public class DOMDefaultHandler extends DefaultHandler
     /**
      * Warning
      */
+    @Override
     public void warning(SAXParseException ex)
     {
         Reporter.informUser(this, ex);
@@ -122,6 +130,7 @@ public class DOMDefaultHandler extends DefaultHandler
     /**
      * Error
      */
+    @Override
     public void error(SAXParseException ex)
     {
         Reporter.informUser(this, ex);
@@ -130,6 +139,7 @@ public class DOMDefaultHandler extends DefaultHandler
     /**
      * Fatal error
      */
+    @Override
     public void fatalError(SAXParseException ex) throws SAXException
     {
         Reporter.informUser(this, ex);

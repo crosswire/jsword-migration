@@ -73,6 +73,7 @@ public abstract class ItemsMem extends Mem implements Items
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.raw.Mem#init()
      */
+    @Override
     public void init()
     {
         hash = new HashMap(getMaxItems());

@@ -24,6 +24,7 @@ public class TextViewPanelBeanInfo extends SimpleBeanInfo
     * Info about the extra properties we provide
     * @return an array of property descriptors
     */
+    @Override
     public PropertyDescriptor[] getPropertyDescriptors()
     {
         try
@@ -52,6 +53,7 @@ public class TextViewPanelBeanInfo extends SimpleBeanInfo
     /**
     * Get additional information from the superclass, in this case JPanel
     */
+    @Override
     public BeanInfo[] getAdditionalBeanInfo()
     {
         Class superclass = TextViewPanel.class.getSuperclass();

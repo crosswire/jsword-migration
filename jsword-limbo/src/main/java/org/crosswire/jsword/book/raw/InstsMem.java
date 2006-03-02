@@ -64,6 +64,7 @@ public abstract class InstsMem extends Mem implements Insts
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.raw.Mem#init()
      */
+    @Override
     public void init()
     {
         array = new int[BibleInfo.versesInBible()][];

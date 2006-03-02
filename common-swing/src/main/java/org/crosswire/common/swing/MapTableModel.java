@@ -213,6 +213,7 @@ public class MapTableModel extends AbstractTableModel
      * @param col 1=keys, 2=values
      * @return String.class
      */
+    @Override
     public Class getColumnClass(int col)
     {
         return String.class;
@@ -223,6 +224,7 @@ public class MapTableModel extends AbstractTableModel
      * @param col The column index
      * @return The column name
      */
+    @Override
     public String getColumnName(int col)
     {
         return colNames[col];

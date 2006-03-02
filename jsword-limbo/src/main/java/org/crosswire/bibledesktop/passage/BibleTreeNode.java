@@ -169,6 +169,7 @@ public class BibleTreeNode implements TreeNode
     /**
      * Returns the children of the reciever as an Enumeration.
      */
+    @Override
     public String toString()
     {
         if (ref == null)

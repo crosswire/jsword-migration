@@ -50,6 +50,7 @@ public class TimeoutReader extends Reader implements Runnable
     /**
      * @return The byte to be read, as normal.
      */
+    @Override
     public int read(char[] cbuf, int off, int len) throws IOException
     {
         calling = Thread.currentThread();
@@ -85,6 +86,7 @@ public class TimeoutReader extends Reader implements Runnable
      * original, but leave the others, as they might not have finished
      * yet.
      */
+    @Override
     public void close() throws IOException
     {
         if (work == null)

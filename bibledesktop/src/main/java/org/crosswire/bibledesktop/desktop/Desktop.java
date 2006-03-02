@@ -119,6 +119,10 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
             ThreadGroup group = new CatchingThreadGroup("BibleDesktopUIGroup"); //$NON-NLS-1$
             Thread t = new Thread(group, "BibleDesktopUIThread") //$NON-NLS-1$
             {
+                /* (non-Javadoc)
+                 * @see java.lang.Runnable#run()
+                 */
+                @Override
                 public void run()
                 {
 //                    new BusStart();
@@ -256,6 +260,10 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     {
         addWindowListener(new WindowAdapter()
         {
+            /* (non-Javadoc)
+             * @see java.awt.event.WindowListener#windowClosed(java.awt.event.WindowEvent)
+             */
+            @Override
             public void windowClosed(WindowEvent ev)
             {
                 actions.getAction(DesktopActions.EXIT).actionPerformed(new ActionEvent(this, 0, EMPTY_STRING));

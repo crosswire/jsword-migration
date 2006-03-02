@@ -54,6 +54,7 @@ public class TabPopupListener extends MouseAdapter
     /* (non-Javadoc)
      * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
      */
+    @Override
     public void mouseClicked(MouseEvent e)
     {
         doPopup(e);
@@ -62,6 +63,7 @@ public class TabPopupListener extends MouseAdapter
     /* (non-Javadoc)
      * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
      */
+    @Override
     public void mouseReleased(MouseEvent e)
     {
         doPopup(e);
@@ -70,6 +72,7 @@ public class TabPopupListener extends MouseAdapter
     /* (non-Javadoc)
      * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
      */
+    @Override
     public void mousePressed(MouseEvent e)
     {
         doPopup(e);

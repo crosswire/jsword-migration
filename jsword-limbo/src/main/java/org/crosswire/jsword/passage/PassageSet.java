@@ -308,6 +308,7 @@ public class PassageSet implements SortedSet
     /* (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public boolean equals(Object o)
     {
         return ref.equals(o);
@@ -316,6 +317,7 @@ public class PassageSet implements SortedSet
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
+    @Override
     public int hashCode()
     {
         return ref.hashCode();

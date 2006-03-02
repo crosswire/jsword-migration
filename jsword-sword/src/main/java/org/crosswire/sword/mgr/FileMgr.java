@@ -98,6 +98,7 @@ void close(InputStream file) throws java.io.IOException {
 		}
 
 
+        @Override
 		public int available() {
 			int retVal = 0;
 			try {
@@ -113,21 +114,25 @@ void close(InputStream file) throws java.io.IOException {
 		}
 
 
+        @Override
 		public void close() throws java.io.IOException {
 			fileMgr.close(this);
 		}
 
 
+        @Override
 		public synchronized void mark(int i) {
 		}
 
 
+        @Override
 		public boolean markSupported() {
 			return false;
 		}
 
 
-	    public int read() throws java.io.IOException {
+	    @Override
+        public int read() throws java.io.IOException {
 			if (istream == null)
 				istream = fileMgr.sysOpen(this);
 
@@ -135,7 +140,8 @@ void close(InputStream file) throws java.io.IOException {
 		}
 
 
-		public int read(byte[] bytes) throws java.io.IOException {
+		@Override
+        public int read(byte[] bytes) throws java.io.IOException {
 			if (istream == null)
 				istream = fileMgr.sysOpen(this);
 
@@ -143,6 +149,7 @@ void close(InputStream file) throws java.io.IOException {
 		}
 
 
+        @Override
 		public int read(byte[] bytes, int off, int len) throws java.io.IOException {
 			if (istream == null)
 				istream = fileMgr.sysOpen(this);
@@ -151,6 +158,7 @@ void close(InputStream file) throws java.io.IOException {
 		}
 
 
+        @Override
 		public synchronized void reset() throws java.io.IOException {
 			if (istream == null)
 				istream = fileMgr.sysOpen(this);
@@ -158,6 +166,7 @@ void close(InputStream file) throws java.io.IOException {
 			istream.reset();
 		}
 		
+        @Override
 	    public long skip(long jump) throws java.io.IOException {
 			if (istream == null)
 				istream = fileMgr.sysOpen(this);

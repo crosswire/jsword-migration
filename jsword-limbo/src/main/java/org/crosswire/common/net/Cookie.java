@@ -347,6 +347,7 @@ public class Cookie implements Cloneable
     /**
     * Returns a text version of this cookie
     */
+    @Override
     public String toString()
     {
         return name+": "+value; //$NON-NLS-1$ 
@@ -378,6 +379,7 @@ public class Cookie implements Cloneable
     /* (non-Javadoc)
      * @see java.lang.Object#clone()
      */
+    @Override
     public Object clone()
     {
         Object clone = null;

@@ -276,6 +276,7 @@ public class RawBook extends AbstractPassageBook
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getFilter()
      */
+    @Override
     protected Filter getFilter()
     {
         return FilterFactory.getDefaultFilter();
@@ -284,6 +285,7 @@ public class RawBook extends AbstractPassageBook
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getText(org.crosswire.jsword.passage.Verse)
      */
+    @Override
     protected String getText(Key key)
     {
         StringBuffer retcode = new StringBuffer();
@@ -334,6 +336,7 @@ public class RawBook extends AbstractPassageBook
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#setText(org.crosswire.jsword.passage.Verse, java.lang.String)
      */
+    @Override
     protected void setText(Verse verse, String text) throws BookException
     {
         throw new BookException(Msg.DRIVER_READONLY);
@@ -394,6 +397,7 @@ public class RawBook extends AbstractPassageBook
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractBible#setDocument(org.crosswire.jsword.passage.Verse, org.crosswire.jsword.book.filter.BookData)
      */
+    @Override
     public void setDocument(Verse verse, BookData bdata)
     {
         // For all of the sections

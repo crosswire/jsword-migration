@@ -62,6 +62,7 @@ public class StackedReader extends Reader
      * Override to pass out to the current Stream.
      * @return The byte read, as normal.
      */
+    @Override
     public int read() throws IOException
     {
         while (true)
@@ -86,6 +87,7 @@ public class StackedReader extends Reader
      * Override to pass out to the current Stream.
      * @return The byte read, as normal.
      */
+    @Override
     public int read(char[] cbuf, int off, int len) throws IOException
     {
         while (current != null)
@@ -106,6 +108,7 @@ public class StackedReader extends Reader
      * If someone closes the StackedReader then we go round
      * and close all the Streams on the stack.
      */
+    @Override
     public void close() throws IOException
     {
         // Close each Reader catching and noting IOExceptions
@@ -147,6 +150,7 @@ public class StackedReader extends Reader
      * Primarily for debugging. Reports on th state of the Stream.
      * @return A String containing the report.
      */
+    @Override
     public String toString()
     {
         String retcode = ""; //$NON-NLS-1$

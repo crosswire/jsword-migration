@@ -64,6 +64,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
      * any field initializers will be called AFTER THIS METHOD EXECUTES
      * so don't use field initializers.
      */
+    @Override
     protected void initializeGUI()
     {
         JPanel panel = new JPanel();
@@ -134,6 +135,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
     /**
      * Updates to the tree that we need to do on any change
      */
+    @Override
     protected void updateTree()
     {
         // expand the tree
@@ -149,6 +151,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
     /**
      * Add a Choice to our set of panels
      */
+    @Override
     protected void addChoice(String key, Choice model)
     {
         super.addChoice(key, model);
@@ -167,6 +170,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
     /**
      * Add a Choice to our set of panels
      */
+    @Override
     protected void removeChoice(String key, Choice model)
     {
         super.removeChoice(key, model);
@@ -442,6 +446,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
         /* (non-Javadoc)
          * @see java.lang.Object#toString()
          */
+        @Override
         public String toString()
         {
             return name;

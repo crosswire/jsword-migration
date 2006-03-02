@@ -135,6 +135,7 @@ public class CompareResultsPane extends JPanel implements Runnable
 
         frame.addWindowListener(new WindowAdapter()
         {
+            @Override
             public void windowClosed(WindowEvent ev)
             {
                 if (work != null)

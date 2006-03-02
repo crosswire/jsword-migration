@@ -74,6 +74,7 @@ public class Header implements Cloneable
     /**
     * Returns a text version of this cookie
     */
+    @Override
     public String toString()
     {
         if (name == null) return value;

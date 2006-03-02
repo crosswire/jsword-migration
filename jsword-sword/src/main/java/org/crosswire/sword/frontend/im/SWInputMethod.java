@@ -32,6 +32,7 @@ public abstract class SWInputMethod {
         state = 0;
     }
 
+    @Override
     public String toString() {
         return name;
     }

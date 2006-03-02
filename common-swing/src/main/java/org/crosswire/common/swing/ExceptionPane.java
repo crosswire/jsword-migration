@@ -242,7 +242,7 @@ public final class ExceptionPane extends JPanel
      */
     public static void setSourcePath(File[] sourcePath)
     {
-        ExceptionPane.sources = (File[]) sourcePath.clone();
+        ExceptionPane.sources = sourcePath.clone();
     }
 
     /**

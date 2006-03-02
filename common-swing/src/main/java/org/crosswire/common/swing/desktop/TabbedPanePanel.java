@@ -70,6 +70,7 @@ public class TabbedPanePanel extends JPanel
      * We return an insets of 0 so the child components will paint on top of the
      * border. 
      */
+    @Override
     public Insets getInsets()
     {
         return new Insets(0, 0, 0, 0);

@@ -43,6 +43,7 @@ public class TeeOutputStream extends OutputStream
      * Override to write to ass the listed Streams.
      * @param b The byte to be written, as normal.
      */
+    @Override
     public void write(int b) throws IOException
     {
         for (int i=0; i<list.size(); i++)
@@ -56,6 +57,7 @@ public class TeeOutputStream extends OutputStream
      * If someone closes the TeeOutputStream then we go round
      * and close all the Streams on the stack.
      */
+    @Override
     public void close() throws IOException
     {
         // Close each OutputStream catching and noting IOExceptions
@@ -93,6 +95,7 @@ public class TeeOutputStream extends OutputStream
      * Primarily for debugging. Reports on th state of the Stream.
      * @return A String containing the report.
      */
+    @Override
     public String toString()
     {
         String retcode = ""; //$NON-NLS-1$

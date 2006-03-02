@@ -73,6 +73,10 @@ public class QuickHelpDialog extends JDialog
         txtHelp.setMargin(new Insets(5, 5, 0, 5));
         txtHelp.addKeyListener(new KeyAdapter()
         {
+            /* (non-Javadoc)
+             * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+             */
+            @Override
             public void keyTyped(KeyEvent ev)
             {
                 close();
@@ -102,6 +106,10 @@ public class QuickHelpDialog extends JDialog
         this.getRootPane().setDefaultButton(btnOK);
         this.addWindowListener(new WindowAdapter()
         {
+            /* (non-Javadoc)
+             * @see java.awt.event.WindowListener#windowClosing(java.awt.event.WindowEvent)
+             */
+            @Override
             public void windowClosing(WindowEvent ev)
             {
                 close();
@@ -112,6 +120,7 @@ public class QuickHelpDialog extends JDialog
     /* (non-Javadoc)
      * @see java.awt.Component#setVisible(boolean)
      */
+    @Override
     public void setVisible(boolean visible)
     {
         if (visible)

@@ -74,6 +74,7 @@ public class ParamName implements Serializable
      * Prevent subclasses from overriding canonical identity based Object methods
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public final boolean equals(Object o)
     {
         return super.equals(o);
@@ -83,6 +84,7 @@ public class ParamName implements Serializable
      * Prevent subclasses from overriding canonical identity based Object methods
      * @see java.lang.Object#hashCode()
      */
+    @Override
     public final int hashCode()
     {
         return super.hashCode();
@@ -91,6 +93,7 @@ public class ParamName implements Serializable
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString()
     {
         return name;

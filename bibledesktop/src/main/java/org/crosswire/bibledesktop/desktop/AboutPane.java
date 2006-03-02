@@ -185,6 +185,10 @@ public class AboutPane
         dlgMain.setModal(true);
         dlgMain.addWindowListener(new WindowAdapter()
         {
+            /* (non-Javadoc)
+             * @see java.awt.event.WindowListener#windowClosed(java.awt.event.WindowEvent)
+             */
+            @Override
             public void windowClosed(WindowEvent ev)
             {
                 doAboutOK();
