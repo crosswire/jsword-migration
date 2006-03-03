@@ -30,11 +30,11 @@ import java.io.Serializable;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ParamName implements Serializable
+public enum ParamName implements Serializable
 {
-	static final ParamName PARAM_BIBLE = new ParamName("bible"); //$NON-NLS-1$
-    static final ParamName PARAM_PASSAGE = new ParamName("passage"); //$NON-NLS-1$
-    static final ParamName PARAM_FINDSTRING = new ParamName("word"); //$NON-NLS-1$
+	PARAM_BIBLE ("bible"), //$NON-NLS-1$
+    PARAM_PASSAGE ("passage"), //$NON-NLS-1$
+    PARAM_FINDSTRING ("word"); //$NON-NLS-1$
 
     /**
      * Only we should be doing this
@@ -49,45 +49,16 @@ public class ParamName implements Serializable
      */
     public static ParamName fromString(String name)
     {
-        for (int i = 0; i < VALUES.length; i++)
+        for (ParamName t : ParamName.values())
         {
-            ParamName o = VALUES[i];
-            if (o.name.equalsIgnoreCase(name))
+            if (t.name.equalsIgnoreCase(name))
             {
-                return o;
+                return t;
             }
         }
         // cannot get here
         assert false;
         return null;
-    }
-
-    /**
-     * Lookup method to convert from an integer
-     */
-    public static ParamName fromInteger(int i)
-    {
-        return VALUES[i];
-    }
-
-    /**
-     * Prevent subclasses from overriding canonical identity based Object methods
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public final boolean equals(Object o)
-    {
-        return super.equals(o);
-    }
-
-    /**
-     * Prevent subclasses from overriding canonical identity based Object methods
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public final int hashCode()
-    {
-        return super.hashCode();
     }
 
     /* (non-Javadoc)
@@ -103,25 +74,4 @@ public class ParamName implements Serializable
      * The name of the ParamName
      */
     private String name;
-
-    // Support for serialization
-    private static int nextObj;
-    private final int obj = nextObj++;
-
-    Object readResolve()
-    {
-        return VALUES[obj];
-    }
-
-    private static final ParamName[] VALUES =
-    {
-        PARAM_BIBLE,
-        PARAM_PASSAGE,
-        PARAM_FINDSTRING,
-    };
-
-    /**
-     * Serialization ID
-     */
-    private static final long serialVersionUID = 3257290244624626230L;
 }

@@ -21,8 +21,6 @@
  */
 package org.crosswire.jsword.book;
 
-import java.io.Serializable;
-
 import org.crosswire.common.util.MsgBase;
 
 /**
@@ -33,85 +31,27 @@ import org.crosswire.common.util.MsgBase;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class Openness implements Serializable
+public enum Openness
 {
-    /**
-     * If the data of unknown distribution status
-     */
-    public static final Openness UNKNOWN = new Openness(Msg.OPEN_UNKNOWN);
+    /** If the data of unknown distribution status */
+    UNKNOWN (Msg.OPEN_UNKNOWN),
 
-    /**
-     * If the data free of copyright restrictions
-     */
-    public static final Openness PD = new Openness(Msg.OPEN_PD);
+    /** If the data free of copyright restrictions */
+    PD (Msg.OPEN_PD),
 
-    /**
-     * Does the data have a license that permits free use
-     */
-    public static final Openness FREE = new Openness(Msg.OPEN_FREE);
+    /** Does the data have a license that permits free use */
+    FREE (Msg.OPEN_FREE),
 
-    /**
-     * Is the data freely redistributable
-     */
-    public static final Openness COPYABLE = new Openness(Msg.OPEN_COPYABLE);
+    /** Is the data freely redistributable */
+    COPYABLE (Msg.OPEN_COPYABLE),
 
-    /**
-     * Is the data sold for commercial profit
-     */
-    public static final Openness COMMERCIAL = new Openness(Msg.OPEN_COMMERCIAL);
+    /** Is the data sold for commercial profit */
+    COMMERCIAL (Msg.OPEN_COMMERCIAL);
 
-    /**
-     * Prevent anyone else from doing this
-     */
+    /** Prevent anyone else from doing this */
     private Openness(MsgBase msg)
     {
         name = msg.toString();
-    }
-
-    /**
-     * Lookup method to convert from a String
-     */
-    public static Openness fromString(String name)
-    {
-        for (int i = 0; i < VALUES.length; i++)
-        {
-            Openness o = VALUES[i];
-            if (o.name.equalsIgnoreCase(name))
-            {
-                return o;
-            }
-        }
-        // cannot get here
-        assert false;
-        return null;
-    }
-
-    /**
-     * Lookup method to convert from an integer
-     */
-    public static Openness fromInteger(int i)
-    {
-        return VALUES[i];
-    }
-
-    /**
-     * Prevent subclasses from overriding canonical identity based Object methods
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public final boolean equals(Object o)
-    {
-        return super.equals(o);
-    }
-
-    /**
-     * Prevent subclasses from overriding canonical identity based Object methods
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public final int hashCode()
-    {
-        return super.hashCode();
     }
 
     /* (non-Javadoc)
@@ -127,27 +67,4 @@ public class Openness implements Serializable
      * The name of the Openness
      */
     private String name;
-
-    // Support for serialization
-    private static int nextObj;
-    private final int obj = nextObj++;
-
-    Object readResolve()
-    {
-        return VALUES[obj];
-    }
-
-    private static final Openness[] VALUES =
-    {
-        UNKNOWN,
-        PD,
-        FREE,
-        COPYABLE,
-        COMMERCIAL
-    };
-
-    /**
-     * Serialization ID
-     */
-    private static final long serialVersionUID = 3257844364125483320L;
 }

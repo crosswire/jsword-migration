@@ -460,7 +460,7 @@ public class RawBook extends AbstractPassageBook
         // Remove the punctuation from the ends of the words.
         for (int i = 0; i < words.length; i++)
         {
-            retcode[i] = CaseType.getCase(words[i]).toInteger();
+            retcode[i] = CaseType.getCase(words[i]).ordinal();
         }
     
         return retcode;

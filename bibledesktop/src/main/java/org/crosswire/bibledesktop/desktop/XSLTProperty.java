@@ -21,8 +21,6 @@
  */
 package org.crosswire.bibledesktop.desktop;
 
-import java.io.Serializable;
-
 import org.crosswire.common.xml.TransformingSAXEventProvider;
 
 
@@ -33,58 +31,38 @@ import org.crosswire.common.xml.TransformingSAXEventProvider;
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at hotmail dot com]
  */
-public final class XSLTProperty implements Serializable
+public enum XSLTProperty
 {
 
-    /**
-     * Determines whether Strong's Numbers should show
-     */
-    public static final XSLTProperty STRONGS_NUMBERS = new XSLTProperty("Strongs", false); //$NON-NLS-1$
+    /** Determines whether Strong's Numbers should show */
+    STRONGS_NUMBERS ("Strongs", false), //$NON-NLS-1$
 
-    /**
-     * Determines whether Word Morphology (e.g. Robinson) should show
-     */
-    public static final XSLTProperty MORPH = new XSLTProperty("Morph", false); //$NON-NLS-1$
+    /** Determines whether Word Morphology (e.g. Robinson) should show */
+    MORPH ("Morph", false), //$NON-NLS-1$
 
-    /**
-     * Determines whether verses should start on a new line.
-     */
-    public static final XSLTProperty START_VERSE_ON_NEWLINE = new XSLTProperty("VLine", false); //$NON-NLS-1$
+    /** Determines whether verses should start on a new line. */
+    START_VERSE_ON_NEWLINE ("VLine", false), //$NON-NLS-1$
 
-    /**
-     * Show verse numbers
-     */
-    public static final XSLTProperty VERSE_NUMBERS = new XSLTProperty("VNum", true); //$NON-NLS-1$
+    /** Show verse numbers */
+    VERSE_NUMBERS ("VNum", true), //$NON-NLS-1$
 
-    /**
-     * Show chapter and verse numbers.
-     */
-    public static final XSLTProperty CV = new XSLTProperty("CVNum", false); //$NON-NLS-1$
+    /** Show chapter and verse numbers. */
+    CV ("CVNum", false), //$NON-NLS-1$
 
-    /**
-     * Show book, chapter and verse numbers.
-     */
-    public static final XSLTProperty BCV = new XSLTProperty("BCVNum", false); //$NON-NLS-1$
+    /** Show book, chapter and verse numbers. */
+    BCV ("BCVNum", false), //$NON-NLS-1$
 
-    /**
-     * Show no verse numbers
-     */
-    public static final XSLTProperty NO_VERSE_NUMBERS = new XSLTProperty("NoVNum", false); //$NON-NLS-1$
+    /** Show no verse numbers */
+    NO_VERSE_NUMBERS ("NoVNum", false), //$NON-NLS-1$
 
-    /**
-     * Show verse numbers as a superscript.
-     */
-    public static final XSLTProperty TINY_VERSE_NUMBERS = new XSLTProperty("TinyVNum", true); //$NON-NLS-1$
+    /** Show verse numbers as a superscript. */
+    TINY_VERSE_NUMBERS ("TinyVNum", true), //$NON-NLS-1$
 
-    /**
-     * Should notes be shown
-     */
-    public static final XSLTProperty NOTES = new XSLTProperty("Notes", true); //$NON-NLS-1$
+    /** Should notes be shown */
+    NOTES ("Notes", true), //$NON-NLS-1$
 
-    /**
-     * Should cross references be shown
-     */
-    public static final XSLTProperty XREF = new XSLTProperty("XRef", true); //$NON-NLS-1$
+    /** Should cross references be shown */
+    XREF ("XRef", true); //$NON-NLS-1$
 
     /**
      * @param name The name of this property
@@ -126,55 +104,10 @@ public final class XSLTProperty implements Serializable
 
     public static void setProperties(TransformingSAXEventProvider provider)
     {
-        for (int i = 0; i < VALUES.length; i++)
+        for (XSLTProperty t : XSLTProperty.values())
         {
-            VALUES[i].setProperty(provider);
+            t.setProperty(provider);
         }
-    }
-
-    /**
-     * Lookup method to convert from a String
-     */
-    public static XSLTProperty fromString(String name)
-    {
-        for (int i = 0; i < VALUES.length; i++)
-        {
-            XSLTProperty o = VALUES[i];
-            if (o.name.equalsIgnoreCase(name))
-            {
-                return o;
-            }
-        }
-        assert false;
-        return null;
-    }
-
-    /**
-     * Lookup method to convert from an integer
-     */
-    public static XSLTProperty fromInteger(int i)
-    {
-        return VALUES[i];
-    }
-
-    /**
-     * Prevent subclasses from overriding canonical identity based Object methods
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object o)
-    {
-        return super.equals(o);
-    }
-
-    /**
-     * Prevent subclasses from overriding canonical identity based Object methods
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        return super.hashCode();
     }
 
     /* (non-Javadoc)
@@ -201,31 +134,4 @@ public final class XSLTProperty implements Serializable
      */
     private boolean state;
 
-    // Support for serialization
-    private static int nextObj;
-    private final int obj = nextObj++;
-
-    Object readResolve()
-    {
-        return VALUES[obj];
-    }
-
-    private static final XSLTProperty[] VALUES =
-    {
-        STRONGS_NUMBERS,
-        MORPH,
-        START_VERSE_ON_NEWLINE,
-        VERSE_NUMBERS,
-        CV,
-        BCV,
-        NO_VERSE_NUMBERS,
-        TINY_VERSE_NUMBERS,
-        NOTES,
-        XREF,
-    };
-
-    /**
-     * Serialization ID
-     */
-    private static final long serialVersionUID = 3257567325749326905L;
 }

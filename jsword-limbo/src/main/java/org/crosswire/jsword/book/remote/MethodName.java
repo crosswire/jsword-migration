@@ -21,7 +21,6 @@
  */
 package org.crosswire.jsword.book.remote;
 
-import java.io.Serializable;
 
 /**
  * Set of constants for the types of RemoteMethod.
@@ -30,11 +29,11 @@ import java.io.Serializable;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class MethodName implements Serializable
+public enum MethodName
 {
-    static final MethodName GETBIBLES = new MethodName("getBibles"); //$NON-NLS-1$
-    static final MethodName GETDATA = new MethodName("getData"); //$NON-NLS-1$
-    static final MethodName FINDPASSAGE = new MethodName("findPassage"); //$NON-NLS-1$
+    GETBIBLES ("getBibles"), //$NON-NLS-1$
+    GETDATA ("getData"), //$NON-NLS-1$
+    FINDPASSAGE ("findPassage"); //$NON-NLS-1$
 
     /**
      * Only we should be doing this
@@ -43,53 +42,6 @@ public class MethodName implements Serializable
     {
         this.name = name;
     }
-
-    /**
-     * Lookup method to convert from a String
-     */
-    public static MethodName fromString(String name)
-    {
-        for (int i = 0; i < VALUES.length; i++)
-        {
-            MethodName o = VALUES[i];
-            if (o.name.equalsIgnoreCase(name))
-            {
-                return o;
-            }
-        }
-        // cannot get here
-        assert false;
-        return null;
-    }
-
-    /**
-     * Lookup method to convert from an integer
-     */
-    public static MethodName fromInteger(int i)
-    {
-        return VALUES[i];
-    }
-
-    /**
-     * Prevent subclasses from overriding canonical identity based Object methods
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public final boolean equals(Object o)
-    {
-        return super.equals(o);
-    }
-
-    /**
-     * Prevent subclasses from overriding canonical identity based Object methods
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public final int hashCode()
-    {
-        return super.hashCode();
-    }
-
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
@@ -100,28 +52,23 @@ public class MethodName implements Serializable
     }
 
     /**
+     * Lookup method to convert from a String
+     */
+    public static MethodName fromString(String name)
+    {
+        for (MethodName t : MethodName.values())
+        {
+            if (t.name.equalsIgnoreCase(name))
+            {
+                return t;
+            }
+        }
+        assert false;
+        return null;
+    }
+
+    /**
      * The name of the MethodName
      */
     private String name;
-
-    // Support for serialization
-    private static int nextObj;
-    private final int obj = nextObj++;
-
-    Object readResolve()
-    {
-        return VALUES[obj];
-    }
-
-    private static final MethodName[] VALUES =
-    {
-        GETBIBLES,
-        GETDATA,
-        FINDPASSAGE
-    };
-
-    /**
-     * Serialization ID
-     */
-    private static final long serialVersionUID = 3905528202582701873L;
 }

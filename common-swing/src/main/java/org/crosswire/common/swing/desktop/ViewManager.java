@@ -328,7 +328,7 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
         {
             initial = LayoutType.TDI;
         }
-        return initial.toInteger();
+        return initial.ordinal();
     }
 
     /* (non-Javadoc)

@@ -168,7 +168,7 @@ public class BlogClientFrame extends JPanel
 
     public static int getType()
     {
-        return type.toInteger();
+        return type.ordinal();
     }
 
     public void signin(String name, char[] pswd)
