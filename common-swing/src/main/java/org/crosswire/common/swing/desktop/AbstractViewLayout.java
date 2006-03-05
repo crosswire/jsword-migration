@@ -52,7 +52,7 @@ public abstract class AbstractViewLayout implements Viewable
     protected AbstractViewLayout()
     {
         panel = new JPanel(new BorderLayout());
-        views = new ArrayList();
+        views = new ArrayList<Component>();
         listenerList = new EventListenerList();
     }
 
@@ -85,9 +85,9 @@ public abstract class AbstractViewLayout implements Viewable
      * Get a snapshot of the views as a collection.
      * @return the views
      */
-    public Collection getViews()
+    public Collection<Component> getViews()
     {
-        return new ArrayList(views);
+        return new ArrayList<Component>(views);
     }
 
     /**
@@ -203,7 +203,7 @@ public abstract class AbstractViewLayout implements Viewable
      */
     public Component getView(int i)
     {
-        return (Component) views.get(i);
+        return views.get(i);
     }
 
     /**
@@ -307,7 +307,7 @@ public abstract class AbstractViewLayout implements Viewable
     /**
      * The list of views.
      */
-    private List views;
+    private List<Component> views;
 
     /**
      * The listeners for handling ViewEvent Listeners

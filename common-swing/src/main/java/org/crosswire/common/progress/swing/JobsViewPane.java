@@ -82,8 +82,8 @@ public class JobsViewPane extends JPanel implements WorkListener
     private void init()
     {
         noJobLabel = new JLabel(Msg.NO_JOBS.toString());
-        jobs = new HashMap();
-        positions = new ArrayList();
+        jobs = new HashMap<Job, JobData>();
+        positions = new ArrayList<JobData>();
         jobsPanel = new JPanel(new GridBagLayout());
         jobsPanel.setBorder(null);
 
@@ -171,7 +171,7 @@ public class JobsViewPane extends JPanel implements WorkListener
      */
     protected void updateJob(Job job)
     {
-        JobData jobdata = (JobData) jobs.get(job);
+        JobData jobdata = jobs.get(job);
 
         int percent = job.getPercent();
         jobdata.getProgress().setString(percent + "%"); //$NON-NLS-1$
@@ -184,7 +184,7 @@ public class JobsViewPane extends JPanel implements WorkListener
      */
     protected void removeJob(Job job)
     {
-        JobData jobdata = (JobData) jobs.get(job);
+        JobData jobdata = jobs.get(job);
 
         log.debug("removing job from panel at " + jobdata.getIndex() + ": " + job.getJobDescription()); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -245,12 +245,12 @@ public class JobsViewPane extends JPanel implements WorkListener
     /**
      * Map of Jobs to JobDatas
      */
-    protected Map jobs;
+    protected Map<Job, JobData> jobs;
 
     /**
      * Array telling us what y position the jobs have in the window
      */
-    private List positions;
+    private List<JobData> positions;
 
     /**
      * The panel containing jobs

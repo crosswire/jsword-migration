@@ -120,7 +120,7 @@ public class TabbedConfigEditor extends AbstractConfigEditor
                     if (index == -1)
                     {
                         // log.fine("  Adding named panel");
-                        FormPane card = (FormPane) decks.get(path);
+                        FormPane card = decks.get(path);
                         if (card != null)
                         {
                             card.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -134,7 +134,7 @@ public class TabbedConfigEditor extends AbstractConfigEditor
                         if (comp instanceof JTabbedPane)
                         {
                             nest = (JTabbedPane) comp;
-                            FormPane card = (FormPane) decks.get(path);
+                            FormPane card = decks.get(path);
                             if (card != null)
                             {
                                 card.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));

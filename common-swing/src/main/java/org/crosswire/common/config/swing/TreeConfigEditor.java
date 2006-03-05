@@ -158,7 +158,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
 
         // Sort the tree out
         String path = Config.getPath(model.getFullPath());
-        FormPane card = (FormPane) decks.get(path);
+        FormPane card = decks.get(path);
         if (card != null && card.getParent() == null)
         {
             JScrollPane scroll = new JScrollPane(card);
@@ -177,7 +177,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
 
         // Sort the tree out
         String path = Config.getPath(model.getFullPath());
-        FormPane card = (FormPane) decks.get(path);
+        FormPane card = decks.get(path);
         if (card != null && card.isEmpty())
         {
             deck.remove(card.getParent());
@@ -281,7 +281,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
          */
         protected List getChildren(String path)
         {
-            List retcode = new ArrayList();
+            List<String> retcode = new ArrayList<String>();
 
             Iterator it = config.getPaths();
             while (it.hasNext())

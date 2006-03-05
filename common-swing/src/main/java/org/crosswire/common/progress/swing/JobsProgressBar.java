@@ -63,8 +63,8 @@ public class JobsProgressBar extends JPanel implements WorkListener
      */
     public JobsProgressBar(boolean small)
     {
-        jobs = new HashMap();
-        positions = new ArrayList();
+        jobs = new HashMap<Job, JobData>();
+        positions = new ArrayList<JobData>();
         if (small)
         {
             // They start off at 15pt (on Windows at least)
@@ -115,7 +115,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
     public void workStateChanged(WorkEvent ev)
     {
         Job job = (Job) ev.getSource();
-        JobData jobdata = (JobData) jobs.get(job);
+        JobData jobdata = jobs.get(job);
         jobdata.workStateChanged(ev);
     }
 
@@ -163,7 +163,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
      */
     protected synchronized void updateJob(Job job)
     {
-        JobData jobdata = (JobData) jobs.get(job);
+        JobData jobdata = jobs.get(job);
 
         int percent = job.getPercent();
         jobdata.getProgress().setString(job.getStateDescription() + ": (" + percent + "%)"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -177,7 +177,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
     {
         job.removeWorkListener(this);
 
-        JobData jobdata = (JobData) jobs.get(job);
+        JobData jobdata = jobs.get(job);
 
         positions.set(jobdata.getIndex(), null);
         jobs.remove(job);
@@ -215,12 +215,12 @@ public class JobsProgressBar extends JPanel implements WorkListener
     /**
      * Where we store the currently displayed jobs
      */
-    protected Map jobs;
+    protected Map<Job, JobData> jobs;
 
     /**
      * Array telling us what y position the jobs have in the window
      */
-    private List positions;
+    private List<JobData> positions;
 
     /**
      * The font for the progress-bars
@@ -240,7 +240,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
     /**
      * A simple struct to group information about a Job
      */
-    private static class JobData implements WorkListener
+    public static class JobData implements WorkListener
     {
         /**
          * Simple ctor

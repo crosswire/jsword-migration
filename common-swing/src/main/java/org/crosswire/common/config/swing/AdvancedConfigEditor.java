@@ -59,7 +59,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor
         tree = new JTree();
         JScrollPane scroll = new JScrollPane();
         CustomTreeCellRenderer render = new CustomTreeCellRenderer();
-        comps = new HashMap();
+        comps = new HashMap<String, Component>();
 
         // Hack: tree depends on it being a Color not a sub of it.
         Color orig = UIManager.getColor("control"); //$NON-NLS-1$
@@ -139,13 +139,13 @@ public class AdvancedConfigEditor extends TreeConfigEditor
     {
         try
         {
-            Field field = (Field) fields.get(key);
+            Field field = fields.get(key);
             if (field != null)
             {
                 fields.remove(field);
             }
 
-            Component comp = (Component) comps.get(key);
+            Component comp = comps.get(key);
             if (comp != null)
             {
                 comps.remove(key);
@@ -203,7 +203,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor
     /**
      * A hash of components
      */
-    protected Map comps;
+    protected Map<String, Component> comps;
 
     /**
      * Serialization ID
@@ -222,7 +222,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor
         @Override
         protected List getChildren(String path)
         {
-            List retcode = new ArrayList();
+            List<String> retcode = new ArrayList<String>();
 
             Iterator it = config.getNames();
             while (it.hasNext())

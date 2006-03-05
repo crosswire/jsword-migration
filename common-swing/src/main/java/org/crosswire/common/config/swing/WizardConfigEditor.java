@@ -77,7 +77,7 @@ public class WizardConfigEditor extends AbstractConfigEditor
     {
         actions = new ActionFactory(WizardConfigEditor.class, this);
 
-        names = new ArrayList();
+        names = new ArrayList<String>();
         layout = new CardLayout();
         deck = new JPanel(layout);
 
@@ -91,7 +91,7 @@ public class WizardConfigEditor extends AbstractConfigEditor
             int last_dot = key.lastIndexOf('.');
             String path = key.substring(0, last_dot);
 
-            FormPane card = (FormPane) decks.get(path);
+            FormPane card = decks.get(path);
             if (card.getParent() == null)
             {
                 JScrollPane scroll = new JScrollPane(card);
@@ -292,7 +292,7 @@ public class WizardConfigEditor extends AbstractConfigEditor
     /**
      * The list of path names
      */
-    private List names;
+    private List<String> names;
 
     /**
      * The title for the config panels

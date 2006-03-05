@@ -117,7 +117,7 @@ public class MapField extends JPanel implements Field
      * Set the current value using a Map
      * @param value The new text
      */
-    public void setMap(Map value)
+    public void setMap(Map<String, String> value)
     {
         tableModel.setMap(value);
         table.setModel(tableModel);
@@ -238,7 +238,7 @@ public class MapField extends JPanel implements Field
          */
         protected NamedMapTableModel()
         {
-            super(new Hashtable());
+            super(new Hashtable<String, String>());
         }
 
         /* (non-Javadoc)

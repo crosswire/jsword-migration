@@ -148,7 +148,7 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
     /* (non-Javadoc)
      * @see org.crosswire.common.swing.desktop.Viewable#getViews()
      */
-    public Collection getViews()
+    public Collection<Component> getViews()
     {
         return getViewLayout().getViews();
     }

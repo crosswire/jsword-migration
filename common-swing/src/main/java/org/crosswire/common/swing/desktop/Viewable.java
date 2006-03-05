@@ -50,7 +50,7 @@ public interface Viewable
      * Get a snapshot of the views as a collection.
      * @return the views
      */
-    Collection getViews();
+    Collection<Component> getViews();
 
     /**
      * Get an iterator of a snapshot of views.

@@ -56,9 +56,9 @@ public class MapTableModel extends AbstractTableModel
      * Create an internal store from a 2D array
      * @param map The table to model
      */
-    public MapTableModel(Map map)
+    public MapTableModel(Map<String, String> map)
     {
-        list = new ArrayList();
+        list = new ArrayList<StringPair>();
         setMap(map);
     }
 
@@ -66,7 +66,7 @@ public class MapTableModel extends AbstractTableModel
      * Change the map that we report on
      * @param map The map we are getting our data from
      */
-    public void setMap(Map map)
+    public void setMap(Map<String, String> map)
     {
         this.map = map;
         list.clear();
@@ -200,7 +200,7 @@ public class MapTableModel extends AbstractTableModel
             return null;
         }
 
-        StringPair entry = (StringPair) list.get(row);
+        StringPair entry = list.get(row);
         if (col == 0)
         {
             return entry.getKey();
@@ -214,7 +214,7 @@ public class MapTableModel extends AbstractTableModel
      * @return String.class
      */
     @Override
-    public Class getColumnClass(int col)
+    public Class<?> getColumnClass(int col)
     {
         return String.class;
     }
@@ -244,12 +244,12 @@ public class MapTableModel extends AbstractTableModel
      * The List that is a copy of the list.
      * A list is used for direct access performance.
      */
-    private List list;
+    private List<StringPair> list;
 
     /**
      * The backing map
      */
-    private Map map;
+    private Map<String, String> map;
 
     /**
      * The default column names
