@@ -207,6 +207,7 @@ public class TarHeader extends Object implements Cloneable
     /**
      * TarHeaders can be cloned.
      */
+    @Override
     public Object clone()
     {
         TarHeader hdr = null;

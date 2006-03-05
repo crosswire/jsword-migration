@@ -41,16 +41,19 @@ public class TarGzOutputStream extends TarOutputStream
 
     // proxy all methods, but buffer if unknown size
 
+    @Override
     public void setDebug(boolean b)
     {
         this.tos.setDebug(b);
     }
 
+    @Override
     public void setBufferDebug(boolean b)
     {
         this.tos.setBufferDebug(b);
     }
 
+    @Override
     public void finish() throws IOException
     {
         if (this.currentEntry != null)
@@ -61,17 +64,20 @@ public class TarGzOutputStream extends TarOutputStream
         this.tos.finish();
     }
 
+    @Override
     public void close() throws IOException
     {
         this.tos.close();
         this.gzip.finish();
     }
 
+    @Override
     public int getRecordSize()
     {
         return this.tos.getRecordSize();
     }
 
+    @Override
     public void putNextEntry(TarEntry entry) throws IOException
     {
         if (entry.getSize() != 0)
@@ -84,6 +90,7 @@ public class TarGzOutputStream extends TarOutputStream
         }
     }
 
+    @Override
     public void closeEntry() throws IOException
     {
         if (this.currentEntry == null)
@@ -101,6 +108,7 @@ public class TarGzOutputStream extends TarOutputStream
         }
     }
 
+    @Override
     public void write(int b) throws IOException
     {
         if (this.currentEntry == null)
@@ -113,6 +121,7 @@ public class TarGzOutputStream extends TarOutputStream
         }
     }
 
+    @Override
     public void write(byte[] b) throws IOException
     {
         if (this.currentEntry == null)
@@ -125,6 +134,7 @@ public class TarGzOutputStream extends TarOutputStream
         }
     }
 
+    @Override
     public void write(byte[] b, int start, int length) throws IOException
     {
         if (this.currentEntry == null)

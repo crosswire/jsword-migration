@@ -104,6 +104,7 @@ public class TarOutputStream extends FilterOutputStream
      * TarBuffer's close().
      */
 
+    @Override
     public void close() throws IOException
     {
         this.finish();
@@ -195,6 +196,7 @@ public class TarOutputStream extends FilterOutputStream
      *
      * @param b The byte written.
      */
+    @Override
     public void write(int b) throws IOException
     {
         this.oneBuf[0] = (byte) b;
@@ -208,6 +210,7 @@ public class TarOutputStream extends FilterOutputStream
      *
      * @param wBuf The buffer to write to the archive.
      */
+    @Override
     public void write(byte[] wBuf) throws IOException
     {
         this.write(wBuf, 0, wBuf.length);
@@ -228,6 +231,7 @@ public class TarOutputStream extends FilterOutputStream
      * @param wOffset The offset in the buffer from which to get bytes.
      * @param numToWrite The number of bytes to write.
      */
+    @Override
     public void write(byte[] wBuf, int wOffset, int numToWrite) throws IOException
     {
         if ((this.currBytes + numToWrite) > this.currSize)

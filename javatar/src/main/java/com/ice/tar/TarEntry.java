@@ -204,7 +204,8 @@ public class TarEntry extends Object implements Cloneable
     /**
      * Clone the entry.
      */
-    public Object clone()
+    @Override
+	public Object clone()
     {
         TarEntry entry = null;
 
@@ -880,6 +881,7 @@ public class TarEntry extends Object implements Cloneable
         hdr.devMinor = 0;
     }
 
+    @Override
     public String toString()
     {
         StringBuffer result = new StringBuffer(128);
