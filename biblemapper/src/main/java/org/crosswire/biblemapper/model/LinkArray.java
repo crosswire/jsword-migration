@@ -105,7 +105,8 @@ public class LinkArray implements Serializable
     /**
      * Generate links from an XML representation.
      */
-    public void fromXML(Element elinks) throws JDOMException
+    @SuppressWarnings("unchecked")
+	public void fromXML(Element elinks) throws JDOMException
     {
         if (!elinks.getName().equals("links"))
         {
