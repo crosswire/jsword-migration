@@ -144,7 +144,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     private void doBlur(int amount)
     {
         // Remember what was selected
-        List selected = new ArrayList(Arrays.asList(list.getSelectedValues()));
+        List<Object> selected = new ArrayList<Object>(Arrays.asList(list.getSelectedValues()));
 
         // Make sure that key changes are not visible until blur is done.
         Key copy = (Key) key.clone();
@@ -334,7 +334,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
      */
     public synchronized void addKeyChangeListener(KeyChangeListener listener)
     {
-        List temp = new ArrayList(2);
+        List<KeyChangeListener> temp = new ArrayList<KeyChangeListener>(2);
 
         if (keyChangeListeners != null)
         {
@@ -355,7 +355,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     {
         if (keyChangeListeners != null && keyChangeListeners.contains(listener))
         {
-            List temp = new ArrayList();
+            List<KeyChangeListener> temp = new ArrayList<KeyChangeListener>();
             temp.addAll(keyChangeListeners);
 
             temp.remove(listener);
@@ -372,7 +372,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
         {
             for (int i = 0; i < keyChangeListeners.size(); i++)
             {
-                KeyChangeListener li = (KeyChangeListener) keyChangeListeners.get(i);
+                KeyChangeListener li = keyChangeListeners.get(i);
                 li.keyChanged(ev);
             }
         }
@@ -400,7 +400,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     /**
      * The listener for KeyChangeEvents
      */
-    private transient List keyChangeListeners;
+    private transient List<KeyChangeListener> keyChangeListeners;
 
     /*
      * GUI Components

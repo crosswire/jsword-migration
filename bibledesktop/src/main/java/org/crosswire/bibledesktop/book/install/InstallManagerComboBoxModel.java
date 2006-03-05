@@ -134,7 +134,7 @@ public class InstallManagerComboBoxModel extends AbstractListModel implements Co
     /**
      * A cache of the names in the Install Manager
      */
-    private List names = new ArrayList();
+    private List<String> names = new ArrayList<String>();
 
     /**
      * The install manager that we are representing

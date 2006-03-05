@@ -956,9 +956,9 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         refreshBooks();
 
         // And the array of allowed osis>html converters
-        Map converters = ConverterFactory.getKnownConverters();
-        Set keys = converters.keySet();
-        String[] names = (String[]) keys.toArray(new String[keys.size()]);
+        Map<String, Class> converters = ConverterFactory.getKnownConverters();
+        Set<String> keys = converters.keySet();
+        String[] names = keys.toArray(new String[keys.size()]);
         ChoiceFactory.getDataMap().put(CONV_KEY, names);
 
         // The choice of configurable XSL stylesheets

@@ -189,7 +189,7 @@ public class MapField extends JPanel implements Field
     {
         try
         {
-            Class clazz = Class.forName(name);
+            Class<?> clazz = Class.forName(name);
 
             if (!superclass.isAssignableFrom(clazz))
             {
@@ -324,7 +324,7 @@ public class MapField extends JPanel implements Field
     /**
      * The class that everything must inherit from
      */
-    private Class superclass;
+    private Class<?> superclass;
 
     /**
      * Serialization ID

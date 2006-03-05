@@ -214,7 +214,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     {
         // First add to our list of listeners so when we get more event syncs
         // we can add this new listener to the new sync
-        List temp = new ArrayList();
+        List<URLEventListener> temp = new ArrayList<URLEventListener>();
         if (hyperlis == null)
         {
             temp.add(listener);
@@ -247,7 +247,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         // First remove from the list of listeners
         if (hyperlis != null && hyperlis.contains(listener))
         {
-            List temp = new ArrayList();
+            List<URLEventListener> temp = new ArrayList<URLEventListener>();
             temp.addAll(hyperlis);
             temp.remove(listener);
             hyperlis = temp;
@@ -328,7 +328,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         {
             Object o = tabMain.getSelectedComponent();
             JScrollPane sp = (JScrollPane) o;
-            return (BookDataDisplay) views.get(sp);
+            return views.get(sp);
         }
         return pnlView;
     }
@@ -400,7 +400,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * A list of all the HyperlinkListeners
      */
-    private transient List hyperlis;
+    private transient List<URLEventListener> hyperlis;
 
     /**
      * The passage that we are displaying (in one or more tabs)
@@ -435,12 +435,12 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * An map of compnents to their views
      */
-    private Map views = new HashMap();
+    private Map<Component, BookDataDisplay> views = new HashMap<Component, BookDataDisplay>();
 
     /**
      * A list of all the InnerDisplayPanes so we can control listeners
      */
-    private List displays = new ArrayList();
+    private List<BookDataDisplay> displays = new ArrayList<BookDataDisplay>();
 
     /**
      * Pointer to whichever of the above is currently in use

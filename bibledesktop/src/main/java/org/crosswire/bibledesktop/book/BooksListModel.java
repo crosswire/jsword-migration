@@ -29,6 +29,7 @@ import javax.swing.AbstractListModel;
 import javax.swing.event.ListDataListener;
 
 import org.crosswire.common.util.Logger;
+import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookList;
 import org.crosswire.jsword.book.Books;
@@ -155,7 +156,7 @@ public class BooksListModel extends AbstractListModel
      */
     protected final synchronized void cacheData()
     {
-        books = new ArrayList();
+        books = new ArrayList<Book>();
         books.addAll(bookList.getBooks(filter));
         Collections.sort(books);
     }
@@ -216,7 +217,7 @@ public class BooksListModel extends AbstractListModel
      * ensure that one thread can't update the list of books while another is
      * trying to create a JList based on this class.
      */
-    protected List books;
+    protected List<Book> books;
 
     /**
      * The log stream

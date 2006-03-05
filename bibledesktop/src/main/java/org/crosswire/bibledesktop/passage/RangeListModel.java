@@ -49,7 +49,7 @@ public class RangeListModel extends AbstractListModel
     public RangeListModel(RestrictionType theRestriction)
     {
         restrict = theRestriction;
-        ranges = new ArrayList();
+        ranges = new ArrayList<VerseRange>();
     }
 
     /**
@@ -142,7 +142,7 @@ public class RangeListModel extends AbstractListModel
     /**
      * The list of ranges in the passage.
      */
-    private List ranges;
+    private List<VerseRange> ranges;
 
     /**
      * If we are modelling in groups, do we break at chapter/book boundries

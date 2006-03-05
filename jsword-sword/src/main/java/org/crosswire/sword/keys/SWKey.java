@@ -5,7 +5,7 @@ package org.crosswire.sword.keys;
  * SWKey is the basis for all types of keys for indexing into modules
  * (e.g. verse, word, place, etc.)
  */
-public class SWKey implements Cloneable, Comparable
+public class SWKey implements Cloneable, Comparable<SWKey>
 {
     public static final char KEYERR_OUTOFBOUNDS = 1;
     public static final char TOP = 1;
@@ -123,11 +123,9 @@ public class SWKey implements Cloneable, Comparable
      * ENT:	ikey - key to compare with this one
      * RET:	> 0 if this key is greater than compare key &lt; 0
      */
-    public int compareTo(Object ikey)
+    public int compareTo(SWKey ikey)
     {
-        if (ikey instanceof SWKey)
-            return toString().compareTo(ikey.toString());
-        return -1;
+        return toString().compareTo(ikey.toString());
     }
 
     /**

@@ -39,19 +39,19 @@ import org.crosswire.jsword.book.BookSet;
 public class BookNode extends DefaultMutableTreeNode
 {
 
-    public BookNode(Object node, BookSet books, Object [] grouping, int level)
+    public BookNode(Object node, BookSet books, int level, Object... grouping)
     {
         setUserObject(node);
         if (level < grouping.length)
         {
             String key = (String) grouping[level];
             Set group = books.getGroup(key);
-            Iterator iter = group.iterator();
-            while (iter.hasNext())
+            Iterator it = group.iterator();
+            while (it.hasNext())
             {
-                String value = iter.next().toString();
+                String value = (String) it.next();
                 BookSet subBooks = books.filter(key, value);
-                add(new BookNode(value, subBooks, grouping, level + 1));
+                add(new BookNode(value, subBooks, level + 1, grouping));
             }
         }
         else if (books != null)
@@ -59,7 +59,7 @@ public class BookNode extends DefaultMutableTreeNode
             Iterator iter = books.iterator();
             while (iter.hasNext())
             {
-                add(new BookNode(iter.next(), null, grouping, level + 1));
+                add(new BookNode(iter.next(), null, level + 1, grouping));
             }
         }
     }

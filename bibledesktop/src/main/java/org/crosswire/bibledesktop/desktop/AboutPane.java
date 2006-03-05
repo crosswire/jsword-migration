@@ -48,6 +48,7 @@ import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.AntiAliasedTextPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.swing.MapTableModel;
+import org.crosswire.common.util.CollectionUtil;
 
 /**
  * AboutPane is a window that contains various advanced user tools in
@@ -146,7 +147,7 @@ public class AboutPane
         {
             // create and add the System Properties tab
             JTable tblProps = new JTable();
-            MapTableModel mdlProps = new MapTableModel(System.getProperties());
+            MapTableModel mdlProps = new MapTableModel(CollectionUtil.properties2Map(System.getProperties()));
             tblProps.setModel(mdlProps);
 
             JScrollPane scrProps = new JScrollPane();

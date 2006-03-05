@@ -26,8 +26,8 @@ import javax.swing.SwingConstants;
 
 import org.crosswire.common.swing.CompositeIcon;
 import org.crosswire.common.swing.GuiUtil;
+import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
-import org.crosswire.jsword.book.BookMetaData;
 
 /**
  * Generates the appropriate icon for a book.
@@ -45,7 +45,7 @@ public class BookIcon
     {
     }
 
-    public static Icon getIcon(BookMetaData book)
+    public static Icon getIcon(Book book)
     {
         Icon icon = ICON_OTHER;
         BookCategory type = book.getBookCategory();

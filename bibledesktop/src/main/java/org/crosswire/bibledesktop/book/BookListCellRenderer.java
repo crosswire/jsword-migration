@@ -30,7 +30,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
-import org.crosswire.jsword.book.BookMetaData;
+import org.crosswire.jsword.book.Book;
 
 /**
  * A custom list view that paints icons alongside the words.
@@ -96,9 +96,9 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
             setBorder(focus ? UIManager.getBorder("List.focusCellHighlightBorder") : noFocus); //$NON-NLS-1$
         }
 
-        if (value instanceof BookMetaData)
+        if (value instanceof Book)
         {
-            BookMetaData book = (BookMetaData) value;
+            Book book = (Book) value;
 
             String displayName = book.toString();
             setText(displayName);
