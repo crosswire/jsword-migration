@@ -153,10 +153,10 @@ public class WebBrowser
     }
 
     /** The set of additional headers */
-    private Vector headers = new Vector();
+    private Vector<Header> headers = new Vector<Header>();
 
     /** The set of cookies */
-    private Vector cookies = new Vector();
+    private Vector<Cookie> cookies = new Vector<Cookie>();
 
     /** The special cookie header */
     private Header cook_head = null;

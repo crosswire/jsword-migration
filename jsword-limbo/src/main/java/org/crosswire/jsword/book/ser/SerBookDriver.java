@@ -24,14 +24,15 @@ package org.crosswire.jsword.book.ser;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
+import org.crosswire.common.util.CollectionUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.basic.AbstractBookDriver;
 import org.crosswire.jsword.book.basic.BookRoot;
+import org.crosswire.jsword.book.raw.RawBook;
 
 /**
  * This represents all of the SerBibles.
@@ -72,12 +73,9 @@ public class SerBookDriver extends AbstractBookDriver
             for (int i=0; i<names.length; i++)
             {
                 URL url = NetUtil.lengthenURL(dir, names[i]);
-                URL prop_url = NetUtil.lengthenURL(url, "bible.properties"); //$NON-NLS-1$
+                URL propUrl = NetUtil.lengthenURL(url, "bible.properties"); //$NON-NLS-1$
 
-                Properties prop = new Properties();
-                prop.load(prop_url.openStream());
-
-                Book book = new SerBook(this, prop, url);
+                Book book = new RawBook(this, CollectionUtil.properties2Map(propUrl), url);
 
                 books.add(book);
             }

@@ -51,7 +51,7 @@ public class StackedReader extends Reader
         else
         {
             dead = current;
-            current = (Reader) list.lastElement();
+            current = list.lastElement();
             list.removeElement(current);
         }
 
@@ -119,7 +119,7 @@ public class StackedReader extends Reader
         {
             try
             {
-                Reader in = (Reader) list.elementAt(i);
+                Reader in = list.elementAt(i);
                 in.close();
             }
             catch (Exception ex)
@@ -161,14 +161,14 @@ public class StackedReader extends Reader
 
         for (int i=list.size()-1; i>=0; i--)
         {
-            Reader in = (Reader) list.elementAt(i);
+            Reader in = list.elementAt(i);
             retcode += "Next: " + in.toString() + NEWLINE; //$NON-NLS-1$
         }
 
         return retcode;
     }
 
-    private Vector list = new Vector();
+    private Vector<Reader> list = new Vector<Reader>();
     private Reader current;
 
     /** The log stream */

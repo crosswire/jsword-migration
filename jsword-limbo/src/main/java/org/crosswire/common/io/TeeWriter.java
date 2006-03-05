@@ -47,7 +47,7 @@ public class TeeWriter extends Writer
     {
         for (int i=0; i<list.size(); i++)
         {
-            Writer out = (Writer) list.elementAt(i);
+            Writer out = list.elementAt(i);
             out.write(cbuf, off, len);
         }
     }
@@ -61,7 +61,7 @@ public class TeeWriter extends Writer
     {
         for (int i=0; i<list.size(); i++)
         {
-            Writer out = (Writer) list.elementAt(i);
+            Writer out = list.elementAt(i);
             out.write(b);
         }
     }
@@ -74,7 +74,7 @@ public class TeeWriter extends Writer
     {
         for (int i=0; i<list.size(); i++)
         {
-            Writer out = (Writer) list.elementAt(i);
+            Writer out = list.elementAt(i);
             out.flush();
         }
     }
@@ -94,7 +94,7 @@ public class TeeWriter extends Writer
         {
             try
             {
-                Writer out = (Writer) list.elementAt(i);
+                Writer out = list.elementAt(i);
                 out.close();
             }
             catch (Exception ex)
@@ -131,14 +131,14 @@ public class TeeWriter extends Writer
 
         for (int i=list.size()-1; i>=0; i--)
         {
-            Writer out = (Writer) list.elementAt(i);
+            Writer out = list.elementAt(i);
             retcode += "Stream" + i + ": " + out.toString() + NEWLINE; //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         return retcode;
     }
 
-    private Vector list = new Vector();
+    private Vector<Writer> list = new Vector<Writer>();
 
     /** The log stream */
     protected static Logger log = Logger.getLogger(TeeWriter.class);

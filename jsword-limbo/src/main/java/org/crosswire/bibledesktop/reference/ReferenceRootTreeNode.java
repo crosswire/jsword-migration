@@ -133,7 +133,7 @@ public class ReferenceRootTreeNode implements TreeNode
      */
     public TreeNode getChildAt(int childIndex)
     {
-        Book book = (Book) books.get(childIndex);
+        Book book = books.get(childIndex);
         return new ReferenceBookTreeNode(model, this, book);
     }
 
@@ -150,7 +150,7 @@ public class ReferenceRootTreeNode implements TreeNode
     /**
      * The current list of books
      */
-    protected List books = new ArrayList();
+    protected List<Book> books = new ArrayList<Book>();
 
     /**
      * the filter that we apply to books before we display them

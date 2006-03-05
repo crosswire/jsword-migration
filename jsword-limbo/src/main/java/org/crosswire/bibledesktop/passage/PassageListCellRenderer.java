@@ -84,7 +84,7 @@ public class PassageListCellRenderer implements ListCellRenderer, Serializable
             try
             {
                 VerseRange range = (VerseRange) value;
-                String text = (String) hash.get(range);
+                String text = hash.get(range);
 
                 if (text == null)
                 {
@@ -132,7 +132,7 @@ public class PassageListCellRenderer implements ListCellRenderer, Serializable
     /**
      * A cache of Bible texts
      */
-    private Map hash = new HashMap();
+    private Map<VerseRange, String> hash = new HashMap<VerseRange, String>();
 
     /**
      * Serialization ID

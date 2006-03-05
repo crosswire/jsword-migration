@@ -67,7 +67,7 @@ public class MenuUtil
     {
         for (int i=0; i<actions.length; i++)
         {
-            commands.put(actions[i].getValue(Action.NAME), actions[i]);
+            commands.put(actions[i].getValue(Action.NAME).toString(), actions[i]);
         }
     }
 
@@ -148,7 +148,7 @@ public class MenuUtil
      */
     protected static Action getAction(String cmd)
     {
-        return (Action) commands.get(cmd);
+        return commands.get(cmd);
     }
 
     /**
@@ -160,7 +160,7 @@ public class MenuUtil
      */
     protected JMenuItem getMenuItem(String cmd)
     {
-        return (JMenuItem) menuitems.get(cmd);
+        return menuitems.get(cmd);
     }
 
     /**
@@ -335,7 +335,7 @@ public class MenuUtil
     /*
      * Data
      */
-    private static Hashtable menuitems = new Hashtable();
-    private static Hashtable commands = new Hashtable();
+    private static Hashtable<String, JMenuItem> menuitems = new Hashtable<String, JMenuItem>();
+    private static Hashtable<String, Action> commands = new Hashtable<String, Action>();
     private static ResourceBundle resource = null;
 }

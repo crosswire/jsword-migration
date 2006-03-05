@@ -48,7 +48,7 @@ public class TeeOutputStream extends OutputStream
     {
         for (int i=0; i<list.size(); i++)
         {
-            OutputStream out = (OutputStream) list.elementAt(i);
+            OutputStream out = list.elementAt(i);
             out.write(b);
         }
     }
@@ -68,7 +68,7 @@ public class TeeOutputStream extends OutputStream
         {
             try
             {
-                OutputStream out = (OutputStream) list.elementAt(i);
+                OutputStream out = list.elementAt(i);
                 out.close();
             }
             catch (Exception ex)
@@ -105,14 +105,14 @@ public class TeeOutputStream extends OutputStream
 
         for (int i=list.size()-1; i>=0; i--)
         {
-            OutputStream out = (OutputStream) list.elementAt(i);
+            OutputStream out = list.elementAt(i);
             retcode += "Stream" + i + ": " + out.toString() + NEWLINE; //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         return retcode;
     }
 
-    private Vector list = new Vector();
+    private Vector<OutputStream> list = new Vector<OutputStream>();
 
     /** The log stream */
     protected static Logger log = Logger.getLogger(TeeOutputStream.class);

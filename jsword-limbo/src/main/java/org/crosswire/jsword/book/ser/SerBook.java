@@ -22,7 +22,7 @@
 package org.crosswire.jsword.book.ser;
 
 import java.net.URL;
-import java.util.Properties;
+import java.util.Map;
 
 import org.crosswire.jsword.book.BookDriver;
 import org.crosswire.jsword.book.BookException;
@@ -148,7 +148,7 @@ public class SerBook extends AbstractPassageBook
     /**
      * Simple ctor
      */
-    public SerBook(BookDriver driver, Properties prop, URL url) throws BookException
+    public SerBook(BookDriver driver, Map<String, String> prop, URL url) throws BookException
     {
         BookMetaData bmd = new DefaultBookMetaData(driver, this, prop);
         setBookMetaData(bmd);

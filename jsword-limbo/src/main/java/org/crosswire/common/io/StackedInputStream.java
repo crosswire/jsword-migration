@@ -52,7 +52,7 @@ public class StackedInputStream extends InputStream
         else
         {
             dead = current;
-            current = (InputStream) list.lastElement();
+            current = list.lastElement();
             list.removeElement(current);
         }
 
@@ -99,7 +99,7 @@ public class StackedInputStream extends InputStream
         {
             try
             {
-                InputStream in = (InputStream) list.elementAt(i);
+                InputStream in = list.elementAt(i);
                 in.close();
             }
             catch (Exception ex)
@@ -141,14 +141,14 @@ public class StackedInputStream extends InputStream
 
         for (int i=list.size()-1; i>=0; i--)
         {
-            InputStream in = (InputStream) list.elementAt(i);
+            InputStream in = list.elementAt(i);
             retcode += "Next: " + in.toString() + NEWLINE; //$NON-NLS-1$
         }
 
         return retcode;
     }
 
-    private Vector list = new Vector();
+    private Vector<InputStream> list = new Vector<InputStream>();
     private InputStream current;
 
     /** The log stream */

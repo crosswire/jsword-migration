@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Properties;
+import java.util.Map;
 
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
@@ -213,7 +213,7 @@ public class RawBook extends AbstractPassageBook
     /**
      * Simple ctor
      */
-    public RawBook(BookDriver driver, Properties prop, URL url)
+    public RawBook(BookDriver driver, Map<String, String> prop, URL url)
     {
         BookMetaData bmd = new DefaultBookMetaData(driver, this, prop);
         setBookMetaData(bmd);

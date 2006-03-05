@@ -136,7 +136,7 @@ public class DebugContainerListener implements ContainerListener
         map.remove(child);
     }
 
-    private Map map = new HashMap();
+    private Map<Component, Component> map = new HashMap<Component, Component>();
 
     /**
      * The log stream

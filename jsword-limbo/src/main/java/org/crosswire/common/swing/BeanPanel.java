@@ -160,7 +160,7 @@ public class BeanPanel extends JPanel
     /**
      * A list of the current editors
      */
-    private List editors = new ArrayList();
+    private List<JTextField> editors = new ArrayList<JTextField>();
 
     /**
      * The log stream
