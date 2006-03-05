@@ -51,7 +51,7 @@ public class DownloadSet implements Comparable
             }
         });
 
-        SortedSet reply = new TreeSet();
+        SortedSet<DownloadSet> reply = new TreeSet<DownloadSet>();
         for (int i = 0; i < files.length; i++)
         {
             String name = files[i].getName();
@@ -60,7 +60,7 @@ public class DownloadSet implements Comparable
             reply.add(new DownloadSet(localprefix, webprefix, sets, datesort));
         }
 
-        return (DownloadSet[]) reply.toArray(new DownloadSet[reply.size()]);
+        return reply.toArray(new DownloadSet[reply.size()]);
     }
 
     /**
