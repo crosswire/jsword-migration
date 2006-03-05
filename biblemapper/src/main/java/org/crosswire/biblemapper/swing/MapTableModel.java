@@ -121,6 +121,7 @@ public class MapTableModel extends AbstractTableModel
      * @param col The index of column
      * @return the name of the column
      */
+    @Override
     public String getColumnName(int col)
     {
         switch (col)
@@ -147,7 +148,8 @@ public class MapTableModel extends AbstractTableModel
      * by the table to set up a default renderer and editor for the column.
      * @return the common ancestor class of the object values in the model.
      */
-    public Class getColumnClass(int col)
+    @Override
+    public Class<?> getColumnClass(int col)
     {
         switch (col)
         {
@@ -170,6 +172,7 @@ public class MapTableModel extends AbstractTableModel
      * @return rue if the cell is editable.
      * @see #setValueAt(Object, int, int)
      */
+    @Override
     public boolean isCellEditable(int row, int col)
     {
         return col > 2;
@@ -244,6 +247,7 @@ public class MapTableModel extends AbstractTableModel
      * @see #getValueAt(int, int)
      * @see #isCellEditable(int, int)
      */
+    @Override
     public void setValueAt(Object val, int row, int col)
     {
         try

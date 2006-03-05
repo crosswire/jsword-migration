@@ -58,6 +58,7 @@ public class ExtensionFileFilter extends FileFilter
      * Is the given file valid?
      * @param file The object to test
      */
+    @Override
     public boolean accept(File file)
     {
         if (file.isDirectory())
@@ -81,6 +82,7 @@ public class ExtensionFileFilter extends FileFilter
     /**
      *
      */
+    @Override
     public String getDescription()
     {
         if (desc != null)

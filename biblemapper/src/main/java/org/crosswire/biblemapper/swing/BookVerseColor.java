@@ -75,10 +75,7 @@ public class BookVerseColor implements VerseColor
         {
             return Color.gray;
         }
-        else
-        {
-            return Color.red;
-        }
+		return Color.red;
     }
 
     /**
@@ -102,6 +99,7 @@ public class BookVerseColor implements VerseColor
     /**
      * The name for display in a combo box
      */
+    @Override
     public String toString()
     {
         try

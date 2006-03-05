@@ -68,6 +68,7 @@ public class GroupVerseColor implements VerseColor
     /**
     * The name for display in a combo box
     */
+    @Override
     public String toString()
     {
         return "Groups";

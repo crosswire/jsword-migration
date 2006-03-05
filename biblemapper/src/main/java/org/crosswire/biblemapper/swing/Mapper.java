@@ -475,6 +475,7 @@ public class Mapper extends JFrame
 
         this.addWindowListener(new WindowAdapter()
         {
+            @Override
             public void windowClosed(WindowEvent ev)
             {
                 exit();
@@ -539,10 +540,7 @@ public class Mapper extends JFrame
 
             return reply == JOptionPane.YES_OPTION;
         }
-        else
-        {
-            return true;
-        }
+		return true;
     }
 
     /**

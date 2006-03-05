@@ -136,6 +136,7 @@ public class MapperPane extends JPanel implements Scrollable
      * Paint the map
      * @param g The graphics instance to paint with
      */
+    @Override
     public void paintComponent(Graphics g)
     {
         g.setColor(versecolor.getBackground());
@@ -239,6 +240,7 @@ public class MapperPane extends JPanel implements Scrollable
      * The size of this map
      * public void reshape(int x, int y, int w, int h)
      */
+    @Override
     public void setSize(Dimension x)
     {
         if (lock_aspect)
@@ -276,10 +278,7 @@ public class MapperPane extends JPanel implements Scrollable
         {
             return getWidth() / 60;
         }
-        else
-        {
-            return getHeight() / 60;
-        }
+		return getHeight() / 60;
     }
 
     /**
@@ -297,10 +296,7 @@ public class MapperPane extends JPanel implements Scrollable
         {
             return getWidth() / 6;
         }
-        else
-        {
-            return getHeight() / 6;
-        }
+		return getHeight() / 6;
     }
 
     /**

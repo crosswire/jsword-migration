@@ -121,10 +121,7 @@ public class AntiGravityRule extends AbstractRule
         {
             return (float) -Math.exp(-idist*STRENGTH) / 2;
         }
-        else
-        {
-            return (float) Math.exp(idist*STRENGTH) / 2;
-        }
+        return (float) Math.exp(idist*STRENGTH) / 2;
     }
 
     /**

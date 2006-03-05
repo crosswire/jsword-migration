@@ -64,11 +64,13 @@ public class MapTest extends TestCase
     };
     Position[] ar = null;
 
+    @Override
     protected void setUp() throws Exception
     {
         ar = Map.cat(dar);
     }
 
+    @Override
     protected void tearDown() throws Exception
     {
     }
