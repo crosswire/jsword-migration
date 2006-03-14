@@ -22,11 +22,11 @@
 package org.crosswire.bibledesktop.passage;
 
 import java.util.Enumeration;
-import java.util.Iterator;
 
 import javax.swing.tree.TreeNode;
 
 import org.crosswire.jsword.passage.BibleInfo;
+import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.Verse;
@@ -64,10 +64,9 @@ public class BibleTreeNode implements TreeNode
                 int currentBook = 0;
                 int bookCount = 0;
 
-                Iterator it = ref.iterator();
-                while (it.hasNext())
+                for (Key key : ref)
                 {
-                    Verse verse = (Verse) it.next();
+                    Verse verse = (Verse) key;
                     if (currentBook != verse.getBook())
                     {
                         currentBook = verse.getBook();

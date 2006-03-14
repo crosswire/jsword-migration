@@ -260,9 +260,8 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus
         // loop through all the verses
 
         int percent = 0;
-        for (Iterator it = key.iterator(); it.hasNext(); )
+        for (Key sublist : key)
         {
-            Key sublist = (Key) it.next();
             if (sublist.canHaveChildren())
             {
                 generateSearchIndexImpl(job, sublist, matchmap);

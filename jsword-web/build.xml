@@ -87,7 +87,8 @@
   </target>
 
   <!--=======================================================================-->
-  <target name="tools" depends="java2html,checkstyle,javancss,findbugs,pmd,cpd,jdepend"/>
+  <!-- <target name="tools" depends="java2html,checkstyle,javancss,findbugs,pmd,cpd,jdepend"/> -->
+  <target name="tools" depends="checkstyle,findbugs,pmd,cpd,jdepend"/>
 
   <!--=======================================================================-->
   <target name="install"

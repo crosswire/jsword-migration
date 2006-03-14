@@ -109,9 +109,8 @@ public class Verifier
 
         // For every verse in the Bible
         int percent = 0;
-        for (Iterator it = key.iterator(); it.hasNext(); )
+        for (Key subkey : key)
         {
-            Key subkey = (Key) it.next();
 
             if (subkey.canHaveChildren())
             {

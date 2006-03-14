@@ -23,7 +23,6 @@ package org.crosswire.biblemapper.swing;
 
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
-import java.util.Iterator;
 import java.util.List;
 
 import org.crosswire.jsword.book.Book;
@@ -33,6 +32,7 @@ import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.search.parse.IndexSearcher;
 import org.crosswire.jsword.book.search.parse.PhraseParamWord;
 import org.crosswire.jsword.passage.BibleInfo;
+import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.PassageTally;
 import org.crosswire.jsword.passage.Verse;
@@ -116,10 +116,9 @@ public class CliMapper
                     total.trimVerses(LINKS_PER_CHAPTER);
                     scrunchTally(total);
 
-                    Iterator it = total.iterator();
-                    while (it.hasNext())
+                    for (Key key : total)
                     {
-                        Verse link = (Verse) it.next();
+                        Verse link = (Verse) key;
                         VerseRange chap = new VerseRange(link, new Verse(link.getBook(), link.getChapter(), BibleInfo.versesInChapter(link.getBook(), link.getChapter())));
                         Element el = new Element("link");
                         el.setAttribute("book", ""+link.getBook());
