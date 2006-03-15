@@ -27,6 +27,7 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 
+import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.RestrictionType;
 import org.crosswire.jsword.passage.VerseRange;
@@ -125,11 +126,10 @@ public class RangeListModel extends AbstractListModel
         ranges.clear();
         if (ref != null)
         {
-            Iterator iter = ref.rangeIterator(restrict);
+            Iterator<Key> iter = ref.rangeIterator(restrict);
             while (iter.hasNext())
             {
-                VerseRange range = (VerseRange) iter.next();
-                ranges.add(range);
+                ranges.add((VerseRange) iter.next());
             }
         }
     }

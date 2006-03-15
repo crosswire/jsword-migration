@@ -70,7 +70,7 @@ public abstract class AbstractLocalURLBook
         int percent = -1;
 
         // For every verse in the Bible
-        Iterator it = WHOLE.verseIterator();
+        Iterator it = WHOLE.iterator();
         while (it.hasNext())
         {
             // Create a Passage containing that verse alone

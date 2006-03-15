@@ -25,7 +25,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -175,9 +174,8 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     public void refresh()
     {
         // Now go through all the known tabs and refresh each
-        for (Iterator it = displays.iterator(); it.hasNext(); )
+        for (BookDataDisplay bdd : displays)
         {
-            BookDataDisplay bdd = (BookDataDisplay) it.next();
             bdd.refresh();
         }
     }
@@ -232,9 +230,8 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         }
 
         // Now go through all the known syncs and add this one in
-        for (Iterator it = displays.iterator(); it.hasNext(); )
+        for (BookDataDisplay idp : displays)
         {
-            BookDataDisplay idp = (BookDataDisplay) it.next();
             idp.addURLEventListener(listener);
         }
     }
@@ -254,9 +251,8 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         }
 
         // Now remove from all the known syncs
-        for (Iterator it = displays.iterator(); it.hasNext(); )
+        for (BookDataDisplay idp : displays)
         {
-            BookDataDisplay idp = (BookDataDisplay) it.next();
             idp.removeURLEventListener(listener);
         }
     }
@@ -344,9 +340,8 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         // Add all the known listeners to this new BookDataDisplay
         if (hyperlis != null)
         {
-            for (Iterator it = hyperlis.iterator(); it.hasNext(); )
+            for (URLEventListener li : hyperlis)
             {
-                URLEventListener li = (URLEventListener) it.next();
                 display.addURLEventListener(li);
             }
         }

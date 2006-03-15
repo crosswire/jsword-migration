@@ -22,7 +22,6 @@
 package org.crosswire.common.swing;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -72,10 +71,8 @@ public class MapTableModel extends AbstractTableModel
         list.clear();
         if (map != null)
         {
-            Iterator iter = map.entrySet().iterator();
-            while (iter.hasNext())
+            for (Map.Entry me : map.entrySet())
             {
-                Map.Entry me = (Map.Entry) iter.next();
                 Object k = me.getKey();
                 Object v = me.getValue();
                 if (k == null || v == null)

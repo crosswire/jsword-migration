@@ -25,7 +25,6 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Iterator;
 
 import javax.swing.Action;
 import javax.swing.JCheckBoxMenuItem;
@@ -167,10 +166,9 @@ public class DesktopActions
     {
         boolean ok = false;
 
-        Iterator it = getDesktop().getViews().iterator();
-        while (it.hasNext())
+        for (Component comp : getDesktop().getViews())
         {
-            BibleViewPane view = (BibleViewPane) it.next();
+            BibleViewPane view = (BibleViewPane) comp;
             if (view.maySave())
             {
                 ok = true;
@@ -183,12 +181,11 @@ public class DesktopActions
             return;
         }
 
-        it = getDesktop().getViews().iterator();
-        while (it.hasNext())
+        for (Component comp : getDesktop().getViews())
         {
             try
             {
-                BibleViewPane view = (BibleViewPane) it.next();
+                BibleViewPane view = (BibleViewPane) comp;
                 view.save();
             }
             catch (IOException ex)

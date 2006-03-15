@@ -30,7 +30,6 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -609,11 +608,10 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
             if (protocol.equals(BIBLE_PROTOCOL))
             {
                 // Does a view contain the passage already?
-                Iterator iter = views.iterator();
                 BibleViewPane clearView = null;
-                while (iter.hasNext())
+                for (Component comp : views)
                 {
-                    BibleViewPane view = (BibleViewPane) iter.next();
+                    BibleViewPane view = (BibleViewPane) comp;
                     if (view.isClear())
                     {
                         clearView = view;

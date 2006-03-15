@@ -23,8 +23,6 @@ package org.crosswire.common.swing.desktop;
 
 import java.awt.Component;
 import java.util.Collection;
-import java.util.Iterator;
-
 import org.crosswire.common.swing.desktop.event.ViewEventListener;
 
 /**
@@ -34,7 +32,7 @@ import org.crosswire.common.swing.desktop.event.ViewEventListener;
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at yahoo dot com]
  */
-public interface Viewable
+public interface Viewable extends Iterable<Component>
 {
     /**
      * Add a view to the set.
@@ -51,12 +49,6 @@ public interface Viewable
      * @return the views
      */
     Collection<Component> getViews();
-
-    /**
-     * Get an iterator of a snapshot of views.
-     * @return an iterator over the views.
-     */
-    Iterator iterator();
 
     /**
      * Copies all the views from the one layout to the other

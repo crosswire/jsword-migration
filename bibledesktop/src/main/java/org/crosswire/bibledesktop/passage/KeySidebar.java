@@ -156,10 +156,9 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
         }
         else
         {
-            Iterator iter = selected.iterator();
-            while (iter.hasNext())
+            for (Object obj : selected)
             {
-                Key k = (Key) iter.next();
+                Key k = (Key) obj;
                 // Create a copy so the selection can be restored
                 Key keyCopy = (Key) k.clone();
                 keyCopy.blur(amount, RestrictionType.getDefaultBlurRestriction());

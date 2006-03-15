@@ -222,7 +222,7 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
     /* (non-Javadoc)
      * @see org.crosswire.common.swing.desktop.Viewable#iterator()
      */
-    public Iterator iterator()
+    public Iterator<Component> iterator()
     {
         return getViewLayout().iterator();
     }

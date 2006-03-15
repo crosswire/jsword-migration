@@ -31,7 +31,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -73,10 +72,9 @@ public class JobsProgressBar extends JPanel implements WorkListener
 
         JobManager.addWorkListener(this);
 
-        Set current = JobManager.getJobs();
-        for (Iterator it = current.iterator(); it.hasNext(); )
+        Set<Job> current = JobManager.getJobs();
+        for (Job job : current)
         {
-            Job job = (Job) it.next();
             addJob(job);
         }
 
