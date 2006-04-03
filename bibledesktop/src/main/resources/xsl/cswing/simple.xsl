@@ -135,8 +135,11 @@
           FONT.jesus { color: red; }
           FONT.speech { color: blue; }
           FONT.transChange { font-style: italic; }
+          FONT.jesusTransChange { color: red; font-style: italic; }
           FONT.strike { text-decoration: line-through; }
           FONT.small-caps { font-variant: small-caps; }
+          FONT.inscription { font-weight: bold; font-variant: small-caps; }
+          FONT.divineName { font-variant: small-caps; }
           FONT.normal { font-variant: normal; }
           FONT.caps { text-transform: uppercase; }
           h3 { font-size: 110%; color: #666699; font-weight: bold; }
@@ -149,7 +152,7 @@
       <body>
         <!-- If there are notes, output a table with notes in the 2nd column. -->
         <xsl:choose>
-          <xsl:when test="$Notes = 'true' and //note">
+          <xsl:when test="$Notes = 'true' and //note[not(@type = 'x-strongsMarkup')]">
             <xsl:choose>
               <xsl:when test="$direction != 'rtl'">
 	            <table cols="2" cellpadding="5" cellspacing="5">
@@ -272,6 +275,8 @@
     <xsl:if test="string-length($title) > 0">
       <h3><xsl:value-of select="$title"/></h3>
     </xsl:if>
+    <!-- Handle the KJV paragraph marker. -->
+    <xsl:if test="milestone[@type = 'x-p']"><br/><br/></xsl:if>
     <!-- Always output the verse -->
     <xsl:choose>
  	  <xsl:when test="$VLine = 'true'">
@@ -340,7 +345,7 @@
   </xsl:template>
 
   <xsl:template match="verse" mode="print-notes">
-    <xsl:if test="./note">
+    <xsl:if test="./note[@type != 'x-strongsMarkup']">
       <xsl:variable name="passage" select="jsword:getValidKey($keyf, @osisID)"/>
       <a href="#{substring-before(concat(@osisID, ' '), ' ')}">
         <xsl:value-of select="jsword:getName($passage)"/>
@@ -359,6 +364,7 @@
   <!--=======================================================================-->
   <!-- Avoid adding whitespace -->
   <!-- When we encounter a note, we merely output a link to the note. -->
+  <xsl:template match="note[@type = 'x-strongsMarkup']"/>
   <xsl:template match="note">
     <xsl:if test="$Notes = 'true'">
       <!-- If the preceeding sibling was a note, emit a separator -->
@@ -375,6 +381,7 @@
   </xsl:template>
 
   <!--=======================================================================-->
+  <xsl:template match="note[@type = 'x-strongsMarkup']" mode="print-notes"/>
   <xsl:template match="note" mode="print-notes">
     <div class="margin">
       <strong><xsl:call-template name="generateNoteXref"/></strong>
@@ -493,11 +500,22 @@
     </xsl:choose>
   </xsl:template>
 
-  <!-- FIXME: Only handles one Robinsons Greek morphology (which is the only morph module today) -->
   <xsl:template name="morph">
     <xsl:param name="morph"/>
+    <xsl:param name="part" select="0"/>
+    <xsl:variable name="orig-work" select="substring-before($morph, ':')"/>
     <xsl:variable name="orig-morph" select="substring-after($morph, ':')"/>
     <xsl:variable name="protocol" select="$greek.morph.protocol"/>
+    <xsl:variable name="protocol">
+      <xsl:choose>
+        <xsl:when test="starts-with($orig-work, 'x-Robinson:') or starts-with($orig-work, 'robinson:')">
+          <xsl:value-of select="$greek.def.protocol"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$hebrew.def.protocol"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:variable name="separator">
       <xsl:choose>
         <xsl:when test="contains($orig-morph, '|')">
@@ -508,14 +526,34 @@
         </xsl:when>
       </xsl:choose>
     </xsl:variable>
+    <xsl:variable name="sub">
+      <xsl:choose>
+        <xsl:when test="$separator != '' and $part = '0'">
+          <xsl:value-of select="$part + 1"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$part"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:choose>
       <xsl:when test="$separator = ''">
-        <sub class="morph"><a href="{$protocol}{$orig-morph}">M<xsl:number level="any" from="/osis//verse" format="1"/></a></sub>
+        <sub class="morph"><a href="{$protocol}{$orig-morph}">M<xsl:number level="any" from="/osis//verse" format="1"/><xsl:number value="$sub" format="a"/></a></sub>
       </xsl:when>
       <xsl:otherwise>
-        <sub class="morph"><a href="{$protocol}{$orig-morph}">M<xsl:number level="any" from="/osis//verse" format="1"/></a></sub>
+        <sub class="morph"><a href="{$protocol}{substring-before($orig-morph, $separator)}">M<xsl:number level="single" from="/osis//verse" format="1"/><xsl:number value="$sub" format="a"/></a>, </sub>
         <xsl:call-template name="morph">
           <xsl:with-param name="morph" select="substring-after($morph, $separator)"/>
+          <xsl:with-param name="part">
+            <xsl:choose>
+              <xsl:when test="$sub">
+                <xsl:value-of select="$sub + 1"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="1"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:with-param>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
@@ -557,15 +595,12 @@
 
   <!--=======================================================================-->
   <!-- Avoid adding whitespace -->
+  <xsl:template match="speaker[@who = 'Jesus']">
+    <font class="jesus"><xsl:apply-templates mode="jesus"/></font>
+  </xsl:template>
+
   <xsl:template match="speaker">
-    <xsl:choose>
-      <xsl:when test="@who='Jesus'">
-        <font class="jesus"><xsl:apply-templates/></font>
-      </xsl:when>
-      <xsl:otherwise>
-        <font class="speech"><xsl:apply-templates/></font>
-      </xsl:otherwise>
-    </xsl:choose>
+    <font class="speech"><xsl:apply-templates/></font>
   </xsl:template>
 
   <!--=======================================================================-->
@@ -624,7 +659,7 @@
   
   <!-- Avoid adding whitespace -->
   <xsl:template match="divineName">
-    <font class="divineName"><xsl:apply-templates/></font>
+    <font class="divineName"><xsl:apply-templates mode="small-caps"/></font>
   </xsl:template>
   
   <xsl:template match="figure">
@@ -657,7 +692,7 @@
   
   <!-- Avoid adding whitespace -->
   <xsl:template match="inscription">
-    <font class="inscription"><xsl:apply-templates/></font>
+    <font class="inscription"><xsl:apply-templates mode="small-caps"/></font>
   </xsl:template>
   
   <!-- Avoid adding whitespace -->
@@ -737,11 +772,6 @@
     <font class="mentioned"><xsl:apply-templates/></font>
   </xsl:template>
   
-  <!--
-      Note: I have not covered <milestone>, <milestoneStart>, or
-            <milestoneEnd> here, since I have no idea what they are supposed
-            to do, based on the spec.
-  -->
   <!-- Milestones represent characteristics of the original manuscript.
     == that are being preserved. For this reason, most are ignored.
     ==
@@ -755,6 +785,9 @@
     == screen   Marks a preferred place for breaks in an on-screen rendering of the text.
     == cQuote   Marks the location of a continuation quote mark, with marker containing the publishers mark.
     -->
+  <!--  This is used by the KJV for paragraph markers. -->
+  <xsl:template match="milestone[@type = 'x-p']"><xsl:text> </xsl:text><xsl:value-of select="@marker"/><xsl:text> </xsl:text></xsl:template>
+
   <xsl:template match="milestone[@type = 'cQuote']">
     <xsl:value-of select="@marker"/>
   </xsl:template>
@@ -780,6 +813,10 @@
     </xsl:choose>
   </xsl:template>
   
+  <xsl:template match="q[@who = 'Jesus']">
+    <font class="jesus"><xsl:value-of select="@marker"/><xsl:apply-templates mode="jesus"/><xsl:value-of select="@marker"/></font>
+  </xsl:template>
+
   <xsl:template match="q[@type = 'blockquote']">
     <blockquote class="q"><xsl:value-of select="@marker"/><xsl:apply-templates/><xsl:value-of select="@marker"/></blockquote>
   </xsl:template>
@@ -872,6 +909,10 @@
   <xsl:template match="transChange">
     <font class="transChange"><xsl:apply-templates/></font>
   </xsl:template>
+  <xsl:template match="transChange" mode="jesus">
+    <font class="jesusTransChange"><xsl:apply-templates mode="jesus"/></font>
+  </xsl:template>
+  
   
   <xsl:template match="hi">
       <xsl:choose>
@@ -915,6 +956,10 @@
           <xsl:apply-templates/>
         </xsl:otherwise>
       </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="text()" mode="small-caps">
+  <xsl:value-of select="translate(., 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
   </xsl:template>
   
 </xsl:stylesheet>
