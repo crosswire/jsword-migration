@@ -20,7 +20,7 @@ public class HebrewDurusauIM extends SWInputMethod {
         init();
     }
 
-    @Override
+    /* @Override */
     public String translate(char in) {
         String retVal = (String)charMap.get(new Integer(in));
         if (retVal == null)

@@ -66,7 +66,7 @@ public class ActionFactory implements ActionListener
      */
     public ActionFactory(Class type, Object bean)
     {
-        actions = new HashMap<String, CWAction>();
+        actions = new HashMap();
 
         buildActionMap(type);
 
@@ -112,7 +112,7 @@ public class ActionFactory implements ActionListener
      */
     public Action getAction(String key)
     {
-        Action action = actions.get(key);
+        Action action = (CWAction) actions.get(key);
 
         if (action != null)
         {
@@ -444,5 +444,5 @@ public class ActionFactory implements ActionListener
     /**
      * The map of known CWActions
      */
-    private Map<String, CWAction> actions;
+    private Map actions;
 }

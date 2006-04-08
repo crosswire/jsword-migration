@@ -99,7 +99,7 @@ public class SectionVerseColor implements VerseColor
     /**
     * The name for display in a combo box
     */
-    @Override
+    /* @Override */
     public String toString()
     {
         try

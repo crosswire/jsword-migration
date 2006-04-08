@@ -76,7 +76,7 @@ public class QuickHelpDialog extends JDialog
             /* (non-Javadoc)
              * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
              */
-            @Override
+            /* @Override */
             public void keyTyped(KeyEvent ev)
             {
                 close();
@@ -109,7 +109,7 @@ public class QuickHelpDialog extends JDialog
             /* (non-Javadoc)
              * @see java.awt.event.WindowListener#windowClosing(java.awt.event.WindowEvent)
              */
-            @Override
+            /* @Override */
             public void windowClosing(WindowEvent ev)
             {
                 close();
@@ -120,7 +120,7 @@ public class QuickHelpDialog extends JDialog
     /* (non-Javadoc)
      * @see java.awt.Component#setVisible(boolean)
      */
-    @Override
+    /* @Override */
     public void setVisible(boolean visible)
     {
         if (visible)

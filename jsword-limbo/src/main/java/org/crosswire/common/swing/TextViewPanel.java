@@ -317,7 +317,7 @@ public class TextViewPanel extends JPanel
      * Add a property change listener
      * @param li The property change listener to add
      */
-    @Override
+    /* @Override */
     public synchronized void removePropertyChangeListener(PropertyChangeListener li)
     {
         super.removePropertyChangeListener(li);
@@ -328,7 +328,7 @@ public class TextViewPanel extends JPanel
      * Remove a property change listener
      * @param li The property change listener to remove
      */
-    @Override
+    /* @Override */
     public synchronized void addPropertyChangeListener(PropertyChangeListener li)
     {
         super.addPropertyChangeListener(li);

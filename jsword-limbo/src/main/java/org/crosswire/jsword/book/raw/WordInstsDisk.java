@@ -64,7 +64,7 @@ public class WordInstsDisk extends InstsDisk
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.raw.InstsDisk#load()
      */
-    @Override
+    /* @Override */
     public void load() throws IOException
     {
         URL url = NetUtil.lengthenURL(raw.getURL(), leafname);

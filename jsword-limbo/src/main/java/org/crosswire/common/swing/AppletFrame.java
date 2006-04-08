@@ -57,7 +57,7 @@ public class AppletFrame extends JFrame
     {
         addWindowListener(new WindowAdapter()
         {
-            @Override
+            /* @Override */
             public void windowClosing(WindowEvent e)
             {
                 close();

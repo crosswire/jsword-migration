@@ -58,7 +58,7 @@ public class MapTable extends JTable
     /* (non-Javadoc)
      * @see javax.swing.JTable#setModel(javax.swing.table.TableModel)
      */
-    @Override
+    /* @Override */
     public void setModel(TableModel dm)
     {
         assert !initialized || dm instanceof MapTableModel;
@@ -70,7 +70,7 @@ public class MapTable extends JTable
     /* (non-Javadoc)
      * @see javax.swing.JTable#setDefaultRenderer(java.lang.Class, javax.swing.table.TableCellRenderer)
      */
-    @Override
+    /* @Override */
     public void setDefaultRenderer(Class columnclass, TableCellRenderer renderer)
     {
         assert renderer instanceof MapCellRenderer;

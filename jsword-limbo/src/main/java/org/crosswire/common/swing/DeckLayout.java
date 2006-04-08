@@ -78,7 +78,7 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
      * @param comp The component to be added.
      * @param constraints A name that identifies the component
      */
-    @Override
+    /* @Override */
     public void addLayoutComponent(Component comp, Object constraints)
     {
         if (constraints instanceof String || constraints == null)
@@ -95,7 +95,7 @@ public class DeckLayout extends AbstractLayout implements LayoutManager2, Serial
      * Removes the specified component from the layout.
      * @param comp The component to be removed.
      */
-    @Override
+    /* @Override */
     public void removeLayoutComponent(Component comp)
     {
         Iterator it = tab.keySet().iterator();

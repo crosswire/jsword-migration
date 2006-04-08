@@ -21,6 +21,7 @@
  */
 package org.crosswire.bibledesktop.book.install;
 
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -39,23 +40,27 @@ import org.crosswire.jsword.book.BookSet;
 public class BookNode extends DefaultMutableTreeNode
 {
 
-    public BookNode(Object node, BookSet books, int level, Object... grouping)
+    public BookNode(Object node, BookSet books, int level, Object[] grouping)
     {
         setUserObject(node);
         if (level < grouping.length)
         {
             String key = (String) grouping[level];
-            Set<String> group = books.getGroup(key);
-            for (String value : group)
+            Set group = books.getGroup(key);
+            Iterator iter = group.iterator();
+            while (iter.hasNext())
             {
+                String value = (String) iter.next();
                 BookSet subBooks = books.filter(key, value);
                 add(new BookNode(value, subBooks, level + 1, grouping));
             }
         }
         else if (books != null)
         {
-            for (Book book : books)
+            Iterator iter = books.iterator();
+            while (iter.hasNext())
             {
+                Book book = (Book) iter.next();
                 add(new BookNode(book, null, level + 1, grouping));
             }
         }

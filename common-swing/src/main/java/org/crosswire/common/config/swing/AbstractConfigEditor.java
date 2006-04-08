@@ -193,7 +193,7 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
             fields.put(key, field);
 
             // Get or create a FieldPanel
-            FormPane card = decks.get(path);
+            FormPane card = (FormPane) decks.get(path);
 
             if (card == null)
             {
@@ -228,11 +228,11 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
 
         try
         {
-            Field field = fields.get(key);
+            Field field = (Field) fields.get(key);
             if (field != null)
             {
                 fields.remove(field);
-                FormPane card = decks.get(path);
+                FormPane card = (FormPane) decks.get(path);
 
                 // Remove field from card.
                 String name = Config.getLeaf(model.getFullPath()) + ':';
@@ -275,7 +275,7 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
             try
             {
                 String key = (String) it.next();
-                Field field = fields.get(key);
+                Field field = (Field) fields.get(key);
                 String value = field.getValue();
 
                 if (value == null)
@@ -304,7 +304,7 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
             {
                 String key = (String) it.next();
 
-                Field field = fields.get(key);
+                Field field = (Field) fields.get(key);
                 String value = config.getLocal(key);
 
                 if (field == null)
@@ -351,12 +351,12 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
     /**
      * A fast way to get at the configuration panels
      */
-    protected Map<String, FormPane> decks = new HashMap<String, FormPane>();
+    protected Map decks = new HashMap();
 
     /**
      * The set of fields that we are displaying
      */
-    protected Map<String, Field> fields = new HashMap<String, Field>();
+    protected Map fields = new HashMap();
 
     /**
      * The large task icon

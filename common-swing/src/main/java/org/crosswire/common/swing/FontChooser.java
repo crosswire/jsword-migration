@@ -208,7 +208,7 @@ public class FontChooser extends JPanel
      * current Font.
      * @param li The new listener class
      */
-    @Override
+    /* @Override */
     public void addPropertyChangeListener(PropertyChangeListener li)
     {
         listeners.addPropertyChangeListener(li);
@@ -219,7 +219,7 @@ public class FontChooser extends JPanel
      * current Font.
      * @param li The listener class to be deleted
      */
-    @Override
+    /* @Override */
     public void removePropertyChangeListener(PropertyChangeListener li)
     {
         listeners.removePropertyChangeListener(li);
@@ -317,7 +317,7 @@ public class FontChooser extends JPanel
         /* (non-Javadoc)
          * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
          */
-        @Override
+        /* @Override */
     public Component getListCellRendererComponent(JList listbox, Object value, int index, boolean selected, boolean focus)
         {
             if (value == null)

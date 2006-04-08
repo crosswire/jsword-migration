@@ -42,12 +42,11 @@ public class TeeWriter extends Writer
     /**
      * Override write to ask the listed Streams.
      */
-    @Override
     public void write(char[] cbuf, int off, int len) throws IOException
     {
         for (int i=0; i<list.size(); i++)
         {
-            Writer out = list.elementAt(i);
+            Writer out = (Writer) list.elementAt(i);
             out.write(cbuf, off, len);
         }
     }
@@ -56,12 +55,11 @@ public class TeeWriter extends Writer
      * Override write to ask the listed Streams.
      * @param b The byte to be written, as normal.
      */
-    @Override
     public void write(int b) throws IOException
     {
         for (int i=0; i<list.size(); i++)
         {
-            Writer out = list.elementAt(i);
+            Writer out = (Writer) list.elementAt(i);
             out.write(b);
         }
     }
@@ -69,12 +67,11 @@ public class TeeWriter extends Writer
     /**
      * Override flush to flush the listed Streams.
      */
-    @Override
     public void flush() throws IOException
     {
         for (int i=0; i<list.size(); i++)
         {
-            Writer out = list.elementAt(i);
+            Writer out = (Writer) list.elementAt(i);
             out.flush();
         }
     }
@@ -83,7 +80,6 @@ public class TeeWriter extends Writer
      * If someone closes the TeeWriter then we go round
      * and close all the Streams on the stack.
      */
-    @Override
     public void close() throws IOException
     {
         // Close each Writer catching and noting IOExceptions
@@ -94,7 +90,7 @@ public class TeeWriter extends Writer
         {
             try
             {
-                Writer out = list.elementAt(i);
+                Writer out = (Writer) list.elementAt(i);
                 out.close();
             }
             catch (Exception ex)
@@ -121,7 +117,6 @@ public class TeeWriter extends Writer
      * Primarily for debugging. Reports on th state of the Stream.
      * @return A String containing the report.
      */
-    @Override
     public String toString()
     {
         String retcode = ""; //$NON-NLS-1$
@@ -131,14 +126,14 @@ public class TeeWriter extends Writer
 
         for (int i=list.size()-1; i>=0; i--)
         {
-            Writer out = list.elementAt(i);
+            Writer out = (Writer) list.elementAt(i);
             retcode += "Stream" + i + ": " + out.toString() + NEWLINE; //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         return retcode;
     }
 
-    private Vector<Writer> list = new Vector<Writer>();
+    private Vector list = new Vector();
 
     /** The log stream */
     protected static Logger log = Logger.getLogger(TeeWriter.class);

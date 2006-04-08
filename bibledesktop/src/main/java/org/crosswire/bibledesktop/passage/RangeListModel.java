@@ -27,10 +27,8 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 
-import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.RestrictionType;
-import org.crosswire.jsword.passage.VerseRange;
 
 /**
  * The RangeListModel class gives access to a Passage as a list of ranges
@@ -50,7 +48,7 @@ public class RangeListModel extends AbstractListModel
     public RangeListModel(RestrictionType theRestriction)
     {
         restrict = theRestriction;
-        ranges = new ArrayList<VerseRange>();
+        ranges = new ArrayList();
     }
 
     /**
@@ -126,10 +124,10 @@ public class RangeListModel extends AbstractListModel
         ranges.clear();
         if (ref != null)
         {
-            Iterator<Key> iter = ref.rangeIterator(restrict);
+            Iterator iter = ref.rangeIterator(restrict);
             while (iter.hasNext())
             {
-                ranges.add((VerseRange) iter.next());
+                ranges.add(iter.next());
             }
         }
     }
@@ -142,7 +140,7 @@ public class RangeListModel extends AbstractListModel
     /**
      * The list of ranges in the passage.
      */
-    private List<VerseRange> ranges;
+    private List ranges;
 
     /**
      * If we are modelling in groups, do we break at chapter/book boundries

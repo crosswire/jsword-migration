@@ -30,6 +30,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -67,9 +68,10 @@ public class JobsViewPane extends JPanel implements WorkListener
 
         JobManager.addWorkListener(this);
 
-        Set<Job> current = JobManager.getJobs();
-        for (Job job : current)
+        Set current = JobManager.getJobs();
+        for (Iterator it = current.iterator(); it.hasNext(); )
         {
+            Job job = (Job) it.next();
             addJob(job);
         }
     }
@@ -80,8 +82,8 @@ public class JobsViewPane extends JPanel implements WorkListener
     private void init()
     {
         noJobLabel = new JLabel(Msg.NO_JOBS.toString());
-        jobs = new HashMap<Job, JobData>();
-        positions = new ArrayList<JobData>();
+        jobs = new HashMap();
+        positions = new ArrayList();
         jobsPanel = new JPanel(new GridBagLayout());
         jobsPanel.setBorder(null);
 
@@ -169,7 +171,7 @@ public class JobsViewPane extends JPanel implements WorkListener
      */
     protected void updateJob(Job job)
     {
-        JobData jobdata = jobs.get(job);
+        JobData jobdata = (JobData) jobs.get(job);
 
         int percent = job.getPercent();
         jobdata.getProgress().setString(percent + "%"); //$NON-NLS-1$
@@ -182,7 +184,7 @@ public class JobsViewPane extends JPanel implements WorkListener
      */
     protected void removeJob(Job job)
     {
-        JobData jobdata = jobs.get(job);
+        JobData jobdata = (JobData) jobs.get(job);
 
         log.debug("removing job from panel at " + jobdata.getIndex() + ": " + job.getJobDescription()); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -243,12 +245,12 @@ public class JobsViewPane extends JPanel implements WorkListener
     /**
      * Map of Jobs to JobDatas
      */
-    protected Map<Job, JobData> jobs;
+    protected Map jobs;
 
     /**
      * Array telling us what y position the jobs have in the window
      */
-    private List<JobData> positions;
+    private List positions;
 
     /**
      * The panel containing jobs

@@ -30,6 +30,7 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -121,7 +122,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
                 /* (non-Javadoc)
                  * @see java.lang.Runnable#run()
                  */
-                @Override
+                /* @Override */
                 public void run()
                 {
 //                    new BusStart();
@@ -262,7 +263,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
             /* (non-Javadoc)
              * @see java.awt.event.WindowListener#windowClosed(java.awt.event.WindowEvent)
              */
-            @Override
+            /* @Override */
             public void windowClosed(WindowEvent ev)
             {
                 actions.getAction(DesktopActions.EXIT).actionPerformed(new ActionEvent(this, 0, EMPTY_STRING));
@@ -609,8 +610,10 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
             {
                 // Does a view contain the passage already?
                 BibleViewPane clearView = null;
-                for (Component comp : views)
+                Iterator iter = views.iterator();
+                while (iter.hasNext())
                 {
+                    Component comp = (Component) iter.next();
                     BibleViewPane view = (BibleViewPane) comp;
                     if (view.isClear())
                     {
@@ -954,9 +957,9 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         refreshBooks();
 
         // And the array of allowed osis>html converters
-        Map<String, Class> converters = ConverterFactory.getKnownConverters();
-        Set<String> keys = converters.keySet();
-        String[] names = keys.toArray(new String[keys.size()]);
+        Map converters = ConverterFactory.getKnownConverters();
+        Set keys = converters.keySet();
+        String[] names = (String[]) keys.toArray(new String[keys.size()]);
         ChoiceFactory.getDataMap().put(CONV_KEY, names);
 
         // The choice of configurable XSL stylesheets

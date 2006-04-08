@@ -107,7 +107,7 @@ public class TarInputStream extends FilterInputStream
     /**
      * Closes this stream. Calls the TarBuffer's close() method.
      */
-    @Override
+    /* @Override */
     public void close() throws IOException
     {
         this.buffer.close();
@@ -133,7 +133,7 @@ public class TarInputStream extends FilterInputStream
      *
      * @return The number of available bytes for the current entry.
      */
-    @Override
+    /* @Override */
     public int available() throws IOException
     {
         return (int) (this.entrySize - this.entryOffset);
@@ -148,7 +148,7 @@ public class TarInputStream extends FilterInputStream
      * @param numToSkip The number of bytes to skip.
      * @return The actual number of bytes skipped.
      */
-    @Override
+    /* @Override */
     public long skip(long numToSkip) throws IOException
     {
         // REVIEW
@@ -176,7 +176,7 @@ public class TarInputStream extends FilterInputStream
      *
      * @return False.
      */
-    @Override
+    /* @Override */
     public boolean markSupported()
     {
         return false;
@@ -187,7 +187,7 @@ public class TarInputStream extends FilterInputStream
      *
      * @param markLimit The limit to mark.
      */
-    @Override
+    /* @Override */
     public void mark(int markLimit)
     {
     }
@@ -195,7 +195,7 @@ public class TarInputStream extends FilterInputStream
     /**
      * Since we do not support marking just yet, we do nothing.
      */
-    @Override
+    /* @Override */
     public void reset()
     {
     }
@@ -324,7 +324,7 @@ public class TarInputStream extends FilterInputStream
      *
      * @return The byte read, or -1 at EOF.
      */
-    @Override
+    /* @Override */
     public int read() throws IOException
     {
         int num = this.read(this.oneBuf, 0, 1);
@@ -344,7 +344,7 @@ public class TarInputStream extends FilterInputStream
      * @param buf The buffer into which to place bytes read.
      * @return The number of bytes read, or -1 at EOF.
      */
-    @Override
+    /* @Override */
     public int read(byte[] buf) throws IOException
     {
         return this.read(buf, 0, buf.length);
@@ -362,7 +362,7 @@ public class TarInputStream extends FilterInputStream
      * @param numToRead The number of bytes to read.
      * @return The number of bytes read, or -1 at EOF.
      */
-    @Override
+    /* @Override */
     public int read(byte[] buf, int offset, int numToRead) throws IOException
     {
         int totalRead = 0;

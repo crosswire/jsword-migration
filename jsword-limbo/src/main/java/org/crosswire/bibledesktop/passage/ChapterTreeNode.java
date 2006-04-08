@@ -21,10 +21,11 @@
  */
 package org.crosswire.bibledesktop.passage;
 
+import java.util.Iterator;
+
 import javax.swing.tree.TreeNode;
 
 import org.crosswire.jsword.passage.BibleInfo;
-import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.Verse;
@@ -52,7 +53,6 @@ public class ChapterTreeNode extends BookTreeNode
     /**
      * This constructor is for when we are really a BookTreeNode
      */
-    @Override
     public void setPassage(Passage ref, boolean filter)
     {
         this.ref = ref;
@@ -65,9 +65,10 @@ public class ChapterTreeNode extends BookTreeNode
 
                 int verse_count = 0;
 
-                for (Key key : ref)
+                Iterator it = ref.iterator();
+                while (it.hasNext())
                 {
-                    Verse verse = (Verse) key;
+                    Verse verse = (Verse) it.next();
 
                     if ((book == 0 || verse.getBook() == book)
                         && (chapter == 0 || verse.getChapter() == chapter))
@@ -88,7 +89,6 @@ public class ChapterTreeNode extends BookTreeNode
     /**
      * Returns the child <code>TreeNode</code> at index i
      */
-    @Override
     public TreeNode getChildAt(int i)
     {
         try
@@ -113,7 +113,6 @@ public class ChapterTreeNode extends BookTreeNode
      * If the receiver does not contain <code>node</code>, -1 will be
      * returned.
      */
-    @Override
     public int getIndex(TreeNode node)
     {
         if (!(node instanceof VerseTreeNode))
@@ -128,7 +127,6 @@ public class ChapterTreeNode extends BookTreeNode
     /**
      * How we appear in the Tree
      */
-    @Override
     public String toString()
     {
         try

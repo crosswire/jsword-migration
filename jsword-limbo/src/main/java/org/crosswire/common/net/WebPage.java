@@ -233,10 +233,10 @@ public class WebPage
     public static int mode = 1;
 
     /** The page headers */
-    private Vector<Header> headers = new Vector<Header>();
+    private Vector headers = new Vector();
 
     /** The new cookies delivered with this page */
-    private Vector<Cookie> cookies = new Vector<Cookie>();
+    private Vector cookies = new Vector();
 
     /** The page source */
     private String data;

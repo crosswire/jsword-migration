@@ -147,7 +147,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
             /* (non-Javadoc)
              * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
              */
-            @Override
+            /* @Override */
             public void keyTyped(KeyEvent ev)
             {
                 if (ev.getKeyChar() == '\n' && ev.getModifiers() == Toolkit.getDefaultToolkit().getMenuShortcutKeyMask())

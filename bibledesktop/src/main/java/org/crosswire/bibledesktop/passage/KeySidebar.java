@@ -144,7 +144,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     private void doBlur(int amount)
     {
         // Remember what was selected
-        List<Object> selected = new ArrayList<Object>(Arrays.asList(list.getSelectedValues()));
+        List selected = new ArrayList(Arrays.asList(list.getSelectedValues()));
 
         // Make sure that key changes are not visible until blur is done.
         Key copy = (Key) key.clone();
@@ -156,9 +156,10 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
         }
         else
         {
-            for (Object obj : selected)
+            Iterator iter = selected.iterator();
+            while (iter.hasNext())
             {
-                Key k = (Key) obj;
+                Key k = (Key) iter.next();
                 // Create a copy so the selection can be restored
                 Key keyCopy = (Key) k.clone();
                 keyCopy.blur(amount, RestrictionType.getDefaultBlurRestriction());
@@ -333,7 +334,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
      */
     public synchronized void addKeyChangeListener(KeyChangeListener listener)
     {
-        List<KeyChangeListener> temp = new ArrayList<KeyChangeListener>(2);
+        List temp = new ArrayList(2);
 
         if (keyChangeListeners != null)
         {
@@ -354,7 +355,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     {
         if (keyChangeListeners != null && keyChangeListeners.contains(listener))
         {
-            List<KeyChangeListener> temp = new ArrayList<KeyChangeListener>();
+            List temp = new ArrayList();
             temp.addAll(keyChangeListeners);
 
             temp.remove(listener);
@@ -371,7 +372,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
         {
             for (int i = 0; i < keyChangeListeners.size(); i++)
             {
-                KeyChangeListener li = keyChangeListeners.get(i);
+                KeyChangeListener li = (KeyChangeListener) keyChangeListeners.get(i);
                 li.keyChanged(ev);
             }
         }
@@ -399,7 +400,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     /**
      * The listener for KeyChangeEvents
      */
-    private transient List<KeyChangeListener> keyChangeListeners;
+    private transient List keyChangeListeners;
 
     /*
      * GUI Components

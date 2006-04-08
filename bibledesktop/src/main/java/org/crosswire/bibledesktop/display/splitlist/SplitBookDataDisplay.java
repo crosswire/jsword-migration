@@ -174,7 +174,7 @@ public class SplitBookDataDisplay extends JPanel
      */
     public synchronized void addKeyChangeListener(KeyChangeListener listener)
     {
-        List<KeyChangeListener> temp = new ArrayList<KeyChangeListener>(2);
+        List temp = new ArrayList(2);
 
         if (keyChangeListeners != null)
         {
@@ -195,7 +195,7 @@ public class SplitBookDataDisplay extends JPanel
     {
         if (keyChangeListeners != null && keyChangeListeners.contains(listener))
         {
-            List<KeyChangeListener> temp = new ArrayList<KeyChangeListener>();
+            List temp = new ArrayList();
             temp.addAll(keyChangeListeners);
 
             temp.remove(listener);
@@ -212,7 +212,7 @@ public class SplitBookDataDisplay extends JPanel
         {
             for (int i = 0; i < keyChangeListeners.size(); i++)
             {
-                KeyChangeListener listener = keyChangeListeners.get(i);
+                KeyChangeListener listener = (KeyChangeListener) keyChangeListeners.get(i);
                 listener.keyChanged(ev);
             }
         }
@@ -226,7 +226,7 @@ public class SplitBookDataDisplay extends JPanel
     /**
      * The listener for KeyChangeEvents
      */
-    private transient List<KeyChangeListener> keyChangeListeners;
+    private transient List keyChangeListeners;
 
     /**
      * What book are we currently viewing?

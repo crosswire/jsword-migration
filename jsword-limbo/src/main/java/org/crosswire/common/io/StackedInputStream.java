@@ -52,7 +52,7 @@ public class StackedInputStream extends InputStream
         else
         {
             dead = current;
-            current = list.lastElement();
+            current = (InputStream) list.lastElement();
             list.removeElement(current);
         }
 
@@ -63,7 +63,6 @@ public class StackedInputStream extends InputStream
      * Override to pass out to the current Stream.
      * @return The byte read, as normal.
      */
-    @Override
     public int read() throws IOException
     {
         while (true)
@@ -88,7 +87,6 @@ public class StackedInputStream extends InputStream
      * If someone closes the StackedInputStream then we go round
      * and close all the Streams on the stack.
      */
-    @Override
     public void close() throws IOException
     {
         // Close each InputStream catching and noting IOExceptions
@@ -99,7 +97,7 @@ public class StackedInputStream extends InputStream
         {
             try
             {
-                InputStream in = list.elementAt(i);
+                InputStream in = (InputStream) list.elementAt(i);
                 in.close();
             }
             catch (Exception ex)
@@ -130,7 +128,6 @@ public class StackedInputStream extends InputStream
      * Primarily for debugging. Reports on th state of the Stream.
      * @return A String containing the report.
      */
-    @Override
     public String toString()
     {
         String retcode = ""; //$NON-NLS-1$
@@ -141,14 +138,14 @@ public class StackedInputStream extends InputStream
 
         for (int i=list.size()-1; i>=0; i--)
         {
-            InputStream in = list.elementAt(i);
+            InputStream in = (InputStream) list.elementAt(i);
             retcode += "Next: " + in.toString() + NEWLINE; //$NON-NLS-1$
         }
 
         return retcode;
     }
 
-    private Vector<InputStream> list = new Vector<InputStream>();
+    private Vector list = new Vector();
     private InputStream current;
 
     /** The log stream */

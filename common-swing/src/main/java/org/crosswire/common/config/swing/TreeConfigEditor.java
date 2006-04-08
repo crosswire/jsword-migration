@@ -64,7 +64,6 @@ public class TreeConfigEditor extends AbstractConfigEditor
      * any field initializers will be called AFTER THIS METHOD EXECUTES
      * so don't use field initializers.
      */
-    @Override
     protected void initializeGUI()
     {
         JPanel panel = new JPanel();
@@ -135,7 +134,6 @@ public class TreeConfigEditor extends AbstractConfigEditor
     /**
      * Updates to the tree that we need to do on any change
      */
-    @Override
     protected void updateTree()
     {
         // expand the tree
@@ -151,14 +149,13 @@ public class TreeConfigEditor extends AbstractConfigEditor
     /**
      * Add a Choice to our set of panels
      */
-    @Override
     protected void addChoice(String key, Choice model)
     {
         super.addChoice(key, model);
 
         // Sort the tree out
         String path = Config.getPath(model.getFullPath());
-        FormPane card = decks.get(path);
+        FormPane card = (FormPane) decks.get(path);
         if (card != null && card.getParent() == null)
         {
             JScrollPane scroll = new JScrollPane(card);
@@ -170,14 +167,13 @@ public class TreeConfigEditor extends AbstractConfigEditor
     /**
      * Add a Choice to our set of panels
      */
-    @Override
     protected void removeChoice(String key, Choice model)
     {
         super.removeChoice(key, model);
 
         // Sort the tree out
         String path = Config.getPath(model.getFullPath());
-        FormPane card = decks.get(path);
+        FormPane card = (FormPane) decks.get(path);
         if (card != null && card.isEmpty())
         {
             deck.remove(card.getParent());
@@ -281,7 +277,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
          */
         protected List getChildren(String path)
         {
-            List<String> retcode = new ArrayList<String>();
+            List retcode = new ArrayList();
 
             Iterator it = config.getPaths();
             while (it.hasNext())
@@ -446,7 +442,6 @@ public class TreeConfigEditor extends AbstractConfigEditor
         /* (non-Javadoc)
          * @see java.lang.Object#toString()
          */
-        @Override
         public String toString()
         {
             return name;

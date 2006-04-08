@@ -22,7 +22,7 @@
 package org.crosswire.jsword.book.ser;
 
 import java.net.URL;
-import java.util.Map;
+import java.util.Properties;
 
 import org.crosswire.jsword.book.BookDriver;
 import org.crosswire.jsword.book.BookException;
@@ -148,7 +148,7 @@ public class SerBook extends AbstractPassageBook
     /**
      * Simple ctor
      */
-    public SerBook(BookDriver driver, Map<String, String> prop, URL url) throws BookException
+    public SerBook(BookDriver driver, Properties prop, URL url) throws BookException
     {
         BookMetaData bmd = new DefaultBookMetaData(driver, this, prop);
         setBookMetaData(bmd);
@@ -166,7 +166,6 @@ public class SerBook extends AbstractPassageBook
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getFilter()
      */
-    @Override
     protected Filter getFilter()
     {
         return FilterFactory.getDefaultFilter();
@@ -175,7 +174,6 @@ public class SerBook extends AbstractPassageBook
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getText(org.crosswire.jsword.passage.Verse)
      */
-    @Override
     protected String getText(Key key) throws BookException
     {
         Verse verse = KeyUtil.getVerse(key);
@@ -186,7 +184,6 @@ public class SerBook extends AbstractPassageBook
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#setText(org.crosswire.jsword.passage.Verse, java.lang.String)
      */
-    @Override
     protected void setText(Verse verse, String text) throws BookException
     {
         cache.setText(verse, text);

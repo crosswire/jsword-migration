@@ -24,8 +24,8 @@ package org.crosswire.jsword.book.raw;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
-import org.crosswire.common.util.CollectionUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
@@ -72,9 +72,12 @@ public class RawBookDriver extends AbstractBookDriver
             for (int i=0; i<names.length; i++)
             {
                 URL url = NetUtil.lengthenURL(dir, names[i]);
-                URL propUrl = NetUtil.lengthenURL(url, RawConstants.FILE_BIBLE_PROPERTIES);
+                URL prop_url = NetUtil.lengthenURL(url, RawConstants.FILE_BIBLE_PROPERTIES);
 
-                Book book = new RawBook(this, CollectionUtil.properties2Map(propUrl), url);
+                Properties prop = new Properties();
+                prop.load(prop_url.openStream());
+
+                Book book = new RawBook(this, prop, url);
 
                 books.add(book);
             }

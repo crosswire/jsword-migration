@@ -213,7 +213,7 @@ public class RawBook extends AbstractPassageBook
     /**
      * Simple ctor
      */
-    public RawBook(BookDriver driver, Map<String, String> prop, URL url)
+    public RawBook(BookDriver driver, Map prop, URL url)
     {
         BookMetaData bmd = new DefaultBookMetaData(driver, this, prop);
         setBookMetaData(bmd);
@@ -276,7 +276,6 @@ public class RawBook extends AbstractPassageBook
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getFilter()
      */
-    @Override
     protected Filter getFilter()
     {
         return FilterFactory.getDefaultFilter();
@@ -285,7 +284,6 @@ public class RawBook extends AbstractPassageBook
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getText(org.crosswire.jsword.passage.Verse)
      */
-    @Override
     protected String getText(Key key)
     {
         StringBuffer retcode = new StringBuffer();
@@ -336,7 +334,6 @@ public class RawBook extends AbstractPassageBook
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#setText(org.crosswire.jsword.passage.Verse, java.lang.String)
      */
-    @Override
     protected void setText(Verse verse, String text) throws BookException
     {
         throw new BookException(Msg.DRIVER_READONLY);
@@ -397,7 +394,6 @@ public class RawBook extends AbstractPassageBook
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractBible#setDocument(org.crosswire.jsword.passage.Verse, org.crosswire.jsword.book.filter.BookData)
      */
-    @Override
     public void setDocument(Verse verse, BookData bdata)
     {
         // For all of the sections
@@ -460,7 +456,7 @@ public class RawBook extends AbstractPassageBook
         // Remove the punctuation from the ends of the words.
         for (int i = 0; i < words.length; i++)
         {
-            retcode[i] = CaseType.getCase(words[i]).ordinal();
+            retcode[i] = CaseType.getCase(words[i]).toInteger();
         }
     
         return retcode;

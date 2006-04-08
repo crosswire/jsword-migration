@@ -117,7 +117,7 @@ public class MapField extends JPanel implements Field
      * Set the current value using a Map
      * @param value The new text
      */
-    public void setMap(Map<String, String> value)
+    public void setMap(Map value)
     {
         tableModel.setMap(value);
         table.setModel(tableModel);
@@ -189,7 +189,7 @@ public class MapField extends JPanel implements Field
     {
         try
         {
-            Class<?> clazz = Class.forName(name);
+            Class clazz = Class.forName(name);
 
             if (!superclass.isAssignableFrom(clazz))
             {
@@ -238,13 +238,12 @@ public class MapField extends JPanel implements Field
          */
         protected NamedMapTableModel()
         {
-            super(new Hashtable<String, String>());
+            super(new Hashtable());
         }
 
         /* (non-Javadoc)
          * @see javax.swing.table.TableModel#getColumnName(int)
          */
-        @Override
         public String getColumnName(int col)
         {
             return (col == 0) ? Msg.NAME.toString() : Msg.CLASS.toString();
@@ -253,7 +252,6 @@ public class MapField extends JPanel implements Field
         /* (non-Javadoc)
          * @see javax.swing.table.TableModel#isCellEditable(int, int)
          */
-        @Override
         public boolean isCellEditable(int row, int col)
         {
             return false;
@@ -324,7 +322,7 @@ public class MapField extends JPanel implements Field
     /**
      * The class that everything must inherit from
      */
-    private Class<?> superclass;
+    private Class superclass;
 
     /**
      * Serialization ID

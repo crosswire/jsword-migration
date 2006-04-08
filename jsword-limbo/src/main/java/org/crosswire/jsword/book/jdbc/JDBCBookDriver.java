@@ -24,8 +24,8 @@ package org.crosswire.jsword.book.jdbc;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
-import org.crosswire.common.util.CollectionUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
@@ -74,7 +74,10 @@ public class JDBCBookDriver extends AbstractBookDriver
                 URL url = NetUtil.lengthenURL(dir, names[i]);
                 URL propUrl = NetUtil.lengthenURL(url, "bible.properties"); //$NON-NLS-1$
 
-                Book book = new JDBCBook(this, CollectionUtil.properties2Map(propUrl));
+                Properties prop = new Properties();
+                prop.load(propUrl.openStream());
+
+                Book book = new JDBCBook(this, prop);
 
                 books.add(book);
             }

@@ -86,7 +86,7 @@ public final class MetalPanelBorder extends AbstractBorder implements UIResource
     /* (non-Javadoc)
      * @see javax.swing.border.Border#paintBorder(java.awt.Component, java.awt.Graphics, int, int, int, int)
      */
-    @Override
+    /* @Override */
     public void paintBorder(Component c, Graphics g, int x, int y, int w, int h)
     {
         g.translate(x, y);
@@ -123,7 +123,7 @@ public final class MetalPanelBorder extends AbstractBorder implements UIResource
     /* (non-Javadoc)
      * @see javax.swing.border.Border#getBorderInsets(java.awt.Component)
      */
-    @Override
+    /* @Override */
     public Insets getBorderInsets(Component c)
     {
         return insets;

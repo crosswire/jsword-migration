@@ -23,6 +23,7 @@ package org.crosswire.biblemapper.swing;
 
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.util.Iterator;
 import java.util.List;
 
 import org.crosswire.jsword.book.Book;
@@ -116,8 +117,10 @@ public class CliMapper
                     total.trimVerses(LINKS_PER_CHAPTER);
                     scrunchTally(total);
 
-                    for (Key key : total)
+                    Iterator iter = total.iterator();
+                    while (iter.hasNext())
                     {
+                        Key key = (Key) iter.next();
                         Verse link = (Verse) key;
                         VerseRange chap = new VerseRange(link, new Verse(link.getBook(), link.getChapter(), BibleInfo.versesInChapter(link.getBook(), link.getChapter())));
                         Element el = new Element("link");

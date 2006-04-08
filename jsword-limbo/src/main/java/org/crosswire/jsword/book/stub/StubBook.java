@@ -53,7 +53,7 @@ public class StubBook extends AbstractPassageBook
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getFilter()
      */
-    @Override
+    /* @Override */
     protected Filter getFilter()
     {
         return FilterFactory.getDefaultFilter();
@@ -62,7 +62,7 @@ public class StubBook extends AbstractPassageBook
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getText(org.crosswire.jsword.passage.Verse)
      */
-    @Override
+    /* @Override */
     protected String getText(Key key)
     {
         return "stub implementation"; //$NON-NLS-1$
@@ -71,7 +71,7 @@ public class StubBook extends AbstractPassageBook
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#setText(org.crosswire.jsword.passage.Verse, java.lang.String)
      */
-    @Override
+    /* @Override */
     protected void setText(Verse verse, String text) throws BookException
     {
         throw new BookException(Msg.DRIVER_READONLY);

@@ -27,6 +27,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
@@ -122,9 +123,11 @@ public class SitesPane extends JPanel
     protected final void addAllInstallers()
     {
         // Now add panels for book installation sites
-        for (String name : installers.keySet())
+        Iterator iter = installers.keySet().iterator();
+        while (iter.hasNext())
         {
-            Installer installer = installers.get(name);
+            String name = (String) iter.next();
+            Installer installer = (Installer) installers.get(name);
 
             SitePane site = new SitePane(installer);
             tabMain.add(name, site);
@@ -181,7 +184,7 @@ public class SitesPane extends JPanel
             /* (non-Javadoc)
              * @see java.awt.event.WindowListener#windowClosed(java.awt.event.WindowEvent)
              */
-            @Override
+            /* @Override */
             public void windowClosed(WindowEvent ev)
             {
                 doSitesClose();
@@ -218,7 +221,7 @@ public class SitesPane extends JPanel
     /**
      * The known installers fetched from InstallManager
      */
-    private Map<String, Installer> installers;
+    private Map installers;
 
     /**
      * The current installer

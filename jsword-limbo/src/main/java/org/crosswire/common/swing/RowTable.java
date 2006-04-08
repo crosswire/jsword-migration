@@ -64,7 +64,7 @@ public class RowTable extends JTable
 
         getTableHeader().addMouseListener(new MouseAdapter()
         {
-            @Override
+            /* @Override */
             public void mouseClicked(MouseEvent e)
             {
                 sort(getColumnModel().getColumnIndexAtX(e.getX()));

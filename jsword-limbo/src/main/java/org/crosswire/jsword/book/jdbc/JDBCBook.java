@@ -32,6 +32,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Properties;
 
 import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.book.BookDriver;
@@ -58,7 +59,7 @@ public class JDBCBook extends AbstractPassageBook
     /**
      * Simple ctor
      */
-    public JDBCBook(BookDriver driver, Map<String, String> prop) throws BookException
+    public JDBCBook(BookDriver driver, Properties prop) throws BookException
     {
         BookMetaData bmd = new DefaultBookMetaData(driver, this, prop);
         setBookMetaData(bmd);
@@ -126,7 +127,6 @@ public class JDBCBook extends AbstractPassageBook
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getFilter()
      */
-    @Override
     protected Filter getFilter()
     {
         return FilterFactory.getDefaultFilter();
@@ -135,7 +135,6 @@ public class JDBCBook extends AbstractPassageBook
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getText(org.crosswire.jsword.passage.Verse)
      */
-    @Override
     protected String getText(Key key)
     {
         String reply = ""; //$NON-NLS-1$
@@ -182,7 +181,6 @@ public class JDBCBook extends AbstractPassageBook
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#setText(org.crosswire.jsword.passage.Verse, java.lang.String)
      */
-    @Override
     protected void setText(Verse verse, String text) throws BookException
     {
         throw new BookException(Msg.DRIVER_READONLY);

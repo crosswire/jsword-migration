@@ -145,7 +145,7 @@ public class BookChooser extends JPanel
         dialog.setLocationRelativeTo(parent);
         dialog.addWindowListener(new WindowAdapter()
         {
-            @Override
+            /* @Override */
             public void windowClosed(WindowEvent ev)
             {
                 cancelPressed();

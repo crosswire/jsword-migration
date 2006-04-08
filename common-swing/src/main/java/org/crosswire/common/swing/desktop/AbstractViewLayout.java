@@ -34,6 +34,7 @@ import javax.swing.event.EventListenerList;
 
 import org.crosswire.common.swing.desktop.event.ViewEvent;
 import org.crosswire.common.swing.desktop.event.ViewEventListener;
+import org.crosswire.common.util.Iterable;
 
 /**
  * Abstract manager of how we layout views.
@@ -43,7 +44,7 @@ import org.crosswire.common.swing.desktop.event.ViewEventListener;
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public abstract class AbstractViewLayout implements Viewable, Iterable<Component>
+public abstract class AbstractViewLayout implements Viewable, Iterable
 {
     /**
      * This constructor is protected because it only needs to be seen by
@@ -52,7 +53,7 @@ public abstract class AbstractViewLayout implements Viewable, Iterable<Component
     protected AbstractViewLayout()
     {
         panel = new JPanel(new BorderLayout());
-        views = new ArrayList<Component>();
+        views = new ArrayList();
         listenerList = new EventListenerList();
     }
 
@@ -85,15 +86,16 @@ public abstract class AbstractViewLayout implements Viewable, Iterable<Component
      * Get a snapshot of the views as a collection.
      * @return the views
      */
-    public Collection<Component> getViews()
+    public Collection getViews()
     {
-        return new ArrayList<Component>(views);
+        return new ArrayList(views);
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Iterable#iterator()
+    /**
+     * Get an iterator of a snapshot of views.
+     * @return an iterator over the views.
      */
-    public Iterator<Component> iterator()
+    public Iterator iterator()
     {
         return getViews().iterator();
     }
@@ -111,8 +113,10 @@ public abstract class AbstractViewLayout implements Viewable, Iterable<Component
         }
         // Go through the views removing them from the layout
         // and adding them to the other
-        for (Component view : this)
+        Iterator it = iterator();
+        while (it.hasNext())
         {
+            Component view = (Component) it.next();
             forceRemoveView(view);
             other.addView(view);
         }
@@ -124,8 +128,10 @@ public abstract class AbstractViewLayout implements Viewable, Iterable<Component
      */
     public void closeAll()
     {
-        for (Component view : this)
+        Iterator it = iterator();
+        while (it.hasNext())
         {
+            Component view = (Component) it.next();
             removeView(view);
         }
     }
@@ -136,8 +142,10 @@ public abstract class AbstractViewLayout implements Viewable, Iterable<Component
      */
     public void closeOthers(Component component)
     {
-        for (Component view : this)
+        Iterator it = iterator();
+        while (it.hasNext())
         {
+            Component view = (Component) it.next();
             if (view != component)
             {
                 removeView(view);
@@ -151,8 +159,10 @@ public abstract class AbstractViewLayout implements Viewable, Iterable<Component
      */
     public void visit(ViewVisitor visitor)
     {
-        for (Component view : this)
+        Iterator it = iterator();
+        while (it.hasNext())
         {
+            Component view = (Component) it.next();
             visitor.visitView(view);
         }
     }
@@ -194,7 +204,7 @@ public abstract class AbstractViewLayout implements Viewable, Iterable<Component
      */
     public Component getView(int i)
     {
-        return views.get(i);
+        return (Component) views.get(i);
     }
 
     /**
@@ -298,7 +308,7 @@ public abstract class AbstractViewLayout implements Viewable, Iterable<Component
     /**
      * The list of views.
      */
-    private List<Component> views;
+    private List views;
 
     /**
      * The listeners for handling ViewEvent Listeners

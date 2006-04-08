@@ -18,7 +18,7 @@ public class UpperCaseDocument extends PlainDocument
     /**
      * Override insertString to force upper case
      */
-    @Override
+    /* @Override */
     public void insertString(int offs, String str, AttributeSet att) throws BadLocationException
     {
         if (str == null) return;

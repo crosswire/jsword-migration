@@ -30,11 +30,11 @@ import java.io.Serializable;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public enum ParamName implements Serializable
+public class ParamName implements Serializable
 {
-	PARAM_BIBLE ("bible"), //$NON-NLS-1$
-    PARAM_PASSAGE ("passage"), //$NON-NLS-1$
-    PARAM_FINDSTRING ("word"); //$NON-NLS-1$
+	static final ParamName PARAM_BIBLE = new ParamName("bible"); //$NON-NLS-1$
+    static final ParamName PARAM_PASSAGE = new ParamName("passage"); //$NON-NLS-1$
+    static final ParamName PARAM_FINDSTRING = new ParamName("word"); //$NON-NLS-1$
 
     /**
      * Only we should be doing this
@@ -49,11 +49,12 @@ public enum ParamName implements Serializable
      */
     public static ParamName fromString(String name)
     {
-        for (ParamName t : ParamName.values())
+        for (int i = 0; i < VALUES.length; i++)
         {
-            if (t.name.equalsIgnoreCase(name))
+            ParamName o = VALUES[i];
+            if (o.name.equalsIgnoreCase(name))
             {
-                return t;
+                return o;
             }
         }
         // cannot get here
@@ -61,10 +62,35 @@ public enum ParamName implements Serializable
         return null;
     }
 
+    /**
+     * Lookup method to convert from an integer
+     */
+    public static ParamName fromInteger(int i)
+    {
+        return VALUES[i];
+    }
+
+    /**
+     * Prevent subclasses from overriding canonical identity based Object methods
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public final boolean equals(Object o)
+    {
+        return super.equals(o);
+    }
+
+    /**
+     * Prevent subclasses from overriding canonical identity based Object methods
+     * @see java.lang.Object#hashCode()
+     */
+    public final int hashCode()
+    {
+        return super.hashCode();
+    }
+
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    @Override
     public String toString()
     {
         return name;
@@ -74,4 +100,25 @@ public enum ParamName implements Serializable
      * The name of the ParamName
      */
     private String name;
+
+    // Support for serialization
+    private static int nextObj;
+    private final int obj = nextObj++;
+
+    Object readResolve()
+    {
+        return VALUES[obj];
+    }
+
+    private static final ParamName[] VALUES =
+    {
+        PARAM_BIBLE,
+        PARAM_PASSAGE,
+        PARAM_FINDSTRING,
+    };
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 3257290244624626230L;
 }

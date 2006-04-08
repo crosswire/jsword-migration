@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -37,7 +36,7 @@ import java.util.Set;
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class SortedListSet<E extends Comparable<E>> extends ArrayList<E> implements Set<E>, List<E>
+public class SortedListSet extends ArrayList implements Set
 {
     /**
      * Create an empty SortedListSet of default size.
@@ -59,7 +58,7 @@ public class SortedListSet<E extends Comparable<E>> extends ArrayList<E> impleme
     /**
      * @param c
      */
-    public SortedListSet(Collection<? extends E> c)
+    public SortedListSet(Collection c)
     {
         this(c.size());
         // Might be better to add all then sort.
@@ -69,8 +68,7 @@ public class SortedListSet<E extends Comparable<E>> extends ArrayList<E> impleme
     /* (non-Javadoc)
      * @see java.util.List#add(int, java.lang.Object)
      */
-    @Override
-    public void add(int index, E element)
+    public void add(int index, Object element)
     {
         // ignore the requested index
         add(element);
@@ -79,8 +77,7 @@ public class SortedListSet<E extends Comparable<E>> extends ArrayList<E> impleme
     /* (non-Javadoc)
      * @see java.util.Collection#add(java.lang.Object)
      */
-    @Override
-    public boolean add(E o)
+    public boolean add(Object o)
     {
         // Add the item only if it is not in the list.
         // Add it into the list so that it is in sorted order.
@@ -96,16 +93,16 @@ public class SortedListSet<E extends Comparable<E>> extends ArrayList<E> impleme
     /* (non-Javadoc)
      * @see java.util.Collection#addAll(java.util.Collection)
      */
-    @Override
-    public boolean addAll(Collection<? extends E> c)
+    public boolean addAll(Collection c)
     {
         // Might be better to add the list to the end
         // and then sort the list.
         // This can be revisited if the list performs badly.
         boolean added = false;
-        for (E e : c)
+        Iterator bmdIter = c.iterator();
+        while (bmdIter.hasNext())
         {
-            if (add(e))
+            if (add(bmdIter.next()))
             {
                 added = true;
             }
@@ -116,8 +113,7 @@ public class SortedListSet<E extends Comparable<E>> extends ArrayList<E> impleme
     /* (non-Javadoc)
      * @see java.util.List#addAll(int, java.util.Collection)
      */
-    @Override
-    public boolean addAll(int index, Collection<? extends E> c)
+    public boolean addAll(int index, Collection c)
     {
         // Ignore the index
         return addAll(c);
@@ -126,12 +122,11 @@ public class SortedListSet<E extends Comparable<E>> extends ArrayList<E> impleme
     /* (non-Javadoc)
      * @see java.util.List#set(int, java.lang.Object)
      */
-    @Override
-    public E set(int index, E element)
+    public Object set(int index, Object element)
     {
         // remove the item at the index (keep it to return it),
         // then insert the item into the sorted list.
-        E item = remove(index);
+        Object item = remove(index);
         add(element);
         return item;
     }
@@ -141,12 +136,11 @@ public class SortedListSet<E extends Comparable<E>> extends ArrayList<E> impleme
      * @param filter The criteria by which to filter.
      * @return a filtered SortedListSet.
      */
-    @SuppressWarnings("unchecked")
-    public SortedListSet<E> filter(Filter filter)
+    public SortedListSet filter(Filter filter)
     {
         // create a copy of the list and
         // remove everything that fails the test.
-        SortedListSet<E> listSet = (SortedListSet) clone();
+        SortedListSet listSet = (SortedListSet) clone();
         Iterator iter = listSet.iterator();
         while (iter.hasNext())
         {

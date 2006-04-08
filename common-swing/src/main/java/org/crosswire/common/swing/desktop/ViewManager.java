@@ -148,7 +148,7 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
     /* (non-Javadoc)
      * @see org.crosswire.common.swing.desktop.Viewable#getViews()
      */
-    public Collection<Component> getViews()
+    public Collection getViews()
     {
         return getViewLayout().getViews();
     }
@@ -222,7 +222,7 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
     /* (non-Javadoc)
      * @see org.crosswire.common.swing.desktop.Viewable#iterator()
      */
-    public Iterator<Component> iterator()
+    public Iterator iterator()
     {
         return getViewLayout().iterator();
     }
@@ -328,7 +328,7 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
         {
             initial = LayoutType.TDI;
         }
-        return initial.ordinal();
+        return initial.toInteger();
     }
 
     /* (non-Javadoc)

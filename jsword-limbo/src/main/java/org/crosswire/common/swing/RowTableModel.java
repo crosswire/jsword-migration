@@ -103,7 +103,7 @@ public class RowTableModel extends AbstractTableModel
      * @return Class
      * @see javax.swing.table.TableModel#getColumnClass(int)
      */
-    @Override
+    /* @Override */
     public Class getColumnClass(int columnIndex)
     {
         return rowColumnModel.getClass(columnIndex);
@@ -125,7 +125,7 @@ public class RowTableModel extends AbstractTableModel
      * @return String
      * @see javax.swing.table.TableModel#getColumnName(int)
      */
-    @Override
+    /* @Override */
     public String getColumnName(int columnIndex)
     {
         return rowColumnModel.getName(columnIndex);

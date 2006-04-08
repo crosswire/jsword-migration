@@ -45,7 +45,7 @@ public class MetalLFCustoms extends AbstractLFCustoms
     /**
      * Install Metal platform specific UI defaults.
      */
-    @Override
+    /* @Override */
     protected void initPlatformUIDefaults()
     {
         // Border panelSelectBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);

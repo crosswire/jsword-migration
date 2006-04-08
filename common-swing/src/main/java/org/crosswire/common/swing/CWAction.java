@@ -95,7 +95,7 @@ public class CWAction extends AbstractAction
      * String representation of this object suitable for debugging
      *
      */
-    @Override
+    /* @Override */
     public String toString()
     {
         StringBuffer sb = new StringBuffer();

@@ -187,7 +187,7 @@ public class DebugPane extends JPanel
             /* (non-Javadoc)
              * @see java.lang.Thread#run()
              */
-            @Override
+            /* @Override */
             public synchronized void run()
             {
                 Job job = JobManager.createJob(predictbase, predicturl, Thread.currentThread(), fake);
@@ -276,7 +276,7 @@ public class DebugPane extends JPanel
         /* (non-Javadoc)
          * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
          */
-        @Override
+        /* @Override */
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
         {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);

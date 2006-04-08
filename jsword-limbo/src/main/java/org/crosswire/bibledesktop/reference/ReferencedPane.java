@@ -217,7 +217,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
             Key key = book.getKey(data);
             if (key != null)
             {
-                List<Key> lpath = new ArrayList<Key>();
+                List lpath = new ArrayList();
                 while (true)
                 {
                     lpath.add(0, key);
@@ -228,7 +228,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
                         break;
                     }
                 }
-                Key[] keys = lpath.toArray(new Key[lpath.size()]);
+                Key[] keys = (Key[]) lpath.toArray(new Key[lpath.size()]);
 
                 TreePath path = new TreePath(keys);
                 treEntries.setSelectionPath(path);

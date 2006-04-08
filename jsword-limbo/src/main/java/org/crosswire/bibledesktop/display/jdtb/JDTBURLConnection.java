@@ -77,7 +77,7 @@ public class JDTBURLConnection extends URLConnection
     /* (non-Javadoc)
      * @see java.net.URLConnection#connect()
      */
-    @Override
+    /* @Override */
     public void connect() throws IOException
     {
         try
@@ -103,7 +103,7 @@ public class JDTBURLConnection extends URLConnection
     /* (non-Javadoc)
      * @see java.net.URLConnection#getInputStream()
      */
-    @Override
+    /* @Override */
     public InputStream getInputStream() throws IOException
     {
         if (!connected)

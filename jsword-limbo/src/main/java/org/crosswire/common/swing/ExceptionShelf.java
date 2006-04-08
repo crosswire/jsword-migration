@@ -23,7 +23,6 @@ package org.crosswire.common.swing;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -203,7 +202,7 @@ public class ExceptionShelf extends JPanel
         }
         else
         {
-            ExceptionPane.showExceptionDialog(this, exceptions.get(current));
+            ExceptionPane.showExceptionDialog(this, (Throwable) exceptions.get(current));
         }
     }
 
@@ -212,7 +211,7 @@ public class ExceptionShelf extends JPanel
      */
     protected void remover()
     {
-        removeException(exceptions.get(current));
+        removeException((Throwable) exceptions.get(current));
     }
 
     /**
@@ -320,7 +319,7 @@ public class ExceptionShelf extends JPanel
     /**
      * The set of panels reporting on the errors
      */
-    private List<Component> panels = new ArrayList<Component>();
+    private List panels = new ArrayList();
 
     /**
      * The shelf scroller
@@ -355,7 +354,7 @@ public class ExceptionShelf extends JPanel
     /**
      * The set of known errors
      */
-    private List<Throwable> exceptions = new ArrayList<Throwable>();
+    private List exceptions = new ArrayList();
 
     /**
      * You must call setHelpDeskListener() in order to start displaying
@@ -393,7 +392,7 @@ public class ExceptionShelf extends JPanel
     /**
      * All the ExceptionShelves that we know about
      */
-    protected static final List<Component> SHELVES = new ArrayList<Component>();
+    protected static final List SHELVES = new ArrayList();
 
     /**
      * The font for the remove button

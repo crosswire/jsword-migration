@@ -103,7 +103,7 @@ public class Map implements Serializable
     {
         try
         {
-            return nodes[book][chapter].pos.clone();
+            return (float[]) nodes[book][chapter].pos.clone();
         }
         catch (ArrayIndexOutOfBoundsException ex)
         {

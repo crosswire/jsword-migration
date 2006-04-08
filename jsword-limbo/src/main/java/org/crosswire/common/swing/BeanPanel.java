@@ -104,7 +104,7 @@ public class BeanPanel extends JPanel
                     try
                     {
                         Method reader = property.getReadMethod();
-                        Object reply = reader.invoke(bean, (Object[]) null);
+                        Object reply = reader.invoke(bean, null);
                         if (reply == null)
                         {
                             text.setText(""); //$NON-NLS-1$
@@ -160,7 +160,7 @@ public class BeanPanel extends JPanel
     /**
      * A list of the current editors
      */
-    private List<JTextField> editors = new ArrayList<JTextField>();
+    private List editors = new ArrayList();
 
     /**
      * The log stream

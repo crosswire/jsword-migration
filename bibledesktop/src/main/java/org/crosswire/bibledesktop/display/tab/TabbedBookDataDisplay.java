@@ -25,6 +25,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -174,8 +175,10 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     public void refresh()
     {
         // Now go through all the known tabs and refresh each
-        for (BookDataDisplay bdd : displays)
+        Iterator iter = displays.iterator();
+        while (iter.hasNext())
         {
+            BookDataDisplay bdd = (BookDataDisplay) iter.next();
             bdd.refresh();
         }
     }
@@ -212,7 +215,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     {
         // First add to our list of listeners so when we get more event syncs
         // we can add this new listener to the new sync
-        List<URLEventListener> temp = new ArrayList<URLEventListener>();
+        List temp = new ArrayList();
         if (hyperlis == null)
         {
             temp.add(listener);
@@ -230,9 +233,11 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         }
 
         // Now go through all the known syncs and add this one in
-        for (BookDataDisplay idp : displays)
+        Iterator iter = displays.iterator();
+        while (iter.hasNext())
         {
-            idp.addURLEventListener(listener);
+            BookDataDisplay bdd = (BookDataDisplay) iter.next();
+            bdd.addURLEventListener(listener);
         }
     }
 
@@ -244,16 +249,18 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         // First remove from the list of listeners
         if (hyperlis != null && hyperlis.contains(listener))
         {
-            List<URLEventListener> temp = new ArrayList<URLEventListener>();
+            List temp = new ArrayList();
             temp.addAll(hyperlis);
             temp.remove(listener);
             hyperlis = temp;
         }
 
         // Now remove from all the known syncs
-        for (BookDataDisplay idp : displays)
+        Iterator iter = displays.iterator();
+        while (iter.hasNext())
         {
-            idp.removeURLEventListener(listener);
+            BookDataDisplay bdd = (BookDataDisplay) iter.next();
+            bdd.removeURLEventListener(listener);
         }
     }
 
@@ -324,7 +331,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         {
             Object o = tabMain.getSelectedComponent();
             JScrollPane sp = (JScrollPane) o;
-            return views.get(sp);
+            return (BookDataDisplay) views.get(sp);
         }
         return pnlView;
     }
@@ -340,8 +347,10 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         // Add all the known listeners to this new BookDataDisplay
         if (hyperlis != null)
         {
-            for (URLEventListener li : hyperlis)
+            Iterator iter = hyperlis.iterator();
+            while (iter.hasNext())
             {
+                URLEventListener li = (URLEventListener) iter.next();
                 display.addURLEventListener(li);
             }
         }
@@ -395,7 +404,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * A list of all the HyperlinkListeners
      */
-    private transient List<URLEventListener> hyperlis;
+    private transient List hyperlis;
 
     /**
      * The passage that we are displaying (in one or more tabs)
@@ -430,12 +439,12 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * An map of compnents to their views
      */
-    private Map<Component, BookDataDisplay> views = new HashMap<Component, BookDataDisplay>();
+    private Map views = new HashMap();
 
     /**
      * A list of all the InnerDisplayPanes so we can control listeners
      */
-    private List<BookDataDisplay> displays = new ArrayList<BookDataDisplay>();
+    private List displays = new ArrayList();
 
     /**
      * Pointer to whichever of the above is currently in use

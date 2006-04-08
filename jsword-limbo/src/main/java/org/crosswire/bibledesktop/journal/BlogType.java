@@ -21,7 +21,7 @@
  */
 package org.crosswire.bibledesktop.journal;
 
-
+import java.io.Serializable;
 
 /**
  * Types of Blogs.
@@ -30,44 +30,111 @@ package org.crosswire.bibledesktop.journal;
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public enum BlogType
+public final class BlogType implements Serializable
 {
-    ATOM ("Atom"), //$NON-NLS-1$
+    public static final BlogType ATOM = new BlogType("Atom"); //$NON-NLS-1$
 
-    META_WEBLOG ("MetaWeblog"); //$NON-NLS-1$
+    public static final BlogType META_WEBLOG = new BlogType("MetaWeblog"); //$NON-NLS-1$
 
     /**
      * Simple ctor
      */
-    private BlogType(String name)
+    public BlogType(String name)
     {
         this.name = name;
+    }
+
+    /**
+     * Get an integer representation for this BlogType
+     */
+    public int toInteger()
+    {
+        for (int i = 0; i < VALUES.length; i++)
+        {
+            if (equals(VALUES[i]))
+            {
+                return i;
+            }
+        }
+        // cannot get here
+        assert false;
+        return -1;
+    }
+
+    /**
+     * Lookup method to convert from a String
+     */
+    public static BlogType fromString(String name)
+    {
+        for (int i = 0; i < VALUES.length; i++)
+        {
+            BlogType o = VALUES[i];
+            if (o.name.equalsIgnoreCase(name))
+            {
+                return o;
+            }
+        }
+        // cannot get here
+        assert false;
+        return null;
+    }
+
+    /**
+     * Lookup method to convert from an integer
+     */
+    public static BlogType fromInteger(int i)
+    {
+        return VALUES[i];
+    }
+
+    /**
+     * Prevent subclasses from overriding canonical identity based Object methods
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public final boolean equals(Object o)
+    {
+        return super.equals(o);
+    }
+
+    /**
+     * Prevent subclasses from overriding canonical identity based Object methods
+     * @see java.lang.Object#hashCode()
+     */
+    public final int hashCode()
+    {
+        return super.hashCode();
     }
 
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    @Override
     public String toString()
     {
         return name;
-    }
-
-    public static BlogType fromInteger(int i)
-    {
-        for (BlogType t : BlogType.values())
-        {
-            if (t.ordinal() == i)
-            {
-                return t;
-            }
-        }
-        assert false;
-        return null;
     }
 
     /**
      * The name of the type
      */
     private String name;
+
+    // Support for serialization
+    private static int nextObj;
+    private final int obj = nextObj++;
+
+    Object readResolve()
+    {
+        return VALUES[obj];
+    }
+
+    private static final BlogType[] VALUES =
+    {
+        ATOM,
+        META_WEBLOG
+    };
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 9092832622652761616L;
 }

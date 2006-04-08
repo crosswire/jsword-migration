@@ -135,14 +135,14 @@ public final class ExceptionPane extends JPanel
         JScrollPane textScroll = new JScrollPane(text);
         textScroll.setColumnHeaderView(label);
 
-        List<Throwable> causes = new ArrayList<Throwable>();
+        List causes = new ArrayList();
         Throwable throwable = ex;
         while (throwable != null)
         {
             causes.add(throwable);
             throwable = throwable.getCause();
         }
-        Throwable[] exs = causes.toArray(new Throwable[causes.size()]);
+        Throwable[] exs = (Throwable[]) causes.toArray(new Throwable[causes.size()]);
 
         JComboBox traces = new JComboBox();
         traces.setModel(new DefaultComboBoxModel(exs));
@@ -242,7 +242,7 @@ public final class ExceptionPane extends JPanel
      */
     public static void setSourcePath(File[] sourcePath)
     {
-        ExceptionPane.sources = sourcePath.clone();
+        ExceptionPane.sources = (File[]) sourcePath.clone();
     }
 
     /**

@@ -117,7 +117,7 @@ public class FixedSplitPane extends JSplitPane
     /* (non-Javadoc)
      * @see java.awt.Container#addImpl(java.awt.Component, java.lang.Object, int)
      */
-    @Override
+    /* @Override */
     protected void addImpl(Component comp, Object constraints, int index)
     {
         if (comp instanceof JComponent)
@@ -130,7 +130,7 @@ public class FixedSplitPane extends JSplitPane
     /* (non-Javadoc)
      * @see javax.swing.JSplitPane#setBottomComponent(java.awt.Component)
      */
-    @Override
+    /* @Override */
     public void setBottomComponent(Component comp)
     {
         if (comp instanceof JComponent)
@@ -143,7 +143,7 @@ public class FixedSplitPane extends JSplitPane
     /* (non-Javadoc)
      * @see javax.swing.JSplitPane#setLeftComponent(java.awt.Component)
      */
-    @Override
+    /* @Override */
     public void setLeftComponent(Component comp)
     {
         if (comp instanceof JComponent)
@@ -156,7 +156,7 @@ public class FixedSplitPane extends JSplitPane
     /* (non-Javadoc)
      * @see javax.swing.JSplitPane#setRightComponent(java.awt.Component)
      */
-    @Override
+    /* @Override */
     public void setRightComponent(Component comp)
     {
         if (comp instanceof JComponent)
@@ -169,7 +169,7 @@ public class FixedSplitPane extends JSplitPane
     /* (non-Javadoc)
      * @see javax.swing.JSplitPane#setTopComponent(java.awt.Component)
      */
-    @Override
+    /* @Override */
     public void setTopComponent(Component comp)
     {
         if (comp instanceof JComponent)
@@ -183,7 +183,7 @@ public class FixedSplitPane extends JSplitPane
      * Validates this container and all of its subcomponents. The first time
      * this method is called, the initial divider position is set.
      */
-    @Override
+    /* @Override */
     public void validate()
     {
         if (firstValidate)
@@ -200,7 +200,7 @@ public class FixedSplitPane extends JSplitPane
     /**
      * Sets the divider location as a percentage of the JSplitPane's size.
      */
-    @Override
+    /* @Override */
     public void setDividerLocation(double newProportionalLoc)
     {
         if (!firstValidate)
@@ -244,7 +244,7 @@ public class FixedSplitPane extends JSplitPane
     /* (non-Javadoc)
      * @see javax.swing.JComponent#updateUI()
      */
-    @Override
+    /* @Override */
     public void updateUI()
     {
         super.updateUI();

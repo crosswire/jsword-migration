@@ -37,7 +37,6 @@ import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.PassageTally;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.passage.VerseRange;
-import org.jdom.Content;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -105,7 +104,6 @@ public class LinkArray implements Serializable
     /**
      * Generate links from an XML representation.
      */
-    @SuppressWarnings("unchecked")
 	public void fromXML(Element elinks) throws JDOMException
     {
         if (!elinks.getName().equals("links"))
@@ -127,9 +125,9 @@ public class LinkArray implements Serializable
                 Element ec = (Element) cit.next();
                 int c = Integer.parseInt(ec.getAttributeValue("num"));
 
-                List<Link> ls = new ArrayList<Link>();
+                List ls = new ArrayList();
 
-                List<Content> els = ec.getChildren("link");
+                List els = ec.getChildren("link");
                 Iterator lit = els.iterator();
                 while (lit.hasNext())
                 {
@@ -141,7 +139,7 @@ public class LinkArray implements Serializable
                     ls.add(l);
                 }
 
-                links[b][c] = ls.toArray(new Link[ls.size()]);
+                links[b][c] = (Link[]) ls.toArray(new Link[ls.size()]);
             }
         }
     }

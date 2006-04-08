@@ -475,7 +475,7 @@ public class Mapper extends JFrame
 
         this.addWindowListener(new WindowAdapter()
         {
-            @Override
+            /* @Override */
             public void windowClosed(WindowEvent ev)
             {
                 exit();

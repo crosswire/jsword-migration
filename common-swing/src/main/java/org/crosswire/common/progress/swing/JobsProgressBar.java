@@ -31,6 +31,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -62,8 +63,8 @@ public class JobsProgressBar extends JPanel implements WorkListener
      */
     public JobsProgressBar(boolean small)
     {
-        jobs = new HashMap<Job, JobData>();
-        positions = new ArrayList<JobData>();
+        jobs = new HashMap();
+        positions = new ArrayList();
         if (small)
         {
             // They start off at 15pt (on Windows at least)
@@ -72,9 +73,10 @@ public class JobsProgressBar extends JPanel implements WorkListener
 
         JobManager.addWorkListener(this);
 
-        Set<Job> current = JobManager.getJobs();
-        for (Job job : current)
+        Set current = JobManager.getJobs();
+        for (Iterator it = current.iterator(); it.hasNext(); )
         {
+            Job job = (Job) it.next();
             addJob(job);
         }
 
@@ -113,7 +115,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
     public void workStateChanged(WorkEvent ev)
     {
         Job job = (Job) ev.getSource();
-        JobData jobdata = jobs.get(job);
+        JobData jobdata = (JobData) jobs.get(job);
         jobdata.workStateChanged(ev);
     }
 
@@ -161,7 +163,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
      */
     protected synchronized void updateJob(Job job)
     {
-        JobData jobdata = jobs.get(job);
+        JobData jobdata = (JobData) jobs.get(job);
 
         int percent = job.getPercent();
         jobdata.getProgress().setString(job.getStateDescription() + ": (" + percent + "%)"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -175,7 +177,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
     {
         job.removeWorkListener(this);
 
-        JobData jobdata = jobs.get(job);
+        JobData jobdata = (JobData) jobs.get(job);
 
         positions.set(jobdata.getIndex(), null);
         jobs.remove(job);
@@ -213,12 +215,12 @@ public class JobsProgressBar extends JPanel implements WorkListener
     /**
      * Where we store the currently displayed jobs
      */
-    protected Map<Job, JobData> jobs;
+    protected Map jobs;
 
     /**
      * Array telling us what y position the jobs have in the window
      */
-    private List<JobData> positions;
+    private List positions;
 
     /**
      * The font for the progress-bars
@@ -238,7 +240,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
     /**
      * A simple struct to group information about a Job
      */
-    public static class JobData implements WorkListener
+    private static class JobData implements WorkListener
     {
         /**
          * Simple ctor

@@ -29,7 +29,6 @@ import javax.swing.AbstractListModel;
 import javax.swing.event.ListDataListener;
 
 import org.crosswire.common.util.Logger;
-import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookList;
 import org.crosswire.jsword.book.Books;
@@ -126,7 +125,7 @@ public class BooksListModel extends AbstractListModel
     /* (non-Javadoc)
      * @see javax.swing.ListModel#addListDataListener(javax.swing.event.ListDataListener)
      */
-    @Override
+    /* @Override */
     public void addListDataListener(ListDataListener li)
     {
         if (listenerList.getListenerCount() == 0)
@@ -140,7 +139,7 @@ public class BooksListModel extends AbstractListModel
     /* (non-Javadoc)
      * @see javax.swing.ListModel#removeListDataListener(javax.swing.event.ListDataListener)
      */
-    @Override
+    /* @Override */
     public void removeListDataListener(ListDataListener li)
     {
         super.removeListDataListener(li);
@@ -156,7 +155,7 @@ public class BooksListModel extends AbstractListModel
      */
     protected final synchronized void cacheData()
     {
-        books = new ArrayList<Book>();
+        books = new ArrayList();
         books.addAll(bookList.getBooks(filter));
         Collections.sort(books);
     }
@@ -190,7 +189,7 @@ public class BooksListModel extends AbstractListModel
     /* (non-Javadoc)
      * @see javax.swing.AbstractListModel#fireContentsChanged(java.lang.Object, int, int)
      */
-    @Override
+    /* @Override */
     protected void fireContentsChanged(Object source, int index0, int index1)
     {
         super.fireContentsChanged(source, index0, index1);
@@ -217,7 +216,7 @@ public class BooksListModel extends AbstractListModel
      * ensure that one thread can't update the list of books while another is
      * trying to create a JList based on this class.
      */
-    protected List<Book> books;
+    protected List books;
 
     /**
      * The log stream

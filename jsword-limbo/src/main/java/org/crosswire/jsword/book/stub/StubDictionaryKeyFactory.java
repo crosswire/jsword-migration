@@ -21,6 +21,8 @@
  */
 package org.crosswire.jsword.book.stub;
 
+import java.util.Iterator;
+
 import org.crosswire.jsword.passage.DefaultKeyList;
 import org.crosswire.jsword.passage.DefaultLeafKeyList;
 import org.crosswire.jsword.passage.Key;
@@ -67,8 +69,9 @@ public class StubDictionaryKeyFactory implements KeyFactory
     {
         DefaultKeyList reply = new DefaultKeyList();
 
-        for (Key key : set)
+        for (Iterator it = set.iterator(); it.hasNext();)
         {
+            Key key = (Key) it.next();
             if (key.getName().equals(name))
             {
                 reply.addAll(key);

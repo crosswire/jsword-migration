@@ -22,6 +22,7 @@
 package org.crosswire.common.swing;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -55,9 +56,9 @@ public class MapTableModel extends AbstractTableModel
      * Create an internal store from a 2D array
      * @param map The table to model
      */
-    public MapTableModel(Map<String, String> map)
+    public MapTableModel(Map map)
     {
-        list = new ArrayList<StringPair>();
+        list = new ArrayList();
         setMap(map);
     }
 
@@ -65,14 +66,16 @@ public class MapTableModel extends AbstractTableModel
      * Change the map that we report on
      * @param map The map we are getting our data from
      */
-    public void setMap(Map<String, String> map)
+    public void setMap(Map map)
     {
         this.map = map;
         list.clear();
         if (map != null)
         {
-            for (Map.Entry me : map.entrySet())
+            Iterator iter = map.entrySet().iterator();
+            while (iter.hasNext())
             {
+                Map.Entry me = (Map.Entry) iter.next();
                 Object k = me.getKey();
                 Object v = me.getValue();
                 if (k == null || v == null)
@@ -197,7 +200,7 @@ public class MapTableModel extends AbstractTableModel
             return null;
         }
 
-        StringPair entry = list.get(row);
+        StringPair entry = (StringPair) list.get(row);
         if (col == 0)
         {
             return entry.getKey();
@@ -210,8 +213,7 @@ public class MapTableModel extends AbstractTableModel
      * @param col 1=keys, 2=values
      * @return String.class
      */
-    @Override
-    public Class<?> getColumnClass(int col)
+    public Class getColumnClass(int col)
     {
         return String.class;
     }
@@ -221,7 +223,6 @@ public class MapTableModel extends AbstractTableModel
      * @param col The column index
      * @return The column name
      */
-    @Override
     public String getColumnName(int col)
     {
         return colNames[col];
@@ -241,12 +242,12 @@ public class MapTableModel extends AbstractTableModel
      * The List that is a copy of the list.
      * A list is used for direct access performance.
      */
-    private List<StringPair> list;
+    private List list;
 
     /**
      * The backing map
      */
-    private Map<String, String> map;
+    private Map map;
 
     /**
      * The default column names

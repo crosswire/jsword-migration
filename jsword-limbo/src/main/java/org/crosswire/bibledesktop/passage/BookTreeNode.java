@@ -21,10 +21,11 @@
  */
 package org.crosswire.bibledesktop.passage;
 
+import java.util.Iterator;
+
 import javax.swing.tree.TreeNode;
 
 import org.crosswire.jsword.passage.BibleInfo;
-import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.Verse;
@@ -52,7 +53,6 @@ public class BookTreeNode extends BibleTreeNode
     /**
      * This constructor is for when we are really a BookTreeNode
      */
-    @Override
     public void setPassage(Passage ref, boolean filter)
     {
         this.ref = ref;
@@ -66,9 +66,10 @@ public class BookTreeNode extends BibleTreeNode
                 int currentRef = 0;
                 int count = 0;
 
-                for (Key key : ref)
+                Iterator it = ref.iterator();
+                while (it.hasNext())
                 {
-                    Verse verse = (Verse) key;
+                    Verse verse = (Verse) it.next();
 
                     if ((book == 0 || verse.getBook() == book)
                         && currentRef != verse.getChapter())
@@ -91,7 +92,6 @@ public class BookTreeNode extends BibleTreeNode
     /**
      * Returns the child <code>TreeNode</code> at index i
      */
-    @Override
     public TreeNode getChildAt(int i)
     {
         try
@@ -117,7 +117,6 @@ public class BookTreeNode extends BibleTreeNode
     /**
      * Returns the parent <code>TreeNode</code> of the receiver.
      */
-    @Override
     public TreeNode getParent()
     {
         return parent;
@@ -128,7 +127,6 @@ public class BookTreeNode extends BibleTreeNode
      * If the receiver does not contain <code>node</code>, -1 will be
      * returned.
      */
-    @Override
     public int getIndex(TreeNode node)
     {
         if (!(node instanceof ChapterTreeNode))
@@ -143,7 +141,6 @@ public class BookTreeNode extends BibleTreeNode
     /**
      * How we appear in the Tree
      */
-    @Override
     public String toString()
     {
         try

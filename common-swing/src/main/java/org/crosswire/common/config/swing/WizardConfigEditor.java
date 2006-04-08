@@ -72,12 +72,11 @@ public class WizardConfigEditor extends AbstractConfigEditor
      * any field initializers will be called AFTER THIS METHOD EXECUTES
      * so don't use field initializers.
      */
-    @Override
     protected void initializeGUI()
     {
         actions = new ActionFactory(WizardConfigEditor.class, this);
 
-        names = new ArrayList<String>();
+        names = new ArrayList();
         layout = new CardLayout();
         deck = new JPanel(layout);
 
@@ -91,7 +90,7 @@ public class WizardConfigEditor extends AbstractConfigEditor
             int last_dot = key.lastIndexOf('.');
             String path = key.substring(0, last_dot);
 
-            FormPane card = decks.get(path);
+            FormPane card = (FormPane) decks.get(path);
             if (card.getParent() == null)
             {
                 JScrollPane scroll = new JScrollPane(card);
@@ -140,7 +139,6 @@ public class WizardConfigEditor extends AbstractConfigEditor
      * Now this wasn't created with JBuilder but maybe just maybe by
      * calling my method this, JBuilder may grok it.
      */
-    @Override
     protected void updateTree()
     {
     }
@@ -292,7 +290,7 @@ public class WizardConfigEditor extends AbstractConfigEditor
     /**
      * The list of path names
      */
-    private List<String> names;
+    private List names;
 
     /**
      * The title for the config panels
