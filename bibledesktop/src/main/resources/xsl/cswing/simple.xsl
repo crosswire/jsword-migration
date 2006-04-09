@@ -505,14 +505,13 @@
     <xsl:param name="part" select="0"/>
     <xsl:variable name="orig-work" select="substring-before($morph, ':')"/>
     <xsl:variable name="orig-morph" select="substring-after($morph, ':')"/>
-    <xsl:variable name="protocol" select="$greek.morph.protocol"/>
     <xsl:variable name="protocol">
       <xsl:choose>
         <xsl:when test="starts-with($orig-work, 'x-Robinson:') or starts-with($orig-work, 'robinson:')">
-          <xsl:value-of select="$greek.def.protocol"/>
+          <xsl:value-of select="$greek.morph.protocol"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="$hebrew.def.protocol"/>
+          <xsl:value-of select="$hebrew.morph.protocol"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
