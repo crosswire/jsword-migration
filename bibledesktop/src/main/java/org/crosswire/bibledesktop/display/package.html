@@ -7,28 +7,31 @@ allow GUI components to choose between the methods they use to display BookData
 objects.
 </p>
 
-<p>
+<br/>
 There are several implementation of this interface in sub-packages.
-<li>textpane - A simple unscrolled implementation that uses a JDK HTML widget.
+<ul>
+<li>textpane - A simple unscrolled implementation that uses a JDK HTML widget.</li>
 <li>proxy - A handy base class to simplify adding features to another
-    implementation of BookDataDisplay
+    implementation of BookDataDisplay</li>
 <li>scrolled - Builds on proxy to scroll child BookDataDisplays. Generally the
-    child will be a textpane implementation.
+    child will be a textpane implementation.</li>
 <li>tab - Splits a display into a number of tabs so arbitarily large pasasges
-    can be viewed without scrolling or memory problems.
+    can be viewed without scrolling or memory problems.</li>
 <li>splitlist - presents the parts of a passage as a list from which individual
-    keys can be selected for viewing.
-</p>
+    keys can be selected for viewing.</li>
+</ul>
 
-<p>
+
+<br/>
 We have spent some time investigating alternatives to the JDK HTML widget.
 The requirements were:
-<li>work using OSIS input
-<li>be easily understood for the developer (which fairly much means HTML)
-<li>work over webstart
-<li>be freely re-distributable
-<li>allow some DHTML like flexibility
-</p>
+<ul>
+<li>work using OSIS input</li>
+<li>be easily understood for the developer (which fairly much means HTML)</li>
+<li>work over webstart</li>
+<li>be freely re-distributable</li>
+<li>allow some DHTML like flexibility</li>
+</ul>
 
 <p>
 <b>JRex (Embed Mozilla)</b><br/>
@@ -67,7 +70,7 @@ scripts are not very helpful.
 </p>
 
 <p>
-<b>FOP -> PNG</b><br/>
+<b>FOP -&gt; PNG</b><br/>
 FOP is XSL:FO renderer that can create PDFs and various graphics files.
 Could give very slick output, but not at all dynamic, quite slow and FO is not
 easy to use. Probably not one of the best ideas for normal rendering.
@@ -76,7 +79,7 @@ See <a href="http://xml.apache.org/fop/index.html">FOP at Apache</a>.
 
 <p>
 <b>Dynamic Swing GUI</b><br/>
-There are plenty of XML->Swing converters. JDK 1.4 even includes one.
+There are plenty of XML-&gt;Swing converters. JDK 1.4 even includes one.
 Maybe we could write a OSIS->SwingXML converter in XSL and then render OSIS
 text in swing components. Could be very fancy. XSL could be complex.
 </p>

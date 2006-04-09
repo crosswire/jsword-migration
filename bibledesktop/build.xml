@@ -44,7 +44,7 @@
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jdom-1.0.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="javatar-2.5.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jlfgr-1_0.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="lucene-core-1.9-final.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="lucene-core-1.9.1.jar"/>
   	<!--
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="blogapps-1.0.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="gnu-regexp-1.1.4.jar"/>
@@ -96,12 +96,10 @@
     and *.sh startup files.
     -->
     <mkdir dir="${jnlp.installed}"/>
-    <copy todir="${jnlp.installed}"
+    <copy file="${jnlp.uninstalled}/bibledesktop.jnlp"
+          tofile="${jnlp.installed}/bibledesktop-${release.version}.jnlp"
           filtering="true"
           preservelastmodified="true">
-      <fileset dir="${jnlp.uninstalled}">
-        <include name="**/*.jnlp"/>
-      </fileset>
       <filterset>
         <filter token="jnlp.homepage"   value="${jnlp.homepage}"/>
         <filter token="jnlp.codebase"   value="${jnlp.codebase}"/>

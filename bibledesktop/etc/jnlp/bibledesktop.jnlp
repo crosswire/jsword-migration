@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE jnlp PUBLIC "-//Sun Microsystems, Inc//DTD JNLP Descriptor 1.0//EN" "jnlp.dtd">
 
-<jnlp spec="1.0+" codebase="@jnlp.codebase@" href="bibledesktop.jnlp">
+<jnlp spec="1.0+" codebase="@jnlp.codebase@" href="bibledesktop-@release.version@.jnlp">
 
   <information>
-    <title>Bible Desktop</title>
+    <title>Bible Desktop v.@release.version@</title>
     <vendor>Crosswire Bible Society</vendor>
     <homepage href="@jnlp.homepage@"/>
     <description>Bible Desktop - Bible Study Software based on the Sword project</description>
@@ -36,18 +36,8 @@
     <jar href="commons-httpclient-3.0.jar"/>
     <jar href="commons-logging.jar"/>
     <jar href="commons-net-1.4.1.jar"/>
-    <jar href="lucene-core-1.9-final.jar"/>
+    <jar href="lucene-core-1.9.1.jar"/>
     <jar href="jlfgr-1_0.jar"/>
-    <!--
-    <jar href="xmlrpc-2.0.1.jar"/>
-    <jar href="rome-0.7.jar"/>
-    <jar href="werx-051405.jar"/>
-    <jar href="blogapps-1.0.jar"/>
-    <jar href="gnu-regexp-1.1.4.jar"/>
-    <jar href="kafenio-config-0.8.5.jar"/>
-    <jar href="kafenio-icons-0.8.5.jar"/>
-    <jar href="kafenio-0.8.5.jar"/>
-    -->
     <property name="apple.laf.useScreenMenuBar" value="true"/>
     <property name="com.apple.mrj.application.apple.menu.about.name" value="BibleDesktop"/>
   </resources>

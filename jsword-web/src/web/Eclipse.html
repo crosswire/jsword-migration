@@ -24,7 +24,7 @@
 <p>
   To develop JSword with Eclipse, you will need to tell it to use
   Sun's Java 1.4.2. We recommend using the most recent point release
-  which at the time of this writing was 1.4.2_08. You can get Sun's Java 
+  which at the time of this writing was 1.4.2_11. You can get Sun's Java 
   <a href="http://java.sun.com/j2se/1.4.2/download.html">here</a>.
   You can find instructions on installing Sun's Java for Linux under
   <a name="linuxjava" href="linuxjava.html">Installing Java under Fedora Core 3/4</a>.
@@ -42,16 +42,13 @@
   the Gnome desktop.
 </p>
 <p>
-  You can get Eclipse for Windows from here:
+  You can get Eclipse for Windows, Linux and Mac from here:
   <a href="http://www.eclipse.org/downloads">http://www.eclipse.org/downloads</a>.
-  The download will be about 90M, so it is best to have a broadband connection.
-  With Windows, you will only have one choice. If you are running linux, you will
+  The download will be about 100M, so it is best to have a broadband connection.
+  With Windows and Mac, you will only have one choice. If you are running linux, you will
   have a choice between Motif and GTK versions and if you are running Fedora Core 4,
-  Eclipse is provided in the distribution as a native GTK build. The screenshots are from the GTK version.
-</p>
-<p>
-  You can istall Eclipse for Fedora Core 3/4 as an rpm from here:
-  <a href="http://www.eclipse.org/downloads">http://www.eclipse.org/downloads</a>.
+  Eclipse is provided in the distribution as a native GTK build.
+  The screenshots are from the GTK version.
 </p>
 
 <h2>Installing Eclipse</h2>
@@ -134,51 +131,33 @@ You can create a <q>Launcher</q> that will be in a Gnome panel of your choice by
   <a href="images/eclipse/firstrun.png">[Image]</a>
 </p>
 
-<h3>Connect to JSword's CVS repository</h3>
-<strong><em>
-  After we release JSword and BibleDesktop version 1.0,
-  we will be migrating to SVN
-</em></strong>
+<h3>Connect to JSword's SVN repository</h3>
+<p>Add the subclipse plugin from <a href="http://subclipse.tigris.org">http://subclipse.tigris.org</a>.
+   Instructions are on that website.
+</p>
 <p>
-  Add the CVS Respository Exploring perspective.
+  Add the SVN Respository Exploring perspective.
   <a href="images/eclipse/repositoryperspective.png">[Image]</a>
 </p>
 <ul>
-  <li>This will automatically open the CVS Repository Exploring perspective.</li>
-  <li>Click on the <q>Add CVS Repository</q> button.</li>
-  <li>Fill in the dialog with the following values:
-	<table>
-	  <tr>
-	    <td><strong>Host:</strong></td>
-	    <td>cvs.crosswire.org</td>
-	  </tr>
-	  <tr>
-		<td><strong>Repository Path:</strong></td>
-		<td>/cvs/jsword</td>
-	  </tr>
-	  <tr>
-	  	<td><strong>User:</strong></td>
-		<td>anonymous</td>
-	  </tr>
-	  <tr>
-		<td><strong>Password:</strong></td>
-		<td>anonymous</td>
-	  </tr>
-	  <tr>
-		<td colspan="2">Click on <q>Save Password</q> as it is no secret!</td>
-	  </tr>
-	  <tr>
-		<td colspan="2">Click on <q>Finish</q></td>
-	  </tr>
-    </table>
+  <li>This will automatically open the SVN Repository Exploring perspective.</li>
+  <li>Click on the <q>Add SVN Repository</q> button.</li>
+  <li>For the URL use the value: https://www.crosswire.org/svn/jsword/trunk.<br/>
     This will provide you with read-only access to the repository.
     To change the code you will submit patches which is explained below.
   </li>
-  <li>Open the repository and expand HEAD.</li>
-  <li>Right click on bibledesktop, choose <q>Check Out As...</q>
+  <li>Open the repository, expanding https://www.crosswire.org/svn/jsword/trunk.</li>
+  <li>Select at a minimum the following:
+      <ul>
+        <li>bibledesktop</li>
+        <li>common</li>
+        <li>common-swing</li>
+        <li>jsword</li>
+      </ul>
+  </li>
+  <li>Right click on one of the selection and choose <q>Checkout...</q>
       and then click <q>Finish</q>.</li>
-  <li>Repeat this for common, jsword and jsword-support.
-      Later you may wish to do help maintain the website and then you will
+  <li>Later you may wish to do help maintain the website and then you will
       want bibledesktop-web and jsword-web.</li>
   <li>You don't need this perspective for day to day development,
       so you can remove it.</li>

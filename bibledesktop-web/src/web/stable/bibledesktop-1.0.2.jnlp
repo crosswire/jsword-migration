@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE jnlp PUBLIC "-//Sun Microsystems, Inc//DTD JNLP Descriptor 1.0//EN" "jnlp.dtd">
 
-<jnlp spec="1.0+" codebase="http://www.crosswire.org/bibledesktop/stable" href="bibledesktop.jnlp">
+<jnlp spec="1.0+" codebase="http://www.crosswire.org/bibledesktop/stable" href="bibledesktop-1.0.2.jnlp">
 
   <information>
     <title>Bible Desktop</title>
@@ -26,17 +26,17 @@
 
   <resources>
     <j2se version="1.4+" max-heap-size="512m"/>
-    <jar href="bibledesktop-1.0.jar"/>
-    <jar href="jsword-1.0.jar"/>
-    <jar href="jsword-common-1.0.jar"/>
-    <jar href="jsword-common-swing-1.0.jar"/>
+    <jar href="bibledesktop-1.0.2.jar"/>
+    <jar href="jsword-1.0.2.jar"/>
+    <jar href="jsword-common-1.0.2.jar"/>
+    <jar href="jsword-common-swing-1.0.2.jar"/>
     <jar href="javatar-2.5.jar"/>
     <jar href="jdom-1.0.jar"/>
     <jar href="commons-codec-1.3.jar"/>
     <jar href="commons-httpclient-3.0.jar"/>
     <jar href="commons-logging.jar"/>
     <jar href="commons-net-1.4.1.jar"/>
-    <jar href="lucene-core-1.9-final.jar"/>
+    <jar href="lucene-core-1.9.1.jar"/>
     <jar href="jlfgr-1_0.jar"/>
     <property name="apple.laf.useScreenMenuBar" value="true"/>
     <property name="com.apple.mrj.application.apple.menu.about.name" value="BibleDesktop"/>
