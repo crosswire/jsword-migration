@@ -11,7 +11,7 @@
   JSword and Bible Desktop are being actively developed in Eclipse.
   While this is not an endorsement of Eclipse, you will find project
   files for Eclipse that will speed your ability to develop JSword.
-  You may use any other mean of developing JSword, but we may not be
+  You may use any other means of developing JSword, but we may not be
   able to provide guidance.
 </p>
 <p>
@@ -32,7 +32,7 @@
 <p>
   We develop under 1.4.2, but routinely test against 1.5. We will move to 1.5
   when it is well supported on all the platforms to which we deploy. Currently
-  these are Windows, Mac and Linux.
+  these are Windows, Mac and Linux. At this time MacOS 10.3 does not support Java 1.5.
 </p>
 
 <h2>Obtain and install Eclipse 3.1</h2>
@@ -58,53 +58,10 @@
   Either rename the <q>eclipse</q> directory, delete it or choose a different Eclipse location.
   For example, you might use <code>/usr/java</code> on linux and <code>c:\java</code> on Windows.
   It will create the Eclipse installation in that directory. For Windows, just unzip
-  it to the c:\java directory. For linux, in the /usr/java directory, run
-  <code>gtar zxvf eclipse-SDK-3.1-linux-gtk.tar.gz</code>.
+  it to the c:\java directory. For linux, if possible, use Eclipse that comes with the distribution.
+  For linux distributions that do not provide Eclipse, in the /usr/java directory,
+  run <code>gtar zxvf eclipse-SDK-3.1-linux-gtk.tar.gz</code>.
 </p>
-
-<h2>Launching Eclipse 3.1 under Linux</h2>
-<p>
-  If you choose to use Eclipse that comes with Fedora Core 4, you can disregard these
-  instructions. That build will install a launcher on one of the menus.
-</p>
-<p>
-  Perhaps the best way to run Eclipse from inside the Gnome desktop is to create a
-  Launcher for it. This is not an endorsement of the Gnome desktop. I don't have any
-  experience with KDE. Perhaps someone can provide instructions on how to do that.
-</p>
-<ol>
-  <li>Assuming that you installed Java as instructed above, you can use
-      <code>-vm /usr/bin/java.</code> I strongly recommend that you explicitly
-      tell Eclipse which Java to run. Please note, you can independently tell
-      Eclipse which Java to use to compile code with.</li>
-  <li>By default, Java caps memory usage to too low a value. You will need to increase
-      it to 512M, with <code>-vmargs -Xmx512M</code></li>
-  <li>The icon for the program is <code>/usr/java/eclipse/icon.xpm</code></li>
-</ol>
-You can create a <q>Launcher</q> that will be in a Gnome panel of your choice by:
-<ol>
-  <li>Right click on the panel in which you want to create the <q>Launcher</q></li>
-  <li>Choose <q>Add to Panel...</q>. 
-      <a href="images/linux/addpanel.png">[Image]</a></li>
-  <li>Choose <q>Custom Application Launcher</q>
-      <a href="images/linux/choosecustom.png">[Image]</a></li>
-  <li>In the dialog fill in the following values:
-      <a href="images/linux/createlauncher.png">[Image]</a>
-    <table>
-      <tr>
-        <td><strong>Name:</strong></td>
-        <td>JSword Eclipse</td>
-      </tr>
-      <tr>
-        <td><strong>Command:</strong></td>
-        <td>/usr/java/eclipse/eclipse -vm /usr/bin/java -vmargs -Xmx512M</td>
-      </tr>
-      <tr>
-        <td colspan="2">Click on the icon and enter /usr/java/eclipse/icon.xpm</td>
-      </tr>
-    </table>
-  </li>
-</ol>
 
 <h2>Setting up the JSword projects in Eclipse</h2>
 
@@ -171,7 +128,8 @@ You can create a <q>Launcher</q> that will be in a Gnome panel of your choice by
   You can read more about these standards <a href="writingcode.html">here</a>.
 </p>
 <p>
-  If you want to know how to setup Eclipse to use the same compiler settings
+  We have saved per project settings for Eclipse 3.1. If you use an earlier version
+  and you want to know how to setup Eclipse to use the same compiler settings
   as we do then the following screenshots (from an earlier version of Eclipse)
   ought to help:
 </p>
@@ -193,24 +151,25 @@ You can create a <q>Launcher</q> that will be in a Gnome panel of your choice by
   It is about as close as we can get to our formatting standards, but it is
   not exact. For this reason, we do not let Eclipse reformat the entire file.
 </p>
+
 <h3>Working under the Java Perspective</h3>
 <p>
   Eclipse provides several perspectives under which you can develop code.
   My personal rut is the Java Perspective. This can be added in the same manner
-  that the CVS Repository Exploring Perspective was added.
+  that the SVN Repository Exploring Perspective was added.
 </p>
 
 <h3>Working under the Team Synchronization Perspective</h3>
 <p>
   This can be added in the same manner that the
-  <q>CVS Repository Exploring Perspective</q> was added.
-  To initially connect this perspective to the CVS Repository, click on the
+  <q>SVN Repository Exploring Perspective</q> was added.
+  To initially connect this perspective to the SVN Repository, click on the
   <q>Synchronize...</q> button. Click on the <q>Next</q> button and then
   the <q>Finish</q> button.
 </p>
 <p>
   When you make changes to any of the projects, this perspective will track the changes.
-  Also, you can click the same button, now labelled <q>Sychronize CVS (Workspace)</q>
+  Also, you can click the same button, now labelled <q>Sychronize SVN (Workspace)</q>
   to get the latest changes from the repository.
 </p>
 <p>

@@ -7,23 +7,50 @@
 </head>
 
 <body>
-
-<h1>Documentation</h1> 
-<h2>Source Documentation</h2> 
+<h1>Getting Involved</h1>
 <p>
-  The <a href="writingcode.html">introduction</a> document describes the aims of the project, and has a list of the contributors,
-  and some comments on contributing code. The high level design comes in the form of an <a href="java2html/org/crosswire/jsword/examples/APIExamples.java.html">API
+  We can use your help, whether it is programming, web development, documentation, providing feedback or getting the word out.
+</p>
+
+<h2>Mailing Lists</h2>
+<p>
+  The first thing you need to do is join the jsword-devel <a href="mailinglists.html">mailing list</a>.
+  Everything that we do is openly discussed here.
+</p>
+
+<h2>Get a Development Environment</h2>
+<p>
+  At a minimum you will need Subversion (aka SVN) and a programmer's text editor. But to make things nicer,
+  we recommend getting a SVN client and also a programmer's IDE. While there are many to choose from and they
+  differ among OSes and you are welcomed to use whatever you wish, we use Eclipse as our IDE and with subclipse,
+  an Eclipse plugin, as our SVN client. We can provide help if you use Eclipse, but if you use something else
+  we might not be able to help. You can get instructions on how to set up Eclipse <a href="Eclipse.html">here</a>.
+</p>
+
+<h2>Get the Source Code</h2>
+<p>
+  We use Subversion for our source code control. Unless you have used SVN before, you may be surprised how
+  it works. The <a href="http://svnbook.red-bean.com/">Subversion Book</a> makes good bedtime reading and
+  provides the best explanation of how it works. In a nutshell, you "checkout" the code, which merely
+  gets you a local copy of the code. You don't need any password to do this and you can use your web
+  browser to browse the repository. For detailed instructions see our pages on <a href="svn.html">svn</a>
+  and <a href="Eclipse.html">Eclipse</a>.
+</p>  
+
+<h2>Understanding the Code</h2>
+<p>
+  Before you can effectively make changes to the code, you need to understand it. Below outlines where you
+  can get this information.
+</p>
+
+<h3>Source Documentation</h3> 
+<p>
+  The high level design comes in the form of an <a href="java2html/org/crosswire/jsword/examples/APIExamples.java.html">API
   Primer</a> which describes how to go about reading and formatting data from JSword, using Bibles, Commentaries and Dictionaries
   (it comes with some decent <a href="api/org/crosswire/jsword/examples/APIExamples.html">JavaDoc</a> too). There is also a <a href="design.html">design
   statement</a> that explains some of the top level design choices. It explains how the Book and Bible interfaces are arranged
   and justifies the design decisions.
 </p>
-
-<p>
-  On a lower level, the <a href="api/org/crosswire/common/config/package-summary.html">Config</a> sub-system doesn't have
-  any dependencies on JSword itself (like the whole of the 'common' tree), and <a href="api/org/crosswire/common/config/package-summary.html">Config</a> is
-  particularly likely to be useful to other projects, so it has some separate documentation.
-</p> 
 
 <p>
   There is also the obligatory <a href="api">JavaDoc</a> tree. Most of the source is fairly well documented,
@@ -32,10 +59,16 @@
 </p>
 
 <p>
-  We use <a href="osisCore.1.1.html">OSIS</a> as a standard for XML format Bible data. From the <a href="http://www.bibletechnologies.net">OSIS
+  We use OSIS 2.1 as a standard for XML format Bible data. From the <a href="http://www.bibletechnologies.net">OSIS
   website</a>: The Open Scriptural Information Standard (OSIS) is an XML based markup of the Bible, commentaries and related
   texts that will facilitate interoperability across natural language boundaries and computer hardware and software for
   publication, linking, reference and accessibility.
+</p>
+
+<h2>Making Changes to Code</h2>
+<p>
+  The <a href="writingcode.html">introduction</a> document describes the aims of the project, and has 
+  some comments on contributing code.
 </p>
 
 <h2>Test Results</h2> 
