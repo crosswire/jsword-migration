@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE jnlp PUBLIC "-//Sun Microsystems, Inc//DTD JNLP Descriptor 1.0//EN" "jnlp.dtd">
 
-<jnlp spec="1.0+" codebase="http://www.crosswire.org/bibledesktop/stable" href="bibledesktop-1.0.2.jnlp">
+<jnlp spec="1.0+" codebase="file:///E:\Eclipse\JSword\bibledesktop/target/installed" href="bibledesktop-1.0.2.jnlp">
 
   <information>
     <title>Bible Desktop v.1.0.2</title>
@@ -10,10 +10,8 @@
     <description>Bible Desktop - Bible Study Software based on the Sword project</description>
     <description kind="short">Bible Desktop is a Bible study package available over the internet</description>
     <description kind="tooltip">Bible Desktop Application</description>
-    <icon href="icon132.gif" width="132" height="132"/>
-    <icon href="icon64.gif" width="64" height="64"/>
-    <icon href="icon32.gif" width="32" height="32"/>
-    <icon href="icon16.gif" width="16" height="16"/>
+    <icon href="icon32.gif"/>
+    <icon kind="splash" href="icon64.gif"/>    
     <offline-allowed/>
   </information>
 
