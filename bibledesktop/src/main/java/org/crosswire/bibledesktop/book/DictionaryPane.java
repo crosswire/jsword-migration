@@ -176,7 +176,7 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
      */
     public void setBookData(Book book, Key key)
     {
-        throw new UnsupportedOperationException(); //$NON-NLS-1$
+        throw new UnsupportedOperationException();
     }
 
     /* (non-Javadoc)

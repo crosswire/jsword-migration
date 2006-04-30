@@ -147,7 +147,7 @@ public class SWConfig {
 
     }
 
-    private class Properties extends java.util.Properties {
+    class Properties extends java.util.Properties {
 
         private static final long serialVersionUID = 3258126977117533238L;
         private String name = null;

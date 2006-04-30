@@ -204,7 +204,7 @@ public class StringArrayField extends JPanel implements Field
         {
             super(new FieldLayout(10, 10));
 
-            add(new JLabel(Msg.NAME.toString() + ':')); //$NON-NLS-1$
+            add(new JLabel(Msg.NAME.toString() + ':')); 
             add(name_field);
 
             setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));

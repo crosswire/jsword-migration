@@ -169,7 +169,7 @@ public class ReferenceRootTreeNode implements TreeNode
     /**
      * So we can keep track of how many books there are
      */
-    private final class CustomBooksListener implements BooksListener
+    final class CustomBooksListener implements BooksListener
     {
         /* (non-Javadoc)
          * @see org.crosswire.jsword.book.BooksListener#bookAdded(org.crosswire.jsword.book.BooksEvent)

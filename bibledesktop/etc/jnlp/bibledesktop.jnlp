@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE jnlp PUBLIC "-//Sun Microsystems, Inc//DTD JNLP Descriptor 1.0//EN" "jnlp.dtd">
-
 <jnlp spec="1.0+" codebase="@jnlp.codebase@" href="bibledesktop-@release.version@.jnlp">
 
   <information>
@@ -13,6 +11,10 @@
     <icon href="icon32.gif"/>
     <icon kind="splash" href="icon64.gif"/>    
     <offline-allowed/>
+    <shortcut online="false"> 
+      <desktop/> 
+      <menu submenu="Bible Desktop"/> 
+    </shortcut> 
   </information>
 
   <security>
@@ -25,7 +27,7 @@
   </security>
 
   <resources>
-    <j2se version="1.4+" max-heap-size="512m"/>
+    <j2se version="1.4+"/>
     <jar href="bibledesktop-@release.version@.jar"/>
     <jar href="jsword-@release.version@.jar"/>
     <jar href="jsword-common-@release.version@.jar"/>

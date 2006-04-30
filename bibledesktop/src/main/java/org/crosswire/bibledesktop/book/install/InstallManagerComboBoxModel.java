@@ -90,7 +90,7 @@ public class InstallManagerComboBoxModel extends AbstractListModel implements Co
     /**
      * Listens to the InstallManager for Installer changes
      */
-    private class CustomInstallerListener implements InstallerListener
+    class CustomInstallerListener implements InstallerListener
     {
         /* (non-Javadoc)
          * @see org.crosswire.jsword.book.install.InstallerListener#installerAdded(org.crosswire.jsword.book.install.InstallerEvent)

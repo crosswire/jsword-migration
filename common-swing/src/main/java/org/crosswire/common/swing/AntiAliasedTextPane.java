@@ -69,7 +69,7 @@ public class AntiAliasedTextPane extends JTextPane
     {
         AntiAliasedTextPane.antiAliasing = antiAliasing;
         // Set it system wide for the next run
-        System.setProperty("swing.aatext", Boolean.toString(antiAliasing)); //$NON-NLS-1$ //$NON-NLS-2$
+        System.setProperty("swing.aatext", Boolean.toString(antiAliasing)); //$NON-NLS-1$ 
 
     }
 

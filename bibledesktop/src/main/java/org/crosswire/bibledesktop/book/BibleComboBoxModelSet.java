@@ -199,7 +199,7 @@ public class BibleComboBoxModelSet
     /**
      * For when a selection is made
      */
-    private final class CustomItemListener implements ItemListener
+    final class CustomItemListener implements ItemListener
     {
         public void itemStateChanged(ItemEvent ev)
         {

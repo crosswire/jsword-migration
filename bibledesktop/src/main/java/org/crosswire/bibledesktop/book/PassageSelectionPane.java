@@ -439,7 +439,7 @@ public class PassageSelectionPane extends JPanel
     /**
      * Update the list whenever the textbox changes
      */
-    private class CustomDocumentEvent implements DocumentListener
+    class CustomDocumentEvent implements DocumentListener
     {
         /* (non-Javadoc)
          * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
@@ -469,7 +469,7 @@ public class PassageSelectionPane extends JPanel
     /**
      * To update the textbox when the passage changes
      */
-    private class CustomPassageListener implements PassageListener
+    class CustomPassageListener implements PassageListener
     {
         /* (non-Javadoc)
          * @see org.crosswire.jsword.passage.PassageListener#versesAdded(org.crosswire.jsword.passage.PassageEvent)

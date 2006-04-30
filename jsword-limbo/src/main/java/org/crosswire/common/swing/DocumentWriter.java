@@ -231,7 +231,7 @@ public class DocumentWriter extends Writer
     /**
      * For Thread/Swing correctness we should only update in the GUI thread
      */
-    private class Updater implements Runnable
+    class Updater implements Runnable
     {
         public void run()
         {

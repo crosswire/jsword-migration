@@ -135,7 +135,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
      */
     public void setBookData(Book book, Key key)
     {
-        throw new UnsupportedOperationException(); //$NON-NLS-1$
+        throw new UnsupportedOperationException(); 
     }
 
     /* (non-Javadoc)
@@ -143,7 +143,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
      */
     public void refresh()
     {
-        throw new UnsupportedOperationException(); //$NON-NLS-1$
+        throw new UnsupportedOperationException(); 
     }
 
     /* (non-Javadoc)

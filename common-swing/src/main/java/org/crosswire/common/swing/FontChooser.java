@@ -312,13 +312,13 @@ public class FontChooser extends JPanel
      * An extension of JLabel that resets it's font so that
      * it can be used to render the items in a JComboBox
      */
-    private static class CustomListCellRenderer extends DefaultListCellRenderer
+    static class CustomListCellRenderer extends DefaultListCellRenderer
     {
         /* (non-Javadoc)
          * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
          */
         /* @Override */
-    public Component getListCellRendererComponent(JList listbox, Object value, int index, boolean selected, boolean focus)
+        public Component getListCellRendererComponent(JList listbox, Object value, int index, boolean selected, boolean focus)
         {
             if (value == null)
             {

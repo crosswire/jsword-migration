@@ -388,7 +388,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
     /**
      * Filter out verse lists
      */
-    private static final class CustomFileFilter extends FileFilter
+    static final class CustomFileFilter extends FileFilter
     {
         /* (non-Javadoc)
          * @see javax.swing.filechooser.FileFilter#accept(java.io.File)

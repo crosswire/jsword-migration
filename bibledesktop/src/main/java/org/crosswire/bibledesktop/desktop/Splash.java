@@ -170,7 +170,7 @@ public class Splash extends JWindow
     /**
      * Pack the frame if we get new jobs that could shunt things around
      */
-    private final class CustomWorkListener implements WorkListener
+    final class CustomWorkListener implements WorkListener
     {
         /* (non-Javadoc)
          * @see org.crosswire.common.progress.WorkListener#workProgressed(org.crosswire.common.progress.WorkEvent)

@@ -13,6 +13,10 @@
     <icon href="icon32.gif"/>
     <icon kind="splash" href="icon64.gif"/>    
     <offline-allowed/>
+    <shortcut online="false">
+      <desktop/>
+      <menu submenu="Bible Desktop"/>
+    </shortcut>
   </information>
 
   <security>
@@ -25,7 +29,7 @@
   </security>
 
   <resources>
-    <j2se version="1.4+" max-heap-size="512m"/>
+    <j2se version="1.4+"/>
     <jar href="bibledesktop-1.0.2.jar"/>
     <jar href="jsword-1.0.2.jar"/>
     <jar href="jsword-common-1.0.2.jar"/>

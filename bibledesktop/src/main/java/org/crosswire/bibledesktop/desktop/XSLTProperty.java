@@ -106,7 +106,7 @@ public final class XSLTProperty implements Serializable
 
     public boolean getDefault()
     {
-        return defaultState; //$NON-NLS-1$
+        return defaultState; 
     }
 
     public boolean getState()

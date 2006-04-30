@@ -471,7 +471,7 @@ public class SitePane extends JPanel
     /**
      * When new books are added we need to relfect the change in this tree.
      */
-    private final class CustomBooksListener implements BooksListener
+    final class CustomBooksListener implements BooksListener
     {
         /* (non-Javadoc)
          * @see org.crosswire.jsword.book.BooksListener#bookAdded(org.crosswire.jsword.book.BooksEvent)

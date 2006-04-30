@@ -444,7 +444,7 @@ public final class ExceptionPane extends JPanel
             mylabel.setText(Msg.NO_FILE.toString());
 
             // Find a file
-            name = File.separator + orig.replace('.', File.separatorChar) + FileUtil.EXTENSION_JAVA; //$NON-NLS-1$ //$NON-NLS-2$
+            name = File.separator + orig.replace('.', File.separatorChar) + FileUtil.EXTENSION_JAVA; 
             for (int i = 0; i < sources.length; i++)
             {
                 File file = new File(sources[i], name);
@@ -542,7 +542,7 @@ public final class ExceptionPane extends JPanel
     /**
      * The ExceptionPane instance that we add to the Log
      */
-    private static final class ExceptionPaneReporterListener implements ReporterListener
+    static final class ExceptionPaneReporterListener implements ReporterListener
     {
         /**
          * Called whenever Reporter.informUser() is passed an Exception

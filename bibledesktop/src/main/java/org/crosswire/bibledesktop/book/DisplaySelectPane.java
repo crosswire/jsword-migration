@@ -725,7 +725,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     /**
      *
      */
-    private static final class SelectedActionListener implements ActionListener
+    static final class SelectedActionListener implements ActionListener
     {
         /* (non-Javadoc)
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

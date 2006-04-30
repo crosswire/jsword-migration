@@ -211,7 +211,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor
      * A custom data model for the TreeConfig Tree
      * @author Joe Walker
      */
-    private class AdvancedConfigureTreeModel extends ConfigureTreeModel
+    class AdvancedConfigureTreeModel extends ConfigureTreeModel
     {
         /* (non-Javadoc)
          * @see org.crosswire.common.config.swing.TreeConfigEditor.ConfigureTreeModel#getChildren(java.lang.String)
@@ -306,7 +306,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor
     /**
      * Simple Tree Node
      */
-    private static class CompNode
+    static class CompNode
     {
         /**
          * Create a node with a name and path
@@ -341,7 +341,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor
     /**
      * The renderer for our tree
      */
-    private class CustomTreeCellRenderer extends DefaultTreeCellRenderer
+    class CustomTreeCellRenderer extends DefaultTreeCellRenderer
     {
         /* (non-Javadoc)
          * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int, boolean)

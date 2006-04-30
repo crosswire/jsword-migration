@@ -145,7 +145,7 @@ public class ConfigurableSwingConverter implements Converter
     /**
      *
      */
-    private static final class XSLTFilter implements URLFilter
+    static final class XSLTFilter implements URLFilter
     {
         /* (non-Javadoc)
          * @see org.crosswire.common.util.URLFilter#accept(java.lang.String)

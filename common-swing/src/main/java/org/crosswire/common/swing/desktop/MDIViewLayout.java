@@ -222,7 +222,7 @@ public class MDIViewLayout extends AbstractViewLayout
     /**
      * So we can tidy things up when a window is closed
      */
-    private class CustomInternalFrameAdapter extends InternalFrameAdapter
+    class CustomInternalFrameAdapter extends InternalFrameAdapter
     {
         /* (non-Javadoc)
          * @see javax.swing.event.InternalFrameListener#internalFrameClosed(javax.swing.event.InternalFrameEvent)
@@ -237,7 +237,7 @@ public class MDIViewLayout extends AbstractViewLayout
     /**
      * We need to veto the closing of the last window.
      */
-    private class CloseListener implements VetoableChangeListener
+    class CloseListener implements VetoableChangeListener
     {
 
         /* (non-Javadoc)

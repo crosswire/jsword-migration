@@ -44,16 +44,16 @@ public class SwordSiteEditor extends JPanel implements SiteEditor
     public void initialize()
     {
         host = new JTextField();
-        JLabel hostLabel = getLabelForText(Msg.HOST, host); //$NON-NLS-1$
+        JLabel hostLabel = getLabelForText(Msg.HOST, host); 
 
         directory = new JTextField();
-        JLabel directoryLabel = getLabelForText(Msg.DIRECTORY, directory); //$NON-NLS-1$
+        JLabel directoryLabel = getLabelForText(Msg.DIRECTORY, directory); 
 
         proxyHost = new JTextField();
-        JLabel proxyHostLabel = getLabelForText(Msg.PROXY_HOST, proxyHost); //$NON-NLS-1$
+        JLabel proxyHostLabel = getLabelForText(Msg.PROXY_HOST, proxyHost); 
 
         proxyPort = new JTextField();
-        JLabel proxyPortLabel = getLabelForText(Msg.PROXY_PORT, proxyPort); //$NON-NLS-1$
+        JLabel proxyPortLabel = getLabelForText(Msg.PROXY_PORT, proxyPort); 
 
         setLayout(new GridBagLayout());
         add(hostLabel,      new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));

@@ -88,7 +88,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller implements Compara
 
         try
         {
-            return new URL(NetUtil.PROTOCOL_FTP, host, directory + "/" + sbmd.getInitials() + ZIP_SUFFIX); //$NON-NLS-1$ //$NON-NLS-2$
+            return new URL(NetUtil.PROTOCOL_FTP, host, directory + "/" + sbmd.getInitials() + ZIP_SUFFIX); //$NON-NLS-1$ 
         }
         catch (MalformedURLException ex)
         {
