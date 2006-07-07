@@ -151,18 +151,20 @@
       </head>
       <body>
         <!-- If there are notes, output a table with notes in the 2nd column. -->
+        <!-- There is a rendering bug which prevents the notes from adhering to the right edge. -->
         <xsl:choose>
           <xsl:when test="$Notes = 'true' and //note[not(@type = 'x-strongsMarkup')]">
             <xsl:choose>
               <xsl:when test="$direction != 'rtl'">
 	            <table cols="2" cellpadding="5" cellspacing="5">
 	              <tr>
-	                <td valign="top" class="text">
-	                  <xsl:apply-templates/>
-	                </td>
+	                <!-- The two rows are swapped until the bug is fixed. -->
 	                <td valign="top" class="notes">
 	                  <p>&#160;</p>
 	                  <xsl:apply-templates select="//verse" mode="print-notes"/>
+	                </td>
+	                <td valign="top" class="text">
+	                  <xsl:apply-templates/>
 	                </td>
 	              </tr>
 	            </table>
@@ -203,7 +205,6 @@
     == Otherwise, we ignore the header and work elements and just process
     == the osisText elements.
     -->
-  <!-- Avoid adding whitespace -->
   <xsl:template match="osisCorpus">
     <xsl:apply-templates select="osisText"/>
   </xsl:template>
@@ -223,7 +224,7 @@
   <xsl:template match="header"/>
   <xsl:template match="revisionDesc"/>
   <xsl:template match="work"/>
-  <!-- <xsl:template match="title"/> who's parent is work -->
+   <!-- <xsl:template match="title"/> who's parent is work -->
   <xsl:template match="contributor"/>
   <xsl:template match="creator"/>
   <xsl:template match="subject"/>
@@ -262,9 +263,47 @@
     <xsl:apply-templates/>
   </xsl:template>
 
+  <xsl:template match="div" mode="jesus">
+    <xsl:apply-templates mode="jesus"/>
+  </xsl:template>
+
   <!--=======================================================================-->
   <!-- Handle verses as containers and as a start verse.                     -->
   <xsl:template match="verse[not(@eID)]">
+    <!-- If the verse doesn't start on its own line and -->
+    <!-- the verse is not the first verse of a set of siblings, -->
+    <!-- output an extra space. -->
+    <xsl:if test="$VLine = 'false' and preceding-sibling::*[local-name() = 'verse']">
+      <xsl:text>&#160;</xsl:text>
+    </xsl:if>
+    <!-- output each preverse element in turn -->
+    <xsl:for-each select=".//*[@subType = 'x-preverse' or @subtype = 'x-preverse']">
+      <xsl:choose>
+        <xsl:when test="local-name() = 'title'">
+          <h3><xsl:apply-templates /></h3>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+    <!-- Handle the KJV paragraph marker. -->
+    <xsl:if test="milestone[@type = 'x-p']"><br/><br/></xsl:if>
+    <!-- Always output the verse -->
+    <xsl:choose>
+ 	  <xsl:when test="$VLine = 'true'">
+        <div class="l"><a name="{@osisID}"><xsl:call-template name="versenum"/></a><xsl:apply-templates/></div>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="versenum"/><xsl:apply-templates/>
+        <!-- Follow the verse with an extra space -->
+        <!-- when they don't start on lines to themselves -->
+        <xsl:text> </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="verse[not(@eID)]" mode="jesus">
     <!-- If the verse doesn't start on its own line and -->
     <!-- the verse is not the first verse of a set of siblings, -->
     <!-- output an extra space. -->
@@ -280,15 +319,26 @@
     <!-- Always output the verse -->
     <xsl:choose>
  	  <xsl:when test="$VLine = 'true'">
-        <div class="l"><a name="{@osisID}"><xsl:call-template name="versenum"/></a><xsl:apply-templates/></div>
+        <div class="l"><a name="{@osisID}"><xsl:call-template name="versenum"/></a><xsl:apply-templates mode="jesus"/></div>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="versenum"/><xsl:apply-templates/>
+        <xsl:call-template name="versenum"/><xsl:apply-templates mode="jesus"/>
         <!-- Follow the verse with an extra space -->
         <!-- when they don't start on lines to themselves -->
         <xsl:text> </xsl:text>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="verse" mode="print-notes">
+    <xsl:if test="./note[@type != 'x-strongsMarkup']">
+      <xsl:variable name="passage" select="jsword:getValidKey($keyf, @osisID)"/>
+      <a href="#{substring-before(concat(@osisID, ' '), ' ')}">
+        <xsl:value-of select="jsword:getName($passage)"/>
+      </a>
+      <xsl:apply-templates select="./note" mode="print-notes" />
+      <div><xsl:text>&#160;</xsl:text></div>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="versenum">
@@ -344,27 +394,21 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="verse" mode="print-notes">
-    <xsl:if test="./note[@type != 'x-strongsMarkup']">
-      <xsl:variable name="passage" select="jsword:getValidKey($keyf, @osisID)"/>
-      <a href="#{substring-before(concat(@osisID, ' '), ' ')}">
-        <xsl:value-of select="jsword:getName($passage)"/>
-      </a>
-      <xsl:apply-templates select="./note" mode="print-notes" />
-      <div><xsl:text>&#160;</xsl:text></div>
-    </xsl:if>
-  </xsl:template>
-
   <!--=======================================================================-->
-  <!-- Avoid adding whitespace -->
   <xsl:template match="a">
     <a href="{@href}"><xsl:apply-templates/></a>
   </xsl:template>
 
+  <xsl:template match="a" mode="jesus">
+    <a href="{@href}"><xsl:apply-templates mode="jesus"/></a>
+  </xsl:template>
+
   <!--=======================================================================-->
-  <!-- Avoid adding whitespace -->
   <!-- When we encounter a note, we merely output a link to the note. -->
   <xsl:template match="note[@type = 'x-strongsMarkup']"/>
+  <xsl:template match="note[@type = 'x-strongsMarkup']" mode="jesus"/>
+  <xsl:template match="note[@type = 'x-strongsMarkup']" mode="print-notes"/>
+
   <xsl:template match="note">
     <xsl:if test="$Notes = 'true'">
       <!-- If the preceeding sibling was a note, emit a separator -->
@@ -380,8 +424,22 @@
     </xsl:if>
   </xsl:template>
 
+  <xsl:template match="note" mode="jesus">
+    <xsl:if test="$Notes = 'true'">
+      <!-- If the preceeding sibling was a note, emit a separator -->
+      <!-- TODO(DMS): If n="xxx" is present and within this verse xxx was already seen, then skip it. -->
+      <xsl:choose>
+        <xsl:when test="following-sibling::*[1][self::note]">
+          <sup class="note"><a href="#note-{generate-id(.)}"><xsl:call-template name="generateNoteXref"/></a>, </sup>
+        </xsl:when>
+        <xsl:otherwise>
+          <sup class="note"><a href="#note-{generate-id(.)}"><xsl:call-template name="generateNoteXref"/></a></sup>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </xsl:template>
+
   <!--=======================================================================-->
-  <xsl:template match="note[@type = 'x-strongsMarkup']" mode="print-notes"/>
   <xsl:template match="note" mode="print-notes">
     <div class="margin">
       <strong><xsl:call-template name="generateNoteXref"/></strong>
@@ -412,6 +470,10 @@
     <p><xsl:apply-templates/></p>
   </xsl:template>
   
+  <xsl:template match="p" mode="jesus">
+    <p><xsl:apply-templates mode="jesus"/></p>
+  </xsl:template>
+  
   <!--=======================================================================-->
   <xsl:template match="p" mode="print-notes">
     <!-- FIXME: This ignores text in the note. -->
@@ -422,6 +484,30 @@
   <xsl:template match="w">
     <!-- Output the content followed by all the lemmas and then all the morphs. -->
     <xsl:apply-templates/>
+    <xsl:if test="$Strongs = 'true' and (starts-with(@lemma, 'x-Strongs:') or starts-with(@lemma, 'strong:'))">
+      <xsl:call-template name="lemma">
+        <xsl:with-param name="lemma" select="@lemma"/>
+      </xsl:call-template>
+    </xsl:if>
+    <xsl:if test="$Morph = 'true' and (starts-with(@morph, 'x-Robinson:') or starts-with(@morph, 'robinson:'))">
+      <xsl:call-template name="morph">
+        <xsl:with-param name="morph" select="@morph"/>
+      </xsl:call-template>
+    </xsl:if>
+    <!--
+        except when followed by a text node or non-printing node.
+        This is true whether the href is output or not.
+    -->
+    <xsl:variable name="siblings" select="../child::node()"/>
+    <xsl:variable name="next-position" select="position() + 1"/>
+    <xsl:if test="$siblings[$next-position] and name($siblings[$next-position]) != ''">
+      <xsl:text> </xsl:text>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template match="w" mode="jesus">
+    <!-- Output the content followed by all the lemmas and then all the morphs. -->
+    <xsl:apply-templates mode="jesus"/>
     <xsl:if test="$Strongs = 'true' and (starts-with(@lemma, 'x-Strongs:') or starts-with(@lemma, 'strong:'))">
       <xsl:call-template name="lemma">
         <xsl:with-param name="lemma" select="@lemma"/>
@@ -559,7 +645,6 @@
   </xsl:template>
 
   <!--=======================================================================-->
-  <!-- Avoid adding whitespace -->
   <xsl:template match="seg">
     <xsl:choose>
       <xsl:when test="starts-with(@type, 'color:')">
@@ -579,6 +664,25 @@
     </xsl:choose>
   </xsl:template>
   
+  <xsl:template match="seg" mode="jesus">
+    <xsl:choose>
+      <xsl:when test="starts-with(@type, 'color:')">
+        <font color="{substring-before(substring-after(@type, 'color: '), ';')}"><xsl:apply-templates mode="jesus"/></font>
+      </xsl:when>
+      <xsl:when test="starts-with(@type, 'font-size:')">
+        <font size="{substring-before(substring-after(@type, 'font-size: '), ';')}"><xsl:apply-templates mode="jesus"/></font>
+      </xsl:when>
+      <xsl:when test="@type = 'x-variant'">
+        <xsl:if test="@subType = 'x-class:1'">
+          <xsl:apply-templates mode="jesus"/>
+        </xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates mode="jesus"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
   <!--=======================================================================-->
   <!-- FIXME: Should we both expand and output?? -->
   <xsl:template match="abbr">
@@ -592,8 +696,18 @@
     </abbr>
   </xsl:template>
 
+  <xsl:template match="abbr" mode="jesus">
+    <abbr class="abbr">
+      <xsl:if test="@expansion">
+        <xsl:attribute name="title">
+          <xsl:value-of select="@expansion"/>
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:apply-templates mode="jesus"/>
+    </abbr>
+  </xsl:template>
+
   <!--=======================================================================-->
-  <!-- Avoid adding whitespace -->
   <xsl:template match="speaker[@who = 'Jesus']">
     <font class="jesus"><xsl:apply-templates mode="jesus"/></font>
   </xsl:template>
@@ -603,13 +717,15 @@
   </xsl:template>
 
   <!--=======================================================================-->
-  <!-- Avoid adding whitespace -->
-  <xsl:template match="title">
-    <h2><xsl:apply-templates/></h2>
+  <xsl:template match="title[@subType ='x-preverse' or @subtype = 'x-preverse']">
+  <!-- Done by a line in [verse]
+    <h3>
+      <xsl:apply-templates/>
+    </h3>
+  -->
   </xsl:template>
 
-  <!--=======================================================================-->
-  <xsl:template match="title[@type='section']">
+  <xsl:template match="title[@subType ='x-preverse' or @subtype = 'x-preverse']" mode="jesus">
   <!-- Done by a line in [verse]
     <h3>
       <xsl:apply-templates/>
@@ -618,7 +734,15 @@
   </xsl:template>
 
   <!--=======================================================================-->
-  <!-- Avoid adding whitespace -->
+  <xsl:template match="title">
+    <h2><xsl:apply-templates/></h2>
+  </xsl:template>
+
+  <xsl:template match="title" mode="jesus">
+    <h2><xsl:apply-templates/></h2>
+  </xsl:template>
+
+  <!--=======================================================================-->
   <xsl:template match="reference">
     <xsl:choose>
       <xsl:when test="$XRef = 'true'">
@@ -630,15 +754,32 @@
     </xsl:choose>
   </xsl:template>
   
+  <xsl:template match="reference" mode="jesus">
+    <xsl:choose>
+      <xsl:when test="$XRef = 'true'">
+        <a href="bible://{@osisRef}"><xsl:apply-templates mode="jesus"/></a>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates mode="jesus"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
   <!--=======================================================================-->
-  <!-- Avoid adding whitespace -->
   <xsl:template match="caption">
     <div class="caption"><xsl:apply-templates/></div>
   </xsl:template>
   
-  <!-- Avoid adding whitespace -->
+  <xsl:template match="caption" mode="jesus">
+    <div class="caption"><xsl:apply-templates/></div>
+  </xsl:template>
+  
   <xsl:template match="catchWord">
     <font class="catchWord"><xsl:apply-templates/></font>
+  </xsl:template>
+  
+  <xsl:template match="catchWord" mode="jesus">
+    <font class="catchWord"><xsl:apply-templates mode="jesus"/></font>
   </xsl:template>
   
   <!--
@@ -646,18 +787,27 @@
       here.
   -->
   
-  <!-- Avoid adding whitespace -->
   <xsl:template match="closer">
     <font class="closer"><xsl:apply-templates/></font>
   </xsl:template>
   
-  <!-- Avoid adding whitespace -->
+  <xsl:template match="closer" mode="jesus">
+    <font class="closer"><xsl:apply-templates mode="jesus"/></font>
+  </xsl:template>
+  
   <xsl:template match="date">
     <font class="date"><xsl:apply-templates/></font>
   </xsl:template>
   
-  <!-- Avoid adding whitespace -->
+  <xsl:template match="date" mode="jesus">
+    <font class="date"><xsl:apply-templates mode="jesus"/></font>
+  </xsl:template>
+  
   <xsl:template match="divineName">
+    <font class="divineName"><xsl:apply-templates mode="small-caps"/></font>
+  </xsl:template>
+  
+  <xsl:template match="divineName" mode="jesus">
     <font class="divineName"><xsl:apply-templates mode="small-caps"/></font>
   </xsl:template>
   
@@ -668,19 +818,27 @@
     </div>
   </xsl:template>
   
-  <!-- Avoid adding whitespace -->
+  <xsl:template match="figure" mode="jesus">
+    <div class="figure">
+      <img src="@src"/>  <!-- FIXME: Not necessarily an image... -->
+      <xsl:apply-templates mode="jesus"/>
+    </div>
+  </xsl:template>
+  
   <xsl:template match="foreign">
     <em class="foreign"><xsl:apply-templates/></em>
   </xsl:template>
   
+  <xsl:template match="foreign" mode="jesus">
+    <em class="foreign"><xsl:apply-templates mode="jesus"/></em>
+  </xsl:template>
+  
   <!-- This is a subheading. -->
-  <!-- Avoid adding whitespace -->
   <xsl:template match="head//head">
     <h5 class="head"><xsl:apply-templates/></h5>
   </xsl:template>
   
   <!-- This is a top-level heading. -->
-  <!-- Avoid adding whitespace -->
   <xsl:template match="head">
     <h4 class="head"><xsl:apply-templates/></h4>
   </xsl:template>
@@ -688,39 +846,61 @@
   <xsl:template match="index">
     <a name="index{@id}" class="index"/>
   </xsl:template>
-  
-  <!-- Avoid adding whitespace -->
+
   <xsl:template match="inscription">
     <font class="inscription"><xsl:apply-templates mode="small-caps"/></font>
   </xsl:template>
-  
-  <!-- Avoid adding whitespace -->
+
+  <xsl:template match="inscription" mode="jesus">
+    <font class="inscription"><xsl:apply-templates mode="small-caps"/></font>
+  </xsl:template>
+
   <xsl:template match="item">
     <li class="item"><xsl:apply-templates/></li>
+  </xsl:template>
+
+  <xsl:template match="item" mode="jesus">
+    <li class="item"><xsl:apply-templates mode="jesus"/></li>
   </xsl:template>
   
   <!--
       <item> and <label> are covered by <list> below and so do not appear here.
   -->
-  
-  <!-- Avoid adding whitespace -->
+
   <xsl:template match="lg">
     <div class="lg"><xsl:apply-templates/></div>
   </xsl:template>
   
-  <!-- Avoid adding whitespace -->
-  <!-- We add a single space to the end of the line because of a bug in Sun's rendering. -->
-  <xsl:template match="l">
-    <div class="l"><xsl:apply-templates/></div>
+  <xsl:template match="lg" mode="jesus">
+    <div class="lg"><xsl:apply-templates mode="jesus"/></div>
   </xsl:template>
   
-  <!-- Avoid adding whitespace -->
+  <xsl:template match="lg[@sID or @eID]">
+  </xsl:template>
+  
+  <xsl:template match="lg[@sID or @eID]" mode="jesus">
+  </xsl:template>
+
+  <xsl:template match="l[@sID]"></xsl:template>
+  <xsl:template match="l[@sID]" mode="jesus"></xsl:template>
+
+  <xsl:template match="l[@eID]"><br/></xsl:template>
+  <xsl:template match="l[@eID]" mode="jesus"><br/></xsl:template>
+
+  <xsl:template match="l">
+    <font class="l"><xsl:apply-templates/></font>
+  </xsl:template>
+  
+  <xsl:template match="l" mode="jesus">
+    <font class="l"><xsl:apply-templates mode="jesus"/></font>
+  </xsl:template>
+
   <!-- While a BR is a break, if it is immediately followed by punctuation,
        indenting this rule can introduce whitespace.
     -->
   <xsl:template match="lb"><br/></xsl:template>
-  
-  <!-- Avoid adding whitespace -->
+  <xsl:template match="lb" mode="jesus"><br/></xsl:template>
+
   <xsl:template match="list">
     <xsl:choose>
       <xsl:when test="label">
@@ -765,10 +945,59 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
-  <!-- Avoid adding whitespace -->
+
+
+  <xsl:template match="list" mode="jesus">
+    <xsl:choose>
+      <xsl:when test="label">
+        <!-- If there are <label>s in the list, it's a <dl>. -->
+        <dl class="list">
+          <xsl:for-each select="node()">
+            <xsl:choose>
+              <xsl:when test="self::label">
+                <dt class="label"><xsl:apply-templates mode="jesus"/></dt>
+              </xsl:when>
+              <xsl:when test="self::item">
+                <dd class="item"><xsl:apply-templates mode="jesus"/></dd>
+              </xsl:when>
+              <xsl:when test="self::list">
+                <dd class="list-wrapper"><xsl:apply-templates select="." mode="jesus"/></dd>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:apply-templates mode="jesus"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:for-each>
+        </dl>
+      </xsl:when>
+
+      <xsl:otherwise>
+        <!-- If there are no <label>s in the list, it's a plain old <ul>. -->
+        <ul class="list">
+          <xsl:for-each select="node()">
+            <xsl:choose>
+              <xsl:when test="self::item">
+                <li class="item"><xsl:apply-templates mode="jesus"/></li>
+              </xsl:when>
+              <xsl:when test="self::list">
+                <li class="list-wrapper"><xsl:apply-templates select="." mode="jesus"/></li>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:apply-templates mode="jesus"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:for-each>
+        </ul>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="mentioned">
     <font class="mentioned"><xsl:apply-templates/></font>
+  </xsl:template>
+  
+  <xsl:template match="mentioned" mode="jesus">
+    <font class="mentioned"><xsl:apply-templates mode="jesus"/></font>
   </xsl:template>
   
   <!-- Milestones represent characteristics of the original manuscript.
@@ -786,8 +1015,13 @@
     -->
   <!--  This is used by the KJV for paragraph markers. -->
   <xsl:template match="milestone[@type = 'x-p']"><xsl:text> </xsl:text><xsl:value-of select="@marker"/><xsl:text> </xsl:text></xsl:template>
+  <xsl:template match="milestone[@type = 'x-p']" mode="jesus"><xsl:text> </xsl:text><xsl:value-of select="@marker"/><xsl:text> </xsl:text></xsl:template>
 
   <xsl:template match="milestone[@type = 'cQuote']">
+    <xsl:value-of select="@marker"/>
+  </xsl:template>
+
+  <xsl:template match="milestone[@type = 'cQuote']" mode="jesus">
     <xsl:value-of select="@marker"/>
   </xsl:template>
 
@@ -803,8 +1037,20 @@
     <font class="name"><xsl:apply-templates/></font>
   </xsl:template>
 
+  <xsl:template match="name" mode="jesus">
+    <font class="name"><xsl:apply-templates mode="jesus"/></font>
+  </xsl:template>
+
   <!-- If there is a milestoned q then just output a quotation mark -->
   <xsl:template match="q[@sID or @eID]">
+    <xsl:choose>
+      <xsl:when test="@marker"><xsl:value-of select="@marker"/></xsl:when>
+      <!-- The chosen mark should be based on the work's author's locale. -->
+      <xsl:otherwise>"</xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template match="q[@sID or @eID]" mode="jesus">
     <xsl:choose>
       <xsl:when test="@marker"><xsl:value-of select="@marker"/></xsl:when>
       <!-- The chosen mark should be based on the work's author's locale. -->
@@ -820,8 +1066,16 @@
     <blockquote class="q"><xsl:value-of select="@marker"/><xsl:apply-templates/><xsl:value-of select="@marker"/></blockquote>
   </xsl:template>
 
+  <xsl:template match="q[@type = 'blockquote']" mode="jesus">
+    <blockquote class="q"><xsl:value-of select="@marker"/><xsl:apply-templates mode="jesus"/><xsl:value-of select="@marker"/></blockquote>
+  </xsl:template>
+
   <xsl:template match="q[@type = 'citation']">
     <blockquote class="q"><xsl:value-of select="@marker"/><xsl:apply-templates/><xsl:value-of select="@marker"/></blockquote>
+  </xsl:template>
+
+  <xsl:template match="q[@type = 'citation']" mode="jesus">
+    <blockquote class="q"><xsl:value-of select="@marker"/><xsl:apply-templates mode="jesus"/><xsl:value-of select="@marker"/></blockquote>
   </xsl:template>
 
   <xsl:template match="q[@type = 'embedded']">
@@ -835,32 +1089,55 @@
     </xsl:choose>
   </xsl:template>
   
+  <xsl:template match="q[@type = 'embedded']" mode="jesus">
+    <xsl:choose>
+      <xsl:when test="@marker">
+      <font class="q"><xsl:value-of select="@marker"/><xsl:apply-templates mode="jesus"/><xsl:value-of select="@marker"/></font>
+      </xsl:when>
+      <xsl:otherwise>
+        <quote class="q"><xsl:apply-templates/></quote>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
   <!-- An alternate reading. -->
-  <!-- Avoid adding whitespace -->
   <xsl:template match="rdg">
     <font class="rdg"><xsl:apply-templates/></font>
+  </xsl:template>
+
+   <xsl:template match="rdg" mode="jesus">
+    <font class="rdg"><xsl:apply-templates mode="jesus"/></font>
   </xsl:template>
 
   <!--
       <row> is handled near <table> below and so does not appear here.
   -->
   
-  <!-- Avoid adding whitespace -->
   <xsl:template match="salute">
     <font class="salute"><xsl:apply-templates/></font>
   </xsl:template>
   
-  <!-- Avoid adding whitespace -->
+ <!-- Avoid adding whitespace -->
+  <xsl:template match="salute" mode="jesus">
+    <font class="salute"><xsl:apply-templates mode="jesus"/></font>
+  </xsl:template>
+
   <xsl:template match="signed">
     <font class="signed"><xsl:apply-templates/></font>
   </xsl:template>
 
-  <!-- Avoid adding whitespace -->
+  <xsl:template match="signed" mode="jesus">
+    <font class="signed"><xsl:apply-templates mode="jesus"/></font>
+  </xsl:template>
+
   <xsl:template match="speech">
     <div class="speech"><xsl:apply-templates/></div>
   </xsl:template>
   
-  <!-- Avoid adding whitespace -->
+  <xsl:template match="speech" mode="jesus">
+    <div class="speech"><xsl:apply-templates mode="jesus"/></div>
+  </xsl:template>
+
   <xsl:template match="table">
     <table class="table">
       <xsl:copy-of select="@rows|@cols"/>
@@ -870,8 +1147,7 @@
       <tbody><xsl:apply-templates select="row"/></tbody>
     </table>
   </xsl:template>
-  
-  <!-- Avoid adding whitespace -->
+
   <xsl:template match="row">
     <tr class="row"><xsl:apply-templates/></tr>
   </xsl:template>
@@ -904,7 +1180,6 @@
     </xsl:element>
   </xsl:template>
 
-  <!-- Avoid adding whitespace -->
   <xsl:template match="transChange">
     <font class="transChange"><xsl:apply-templates/></font>
   </xsl:template>
@@ -950,6 +1225,50 @@
         </xsl:when>
         <xsl:when test="@type = 'x-caps'">
           <font class="caps"><xsl:apply-templates/></font>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates/>
+        </xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="hi" mode="jesus">
+      <xsl:choose>
+        <xsl:when test="@type = 'acrostic'">
+          <font class="acrostic"><xsl:apply-templates mode="jesus"/></font>
+        </xsl:when>
+        <xsl:when test="@type = 'bold'">
+          <strong><xsl:apply-templates mode="jesus"/></strong>
+        </xsl:when>
+        <xsl:when test="@type = 'emphasis'">
+          <em><xsl:apply-templates mode="jesus"/></em>
+        </xsl:when>
+        <xsl:when test="@type = 'illuminated'">
+          <strong><em><xsl:apply-templates mode="jesus"/></em></strong>
+        </xsl:when>
+        <xsl:when test="@type = 'italic'">
+          <em><xsl:apply-templates mode="jesus"/></em>
+        </xsl:when>
+        <xsl:when test="@type = 'line-through'">
+          <font class="strike"><xsl:apply-templates mode="jesus"/></font>
+        </xsl:when>
+        <xsl:when test="@type = 'normal'">
+          <font class="normal"><xsl:apply-templates mode="jesus"/></font>
+        </xsl:when>
+        <xsl:when test="@type = 'small-caps'">
+          <font class="small-caps"><xsl:apply-templates mode="small-caps"/></font>
+        </xsl:when>
+        <xsl:when test="@type = 'sub'">
+          <sub><xsl:apply-templates mode="jesus"/></sub>
+        </xsl:when>
+        <xsl:when test="@type = 'super'">
+          <sup><xsl:apply-templates mode="jesus"/></sup>
+        </xsl:when>
+        <xsl:when test="@type = 'underline'">
+          <u><xsl:apply-templates mode="jesus"/></u>
+        </xsl:when>
+        <xsl:when test="@type = 'x-caps'">
+          <font class="caps"><xsl:apply-templates mode="jesus"/></font>
         </xsl:when>
         <xsl:otherwise>
           <xsl:apply-templates/>
