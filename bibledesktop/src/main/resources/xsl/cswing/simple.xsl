@@ -116,6 +116,9 @@
   <!-- Create a global key factory from which OSIS ids will be generated -->
   <xsl:variable name="keyf" select="jsword:org.crosswire.jsword.passage.PassageKeyFactory.instance()"/>
 
+  <!-- Create a global key factory from which OSIS ids will be generated -->
+  <xsl:variable name="redText" select="jsword:org.crosswire.common.xml.RedLetterText.new()"/>
+
   <!--=======================================================================-->
   <xsl:template match="/osis">
     <html dir="{$direction}">
@@ -134,8 +137,6 @@
           SUP.note { font-size: 75%; color: green; }
           FONT.jesus { color: red; }
           FONT.speech { color: blue; }
-          FONT.transChange { font-style: italic; }
-          FONT.jesusTransChange { color: red; font-style: italic; }
           FONT.strike { text-decoration: line-through; }
           FONT.small-caps { font-variant: small-caps; }
           FONT.inscription { font-weight: bold; font-variant: small-caps; }
@@ -775,11 +776,11 @@
   </xsl:template>
   
   <xsl:template match="catchWord">
-    <font class="catchWord"><xsl:apply-templates/></font>
+    <xsl:apply-templates/>
   </xsl:template>
   
   <xsl:template match="catchWord" mode="jesus">
-    <font class="catchWord"><xsl:apply-templates mode="jesus"/></font>
+    <xsl:apply-templates mode="jesus"/>
   </xsl:template>
   
   <!--
@@ -788,27 +789,27 @@
   -->
   
   <xsl:template match="closer">
-    <font class="closer"><xsl:apply-templates/></font>
+    <xsl:apply-templates/>
   </xsl:template>
   
   <xsl:template match="closer" mode="jesus">
-    <font class="closer"><xsl:apply-templates mode="jesus"/></font>
+    <xsl:apply-templates mode="jesus"/>
   </xsl:template>
   
   <xsl:template match="date">
-    <font class="date"><xsl:apply-templates/></font>
+    <xsl:apply-templates/>
   </xsl:template>
   
   <xsl:template match="date" mode="jesus">
-    <font class="date"><xsl:apply-templates mode="jesus"/></font>
+    <xsl:apply-templates mode="jesus"/>
   </xsl:template>
   
   <xsl:template match="divineName">
-    <font class="divineName"><xsl:apply-templates mode="small-caps"/></font>
+    <xsl:apply-templates mode="small-caps"/>
   </xsl:template>
   
   <xsl:template match="divineName" mode="jesus">
-    <font class="divineName"><xsl:apply-templates mode="small-caps"/></font>
+    <xsl:apply-templates mode="small-caps"/>
   </xsl:template>
   
   <xsl:template match="figure">
@@ -848,11 +849,11 @@
   </xsl:template>
 
   <xsl:template match="inscription">
-    <font class="inscription"><xsl:apply-templates mode="small-caps"/></font>
+    <xsl:apply-templates mode="small-caps"/>
   </xsl:template>
 
   <xsl:template match="inscription" mode="jesus">
-    <font class="inscription"><xsl:apply-templates mode="small-caps"/></font>
+    <xsl:apply-templates mode="small-caps"/>
   </xsl:template>
 
   <xsl:template match="item">
@@ -875,24 +876,21 @@
     <div class="lg"><xsl:apply-templates mode="jesus"/></div>
   </xsl:template>
   
-  <xsl:template match="lg[@sID or @eID]">
-  </xsl:template>
-  
-  <xsl:template match="lg[@sID or @eID]" mode="jesus">
-  </xsl:template>
+  <xsl:template match="lg[@sID or @eID]"/>
+  <xsl:template match="lg[@sID or @eID]" mode="jesus"/>
 
-  <xsl:template match="l[@sID]"></xsl:template>
-  <xsl:template match="l[@sID]" mode="jesus"></xsl:template>
+  <xsl:template match="l[@sID]"/>
+  <xsl:template match="l[@sID]" mode="jesus"/>
 
   <xsl:template match="l[@eID]"><br/></xsl:template>
   <xsl:template match="l[@eID]" mode="jesus"><br/></xsl:template>
 
   <xsl:template match="l">
-    <font class="l"><xsl:apply-templates/></font>
+    <xsl:apply-templates/><br/>
   </xsl:template>
   
   <xsl:template match="l" mode="jesus">
-    <font class="l"><xsl:apply-templates mode="jesus"/></font>
+    <xsl:apply-templates mode="jesus"/><br/>
   </xsl:template>
 
   <!-- While a BR is a break, if it is immediately followed by punctuation,
@@ -993,11 +991,11 @@
   </xsl:template>
 
   <xsl:template match="mentioned">
-    <font class="mentioned"><xsl:apply-templates/></font>
+    <xsl:apply-templates/>
   </xsl:template>
   
   <xsl:template match="mentioned" mode="jesus">
-    <font class="mentioned"><xsl:apply-templates mode="jesus"/></font>
+    <xsl:apply-templates mode="jesus"/>
   </xsl:template>
   
   <!-- Milestones represent characteristics of the original manuscript.
@@ -1034,11 +1032,11 @@
   <xsl:template match="milestoneEnd"/>
   
   <xsl:template match="name">
-    <font class="name"><xsl:apply-templates/></font>
+    <xsl:apply-templates/>
   </xsl:template>
 
   <xsl:template match="name" mode="jesus">
-    <font class="name"><xsl:apply-templates mode="jesus"/></font>
+    <xsl:apply-templates mode="jesus"/>
   </xsl:template>
 
   <!-- If there is a milestoned q then just output a quotation mark -->
@@ -1081,7 +1079,7 @@
   <xsl:template match="q[@type = 'embedded']">
     <xsl:choose>
       <xsl:when test="@marker">
-      <font class="q"><xsl:value-of select="@marker"/><xsl:apply-templates/><xsl:value-of select="@marker"/></font>
+        <xsl:value-of select="@marker"/><xsl:apply-templates/><xsl:value-of select="@marker"/>
       </xsl:when>
       <xsl:otherwise>
         <quote class="q"><xsl:apply-templates/></quote>
@@ -1092,7 +1090,7 @@
   <xsl:template match="q[@type = 'embedded']" mode="jesus">
     <xsl:choose>
       <xsl:when test="@marker">
-      <font class="q"><xsl:value-of select="@marker"/><xsl:apply-templates mode="jesus"/><xsl:value-of select="@marker"/></font>
+      <xsl:value-of select="@marker"/><xsl:apply-templates mode="jesus"/><xsl:value-of select="@marker"/>
       </xsl:when>
       <xsl:otherwise>
         <quote class="q"><xsl:apply-templates/></quote>
@@ -1102,11 +1100,11 @@
   
   <!-- An alternate reading. -->
   <xsl:template match="rdg">
-    <font class="rdg"><xsl:apply-templates/></font>
+    <xsl:apply-templates/>
   </xsl:template>
 
    <xsl:template match="rdg" mode="jesus">
-    <font class="rdg"><xsl:apply-templates mode="jesus"/></font>
+    <xsl:apply-templates mode="jesus"/>
   </xsl:template>
 
   <!--
@@ -1114,20 +1112,20 @@
   -->
   
   <xsl:template match="salute">
-    <font class="salute"><xsl:apply-templates/></font>
+    <xsl:apply-templates/>
   </xsl:template>
   
  <!-- Avoid adding whitespace -->
   <xsl:template match="salute" mode="jesus">
-    <font class="salute"><xsl:apply-templates mode="jesus"/></font>
+    <xsl:apply-templates mode="jesus"/>
   </xsl:template>
 
   <xsl:template match="signed">
-    <font class="signed"><xsl:apply-templates/></font>
+    <xsl:apply-templates/>
   </xsl:template>
 
   <xsl:template match="signed" mode="jesus">
-    <font class="signed"><xsl:apply-templates mode="jesus"/></font>
+    <xsl:apply-templates mode="jesus"/>
   </xsl:template>
 
   <xsl:template match="speech">
@@ -1181,17 +1179,17 @@
   </xsl:template>
 
   <xsl:template match="transChange">
-    <font class="transChange"><xsl:apply-templates/></font>
+    <em><xsl:apply-templates/></em>
   </xsl:template>
   <xsl:template match="transChange" mode="jesus">
-    <font class="jesusTransChange"><xsl:apply-templates mode="jesus"/></font>
+    <em><xsl:apply-templates/></em>
   </xsl:template>
   
   
   <xsl:template match="hi">
       <xsl:choose>
         <xsl:when test="@type = 'acrostic'">
-          <font class="acrostic"><xsl:apply-templates/></font>
+          <xsl:apply-templates/>
         </xsl:when>
         <xsl:when test="@type = 'bold'">
           <strong><xsl:apply-templates/></strong>
@@ -1235,7 +1233,7 @@
   <xsl:template match="hi" mode="jesus">
       <xsl:choose>
         <xsl:when test="@type = 'acrostic'">
-          <font class="acrostic"><xsl:apply-templates mode="jesus"/></font>
+          <xsl:apply-templates mode="jesus"/>
         </xsl:when>
         <xsl:when test="@type = 'bold'">
           <strong><xsl:apply-templates mode="jesus"/></strong>
