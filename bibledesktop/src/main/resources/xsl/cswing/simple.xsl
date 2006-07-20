@@ -116,9 +116,6 @@
   <!-- Create a global key factory from which OSIS ids will be generated -->
   <xsl:variable name="keyf" select="jsword:org.crosswire.jsword.passage.PassageKeyFactory.instance()"/>
 
-  <!-- Create a global key factory from which OSIS ids will be generated -->
-  <xsl:variable name="redText" select="jsword:org.crosswire.common.xml.RedLetterText.new()"/>
-
   <!--=======================================================================-->
   <xsl:template match="/osis">
     <html dir="{$direction}">
