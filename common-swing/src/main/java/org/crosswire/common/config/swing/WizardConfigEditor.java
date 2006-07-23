@@ -99,7 +99,7 @@ public class WizardConfigEditor extends AbstractConfigEditor
                 wcards++;
 
                 // The name for the title bar
-                names.add(path.replace('.', ' ')); 
+                names.add(path.replace('.', ' '));
             }
         }
 

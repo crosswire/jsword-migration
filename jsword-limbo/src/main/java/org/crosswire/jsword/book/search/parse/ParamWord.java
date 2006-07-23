@@ -44,7 +44,7 @@ public interface ParamWord extends Word
      * @return The requested text
      * @exception BookException If this action is not appropriate
      */
-    public String getWord(IndexSearcher engine) throws BookException;
+    String getWord(IndexSearcher engine) throws BookException;
 
     /**
      * Get a Passage or throw-up if that is not appropriate
@@ -54,5 +54,5 @@ public interface ParamWord extends Word
      * @return A Passage relevant to this command
      * @exception BookException If this action is not appropriate
      */
-    public Key getKeyList(IndexSearcher engine) throws BookException;
+    Key getKeyList(IndexSearcher engine) throws BookException;
 }

@@ -40,24 +40,24 @@ public interface Insts
      * @param verse The Verse to retrieve words for
      * @return An array of word indexes
      */
-    public int[] getIndexes(Verse verse);
+    int[] getIndexes(Verse verse);
 
     /**
      * Retrieve an ordered list of the words in a Verse
      * @param ordinal The Verse to retrieve words for
      * @return An array of word indexes
      */
-    public int[] getIndexes(int ordinal);
+    int[] getIndexes(int ordinal);
 
     /**
      * Set a list of word indexes as the test to a Verse
      * @param verse The Verse to set the words for
      * @param indexes The array of word indexes
      */
-    public void setIndexes(int[] indexes, Verse verse);
+    void setIndexes(int[] indexes, Verse verse);
 
     /**
      * Ensure that all changes to the index of words are written to disk
      */
-    public void save() throws IOException;
+    void save() throws IOException;
 }

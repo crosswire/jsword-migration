@@ -444,7 +444,7 @@ public final class ExceptionPane extends JPanel
             mylabel.setText(Msg.NO_FILE.toString());
 
             // Find a file
-            name = File.separator + orig.replace('.', File.separatorChar) + FileUtil.EXTENSION_JAVA; 
+            name = File.separator + orig.replace('.', File.separatorChar) + FileUtil.EXTENSION_JAVA;
             for (int i = 0; i < sources.length; i++)
             {
                 File file = new File(sources[i], name);

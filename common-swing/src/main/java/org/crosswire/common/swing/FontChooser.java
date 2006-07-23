@@ -77,12 +77,12 @@ public class FontChooser extends JPanel
         name.setSelectedItem(font.deriveFont(Font.PLAIN, RENDERED_FONT_SIZE));
         name.addItemListener(changer);
 
-        for (int i = 5; i < 20; i++)
+        for (int i = MIN_FONT_SIZE; i <= MAX_FONT_SIZE; i++)
         {
             size.addItem(new Integer(i));
         }
 
-        size.setSelectedItem(new Integer(font.getSize()));
+        size.setSelectedItem(new Integer(RENDERED_FONT_SIZE));
         size.addItemListener(changer);
 
         bold.setSelected(font.isBold());
@@ -360,6 +360,16 @@ public class FontChooser extends JPanel
      * The current font
      */
     protected Font font;
+
+    /**
+     * The minimum size of the font.
+     */
+    private static final int MIN_FONT_SIZE = 5;
+
+    /**
+     * The minimum size of the font.
+     */
+    private static final int MAX_FONT_SIZE = 72;
 
     /**
      * The default size of the rendered font

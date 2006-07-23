@@ -81,15 +81,11 @@ public class BookIcon
 
         if (!book.isSupported())
         {
-            // Enciphered is a specialized reason that it's not supported
-            if (book.isEnciphered())
-            {
-                icon = new CompositeIcon(icon, ICON_LOCKED, SwingConstants.CENTER);
-            }
-            else
-            {
-                icon = new CompositeIcon(icon, ICON_UNSUPPORTED, SwingConstants.CENTER);
-            }
+            icon = new CompositeIcon(icon, ICON_UNSUPPORTED, SwingConstants.CENTER);
+        }
+        else if (book.isLocked())
+        {
+            icon = new CompositeIcon(icon, ICON_LOCKED, SwingConstants.CENTER);
         }
 
         return icon;

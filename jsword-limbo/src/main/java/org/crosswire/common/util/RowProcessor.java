@@ -35,6 +35,6 @@ public interface RowProcessor
      * Process a row of Objects making up a line.
      * @param row the row to handle
      */
-    public void process(Object[] row);
+    void process(Object[] row);
 
 }

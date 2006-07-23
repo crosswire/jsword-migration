@@ -276,6 +276,7 @@ public class SitePane extends JPanel
         else
         {
             panel.add(new JButton(actions.getAction(DELETE)));
+            panel.add(new JButton(actions.getAction(UNLOCK)));
             panel.add(new JButton(actions.getAction(UNINDEX)));
         }
         return panel;
@@ -313,6 +314,32 @@ public class SitePane extends JPanel
         catch (BookException e)
         {
             Reporter.informUser(this, e);
+        }
+    }
+
+    /**
+     * Unlock the current book
+     */
+    public void doUnlock()
+    {
+        TreePath path = treAvailable.getSelectionPath();
+        if (path == null)
+        {
+            return;
+        }
+
+        Object last = path.getLastPathComponent();
+        Book book = getBook(last);
+
+        String unlockKey =
+            JOptionPane.showInputDialog(this,
+                                        Msg.UNLOCK_BOOK.toString(new Object[] {book.getName()}),
+                                        Msg.UNLOCK_TITLE.toString(),
+                                        JOptionPane.QUESTION_MESSAGE);
+        if (unlockKey != null && unlockKey.length() > 0)
+        {
+            book.unlock(unlockKey);
+            Books.installed().addBook(book);
         }
     }
 
@@ -399,7 +426,13 @@ public class SitePane extends JPanel
             }
 
             float size = installer.getSize(name) / 1024.0F;
-            if (JOptionPane.showConfirmDialog(this, Msg.SIZE.toString(new Object[] {name.getName(), new Float(size)}),
+            Msg msg = Msg.KB_SIZE;
+            if (size > 1024.0F)
+            {
+                size /= 1024.0F;
+                msg = Msg.MB_SIZE;
+            }
+            if (JOptionPane.showConfirmDialog(this, msg.toString(new Object[] {name.getName(), new Float(size)}),
                             Msg.CONFIRMATION_TITLE.toString(),
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
             {
@@ -455,9 +488,10 @@ public class SitePane extends JPanel
         }
         display.setBook(book);
 
-        boolean canInstall = bookSelected && book.isSupported() && !book.isEnciphered();
+        boolean canInstall = bookSelected && book.isSupported();
         IndexManager imanager = IndexManagerFactory.getIndexManager();
         actions.getAction(DELETE).setEnabled(bookSelected && book.getDriver().isDeletable(book));
+        actions.getAction(UNLOCK).setEnabled(bookSelected && book.isLocked());
         actions.getAction(UNINDEX).setEnabled(bookSelected && imanager.isIndexed(book));
         actions.getAction(INSTALL).setEnabled(canInstall);
         actions.getAction(INSTALL_SEARCH).setEnabled(canInstall && book.getBookCategory() == BookCategory.BIBLE);
@@ -498,6 +532,7 @@ public class SitePane extends JPanel
     private static final String INSTALL = "Install"; //$NON-NLS-1$
     private static final String INSTALL_SEARCH = "InstallSearch"; //$NON-NLS-1$
     private static final String DELETE = "Delete"; //$NON-NLS-1$
+    private static final String UNLOCK = "Unlock"; //$NON-NLS-1$
     private static final String UNINDEX = "Unindex"; //$NON-NLS-1$
 
     /**

@@ -42,5 +42,5 @@ public interface Thesaurus
      * @param word The word to base your word array on
      * @return An array of words starting with the base
      */
-    public Collection getSynonyms(String word) throws BookException;
+    Collection getSynonyms(String word) throws BookException;
 }

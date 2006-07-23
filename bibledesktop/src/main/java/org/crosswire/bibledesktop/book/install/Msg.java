@@ -35,7 +35,8 @@ final class Msg extends MsgBase
     static final Msg AVAILABLE_BOOKS = new Msg("SitesPane.AvailableBooks"); //$NON-NLS-1$
     static final Msg LOCAL_BOOKS = new Msg("SitesPane.Local"); //$NON-NLS-1$
 
-    static final Msg SIZE = new Msg("SitePane.Size"); //$NON-NLS-1$
+    static final Msg KB_SIZE = new Msg("SitePane.KBSize"); //$NON-NLS-1$
+    static final Msg MB_SIZE = new Msg("SitePane.MBSize"); //$NON-NLS-1$
     static final Msg CONFIRMATION_TITLE = new Msg("SitePane.ConfirmationTitle"); //$NON-NLS-1$
     static final Msg INSTALLED = new Msg("SitePane.Installed"); //$NON-NLS-1$
     static final Msg INSTALLED_DESC = new Msg("SitePane.InstalledDesc"); //$NON-NLS-1$
@@ -44,6 +45,8 @@ final class Msg extends MsgBase
     static final Msg NONE_AVAILABLE_DESC = new Msg("SitePane.NoneAvailableDesc"); //$NON-NLS-1$
     static final Msg CONFIRM_DELETE_TITLE = new Msg("SitePane.ConfirmDeleteTitle"); //$NON-NLS-1$
     static final Msg CONFIRM_DELETE_BOOK = new Msg("SitePane.ConfirmDeleteBook"); //$NON-NLS-1$
+    static final Msg UNLOCK_TITLE = new Msg("SitePane.UnlockTitle"); //$NON-NLS-1$
+    static final Msg UNLOCK_BOOK = new Msg("SitePane.UnlockBook"); //$NON-NLS-1$
     static final Msg CONFIRM_UNINSTALL_TITLE = new Msg("SitePane.ConfirmUninstallTitle"); //$NON-NLS-1$
     static final Msg CONFIRM_UNINSTALL_BOOK = new Msg("SitePane.ConfirmUninstallBook"); //$NON-NLS-1$
 

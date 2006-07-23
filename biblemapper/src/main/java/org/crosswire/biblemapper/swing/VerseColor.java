@@ -39,22 +39,22 @@ public interface VerseColor
     * @param verse The verse number
     * @return The Color for this verse
     */
-    public Color getColor(int book, int chapter, int verse);
+    Color getColor(int book, int chapter, int verse);
 
     /**
     * What Color would set off the Verses painted on it
     * @return An appropriate background color
     */
-    public Color getBackground();
+    Color getBackground();
 
     /**
     * What Color should text be painted in
     * @return An appropriate font color
     */
-    public Color getForeground();
+    Color getForeground();
 
     /**
     * The name for display in a combo box
     */
-    public String toString();
+    String toString();
 }

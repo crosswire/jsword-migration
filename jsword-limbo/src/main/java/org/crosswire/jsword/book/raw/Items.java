@@ -38,14 +38,14 @@ public interface Items
      * Get an Enumeration through the words
      * @return An Enumeration
      */
-    public Iterator iterator();
+    Iterator iterator();
 
     /**
      * Fetch an item from the dictionary by an id.
      * @param index The id of the word to fetch
      * @exception NoSuchResourceException
      */
-    public String getItem(int index) throws NoSuchResourceException;
+    String getItem(int index) throws NoSuchResourceException;
 
     /**
      * This method is called during the creation of the index to add a
@@ -55,22 +55,22 @@ public interface Items
      * @param data The word to find/create an id for
      * @return The (new) id for the item, or -1
      */
-    public int getIndex(String data);
+    int getIndex(String data);
 
     /**
      * Set a list of word indexes as the test to a Verse
      * @param data The array of wordd to be indexed
      */
-    public int[] getIndex(String[] data);
+    int[] getIndex(String[] data);
 
     /**
      * How many items are there in the current dictionary
      * @return the Item count
      */
-    public int size();
+    int size();
 
     /**
      * Ensure that all changes to the index of words are written to disk
      */
-    public void save() throws IOException;
+    void save() throws IOException;
 }

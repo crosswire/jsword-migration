@@ -40,7 +40,7 @@ public interface Rule
      * @param chapter The chapter 
      * @return Desired position.
      */
-    public Position getDesiredPosition(Map map, int book, int chapter);
+    Position getDesiredPosition(Map map, int book, int chapter);
 
     /**
      * Specify where it would like a node to be positioned in space weighted
@@ -50,7 +50,7 @@ public interface Rule
      * @param chapter The chapter 
      * @return Desired position.
      */
-    public Position[] getScaledPosition(Map map, int book, int chapter);
+    Position[] getScaledPosition(Map map, int book, int chapter);
 
     /**
      * Each call to getDesiredPosition() returns an array of Positions,
@@ -58,7 +58,7 @@ public interface Rule
      * @param scale The preferred length of the desired position array
      * @see #getDesiredPosition(Map, int, int)
      */
-    public void setScale(int scale);
+    void setScale(int scale);
 
     /**
      * Each call to getDesiredPosition() returns an array of Positions,
@@ -66,5 +66,5 @@ public interface Rule
      * @return The preferred length of the desired position array
      * @see #getDesiredPosition(Map, int, int)
      */
-    public int getScale();
+    int getScale();
 }

@@ -38,11 +38,11 @@ public interface MapListener extends EventListener
     * moved.
     * @param ev Describes the change
     */
-    public void mapChanged(MapEvent ev);
+    void mapChanged(MapEvent ev);
 
     /**
     * This method is called to indicate that the whole map has changed
     * @param ev Describes the change
     */
-    public void mapRewritten(MapEvent ev);
+    void mapRewritten(MapEvent ev);
 }

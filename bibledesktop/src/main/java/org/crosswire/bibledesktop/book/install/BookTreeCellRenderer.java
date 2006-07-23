@@ -56,14 +56,11 @@ public class BookTreeCellRenderer extends DefaultTreeCellRenderer
 
             if (!book.isSupported())
             {
-                if (book.isEnciphered())
-                {
-                    tooltip = Msg.BOOK_LOCKED.toString();
-                }
-                else
-                {
-                    tooltip = Msg.BOOK_UNSUPPORTED.toString();
-                }
+                tooltip = Msg.BOOK_UNSUPPORTED.toString();
+            }
+            else if (book.isLocked())
+            {
+                tooltip = Msg.BOOK_LOCKED.toString();
             }
         }
 

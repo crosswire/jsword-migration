@@ -23,7 +23,7 @@ import com.manning.blogapps.chapter08.blogclient.Blog;
  */
 public interface BlogClientTab
 {
-    public void onSelected();
+    void onSelected();
 
-    public void setBlog(Blog blog);
+    void setBlog(Blog blog);
 }

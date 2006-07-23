@@ -47,5 +47,5 @@ public interface CommandWord extends Word
      *               string or a default Bible.
      * @param ref The Passage to alter (if necessary)
      */
-    public void updatePassage(IndexSearcher engine, Key ref) throws BookException;
+    void updatePassage(IndexSearcher engine, Key ref) throws BookException;
 }

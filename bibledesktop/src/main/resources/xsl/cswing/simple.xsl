@@ -143,8 +143,8 @@
           h3 { font-size: 110%; color: #666699; font-weight: bold; }
           h2 { font-size: 115%; color: #669966; font-weight: bold; }
           div.margin { font-size:90%; }
-          TD.notes { width:100px; background:#f4f4e8; }
-          TD.text { }
+          TD.notes { width:20%; background:#f4f4e8; }
+          TD.text { width:80%; }
         </style>
       </head>
       <body>
@@ -329,7 +329,7 @@
   </xsl:template>
 
   <xsl:template match="verse" mode="print-notes">
-    <xsl:if test="./note[@type != 'x-strongsMarkup']">
+    <xsl:if test="./note[not(@type = 'x-strongsMarkup')]">
       <xsl:variable name="passage" select="jsword:getValidKey($keyf, @osisID)"/>
       <a href="#{substring-before(concat(@osisID, ' '), ' ')}">
         <xsl:value-of select="jsword:getName($passage)"/>
@@ -409,10 +409,11 @@
 
   <xsl:template match="note">
     <xsl:if test="$Notes = 'true'">
-      <!-- If the preceeding sibling was a note, emit a separator -->
-      <!-- TODO(DMS): If n="xxx" is present and within this verse xxx was already seen, then skip it. -->
+      <!-- If there is a following sibling that is a note, emit a separator -->
+      <xsl:variable name="siblings" select="../child::node()"/>
+      <xsl:variable name="next-position" select="position() + 1"/>
       <xsl:choose>
-        <xsl:when test="following-sibling::*[1][self::note]">
+        <xsl:when test="name($siblings[$next-position]) = 'note'">
           <sup class="note"><a href="#note-{generate-id(.)}"><xsl:call-template name="generateNoteXref"/></a>, </sup>
         </xsl:when>
         <xsl:otherwise>
@@ -424,10 +425,11 @@
 
   <xsl:template match="note" mode="jesus">
     <xsl:if test="$Notes = 'true'">
-      <!-- If the preceeding sibling was a note, emit a separator -->
-      <!-- TODO(DMS): If n="xxx" is present and within this verse xxx was already seen, then skip it. -->
+     <!-- If there is a following sibling that is a note, emit a separator -->
+      <xsl:variable name="siblings" select="../child::node()"/>
+      <xsl:variable name="next-position" select="position() + 1"/>
       <xsl:choose>
-        <xsl:when test="following-sibling::*[1][self::note]">
+        <xsl:when test="$siblings[$next-position] and name($siblings[$next-position]) = 'note'">
           <sup class="note"><a href="#note-{generate-id(.)}"><xsl:call-template name="generateNoteXref"/></a>, </sup>
         </xsl:when>
         <xsl:otherwise>

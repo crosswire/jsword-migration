@@ -38,10 +38,10 @@ public interface Remoter
      * @param method What to execute
      * @return Document The results of the execution.
      */
-    public Document execute(RemoteMethod method) throws RemoterException;
+    Document execute(RemoteMethod method) throws RemoterException;
     
     /**
      * The name of this remoter to help the metadata
      */
-    public String getRemoterName();
+    String getRemoterName();
 }
