@@ -1,7 +1,7 @@
 <project name="findbugs" default="findbugs">
 
   <property name="support.bugs" value="${support.tools}/findbugs"/>
-  <property name="version.bugs" value="0.9.4"/>
+  <property name="version.bugs" value="1.0.0"/>
 
   <!-- this should be overridden by the parent file -->
   <property name="support.tools" value=".."/>
@@ -28,12 +28,13 @@
       <class location="${target.jar}/jsword-common-${release.version}.jar"/>
       <class location="${target.jar}/jsword-common-swing-${release.version}.jar"/>
       <auxClasspath path="${target.jar}/commons-net-1.4.1.jar"/>
-      <auxClasspath path="${target.jar}/commons-httpclient-3.0.jar"/>
+      <auxClasspath path="${target.jar}/commons-httpclient-3.0.1.jar"/>
       <auxClasspath path="${target.jar}/javatar-2.5.jar"/>
       <auxClasspath path="${target.jar}/jdom-1.0.jar"/>
       <auxClasspath path="${target.jar}/lucene-core-2.0.0.jar"/>
-      <auxClasspath path="../common/jar/jaf-1.0.2/activation.jar"/>
+      <auxClasspath path="../common/jar/jaf-1.1/activation.jar"/>
       <auxClasspath path="${target.jar}/jlfgr-1_0.jar"/>
+<!--
       <auxClasspath path="${target.jar}/blogapps-1.0.jar"/>
       <auxClasspath path="${target.jar}/gnu-regexp-1.1.4.jar"/>
       <auxClasspath path="${target.jar}/rome-0.7.jar"/>
@@ -42,6 +43,7 @@
       <auxClasspath path="${target.jar}/kafenio-0.8.5.jar"/>
       <auxClasspath path="${target.jar}/kafenio-config-0.8.5.jar"/>
       <auxClasspath path="${target.jar}/kafenio-icons-0.8.5.jar"/>
+-->
     </findbugs>
   </target>
 

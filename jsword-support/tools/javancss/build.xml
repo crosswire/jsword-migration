@@ -1,7 +1,7 @@
 <project name="javancss" default="javancss">
 
   <property name="support.javancss" value="${support.tools}/javancss"/>
-  <property name="version.javancss" value="21.41"/>
+  <property name="version.javancss" value="26.46"/>
 
   <!-- this should be overridden by the parent file -->
   <property name="support.tools" value=".."/>
