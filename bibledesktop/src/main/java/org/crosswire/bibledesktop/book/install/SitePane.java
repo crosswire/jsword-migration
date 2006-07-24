@@ -332,10 +332,14 @@ public class SitePane extends JPanel
         Book book = getBook(last);
 
         String unlockKey =
-            JOptionPane.showInputDialog(this,
+            (String) JOptionPane.showInputDialog(this,
                                         Msg.UNLOCK_BOOK.toString(new Object[] {book.getName()}),
                                         Msg.UNLOCK_TITLE.toString(),
-                                        JOptionPane.QUESTION_MESSAGE);
+                                        JOptionPane.QUESTION_MESSAGE,
+                                        null,
+                                        null,
+                                        book.getUnlockKey());
+
         if (unlockKey != null && unlockKey.length() > 0)
         {
             book.unlock(unlockKey);
@@ -491,7 +495,7 @@ public class SitePane extends JPanel
         boolean canInstall = bookSelected && book.isSupported();
         IndexManager imanager = IndexManagerFactory.getIndexManager();
         actions.getAction(DELETE).setEnabled(bookSelected && book.getDriver().isDeletable(book));
-        actions.getAction(UNLOCK).setEnabled(bookSelected && book.isLocked());
+        actions.getAction(UNLOCK).setEnabled(bookSelected && book.isEnciphered());
         actions.getAction(UNINDEX).setEnabled(bookSelected && imanager.isIndexed(book));
         actions.getAction(INSTALL).setEnabled(canInstall);
         actions.getAction(INSTALL_SEARCH).setEnabled(canInstall && book.getBookCategory() == BookCategory.BIBLE);

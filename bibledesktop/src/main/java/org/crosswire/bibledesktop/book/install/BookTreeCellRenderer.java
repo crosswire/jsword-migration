@@ -51,12 +51,12 @@ public class BookTreeCellRenderer extends DefaultTreeCellRenderer
             {
                 Book book = (Book) obj;
                 setLeafIcon(BookIcon.getIcon(book));
-    
+
                 if (book.isQuestionable())
                 {
                     tooltip = Msg.BOOK_QUESTIONABLE.toString();
                 }
-    
+
                 if (!book.isSupported())
                 {
                     tooltip = Msg.BOOK_UNSUPPORTED.toString();

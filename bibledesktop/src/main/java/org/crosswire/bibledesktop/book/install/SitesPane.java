@@ -35,7 +35,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
 import javax.swing.JTabbedPane;
 
 import org.crosswire.common.progress.swing.JobsProgressBar;
