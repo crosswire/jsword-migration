@@ -176,7 +176,6 @@ public class SitesPane extends JPanel
         dlgMain.getContentPane().add(this, BorderLayout.CENTER);
         dlgMain.getContentPane().add(createButtons(), BorderLayout.SOUTH);
         dlgMain.setTitle(Msg.AVAILABLE_BOOKS.toString());
-        dlgMain.getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
         dlgMain.setResizable(true);
         //dlgMain.setModal(true);
         dlgMain.addWindowListener(new WindowAdapter()

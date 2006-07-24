@@ -31,6 +31,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -41,6 +43,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
@@ -233,11 +236,13 @@ public class EditSitePane extends JPanel
         dlgMain.getRootPane().registerKeyboardAction(closer, esc, JComponent.WHEN_IN_FOCUSED_WINDOW);
         dlgMain.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         dlgMain.setTitle(Msg.EDIT_SITE_TITLE.toString());
+        dlgMain.setResizable(true);
         dlgMain.setModal(true);
 
         GuiUtil.setSize(dlgMain, new Dimension(480, 320));
         GuiUtil.centerWindow(dlgMain);
         dlgMain.setVisible(true);
+        dlgMain.toFront();
     }
 
     /**
