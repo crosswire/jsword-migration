@@ -329,12 +329,12 @@
   </xsl:template>
 
   <xsl:template match="verse" mode="print-notes">
-    <xsl:if test="./note[not(@type = 'x-strongsMarkup')]">
+    <xsl:if test=".//note[not(@type) or not(@type = 'x-strongsMarkup')]">
       <xsl:variable name="passage" select="jsword:getValidKey($keyf, @osisID)"/>
       <a href="#{substring-before(concat(@osisID, ' '), ' ')}">
         <xsl:value-of select="jsword:getName($passage)"/>
       </a>
-      <xsl:apply-templates select="./note" mode="print-notes" />
+      <xsl:apply-templates select=".//note" mode="print-notes" />
       <div><xsl:text>&#160;</xsl:text></div>
     </xsl:if>
   </xsl:template>
