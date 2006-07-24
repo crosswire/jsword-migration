@@ -38,8 +38,8 @@
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jsword-common-swing-${release.version}.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jsword-${release.version}.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-codec-1.3.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-httpclient-3.0.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-logging.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-httpclient-3.0.1.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-logging-1.1.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-net-1.4.1.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jdom-1.0.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="javatar-2.5.jar"/>

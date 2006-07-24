@@ -35,8 +35,8 @@
     <jar href="javatar-2.5.jar"/>
     <jar href="jdom-1.0.jar"/>
     <jar href="commons-codec-1.3.jar"/>
-    <jar href="commons-httpclient-3.0.jar"/>
-    <jar href="commons-logging.jar"/>
+    <jar href="commons-httpclient-3.0.1.jar"/>
+    <jar href="commons-logging-1.1.jar"/>
     <jar href="commons-net-1.4.1.jar"/>
     <jar href="lucene-core-2.0.0.jar"/>
     <jar href="jlfgr-1_0.jar"/>
