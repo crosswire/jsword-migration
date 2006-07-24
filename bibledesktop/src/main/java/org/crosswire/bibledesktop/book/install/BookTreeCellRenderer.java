@@ -46,21 +46,25 @@ public class BookTreeCellRenderer extends DefaultTreeCellRenderer
         String tooltip = null;
         if (leaf && value instanceof BookNode)
         {
-            Book book = (Book) ((BookNode) value).getUserObject();
-            setLeafIcon(BookIcon.getIcon(book));
-
-            if (book.isQuestionable())
+            Object obj = ((BookNode) value).getUserObject();
+            if (obj instanceof Book)
             {
-                tooltip = Msg.BOOK_QUESTIONABLE.toString();
-            }
-
-            if (!book.isSupported())
-            {
-                tooltip = Msg.BOOK_UNSUPPORTED.toString();
-            }
-            else if (book.isLocked())
-            {
-                tooltip = Msg.BOOK_LOCKED.toString();
+                Book book = (Book) obj;
+                setLeafIcon(BookIcon.getIcon(book));
+    
+                if (book.isQuestionable())
+                {
+                    tooltip = Msg.BOOK_QUESTIONABLE.toString();
+                }
+    
+                if (!book.isSupported())
+                {
+                    tooltip = Msg.BOOK_UNSUPPORTED.toString();
+                }
+                else if (book.isLocked())
+                {
+                    tooltip = Msg.BOOK_LOCKED.toString();
+                }
             }
         }
 

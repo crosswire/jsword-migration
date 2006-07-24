@@ -407,9 +407,9 @@ public class EditSitePane extends JPanel
     public void doSave()
     {
         String name = txtName.getText();
+        siteEditor.save();
         Installer installer = siteEditor.getInstaller();
         imanager.addInstaller(name, installer);
-        siteEditor.save();
 
         clear();
         editName = null;
