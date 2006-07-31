@@ -9,10 +9,12 @@ if "%JSWORD%"=="" set JSWORD=%DEFAULT_JSWORD%
 set DEFAULT_JSWORD=
 if exist "%JSWORD%" goto DoneFindJSword
 REM have a blind guess ...
-if not exist "C:\Progra~1\JSword" goto FailedFindJSword
-set JSWORD=C:\Progra~1\JSword
+if not exist "C:\Progra~1\CrossW~1\BibleD~1" goto FailedFindJSword
+set JSWORD=C:\Progra~1\CrossW~1\BibleD~1
 :DoneFindJSword
 echo "Using JSWORD=%JSWORD%"
+
+cd %JSWORD%
 
 REM STEP 3 - Setup the classpath
 set LOCALCLASSPATH=%CLASSPATH%
@@ -26,7 +28,7 @@ REM -classpath "%JSWORD%\resource"
 goto End
 
 :FailedFindJSword
-echo "Can't find install directory. Please use C:\Progra~1\JSword or set the JSWORD variable"
+echo "Can't find install directory. Please use C:\Program Files\CrossWire\BibleDesktop or set the JSWORD variable"
 
 :End
 set LOCALCLASSPATH=

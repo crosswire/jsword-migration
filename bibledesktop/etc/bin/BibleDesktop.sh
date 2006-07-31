@@ -43,6 +43,8 @@ if [ -z "$JSWORD" ] ; then
   JSWORD=`cd "$JSWORD" && pwd`
 fi
 
+cd $JSWORD
+
 # For Cygwin, ensure paths are in UNIX format before anything is touched
 if $cygwin ; then
   [ -n "$JSWORD" ] &&
