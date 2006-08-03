@@ -3,14 +3,17 @@ REM STEP 1 - Initial setup
 REM @echo off
 if "%OS%"=="Windows_NT" @setlocal
 
+REM Win98 does not define ProgramFiles, XP, 2000, do...
+if "%ProgramFiles%"=="" set ProgramFiles="C:\Program~1"
+
 REM STEP 2 - Check we know where we are installed
 set DEFAULT_JSWORD=%~dp0
 if "%JSWORD%"=="" set JSWORD=%DEFAULT_JSWORD%
 set DEFAULT_JSWORD=
 if exist "%JSWORD%" goto DoneFindJSword
 REM have a blind guess ...
-if not exist "C:\Progra~1\CrossW~1\BibleD~1" goto FailedFindJSword
-set JSWORD=C:\Progra~1\CrossW~1\BibleD~1
+if not exist "%ProgramFiles%\CrossW~1\BibleD~1" goto FailedFindJSword
+set JSWORD=%ProgramFiles%\CrossW~1\BibleD~1
 :DoneFindJSword
 echo "Using JSWORD=%JSWORD%"
 
@@ -24,7 +27,7 @@ REM STEP 4 - Run JSword
 REM -Xmx256M
 REM "-Djava.endorsed.dirs=%JSWORD%\lib"
 REM -classpath "%JSWORD%\resource"
-"%JAVA_HOME%\bin\java.exe" -classpath "%LOCALCLASSPATH%" org.crosswire.bibledesktop.desktop.Desktop
+"%JAVA_HOME%\bin\java.exe" -classpath "%LOCALCLASSPATH%" -Dsword.home="%SWORD_HOME%" org.crosswire.bibledesktop.desktop.Desktop
 goto End
 
 :FailedFindJSword
