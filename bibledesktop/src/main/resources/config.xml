@@ -153,11 +153,11 @@
   </option>
 
   <option key="SwordBook.BookSearchPath" type="path">
-    <introspect class="org.crosswire.jsword.book.sword.SwordBookDriver" property="SwordPath"/>
+    <introspect class="org.crosswire.jsword.book.sword.SwordBookPath" property="AugmentPath"/>
   </option>
 
   <option key="SwordBook.DownloadDirectory" type="directory">
-    <introspect class="org.crosswire.jsword.book.sword.SwordBookDriver" property="DownloadDir"/>
+    <introspect class="org.crosswire.jsword.book.sword.SwordBookPath" property="DownloadDir"/>
   </option>
 
 <!-- Currently not used
