@@ -4,7 +4,7 @@
 !include LogicLib.nsh
 
 !define PRODUCT_NAME "BibleDesktop"
-!define PRODUCT_VERSION "1.0"
+!define PRODUCT_VERSION "1.0.4"
 !define CLASS "org.crosswire.bibledesktop.desktop.Desktop"
 !define JAVALIB "$EXEDIR"
 

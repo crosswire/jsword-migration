@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "BibleDesktop"
-!define PRODUCT_VERSION "1.0.3"
+!define PRODUCT_VERSION "1.0.4"
 !define PRODUCT_PUBLISHER "Crosswire Bible Society"
 !define PRODUCT_WEB_SITE "http://www.crosswire.org/bibledesktop/index.html"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\${PRODUCT_NAME}.exe"
@@ -59,7 +59,7 @@ Section "MainSection" SEC01
   ; remove all previous jars
   Delete   /REBOOTOK $INSTDIR\*.jar
   ; use the unsigned jars
-  File ..\..\target\uninstalled\*.jar
+  File ..\..\..\target\uninstalled\*.jar
 SectionEnd
 
 Section -AdditionalIcons
