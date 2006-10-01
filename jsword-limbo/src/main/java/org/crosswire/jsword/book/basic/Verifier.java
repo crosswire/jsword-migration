@@ -31,11 +31,11 @@ import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.index.search.DefaultSearchRequest;
-import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.KeyUtil;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.Verse;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * The Verifier check 2 versions for identical text.

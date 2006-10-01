@@ -25,10 +25,10 @@ import java.util.Iterator;
 
 import javax.swing.tree.TreeNode;
 
-import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.Verse;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * PassageTableModel.

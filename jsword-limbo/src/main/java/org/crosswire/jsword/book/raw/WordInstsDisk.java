@@ -28,7 +28,7 @@ import java.net.URL;
 import org.crosswire.common.util.FileUtil;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
-import org.crosswire.jsword.passage.BibleInfo;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * WordInstsDisk is like WordInstsMem however the entire block of data is

@@ -40,12 +40,12 @@ import org.crosswire.jsword.book.basic.AbstractPassageBook;
 import org.crosswire.jsword.book.basic.DefaultBookMetaData;
 import org.crosswire.jsword.book.filter.Filter;
 import org.crosswire.jsword.book.filter.FilterFactory;
-import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.KeyUtil;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.Verse;
+import org.crosswire.jsword.versification.BibleInfo;
 import org.jdom.Element;
 
 /**

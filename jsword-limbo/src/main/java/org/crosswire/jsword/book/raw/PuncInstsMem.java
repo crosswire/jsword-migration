@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.crosswire.jsword.passage.BibleInfo;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * A PuncInstsMem provides access to the list of punctuation ids that

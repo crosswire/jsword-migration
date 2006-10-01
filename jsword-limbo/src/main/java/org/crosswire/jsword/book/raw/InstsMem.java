@@ -27,8 +27,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
-import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.Verse;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * InstsMem is a Base implementation of the Insts interface using the in

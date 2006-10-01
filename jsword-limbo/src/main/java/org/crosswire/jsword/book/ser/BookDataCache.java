@@ -36,8 +36,8 @@ import org.crosswire.common.util.FileUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.jsword.book.BookException;
-import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.Verse;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * A cache of BibleData that can be shared amongst Bibles.

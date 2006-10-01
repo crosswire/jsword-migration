@@ -50,13 +50,13 @@ import org.crosswire.jsword.book.SentenceUtil;
 import org.crosswire.jsword.book.search.Grammar;
 import org.crosswire.jsword.book.search.Thesaurus;
 import org.crosswire.jsword.index.AbstractIndex;
-import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.KeyUtil;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageKeyFactory;
 import org.crosswire.jsword.passage.Verse;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * A search engine - This is a stepping stone on the way to allowing use of

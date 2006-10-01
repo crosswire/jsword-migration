@@ -23,8 +23,8 @@ package org.crosswire.jsword.book.raw;
 
 import java.io.IOException;
 
-import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.Verse;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * InstsDisk is a Base implementation of the Insts interface using the in
