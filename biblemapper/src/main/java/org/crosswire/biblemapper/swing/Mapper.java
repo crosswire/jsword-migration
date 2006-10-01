@@ -76,7 +76,8 @@ import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Books;
-import org.crosswire.jsword.passage.BibleInfo;
+import org.crosswire.jsword.versification.BibleNames;
+import org.crosswire.jsword.versification.SectionNames;
 import org.jdom.Document;
 
 /**
@@ -110,13 +111,13 @@ public class Mapper extends JFrame
         vcols = new VerseColor[76];
         vcols[0] = new RainbowVerseColor();
         vcols[1] = new GroupVerseColor();
-        for (int i = BibleInfo.Section.PENTATEUCH; i <= BibleInfo.Section.LETTERS; i++)
+        for (int i = SectionNames.PENTATEUCH; i <= SectionNames.LETTERS; i++)
         {
             vcols[i + 1] = new SectionVerseColor(i);
         }
-        for (int i = BibleInfo.Names.GENESIS; i <= BibleInfo.Names.REVELATION; i++)
+        for (int i = BibleNames.GENESIS; i <= BibleNames.REVELATION; i++)
         {
-            vcols[i + 1 + BibleInfo.Section.LETTERS] = new BookVerseColor(i);
+            vcols[i + 1 + SectionNames.LETTERS] = new BookVerseColor(i);
         }
 
         init();

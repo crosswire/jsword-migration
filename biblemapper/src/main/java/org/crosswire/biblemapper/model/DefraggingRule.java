@@ -21,7 +21,7 @@
  */
 package org.crosswire.biblemapper.model;
 
-import org.crosswire.jsword.passage.BibleInfo;
+import org.crosswire.jsword.versification.BibleInfo;
 import org.crosswire.common.util.Reporter;
 
 /**

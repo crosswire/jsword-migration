@@ -28,10 +28,10 @@ import org.crosswire.biblemapper.model.Map;
 import org.crosswire.biblemapper.model.MapEvent;
 import org.crosswire.biblemapper.model.MapListener;
 import org.crosswire.common.util.Reporter;
-import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.passage.VerseRange;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * A MapTableModel takes an underlying map and represents it as a

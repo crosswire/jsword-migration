@@ -25,9 +25,9 @@ import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
 import org.crosswire.common.util.Logger;
-import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * A ComboBoxModel for selecting book/chapter/verse.

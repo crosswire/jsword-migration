@@ -29,9 +29,9 @@ import java.awt.event.ItemListener;
 import javax.swing.JComboBox;
 import javax.swing.event.EventListenerList;
 
-import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * A set of correctly constructed and linked BibleComboBoxModels.

@@ -35,8 +35,8 @@ import org.crosswire.biblemapper.model.Map;
 import org.crosswire.biblemapper.model.MapEvent;
 import org.crosswire.biblemapper.model.MapListener;
 import org.crosswire.common.swing.GuiUtil;
-import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * This is an Swing GUI interface to the BMap project.

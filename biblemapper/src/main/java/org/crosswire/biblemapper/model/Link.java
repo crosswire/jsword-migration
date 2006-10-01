@@ -23,10 +23,10 @@ package org.crosswire.biblemapper.model;
 
 import java.io.Serializable;
 
-import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.passage.VerseRange;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * A Link describes a destination verse and a link strength.

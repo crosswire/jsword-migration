@@ -23,7 +23,7 @@ package org.crosswire.biblemapper.swing;
 
 import java.awt.Color;
 
-import org.crosswire.jsword.passage.BibleInfo;
+import org.crosswire.jsword.versification.SectionNames;
 
 /**
  * GroupVerseColor gives colors to groups of books, so the pentetuch is
@@ -44,7 +44,7 @@ public class GroupVerseColor implements VerseColor
     */
     public Color getColor(int book, int chapter, int verse)
     {
-        return array[BibleInfo.getSection(book)-1];
+        return array[SectionNames.getSection(book)-1];
     }
 
     /**

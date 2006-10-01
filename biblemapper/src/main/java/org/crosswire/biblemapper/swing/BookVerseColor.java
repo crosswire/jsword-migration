@@ -23,8 +23,8 @@ package org.crosswire.biblemapper.swing;
 
 import java.awt.Color;
 
-import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * BookVerseColor gives a color to a selected books, leaving the

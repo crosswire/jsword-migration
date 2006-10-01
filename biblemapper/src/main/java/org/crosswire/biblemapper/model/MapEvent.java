@@ -23,8 +23,8 @@ package org.crosswire.biblemapper.model;
 
 import java.util.EventObject;
 
-import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * A MapEvent happens whenever a Map changes.

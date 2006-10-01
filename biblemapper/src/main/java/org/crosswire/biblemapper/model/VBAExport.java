@@ -23,8 +23,8 @@ package org.crosswire.biblemapper.model;
 
 import java.io.PrintWriter;
 
-import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * VBAExport takes a Map and exports the data to a Word VBA file.

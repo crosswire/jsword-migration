@@ -25,10 +25,10 @@ import java.util.Enumeration;
 
 import javax.swing.tree.TreeNode;
 
-import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.passage.VerseRange;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * A PassageTreeNode extends TreeNode to Model a Passage.

@@ -32,8 +32,8 @@ import java.util.List;
 
 import org.crosswire.common.util.EventListenerList;
 import org.crosswire.common.util.Logger;
-import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
+import org.crosswire.jsword.versification.BibleInfo;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;

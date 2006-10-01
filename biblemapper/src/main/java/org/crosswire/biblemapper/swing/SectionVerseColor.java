@@ -23,8 +23,9 @@ package org.crosswire.biblemapper.swing;
 
 import java.awt.Color;
 
-import org.crosswire.jsword.passage.BibleInfo;
 import org.crosswire.jsword.passage.NoSuchVerseException;
+import org.crosswire.jsword.versification.BibleInfo;
+import org.crosswire.jsword.versification.SectionNames;
 
 /**
  * SectionVerseColor gives a color to a selected group of books,
@@ -71,7 +72,7 @@ public class SectionVerseColor implements VerseColor
     */
     public Color getColor(int book, int chapter, int verse)
     {
-        if (section != BibleInfo.getSection(book))
+        if (section != SectionNames.getSection(book))
         {
             return Color.gray;
         }
