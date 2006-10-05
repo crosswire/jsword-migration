@@ -171,7 +171,7 @@
   </option>
 
   <option key="Passages.FullBookName" type="boolean">
-    <introspect class="org.crosswire.jsword.passage.BibleInfo" property="FullBookName"/>
+    <introspect class="org.crosswire.jsword.versification.BibleInfo" property="FullBookName"/>
   </option>
 
   <option key="Passages.BlurringRules" type="int-options">
@@ -182,7 +182,7 @@
   </option>
 
   <option key="Passages.BookCase" type="int-options">
-    <introspect class="org.crosswire.jsword.passage.BibleInfo" property="Case"/>
+    <introspect class="org.crosswire.jsword.versification.BibleInfo" property="Case"/>
     <alternative number="0"/>
     <alternative number="1"/>
     <alternative number="2"/>

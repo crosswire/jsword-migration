@@ -25,6 +25,7 @@ import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.event.MouseListener;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.MessageFormat;
 
 import javax.swing.JTextPane;
@@ -128,6 +129,13 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             {
                 XSLTProperty.setProperties(htmlsep);
             }
+
+            URL loc = bmd.getLocation();
+            if (loc != null)
+            {
+                htmlsep.setParameter("baseURL", loc.toExternalForm()); //$NON-NLS-1$
+            }
+
             htmlsep.setParameter("direction", direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             String text = XMLUtil.writeToString(htmlsep);
 

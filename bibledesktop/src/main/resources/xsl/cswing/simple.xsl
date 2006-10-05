@@ -54,6 +54,12 @@
   <xsl:param name="greek.morph.protocol" select="'gmorph:'"/>
   <xsl:param name="hebrew.morph.protocol" select="'hmorph:'"/>
 
+  <!-- The absolute base for relative references. -->
+  <xsl:param name="baseURL" select="''"/>
+
+  <!-- Whether to show non-canonical "headings" or not -->
+  <xsl:param name="Headings" select="'true'"/>
+
   <!-- Whether to show Strongs or not -->
   <xsl:param name="Strongs" select="'false'"/>
 
@@ -813,14 +819,14 @@
   
   <xsl:template match="figure">
     <div class="figure">
-      <img src="@src"/>  <!-- FIXME: Not necessarily an image... -->
+      <img src="{concat($baseURL, @src)}"/>  <!-- FIXME: Not necessarily an image... -->
       <xsl:apply-templates/>
     </div>
   </xsl:template>
   
   <xsl:template match="figure" mode="jesus">
     <div class="figure">
-      <img src="@src"/>  <!-- FIXME: Not necessarily an image... -->
+      <img src="{concat($baseURL, @src)}"/>  <!-- FIXME: Not necessarily an image... -->
       <xsl:apply-templates mode="jesus"/>
     </div>
   </xsl:template>
