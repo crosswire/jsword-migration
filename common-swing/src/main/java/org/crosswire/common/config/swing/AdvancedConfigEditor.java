@@ -39,7 +39,6 @@ import javax.swing.UIManager;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
 import org.crosswire.common.config.Choice;
-import org.crosswire.common.util.Reporter;
 
 /**
  * A mutable view of Fields setting array.
@@ -110,24 +109,17 @@ public class AdvancedConfigEditor extends TreeConfigEditor
      */
     protected void addChoice(String key, Choice model)
     {
-        try
-        {
-            Field field = FieldMap.getField(model);
-            fields.put(key, field);
+        Field field = FieldMap.getField(model);
+        fields.put(key, field);
 
-            // Add the Field to the FieldPanel
-            JComponent comp = field.getComponent();
-            comp.setToolTipText(model.getHelpText());
-            comps.put(key, comp);
+        // Add the Field to the FieldPanel
+        JComponent comp = field.getComponent();
+        comp.setToolTipText(model.getHelpText());
+        comps.put(key, comp);
 
-            // Fill in the current value
-            String value = config.getLocal(key);
-            field.setValue(value);
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(this, ex);
-        }
+        // Fill in the current value
+        String value = config.getLocal(key);
+        field.setValue(value);
     }
 
     /**
@@ -135,30 +127,22 @@ public class AdvancedConfigEditor extends TreeConfigEditor
      */
     protected void removeChoice(String key)
     {
-        try
+        Field field = (Field) fields.get(key);
+        if (field != null)
         {
-            Field field = (Field) fields.get(key);
-            if (field != null)
-            {
-                fields.remove(field);
-            }
-
-            Component comp = (Component) comps.get(key);
-            if (comp != null)
-            {
-                comps.remove(key);
-            }
+            fields.remove(field);
         }
-        catch (Exception ex)
+
+        Component comp = (Component) comps.get(key);
+        if (comp != null)
         {
-            Reporter.informUser(this, ex);
+            comps.remove(key);
         }
     }
 
     /**
-     * Used to update the configuration panel whenever someone
-     * selects a different item form the tree on the LHS of the
-     * configuation dialog.
+     * Used to update the configuration panel whenever someone selects a
+     * different item form the tree on the LHS of the configuation dialog.
      */
     public void selectCard()
     {

@@ -68,7 +68,7 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
         panel.add(getViewLayout().getPanel(), getConstraint());
 
         // Get the action definitions from the calling class
-        contextActions = new ActionFactory(CallContext.instance().getCallingClass(), this);
+        contextActions = new ActionFactory(CallContext.getCallingClass(), this);
 
         tdiView = new JRadioButtonMenuItem(contextActions.getAction(TAB_MODE));
         mdiView = new JRadioButtonMenuItem(contextActions.getAction(WINDOW_MODE));

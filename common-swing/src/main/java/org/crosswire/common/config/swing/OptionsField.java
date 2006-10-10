@@ -87,17 +87,17 @@ public class OptionsField implements Field
      */
     public void setValue(String value)
     {
-        for (int i = 0; i < list.length; i++)
-        {
-            if (value.equals(list[i]))
-            {
-                combo.setSelectedItem(list[i]);
-                return;
-            }
-        }
-
         if (list != null && list.length > 0)
         {
+            for (int i = 0; i < list.length; i++)
+            {
+                if (value.equals(list[i]))
+                {
+                    combo.setSelectedItem(list[i]);
+                    return;
+                }
+            }
+
             combo.setSelectedItem(list[0]);
         }
 

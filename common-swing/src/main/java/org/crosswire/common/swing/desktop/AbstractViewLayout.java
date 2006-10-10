@@ -23,7 +23,6 @@ package org.crosswire.common.swing.desktop;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.GridBagConstraints;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -261,7 +260,7 @@ public abstract class AbstractViewLayout implements Viewable, Iterable
      */
     protected Object getConstraint()
     {
-        return gbc;
+        return null;
     }
 
     /**
@@ -330,9 +329,4 @@ public abstract class AbstractViewLayout implements Viewable, Iterable
      */
     private JPanel panel;
 
-    /**
-     * A shared, reusable constraint that makes its contents
-     * grow to fill the area.
-     */
-    private GridBagConstraints gbc;
 }

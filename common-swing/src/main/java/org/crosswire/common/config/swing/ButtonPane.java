@@ -109,7 +109,7 @@ public class ButtonPane extends JPanel
     /**
      * The action factory for the buttons
      */
-    private static transient ActionFactory actions;
+    private transient ActionFactory actions;
 
     /**
      * PENDING: turn this into a [add|remove]ButtonPaneListener thing

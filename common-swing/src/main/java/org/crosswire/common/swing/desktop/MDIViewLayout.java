@@ -84,28 +84,30 @@ public class MDIViewLayout extends AbstractViewLayout
      */
     public void removeView(Component view)
     {
-        JInternalFrame iframe = (JInternalFrame) SwingUtilities.getAncestorOfClass(JInternalFrame.class, view);
-        if (getViewCount() > 1)
+        Component comp = SwingUtilities.getAncestorOfClass(JInternalFrame.class, view);
+        if (comp instanceof JInternalFrame)
         {
-            if (iframe != null)
+            JInternalFrame iframe = (JInternalFrame) comp;
+            if (getViewCount() > 1)
             {
                 // We need to remove our listener
                 // because calling dispose will call it otherwise.
                 // We want it to be called only when the 'X' window close button is pressed
                 removeInternalFrameListener(iframe);
                 iframe.dispose();
+
+                super.removeView(view);
             }
-            super.removeView(view);
-        }
-        else
-        {
-            if (view instanceof Clearable)
+            else
             {
-                ((Clearable) view).clear();
+                if (view instanceof Clearable)
+                {
+                    ((Clearable) view).clear();
+                }
+                // Some one may have clicked on the close button,
+                // which made the view hidden
+                iframe.setVisible(true);
             }
-            // Some one may have clicked on the close button,
-            // which made the view hidden
-            iframe.setVisible(true);
         }
     }
 
@@ -114,12 +116,14 @@ public class MDIViewLayout extends AbstractViewLayout
      */
     protected void forceRemoveView(Component component)
     {
-        JInternalFrame iframe = (JInternalFrame) SwingUtilities.getAncestorOfClass(JInternalFrame.class, component);
-        if (iframe != null)
+        Component comp = SwingUtilities.getAncestorOfClass(JInternalFrame.class, component);
+        if (comp instanceof JInternalFrame)
         {
+            JInternalFrame iframe = (JInternalFrame) comp;
             // We need to remove our listener
             // because calling dispose will call it otherwise.
-            // We want it to be called only when the 'X' window close button is pressed
+            // We want it to be called only when the 'X' window close button is
+            // pressed
             removeInternalFrameListener(iframe);
             iframe.dispose();
         }
@@ -131,9 +135,10 @@ public class MDIViewLayout extends AbstractViewLayout
      */
     public void updateTitle(Component view)
     {
-        JInternalFrame iframe = (JInternalFrame) SwingUtilities.getAncestorOfClass(JInternalFrame.class, view);
-        if (iframe != null)
+        Component comp = SwingUtilities.getAncestorOfClass(JInternalFrame.class, view);
+        if (comp instanceof JInternalFrame)
         {
+            JInternalFrame iframe = (JInternalFrame) comp;
             iframe.setTitle(getTitle(view));
         }
     }

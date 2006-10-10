@@ -35,12 +35,9 @@ public final class Msg extends MsgBase
     static final Msg EDIT = new Msg("ColorField.Edit"); //$NON-NLS-1$
     static final Msg CONFIG_SAVE_FAILED = new Msg("ConfigEditorFactory.ConfigFileFailed"); //$NON-NLS-1$
     static final Msg SELECT_FONT = new Msg("FontField.SelectFont"); //$NON-NLS-1$
-    static final Msg CLASS = new Msg("MapField.Class"); //$NON-NLS-1$
-    static final Msg NAME = new Msg("MapField.Name"); //$NON-NLS-1$
-    static final Msg COMPONENT_EDITOR = new Msg("MapField.ComponentEditor"); //$NON-NLS-1$
-    static final Msg EDIT_CLASS = new Msg("MapField.EditClass"); //$NON-NLS-1$
-    static final Msg CLASS_NOT_FOUND = new Msg("MapField.ClassNotFound."); //$NON-NLS-1$
-    static final Msg BAD_SUPERCLASS = new Msg("MapField.BadSuperclass"); //$NON-NLS-1$
+    static final Msg NAME = new Msg("StringArrayField.Name"); //$NON-NLS-1$
+    static final Msg COMPONENT_EDITOR = new Msg("StringArrayField.ComponentEditor"); //$NON-NLS-1$
+    static final Msg EDIT_CLASS = new Msg("StringArrayField.EditClass"); //$NON-NLS-1$
     static final Msg ERROR = new Msg("OptionsField.Error"); //$NON-NLS-1$
     static final Msg NO_OPTIONS = new Msg("OptionsField.NoOptions"); //$NON-NLS-1$
     static final Msg PATH_EDITOR = new Msg("PathField.PathEditor"); //$NON-NLS-1$

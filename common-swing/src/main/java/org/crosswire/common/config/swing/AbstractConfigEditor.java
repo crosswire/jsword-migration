@@ -42,7 +42,6 @@ import org.crosswire.common.config.ConfigListener;
 import org.crosswire.common.swing.FormPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Logger;
-import org.crosswire.common.util.Reporter;
 
 /**
  * Page of a Config.
@@ -139,16 +138,9 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
      */
     public void okPressed(ActionEvent ev)
     {
-        try
-        {
-            screenToLocal();
-            al.actionPerformed(ev);
-            hideDialog();
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(this, ex);
-        }
+        screenToLocal();
+        al.actionPerformed(ev);
+        hideDialog();
     }
 
     /* (non-Javadoc)
@@ -164,18 +156,11 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
      */
     public void applyPressed(ActionEvent ev)
     {
-        try
+        screenToLocal();
+        al.actionPerformed(ev);
+        if (dialog != null)
         {
-            screenToLocal();
-            al.actionPerformed(ev);
-            if (dialog != null)
-            {
-                dialog.pack();
-            }
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(this, ex);
+            dialog.pack();
         }
     }
 
@@ -186,37 +171,30 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
     {
         String path = Config.getPath(model.getFullPath());
 
-        try
+        // Check if we want to display this option
+        Field field = FieldMap.getField(model);
+        fields.put(key, field);
+
+        // Get or create a FieldPanel
+        FormPane card = (FormPane) decks.get(path);
+
+        if (card == null)
         {
-            // Check if we want to display this option
-            Field field = FieldMap.getField(model);
-            fields.put(key, field);
-
-            // Get or create a FieldPanel
-            FormPane card = (FormPane) decks.get(path);
-
-            if (card == null)
-            {
-                card = new FormPane();
-                decks.put(path, card);
-                cards++;
-            }
-
-            // Add the Field to the FieldPanel
-            JComponent comp = field.getComponent();
-            comp.setToolTipText(model.getHelpText());
-
-            String name = Config.getLeaf(model.getFullPath()) + ':';
-            card.addEntry(name, comp);
-
-            // Fill in the current value
-            String value = config.getLocal(key);
-            field.setValue(value);
+            card = new FormPane();
+            decks.put(path, card);
+            cards++;
         }
-        catch (Exception ex)
-        {
-            Reporter.informUser(this, ex);
-        }
+
+        // Add the Field to the FieldPanel
+        JComponent comp = field.getComponent();
+        comp.setToolTipText(model.getHelpText());
+
+        String name = Config.getLeaf(model.getFullPath()) + ':';
+        card.addEntry(name, comp);
+
+        // Fill in the current value
+        String value = config.getLocal(key);
+        field.setValue(value);
     }
 
     /**
@@ -226,27 +204,20 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
     {
         String path = Config.getPath(model.getFullPath());
 
-        try
+        Field field = (Field) fields.get(key);
+        if (field != null)
         {
-            Field field = (Field) fields.get(key);
-            if (field != null)
+            fields.remove(field);
+            FormPane card = (FormPane) decks.get(path);
+
+            // Remove field from card.
+            String name = Config.getLeaf(model.getFullPath()) + ':';
+            card.removeEntry(name);
+
+            if (card.isEmpty())
             {
-                fields.remove(field);
-                FormPane card = (FormPane) decks.get(path);
-
-                // Remove field from card.
-                String name = Config.getLeaf(model.getFullPath()) + ':';
-                card.removeEntry(name);
-
-                if (card.isEmpty())
-                {
-                    decks.remove(card);
-                }
+                decks.remove(card);
             }
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(this, ex);
         }
     }
 
@@ -272,23 +243,16 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
         Iterator it = config.getNames();
         while (it.hasNext())
         {
-            try
-            {
-                String key = (String) it.next();
-                Field field = (Field) fields.get(key);
-                String value = field.getValue();
+            String key = (String) it.next();
+            Field field = (Field) fields.get(key);
+            String value = field.getValue();
 
-                if (value == null)
-                {
-                    log.error("null value from key=" + key); //$NON-NLS-1$
-                }
-
-                config.setLocal(key, value);
-            }
-            catch (Exception ex)
+            if (value == null)
             {
-                Reporter.informUser(this, ex);
+                log.error("null value from key=" + key); //$NON-NLS-1$
             }
+
+            config.setLocal(key, value);
         }
     }
 
@@ -300,25 +264,18 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
         Iterator it = config.getNames();
         while (it.hasNext())
         {
-            try
+            String key = (String) it.next();
+
+            Field field = (Field) fields.get(key);
+            String value = config.getLocal(key);
+
+            if (field == null)
             {
-                String key = (String) it.next();
-
-                Field field = (Field) fields.get(key);
-                String value = config.getLocal(key);
-
-                if (field == null)
-                {
-                    log.error("Null field from key=" + key + ", skipping setting value=" + value); //$NON-NLS-1$ //$NON-NLS-2$
-                }
-                else
-                {
-                    field.setValue(value);
-                }
+                log.error("Null field from key=" + key + ", skipping setting value=" + value); //$NON-NLS-1$ //$NON-NLS-2$
             }
-            catch (Exception ex)
+            else
             {
-                Reporter.informUser(this, ex);
+                field.setValue(value);
             }
         }
     }

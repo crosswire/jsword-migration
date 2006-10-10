@@ -25,6 +25,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -86,6 +87,7 @@ public class ActionFactory implements ActionListener
         // Instead of cascading if/then/else
         // use reflecton to do a direct lookup and call
         String methodName = METHOD_PREFIX + action;
+        Exception ex = null;
         try
         {
             try
@@ -93,13 +95,30 @@ public class ActionFactory implements ActionListener
                 Method doMethod = bean.getClass().getDeclaredMethod(methodName, new Class[] { ActionEvent.class });
                 doMethod.invoke(bean, new Object[] { ev });
             }
-            catch (NoSuchMethodException ex)
+            catch (NoSuchMethodException e)
             {
                 Method doMethod = bean.getClass().getDeclaredMethod(methodName, new Class[0]);
                 doMethod.invoke(bean, new Object[0]);
             }
         }
-        catch (Exception ex)
+        catch (NoSuchMethodException e)
+        {
+            ex = e;
+        }
+        catch (IllegalArgumentException e)
+        {
+            ex = e;
+        }
+        catch (IllegalAccessException e)
+        {
+            ex = e;
+        }
+        catch (InvocationTargetException e)
+        {
+            ex = e;
+        }
+
+        if (ex != null)
         {
             log.error("Could not execute method " + bean.getClass().getName() + "." + methodName + "()", ex); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         }

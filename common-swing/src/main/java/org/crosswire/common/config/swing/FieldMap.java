@@ -57,7 +57,7 @@ public final class FieldMap
     public static Field getField(Choice type)
     {
         Field field = null;
-
+        Exception ex = null;
         try
         {
             // We need to treat instances of MultipleChoice differently
@@ -80,17 +80,27 @@ public final class FieldMap
                     field = new TextField();
                 }
             }
+            field.setChoice(type);
         }
-        catch (Exception ex)
+        catch (InstantiationException e)
+        {
+            ex = e;
+        }
+        catch (IllegalAccessException e)
+        {
+            ex = e;
+        }
+
+        if (ex != null)
         {
             log.warn("field type (" + type + ") initialization failed:", ex); //$NON-NLS-1$ //$NON-NLS-2$
             Reporter.informUser(type, ex);
 
             log.warn("field type (" + type + ") unregistered."); //$NON-NLS-1$ //$NON-NLS-2$
             field = new TextField();
+            field.setChoice(type);
         }
 
-        field.setChoice(type);
         return field;
     }
 

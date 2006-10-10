@@ -48,7 +48,6 @@ import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.EdgeBorder;
 import org.crosswire.common.swing.FormPane;
 import org.crosswire.common.util.Logger;
-import org.crosswire.common.util.Reporter;
 
 /**
  * A mutable view of Fields setting array.
@@ -67,12 +66,10 @@ import org.crosswire.common.util.Reporter;
 public class WizardConfigEditor extends AbstractConfigEditor
 {
     /**
-     * <br />Danger - this method is not called by the TreeConfigEditor
-     * constructor, it is called by the AbstractConfigEditor constructor so
-     * any field initializers will be called AFTER THIS METHOD EXECUTES
-     * so don't use field initializers.
+     * Default constructor
+     *
      */
-    protected void initializeGUI()
+    public WizardConfigEditor()
     {
         actions = new ActionFactory(WizardConfigEditor.class, this);
 
@@ -80,6 +77,44 @@ public class WizardConfigEditor extends AbstractConfigEditor
         layout = new CardLayout();
         deck = new JPanel(layout);
 
+        title = new JLabel(Msg.PROPERTIES.toString(), SwingConstants.LEFT);
+        title.setIcon(TASK_ICON_LARGE);
+        title.setFont(new Font(getFont().getName(), Font.PLAIN, 16));
+        title.setPreferredSize(new Dimension(30, 30));
+        title.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        title.setBackground(Color.gray);
+        title.setForeground(Color.white);
+        title.setOpaque(true);
+
+        deck.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+
+        // Use this if you want to have the tree touch the bottom. Then add
+        // the button panel to content.South
+        // JPanel content = new JPanel();
+        // content.setLayout(new BorderLayout());
+        // content.add(BorderLayout.CENTER, deck);
+
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
+        panel.add(title, BorderLayout.PAGE_START);
+        panel.add(deck, BorderLayout.CENTER);
+
+        setLayout(new BorderLayout(5, 10));
+        setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        add(panel, BorderLayout.CENTER);
+        add(getButtonPane(), BorderLayout.PAGE_END);
+
+    }
+
+    /**
+     * <br />Danger - this method is not called by the TreeConfigEditor
+     * constructor, it is called by the AbstractConfigEditor constructor so
+     * any field initializers will be called AFTER THIS METHOD EXECUTES
+     * so don't use field initializers.
+     */
+    protected void initializeGUI()
+    {
         // We need to Enumerate thru the Model names not the Path names in the
         // deck because the deck is a Hashtable that re-orders them.
         Iterator it = config.getNames();
@@ -103,34 +138,7 @@ public class WizardConfigEditor extends AbstractConfigEditor
             }
         }
 
-        title = new JLabel(Msg.PROPERTIES.toString(), SwingConstants.LEFT);
-        title.setIcon(TASK_ICON_LARGE);
-        title.setFont(new Font(getFont().getName(), Font.PLAIN, 16));
-        title.setPreferredSize(new Dimension(30, 30));
-        title.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        title.setBackground(Color.gray);
-        title.setForeground(Color.white);
-        title.setOpaque(true);
         title.setText(names.get(1) + Msg.PROPERTIES_POSN.toString(new Object[] { new Integer(1), new Integer(wcards) }));
-
-        deck.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
-
-        // Use this if you want to have the tree touch the bottom. Then add
-        // the button panel to content.South
-        // JPanel content = new JPanel();
-        // content.setLayout(new BorderLayout());
-        // content.add(BorderLayout.CENTER, deck);
-
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
-        panel.add(title, BorderLayout.PAGE_START);
-        panel.add(deck, BorderLayout.CENTER);
-
-        setLayout(new BorderLayout(5, 10));
-        setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
-        add(panel, BorderLayout.CENTER);
-        add(getButtonPane(), BorderLayout.PAGE_END);
 
         SwingUtilities.updateComponentTreeUI(this);
     }
@@ -195,16 +203,9 @@ public class WizardConfigEditor extends AbstractConfigEditor
 
     public void doWizardFinish(ActionEvent ev)
     {
-        try
-        {
-            screenToLocal();
-            al.actionPerformed(ev);
-            hideDialog();
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(this, ex);
-        }
+        screenToLocal();
+        al.actionPerformed(ev);
+        hideDialog();
     }
 
     /**

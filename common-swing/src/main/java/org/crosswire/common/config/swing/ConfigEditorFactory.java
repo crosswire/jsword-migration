@@ -58,24 +58,48 @@ public final class ConfigEditorFactory
      */
     public static void showDialog(Config config, Component parent, ActionListener al)
     {
+        Exception ex = null;
         try
         {
             ConfigEditor base = (ConfigEditor) ClassUtil.getImplementation(ConfigEditor.class);
             base.construct(config);
             base.showDialog(parent, al);
         }
-        catch (Exception ex)
+        catch (ClassCastException e)
+        {
+            ex = e;
+        }
+        catch (IOException e)
+        {
+            ex = e;
+        }
+        catch (ClassNotFoundException e)
+        {
+            ex = e;
+        }
+        catch (InstantiationException e)
+        {
+            ex = e;
+        }
+        catch (IllegalAccessException e)
+        {
+            ex = e;
+        }
+
+        if (ex != null)
         {
             Reporter.informUser(parent, ex);
         }
     }
 
     /**
-     * Create a dialog to house a TreeConfig component
-     * using the default set of Fields, with the default accept action
-     * of config.localToAppliation and config,localToPermanentURL
+     * Create a dialog to house a TreeConfig component using the default set of
+     * Fields, with the default accept action of config.localToAppliation and
+     * config,localToPermanentURL
+     * 
      * @param config The set of Choices to display
-     * @param parent A component to use to find a frame to use as a dialog parent
+     * @param parent A component to use to find a frame to use as a dialog
+     *            parent
      */
     public static void showDialog(Config config, Component parent, URL url)
     {

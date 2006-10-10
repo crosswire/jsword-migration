@@ -289,7 +289,7 @@ public final class GuiUtil
 
         // One of the dimensions may have changed via setSize,
         // and the other may be waiting to change here
-        if (honoredState != 0)
+        if (honoredState != 0 && win instanceof Frame)
         {
             Frame frame = (Frame) win;
             // Make sure to preserve existing states

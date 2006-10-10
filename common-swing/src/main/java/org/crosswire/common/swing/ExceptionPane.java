@@ -251,7 +251,7 @@ public final class ExceptionPane extends JPanel
      */
     public static File[] getSourcePath()
     {
-        return sources;
+        return (File[]) sources.clone();
     }
 
     /**
@@ -445,9 +445,10 @@ public final class ExceptionPane extends JPanel
 
             // Find a file
             name = File.separator + orig.replace('.', File.separatorChar) + FileUtil.EXTENSION_JAVA;
-            for (int i = 0; i < sources.length; i++)
+            File [] srcs = ExceptionPane.getSourcePath();
+            for (int i = 0; i < srcs.length; i++)
             {
-                File file = new File(sources[i], name);
+                File file = new File(srcs[i], name);
                 if (file.isFile() && file.canRead())
                 {
                     // Found the file, load it into the window
@@ -483,7 +484,7 @@ public final class ExceptionPane extends JPanel
                             }
                         }
                     }
-                    catch (Exception ex)
+                    catch (IOException ex)
                     {
                         data.append(ex.getMessage());
                     }
@@ -514,9 +515,9 @@ public final class ExceptionPane extends JPanel
 
             // If we can't find a matching file
             String error = Msg.SOURCE_NOT_FOUND.toString(new Object[] { st.getClassName(level), errorLine });
-            for (int i = 0; i < sources.length; i++)
+            for (int i = 0; i < srcs.length; i++)
             {
-                error += Msg.SOURCE_ATTEMPT.toString(new Object[] { sources[i].getAbsolutePath() + name });
+                error += Msg.SOURCE_ATTEMPT.toString(new Object[] { srcs[i].getAbsolutePath() + name });
             }
 
             mytext.setText(error);
@@ -626,6 +627,7 @@ public final class ExceptionPane extends JPanel
 
         private ReporterEvent event;
     }
+
     /**
      * The exception we are displaying
      */
@@ -643,7 +645,7 @@ public final class ExceptionPane extends JPanel
     /**
      * The directories searched for source
      */
-    protected static File[] sources = new File[0];
+    private static File[] sources = new File[0];
 
     /**
      * The listener that pops up the ExceptionPanes
