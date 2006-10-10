@@ -23,6 +23,7 @@ package org.crosswire.bibledesktop.desktop;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
@@ -41,7 +42,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -96,6 +96,7 @@ import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.util.ConverterFactory;
 import org.crosswire.jsword.util.Project;
 import org.jdom.Document;
+import org.jdom.JDOMException;
 
 /**
  * The Desktop is the user's view of BibleDesktop.
@@ -117,40 +118,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         try
         {
             ThreadGroup group = new CatchingThreadGroup("BibleDesktopUIGroup"); //$NON-NLS-1$
-            Thread t = new Thread(group, "BibleDesktopUIThread") //$NON-NLS-1$
-            {
-                /* (non-Javadoc)
-                 * @see java.lang.Runnable#run()
-                 */
-                /* @Override */
-                public void run()
-                {
-//                    new BusStart();
-                    ExceptionPane.setHelpDeskListener(true);
-                    LookAndFeelUtil.initialize();
-
-                    final Splash splash = new Splash();
-
-                    final Desktop desktop = new Desktop();
-
-                    // change the size and location before showing the application.
-                    GuiUtil.setSize(desktop, getDefaultSize());
-                    GuiUtil.centerWindow(desktop);
-
-                    // Now bring up the app and offer to install books if the user has none.
-                    SwingUtilities.invokeLater(new Runnable()
-                        {
-                            public void run()
-                            {
-                                splash.close();
-                                desktop.setVisible(true);
-                                desktop.establishPreferredSize();
-                                desktop.pack();
-                                desktop.checkForBooks();
-                            }
-                        });
-                }
-            };
+            Thread t = new DesktopThread(group);
             t.start();
         }
         catch (Exception ex)
@@ -295,7 +263,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
 
         // The toolbar needs to be in the outermost container, on the border
         // And the only other item in that container can be CENTER
-        JComponent contentPane = (JComponent) getContentPane();
+        Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
         ToolBar toolbar = createToolBar();
         contentPane.add(toolbar, BorderLayout.NORTH);
@@ -435,7 +403,6 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     {
         JMenu menuView = new JMenu(actions.getAction(DesktopActions.VIEW));
         JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.TINY_VERSE_NUMBERS.getName()));
-        toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.TINY_VERSE_NUMBERS.getName()));
         toggle.setSelected(XSLTProperty.TINY_VERSE_NUMBERS.getDefault());
         menuView.add(toggle).addMouseListener(barStatus);
         toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.START_VERSE_ON_NEWLINE.getName()));
@@ -529,9 +496,8 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
      */
     public void establishPreferredSize()
     {
-        JComponent contentPane = (JComponent) getContentPane();
+        Container contentPane = getContentPane();
         contentPane.setPreferredSize(contentPane.getSize());
-
         log.warn("The size of the contentpane is: " + contentPane.getSize()); //$NON-NLS-1$
     }
 
@@ -804,12 +770,17 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         {
             xmlconfig = XMLUtil.getDocument(CONFIG_KEY);
         }
-        catch (Exception ex)
+        // Something went wrong before we've managed to get on our feet.
+        // so we want the best possible shot at working out what failed.
+        catch (IOException e)
         {
-            // Something went wrong before we've managed to get on our feet.
-            // so we want the best possible shot at working out what failed.
-            ex.printStackTrace();
-            ExceptionPane.showExceptionDialog(null, ex);
+            e.printStackTrace();
+            ExceptionPane.showExceptionDialog(null, e);
+        }
+        catch (JDOMException e)
+        {
+            e.printStackTrace();
+            ExceptionPane.showExceptionDialog(null, e);
         }
 
         Locale defaultLocale = Locale.getDefault();
@@ -821,7 +792,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         {
             config.setProperties(ResourceUtil.getProperties(DESKTOP_KEY));
         }
-        catch (Exception ex)
+        catch (IOException ex)
         {
             ex.printStackTrace();
             ExceptionPane.showExceptionDialog(null, ex);
@@ -1010,6 +981,70 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     public Config getConfig()
     {
         return config;
+    }
+
+    /**
+     * Helper class to run the application in a thread group and capture errors.
+     */
+    private static final class DesktopThread extends Thread
+    {
+        DesktopThread(ThreadGroup group)
+        {
+            super(group, "BibleDesktopUIThread"); //$NON-NLS-1$
+        }
+
+        /* (non-Javadoc)
+         * @see java.lang.Runnable#run()
+         */
+        /* @Override */
+        public void run()
+        {
+//            new BusStart();
+            ExceptionPane.setHelpDeskListener(true);
+            LookAndFeelUtil.initialize();
+
+            Splash splash = new Splash();
+
+            Desktop desktop = new Desktop();
+
+            // change the size and location before showing the application.
+            GuiUtil.setSize(desktop, getDefaultSize());
+            GuiUtil.centerWindow(desktop);
+
+            // Now bring up the app and offer to install books if the user has none.
+            SwingUtilities.invokeLater(new DesktopRunner(desktop, splash));
+        }
+    }
+
+    /**
+     * Helper class to actually display the application at the right time.
+     */
+    private static class DesktopRunner implements Runnable
+    {
+        /**
+         * @param aDesktop
+         * @param aSplash
+         */
+        public DesktopRunner(Desktop aDesktop, Splash aSplash)
+        {
+            desktop = aDesktop;
+            splash = aSplash;
+        }
+
+        /* (non-Javadoc)
+         * @see java.lang.Runnable#run()
+         */
+        public void run()
+        {
+            splash.close();
+            desktop.setVisible(true);
+            desktop.establishPreferredSize();
+            desktop.pack();
+            desktop.checkForBooks();
+        }
+
+        private Desktop desktop;
+        private Splash splash;
     }
 
     private boolean hasRefBooks;

@@ -43,6 +43,7 @@ import org.crosswire.common.swing.desktop.ViewVisitor;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.util.Project;
 
 /**
@@ -110,9 +111,13 @@ public class DesktopActions
             BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
             view.open();
         }
-        catch (Exception ex)
+        catch (NoSuchVerseException e)
         {
-            Reporter.informUser(getDesktop(), ex);
+            Reporter.informUser(getDesktop(), e);
+        }
+        catch (IOException e)
+        {
+            Reporter.informUser(getDesktop(), e);
         }
     }
 
@@ -349,34 +354,27 @@ public class DesktopActions
      */
     public void doViewSource()
     {
-        try
+        // Limit view source to the current tab.
+        BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
+        SplitBookDataDisplay da = view.getPassagePane();
+        BookDataDisplay bdd = da.getBookDataDisplay();
+        if (bdd instanceof TabbedBookDataDisplay)
         {
-            // Limit view source to the current tab.
-            BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
-            SplitBookDataDisplay da = view.getPassagePane();
-            BookDataDisplay bdd = da.getBookDataDisplay();
-            if (bdd instanceof TabbedBookDataDisplay)
-            {
-                bdd = ((TabbedBookDataDisplay) bdd).getInnerDisplayPane();
-            }
-
-            Key key = bdd.getKey();
-
-            if (key == null)
-            {
-                Reporter.informUser(getDesktop(), Msg.SOURCE_MISSING);
-                return;
-            }
-
-            Book book = da.getBook();
-
-            ViewSourcePane viewer = new ViewSourcePane(book, key);
-            viewer.showInFrame(getDesktop());
+            bdd = ((TabbedBookDataDisplay) bdd).getInnerDisplayPane();
         }
-        catch (Exception ex)
+
+        Key key = bdd.getKey();
+
+        if (key == null)
         {
-            Reporter.informUser(getDesktop(), ex);
+            Reporter.informUser(getDesktop(), Msg.SOURCE_MISSING);
+            return;
         }
+
+        Book book = da.getBook();
+
+        ViewSourcePane viewer = new ViewSourcePane(book, key);
+        viewer.showInFrame(getDesktop());
     }
 
     /**
@@ -392,15 +390,8 @@ public class DesktopActions
      */
     public void doOptions()
     {
-        try
-        {
-            URL configUrl = Project.instance().getWritablePropertiesURL("desktop"); //$NON-NLS-1$
-            ConfigEditorFactory.showDialog(desktop.getConfig(), desktop, configUrl);
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(desktop, ex);
-        }
+        URL configUrl = Project.instance().getWritablePropertiesURL("desktop"); //$NON-NLS-1$
+        ConfigEditorFactory.showDialog(desktop.getConfig(), desktop, configUrl);
     }
 
     /**
@@ -479,9 +470,12 @@ public class DesktopActions
          */
         public void visitView(Component component)
         {
-            BibleViewPane view = (BibleViewPane) component;
-            SplitBookDataDisplay sbDisplay = view.getPassagePane();
-            sbDisplay.showSidebar(show);
+            if (component instanceof BibleViewPane)
+            {
+                BibleViewPane view = (BibleViewPane) component;
+                SplitBookDataDisplay sbDisplay = view.getPassagePane();
+                sbDisplay.showSidebar(show);
+            }
         }
 
         private boolean show;

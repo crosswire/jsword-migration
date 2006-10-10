@@ -21,6 +21,8 @@
  */
 package org.crosswire.bibledesktop.display;
 
+import java.io.IOException;
+
 import org.crosswire.common.util.ClassUtil;
 
 /**
@@ -44,14 +46,33 @@ public final class BookDataDisplayFactory
      */
     public static BookDataDisplay createBookDataDisplay()
     {
+        Exception ex = null;
         try
         {
             return (BookDataDisplay) ClassUtil.getImplementation(BookDataDisplay.class);
         }
-        catch (Exception ex)
+        catch (ClassCastException e)
         {
-            assert false : ex;
-            return null;
+            ex = e;
         }
+        catch (IOException e)
+        {
+            ex = e;
+        }
+        catch (ClassNotFoundException e)
+        {
+            ex = e;
+        }
+        catch (InstantiationException e)
+        {
+            ex = e;
+        }
+        catch (IllegalAccessException e)
+        {
+            ex = e;
+        }
+
+        assert false : ex;
+        return null;
     }
 }

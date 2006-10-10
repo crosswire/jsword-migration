@@ -41,7 +41,6 @@ import org.crosswire.bibledesktop.book.DisplaySelectEvent;
 import org.crosswire.bibledesktop.book.DisplaySelectListener;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
-import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
@@ -262,33 +261,26 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
      */
     protected void selection()
     {
-        try
+        Object[] selected = list.getSelectedValues();
+
+        if (selected.length > 0)
         {
-            Object[] selected = list.getSelectedValues();
+            partial = book.createEmptyKeyList();
 
-            if (selected.length > 0)
+            for (int i = 0; i < selected.length; i++)
             {
-                partial = book.createEmptyKeyList();
-
-                for (int i = 0; i < selected.length; i++)
-                {
-                    partial.addAll((Key) selected[i]);
-                }
-
-                fireKeyChanged(new KeyChangeEvent(this, partial));
-            }
-            else
-            {
-                // Nothing selected so use the whole passage
-                fireKeyChanged(new KeyChangeEvent(this, key));
+                partial.addAll((Key) selected[i]);
             }
 
-            setActive();
+            fireKeyChanged(new KeyChangeEvent(this, partial));
         }
-        catch (Exception ex)
+        else
         {
-            Reporter.informUser(this, ex);
+            // Nothing selected so use the whole passage
+            fireKeyChanged(new KeyChangeEvent(this, key));
         }
+
+        setActive();
     }
 
     /**

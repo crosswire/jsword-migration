@@ -36,7 +36,7 @@ import org.crosswire.bibledesktop.display.proxy.ProxyBookDataDisplay;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ScrolledBookDataDisplay extends ProxyBookDataDisplay implements BookDataDisplay
+public class ScrolledBookDataDisplay extends ProxyBookDataDisplay
 {
     /**
      * Simple Constructor

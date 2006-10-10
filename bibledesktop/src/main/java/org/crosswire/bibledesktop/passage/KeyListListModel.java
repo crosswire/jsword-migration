@@ -22,7 +22,6 @@
 package org.crosswire.bibledesktop.passage;
 
 import javax.swing.AbstractListModel;
-import javax.swing.ListModel;
 
 import org.crosswire.jsword.passage.Key;
 
@@ -33,7 +32,7 @@ import org.crosswire.jsword.passage.Key;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class KeyListListModel extends AbstractListModel implements ListModel
+public class KeyListListModel extends AbstractListModel
 {
     /**
      * Constructor for ListListModel.

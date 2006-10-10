@@ -38,6 +38,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 import javax.swing.text.JTextComponent;
+import javax.xml.transform.TransformerException;
 
 import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.swing.ActionFactory;
@@ -51,10 +52,12 @@ import org.crosswire.common.xml.TransformingSAXEventProvider;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.book.BookData;
+import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.util.ConverterFactory;
 import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
 
 /**
  * ViewSourcePane allow viewing of some text in its own standalone frame.
@@ -99,9 +102,17 @@ public class ViewSourcePane extends JPanel
 
             init(orig, osis.toString(), html.toString());
         }
-        catch (Exception ex)
+        catch (SAXException e)
         {
-            Reporter.informUser(null, ex);
+            Reporter.informUser(null, e);
+        }
+        catch (TransformerException e)
+        {
+            Reporter.informUser(null, e);
+        }
+        catch (BookException e)
+        {
+            Reporter.informUser(null, e);
         }
     }
 

@@ -41,7 +41,6 @@ import org.crosswire.bibledesktop.display.URLEventListener;
 import org.crosswire.bibledesktop.passage.KeyListListModel;
 import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.util.Logger;
-import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.book.BookFilter;
@@ -111,13 +110,11 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
         JScrollPane scrDicts = new JScrollPane();
         scrDicts.setViewportView(lstDicts);
 
-        set = new BibleComboBoxModelSet();
         JComboBox cboBooks = new JComboBox();
         JComboBox cboChaps = new JComboBox();
         JComboBox cboVerse = new JComboBox();
-        set.setBookComboBox(cboBooks);
-        set.setChapterComboBox(cboChaps);
-        set.setVerseComboBox(cboVerse);
+        set = new BibleComboBoxModelSet(cboBooks, cboChaps, cboVerse);
+
         set.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent ev)
@@ -360,15 +357,8 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
             return;
         }
 
-        try
-        {
-            Verse verse = set.getVerse();
-            display.setBookData(book, verse);
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(this, ex);
-        }
+        Verse verse = set.getVerse();
+        display.setBookData(book, verse);
     }
 
     /**
@@ -376,17 +366,10 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
      */
     protected void newEntry()
     {
-        try
+        Key key = (Key) lstEntries.getSelectedValue();
+        if (key != null)
         {
-            Key key = (Key) lstEntries.getSelectedValue();
-            if (key != null)
-            {
-                display.setBookData(dict, key);
-            }
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(this, ex);
+            display.setBookData(dict, key);
         }
     }
 

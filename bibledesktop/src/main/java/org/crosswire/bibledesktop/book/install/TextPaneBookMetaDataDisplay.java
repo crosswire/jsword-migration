@@ -25,6 +25,7 @@ import java.awt.Component;
 
 import javax.swing.JTextPane;
 import javax.swing.text.html.HTMLEditorKit;
+import javax.xml.transform.TransformerException;
 
 import org.crosswire.common.swing.AntiAliasedTextPane;
 import org.crosswire.common.util.Logger;
@@ -36,6 +37,7 @@ import org.crosswire.common.xml.TransformingSAXEventProvider;
 import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.util.ConverterFactory;
+import org.xml.sax.SAXException;
 
 /**
  * A JDK JTextPane implementation of an OSIS displayer.
@@ -79,9 +81,13 @@ public class TextPaneBookMetaDataDisplay
             txtView.setText(text);
             txtView.select(0, 0);
         }
-        catch (Exception ex)
+        catch (SAXException e)
         {
-            Reporter.informUser(this, ex);
+            Reporter.informUser(this, e);
+        }
+        catch (TransformerException e)
+        {
+            Reporter.informUser(this, e);
         }
     }
 

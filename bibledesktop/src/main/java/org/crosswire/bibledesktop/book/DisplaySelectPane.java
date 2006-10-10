@@ -53,6 +53,7 @@ import org.crosswire.common.swing.desktop.event.TitleChangedEvent;
 import org.crosswire.common.swing.desktop.event.TitleChangedListener;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.index.IndexStatus;
 import org.crosswire.jsword.index.IndexStatusEvent;
@@ -319,7 +320,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
                 setKey(results);
             }
         }
-        catch (Exception ex)
+        catch (BookException ex)
         {
             Reporter.informUser(this, ex);
         }

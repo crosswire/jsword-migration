@@ -36,6 +36,7 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import javax.swing.text.html.HTMLEditorKit;
+import javax.xml.transform.TransformerException;
 
 import org.crosswire.bibledesktop.desktop.XSLTProperty;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
@@ -51,9 +52,11 @@ import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.book.BookData;
+import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.util.ConverterFactory;
+import org.xml.sax.SAXException;
 
 /**
  * A JDK JTextPane implementation of an OSIS displayer.
@@ -142,9 +145,17 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             txtView.setText(text);
             txtView.select(0, 0);
         }
-        catch (Exception ex)
+        catch (SAXException e)
         {
-            Reporter.informUser(this, ex);
+            Reporter.informUser(this, e);
+        }
+        catch (BookException e)
+        {
+            Reporter.informUser(this, e);
+        }
+        catch (TransformerException e)
+        {
+            Reporter.informUser(this, e);
         }
     }
 

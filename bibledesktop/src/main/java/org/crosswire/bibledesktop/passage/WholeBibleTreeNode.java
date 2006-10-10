@@ -194,8 +194,6 @@ public final class WholeBibleTreeNode implements TreeNode
             return WholeBibleTreeNode.getNode(this, range.getStart().getBook(), range.getStart().getChapter(), i + 1);
 
         case LEVEL_VERSE:
-            return null;
-
         default:
             return null;
         }
@@ -221,8 +219,6 @@ public final class WholeBibleTreeNode implements TreeNode
                 return BibleInfo.versesInChapter(range.getStart().getBook(), range.getStart().getChapter());
 
             case LEVEL_VERSE:
-                return 0;
-
             default:
                 return 0;
             }
@@ -259,8 +255,6 @@ public final class WholeBibleTreeNode implements TreeNode
             return vnode.getVerseRange().getStart().getVerse() - 1;
 
         case LEVEL_VERSE:
-            return -1;
-
         default:
             return -1;
         }
@@ -293,13 +287,13 @@ public final class WholeBibleTreeNode implements TreeNode
         private int count;
     }
 
-    protected static final int LEVEL_BIBLE = 0;
-    protected static final int LEVEL_BOOK = 1;
-    protected static final int LEVEL_CHAPTER = 2;
-    protected static final int LEVEL_VERSE = 3;
+    private static final int LEVEL_BIBLE = 0;
+    private static final int LEVEL_BOOK = 1;
+    private static final int LEVEL_CHAPTER = 2;
+    private static final int LEVEL_VERSE = 3;
 
     /** The range that this node refers to */
-    protected VerseRange range;
+    private VerseRange range;
 
     /** Our parent tree node */
     private TreeNode parent;

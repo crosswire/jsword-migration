@@ -41,7 +41,6 @@ import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
 import org.crosswire.bibledesktop.display.URLEventListener;
 import org.crosswire.bibledesktop.display.scrolled.ScrolledBookDataDisplay;
 import org.crosswire.common.swing.GuiUtil;
-import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.KeyUtil;
@@ -283,43 +282,36 @@ public class TabbedBookDataDisplay implements BookDataDisplay
      */
     protected void tabChanged()
     {
-        try
+        // This is someone clicking on more isnt it?
+        if (tabMain.getSelectedComponent() != pnlMore)
         {
-            // This is someone clicking on more isnt it?
-            if (tabMain.getSelectedComponent() != pnlMore)
-            {
-                return;
-            }
-
-            // First remove the old more ... tab that the user has just selected
-            tabMain.remove(pnlMore);
-
-            // What do we display next
-            Passage next = waiting;
-            waiting = next.trimVerses(pageSize);
-
-            // Create a new tab
-            BookDataDisplay pnlNew = createInnerDisplayPane();
-            pnlNew.setBookData(book, next);
-
-            Component display = pnlNew.getComponent();
-            views.put(display, pnlNew);
-
-            tabMain.add(getTabName(next), display);
-
-            // Do we need a new more tab
-            if (waiting != null)
-            {
-                tabMain.add(Msg.MORE.toString(), pnlMore);
-            }
-
-            // Select the real new tab in place of any more tabs
-            tabMain.setSelectedComponent(display);
+            return;
         }
-        catch (Exception ex)
+
+        // First remove the old more ... tab that the user has just selected
+        tabMain.remove(pnlMore);
+
+        // What do we display next
+        Passage next = waiting;
+        waiting = next.trimVerses(pageSize);
+
+        // Create a new tab
+        BookDataDisplay pnlNew = createInnerDisplayPane();
+        pnlNew.setBookData(book, next);
+
+        Component display = pnlNew.getComponent();
+        views.put(display, pnlNew);
+
+        tabMain.add(getTabName(next), display);
+
+        // Do we need a new more tab
+        if (waiting != null)
         {
-            Reporter.informUser(this, ex);
+            tabMain.add(Msg.MORE.toString(), pnlMore);
         }
+
+        // Select the real new tab in place of any more tabs
+        tabMain.setSelectedComponent(display);
     }
 
     /**

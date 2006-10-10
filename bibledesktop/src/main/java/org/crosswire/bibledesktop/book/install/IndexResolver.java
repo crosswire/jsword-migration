@@ -23,6 +23,7 @@ package org.crosswire.bibledesktop.book.install;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -33,6 +34,8 @@ import javax.swing.JPanel;
 
 import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookException;
+import org.crosswire.jsword.book.install.InstallException;
 import org.crosswire.jsword.book.install.InstallManager;
 import org.crosswire.jsword.book.install.Installer;
 import org.crosswire.jsword.index.IndexManagerFactory;
@@ -84,11 +87,26 @@ public final class IndexResolver
             Installer installer = selectInstaller(parent);
             if (installer != null)
             {
+                Exception ex = null;
                 try
                 {
                     IndexDownloader.downloadIndex(book, installer);
                 }
-                catch (Exception ex)
+                catch (InstallException e)
+                {
+                    ex = e;
+
+                }
+                catch (BookException e)
+                {
+                    ex = e;
+                }
+                catch (IOException e)
+                {
+                    ex = e;
+                }
+
+                if (ex != null)
                 {
                     log.error("index download failed: ", ex); //$NON-NLS-1$
                     //Reporter.informUser(parent, ex);

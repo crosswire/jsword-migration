@@ -42,6 +42,13 @@ import org.crosswire.jsword.versification.BibleInfo;
  */
 public class BibleComboBoxModelSet
 {
+    public BibleComboBoxModelSet(JComboBox books, JComboBox chapters, JComboBox verses)
+    {
+        setBookComboBox(books);
+        setChapterComboBox(chapters);
+        setVerseComboBox(verses);
+    }
+
     /**
      * The book combo box
      */

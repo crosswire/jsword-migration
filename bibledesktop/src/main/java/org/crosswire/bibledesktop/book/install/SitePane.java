@@ -459,16 +459,9 @@ public class SitePane extends JPanel
         TreePath path = treAvailable.getSelectionPath();
         if (path != null)
         {
-            try
-            {
-                Object last = path.getLastPathComponent();
-                Book book = getBook(last);
-                IndexResolver.scheduleIndex(book, this);
-            }
-            catch (Exception ex)
-            {
-                Reporter.informUser(this, ex);
-            }
+            Object last = path.getLastPathComponent();
+            Book book = getBook(last);
+            IndexResolver.scheduleIndex(book, this);
         }
     }
 
