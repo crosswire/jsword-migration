@@ -1,3 +1,52 @@
+October 4, 2006 - 3.8:
+New rules:
+    Basic ruleset: BrokenNullCheck
+    Strict exceptions ruleset: AvoidRethrowingException
+    Optimizations ruleset: UnnecessaryWrapperObjectCreation
+    Strings ruleset: UselessStringValueOf
+Fixed bug 1498910 - AssignmentInOperand no longer has a typo in the message.
+Fixed bug 1498960 - DontImportJavaLang no longer reports static imports of java.lang members.
+Fixed bug 1417106 - MissingBreakInSwitch no longer flags stmts where every case has either a return or a throw.
+Fixed bug 1412529 - UncommentedEmptyConstructor no longer flags private constructors.
+Fixed bug 1462189 - InsufficientStringBufferDeclaration now resets when it reaches setLength the same way it does at a Constructor
+Fixed bug 1497815 - InsufficientStringBufferDeclaration rule now takes the length of the constructor into account, and adds the length of the initial string to its initial length
+Fixed bug 1504842 - ExceptionSignatureDeclaration no longer flags methods starting with 'test'.
+Fixed bug 1516728 - UselessOverridingMethod no longer raises an NPE on methods that use generics.
+Fixed bug 1522054 - BooleanInstantiation now detects instantiations inside method calls.
+Fixed bug 1522056 - UseStringBufferForStringAppends now flags appends which occur in static initializers and constructors
+Fixed bug 1526530 - SingularField now finds fields which are hidden at the method or static level
+Fixed bug 1529805 - UnusedModifier no longer throws NPEs on JDK 1.5 enums.
+Fixed bug 1531593 - UnnecessaryConversionTemporary no longer reports false positives when toString() is invoked inside the call to 'new Long/Integer/etc()'.
+Fixed bug 1512871 - Improved C++ tokenizer error messages - now they include the filename.
+Fixed bug 1531152 - CloneThrowsCloneNotSupportedException now reports the proper line number.
+Fixed bug 1531236 - IdempotentOperations reports fewer false positives.
+Fixed bug 1544564 - LooseCoupling rule now checks for ArrayLists
+Fixed bug 1544565 - NonThreadSafeSingleton now finds if's with compound statements
+Fixed bug 1561784 - AbstractOptimizationRule no longer throws ClassCastExceptions on certain postfix expressions.
+Fixed a bug in AvoidProtectedFieldInFinalClass - it no longer reports false positives for protected fields in inner classes.
+Fixed a bug in the C++ grammar - the tokenizer now properly recognizes macro definitions which are followed by a multiline comment.
+Modified C++ tokenizer to use the JavaCC STATIC option; this results in about a 30% speedup in tokenizing.
+Implemented RFE 1501850 - UnusedFormalParameter now catches cases where a parameter is assigned to but not used.
+Applied patch 1481024 (implementing RFE 1490181)- NOPMD messages can now be reported with a user specified msg, e.g., //NOPMD - this is expected
+Added JSP support to the copy/paste detector.
+Placed JSF/JSP ruleset names in rulesets/jsprulesets.properties
+Added the image to the ASTEnumConstant nodes.
+Added new XSLT stylesheet for CPD XML->HTML from Max Tardiveau.
+Refactored UseIndexOfChar to extract common functionality into AbstractPoorMethodCall.
+Improved CPD GUI and Designer look/functionality; thanks to Brian Remedios for the changes!
+Rewrote the NOPMD mechanism to collect NOPMD markers as the source file is tokenized.  This eliminates an entire scan of each source file.
+Applied patch from Jason Bennett to enhance CyclomaticComplexity rule to account for conditional or/and nodes, do stmts, and catch blocks.
+Applied patch from Xavier Le Vourch to reduce false postives from CloneMethodMustImplementCloneable.
+Updated Jaxen library to beta 10.
+Performance Refactoring, XPath rules re-written as Java:
+    BooleanInstantiation
+    UselessOperationOnImmutable
+    OverrideBothEqualsAndHashcode
+    UnnecessaryReturn
+    UseStringBufferForStringAppends
+    SingularField
+    NonThreadSafeSingleton
+
 June 1, 2006 - 3.7:
 New rules:
     Basic-JSP ruleset: DuplicateJspImport
@@ -620,5 +669,5 @@ Added new HTML report format
 June 25 2002 - 0.1:
 Initial release
 
-Using PMD?  Get the book!  http://pmdapplied.com/
+Using PMD?  Get the book - http://pmdapplied.com/
 controversial,basic,strings,design,naming,finalizers,braces,clone,codesize,coupling,imports,javabeans,junit,logging-jakarta-commons,logging-java,migrating,optimizations,strictexception,sunsecure,unusedcode

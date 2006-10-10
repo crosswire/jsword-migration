@@ -22,6 +22,7 @@
              debug      ="on"
              deprecation="on"
              optimize   ="off"
+             source     ="1.4"
              excludes   ="**/RCS/*">
       </javac>
       <copy file="icons/javancssframe.gif"
@@ -50,6 +51,12 @@
             classpath="${CLASSPATH}"/>
 
    <target name="javancss">
+      <javancss srcdir="src"
+                includes="**/*.java"
+                generateReport="yes"/>
+   </target>
+
+   <target name="test">
       <javancss srcdir="src"
                 includes="**/*.java"
                 generateReport="yes"/>

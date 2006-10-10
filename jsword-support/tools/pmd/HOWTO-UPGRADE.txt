@@ -7,6 +7,9 @@ In the new directory, remove the following:
    bin
    docs
 
+Change the references to the old directory to the new directory in the following files:
+   build.xml
+
 In SVN remove the old pmd directory.
 
 Determine what has changed in pmd and update ruleset.xml appropriately.

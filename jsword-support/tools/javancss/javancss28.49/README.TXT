@@ -47,10 +47,10 @@ LICENSE
    GNU General Public License
 
 VERSION
-   26.46
+   28.49
 
 DATE
-   06/12/2006
+   10/06/2006
 
 AUTHOR
    Chr. Clemens Lee, <clemens@kclee.com>
