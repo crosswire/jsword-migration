@@ -314,6 +314,15 @@ public class DesktopActions
         da.getBookDataDisplay().refresh();
     }
 
+    public void doHeadings(ActionEvent ev)
+    {
+        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
+        XSLTProperty.HEADINGS.setState(toggle.isSelected());
+        BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
+        SplitBookDataDisplay da = view.getPassagePane();
+        da.getBookDataDisplay().refresh();
+    }
+
     public void doNotes(ActionEvent ev)
     {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();

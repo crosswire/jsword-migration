@@ -462,6 +462,9 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         verseMenu.add(radio).addMouseListener(barStatus);
 
         menuView.addSeparator();
+        toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.HEADINGS.getName()));
+        toggle.setSelected(XSLTProperty.HEADINGS.getDefault());
+        menuView.add(toggle).addMouseListener(barStatus);
         toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.NOTES.getName()));
         toggle.setSelected(XSLTProperty.NOTES.getDefault());
         menuView.add(toggle).addMouseListener(barStatus);

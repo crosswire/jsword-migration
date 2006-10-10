@@ -57,9 +57,6 @@
   <!-- The absolute base for relative references. -->
   <xsl:param name="baseURL" select="''"/>
 
-  <!-- Whether to show non-canonical "headings" or not -->
-  <xsl:param name="Headings" select="'true'"/>
-
   <!-- Whether to show Strongs or not -->
   <xsl:param name="Strongs" select="'false'"/>
 
@@ -68,6 +65,9 @@
 
   <!-- Whether to start each verse on an new line or not -->
   <xsl:param name="VLine" select="'false'"/>
+
+  <!-- Whether to show non-canonical "headings" or not -->
+  <xsl:param name="Headings" select="'true'"/>
 
   <!-- Whether to show notes or not -->
   <xsl:param name="Notes" select="'true'"/>
@@ -126,6 +126,7 @@
   <xsl:template match="/osis">
     <html dir="{$direction}">
       <head>
+        <base href="{$baseURL}"/>
         <xsl:if test="$css != ''">
           <link rel="stylesheet" type="text/css" href="{$css}" title="styling" />
         </xsl:if>
@@ -284,7 +285,10 @@
     <xsl:for-each select=".//*[@subType = 'x-preverse' or @subtype = 'x-preverse']">
       <xsl:choose>
         <xsl:when test="local-name() = 'title'">
-          <h3><xsl:apply-templates /></h3>
+          <!-- Always show canonical titles or if headings is turned on -->
+          <xsl:if test="@canonical = 'true' or $Headings = 'true'">
+            <h3><xsl:apply-templates /></h3>
+          </xsl:if>
         </xsl:when>
         <xsl:otherwise>
           <xsl:apply-templates />
@@ -690,7 +694,6 @@
   </xsl:template>
   
   <!--=======================================================================-->
-  <!-- FIXME: Should we both expand and output?? -->
   <xsl:template match="abbr">
     <abbr class="abbr">
       <xsl:if test="@expansion">
@@ -741,11 +744,17 @@
 
   <!--=======================================================================-->
   <xsl:template match="title">
-    <h2><xsl:apply-templates/></h2>
+    <!-- Always show canonical titles or if headings is turned on -->
+    <xsl:if test="@canonical = 'true' or $Headings = 'true'">
+      <h2><xsl:apply-templates/></h2>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="title" mode="jesus">
-    <h2><xsl:apply-templates/></h2>
+    <!-- Always show canonical titles or if headings is turned on -->
+    <xsl:if test="@canonical = 'true' or $Headings = 'true'">
+      <h2><xsl:apply-templates/></h2>
+    </xsl:if>
   </xsl:template>
 
   <!--=======================================================================-->
@@ -819,7 +828,7 @@
   
   <xsl:template match="figure">
     <div class="figure">
-      <img src="{concat($baseURL, @src)}"/>  <!-- FIXME: Not necessarily an image... -->
+      <img src="{concat($baseURL, @src)}"/>   <!-- FIXME: Not necessarily an image... -->
       <xsl:apply-templates/>
     </div>
   </xsl:template>

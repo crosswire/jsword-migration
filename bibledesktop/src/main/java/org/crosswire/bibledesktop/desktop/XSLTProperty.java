@@ -77,6 +77,11 @@ public final class XSLTProperty implements Serializable
     public static final XSLTProperty TINY_VERSE_NUMBERS = new XSLTProperty("TinyVNum", true); //$NON-NLS-1$
 
     /**
+     * Should headings be shown
+     */
+    public static final XSLTProperty HEADINGS = new XSLTProperty("Headings", true); //$NON-NLS-1$
+
+    /**
      * Should notes be shown
      */
     public static final XSLTProperty NOTES = new XSLTProperty("Notes", true); //$NON-NLS-1$
@@ -217,6 +222,7 @@ public final class XSLTProperty implements Serializable
         BCV,
         NO_VERSE_NUMBERS,
         TINY_VERSE_NUMBERS,
+        HEADINGS,
         NOTES,
         XREF,
     };
