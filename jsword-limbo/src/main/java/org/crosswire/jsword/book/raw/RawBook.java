@@ -32,7 +32,6 @@ import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookDriver;
 import org.crosswire.jsword.book.BookException;
-import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.CaseType;
 import org.crosswire.jsword.book.OSISUtil;
 import org.crosswire.jsword.book.SentenceUtil;
@@ -215,8 +214,8 @@ public class RawBook extends AbstractPassageBook
      */
     public RawBook(BookDriver driver, Map prop, URL url)
     {
-        BookMetaData bmd = new DefaultBookMetaData(driver, this, prop);
-        setBookMetaData(bmd);
+        super(null); // set the BookMetaData later
+        setBookMetaData(new DefaultBookMetaData(driver, this, prop));
 
         this.url = url;
 

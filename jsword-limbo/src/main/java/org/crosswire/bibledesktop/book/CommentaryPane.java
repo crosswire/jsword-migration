@@ -234,11 +234,11 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
      * GUI components
      */
     private BooksComboBoxModel mdlcomments = new BooksComboBoxModel(filter);
-    protected BibleComboBoxModelSet set = new BibleComboBoxModelSet();
-    protected JComboBox cboComments = new JComboBox();
     private JComboBox cboBooks = new JComboBox();
     private JComboBox cboChaps = new JComboBox();
     private JComboBox cboVerse = new JComboBox();
+    protected BibleComboBoxModelSet set = new BibleComboBoxModelSet(cboBooks, cboChaps, cboVerse);
+    protected JComboBox cboComments = new JComboBox();
     private JPanel pnlSelect = new JPanel();
     private JPanel pnlTop = new JPanel();
 

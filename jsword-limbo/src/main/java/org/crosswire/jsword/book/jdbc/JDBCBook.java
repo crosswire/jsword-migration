@@ -37,7 +37,6 @@ import java.util.Properties;
 import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.book.BookDriver;
 import org.crosswire.jsword.book.BookException;
-import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.basic.AbstractPassageBook;
 import org.crosswire.jsword.book.basic.DefaultBookMetaData;
 import org.crosswire.jsword.book.filter.Filter;
@@ -61,8 +60,9 @@ public class JDBCBook extends AbstractPassageBook
      */
     public JDBCBook(BookDriver driver, Properties prop) throws BookException
     {
-        BookMetaData bmd = new DefaultBookMetaData(driver, this, prop);
-        setBookMetaData(bmd);
+        super(null); // set BookMetaData later
+
+        setBookMetaData(new DefaultBookMetaData(driver, this, prop));
 
         Map props = getProperties();
 

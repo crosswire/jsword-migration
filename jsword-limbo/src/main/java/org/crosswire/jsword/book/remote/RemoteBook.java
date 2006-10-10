@@ -27,7 +27,6 @@ import org.crosswire.common.xml.SAXEventProvider;
 import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookException;
-import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.basic.AbstractBook;
 import org.crosswire.jsword.book.basic.DefaultBookMetaData;
 import org.crosswire.jsword.passage.Key;
@@ -56,8 +55,7 @@ public class RemoteBook extends AbstractBook
      */
     public RemoteBook(Remoter remoter, RemoteBookDriver driver, String name, BookCategory type)
     {
-        BookMetaData bmd = new DefaultBookMetaData(driver, name, type);
-        setBookMetaData(bmd);
+        super(new DefaultBookMetaData(driver, name, type));
 
         this.remoter = remoter;
         this.driver = driver;

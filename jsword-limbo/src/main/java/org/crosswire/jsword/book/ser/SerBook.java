@@ -26,7 +26,6 @@ import java.util.Properties;
 
 import org.crosswire.jsword.book.BookDriver;
 import org.crosswire.jsword.book.BookException;
-import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.basic.AbstractPassageBook;
 import org.crosswire.jsword.book.basic.DefaultBookMetaData;
 import org.crosswire.jsword.book.filter.Filter;
@@ -150,8 +149,8 @@ public class SerBook extends AbstractPassageBook
      */
     public SerBook(BookDriver driver, Properties prop, URL url) throws BookException
     {
-        BookMetaData bmd = new DefaultBookMetaData(driver, this, prop);
-        setBookMetaData(bmd);
+        super(null); // set the BookMetaData later
+        setBookMetaData(new DefaultBookMetaData(driver, this, prop));
 
         try
         {
