@@ -42,6 +42,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -497,8 +498,11 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     public void establishPreferredSize()
     {
         Container contentPane = getContentPane();
-        contentPane.setPreferredSize(contentPane.getSize());
-        log.warn("The size of the contentpane is: " + contentPane.getSize()); //$NON-NLS-1$
+        if (contentPane instanceof JComponent)
+        {
+            ((JComponent) contentPane).setPreferredSize(contentPane.getSize());
+            log.warn("The size of the contentpane is: " + contentPane.getSize()); //$NON-NLS-1$
+        }
     }
 
     /**
