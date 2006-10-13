@@ -24,6 +24,8 @@
     <xslt in="${target.web}/pmd/report_pmd.xml"
           style="${pmd}/pmd-report-per-class.xslt"
           out="${target.web}/pmd/index.html" />
+    <copy file="${pmd}/sorttable.js" overwrite="true"
+          tofile="${target.web}/pmd/sorttable.js"/>
   </target>
 
   <taskdef name="cpd" classname="net.sourceforge.pmd.cpd.CPDTask">
@@ -34,11 +36,14 @@
 
   <target name="cpd">
     <mkdir dir="${target.web}/cpd"/>
-    <cpd minimumTokenCount="100" outputFile="${target.web}/cpd/report.txt">
+    <cpd minimumTokenCount="100" format="xml" outputFile="${target.web}/cpd/report_cpd.xml">
       <fileset dir="..">
         <patternset refid="pattern.alljava"/>
       </fileset>
     </cpd>
+  	<xslt in="${target.web}/cpd/report_cpd.xml"
+  		  style="${pmd}/cpdhtml.xslt"
+  		  out="${target.web}/cpd/index.html" />
   </target>
 
 </project>

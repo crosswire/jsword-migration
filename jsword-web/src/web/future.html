@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>JSword/BibleDesktop - Future directions</title>
+</head>
+
+<body>
+
+<h1>Future directions</h1>
+
+<p>
+  JSword and BibleDesktop are a community effort. Each developer brings to the table personal interests and abilities.
+  This ultimately drives how this software changes. Below is an outline of some changes for the future. Please feel free
+  to join and post to <a href="mailinglists.html">jsword-devel</a> anything you wish to add. You may also register with
+  <a href="/bugs">Jira</a>, our development planning tool (sometimes called a bugs database, but it is much more than that)
+  and add your ideas there.
+</p>
+
+<ol>
+  <li>Strong set of tools suitable for biblical research.
+    <ol style="list-style-type: lower-latin">
+      <li>Translation comparison. Two translations in parallel columns are represented as a "word diff" in a third column with strike out and additions clearly represented.
+      <li>Transliteration display of non-Latin alphabets.
+      <li>Improved search.
+        <ol style="list-style-type: lower-roman">
+          <li>Transliteration search</li>
+          <li>Accent insensitive search.</li>
+          <li>Synonym and related term search.</li>
+          <li>Stem search for supported languages (e.g. depluralization, root words, ...)</li>
+          <li>Strong cross reference. (E.g. find all verses having a particular Strong's number; Find all the ways that a strong's number is represented in the text)</li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li>Improved usability:
+    <ol style="list-style-type: lower-latin">
+      <li>Persistence to the desktop. It remembers "view" choices, window sizing and placement.</li>
+      <li>Personalization of the desktop. The user can choose what makes up the desktop and how it should be arranged.</li>
+      <li>Ability to create a personal commentary, notes, annotations and the like for a bible. (All this requires is the ability to write a module.)</li>
+      <li>Better display of the Bible text. (Since it will be a full fledged browser, with javascript, make it more interactive)</li>
+      <li>Better navigation in Search History.</li>
+      <li>Allow for customization on a per module basis (e.g. font characteristics, view settings, ...)</li>
+      <li>Integrated help.</li>
+    </ol>
+  </li>
+</ol>
+
+Some architectural changes:
+<ol>
+<li>A framework which would make it easy for others to develop optional capabilities that can be easily discovered, imported, used and, if not needed, discarded. Ultimately, a core download should be pretty small and feature light.<br/>
+   (It would have been great if Don could have used such a framework for the Journaling capabilities he provided.)</li>
+<li>Rendering using a modern browser.</li>
+<li>An ability to work directly with OSIS files.</li>
+<li>A lightweight core API that can be used on mobile devices such as phones and PDAs. (We may have this already)</li>
+<li>Able to use any 1.4.2 Java runtime, with GJC being a specific target. The goal is to be fully open source. Currently we are reliant on closed source java.</li>
+<li>Use 3rd party code as a replacement. E.g. preferences, plugins, ....</li>
+</ol>
+
+</body>
+</html>

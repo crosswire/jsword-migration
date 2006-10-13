@@ -27,7 +27,7 @@
   which at the time of this writing was 1.4.2_11. You can get Sun's Java 
   <a href="http://java.sun.com/j2se/1.4.2/download.html">here</a>.
   You can find instructions on installing Sun's Java for Linux under
-  <a name="linuxjava" href="linuxjava.html">Installing Java under Fedora Core 3/4</a>.
+  <a name="linuxjava" href="linuxjava.html">Installing Java for Linux</a>.
 </p>
 <p>
   If possible set an environment variable, <code>JAVA_HOME</code> to point to 
@@ -36,7 +36,8 @@
 <p>
   We develop under 1.4.2, but routinely test against 1.5. We will move to 1.5
   when it is well supported on all the platforms to which we deploy. Currently
-  these are Windows, Mac and Linux. At this time MacOS 10.3 does not support Java 1.5.
+  these are Windows, Mac and Linux. At this time MacOS 10.3 does not support Java 1.5
+  and probably will not.
 </p>
 
 <h2>Obtain and install Eclipse 3.1</h2>
@@ -48,8 +49,10 @@
 <p>
   You can get Eclipse for Windows, Linux and Mac from here:
   <a href="http://www.eclipse.org/downloads">http://www.eclipse.org/downloads</a>.
+  Some Linux distributions provide Eclipse, but they are generally a release or two behind
+  and often lack some functionality. For this reason only, they are not recommended.
   The download will be about 100M, so it is best to have a broadband connection.
-  With Windows and Mac, you will only have one choice. If you are running linux, you will
+  With Windows and Mac, you will only have one choice. If you are running Linux, you will
   have a choice between Motif and GTK versions and if you are running Fedora Core 4 or greater,
   Eclipse is provided in the distribution as a native GTK build.
   The screenshots are from the GTK version.
@@ -60,10 +63,10 @@
   As root on Linux or an administrator on Windows, install the program to a directory of your choice.
   Do not install it to a directory containing an existing <q>eclipse</q> directory.
   Either rename the <q>eclipse</q> directory, delete it or choose a different Eclipse location.
-  For example, you might use <code>/usr/java</code> on linux and <code>c:\java</code> on Windows.
+  For example, you might use <code>/usr/java</code> on Linux and <code>c:\java</code> on Windows.
   It will create the Eclipse installation in that directory. For Windows, just unzip
-  it to the c:\java directory. For linux, if possible, use Eclipse that comes with the distribution.
-  For linux distributions that do not provide Eclipse, in the /usr/java directory,
+  it to the c:\java directory. For Linux, if possible, use Eclipse that comes with the distribution.
+  For Linux distributions that do not provide Eclipse, in the /usr/java directory,
   run <code>gtar zxvf eclipse-SDK-3.1-linux-gtk.tar.gz</code>.
 </p>
 <p>

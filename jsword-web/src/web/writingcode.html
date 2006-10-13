@@ -11,7 +11,7 @@
 <ul>
   <li>
     JSword should be a Bible study library with which to build various front-ends.
-    Front-ends could include Applets, stand-alone Swing/AWT/SWT GUIs, server-side
+    Front-ends could include Applets, stand-alone Swing/AWT/SWT or RCP/JFace/SWT GUIs, server-side
     processing for JSP/Servlets, and more advanced projects like link mappers
     and translations.
   </li>
@@ -111,10 +111,9 @@
   project lives in <code>org.crosswire.jsword</code>.
 </p>
 <p>
-  Also, since there is an MVC relationship between various parts of the code
-  we avoid importing <code>org.crosswire.jsword.view.*</code> in any other code,
-  and avoid importing <code>org.crosswire.jsword.control.*</code> in anything
-  but <code>org.crosswire.jsword.view.*</code>
+  Also, since there is an Model-View-Controller (MVC) relationship between various parts of the code
+  we avoid importing view code into model code, but model code is imported by both model
+  and view code.
 </p>
 <p>
   Also any code specific to an interface X should be in a package containing

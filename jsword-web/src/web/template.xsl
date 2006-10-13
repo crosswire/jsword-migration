@@ -36,8 +36,9 @@
     <table width="100%">
       <tr align="center">
         <td class="navbutton" align="center"><a href="/">Crosswire</a></td>
-        <td class="navbutton" align="center"><a href="index.html">JSword Home</a></td>
-        <td class="navbutton" align="center"><a href="/sword/">Sword Home</a></td>
+        <td class="navbutton" align="center"><a href="index.html">JSword</a></td>
+        <td class="navbutton" align="center"><a href="/bibledesktop">BibleDesktop</a></td>
+        <td class="navbutton" align="center"><a href="/sword/">Sword</a></td>
         <td class="navbutton" align="center"><a href="/sword/about">Purpose Statement</a></td>
       </tr>
     </table>
@@ -81,41 +82,46 @@
             <li><a href="news.html">News</a></li>
             <li><a href="change.html">Changes</a></li>
           </ul>
-          <p>Getting-JSword</p>
+          <p>Getting JSword</p>
           <ul>
             <li><a href="download.jsp">Download</a></li>
             <li><a href="/sword/modules">Modules</a></li>
             <li><a href="/bibledesktop/screenshot.html">Screenshots</a></li>
             <!-- li><a href="demo.jsp">Web-Demo</a></li -->
           </ul>
-          <p>Getting-Involved</p>
+          <p>Getting Involved</p>
           <ul>
             <li><a href="svn.html">SVN</a></li>
             <li><a href="maillists.html">Mailing Lists</a></li>
-            <li><a href="/bugs">Bug Tracking</a></li>
+            <li><a href="/bugs">Issue Tracking</a></li>
+            <li><a href="future.html">Roadmap</a></li>
           </ul>
           <p>Documentation</p>
           <ul>
             <li><a href="devt.html">Introduction</a></li>
             <li><a href="writingcode.html">Writing Code</a></li>
-            <li><a href="java2html/org/crosswire/jsword/examples/APIExamples.java.html">API Primer</a></li>
             <li><a href="design.html">Design</a></li>
+            <li><a href="java2html/org/crosswire/jsword/examples/APIExamples.java.html">API Primer</a></li>
             <li><a href="api/org/crosswire/common/config/package-summary.html">Config API</a></li>
             <li><a href="api">JavaDoc</a></li>
             <li><a href="java2html">Java-Source</a></li>
-            <li><a href="junit">Test-Results</a></li>
-            <li><a href="jcoverage">Test-Coverage</a></li>
+          </ul>
+          <p>Nightly Build</p>
+          <ul>
+            <li><a href="buildlog.txt">Build Log</a></li>
+            <!-- li><a href="junit">Test-Results</a></li -->
+            <!-- li><a href="jcoverage">Test-Coverage</a></li -->
             <li><a href="checkstyle">CheckStyle</a></li>
             <li><a href="pmd">PMD Report</a></li>
+            <li><a href="cpd/report.txt">CPD Report</a></li>
             <li><a href="findbugs">FindBugs Report</a></li>
             <li><a href="jdepend/jdepend-report.html">JDepend Report</a></li>
             <li><a href="javancss">NCSS Report</a></li>
-            <li><a href="buildlog.txt">Build Log</a></li>
           </ul>
-          <p>Other-Projects</p>
+          <p>Other Projects</p>
           <ul>
             <li><a href="/">Crosswire</a></li>
-            <li><a href="/sword/index.jsp">Sword</a></li>
+            <li><a href="/sword">Sword</a></li>
             <li><a href="http://www.sourceforge.net/projects/projectb/">Project-B</a></li>
           </ul>
         </td>
