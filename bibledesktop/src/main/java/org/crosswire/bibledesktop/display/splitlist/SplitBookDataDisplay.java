@@ -243,7 +243,7 @@ public class SplitBookDataDisplay extends JPanel
      */
     private KeySidebar sidebar;
     private JSplitPane split;
-    private BookDataDisplay child;
+    private transient BookDataDisplay child;
 
     /**
      * Serialization ID

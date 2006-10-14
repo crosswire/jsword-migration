@@ -396,7 +396,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * A list of all the HyperlinkListeners
      */
-    private transient List hyperlis;
+    private List hyperlis;
 
     /**
      * The passage that we are displaying (in one or more tabs)

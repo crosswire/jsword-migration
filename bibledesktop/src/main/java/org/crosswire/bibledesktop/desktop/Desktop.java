@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
@@ -788,7 +789,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         }
 
         Locale defaultLocale = Locale.getDefault();
-        ResourceBundle configResources = ResourceBundle.getBundle(CONFIG_KEY, defaultLocale, new CWClassLoader(Desktop.class));
+        ResourceBundle configResources = ResourceBundle.getBundle(CONFIG_KEY, defaultLocale, CWClassLoader.instance(Desktop.class));
 
         config.add(xmlconfig, configResources);
 
@@ -985,6 +986,21 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     public Config getConfig()
     {
         return config;
+    }
+
+    /**
+     * Serialization support.
+     * 
+     * @param in
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        actions = new DesktopActions(this);
+        views = new ViewManager(this);
+        views.addViewEventListener(this);
+        is.defaultReadObject();
     }
 
     /**

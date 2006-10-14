@@ -21,6 +21,8 @@
  */
 package org.crosswire.bibledesktop.book;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -193,6 +195,24 @@ public class BooksListModel extends AbstractListModel
     protected void fireContentsChanged(Object source, int index0, int index1)
     {
         super.fireContentsChanged(source, index0, index1);
+    }
+
+    /**
+     * Serialization support.
+     * 
+     * @param in
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        listener = new CustomListDataListener();
+        filter = null;
+        // This is not quite right. Probably should write out the Book initials and read them in here.
+        // But at this time we don't serialize views.
+        bookList = Books.installed();
+
+        is.defaultReadObject();
     }
 
     /**

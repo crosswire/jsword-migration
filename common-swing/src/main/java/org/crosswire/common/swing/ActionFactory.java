@@ -188,7 +188,7 @@ public class ActionFactory implements ActionListener
     {
         try
         {
-            ResourceBundle resources = ResourceBundle.getBundle(basis.getName(), Locale.getDefault(), new CWClassLoader(basis));
+            ResourceBundle resources = ResourceBundle.getBundle(basis.getName(), Locale.getDefault(), CWClassLoader.instance(basis));
 
             Enumeration en = resources.getKeys();
             while (en.hasMoreElements())

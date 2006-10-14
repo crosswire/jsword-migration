@@ -31,6 +31,8 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -156,6 +158,19 @@ public class Splash extends JWindow
 
         setVisible(false);
         dispose();
+    }
+
+    /**
+     * Serialization support.
+     * 
+     * @param in
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        listener = new CustomWorkListener();
+        is.defaultReadObject();
     }
 
     private transient CustomWorkListener listener = new CustomWorkListener();

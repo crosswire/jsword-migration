@@ -29,6 +29,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -80,8 +82,8 @@ public class PassageSelectionPane extends JPanel
      */
     public PassageSelectionPane()
     {
-        icoGood = GuiUtil.getIcon("toolbarButtonGraphics/general/About24.gif"); //$NON-NLS-1$
-        icoBad = GuiUtil.getIcon("toolbarButtonGraphics/general/Stop24.gif"); //$NON-NLS-1$
+        icoGood = GuiUtil.getIcon(GOOD_ICON);
+        icoBad = GuiUtil.getIcon(BAD_ICON);
 
         init();
     }
@@ -387,12 +389,31 @@ public class PassageSelectionPane extends JPanel
         actions.getAction(DELETE).setEnabled(selected != null && selected.length > 0);
     }
 
+    /**
+     * Serialization support.
+     * 
+     * @param in
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        // We don't serialize views
+        icoGood = GuiUtil.getIcon(GOOD_ICON);
+        icoBad = GuiUtil.getIcon(BAD_ICON);
+        keyf = PassageKeyFactory.instance();
+        actions = new ActionFactory(PassageSelectionPane.class, this);
+        is.defaultReadObject();
+    }
+
     private static final String BIBLE_TREE = "BibleTree"; //$NON-NLS-1$
     private static final String ADD = "AddVerse"; //$NON-NLS-1$
     private static final String DELETE = "DeleteVerse"; //$NON-NLS-1$
     private static final String SELECTED_VERSES = "SelectedVerses"; //$NON-NLS-1$
     private static final String VERSES = "Verses"; //$NON-NLS-1$
     private static final String DONE = "Done"; //$NON-NLS-1$
+    private static final String GOOD_ICON = "toolbarButtonGraphics/general/About24.gif"; //$NON-NLS-1$
+    private static final String BAD_ICON = "toolbarButtonGraphics/general/Stop24.gif"; //$NON-NLS-1$
 
     /**
      * To convert strings into Biblical keys

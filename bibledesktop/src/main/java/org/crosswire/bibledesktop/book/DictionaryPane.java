@@ -25,6 +25,8 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.JComboBox;
 import javax.swing.JList;
@@ -374,9 +376,25 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
     }
 
     /**
+     * Serialization support.
+     * 
+     * @param in
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        // We don't serialize views
+        display = BookDataDisplayFactory.createBookDataDisplay();
+        dict = null;
+        set = null;
+        is.defaultReadObject();
+    }
+
+    /**
      * The display of OSIS data
      */
-    private BookDataDisplay display;
+    private transient BookDataDisplay display;
     private transient Book dict;
     protected transient BibleComboBoxModelSet set;
     private JPanel pnlSelect;

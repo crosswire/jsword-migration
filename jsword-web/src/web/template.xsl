@@ -113,7 +113,7 @@
             <!-- li><a href="jcoverage">Test-Coverage</a></li -->
             <li><a href="checkstyle">CheckStyle</a></li>
             <li><a href="pmd">PMD Report</a></li>
-            <li><a href="cpd/report.txt">CPD Report</a></li>
+            <li><a href="cpd">CPD Report</a></li>
             <li><a href="findbugs">FindBugs Report</a></li>
             <li><a href="jdepend/jdepend-report.html">JDepend Report</a></li>
             <li><a href="javancss">NCSS Report</a></li>

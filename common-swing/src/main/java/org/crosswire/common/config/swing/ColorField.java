@@ -26,6 +26,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Insets;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -99,6 +101,19 @@ public class ColorField extends JPanel implements Field
     public JComponent getComponent()
     {
         return this;
+    }
+
+    /**
+     * Serialization support.
+     * 
+     * @param in
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        actions = new ActionFactory(ColorField.class, this);
+        is.defaultReadObject();
     }
 
     private static final String EDIT = "EditColor"; //$NON-NLS-1$

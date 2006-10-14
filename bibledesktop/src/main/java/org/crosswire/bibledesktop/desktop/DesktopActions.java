@@ -515,7 +515,7 @@ public class DesktopActions
     /**
      * The factory for actions that this class works with
      */
-    private transient ActionFactory actions;
+    private ActionFactory actions;
 
     /**
      * The About window

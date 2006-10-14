@@ -24,6 +24,8 @@ package org.crosswire.bibledesktop.book.install;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -175,7 +177,20 @@ public class SwordSiteEditor extends JPanel implements SiteEditor
         return label;
     }
 
-    private AbstractSwordInstaller installer;
+    /**
+     * Serialization support.
+     * 
+     * @param in
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        installer = null;
+        is.defaultReadObject();
+    }
+
+    private transient AbstractSwordInstaller installer;
     private JTextField host;
     private JTextField directory;
     private JTextField proxyHost;

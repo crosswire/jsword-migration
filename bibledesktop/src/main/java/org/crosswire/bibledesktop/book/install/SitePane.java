@@ -23,6 +23,8 @@ package org.crosswire.bibledesktop.book.install;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -521,6 +523,22 @@ public class SitePane extends JPanel
         }
     }
 
+
+    /**
+     * Serialization support.
+     * 
+     * @param in
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        // Broken but we don't serialize views
+        installer = null;
+        display = null;
+        actions = new ActionFactory(SitePane.class, this);
+        is.defaultReadObject();
+    }
 
     private static final String INSTALLED_BOOKS_LABEL = "InstalledBooksLabel"; //$NON-NLS-1$
     private static final String AVAILABLE_BOOKS_LABEL = "AvailableBooksLabel"; //$NON-NLS-1$

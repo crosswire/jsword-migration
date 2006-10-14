@@ -32,6 +32,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -568,7 +570,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     /**
      * Keep the selection up to date with indexing.
      */
-    private IndexStatusListener isl = new IndexStatusListener()
+    private transient IndexStatusListener isl = new IndexStatusListener()
     {
         public void statusChanged(IndexStatusEvent ev)
         {
@@ -724,6 +726,32 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     }
 
     /**
+     * Serialization support.
+     * 
+     * @param in
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        // We don't serialize views
+        selected = null;
+
+        listeners = new EventListenerList();
+
+        actions = new ActionFactory(DisplaySelectPane.class, this);
+
+        isl = new IndexStatusListener()
+        {
+            public void statusChanged(IndexStatusEvent ev)
+            {
+                enableComponents();
+            }
+        };
+        is.defaultReadObject();
+    }
+
+    /**
      *
      */
     static final class SelectedActionListener implements ActionListener
@@ -798,7 +826,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     /**
      * Who is interested in things this DisplaySelectPane does
      */
-    private EventListenerList listeners;
+    private transient EventListenerList listeners;
 
     /**
      * How may hits to show when the search results are ranked.

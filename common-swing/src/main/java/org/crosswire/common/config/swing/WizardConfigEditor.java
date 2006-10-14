@@ -29,6 +29,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -268,6 +270,19 @@ public class WizardConfigEditor extends AbstractConfigEditor
             dialog.dispose();
             dialog = null;
         }
+    }
+
+    /**
+     * Serialization support.
+     * 
+     * @param in
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        actions = new ActionFactory(WizardConfigEditor.class, this);
+        is.defaultReadObject();
     }
 
     private static final String NEXT = "WizardNext"; //$NON-NLS-1$

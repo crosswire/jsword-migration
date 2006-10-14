@@ -64,7 +64,8 @@
         	<td>
         		<table>
         			<xsl:for-each select="file">
-        				<tr><td><a><xsl:attribute name="href">../src/<xsl:value-of select="@path"/>.html#<xsl:value-of select="@line"/></xsl:attribute><xsl:value-of select="@path"/></a></td><td> line <xsl:value-of select="@line"/></td></tr>
+        			    <xsl:variable name="webpath" select="substring-after(@path, substring-before(@path, '/org/'))"/>
+        				<tr><td><a><xsl:attribute name="href">/jsword/java2html<xsl:value-of select="$webpath"/>.html#<xsl:value-of select="@line"/></xsl:attribute><xsl:value-of select="substring-before(translate(substring-after($webpath, '/'),'/','.'),'.java')"/></a></td><td> line <xsl:value-of select="@line"/></td></tr>
         			</xsl:for-each>
         		</table>
         	</td>

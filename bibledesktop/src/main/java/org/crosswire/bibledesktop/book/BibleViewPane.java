@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Reader;
 import java.io.Writer;
 
@@ -366,6 +367,19 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
         {
             fireTitleChanged(new TitleChangedEvent(BibleViewPane.this, getTitle()));
         }
+    }
+
+    /**
+     * Serialization support.
+     * 
+     * @param in
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        listeners = new EventListenerList();
+        is.defaultReadObject();
     }
 
     protected File saved;

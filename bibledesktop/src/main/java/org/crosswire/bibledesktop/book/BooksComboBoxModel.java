@@ -21,6 +21,9 @@
  */
 package org.crosswire.bibledesktop.book;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
 import javax.swing.ComboBoxModel;
 
 import org.crosswire.jsword.book.Book;
@@ -139,6 +142,19 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
                 current = null;
             }
         }
+    }
+
+    /**
+     * Serialization support.
+     * 
+     * @param in
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        current = null;
+        is.defaultReadObject();
     }
 
     /**

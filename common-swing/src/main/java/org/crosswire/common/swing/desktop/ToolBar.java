@@ -25,6 +25,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.Action;
 import javax.swing.Icon;
@@ -205,6 +207,19 @@ public class ToolBar extends JToolBar
     {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         showLargeIcons(toggle.isSelected());
+    }
+
+    /**
+     * Serialization support.
+     * 
+     * @param in
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        actions = new ActionFactory(ToolBar.class, this);
+        is.defaultReadObject();
     }
 
     private static final String TOOLBAR_TOGGLE = "ToolBarToggle"; //$NON-NLS-1$

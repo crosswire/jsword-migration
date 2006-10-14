@@ -24,6 +24,8 @@ package org.crosswire.common.config.swing;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -189,6 +191,19 @@ public class StringArrayField extends JPanel implements Field
     private String currentValue()
     {
         return (String) list_model.getElementAt(list.getSelectedIndex());
+    }
+
+    /**
+     * Serialization support.
+     * 
+     * @param in
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        actions = new ActionFactory(StringArrayField.class, this);
+        is.defaultReadObject();
     }
 
     /**

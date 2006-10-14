@@ -27,6 +27,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -71,35 +73,7 @@ public class SitesPane extends JPanel
 
         addAllInstallers();
 
-        imanager.addInstallerListener(new InstallerListener()
-        {
-            /* (non-Javadoc)
-             * @see org.crosswire.jsword.book.install.InstallerListener#installerAdded(org.crosswire.jsword.book.install.InstallerEvent)
-             */
-            public void installerAdded(InstallerEvent ev)
-            {
-                Installer installer = ev.getInstaller();
-                String name = imanager.getInstallerNameForInstaller(installer);
-
-                SitePane site = new SitePane(installer);
-                tabMain.add(name, site);
-            }
-
-            /* (non-Javadoc)
-             * @see org.crosswire.jsword.book.install.InstallerListener#installerRemoved(org.crosswire.jsword.book.install.InstallerEvent)
-             */
-            public void installerRemoved(InstallerEvent ev)
-            {
-                // This gets tricky because if you add a site with a new name
-                // but the same details as an old one, then the old name goes
-                // so we can't get the old name to remove it's tab (and anyway
-                // we would have to do a search through all the tabs to find it
-                // by name)
-                // So we just nuke all the tabs and re-create them
-                removeAllInstallers();
-                addAllInstallers();
-            }
-        });
+        imanager.addInstallerListener(new SiteInstallerListener());
     }
 
     /**
@@ -213,13 +187,67 @@ public class SitesPane extends JPanel
 
     }
 
+    /**
+     * Serialization support.
+     * 
+     * @param in
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        actions = new ActionFactory(SitesPane.class, this);
+        imanager = new InstallManager();
+        installers = imanager.getInstallers();
+
+        is.defaultReadObject();
+
+        addAllInstallers();
+
+        imanager.addInstallerListener(new SiteInstallerListener());
+    }
+
+    /**
+     * Local listener for install events.
+     */
+    class SiteInstallerListener implements InstallerListener
+    {
+
+        /* (non-Javadoc)
+         * @see org.crosswire.jsword.book.install.InstallerListener#installerAdded(org.crosswire.jsword.book.install.InstallerEvent)
+         */
+        public void installerAdded(InstallerEvent ev)
+        {
+            Installer installer = ev.getInstaller();
+            String name = imanager.getInstallerNameForInstaller(installer);
+
+            SitePane site = new SitePane(installer);
+            tabMain.add(name, site);
+        }
+
+        /* (non-Javadoc)
+         * @see org.crosswire.jsword.book.install.InstallerListener#installerRemoved(org.crosswire.jsword.book.install.InstallerEvent)
+         */
+        public void installerRemoved(InstallerEvent ev)
+        {
+            // This gets tricky because if you add a site with a new name
+            // but the same details as an old one, then the old name goes
+            // so we can't get the old name to remove it's tab (and anyway
+            // we would have to do a search through all the tabs to find it
+            // by name)
+            // So we just nuke all the tabs and re-create them
+            removeAllInstallers();
+            addAllInstallers();
+        }
+    }
+
     private static final String CLOSE = "SitesClose"; //$NON-NLS-1$
     private static final String EDIT_SITE = "ManageSites"; //$NON-NLS-1$
 
     /**
      * The known installers fetched from InstallManager
      */
-    private Map installers;
+    private transient Map installers;
 
     /**
      * The current installer
