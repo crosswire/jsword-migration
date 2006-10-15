@@ -192,7 +192,7 @@ public class PathField extends JPanel implements Field
     /**
      * Serialization support.
      * 
-     * @param in
+     * @param is
      * @throws IOException
      * @throws ClassNotFoundException
      */

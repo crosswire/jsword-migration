@@ -200,7 +200,7 @@ public class BooksListModel extends AbstractListModel
     /**
      * Serialization support.
      * 
-     * @param in
+     * @param is
      * @throws IOException
      * @throws ClassNotFoundException
      */

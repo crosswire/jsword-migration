@@ -728,7 +728,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     /**
      * Serialization support.
      * 
-     * @param in
+     * @param is
      * @throws IOException
      * @throws ClassNotFoundException
      */

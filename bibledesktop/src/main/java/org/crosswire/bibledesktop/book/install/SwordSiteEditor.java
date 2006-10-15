@@ -180,7 +180,7 @@ public class SwordSiteEditor extends JPanel implements SiteEditor
     /**
      * Serialization support.
      * 
-     * @param in
+     * @param is
      * @throws IOException
      * @throws ClassNotFoundException
      */

@@ -372,7 +372,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
     /**
      * Serialization support.
      * 
-     * @param in
+     * @param is
      * @throws IOException
      * @throws ClassNotFoundException
      */

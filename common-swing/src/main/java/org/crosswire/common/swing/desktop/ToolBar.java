@@ -212,7 +212,7 @@ public class ToolBar extends JToolBar
     /**
      * Serialization support.
      * 
-     * @param in
+     * @param is
      * @throws IOException
      * @throws ClassNotFoundException
      */

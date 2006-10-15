@@ -991,7 +991,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     /**
      * Serialization support.
      * 
-     * @param in
+     * @param is
      * @throws IOException
      * @throws ClassNotFoundException
      */

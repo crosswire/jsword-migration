@@ -392,7 +392,7 @@ public class PassageSelectionPane extends JPanel
     /**
      * Serialization support.
      * 
-     * @param in
+     * @param is
      * @throws IOException
      * @throws ClassNotFoundException
      */

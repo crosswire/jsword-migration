@@ -147,7 +147,7 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
     /**
      * Serialization support.
      * 
-     * @param in
+     * @param is
      * @throws IOException
      * @throws ClassNotFoundException
      */

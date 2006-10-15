@@ -378,7 +378,7 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
     /**
      * Serialization support.
      * 
-     * @param in
+     * @param is
      * @throws IOException
      * @throws ClassNotFoundException
      */

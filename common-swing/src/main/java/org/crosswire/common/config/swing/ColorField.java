@@ -106,7 +106,7 @@ public class ColorField extends JPanel implements Field
     /**
      * Serialization support.
      * 
-     * @param in
+     * @param is
      * @throws IOException
      * @throws ClassNotFoundException
      */

@@ -30,7 +30,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 
@@ -64,14 +63,12 @@ public class JDBCBook extends AbstractPassageBook
 
         setBookMetaData(new DefaultBookMetaData(driver, this, prop));
 
-        Map props = getProperties();
-
         // Load the specified JDBC name
         int driver_attempt = 1;
         while (true)
         {
             String property = "JdbcDriver" + driver_attempt; //$NON-NLS-1$
-            String drivername = (String) props.get(property);
+            String drivername = getProperty(property);
 
             try
             {
@@ -89,26 +86,26 @@ public class JDBCBook extends AbstractPassageBook
         try
         {
             // Actually connect to the database
-            String text_url = (String) props.get("TextURL"); //$NON-NLS-1$
+            String text_url = getProperty("TextURL"); //$NON-NLS-1$
             textCon = DriverManager.getConnection(text_url);
 
-            String concord_url = (String) props.get("ConcordURL"); //$NON-NLS-1$
+            String concord_url = getProperty("ConcordURL"); //$NON-NLS-1$
             concCon = DriverManager.getConnection(concord_url);
 
             // SQL statements
-            String doc_query = (String) props.get("DocQuery"); //$NON-NLS-1$
+            String doc_query = getProperty("DocQuery"); //$NON-NLS-1$
             docStmt = textCon.prepareStatement(doc_query);
 
-            String ref_query = (String) props.get("RefQuery"); //$NON-NLS-1$
+            String ref_query = getProperty("RefQuery"); //$NON-NLS-1$
             refStmt = concCon.prepareStatement(ref_query);
 
-            //String verse_query = (String) props.get("VerseQuery");
+            //String verse_query = getProperty("VerseQuery");
             //verse_stmt = textcnx.prepareStatement(verse_query);
 
-            String start_query = (String) props.get("StartQuery"); //$NON-NLS-1$
+            String start_query = getProperty("StartQuery"); //$NON-NLS-1$
             startStmt = concCon.prepareStatement(start_query);
 
-            wordsQuery = (String) props.get("WordsQuery"); //$NON-NLS-1$
+            wordsQuery = getProperty("WordsQuery"); //$NON-NLS-1$
         }
         catch (SQLException ex)
         {
