@@ -33,7 +33,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ToolTipManager;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
-import org.crosswire.bibledesktop.book.install.Librarian;
+import org.crosswire.bibledesktop.book.install.SitesPane;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.splitlist.SplitBookDataDisplay;
 import org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay;
@@ -92,13 +92,13 @@ public class DesktopActions
     /**
      * @return the Bible installer dialog
      */
-    public Librarian getLibrarian()
+    public SitesPane getSites()
     {
-        if (librarian == null)
+        if (sites == null)
         {
-            librarian = new Librarian();
+            sites = new SitesPane();
         }
-        return librarian;
+        return sites;
     }
 
     /**
@@ -378,11 +378,11 @@ public class DesktopActions
     }
 
     /**
-     * Opens the Book installer window (aka a Librarian)
+     * Opens the Book installer window (aka a SitesPane)
      */
     public void doBooks()
     {
-        getLibrarian().showInDialog(getDesktop());
+        getSites().showInDialog(getDesktop());
     }
 
     /**
@@ -525,5 +525,5 @@ public class DesktopActions
     /**
      * The Book installer window
      */
-    private Librarian librarian;
+    private SitesPane sites;
 }

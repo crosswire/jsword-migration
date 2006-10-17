@@ -32,8 +32,8 @@ import org.crosswire.common.util.MsgBase;
  */
 final class Msg extends MsgBase
 {
-    static final Msg AVAILABLE_BOOKS = new Msg("Librarian.AvailableBooks"); //$NON-NLS-1$
-    static final Msg LOCAL_BOOKS = new Msg("Librarian.Local"); //$NON-NLS-1$
+    static final Msg AVAILABLE_BOOKS = new Msg("SitesPane.AvailableBooks"); //$NON-NLS-1$
+    static final Msg LOCAL_BOOKS = new Msg("SitesPane.Local"); //$NON-NLS-1$
 
     static final Msg KB_SIZE = new Msg("SitePane.KBSize"); //$NON-NLS-1$
     static final Msg MB_SIZE = new Msg("SitePane.MBSize"); //$NON-NLS-1$

@@ -47,23 +47,23 @@ import org.crosswire.jsword.book.install.InstallerEvent;
 import org.crosswire.jsword.book.install.InstallerListener;
 
 /**
- * A Librarian manages library sites.
+ * A SitesPane manages library sites.
  * <p>so start one of these call:
  * <pre>
- * librarian = new Librarian();
- * librarian.showInDialog(parent);
+ * sitesPane = new SitesPane();
+ * sitesPane.showInDialog(parent);
  * </pre>
  *
  * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class Librarian extends JPanel
+public class SitesPane extends JPanel
 {
     /**
      * Simple ctor
      */
-    public Librarian()
+    public SitesPane()
     {
         init();
 
@@ -80,7 +80,7 @@ public class Librarian extends JPanel
      */
     private void init()
     {
-        actions = new ActionFactory(Librarian.class, this);
+        actions = new ActionFactory(SitesPane.class, this);
 
         tabMain = new JTabbedPane();
         this.setLayout(new BorderLayout());
@@ -195,7 +195,7 @@ public class Librarian extends JPanel
      */
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
     {
-        actions = new ActionFactory(Librarian.class, this);
+        actions = new ActionFactory(SitesPane.class, this);
         imanager = new InstallManager();
         installers = imanager.getInstallers();
 
