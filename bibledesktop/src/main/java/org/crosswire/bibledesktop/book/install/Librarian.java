@@ -47,24 +47,23 @@ import org.crosswire.jsword.book.install.InstallerEvent;
 import org.crosswire.jsword.book.install.InstallerListener;
 
 /**
- * A panel for use within a SitesPane to display one set of Books that are
- * installed or could be installed.
+ * A Librarian manages library sites.
  * <p>so start one of these call:
  * <pre>
- * sites = new SitesPane();
- * sites.showInDialog(parent);
+ * librarian = new Librarian();
+ * librarian.showInDialog(parent);
  * </pre>
  *
  * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class SitesPane extends JPanel
+public class Librarian extends JPanel
 {
     /**
      * Simple ctor
      */
-    public SitesPane()
+    public Librarian()
     {
         init();
 
@@ -81,7 +80,7 @@ public class SitesPane extends JPanel
      */
     private void init()
     {
-        actions = new ActionFactory(SitesPane.class, this);
+        actions = new ActionFactory(Librarian.class, this);
 
         tabMain = new JTabbedPane();
         this.setLayout(new BorderLayout());
@@ -196,7 +195,7 @@ public class SitesPane extends JPanel
      */
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
     {
-        actions = new ActionFactory(SitesPane.class, this);
+        actions = new ActionFactory(Librarian.class, this);
         imanager = new InstallManager();
         installers = imanager.getInstallers();
 

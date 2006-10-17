@@ -30,6 +30,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
+import org.crosswire.bibledesktop.book.install.BookIcon;
 import org.crosswire.jsword.book.Book;
 
 /**

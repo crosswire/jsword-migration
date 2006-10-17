@@ -62,7 +62,7 @@ import org.crosswire.jsword.index.IndexManager;
 import org.crosswire.jsword.index.IndexManagerFactory;
 
 /**
- * A panel for use within a SitesPane to display one set of Books that are
+ * A panel for use within a Librarian to display one set of Books that are
  * installed or could be installed.
  *
  * @see gnu.gpl.License for license details.

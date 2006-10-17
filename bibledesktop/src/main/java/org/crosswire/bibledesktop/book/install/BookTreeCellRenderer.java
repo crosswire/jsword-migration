@@ -24,7 +24,6 @@ import java.awt.Component;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-import org.crosswire.bibledesktop.book.BookIcon;
 import org.crosswire.jsword.book.Book;
 
 /**

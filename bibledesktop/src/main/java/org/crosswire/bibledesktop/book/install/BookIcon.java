@@ -19,7 +19,7 @@
  *
  * ID: $Id$
  */
-package org.crosswire.bibledesktop.book;
+package org.crosswire.bibledesktop.book.install;
 
 import javax.swing.Icon;
 import javax.swing.SwingConstants;
