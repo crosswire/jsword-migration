@@ -80,7 +80,7 @@ public class PassageLeftParamWord implements ParamWord
             }
 
             buff.append(word);
-            buff.append(" "); //$NON-NLS-1$
+            buff.append(' ');
         }
 
         try

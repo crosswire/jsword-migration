@@ -60,7 +60,7 @@ public abstract class InstsDisk extends Disk implements Insts
         }
         catch (Exception ex)
         {
-            messages.append(""+ex); //$NON-NLS-1$
+            messages.append(ex.toString());
         }
     }
 

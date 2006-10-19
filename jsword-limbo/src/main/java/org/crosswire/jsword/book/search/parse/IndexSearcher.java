@@ -133,7 +133,7 @@ public class IndexSearcher implements Searcher
             }
             catch (ClassCastException ex)
             {
-                ex.printStackTrace();
+                ex.printStackTrace(System.err);
                 throw new BookException(Msg.ENGINE_SYNTAX, new Object[] { temp });
             }
         }

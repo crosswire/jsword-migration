@@ -82,7 +82,7 @@ public class WebPage
         }
         catch (Throwable ex)
         {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
             if (ex instanceof ThreadDeath) throw (ThreadDeath) ex;
             data = null;
         }

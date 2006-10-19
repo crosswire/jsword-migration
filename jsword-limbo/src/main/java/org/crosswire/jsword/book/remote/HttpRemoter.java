@@ -110,9 +110,9 @@ public class HttpRemoter implements Remoter
                     String val = method.getParameter(param);
                     String b64 = URLEncoder.encode(val, "UTF-8"); //$NON-NLS-1$
 
-                    buffer.append("&"); //$NON-NLS-1$
+                    buffer.append('&');
                     buffer.append(key);
-                    buffer.append("="); //$NON-NLS-1$
+                    buffer.append('=');
                     buffer.append(b64);
                 }
             }

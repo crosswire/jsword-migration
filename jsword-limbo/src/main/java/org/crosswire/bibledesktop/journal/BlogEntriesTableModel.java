@@ -29,7 +29,7 @@ public class BlogEntriesTableModel extends DefaultTableModel
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 

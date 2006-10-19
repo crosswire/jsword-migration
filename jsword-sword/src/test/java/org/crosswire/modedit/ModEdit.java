@@ -35,7 +35,7 @@ public class ModEdit {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
         catch(Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
         new ModEdit();
     }

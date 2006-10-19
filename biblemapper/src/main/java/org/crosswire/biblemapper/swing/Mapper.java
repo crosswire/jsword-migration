@@ -933,7 +933,6 @@ public class Mapper extends JFrame
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
             Reporter.informUser(this, ex);
         }
     }

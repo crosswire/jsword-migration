@@ -82,7 +82,7 @@ public class MainFrame extends JFrame {
             jbInit();
         }
         catch(Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
     /**Component initialization*/
@@ -225,7 +225,7 @@ public class MainFrame extends JFrame {
             is.close();
             statusBar.setText("New Font Loaded."); //$NON-NLS-1$
         }
-        catch (Exception ex) { ex.printStackTrace(); }
+        catch (Exception ex) { ex.printStackTrace(System.err); }
 
     }
 
@@ -250,7 +250,7 @@ public class MainFrame extends JFrame {
             jTextArea1.setText(newText);
             statusBar.setText(Integer.toString(newText.length())+" characters of content loaded."); //$NON-NLS-1$
         }
-        catch (Exception ex) { ex.printStackTrace(); }
+        catch (Exception ex) { ex.printStackTrace(System.err); }
 
     }
 
@@ -301,7 +301,7 @@ public class MainFrame extends JFrame {
             try {
                 jTextArea1.write(new OutputStreamWriter(new FileOutputStream(outFile), "UTF-8")); //$NON-NLS-1$
             }
-            catch (Exception e1) { e1.printStackTrace(); }
+            catch (Exception e1) { e1.printStackTrace(System.err); }
         }
 
     }

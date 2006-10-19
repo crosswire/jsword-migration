@@ -126,7 +126,7 @@ public class BSFGui extends JPanel
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
             reply = ex;
         }
         finally

@@ -23,7 +23,7 @@
   <rule ref="rulesets/basic.xml/BooleanInstantiation"/>
   <rule ref="rulesets/basic.xml/UnnecessaryFinalModifier"/>
   <rule ref="rulesets/basic.xml/CollapsibleIfStatements"/>
-  <rule ref="rulesets/basic.xml/UselessOverridingMethod"/>
+  <!-- <rule ref="rulesets/basic.xml/UselessOverridingMethod"/> buggy -->
   <rule ref="rulesets/basic.xml/ClassCastExceptionWithToArray"/>
   <rule ref="rulesets/basic.xml/AvoidDecimalLiteralsInBigDecimalConstructor"/>
   <rule ref="rulesets/basic.xml/UselessOperationOnImmutable"/>
@@ -32,9 +32,9 @@
   <!-- <rule ref="rulesets/basic.xml/AvoidThreadGroup"/> Used correctly in Desktop.java -->
   <rule ref="rulesets/basic.xml/BrokenNullCheck"/>
 
-  <!-- <rule ref="rulesets/naming.xml/ShortVariable"/> 646 reports -->
-  <!-- <rule ref="rulesets/naming.xml/LongVariable"/> 127 reports -->
-  <rule ref="rulesets/naming.xml/ShortMethodName"/>
+  <!-- <rule ref="rulesets/naming.xml/ShortVariable"/> 702 reports -->
+  <!-- <rule ref="rulesets/naming.xml/LongVariable"/> 145 reports -->
+  <!-- <rule ref="rulesets/naming.xml/ShortMethodName"/> 1 report History.go() -->
   <rule ref="rulesets/naming.xml/VariableNamingConventions"/>
   <rule ref="rulesets/naming.xml/MethodNamingConventions"/>
   <rule ref="rulesets/naming.xml/ClassNamingConventions"/>
@@ -44,8 +44,8 @@
   <rule ref="rulesets/naming.xml/SuspiciousHashcodeMethodName"/>
   <rule ref="rulesets/naming.xml/SuspiciousConstantFieldName"/>
   <rule ref="rulesets/naming.xml/SuspiciousEqualsMethodName"/>
-  <rule ref="rulesets/naming.xml/AvoidFieldNameMatchingTypeName"/>
-  <rule ref="rulesets/naming.xml/AvoidFieldNameMatchingMethodName"/>
+  <!-- <rule ref="rulesets/naming.xml/AvoidFieldNameMatchingTypeName"/> implemented poorly -->
+  <!-- <rule ref="rulesets/naming.xml/AvoidFieldNameMatchingMethodName"/> implemented poorly -->
   <rule ref="rulesets/naming.xml/AvoidNonConstructorMethodsWithClassName"/>
   <rule ref="rulesets/naming.xml/NoPackage"/>
   <rule ref="rulesets/naming.xml/PackageCase"/>
@@ -60,10 +60,10 @@
   <rule ref="rulesets/design.xml/SimplifyBooleanReturns"/>
   <rule ref="rulesets/design.xml/SimplifyBooleanExpressions"/>
   <rule ref="rulesets/design.xml/SwitchStmtsShouldHaveDefault"/>
-  <!-- <rule ref="rulesets/design.xml/AvoidDeeplyNestedIfStmts"/> 8 reports -->
+  <!-- <rule ref="rulesets/design.xml/AvoidDeeplyNestedIfStmts"/> 14 reports -->
   <rule ref="rulesets/design.xml/AvoidReassigningParameters"/>
   <rule ref="rulesets/design.xml/SwitchDensity"/>
-  <rule ref="rulesets/design.xml/ConstructorCallsOverridableMethod"/>
+  <!-- <rule ref="rulesets/design.xml/ConstructorCallsOverridableMethod"/> very good idea, buggy implementation -->
   <rule ref="rulesets/design.xml/AccessorClassGeneration"/>
   <rule ref="rulesets/design.xml/FinalFieldCouldBeStatic"/>
   <rule ref="rulesets/design.xml/CloseResource"/>
@@ -76,27 +76,27 @@
   <!-- <rule ref="rulesets/design.xml/ConfusingTernary"/> allow (test ? 1 : 2) -->
   <rule ref="rulesets/design.xml/InstantiationToGetClass"/>
   <rule ref="rulesets/design.xml/IdempotentOperations"/>
-  <rule ref="rulesets/design.xml/SimpleDateFormatNeedsLocale"/>
-  <!-- <rule ref="rulesets/design.xml/ImmutableField"/> 236 reports. -->
+  <!-- <rule ref="rulesets/design.xml/SimpleDateFormatNeedsLocale"/> should use -->
+  <!-- <rule ref="rulesets/design.xml/ImmutableField"/> 230 reports. -->
   <rule ref="rulesets/design.xml/UseLocaleWithCaseConversions"/>
   <rule ref="rulesets/design.xml/AvoidProtectedFieldInFinalClass"/>
   <rule ref="rulesets/design.xml/AssignmentToNonFinalStatic"/>
-  <!-- <rule ref="rulesets/design.xml/MissingStaticMethodInNonInstantiatableClass"/> 29 reports -->
-  <!-- <rule ref="rulesets/design.xml/AvoidSynchronizedAtMethodLevel"/> 106 reports -->
+  <rule ref="rulesets/design.xml/MissingStaticMethodInNonInstantiatableClass"/>
+  <!-- <rule ref="rulesets/design.xml/AvoidSynchronizedAtMethodLevel"/> 109 reports -->
   <rule ref="rulesets/design.xml/MissingBreakInSwitch"/>
   <rule ref="rulesets/design.xml/UseNotifyAllInsteadOfNotify"/>
   <rule ref="rulesets/design.xml/AvoidInstanceofChecksInCatchClause"/>
   <rule ref="rulesets/design.xml/AbstractClassWithoutAbstractMethod"/>
   <rule ref="rulesets/design.xml/SimplifyConditional"/>
-  <rule ref="rulesets/design.xml/CompareObjectsWithEquals"/>
+  <!-- <rule ref="rulesets/design.xml/CompareObjectsWithEquals"/> use on occassion but we do need object equals, too -->
   <rule ref="rulesets/design.xml/PositionLiteralsFirstInComparisons"/>
   <rule ref="rulesets/design.xml/UnnecessaryLocalBeforeReturn"/>
   <rule ref="rulesets/design.xml/NonThreadSafeSingleton"/>
-  <!-- <rule ref="rulesets/design.xml/UncommentedEmptyMethod"/> 53 reports -->
-  <!-- <rule ref="rulesets/design.xml/UncommentedEmptyConstructor"/> 188 reports -->
+  <!-- <rule ref="rulesets/design.xml/UncommentedEmptyMethod"/> 74 reports -->
+  <!-- <rule ref="rulesets/design.xml/UncommentedEmptyConstructor"/> 14 reports -->
   <rule ref="rulesets/design.xml/AvoidConstantsInterface"/>
-  <rule ref="rulesets/design.xml/UnsynchronizedStaticDateFormatter"/>
-  <rule ref="rulesets/design.xml/PreserveStackTrace"/>
+  <!-- <rule ref="rulesets/design.xml/UnsynchronizedStaticDateFormatter"/> 5 reports -->
+  <!-- <rule ref="rulesets/design.xml/PreserveStackTrace"/> 7 reports -->
 
   <rule ref="rulesets/imports.xml/DuplicateImports"/>
   <rule ref="rulesets/imports.xml/DontImportJavaLang"/>
@@ -114,29 +114,36 @@
   <rule ref="rulesets/junit.xml/UseAssertSameInsteadOfAssertTrue"/>
 -->
 
-  <rule ref="rulesets/strings.xml/AvoidDuplicateLiterals"/>
+  <!-- <rule ref="rulesets/strings.xml/AvoidDuplicateLiterals"/> 5 reports -->
   <rule ref="rulesets/strings.xml/StringInstantiation"/>
   <rule ref="rulesets/strings.xml/StringToString"/>
   <rule ref="rulesets/strings.xml/InefficientStringBuffering"/>
   <rule ref="rulesets/strings.xml/UnnecessaryCaseChange"/>
   <rule ref="rulesets/strings.xml/UseStringBufferLength"/>
+  <rule ref="rulesets/strings.xml/AppendCharacterWithChar"/>
+  <!-- <rule ref="rulesets/strings.xml/ConsecutiveLiteralAppends"/> 1 report -->
+  <rule ref="rulesets/strings.xml/UseIndexOfChar"/>
+  <!-- <rule ref="rulesets/strings.xml/InefficientEmptyStringCheck"/> 1 report, dumb -->
+  <!-- <rule ref="rulesets/strings.xml/InsufficientStringBufferDeclaration"/> 3 reports -->
+  <rule ref="rulesets/strings.xml/UselessStringValueOf"/>  
+
 
   <rule ref="rulesets/braces.xml/IfStmtsMustUseBraces"/>
   <rule ref="rulesets/braces.xml/WhileLoopsMustUseBraces"/>
   <rule ref="rulesets/braces.xml/IfElseStmtsMustUseBraces"/>
   <rule ref="rulesets/braces.xml/ForLoopsMustUseBraces"/>
 
-  <!-- <rule ref="rulesets/codesize.xml/ExcessiveMethodLength"/> 8 reports. -->
-  <rule ref="rulesets/codesize.xml/ExcessiveParameterList"/>
+  <!-- <rule ref="rulesets/codesize.xml/ExcessiveMethodLength"/> 9 reports. -->
+  <!-- <rule ref="rulesets/codesize.xml/ExcessiveParameterList"/> better handled by CheckStyle -->
   <!-- <rule ref="rulesets/codesize.xml/ExcessiveClassLength"/> 5 reports. -->
-  <!-- <rule ref="rulesets/codesize.xml/CyclomaticComplexity"/> 41 reports, maybe check comments? -->
-  <rule ref="rulesets/codesize.xml/ExcessivePublicCount"/>
-  <rule ref="rulesets/codesize.xml/TooManyFields"/>
+  <!-- <rule ref="rulesets/codesize.xml/CyclomaticComplexity"/> 67 reports, maybe check comments? -->
+  <!-- <rule ref="rulesets/codesize.xml/ExcessivePublicCount"/> better handled by CheckStyle -->
+  <!-- <rule ref="rulesets/codesize.xml/TooManyFields"/> better handled by CheckStyle -->
 
-  <rule ref="rulesets/j2ee.xml/UseProperClassLoader"/> <!-- new 3.8 -->
+  <rule ref="rulesets/j2ee.xml/UseProperClassLoader"/>
 
   <!-- <rule ref="rulesets/javabeans.xml/BeanMembersShouldSerialize"/> 585 reports -->
-  <rule ref="rulesets/javabeans.xml/MissingSerialVersionUID"/>
+  <!-- <rule ref="rulesets/javabeans.xml/MissingSerialVersionUID"/> Not very good. -->
 
   <rule ref="rulesets/finalizers.xml/EmptyFinalizer"/>
   <rule ref="rulesets/finalizers.xml/FinalizeOnlyCallsSuperFinalize"/>
@@ -146,35 +153,24 @@
   <rule ref="rulesets/finalizers.xml/AvoidCallingFinalize"/>
 
   <rule ref="rulesets/clone.xml/ProperCloneImplementation"/>
-  <rule ref="rulesets/clone.xml/CloneThrowsCloneNotSupportedException"/>
-  <rule ref="rulesets/clone.xml/CloneMethodMustImplementCloneable"/>
+  <!-- <rule ref="rulesets/clone.xml/CloneThrowsCloneNotSupportedException"/> Not very good. -->
+  <!-- <rule ref="rulesets/clone.xml/CloneMethodMustImplementCloneable"/> Not very good. -->
 
+  <!-- Better handled by other tools
   <rule ref="rulesets/coupling.xml/CouplingBetweenObjects"/>
   <rule ref="rulesets/coupling.xml/ExcessiveImports"/>
   <rule ref="rulesets/coupling.xml/LooseCoupling"/>
+  -->
 
   <rule ref="rulesets/strictexception.xml/AvoidCatchingThrowable"/>
   <rule ref="rulesets/strictexception.xml/SignatureDeclareThrowsException"/>
   <rule ref="rulesets/strictexception.xml/ExceptionAsFlowControl"/>
   <rule ref="rulesets/strictexception.xml/AvoidCatchingNPE"/>
-  <rule ref="rulesets/strictexception.xml/AvoidThrowingRawExceptionTypes"/>
+  <!-- <rule ref="rulesets/strictexception.xml/AvoidThrowingRawExceptionTypes"/> good idea, bad implementation -->
   <rule ref="rulesets/strictexception.xml/AvoidThrowingNullPointerException"/>
-  <rule ref="rulesets/strictexception.xml/AvoidRethrowingException"/> <!-- new 3.8 -->
+  <!-- <rule ref="rulesets/strictexception.xml/AvoidRethrowingException"/> new 3.8 -->
 
-  <rule ref="rulesets/strings.xml/AvoidDuplicateLiterals"/> <!-- new 3.8 -->
-  <rule ref="rulesets/strings.xml/StringInstantiation"/> <!-- new 3.8 -->
-  <rule ref="rulesets/strings.xml/StringToString"/> <!-- new 3.8 -->
-  <rule ref="rulesets/strings.xml/InefficientStringBuffering"/> <!-- new 3.8 -->
-  <rule ref="rulesets/strings.xml/UnnecessaryCaseChange"/> <!-- new 3.8 -->
-  <rule ref="rulesets/strings.xml/UseStringBufferLength"/> <!-- new 3.8 -->
-  <rule ref="rulesets/strings.xml/AppendCharacterWithChar"/> <!-- new 3.8 -->
-  <rule ref="rulesets/strings.xml/ConsecutiveLiteralAppends"/> <!-- new 3.8 -->
-  <rule ref="rulesets/strings.xml/UseIndexOfChar"/> <!-- new 3.8 -->
-  <rule ref="rulesets/strings.xml/InefficientEmptyStringCheck"/> <!-- new 3.8 -->
-  <rule ref="rulesets/strings.xml/InsufficientStringBufferDeclaration"/> <!-- new 3.8 -->
-  <rule ref="rulesets/strings.xml/UselessStringValueOf"/> <!-- new 3.8 -->  
-
-  <rule ref="rulesets/controversial.xml/UnnecessaryConstructor"/>
+  <!-- <rule ref="rulesets/controversial.xml/UnnecessaryConstructor"/> -->
   <!-- <rule ref="rulesets/controversial.xml/NullAssignment"/> 61 reports -->
   <!-- <rule ref="rulesets/controversial.xml/OnlyOneReturn"/> 506 reports -->
   <rule ref="rulesets/controversial.xml/UnusedModifier"/>
@@ -186,7 +182,7 @@
   <rule ref="rulesets/controversial.xml/UnnecessaryParentheses"/>
   <!-- <rule ref="rulesets/controversial.xml/SingularField"/> 65 reports -->
   <!-- <rule ref="rulesets/controversial.xml/DefaultPackage"/> 355 reports -->
-  <rule ref="rulesets/controversial.xml/BooleanInversion"/> <!-- new 3.8 -->
+  <!-- <rule ref="rulesets/controversial.xml/BooleanInversion"/> -->
 
   <!-- <rule ref="rulesets/logging-java.xml/MoreThanOneLogger"/> Not written very well. -->
   <!-- <rule ref="rulesets/logging-java.xml/LoggerIsNotStaticFinal"/> Not very smart. -->
@@ -196,15 +192,15 @@
   <rule ref="rulesets/logging-jakarta-commons.xml/UseCorrectExceptionLogging"/>
   <rule ref="rulesets/logging-jakarta-commons.xml/ProperLogger"/>
   
-  <!-- <rule ref="rulesets/optimizations.xml/LocalVariableCouldBeFinal"/> 21117 reports! -->
-  <!-- <rule ref="rulesets/optimizations.xml/MethodArgumentCouldBeFinal"/> 1908 reports! -->
-  <!-- <rule ref="rulesets/optimizations.xml/AvoidInstantiatingObjectsInLoops"/> 70 reports. -->
-  <rule ref="rulesets/optimizations.xml/UseArrayListInsteadOfVector"/> <!-- new 3.8 -->
-  <rule ref="rulesets/optimizations.xml/SimplifyStartsWith"/> <!-- new 3.8 -->
-  <rule ref="rulesets/optimizations.xml/UseStringBufferForStringAppends"/> <!-- new 3.8 -->
-  <rule ref="rulesets/optimizations.xml/UseArraysAsList"/> <!-- new 3.8 -->
-  <rule ref="rulesets/optimizations.xml/AvoidArrayLoops"/> <!-- new 3.8 -->
-  <rule ref="rulesets/optimizations.xml/UnnecessaryWrapperObjectCreation"/> <!-- new 3.8 -->
+  <!-- <rule ref="rulesets/optimizations.xml/LocalVariableCouldBeFinal"/> 2267 reports! -->
+  <!-- <rule ref="rulesets/optimizations.xml/MethodArgumentCouldBeFinal"/> 2156 reports! -->
+  <!-- <rule ref="rulesets/optimizations.xml/AvoidInstantiatingObjectsInLoops"/> 75 reports. -->
+  <rule ref="rulesets/optimizations.xml/UseArrayListInsteadOfVector"/>
+  <rule ref="rulesets/optimizations.xml/SimplifyStartsWith"/>
+  <rule ref="rulesets/optimizations.xml/UseStringBufferForStringAppends"/>
+  <rule ref="rulesets/optimizations.xml/UseArraysAsList"/>
+  <rule ref="rulesets/optimizations.xml/AvoidArrayLoops"/>
+  <!-- <rule ref="rulesets/optimizations.xml/UnnecessaryWrapperObjectCreation"/> 1 Java 1.5 report -->
   
   <rule ref="rulesets/sunsecure.xml/MethodReturnsInternalArray"/>
   <rule ref="rulesets/sunsecure.xml/ArrayIsStoredDirectly"/>

@@ -108,7 +108,7 @@ void close(InputStream file) throws java.io.IOException {
 				retVal = istream.available();
 			}
 			catch (Exception e) {
-				e.printStackTrace();
+				e.printStackTrace(System.err);
 			}
 			return retVal;
 		}

@@ -111,7 +111,7 @@ public class Main
      */
     private String handle(Throwable ex)
     {
-        ex.printStackTrace();
+        ex.printStackTrace(System.err);
 
         return ex.toString();
     }

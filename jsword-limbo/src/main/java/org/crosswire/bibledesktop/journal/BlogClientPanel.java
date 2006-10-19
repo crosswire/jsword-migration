@@ -74,7 +74,7 @@ public class BlogClientPanel extends JPanel implements BlogClientTab
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 
@@ -144,7 +144,7 @@ public class BlogClientPanel extends JPanel implements BlogClientTab
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 
@@ -159,7 +159,7 @@ public class BlogClientPanel extends JPanel implements BlogClientTab
         }
         catch (Throwable t)
         {
-            t.printStackTrace();
+            t.printStackTrace(System.err);
         }
     }
 
@@ -193,7 +193,7 @@ public class BlogClientPanel extends JPanel implements BlogClientTab
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                e.printStackTrace(System.err);
                 JOptionPane.showMessageDialog(window, Msg.DELETE_ERROR);
             }
         }
@@ -219,7 +219,7 @@ public class BlogClientPanel extends JPanel implements BlogClientTab
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                e.printStackTrace(System.err);
                 JOptionPane.showMessageDialog(window, Msg.UPLOAD_ERROR);
             }
         }
@@ -286,7 +286,7 @@ public class BlogClientPanel extends JPanel implements BlogClientTab
         catch (Exception e)
         {
             // TODO: indicate error to user
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 

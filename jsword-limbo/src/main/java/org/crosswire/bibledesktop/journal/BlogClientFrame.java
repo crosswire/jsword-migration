@@ -277,7 +277,7 @@ public class BlogClientFrame extends JPanel
                     curPanel = disconnectedPanel;
                     add(disconnectedPanel, java.awt.BorderLayout.CENTER);
                 }
-                ex.printStackTrace();
+                ex.printStackTrace(System.err);
             }
 
             ReflectionBus.broadcast(new ResizeJournalSignal());

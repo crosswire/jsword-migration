@@ -142,7 +142,7 @@ public class SWConfig {
             }
         }catch(Exception ex) {
             System.err.println("Error: " + ex.getMessage() ); //$NON-NLS-1$
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
         }
 
     }

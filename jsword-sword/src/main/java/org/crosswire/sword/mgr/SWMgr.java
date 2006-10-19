@@ -264,7 +264,7 @@ public class SWMgr {
                     config = myconfig = new SWConfig(newmodfile);
                 }
             }
-            catch (java.io.IOException e) { e.printStackTrace(); }
+            catch (java.io.IOException e) { e.printStackTrace(System.err); }
         }
     }
 
@@ -281,7 +281,7 @@ public class SWMgr {
                 }
             }
         }
-        catch (java.io.IOException e) { e.printStackTrace(); }
+        catch (java.io.IOException e) { e.printStackTrace(System.err); }
         if (config != null) {
 /*
         SectionMap::iterator Sectloop, Sectend;

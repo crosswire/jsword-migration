@@ -157,7 +157,7 @@ public class CliMapper
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
         }
     }
 

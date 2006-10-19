@@ -73,7 +73,7 @@ public class PhraseParamWord implements ParamWord
             }
 
             buff.append(word);
-            buff.append(" "); //$NON-NLS-1$
+            buff.append(' ');
         }
 
         return bestMatch(engine, buff.toString());

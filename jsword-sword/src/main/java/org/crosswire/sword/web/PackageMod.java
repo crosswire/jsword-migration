@@ -39,7 +39,7 @@ public class PackageMod {
             }
             fin.close();
         }
-        catch (Exception e) { e.printStackTrace(); }
+        catch (Exception e) { e.printStackTrace(System.err); }
     }
 
     public static long getLastModFile(SWMgr mgr, String sourceDir, String modName) {
@@ -121,7 +121,7 @@ public class PackageMod {
 //				}
                 }
         }
-        catch (Exception e1) { e1.printStackTrace(); }
+        catch (Exception e1) { e1.printStackTrace(System.err); }
         return lastModFile;
     }
 
@@ -200,6 +200,6 @@ public class PackageMod {
                 zstream.close();
                 }
         }
-        catch (Exception e1) { e1.printStackTrace(); }
+        catch (Exception e1) { e1.printStackTrace(System.err); }
     }
 }

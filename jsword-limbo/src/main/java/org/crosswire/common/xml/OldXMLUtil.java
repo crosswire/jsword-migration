@@ -106,7 +106,7 @@ public class OldXMLUtil
 
         case Node.ELEMENT_NODE:
             buff.append(DOT_PADDING.substring(0, depth*2));
-            buff.append("<"); //$NON-NLS-1$
+            buff.append('<');
             buff.append(node.getNodeName());
 
             // The attributes
@@ -119,7 +119,7 @@ public class OldXMLUtil
                     buff.append(map.item(i).getNodeName());
                     buff.append("='"); //$NON-NLS-1$
                     buff.append(map.item(i).getNodeValue());
-                    buff.append("'"); //$NON-NLS-1$
+                    buff.append('\'');
                 }
             }
 
@@ -133,7 +133,7 @@ public class OldXMLUtil
             }
             else
             {
-                buff.append(">"); //$NON-NLS-1$
+                buff.append('>');
                 buff.append(StringUtil.NEWLINE);
 
                 for (int i=0; i<list.getLength(); i++)
@@ -144,7 +144,7 @@ public class OldXMLUtil
                 buff.append(DOT_PADDING.substring(0, depth*2));
                 buff.append("</"); //$NON-NLS-1$
                 buff.append(node.getNodeName());
-                buff.append(">"); //$NON-NLS-1$
+                buff.append('>');
                 buff.append(StringUtil.NEWLINE);
             }
             break;

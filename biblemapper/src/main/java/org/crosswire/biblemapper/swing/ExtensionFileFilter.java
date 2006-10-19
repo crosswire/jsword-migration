@@ -101,7 +101,7 @@ public class ExtensionFileFilter extends FileFilter
             buff.append(extensions[i]);
         }
 
-        buff.append(")"); //$NON-NLS-1$
+        buff.append(')');
 
         return buff.toString();
     }
