@@ -43,10 +43,6 @@ import org.crosswire.jsword.book.install.sword.AbstractSwordInstaller;
  */
 public class SwordSiteEditor extends JPanel implements SiteEditor
 {
-    public SwordSiteEditor()
-    {
-    }
-
     public void initialize()
     {
         host = new JTextField();

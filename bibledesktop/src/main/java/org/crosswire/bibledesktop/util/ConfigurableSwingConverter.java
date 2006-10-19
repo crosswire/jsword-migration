@@ -114,8 +114,7 @@ public class ConfigurableSwingConverter implements Converter
         String[] fontSpec = StringUtil.split(font, ","); //$NON-NLS-1$
         int fontStyle = Integer.parseInt(fontSpec[1]);
         int fontSize = Integer.parseInt(fontSpec[2]);
-        Font newFont = new Font(fontSpec[0], fontStyle, fontSize);
-        return newFont;
+        return new Font(fontSpec[0], fontStyle, fontSize);
     }
 
     /**

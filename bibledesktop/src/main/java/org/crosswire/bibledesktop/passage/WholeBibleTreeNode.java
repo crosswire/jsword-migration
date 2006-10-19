@@ -193,7 +193,6 @@ public final class WholeBibleTreeNode implements TreeNode
         case LEVEL_CHAPTER:
             return WholeBibleTreeNode.getNode(this, range.getStart().getBook(), range.getStart().getChapter(), i + 1);
 
-        case LEVEL_VERSE:
         default:
             return null;
         }
@@ -218,7 +217,6 @@ public final class WholeBibleTreeNode implements TreeNode
             case LEVEL_CHAPTER:
                 return BibleInfo.versesInChapter(range.getStart().getBook(), range.getStart().getChapter());
 
-            case LEVEL_VERSE:
             default:
                 return 0;
             }
@@ -254,7 +252,6 @@ public final class WholeBibleTreeNode implements TreeNode
         case LEVEL_CHAPTER:
             return vnode.getVerseRange().getStart().getVerse() - 1;
 
-        case LEVEL_VERSE:
         default:
             return -1;
         }

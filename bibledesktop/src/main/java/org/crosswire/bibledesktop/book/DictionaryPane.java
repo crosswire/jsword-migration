@@ -240,22 +240,24 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
      */
     public void setWord(String data)
     {
+        if (dict == null)
+        {
+            return;
+        }
+
+        Key key = null;
         try
         {
-            if (dict == null)
-            {
-                return;
-            }
-
-            Key key = dict.getKey(data);
-            if (key != null)
-            {
-                lstEntries.setSelectedValue(key, true);
-            }
+            key = dict.getKey(data);
         }
         catch (NoSuchKeyException ex)
         {
-            // ignore
+            key = null;
+        }
+
+        if (key != null)
+        {
+            lstEntries.setSelectedValue(key, true);
         }
     }
 
@@ -264,7 +266,7 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
      */
     public void setKey(Key key)
     {
-        if (key != null && key instanceof Passage)
+        if (key instanceof Passage)
         {
             Passage ref = (Passage) key;
             if (ref.countVerses() > 0)
@@ -304,7 +306,7 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
     /**
      * Called when someone selects a new Dictionary
      */
-    protected void newDictionary()
+    /*private*/ final void newDictionary()
     {
         Object selected = lstDicts.getSelectedValue();
         // Don't leave the scroller in the middle of the list!
@@ -350,7 +352,7 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
     /**
      * 
      */
-    protected void updateDisplay()
+    /*protected*/ final void updateDisplay()
     {
         Book book = (Book) lstDicts.getSelectedValue();
         if (book == null)
@@ -366,7 +368,7 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
     /**
      * Called when someone selects a new entry from the current dictionary
      */
-    protected void newEntry()
+    /*private*/ final void newEntry()
     {
         Key key = (Key) lstEntries.getSelectedValue();
         if (key != null)

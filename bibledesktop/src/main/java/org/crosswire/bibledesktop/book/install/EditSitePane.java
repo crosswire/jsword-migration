@@ -254,7 +254,7 @@ public class EditSitePane extends JPanel
     /**
      * The name field has been updated, so we need to check the entry is valid
      */
-    protected void siteUpdate()
+    public final void siteUpdate()
     {
         if (txtName.isEditable())
         {
@@ -279,7 +279,7 @@ public class EditSitePane extends JPanel
     /**
      * The installer type combo box has been changed
      */
-    protected void newType()
+    /*private*/ final void newType()
     {
         if (userInitiated)
         {

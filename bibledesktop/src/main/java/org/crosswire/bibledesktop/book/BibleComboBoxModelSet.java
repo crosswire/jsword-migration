@@ -52,7 +52,7 @@ public class BibleComboBoxModelSet
     /**
      * The book combo box
      */
-    public void setBookComboBox(JComboBox cboBook)
+    public final void setBookComboBox(JComboBox cboBook)
     {
         this.cboBook = cboBook;
 
@@ -63,7 +63,7 @@ public class BibleComboBoxModelSet
     /**
      * The chapter combo box
      */
-    public void setChapterComboBox(JComboBox cboChapter)
+    public final void setChapterComboBox(JComboBox cboChapter)
     {
         this.cboChapter = cboChapter;
 
@@ -76,7 +76,7 @@ public class BibleComboBoxModelSet
     /**
      * The verse combo box
      */
-    public void setVerseComboBox(JComboBox cboVerse)
+    public final void setVerseComboBox(JComboBox cboVerse)
     {
         this.cboVerse = cboVerse;
 

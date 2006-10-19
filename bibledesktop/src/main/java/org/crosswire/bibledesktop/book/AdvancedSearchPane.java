@@ -321,7 +321,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         return chkRank.isSelected();
     }
 
-    public void setLabelRank(int val)
+    public final void setLabelRank(int val)
     {
         if (val == 0)
         {
@@ -458,7 +458,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     /**
      *
      */
-    public void updatePreset()
+    public final void updatePreset()
     {
         if (editingRestrict)
         {

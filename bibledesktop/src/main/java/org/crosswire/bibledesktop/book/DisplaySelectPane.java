@@ -517,7 +517,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     /**
      * Someone changed the version combo
      */
-    protected void changeVersion()
+    public final void changeVersion()
     {
         Book newSelected = mdlBible.getSelectedBook();
 
@@ -590,7 +590,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     /**
      * Ensure that the right components are enabled
      */
-    protected void enableComponents()
+    /*private*/ final void enableComponents()
     {
         boolean readable = selected != null;
         boolean searchable = readable && selected.getIndexStatus().equals(IndexStatus.DONE);
@@ -612,7 +612,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     /**
      * Someone clicked the "..." button
      */
-    protected void showSelectDialog()
+    /*private*/ final void showSelectDialog()
     {
         if (dlgSelect == null)
         {

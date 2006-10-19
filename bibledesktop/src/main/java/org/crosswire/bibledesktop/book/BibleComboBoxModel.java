@@ -155,13 +155,9 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
             case LEVEL_BOOK:
                 return BibleInfo.getLongBookName(index + 1);
 
-            case LEVEL_CHAPTER:
-            case LEVEL_VERSE:
+            default:
                 return new Integer(index + 1);
 
-            default:
-                assert false : level;
-                return null;
             }
         }
         catch (NoSuchVerseException ex)

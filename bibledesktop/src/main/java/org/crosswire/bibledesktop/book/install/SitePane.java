@@ -366,14 +366,12 @@ public class SitePane extends JPanel
         try
         {
             IndexManager imanager = IndexManagerFactory.getIndexManager();
-            if (imanager.isIndexed(book))
+            if (imanager.isIndexed(book)
+                && JOptionPane.showConfirmDialog(this, Msg.CONFIRM_UNINSTALL_BOOK.toString(new Object[] {book.getName()}),
+                                              Msg.CONFIRM_UNINSTALL_TITLE.toString(),
+                                              JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
             {
-                if (JOptionPane.showConfirmDialog(this, Msg.CONFIRM_UNINSTALL_BOOK.toString(new Object[] {book.getName()}),
-                                Msg.CONFIRM_UNINSTALL_TITLE.toString(),
-                                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
-                {
-                    imanager.deleteIndex(book);
-                }
+                imanager.deleteIndex(book);
             }
             actions.getAction(UNINDEX).setEnabled(imanager.isIndexed(book));
         }

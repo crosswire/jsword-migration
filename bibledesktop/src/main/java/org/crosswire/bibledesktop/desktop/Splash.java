@@ -152,7 +152,7 @@ public class Splash extends JWindow
     /**
      * Shut up shop
      */
-    public void close()
+    public final void close()
     {
         JobManager.removeWorkListener(listener);
 

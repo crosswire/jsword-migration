@@ -255,8 +255,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             data = data.substring(2);
         }
 
-        String[] parts = { protocol, data };
-        return parts;
+        return new String[] { protocol, data };
     }
     /**
      * Accessor for the Swing component

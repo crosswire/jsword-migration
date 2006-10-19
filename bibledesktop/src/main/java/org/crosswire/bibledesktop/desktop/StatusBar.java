@@ -69,30 +69,30 @@ public class StatusBar extends JComponent implements MouseListener, URLEventList
      */
     private void initialize()
     {
-        lbl_message.setText(Msg.STATUS_DEFAULT.toString());
+        labelMessage.setText(Msg.STATUS_DEFAULT.toString());
 
-        Font font = pnl_progr.getFont();
-        pnl_progr.setFont(font.deriveFont(6.0F));
+        Font font = panelProgress.getFont();
+        panelProgress.setFont(font.deriveFont(6.0F));
 
         /*
-        Dimension dim = pnl_progr.getPreferredSize();
-        dim.height = lbl_message.getSize().height;
-        pnl_progr.setPreferredSize(dim);
+        Dimension dim = panelProgress.getPreferredSize();
+        dim.height = labelMessage.getSize().height;
+        panelProgress.setPreferredSize(dim);
         */
 
-        lbl_name.setText(' ' + Msg.getVersionedApplicationTitle() + ' ');
+        labelName.setText(' ' + Msg.getVersionedApplicationTitle() + ' ');
 
         this.setBorder(BorderFactory.createEtchedBorder());
         this.setLayout(new GridBagLayout());
 
-        JSeparator separator = new JSeparator(SwingConstants.VERTICAL);
+        JSeparator separator  = new JSeparator(SwingConstants.VERTICAL);
         JSeparator separator2 = new JSeparator(SwingConstants.VERTICAL);
 
-        this.add(lbl_message, new GridBagConstraints(0, 0, 1, 1, 0.5, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(separator,   new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(pnl_progr,   new GridBagConstraints(2, 0, 1, 1, 0.5, 0.0, GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(separator2,  new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(lbl_name,    new GridBagConstraints(4, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(labelMessage,  new GridBagConstraints(0, 0, 1, 1, 0.5, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(separator,     new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(panelProgress, new GridBagConstraints(2, 0, 1, 1, 0.5, 0.0, GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(separator2,    new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(labelName,     new GridBagConstraints(4, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
     }
 
     /* (non-Javadoc)
@@ -112,11 +112,11 @@ public class StatusBar extends JComponent implements MouseListener, URLEventList
         String url = ev.getURL();
         if (protocol.length() == 0)
         {
-            lbl_message.setText(url);
+            labelMessage.setText(url);
         }
         else
         {
-            lbl_message.setText(protocol + "://" + url); //$NON-NLS-1$
+            labelMessage.setText(protocol + "://" + url); //$NON-NLS-1$
         }
     }
 
@@ -125,7 +125,7 @@ public class StatusBar extends JComponent implements MouseListener, URLEventList
      */
     public void leaveURL(URLEvent ev)
     {
-        lbl_message.setText(Msg.STATUS_DEFAULT.toString());
+        labelMessage.setText(Msg.STATUS_DEFAULT.toString());
     }
 
     /**
@@ -136,9 +136,12 @@ public class StatusBar extends JComponent implements MouseListener, URLEventList
     {
         if (txt == null)
         {
-            txt = Msg.STATUS_DEFAULT.toString();
+            labelMessage.setText(Msg.STATUS_DEFAULT.toString());
         }
-        lbl_message.setText(txt);
+        else
+        {
+            labelMessage.setText(txt);
+        }
     }
 
     /**
@@ -151,7 +154,7 @@ public class StatusBar extends JComponent implements MouseListener, URLEventList
 //        {
 //            public void run()
 //            {
-//                lbl_message.setText(signal.getMessage());
+//                labelMessage.setText(signal.getMessage());
 //            }
 //        });
 //    }
@@ -174,7 +177,7 @@ public class StatusBar extends JComponent implements MouseListener, URLEventList
 
                 if (value != null)
                 {
-                    lbl_message.setText(value.toString());
+                    labelMessage.setText(value.toString());
                 }
             }
         }
@@ -186,7 +189,7 @@ public class StatusBar extends JComponent implements MouseListener, URLEventList
      */
     public void mouseExited(MouseEvent ev)
     {
-        lbl_message.setText(Msg.STATUS_DEFAULT.toString());
+        labelMessage.setText(Msg.STATUS_DEFAULT.toString());
     }
 
     /**
@@ -219,17 +222,17 @@ public class StatusBar extends JComponent implements MouseListener, URLEventList
     /**
      * Where the progress bars go
      */
-    private JobsProgressBar pnl_progr = new JobsProgressBar(true);
+    private JobsProgressBar panelProgress = new JobsProgressBar(true);
 
     /**
      * Where the help messages go
      */
-    protected JLabel lbl_message = new JLabel();
+    protected JLabel labelMessage = new JLabel();
 
     /**
      * Where the product name goes
      */
-    private JLabel lbl_name = new JLabel();
+    private JLabel labelName = new JLabel();
 
     /**
      * Serialization ID

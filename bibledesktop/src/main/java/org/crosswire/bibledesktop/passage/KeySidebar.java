@@ -259,7 +259,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     /**
      * Someone clicked on a value in the list
      */
-    protected void selection()
+    /*private*/ final void selection()
     {
         Object[] selected = list.getSelectedValues();
 
@@ -358,7 +358,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     /**
      * Inform the command keyChangeListeners
      */
-    protected synchronized void fireKeyChanged(KeyChangeEvent ev)
+    /*private*/ final synchronized void fireKeyChanged(KeyChangeEvent ev)
     {
         if (keyChangeListeners != null)
         {

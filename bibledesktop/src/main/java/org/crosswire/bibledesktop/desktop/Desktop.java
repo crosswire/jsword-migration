@@ -127,7 +127,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         {
             // Something went wrong before we've managed to get on our feet.
             // so we want the best possible shot at working out what failed.
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
             ExceptionPane.showExceptionDialog(null, ex);
         }
     }
@@ -779,12 +779,12 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         // so we want the best possible shot at working out what failed.
         catch (IOException e)
         {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
             ExceptionPane.showExceptionDialog(null, e);
         }
         catch (JDOMException e)
         {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
             ExceptionPane.showExceptionDialog(null, e);
         }
 
@@ -799,7 +799,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         }
         catch (IOException ex)
         {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
             ExceptionPane.showExceptionDialog(null, ex);
         }
 
@@ -931,7 +931,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
      * Setup the choices so that the options dialog knows what there is to
      * select from.
      */
-    protected void fillChoiceFactory()
+    /*private*/ final void fillChoiceFactory()
     {
         refreshBooks();
 

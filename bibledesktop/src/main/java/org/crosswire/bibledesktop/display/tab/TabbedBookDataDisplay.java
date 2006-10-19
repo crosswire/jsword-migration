@@ -280,7 +280,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * Tabs changed, generate some stuff
      */
-    protected void tabChanged()
+    /*private*/ final void tabChanged()
     {
         // This is someone clicking on more isnt it?
         if (tabMain.getSelectedComponent() != pnlMore)

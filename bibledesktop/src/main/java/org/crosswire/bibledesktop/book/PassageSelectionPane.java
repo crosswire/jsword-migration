@@ -374,7 +374,7 @@ public class PassageSelectionPane extends JPanel
     /**
      * The tree selection has changed
      */
-    protected void treeSelected()
+    /*private*/ final void treeSelected()
     {
         TreePath[] selected = treAll.getSelectionPaths();
         actions.getAction(ADD).setEnabled(selected != null && selected.length > 0);
@@ -383,7 +383,7 @@ public class PassageSelectionPane extends JPanel
     /**
      * List selection has changed
      */
-    protected void listSelected()
+    /*private*/ final void listSelected()
     {
         Object[] selected = lstSel.getSelectedValues();
         actions.getAction(DELETE).setEnabled(selected != null && selected.length > 0);
