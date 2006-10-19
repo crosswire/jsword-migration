@@ -55,7 +55,7 @@ public class CatchingThreadGroup extends ThreadGroup
     /* @Override */
     public void uncaughtException(Thread t, Throwable ex)
     {
-        ex.printStackTrace();
+        ex.printStackTrace(System.err);
         ExceptionPane.showExceptionDialog(null, ex);
     }
 }

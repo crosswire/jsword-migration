@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,7 +88,8 @@ public final class ExceptionPane extends JPanel
      */
     private void initialise()
     {
-        String exmsg = "<html><font size=\"-1\">" + Msg.ERROR_OCCURED + "</font> " + ExceptionPane.getHTMLDescription(ex); //$NON-NLS-1$ //$NON-NLS-2$
+        MessageFormat msgFormat = new MessageFormat("<html><font size=\"-1\">{0}</font> {1}"); //$NON-NLS-1$
+        String exmsg = msgFormat.format(new Object[] { Msg.ERROR_OCCURED.toString(), ExceptionPane.getHTMLDescription(ex) });
 
         // The upper pane
         JLabel message = new JLabel();
@@ -471,7 +473,7 @@ public final class ExceptionPane extends JPanel
                             {
                                 break;
                             }
-                            data.append(line).append("\n"); //$NON-NLS-1$
+                            data.append(line).append('\n');
 
                             int current_line = in.getLineNumber();
                             if (current_line == line_num - 1)
@@ -514,13 +516,13 @@ public final class ExceptionPane extends JPanel
             }
 
             // If we can't find a matching file
-            String error = Msg.SOURCE_NOT_FOUND.toString(new Object[] { st.getClassName(level), errorLine });
+            StringBuffer error = new StringBuffer(Msg.SOURCE_NOT_FOUND.toString(new Object[] { st.getClassName(level), errorLine }));
             for (int i = 0; i < srcs.length; i++)
             {
-                error += Msg.SOURCE_ATTEMPT.toString(new Object[] { srcs[i].getAbsolutePath() + name });
+                error.append(Msg.SOURCE_ATTEMPT.toString(new Object[] { srcs[i].getAbsolutePath() + name }));
             }
 
-            mytext.setText(error);
+            mytext.setText(error.toString());
             SwingUtilities.getRoot(mylabel).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
 

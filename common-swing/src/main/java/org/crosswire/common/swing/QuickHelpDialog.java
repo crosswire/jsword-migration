@@ -142,7 +142,7 @@ public class QuickHelpDialog extends JDialog
     /**
      * 
      */
-    public void close()
+    public final void close()
     {
         setVisible(false);
     }

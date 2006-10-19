@@ -203,7 +203,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
         {
             if (i > 1)
             {
-                path.append("."); //$NON-NLS-1$
+                path.append('.');
             }
 
             path.append(list[i].toString());
@@ -288,13 +288,13 @@ public class TreeConfigEditor extends AbstractConfigEditor
                 {
                     // Chop off the similar start
                     temp = temp.substring(path.length());
-                    if (temp.startsWith(".")) //$NON-NLS-1$
+                    if (temp.charAt(0) == '.')
                     {
                         temp = temp.substring(1);
                     }
 
                     // Chop off all after the first dot
-                    int dot_pos = temp.indexOf("."); //$NON-NLS-1$
+                    int dot_pos = temp.indexOf('.');
                     if (dot_pos != -1)
                     {
                         temp = temp.substring(0, dot_pos);

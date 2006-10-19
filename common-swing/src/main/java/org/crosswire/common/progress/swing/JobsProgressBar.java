@@ -122,7 +122,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
     /**
      * Create a new set of components for the new Job
      */
-    protected synchronized void addJob(Job job)
+    /*private*/ final synchronized void addJob(Job job)
     {
         job.addWorkListener(this);
 

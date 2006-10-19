@@ -110,7 +110,7 @@ public class CWAction extends AbstractAction
         sb.append(isEnabled());
         sb.append("\n    ObjectID:"); //$NON-NLS-1$
         sb.append(System.identityHashCode(this));
-        sb.append("\n"); //$NON-NLS-1$
+        sb.append('\n');
 
         return sb.toString();
     }

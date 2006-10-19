@@ -122,7 +122,7 @@ public class JobsViewPane extends JPanel implements WorkListener
     /**
      * Create a new set of components for the new Job
      */
-    protected void addJob(final Job job)
+    /*private*/ final void addJob(final Job job)
     {
         int i = findEmptyPosition();
         log.debug("adding job to panel at " + i + ": " + job.getJobDescription()); //$NON-NLS-1$ //$NON-NLS-2$

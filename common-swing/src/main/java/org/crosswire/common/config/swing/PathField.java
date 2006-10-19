@@ -125,12 +125,12 @@ public class PathField extends JPanel implements Field
     }
 
     /**
-     * Set the current value using a hashtable
+     * Set the current value using a String array
      * @param value The new text
      */
     public void setArray(String[] value)
     {
-        model = new DefaultComboBoxModel(value);
+        model = new DefaultComboBoxModel((String[]) value.clone());
         list.setModel(model);
     }
 

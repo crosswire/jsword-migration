@@ -116,7 +116,7 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
     /* (non-Javadoc)
      * @see org.crosswire.common.swing.desktop.Viewable#addView(java.awt.Component)
      */
-    public void addView(Component component)
+    public final void addView(Component component)
     {
         getViewLayout().addView(component);
     }
@@ -172,7 +172,7 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
     /**
      * Adds a view to the list in this Desktop.
      */
-    public Component addView()
+    public final Component addView()
     {
 
         Component view = generator.createView();
@@ -363,7 +363,7 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
     /* (non-Javadoc)
      * @see org.crosswire.common.swing.desktop.Viewable#addViewEventListener(org.crosswire.common.swing.desktop.event.ViewEventListener)
      */
-    public void addViewEventListener(ViewEventListener listener)
+    public final void addViewEventListener(ViewEventListener listener)
     {
         LayoutType.MDI.getLayout().addViewEventListener(listener);
         LayoutType.TDI.getLayout().addViewEventListener(listener);
@@ -388,7 +388,7 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
         return contextActions.getAction(key);
     }
 
-    protected Object getConstraint()
+    /*private*/ final Object getConstraint()
     {
         return gbc;
     }

@@ -58,7 +58,5 @@ public abstract class AbstractLFCustoms
      * This method does nothing. Subclass should override this to install platform
      * specific UI defaults.
      */
-    protected void initPlatformUIDefaults()
-    {
-    }
+    protected abstract void initPlatformUIDefaults();
 }

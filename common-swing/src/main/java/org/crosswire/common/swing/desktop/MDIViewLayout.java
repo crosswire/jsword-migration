@@ -252,12 +252,10 @@ public class MDIViewLayout extends AbstractViewLayout
         {
             // Don't allow the last one to be closed.
             String name = evt.getPropertyName();
-            if (name.equals(JInternalFrame.IS_CLOSED_PROPERTY))
+            if (name.equals(JInternalFrame.IS_CLOSED_PROPERTY)
+                && MDIViewLayout.this.desk.getComponentCount() == 1)
             {
-                if (MDIViewLayout.this.desk.getComponentCount() == 1)
-                {
-                    throw new PropertyVetoException("Cannot close the last window", evt); //$NON-NLS-1$
-                }
+                throw new PropertyVetoException("Cannot close the last window", evt); //$NON-NLS-1$
             }
         }
 

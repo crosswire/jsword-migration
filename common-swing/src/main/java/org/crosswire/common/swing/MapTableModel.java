@@ -66,7 +66,7 @@ public class MapTableModel extends AbstractTableModel
      * Change the map that we report on
      * @param map The map we are getting our data from
      */
-    public void setMap(Map map)
+    public final void setMap(Map map)
     {
         this.map = map;
         list.clear();

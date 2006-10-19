@@ -58,7 +58,7 @@ public class ButtonPane extends JPanel
     /**
      * GUI init.
      */
-    protected void init()
+    private void init()
     {
         actions = new ActionFactory(ButtonPane.class, this);
 
