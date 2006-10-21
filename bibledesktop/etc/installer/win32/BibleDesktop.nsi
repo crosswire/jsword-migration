@@ -4,13 +4,12 @@
 !include LogicLib.nsh
 
 !define PRODUCT_NAME "BibleDesktop"
-!define PRODUCT_VERSION "1.0.4"
+!define PRODUCT_VERSION "1.0.5"
 !define CLASS "org.crosswire.bibledesktop.desktop.Desktop"
 !define JAVALIB "$EXEDIR"
 
 !define JRE_VERSION "1.4.2"
 !define JRE_URL "http://dlc.sun.com/jdk/j2re-1_4_2_07-windows-i586-p.exe"
-;!define JRE_URL "http://nsis.sourceforge.net/mediawiki/images/b/b4/InetLoad.zip"
 
 SetCompressor lzma
 

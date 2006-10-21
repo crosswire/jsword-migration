@@ -1,0 +1,63 @@
+Release process:
+
+Step 1: Update the application's release number
+
+On a Major release update the second number, on a minor change the third.
+The first gets changed if there is a super major change.
+Pretend that 1.0.9 is the next release number (because the current release is 1.0.8).
+Change org.crosswire.bibledesktop.desktop.Msg.properties Desktop.Version=1.0.9
+In the ant file common/core.xml change to <property name="release.version" value="1.0.9"/>
+Update bibledesktop/etc/installer/macosx/info.plist. The release number is repeated many times.
+Update bibledesktop/etc/installer/win32/BibleDesktop.nsi PROCUCT_VERSION "1.09"
+
+Step 2: Update the release files for the current jar names.
+Update bibledesktop/etc/installer/macosx/info.plist
+Update bibledesktop/etc/jnlp/bibledesktop.jnlp
+Check in the changes for these 2 steps.
+
+Step 3: Perform a clean build
+
+Execute an ant build all in jsword-web. (jsword-web-ant-all in Eclipse)
+Clean up all findbugs, pmd and checkstyle issues that make sense to do.
+(Currently there are 1 findbugs, 1 pmd and 2 checkstyle issues that can be ignored.)
+Fix any javadoc issues.
+Check in any files that changed.
+Re-execute the ant if any files changed.
+
+Step 4: Build the Windows installer
+Right click on bibledesktop/etc/installer/win32/BibleDesktop.nsi and compile the NSIS script.
+(You need to be in Windows with NSIS installed)
+Verify that the installer works.
+You can perform part of step 7 now.
+
+Step 5: Build the MacOS X installer
+Get bibledesktop-web/src/web/stable/BibleDesktop-v1.0.8.dmg
+Open it to get a copy of the BibleDesktop.app
+Get a copy of the previous BibleDesktop.app from the previous dmg.
+Replace BibleDesktop.app/Contents/info.plist with bibledesktop/etc/installer/macosx/info.plist
+Replace all the jar files in BibleDesktop.app/Contents/Resources/Java with those from bibledesktop/target/installed
+Control(Right) Click on the BibleDesktop dmg and Open With Disk Utility.
+Convert the dmg to read/write, mount and open it.
+Copy the modified BibleDesktop.app into the opened, r/w disk image.
+Eject the disk image.
+Convert it to a compressed image and take the opportunity to rename it.
+Save it into the bibledesktop/etc/installers/macosx directory, temporarily.
+Don't check in the disk image.
+Verify that the installer works.
+You can perform part of step 7 now.
+
+Step 6: Build the Linux installers
+(None at this time)
+
+Step 7: Copy the release files to stable
+Delete all the files in bibledesktop-web/src/web/stable
+Copy the following to bibledesktop-web/src/web/stable
+	All the files in bibledesktop/target/installed
+Move the following to bibledesktop-web/src/web/stable
+	From bibledesktop/etc/installer/macosx copy BibleDesktop-v1.0.9.dmg
+	From bibledesktop/etc/installer/win32 copy BibleDesktop.exe and BibleDesktopSetup.exe
+	From bibldesktop/etc/installers/rpm copy ??? (rpm and deb files)
+Update bibledesktop-web/src/web/stable/bibledesktop-1.0.9.jnlp with the following
+	codebase="http://www.crosswire.org/bibledesktop/stable"
+	href="http://www.crosswire.org/bibledesktop"
+

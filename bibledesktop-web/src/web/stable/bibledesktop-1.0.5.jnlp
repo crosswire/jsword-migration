@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+" codebase="http://www.crosswire.org/bibledesktop/stable" href="bibledesktop-1.0.5.jnlp">
+
+  <information>
+    <title>Bible Desktop v.1.0.5</title>
+    <vendor>Crosswire Bible Society</vendor>
+    <homepage href="http://www.crosswire.org/bibledesktop/stable"/>
+    <description>Bible Desktop - Bible Study Software based on the Sword project</description>
+    <description kind="short">Bible Desktop is a Bible study package available over the internet</description>
+    <description kind="tooltip">Bible Desktop Application</description>
+    <icon href="icon32.gif"/>
+    <icon kind="splash" href="icon64.gif"/>    
+    <offline-allowed/>
+    <shortcut online="false"> 
+      <desktop/> 
+      <menu submenu="Bible Desktop"/> 
+    </shortcut> 
+  </information>
+
+  <security>
+    <!--
+    We need disk io to read installed Sword Bibles,
+    network access to install new ones, and the ability to read system vars
+    I'm not sure there is much point in asking for less that everything
+    -->
+    <all-permissions/>
+  </security>
+
+  <resources>
+    <j2se version="1.4+"/>
+    <jar href="bibledesktop-1.0.5.jar"/>
+    <jar href="jsword-1.0.5.jar"/>
+    <jar href="jsword-common-1.0.5.jar"/>
+    <jar href="jsword-common-swing-1.0.5.jar"/>
+    <jar href="javatar-2.5.jar"/>
+    <jar href="jdom-1.0.jar"/>
+    <jar href="commons-codec-1.3.jar"/>
+    <jar href="commons-httpclient-3.0.1.jar"/>
+    <jar href="commons-logging-1.1.jar"/>
+    <jar href="commons-net-1.4.1.jar"/>
+    <jar href="lucene-core-2.0.0.jar"/>
+    <jar href="jlfgr-1_0.jar"/>
+    <property name="apple.laf.useScreenMenuBar" value="true"/>
+    <property name="com.apple.mrj.application.apple.menu.about.name" value="BibleDesktop"/>
+  </resources>
+
+  <application-desc main-class="org.crosswire.bibledesktop.desktop.Desktop"/>
+
+</jnlp>
