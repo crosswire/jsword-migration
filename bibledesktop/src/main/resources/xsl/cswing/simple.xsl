@@ -1037,6 +1037,10 @@
     <xsl:value-of select="@marker"/>
   </xsl:template>
 
+  <xsl:template match="milestone[@type = 'line']"><br/></xsl:template>
+
+  <xsl:template match="milestone[@type = 'line']" mode="jesus"><br/></xsl:template>
+
   <!--
     == Milestone start and end are deprecated.
     == At this point we expect them to not be in the document.
