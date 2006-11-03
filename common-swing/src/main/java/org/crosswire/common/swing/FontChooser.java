@@ -250,12 +250,21 @@ public class FontChooser extends JPanel
         protected CustomComboBoxModel()
         {
             String[] names = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-            // For older JDKs use: font_names = getToolkit().getFontList();
+
             fonts = new Font[names.length];
 
             for (int i = 0; i < fonts.length; i++)
             {
-                fonts[i] = new Font(names[i], Font.PLAIN, RENDERED_FONT_SIZE);
+                // We need to exclude certain fonts that cause the JVM to crash.
+                // See Bug Parade 6376296
+                // It will be fixed in Java 1.6 (Mustang)
+                if(names[i].equals("padmaa") || names[i].equals("Rekha") || names[i].indexOf("Lohit") > -1 || names[i].indexOf("aakar") > -1) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                {
+                    continue;
+                }
+
+                // Add good fonts to total font listing
+                fonts[fontCount++] = new Font(names[i], Font.PLAIN, RENDERED_FONT_SIZE);
             }
         }
 
@@ -281,7 +290,7 @@ public class FontChooser extends JPanel
          */
         public int getSize()
         {
-            return fonts.length;
+            return fontCount;
         }
 
         /* (non-Javadoc)
@@ -293,7 +302,12 @@ public class FontChooser extends JPanel
         }
 
         /**
-         * An array of the fonts themselves
+         * The total number of fonts. Note, this may be less than or equal to fonts.length.
+         */
+        private int fontCount;
+
+        /**
+         * An array of the fonts themselves. Note the array is as big as the total number of fonts in the system.
          */
         private Font[] fonts;
 
@@ -329,7 +343,7 @@ public class FontChooser extends JPanel
             {
                 Font afont = (Font) value;
                 setText(afont.getFamily());
-                setFont(afont);
+                setFont(DEFAULT_FONT.getFont()); // afont); // Some fonts cannot display their own name.
             }
 
             return this;
