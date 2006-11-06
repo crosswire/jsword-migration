@@ -161,8 +161,6 @@ public class ActionFactory implements ActionListener
     {
         Action action = getAction(key);
 
-        assert action != null : "Missing resource: " + key; //$NON-NLS-1$
-
         JLabel label = new JLabel();
         if (action != null)
         {

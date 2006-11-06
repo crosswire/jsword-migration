@@ -483,7 +483,13 @@ public class SitePane extends JPanel
                 bookSelected = true;
             }
         }
+
         display.setBook(book);
+
+        if (book == null)
+        {
+            return;
+        }
 
         boolean canInstall = bookSelected && book.isSupported();
         IndexManager imanager = IndexManagerFactory.getIndexManager();

@@ -245,20 +245,16 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
             return;
         }
 
-        Key key = null;
         try
         {
-            key = dict.getKey(data);
+            Key key = dict.getKey(data);
+            lstEntries.setSelectedValue(key, true);
         }
         catch (NoSuchKeyException ex)
         {
-            key = null;
+            return;
         }
 
-        if (key != null)
-        {
-            lstEntries.setSelectedValue(key, true);
-        }
     }
 
     /**
