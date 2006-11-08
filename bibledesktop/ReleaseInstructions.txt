@@ -9,6 +9,7 @@ Change org.crosswire.bibledesktop.desktop.Msg.properties Desktop.Version=1.0.9
 In the ant file common/core.xml change to <property name="release.version" value="1.0.9"/>
 Update bibledesktop/etc/installer/macosx/info.plist. The release number is repeated many times.
 Update bibledesktop/etc/installer/win32/BibleDesktop.nsi PROCUCT_VERSION "1.09"
+Update bibledesktop-web/src/web/download.html.
 
 Step 2: Update the release files for the current jar names.
 Update bibledesktop/etc/installer/macosx/info.plist
@@ -61,3 +62,8 @@ Update bibledesktop-web/src/web/stable/bibledesktop-1.0.9.jnlp with the followin
 	codebase="http://www.crosswire.org/bibledesktop/stable"
 	href="http://www.crosswire.org/bibledesktop"
 
+Public Relations:
+	Create the announcements:
+		http://www.crosswire.org/sword/admin/news (userid and password required)
+		jsword-web/src/web/change.html with a detailed list of changes
+		jsword-web/src/web/news.html with a short announcement

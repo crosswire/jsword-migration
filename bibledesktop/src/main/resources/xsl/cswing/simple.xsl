@@ -828,14 +828,28 @@
   
   <xsl:template match="figure">
     <div class="figure">
-      <img src="{concat($baseURL, @src)}"/>   <!-- FIXME: Not necessarily an image... -->
+      <xsl:choose>
+        <xsl:when test="starts-with(@src, '/')">
+          <img src="{concat($baseURL, @src)}"/>   <!-- FIXME: Not necessarily an image... -->
+        </xsl:when>
+        <xsl:otherwise>
+          <img src="{concat($baseURL, '/',  @src)}"/>   <!-- FIXME: Not necessarily an image... -->
+        </xsl:otherwise>
+      </xsl:choose>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
   
   <xsl:template match="figure" mode="jesus">
     <div class="figure">
-      <img src="{concat($baseURL, @src)}"/>  <!-- FIXME: Not necessarily an image... -->
+      <xsl:choose>
+        <xsl:when test="starts-with(@src, '/')">
+          <img src="{concat($baseURL, @src)}"/>   <!-- FIXME: Not necessarily an image... -->
+        </xsl:when>
+        <xsl:otherwise>
+          <img src="{concat($baseURL, '/',  @src)}"/>   <!-- FIXME: Not necessarily an image... -->
+        </xsl:otherwise>
+      </xsl:choose>
       <xsl:apply-templates mode="jesus"/>
     </div>
   </xsl:template>
