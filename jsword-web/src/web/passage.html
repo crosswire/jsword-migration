@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <title>JSword - Passage Recognition</title>
+</head>
+
+<body>
+
+<img src="images/passage.png"/>
+
+<h2>Legend</h2>
+<p>The diagram consists of States and Transitions.</p>
+<table>
+<tr><td>States:</td></tr>
+<tr><td>Gold</td><td>Start of the recognition of a passage.</td></tr>
+<tr><td>Light Blue</td><td>Found a Book, Chapter or Verse.</td></tr>
+<tr><td>Magenta</td><td>An intermediate state</td></tr>
+<tr><td></td></tr>
+<tr><td>Transitions:</td></tr>
+<tr><td>n (red)</td><td>a sequence of digits</td></tr>
+<tr><td>w (blue)</td><td>a sequence of letters</td></tr>
+<tr><td>s (black)</td><td>a single separator, such as . or :</td></tr>
+<tr><td>r (green)</td><td>a single range character, such as -</td></tr>
+<tr><td>t (green)</td><td>a single terminator character, such as , or ;</td></tr>
+</table>
+? - means optional
+<h2>Introduction</h2>
+<p>
+At the heart of Bible software is a passage recognition system.
+Biblical references are defined in terms of books, chapters and verses.
+A reference may be just a book, a book and a chapter, or a book, chapter and verse.
+A range starts with one reference and ends with another.
+A passage is a collection of these references.
+</p>
+<p>
+A passage recognition system is trivial if every reference is completely formed.
+A trivial system would be inflexible for the names of the books of the Bible.
+If an exact match is found, then the book is known. So Genesis would not be found
+with Gen, GENESIS, genesis, or anything else.
+To specify a chapter, a book name would be followed by a single space and then the chapter number.
+To sepecify a verse, the chapter reference would be followed by a colon, ':', and then the verse number.
+</p>
+<p>
+The goal of a passage recognition system is to understand all passages that people would.
+A trivial passage recognition system is not reasonable.
+Some books of the Bible have more than one name.
+Most published references use abbreviations.
+Most people will abbreviate references too.
+And there are no universal accepted set of abbreviations.
+</p>
+<p>
+A passage of multiple references increases complexity. For example, Gen 1-2 refers to all of Genesis chapter 1 and 2.
+While, Gen 1:1-2 refers to the first 2 verses of Genesis. Most people would assume that Gen 1 3 would refer to Gen 1:3.
+</p>
+<h2>Details, Details</h2>
+<h3>Token stream</h3>
+<p>
+The first thing that is done with a passage is to break it on whitespace into a token stream.
+These are then fed into the passage recognizer, beginning at the Gold circle. So for a passage to be
+recognized it needs to start with a book name.
+</p>
+<h3>Book name recognition</h3>
+<p>
+The names of most of the books of the Bible are a single word, such as John.
+But some are several words, such as Song of Songs, which is also known as Canticle of Canticles.
+Some are part of a numbered series: 1 Corinthians or II Corinthians.
+In some languages the number is followed by a '.' as in 1. Moses.
+Names may be abbreviated by simple truncation, such as 1 Cor or 1co.
+Or abbreviated in other ways Jn for John, Jas for James, SOS for Songs.
+</p>
+<p>
+In the diagram, a book name may begin with a leading number, and is followed by an optional punctuation and a sequence of one or more words.
+From an ease of programming, a reasonable compromise is to gather everything until a digit, range character or a sepaator is found.
+</p>
+<p>
+The diagram allows for a name of one book to be followed without a separator by another as in "Gen Lev."
+This has to be distinguished from books with multi-word names as in "Gen Song of Songs Mal".
+</p>
+<h3>Chapter recognition</h3>
+<p>
+When a number follows a book name, it seems fairly easy to know that it is a chapter.
+However, if is for a single chapter book, it probably is the verse, as in Jude 3.
+So Jude 1 could either all of Jude as in Jude, chapter 1, or to the first verse of Jude.
+As a practical matter, Jude 1 should be disambiguated to the first verse of Jude.
+But it is equally permissible for it to be written as Jude 1:3.
+</p>
+<p>
+What this points out is past the book name everything needs too be interpreted in terms of its contextual basis.
+The context of a chapter is its book. An example where that comes into play:<br/>
+Gen 1,3 - Gen is the context of 1 and because 1 has no verse, the 3 is a chapter as well.
+</p>
+<h3>Verse recognition</h3>
+<p>
+When a number follows a chapter number, it might also seem to be a trivial identification.
+But there odd, very rare situatons where that does not work (e.g. Gen 2 2 Peter)
+A number that follows a verse number typically is a verse number, For example:<br/>
+Gen 2 3 5 - should be understood as Gen 2:3,5.
+</p>
+<h3>Non Contiguous Chapters and Verses.</h3>
+<p>
+</p>
+</body>
+</html>
