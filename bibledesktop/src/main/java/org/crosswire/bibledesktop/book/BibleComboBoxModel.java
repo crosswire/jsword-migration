@@ -205,7 +205,6 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
             int book = old.getBook();
             int verse = old.getVerse();
 
-            
             verse = Math.min(verse, BibleInfo.versesInChapter(book, chapter));
 
             Verse update = new Verse(book, chapter, verse);
