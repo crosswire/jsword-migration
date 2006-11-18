@@ -26,8 +26,10 @@ Check in any files that changed.
 Re-execute the ant if any files changed.
 
 Step 4: Build the Windows installer
-Right click on bibledesktop/etc/installer/win32/BibleDesktop.nsi and compile the NSIS script.
-(You need to be in Windows with NSIS installed)
+Right click on bibledesktop/etc/installer/win32/BibleDesktopSetup.nsi and compile the NSIS script.
+You need to be in Windows with NSIS installed.
+This installer also requires the InetLoad plugin available here:
+	http://nsis.sourceforge.net/InetLoad
 Verify that the installer works.
 You can perform part of step 7 now.
 
