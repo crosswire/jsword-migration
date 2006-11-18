@@ -180,17 +180,10 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
             int chapter = old.getChapter();
             int verse = old.getVerse();
 
-            if (BibleInfo.chaptersInBook(book) < chapter)
-            {
-                chapter = 1;
-            }
+            chapter = Math.min(chapter, BibleInfo.chaptersInBook(book));
+            verse = Math.min(verse, BibleInfo.versesInChapter(book, chapter));
 
-            if (BibleInfo.versesInChapter(book, chapter) < verse)
-            {
-                verse = 1;
-            }
-
-            Verse update = new Verse(book, chapter, verse, true);
+            Verse update = new Verse(book, chapter, verse);
             set.setViewedVerse(update);
         }
         catch (NoSuchVerseException ex)
@@ -212,12 +205,10 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
             int book = old.getBook();
             int verse = old.getVerse();
 
-            if (BibleInfo.versesInChapter(book, chapter) < verse)
-            {
-                verse = 1;
-            }
+            
+            verse = Math.min(verse, BibleInfo.versesInChapter(book, chapter));
 
-            Verse update = new Verse(book, chapter, verse, true);
+            Verse update = new Verse(book, chapter, verse);
             set.setViewedVerse(update);
         }
         catch (NoSuchVerseException ex)
@@ -231,9 +222,16 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
      */
     public void setVerse(int verse)
     {
-        Verse old = set.getVerse();
-        Verse update = new Verse(old.getBook(), old.getChapter(), verse, true);
-        set.setViewedVerse(update);
+        try
+        {
+            Verse old = set.getVerse();
+            Verse update = new Verse(old.getBook(), old.getChapter(), verse);
+            set.setViewedVerse(update);
+        }
+        catch (NoSuchVerseException ex)
+        {
+            assert false : ex;
+        }
     }
 
     /* (non-Javadoc)
