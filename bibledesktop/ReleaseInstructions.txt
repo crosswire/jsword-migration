@@ -64,8 +64,31 @@ Update bibledesktop-web/src/web/stable/bibledesktop-1.0.9.jnlp with the followin
 	codebase="http://www.crosswire.org/bibledesktop/stable"
 	href="http://www.crosswire.org/bibledesktop"
 
+Step 8: Clean checkout on the crosswire server
+Log in to the crosswire server
+Check ~jsword/bibledesktop/html/stable for the *1.0.9* files.
+They should match the files listed in BibleDesktop.jnlp.
+Remove any old or unused jars. This is important as they will otherwise be packaged via ant.
+Put ~jsword/bin in your path.
+Run ~jsword/bin/cleanCheckout.sh.
+Run ~jsword/bin/build.sh all release.final
+Check ~ftp/pub/jsword/release for the *1.0.9* files.
+They should match the *1.0.8* files. Fix as needed.
+
+Step 9: Verify the install.
+Go to www.crosswire.org/bibledesktop/download.html
+Check that the Mac installer works on a Mac.
+Check that the Windows installer works on Windows, without Java and also with Java.
+Check that Java WebStart works on a Mac, on Windows *or* on linux, with Java installed.
+
+Step 10: Tag the release in svn
+Wait a few days to see if there are any problems that need to be fixed.
+If so, fix the problems and re-release with the same version number.
+svn tag http://www.crosswire.org/svn/jsword/trunk http://www.crosswire.org/svn/jsword/tags/R1.0.9
+
 Public Relations:
 	Create the announcements:
 		http://www.crosswire.org/sword/admin/news (userid and password required)
 		jsword-web/src/web/change.html with a detailed list of changes
 		jsword-web/src/web/news.html with a short announcement
+	Send an announcement to jsword-devel, bibledesktop-announce and bibldesktop-users
