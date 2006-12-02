@@ -78,15 +78,10 @@ public class MainFrame extends JFrame {
     /**Construct the frame*/
     public MainFrame() {
         enableEvents(AWTEvent.WINDOW_EVENT_MASK);
-        try {
-            jbInit();
-        }
-        catch(Exception e) {
-            e.printStackTrace(System.err);
-        }
+        jbInit();
     }
     /**Component initialization*/
-    private void jbInit() throws Exception  {
+    private void jbInit() {
         //setIconImage(Toolkit.getDefaultToolkit().createImage(Frame1.class.getResource("[Your Icon]")));
         contentPane = (JPanel) this.getContentPane();
         contentPane.setLayout(borderLayout1);
