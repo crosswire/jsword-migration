@@ -6,7 +6,6 @@
 !define PRODUCT_NAME "BibleDesktop"
 !define PRODUCT_VERSION "1.0.5"
 !define CLASS "org.crosswire.bibledesktop.desktop.Desktop"
-!define JAVALIB "$EXEDIR"
 
 !define JRE_VERSION "1.5.0"
 !define JRE_URL "http://dlc.sun.com/jdk/jre-1_5_0_01-windows-i586-p.exe"
@@ -14,6 +13,7 @@
 SetCompressor lzma
 
 Var HasJRE
+Var JavaLIB
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 Caption "${PRODUCT_NAME} ${PRODUCT_VERSION}"
@@ -26,27 +26,39 @@ ShowInstDetails nevershow
 
 Section ""
 
-  Call BuildClassPath
-  Pop $R1
-
   Call FindJRE
   Pop $R0
 
+  ${If} $R0 == "No"
+    MessageBox MB_OK "Could not find Java.$\rPlease install Java and try again."
+    Quit
+  ${EndIf}
+
+  StrCpy $JavaLib "$EXEDIR"
+  Call BuildClassPath
+  Pop $R1
+
+  ${If} $R1 == ""
+    StrCpy $JavaLib "$EXEDIR/lib"
+    Call BuildClassPath
+    Pop $R1
+  ${EndIF}
+
   StrCpy $0 '"$R0" -classpath "$R1" ${CLASS}'
 
-ClearErrors
-FileOpen $1 $EXEDIR\java.log w
-IfErrors done
-FileWrite $1 $0
-FileClose $1
-done:
+;ClearErrors
+;FileOpen $1 $EXEDIR\java.log w
+;IfErrors done
+;FileWrite $1 $0
+;FileClose $1
+;done:
 
   SetOutPath $EXEDIR
   Exec $0
 SectionEnd
 
 Function BuildClassPath
-; Builds the class path with all the jars in JAVALIB
+; Builds the class path with all the jars in JavaLib
 ; and puts the results on the stack.
 
   ; save state
@@ -58,13 +70,13 @@ Function BuildClassPath
   StrCpy $R0 ""
   
   ; Iterate over all the jar files in JAVALIB
-  FindFirst $R1 $R2 "${JAVALIB}\*.jar"
+  FindFirst $R1 $R2 "$JavaLib\*.jar"
   ${Unless} ${Errors}
     ${Do}
       ${If} $R0 == ""
-        StrCpy $R0 "${JAVALIB}\$R2"
+        StrCpy $R0 "$JavaLib\$R2"
       ${Else}
-        StrCpy $R0 "$R0;${JAVALIB}\$R2"
+        StrCpy $R0 "$R0;$JavaLib\$R2"
       ${EndIf}
       FindNext $R1 $R2
     ${LoopUntil} ${Errors}
@@ -78,7 +90,7 @@ Function BuildClassPath
 FunctionEnd
 
 Function .onInit
-  Call DetectJRE
+  Call FindJRE
   pop $HasJRE
 
   ${If} $HasJRE == "No"
@@ -89,7 +101,7 @@ Function .onInit
 FunctionEnd
 
 Function GetJRE
-  MessageBox MB_OK "BibleDesktop uses Java ${JRE_VERSION} or later, it will now be downloaded and installed."
+  MessageBox MB_OK "${PRODUCT_NAME} uses Java ${JRE_VERSION} or later, it will now be downloaded and installed."
 
   StrCpy $2 "$TEMP\Java Runtime Environment.exe"
   InetLoad::load /POPUP "Getting Java for ${PRODUCT_NAME}" ${JRE_URL} $2
@@ -98,7 +110,7 @@ Function GetJRE
   ;NSISdl::download /TIMEOUT=30000 ${JRE_URL} $2
   ;Pop $R0 ;Get the return value
   ;StrCmp $R0 "success" +5
-  MessageBox MB_OK "Could not install Java for you. Please install Java from http://www.java.com then re-run BibleDesktop."
+  MessageBox MB_OK "Could not install Java for you. Please install Java from http://www.java.com then re-run ${PRODUCT_NAME}."
   StrCpy $0 "http://www.java.com"
   Call openLinkNewWindow
   Quit
@@ -140,34 +152,13 @@ Function openLinkNewWindow
   Pop $3
 FunctionEnd
 
-
-Function DetectJRE
-  ; Put "Yes" or "No" on the stack
-
-  ; save state
-  push $R0
-
-  ; When the JRE is installed so is Web Start.
-  ; The current version of WebStart is something like 1.4.2_07
-  ; This is more fine grained than Java Runtime Environment
-  ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\Java Web Start" "CurrentVersion"
-
-  ${If} ${JRE_VERSION} S> $R0
-     StrCpy $R0 "No"
-  ${Else}
-     StrCpy $R0 "Yes"
-  ${EndIf}
-
-  ; restore state and put results in R0
-  Exch $R0
-FunctionEnd
-
 Function FindJRE
 ;
 ;  Find JRE (javaw.exe) and put it on the stack
-;  1 - in .\jre directory (JRE Installed with application)
-;  2 - in JAVA_HOME environment variable
-;  3 - in the registry
+;  1 - in ..\Java\Win32\jre*
+;  2 - in .\jre directory (JRE Installed with application)
+;  3 - in JAVA_HOME environment variable
+;  4 - in the registry
 ;  Else an error
 ;
 ;  Note: It is possible that this will find a version of java
@@ -176,8 +167,10 @@ Function FindJRE
   ; save state
   Push $R0
 
-  ${If} ${FileExists} "$EXEDIR\jre\bin\javaw.exe"
-     StrCpy $R0 "$EXEDIR\jre\bin\javaw.exe"
+  ${If} ${FileExists} "$EXEDIR\..\Java\win32\jre\bin\javaw.exe"
+    StrCpy $R0 "$EXEDIR\..\Java\win32\jre\bin\javaw.exe"
+  ${ElseIf} ${FileExists} "$EXEDIR\Java\win32\jre\bin\javaw.exe"
+     StrCpy $R0 "$EXEDIR\Java\win32\jre\bin\javaw.exe"
   ${Else}
     ReadEnvStr $R0 "JAVA_HOME"
     ${If} ${FileExists} "$R0\bin\javaw.exe"
@@ -193,8 +186,7 @@ Function FindJRE
         ${If} ${FileExists} "$R0\bin\javaw.exe"
           StrCpy $R0 "$R0\bin\javaw.exe"
         ${Else}
-          MessageBox MB_OK "Could not find Java.$\rPlease install Java and try again."
-          Quit
+          StrCpy $R0 "No"
         ${EndIf}
       ${EndIf}
     ${EndIf}
