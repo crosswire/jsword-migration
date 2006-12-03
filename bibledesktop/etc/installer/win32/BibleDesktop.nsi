@@ -45,6 +45,8 @@ Section ""
   ${EndIF}
 
   StrCpy $0 '"$R0" -classpath "$R1" ${CLASS}'
+  ; Use the following for USB/CD installs
+  ;StrCpy $0 '"$R0" -classpath "$R1" -Djsword.home="$EXEDIR\JSword" -Dsword.home="$EXEDIR\.." ${CLASS}'
 
 ;ClearErrors
 ;FileOpen $1 $EXEDIR\java.log w
