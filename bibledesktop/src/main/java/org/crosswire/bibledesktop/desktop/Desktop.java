@@ -119,6 +119,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     {
         try
         {
+            Locale.setDefault(new Locale("fa"));
             ThreadGroup group = new CatchingThreadGroup("BibleDesktopUIGroup"); //$NON-NLS-1$
             Thread t = new DesktopThread(group);
             t.start();
