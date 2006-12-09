@@ -242,11 +242,11 @@
   </option>
 -->
 
-<!-- This really only useful for developers, they can uncomment it.
+<!-- This really only useful for developers, they can uncomment it.-->
   <option key="Advanced.AboutDialog.IncludeAdvancedTabs" type="boolean">
     <introspect class="org.crosswire.bibledesktop.desktop.AboutPane" property="Advanced"/>
   </option>
--->
+
 
 <!--  Temporarily remove Blog code
   <option key="WebJournal.Url" type="string" priority="1">
