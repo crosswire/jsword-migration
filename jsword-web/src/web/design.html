@@ -37,14 +37,15 @@
   Before we look at what BookData and Key looks like, a Book will need to be
   able to do 2 other things:<br/>
   Firstly tell us about itself: what it is called, where it comes from and so
-  on - MetaData about the Book itself. Secondly help us to find stuff by searching.
+  on - BookMetaData about the Book itself. Secondly help us to find stuff by searching.
 </p>
 
 <pre>interface Book
 {
     BookData getData(Key ptr);
-    BookMetaData getMetaData();
-    Key search(Search word);
+    String getRawData(Key ptr);
+    BookMetaData getBookMetaData();
+    Key find(SearchRequest request);
 }</pre>
 
 <p>
@@ -62,7 +63,7 @@
   an AbstractFactory:
 </p>
 
-<pre>interface Books
+<pre>interface BookList
 {
     List getBooks();
     List getBooks(BookFilter filter);
@@ -74,15 +75,67 @@
   Both getBooks() methods allow you to iterate over the Books known to the whole
   system (Books), and to Filter out the uninteresting Books. There is a BookFilters
   class that contains a set of default implentations.<br/>
-  The List returned by getBooks() contains BookMetaData objects and not the Books
-  themselves because creating a Book may be a time and memory consuming process
-  (indexes to be loaded etc) So these BookMetaData objects need to be able to
-  give access to the Book they represent.
+  A Book contains BookMetaData, which provides information about a Book:
 </p>
 
-<pre>interface BookMetaData
+<pre>interface BookMetaData extends Comparable
 {
-    Book getBook();
+    // Get various, different ways that this Book is known.
+    String getName();
+    String getInitials();
+    String getOsisID();
+    String getFullName();
+
+    // Get general info about any Book
+    BookCategory getBookCategory();
+    String getLanguage();
+    boolean isLeftToRight();
+    boolean isSupported();
+    boolean isQuestionable();
+
+    // get other information about a book
+    boolean hasFeature(FeatureType feature);
+    Map getProperties();
+    String getProperty(String key);
+
+    ... Other methods ...
+}</pre>
+
+<p>
+  Book largely replicates this interface and it is expected that methods of the same name
+  are delegated to the Book's BookMetaData. The reason for this delegation is that from
+  a developer's perspective, these are integral characteristics of a Book and in most
+  cases there is no reason to care that they are meta data. However, each Sword module
+  has a conf file which contains this information and this is taken as the Book's meta
+  data.
+</p>
+
+<pre>interface Book
+{
+    BookData getData(Key ptr);
+    String getRawData(Key key);
+    BookMetaData getBookMetaData();
+    Key find(SearchRequest request);
+
+    // Get various, different ways that this Book is known.
+    String getName()
+    String getInitials()
+    String getOsisID()
+    String getFullName()
+
+    // Get general info about any Book
+    BookCategory getBookCategory();
+    String getLanguage();
+    boolean isLeftToRight();
+    boolean isSupported();
+    boolean isQuestionable();
+
+    // get other information about a book
+    boolean hasFeature(FeatureType feature);
+    Map getProperties();
+    String getProperty(String key);
+
+    ... Other methods ...
 }</pre>
 
 <p>
