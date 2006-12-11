@@ -461,9 +461,12 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.STATUS_TOGGLE));
         toggle.setSelected(true);
         menuView.add(toggle).addMouseListener(barStatus);
-        toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.JOURNAL_TOGGLE));
-        toggle.setSelected(isWebJournalShowing());
-        menuView.add(toggle).addMouseListener(barStatus);
+
+        // The Journal is turned off for now
+        //toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.JOURNAL_TOGGLE));
+        //toggle.setSelected(isWebJournalShowing());
+        //menuView.add(toggle).addMouseListener(barStatus);
+
         sidebarToggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.SIDEBAR_TOGGLE));
         sidebarToggle.setSelected(isSidebarShowing());
         menuView.add(sidebarToggle).addMouseListener(barStatus);

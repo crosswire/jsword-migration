@@ -170,25 +170,29 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             HyperlinkEvent.EventType type = ev.getEventType();
             JTextPane pane = (JTextPane) ev.getSource();
 
-            String[] parts = getParts(ev.getDescription());
+            String url = ev.getDescription();
+            String[] parts = getParts(url);
             if (type == HyperlinkEvent.EventType.ACTIVATED)
             {
-                String url = ev.getDescription();
-                if (parts[1].charAt(0) == '#')
+                // There are some errors which make an empty url
+                if (parts[1].length() > 0)
                 {
-                    log.debug(MessageFormat.format(SCROLL_TO_URL, new Object[] { url }));
-                    // This must be relative to the current document
-                    // in which case we assume that it is an in page reference.
-                    // We ignore the frame case (example code within JEditorPane
-                    // JavaDoc).
-                    // Remove the leading #
-                    url = url.substring(1);
-                    pane.scrollToReference(url);
-                }
-                else
-                {
-                    // Fully formed, so we hand it off to be processed
-                    fireActivateURL(new URLEvent(this, parts[0], parts[1]));
+                    if (parts[1].charAt(0) == '#')
+                    {
+                        log.debug(MessageFormat.format(SCROLL_TO_URL, new Object[] { url }));
+                        // This must be relative to the current document
+                        // in which case we assume that it is an in page reference.
+                        // We ignore the frame case (example code within JEditorPane
+                        // JavaDoc).
+                        // Remove the leading #
+                        url = url.substring(1);
+                        pane.scrollToReference(url);
+                    }
+                    else
+                    {
+                        // Fully formed, so we hand it off to be processed
+                        fireActivateURL(new URLEvent(this, parts[0], parts[1]));
+                    }
                 }
             }
             else
