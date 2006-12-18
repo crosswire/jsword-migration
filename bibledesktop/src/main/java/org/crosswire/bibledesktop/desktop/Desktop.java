@@ -119,7 +119,6 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     {
         try
         {
-            Locale.setDefault(new Locale("fa"));
             ThreadGroup group = new CatchingThreadGroup("BibleDesktopUIGroup"); //$NON-NLS-1$
             Thread t = new DesktopThread(group);
             t.start();
@@ -144,15 +143,10 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         // ResourceBundles, properties and other resources
         Project project = Project.instance();
 
-        // Splash screen
-        URL predicturl = project.getWritablePropertiesURL(SPLASH_PROPS);
-        Job startJob = JobManager.createJob(Msg.STARTUP_TITLE.toString(), predicturl, true);
-
         // Load the configuration.
         // This has to be done before any gui components are created.
-        // (Other than the splash)
+        // (Including the splash)
         // This includes code that is invoked by it.
-        startJob.setProgress(Msg.STARTUP_CONFIG.toString());
         generateConfig();
 
         // Make this be the root frame of optiondialogs
@@ -160,6 +154,12 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
 
         // Grab errors
         Reporter.grabAWTExecptions(true);
+
+        // Splash screen
+        URL predicturl = project.getWritablePropertiesURL(SPLASH_PROPS);
+        Job startJob = JobManager.createJob(Msg.STARTUP_TITLE.toString(), predicturl, true);
+
+        //startJob.setProgress(Msg.STARTUP_CONFIG.toString());
 
         // Create the Desktop Actions
         actions = new DesktopActions(this);
@@ -773,6 +773,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     public final void generateConfig()
     {
         fillChoiceFactory();
+
         config = new Config(Msg.CONFIG_TITLE.toString());
         Document xmlconfig = null;
         try
