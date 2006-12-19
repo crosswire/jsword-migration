@@ -143,6 +143,30 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         // ResourceBundles, properties and other resources
         Project project = Project.instance();
 
+        // Allow the setting of user.language and user.country to influence the default locale
+        String language = System.getProperty("user.language"); //$NON-NLS-1$
+        String locale = null;
+        if (language != null)
+        {
+            locale = language;
+        }
+
+//        LATER(DMS): support country based locales
+//        String country = System.getProperty("user.country"); //$NON-NLS-1$
+//        if (country != null)
+//        {
+//            if (locale != null)
+//            {
+//                locale += '_';
+//            }
+//            locale += country;
+//        }
+
+        if (locale != null && ! "en".equals(locale)) //$NON-NLS-1$
+        {
+            Locale.setDefault(new Locale(locale));
+        }
+
         // Load the configuration.
         // This has to be done before any gui components are created.
         // (Including the splash)
