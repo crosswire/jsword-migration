@@ -89,7 +89,7 @@ public class PassageListCellRenderer implements ListCellRenderer, Serializable
                 if (text == null)
                 {
                     BookData bdata = bible.getData(range);
-                    String simple = bdata.getVerseText();
+                    String simple = bdata.getCanonicalText();
                     text = "<html><b>" + range.getName() + "</b> " + simple; //$NON-NLS-1$ //$NON-NLS-2$
                     hash.put(range, text);
                 }
