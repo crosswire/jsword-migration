@@ -288,7 +288,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
             modifier.setRanked(rank);
 
             Key results = selected.find(new DefaultSearchRequest(param, modifier));
-            int total = results.getChildCount();
+            int total = results.getCardinality();
             int partial = total;
 
             // we get PassageTallys for rank searches

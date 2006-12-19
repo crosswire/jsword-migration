@@ -51,7 +51,7 @@ public class KeyTreeNode implements TreeNode
      */
     public int getChildCount()
     {
-        return key.getChildCount();
+        return key.getCardinality();
     }
 
     /* (non-Javadoc)

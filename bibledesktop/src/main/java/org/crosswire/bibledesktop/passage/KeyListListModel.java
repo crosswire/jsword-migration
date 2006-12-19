@@ -47,7 +47,7 @@ public class KeyListListModel extends AbstractListModel
      */
     public int getSize()
     {
-        return keys != null ? keys.getChildCount() : 0;
+        return keys != null ? keys.getCardinality() : 0;
     }
 
     /**

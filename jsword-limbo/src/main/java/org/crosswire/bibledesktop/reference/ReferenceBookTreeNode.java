@@ -74,7 +74,7 @@ public class ReferenceBookTreeNode implements TreeNode
      */
     public int getChildCount()
     {
-        return keys.getChildCount();
+        return keys.getCardinality();
     }
 
     /* (non-Javadoc)
