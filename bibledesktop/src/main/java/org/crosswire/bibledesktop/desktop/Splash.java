@@ -41,8 +41,8 @@ import javax.swing.JPanel;
 import javax.swing.JWindow;
 import javax.swing.SwingConstants;
 
-import org.crosswire.common.progress.Job;
 import org.crosswire.common.progress.JobManager;
+import org.crosswire.common.progress.Progress;
 import org.crosswire.common.progress.WorkEvent;
 import org.crosswire.common.progress.WorkListener;
 import org.crosswire.common.progress.swing.JobsProgressBar;
@@ -192,8 +192,8 @@ public class Splash extends JWindow
          */
         public void workProgressed(WorkEvent ev)
         {
-            Job job = ev.getJob();
-            if (job.getPercent() == 0 || job.isFinished())
+            Progress job = ev.getJob();
+            if (job.getWork() == 0 || job.isFinished())
             {
                 Splash.this.pack();
             }

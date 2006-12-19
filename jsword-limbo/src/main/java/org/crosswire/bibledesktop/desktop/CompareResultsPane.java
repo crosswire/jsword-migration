@@ -43,8 +43,8 @@ import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.Document;
 
-import org.crosswire.common.progress.Job;
 import org.crosswire.common.progress.JobManager;
+import org.crosswire.common.progress.Progress;
 import org.crosswire.common.progress.WorkEvent;
 import org.crosswire.common.progress.WorkListener;
 import org.crosswire.common.swing.DocumentWriter;
@@ -334,9 +334,9 @@ public class CompareResultsPane extends JPanel implements Runnable
             {
                 public void run()
                 {
-                    Job job = ev.getJob();
-                    int percent = job.getPercent();
-                    barProgress.setString(job.getStateDescription() + ": (" + percent + "%)"); //$NON-NLS-1$ //$NON-NLS-2$
+                    Progress job = ev.getJob();
+                    int percent = job.getWork();
+                    barProgress.setString(job.getSectionName() + ": (" + percent + "%)"); //$NON-NLS-1$ //$NON-NLS-2$
                     barProgress.setValue(percent);
                 }
             });

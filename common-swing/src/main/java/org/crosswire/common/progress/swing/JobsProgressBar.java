@@ -44,6 +44,7 @@ import javax.swing.SwingUtilities;
 
 import org.crosswire.common.progress.Job;
 import org.crosswire.common.progress.JobManager;
+import org.crosswire.common.progress.Progress;
 import org.crosswire.common.progress.WorkEvent;
 import org.crosswire.common.progress.WorkListener;
 import org.crosswire.common.swing.GuiUtil;
@@ -76,7 +77,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
         Set current = JobManager.getJobs();
         for (Iterator it = current.iterator(); it.hasNext(); )
         {
-            Job job = (Job) it.next();
+            Progress job = (Job) it.next();
             addJob(job);
         }
 
@@ -92,7 +93,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
         {
             public void run()
             {
-                Job job = ev.getJob();
+                Progress job = ev.getJob();
 
                 if (!jobs.containsKey(job))
                 {
@@ -114,7 +115,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
      */
     public void workStateChanged(WorkEvent ev)
     {
-        Job job = (Job) ev.getSource();
+        Progress job = (Job) ev.getSource();
         JobData jobdata = (JobData) jobs.get(job);
         jobdata.workStateChanged(ev);
     }
@@ -122,16 +123,16 @@ public class JobsProgressBar extends JPanel implements WorkListener
     /**
      * Create a new set of components for the new Job
      */
-    /*private*/ final synchronized void addJob(Job job)
+    /*private*/ final synchronized void addJob(Progress job)
     {
-        job.addWorkListener(this);
+        ((Job) job).addWorkListener(this);
 
         int i = findEmptyPosition();
-        log.debug("adding job to panel at " + i + ": " + job.getJobDescription()); //$NON-NLS-1$ //$NON-NLS-2$
+        log.debug("adding job to panel at " + i + ": " + job.getJobName()); //$NON-NLS-1$ //$NON-NLS-2$
 
         JProgressBar progress = new JProgressBar();
         progress.setStringPainted(true);
-        progress.setToolTipText(job.getJobDescription());
+        progress.setToolTipText(job.getJobName());
         progress.setBorder(null);
         progress.setBackground(getBackground());
         progress.setForeground(getForeground());
@@ -161,27 +162,27 @@ public class JobsProgressBar extends JPanel implements WorkListener
     /**
      * Update the job details because it has just progressed
      */
-    protected synchronized void updateJob(Job job)
+    protected synchronized void updateJob(Progress job)
     {
         JobData jobdata = (JobData) jobs.get(job);
 
-        int percent = job.getPercent();
-        jobdata.getProgress().setString(job.getStateDescription() + ": (" + percent + "%)"); //$NON-NLS-1$ //$NON-NLS-2$
+        int percent = job.getWork();
+        jobdata.getProgress().setString(job.getSectionName() + ": (" + percent + "%)"); //$NON-NLS-1$ //$NON-NLS-2$
         jobdata.getProgress().setValue(percent);
     }
 
     /**
      * Remove the set of components from the panel
      */
-    protected synchronized void removeJob(Job job)
+    protected synchronized void removeJob(Progress job)
     {
-        job.removeWorkListener(this);
+        ((Job) job).removeWorkListener(this);
 
         JobData jobdata = (JobData) jobs.get(job);
 
         positions.set(jobdata.getIndex(), null);
         jobs.remove(job);
-        log.debug("removing job from panel: " + jobdata.getJob().getJobDescription()); //$NON-NLS-1$
+        log.debug("removing job from panel: " + jobdata.getJob().getJobName()); //$NON-NLS-1$
 
         this.remove(jobdata.getComponent());
         GuiUtil.refresh(this);
@@ -245,7 +246,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
         /**
          * Simple ctor
          */
-        JobData(Job job, int index, JProgressBar progress)
+        JobData(Progress job, int index, JProgressBar progress)
         {
             this.job = job;
             this.index = index;
@@ -266,7 +267,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
         /**
          * Accessor for the Job
          */
-        Job getJob()
+        Progress getJob()
         {
             return job;
         }
@@ -314,7 +315,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
         {
             if (cancelButton != null)
             {
-                cancelButton.setEnabled(job.isInterruptable());
+                cancelButton.setEnabled(job.isCancelable());
             }
         }
 
@@ -350,7 +351,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
             {
                 public void actionPerformed(ActionEvent ev)
                 {
-                    getJob().interrupt();
+                    getJob().cancel();
                 }
             });
             return cancelButton;
@@ -364,7 +365,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
          */
         private Component decorateProgressBar()
         {
-            if (!job.isInterruptable())
+            if (!job.isCancelable())
             {
                 return progress;
             }
@@ -381,7 +382,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
             return panel;
         }
 
-        private Job job;
+        private Progress job;
         private int index;
         private JProgressBar progress;
         private Component comp;

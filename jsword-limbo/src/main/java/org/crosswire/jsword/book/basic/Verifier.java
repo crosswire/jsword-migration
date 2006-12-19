@@ -25,8 +25,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.crosswire.common.progress.Job;
 import org.crosswire.common.progress.JobManager;
+import org.crosswire.common.progress.Progress;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookException;
@@ -100,7 +100,7 @@ public class Verifier
      */
     public void checkText(Key key, PrintWriter out)
     {
-        Job job = JobManager.createJob(Msg.VERIFY_START.toString(), Thread.currentThread(), false);
+        Progress job = JobManager.createJob(VerifierMsg.VERIFY_START.toString(), Thread.currentThread(), false);
 
         if (key == null)
         {
@@ -108,6 +108,7 @@ public class Verifier
         }
 
         // For every verse in the Bible
+        job.setSectionName(VerifierMsg.VERIFY_VERSES.toString());
         int percent = 0;
         for (Iterator it = key.iterator(); it.hasNext(); )
         {
@@ -128,7 +129,7 @@ public class Verifier
                     // Check - this needs some work
                     if (!text1.equals(text2))
                     {
-                        out.println(Msg.VERIFY_VERSE.toString() + subkey);
+                        out.println(VerifierMsg.VERIFY_VERSE.toString() + subkey);
                         out.println(book1.getName() + ": " + text1); //$NON-NLS-1$
                         out.println(book2.getName() + ": " + text2); //$NON-NLS-1$
                         out.println();
@@ -136,7 +137,7 @@ public class Verifier
                 }
                 catch (Exception ex)
                 {
-                    out.println(Msg.VERIFY_VERSE.toString() + subkey);
+                    out.println(VerifierMsg.VERIFY_VERSE.toString() + subkey);
                     ex.printStackTrace(out);
                     out.println();
                 }
@@ -148,7 +149,7 @@ public class Verifier
                     percent = 100 * verse.getOrdinal() / BibleInfo.versesInBible();
                 }
 
-                job.setProgress(percent, Msg.VERIFY_VERSES.toString());
+                job.setWork(percent);
 
                 // This could take a long time ...
                 Thread.yield();
@@ -165,7 +166,7 @@ public class Verifier
      */
     public void checkPassage(PrintWriter out) throws BookException
     {
-        Job job = JobManager.createJob(Msg.VERIFY_PASSAGES.toString(), Thread.currentThread(), false);
+        Progress job = JobManager.createJob(VerifierMsg.VERIFY_PASSAGES.toString(), Thread.currentThread(), false);
         int count = 0;
         int percent = -1;
 
@@ -182,7 +183,7 @@ public class Verifier
             if (percent != newpercent)
             {
                 percent = newpercent;
-                job.setProgress(percent, Msg.VERIFY_WORDS.toString());
+                job.setWork(percent);
             }
 
             // This could take a long time ...
@@ -207,7 +208,7 @@ public class Verifier
         // Check
         if (!ref1.equals(ref2))
         {
-            out.println(Msg.WORD.toString() + word);
+            out.println(VerifierMsg.VERIFY_WORD.toString() + word);
             out.println(book1.getName() + ": " + ref1); //$NON-NLS-1$
             out.println(book2.getName() + ": " + ref2); //$NON-NLS-1$
             out.println();

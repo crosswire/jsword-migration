@@ -43,8 +43,8 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
-import org.crosswire.common.progress.Job;
 import org.crosswire.common.progress.JobManager;
+import org.crosswire.common.progress.Progress;
 import org.crosswire.common.progress.WorkEvent;
 import org.crosswire.common.progress.WorkListener;
 import org.crosswire.common.swing.GuiUtil;
@@ -71,7 +71,7 @@ public class JobsViewPane extends JPanel implements WorkListener
         Set current = JobManager.getJobs();
         for (Iterator it = current.iterator(); it.hasNext(); )
         {
-            Job job = (Job) it.next();
+            Progress job = (Progress) it.next();
             addJob(job);
         }
     }
@@ -122,18 +122,18 @@ public class JobsViewPane extends JPanel implements WorkListener
     /**
      * Create a new set of components for the new Job
      */
-    /*private*/ final void addJob(final Job job)
+    /*private*/ final void addJob(final Progress job)
     {
         int i = findEmptyPosition();
-        log.debug("adding job to panel at " + i + ": " + job.getJobDescription()); //$NON-NLS-1$ //$NON-NLS-2$
+        log.debug("adding job to panel at " + i + ": " + job.getJobName()); //$NON-NLS-1$ //$NON-NLS-2$
 
         JProgressBar progress = new JProgressBar();
         progress.setStringPainted(true);
         progress.setString("0%"); //$NON-NLS-1$
-        progress.setToolTipText(job.getJobDescription());
+        progress.setToolTipText(job.getJobName());
         progress.setValue(0);
 
-        JLabel label = new JLabel(job.getJobDescription() + ":"); //$NON-NLS-1$
+        JLabel label = new JLabel(job.getJobName() + ":"); //$NON-NLS-1$
 
         // It is clumsy to use an ActionFactory for these buttons,
         // since there is one cancel button per job.
@@ -143,7 +143,7 @@ public class JobsViewPane extends JPanel implements WorkListener
         // 2) not have a mnemonic
         // 3) not have an accelerator
         JButton cancel = new JButton(Msg.CANCEL.toString());
-        if (!job.isInterruptable())
+        if (!job.isCancelable())
         {
             cancel.setEnabled(false);
         }
@@ -169,24 +169,24 @@ public class JobsViewPane extends JPanel implements WorkListener
     /**
      * Update the job details because it have just progressed
      */
-    protected void updateJob(Job job)
+    protected void updateJob(Progress job)
     {
         JobData jobdata = (JobData) jobs.get(job);
 
-        int percent = job.getPercent();
+        int percent = job.getWork();
         jobdata.getProgress().setString(percent + "%"); //$NON-NLS-1$
-        jobdata.getProgress().setToolTipText(job.getStateDescription());
+        jobdata.getProgress().setToolTipText(job.getSectionName());
         jobdata.getProgress().setValue(percent);
     }
 
     /**
      * Remove the set of components from the panel
      */
-    protected void removeJob(Job job)
+    protected void removeJob(Progress job)
     {
         JobData jobdata = (JobData) jobs.get(job);
 
-        log.debug("removing job from panel at " + jobdata.getIndex() + ": " + job.getJobDescription()); //$NON-NLS-1$ //$NON-NLS-2$
+        log.debug("removing job from panel at " + jobdata.getIndex() + ": " + job.getJobName()); //$NON-NLS-1$ //$NON-NLS-2$
 
         positions.set(jobdata.getIndex(), null);
         jobs.remove(job);
@@ -292,7 +292,7 @@ public class JobsViewPane extends JPanel implements WorkListener
          */
         public void run()
         {
-            Job job = event.getJob();
+            Progress job = event.getJob();
 
             if (!pane.jobs.containsKey(job))
             {
@@ -331,7 +331,7 @@ public class JobsViewPane extends JPanel implements WorkListener
         /**
          * @param theJob
          */
-        public CancelListener(Job theJob)
+        public CancelListener(Progress theJob)
         {
             job = theJob;
         }
@@ -341,10 +341,10 @@ public class JobsViewPane extends JPanel implements WorkListener
          */
         public void actionPerformed(ActionEvent ev)
         {
-            job.interrupt();
+            job.cancel();
         }
 
-        private Job job;
+        private Progress job;
     }
     /**
      * A simple struct to group information about a Job
@@ -354,7 +354,7 @@ public class JobsViewPane extends JPanel implements WorkListener
         /**
          * Simple ctor
          */
-        public JobData(Job job, int index, JLabel label, JProgressBar progress, JButton cancel)
+        public JobData(Progress job, int index, JLabel label, JProgressBar progress, JButton cancel)
         {
             this.job = job;
             this.index = index;
@@ -378,7 +378,7 @@ public class JobsViewPane extends JPanel implements WorkListener
         /**
          * Accessor for the job
          */
-        Job getJob()
+        Progress getJob()
         {
             return job;
         }
@@ -415,7 +415,7 @@ public class JobsViewPane extends JPanel implements WorkListener
             return index;
         }
 
-        private Job job;
+        private Progress job;
         private JLabel label;
         private JProgressBar progress;
         private JButton cancel;

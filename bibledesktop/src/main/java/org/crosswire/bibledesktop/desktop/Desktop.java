@@ -67,8 +67,8 @@ import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.config.ChoiceFactory;
 import org.crosswire.common.config.Config;
 import org.crosswire.common.history.History;
-import org.crosswire.common.progress.Job;
 import org.crosswire.common.progress.JobManager;
+import org.crosswire.common.progress.Progress;
 import org.crosswire.common.swing.CatchingThreadGroup;
 import org.crosswire.common.swing.ExceptionPane;
 import org.crosswire.common.swing.FixedSplitPane;
@@ -181,18 +181,18 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
 
         // Splash screen
         URL predicturl = project.getWritablePropertiesURL(SPLASH_PROPS);
-        Job startJob = JobManager.createJob(Msg.STARTUP_TITLE.toString(), predicturl, true);
+        Progress startJob = JobManager.createJob(Msg.STARTUP_TITLE.toString(), predicturl, true);
 
         //startJob.setProgress(Msg.STARTUP_CONFIG.toString());
 
         // Create the Desktop Actions
         actions = new DesktopActions(this);
 
-        startJob.setProgress(Msg.STARTUP_GENERATE.toString());
+        startJob.setSectionName(Msg.STARTUP_GENERATE.toString());
         createComponents();
 
         // Configuration
-        startJob.setProgress(Msg.STARTUP_GENERAL_CONFIG.toString());
+        startJob.setSectionName(Msg.STARTUP_GENERAL_CONFIG.toString());
         // GUI setup
         debug();
         init();

@@ -66,7 +66,7 @@ public abstract class AbstractLocalURLBook
 
         Passage temp = PassageFactory.createPassage(PassageFactory.SPEED);
 
-        Job job = JobManager.createJob("Copying Bible data to new driver", Thread.currentThread(), false);
+        Progress job = JobManager.createJob("Copying Bible data to new driver", Thread.currentThread(), false);
         int percent = -1;
 
         // For every verse in the Bible

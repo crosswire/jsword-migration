@@ -37,8 +37,8 @@ import java.util.TreeMap;
 import org.crosswire.common.activate.Activatable;
 import org.crosswire.common.activate.Activator;
 import org.crosswire.common.activate.Lock;
-import org.crosswire.common.progress.Job;
 import org.crosswire.common.progress.JobManager;
+import org.crosswire.common.progress.Progress;
 import org.crosswire.common.util.FileUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
@@ -88,7 +88,7 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus
         this.book = book;
         this.url = storage;
 
-        Job job = JobManager.createJob(Msg.INDEX_START.toString(), Thread.currentThread(), false);
+        Progress job = JobManager.createJob(Msg.INDEX_START.toString(), Thread.currentThread(), false);
 
         try
         {
@@ -99,7 +99,7 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus
         }
         catch (Exception ex)
         {
-            job.ignoreTimings();
+            job.cancel();
             throw new BookException(Msg.SER_INIT, ex);
         }
         finally
@@ -189,7 +189,7 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.search.AbstractIndex#generateSearchIndex(org.crosswire.common.progress.Job)
      */
-    public void generateSearchIndex(Job job) throws BookException
+    public void generateSearchIndex(Progress job) throws BookException
     {
         // create a word/passage hashmap
         Map matchmap = new HashMap();
@@ -219,7 +219,8 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus
 
             // Fire a progress event?
             int percent = PERCENT_READ + (PERCENT_WRITE * count++ / words) / BibleInfo.versesInBible();
-            job.setProgress(percent, Msg.WRITING_WORDS.toString(word));
+            job.setSectionName(Msg.WRITING_WORDS.toString(word));
+            job.setWork(percent); 
 
             // This could take a long time ...
             Thread.yield();
@@ -232,7 +233,8 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus
         // Store the indexes on disk
         try
         {
-            job.setProgress(PERCENT_READ + PERCENT_WRITE, Msg.SAVING.toString());
+            job.setSectionName(Msg.SAVING.toString());
+            job.setWork(PERCENT_READ + PERCENT_WRITE);
 
             // Save the ascii Passage index
             URL indexurl = NetUtil.lengthenURL(url, FILE_INDEX);
@@ -255,7 +257,7 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus
     /**
      * Dig down into a Key indexing as we go.
      */
-    private void generateSearchIndexImpl(Job job, Key key, Map matchmap) throws BookException
+    private void generateSearchIndexImpl(Progress job, Key key, Map matchmap) throws BookException
     {
         // loop through all the verses
 
@@ -294,7 +296,8 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus
                     percent = PERCENT_READ * verse.getOrdinal() / BibleInfo.versesInBible();
                 }
 
-                job.setProgress(percent, Msg.FINDING_WORDS.toString(sublist.getName()));
+                job.setSectionName(Msg.FINDING_WORDS.toString(sublist.getName()));
+                job.setWork(percent);
 
                 // This could take a long time ...
                 Thread.yield();

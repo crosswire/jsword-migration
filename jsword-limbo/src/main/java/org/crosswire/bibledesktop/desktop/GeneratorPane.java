@@ -48,7 +48,7 @@ import javax.swing.WindowConstants;
 import org.crosswire.bibledesktop.book.BookListCellRenderer;
 import org.crosswire.bibledesktop.book.BooksComboBoxModel;
 import org.crosswire.bibledesktop.book.DriversComboBoxModel;
-import org.crosswire.common.progress.Job;
+import org.crosswire.common.progress.Progress;
 import org.crosswire.common.progress.WorkEvent;
 import org.crosswire.common.progress.WorkListener;
 import org.crosswire.common.swing.EirPanel;
@@ -392,9 +392,9 @@ public class GeneratorPane extends EirPanel
             {
                 public void run()
                 {
-                    Job job = ev.getJob();
-                    int percent = job.getPercent();
-                    barProg.setString(job.getStateDescription() + ": (" + percent + "%)"); //$NON-NLS-1$  //$NON-NLS-2$
+                    Progress job = ev.getJob();
+                    int percent = job.getWork();
+                    barProg.setString(job.getSectionName() + ": (" + percent + "%)"); //$NON-NLS-1$  //$NON-NLS-2$
                     barProg.setValue(percent);
                 }
             });

@@ -44,8 +44,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
-import org.crosswire.common.progress.Job;
 import org.crosswire.common.progress.JobManager;
+import org.crosswire.common.progress.Progress;
 import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.util.Project;
 
@@ -190,9 +190,9 @@ public class DebugPane extends JPanel
             /* @Override */
             public synchronized void run()
             {
-                Job job = JobManager.createJob(predictbase, predicturl, Thread.currentThread(), fake);
+                Progress job = JobManager.createJob(predictbase, predicturl, Thread.currentThread(), fake);
 
-                job.setProgress(0, Msg.DEBUG_STEPS.toString(new Object[] { new Integer(0), new Integer(steps) }));
+                job.setSectionName(Msg.DEBUG_STEPS.toString(new Object[] { new Integer(0), new Integer(steps) }));
                 log.debug("starting test job:"); //$NON-NLS-1$
 
                 for (int i = 1; i <= steps && !Thread.interrupted(); i++)
@@ -206,7 +206,8 @@ public class DebugPane extends JPanel
                         log.warn("Exception while waiting", ex); //$NON-NLS-1$
                     }
 
-                    job.setProgress((i * 100) / steps, Msg.DEBUG_STEPS.toString(new Object[] { new Integer(i), new Integer(steps) }));
+                    job.setWork((i * 100) / steps);
+                    job.setSectionName(Msg.DEBUG_STEPS.toString(new Object[] { new Integer(i), new Integer(steps) }));
                 }
 
                 job.done();

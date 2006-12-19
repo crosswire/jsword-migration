@@ -29,7 +29,7 @@ import java.net.URL;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
-import org.crosswire.common.progress.Job;
+import org.crosswire.common.progress.Progress;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.jsword.book.Book;
@@ -100,7 +100,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller implements Compara
      * @see org.crosswire.jsword.book.install.sword.AbstractSwordInstaller#download(java.lang.String, java.lang.String, java.net.URL)
      */
     /* @Override */
-    protected void download(Job job, String dir, String file, URL dest) throws InstallException
+    protected void download(Progress job, String dir, String file, URL dest) throws InstallException
     {
         FTPClient ftp = new FTPClient();
 
