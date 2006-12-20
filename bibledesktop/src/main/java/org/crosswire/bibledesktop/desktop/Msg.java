@@ -47,13 +47,6 @@ public final class Msg extends MsgBase
     static final Msg UNKNOWN_PROTOCOL = new Msg("Desktop.UnknownProtocol"); //$NON-NLS-1$
     static final Msg BAD_PROTOCOL_URL = new Msg("Desktop.BadProtocolUrl"); //$NON-NLS-1$
 
-    // Strings for the preloading job
-    static final Msg PRELOAD_TITLE = new Msg("Desktop.PreloadTitle"); //$NON-NLS-1$
-    static final Msg PRELOAD_SETUP = new Msg("Desktop.PreloadSetup"); //$NON-NLS-1$
-    static final Msg PRELOAD_DATA = new Msg("Desktop.PreloadData"); //$NON-NLS-1$
-    static final Msg PRELOAD_PROVIDER = new Msg("Desktop.PreloadProvider"); //$NON-NLS-1$
-    static final Msg PRELOAD_STYLE = new Msg("Desktop.PreloadStyle"); //$NON-NLS-1$
-
     // Strings for the startup job
     static final Msg STARTUP_TITLE = new Msg("Desktop.StartupTitle"); //$NON-NLS-1$
     static final Msg STARTUP_CONFIG = new Msg("Desktop.StartupConfig"); //$NON-NLS-1$
