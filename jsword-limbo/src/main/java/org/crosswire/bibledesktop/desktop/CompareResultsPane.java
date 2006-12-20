@@ -88,12 +88,12 @@ public class CompareResultsPane extends JPanel implements Runnable
         txtResults.setColumns(40);
         scrResults.getViewport().add(txtResults, null);
         pnlResults.setLayout(new BorderLayout(5, 5));
-        pnlResults.setBorder(new TitledBorder(Msg.RESULTS_TITLE.toString()));
+        pnlResults.setBorder(new TitledBorder(LimboMsg.RESULTS_TITLE.toString()));
         pnlResults.add(scrResults, BorderLayout.CENTER);
         pnlResults.add(barProgress, BorderLayout.NORTH);
 
         // I18N: migrate this to an ActionFactory
-        btnStop.setText(Msg.RESULTS_START.toString());
+        btnStop.setText(LimboMsg.RESULTS_START.toString());
         btnStop.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent ev)
@@ -115,10 +115,10 @@ public class CompareResultsPane extends JPanel implements Runnable
      */
     public void showInFrame(Frame parent)
     {
-        final JDialog frame = new JDialog(parent, Msg.RESULTS_DIALOG.toString());
+        final JDialog frame = new JDialog(parent, LimboMsg.RESULTS_DIALOG.toString());
 
         // I18N: migrate this to an ActionFactory
-        btnClose = new JButton(Msg.RESULTS_CLOSE.toString());
+        btnClose = new JButton(LimboMsg.RESULTS_CLOSE.toString());
         btnClose.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent ev)
@@ -194,19 +194,19 @@ public class CompareResultsPane extends JPanel implements Runnable
      */
     private void setTitles()
     {
-        lblBible1.setText("<html><b>" + Msg.RESULTS_BOOKS + "</b> " //$NON-NLS-1$ //$NON-NLS-2$
+        lblBible1.setText("<html><b>" + LimboMsg.RESULTS_BOOKS + "</b> " //$NON-NLS-1$ //$NON-NLS-2$
                            + ver.getBible1().getName() + " / " //$NON-NLS-1$
                            + ver.getBible2().getName());
 
-        String compare = "<html><b>" + Msg.RESULTS_COMPARING + "</b> "; //$NON-NLS-1$ //$NON-NLS-2$
+        String compare = "<html><b>" + LimboMsg.RESULTS_COMPARING + "</b> "; //$NON-NLS-1$ //$NON-NLS-2$
         if (checkRef != null)
         {
-            compare += Msg.RESULTS_PASSAGE + "=" + checkRef + ' '; //$NON-NLS-1$
+            compare += LimboMsg.RESULTS_PASSAGE + "=" + checkRef + ' '; //$NON-NLS-1$
         }
 
         if (checkText != null)
         {
-            compare += Msg.RESULTS_WORDS + "=" + (checkText.equals("") ? "*" : checkText); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            compare += LimboMsg.RESULTS_WORDS + "=" + (checkText.equals("") ? "*" : checkText); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         }
 
         lblBible2.setText(compare);
@@ -224,7 +224,7 @@ public class CompareResultsPane extends JPanel implements Runnable
             public void run()
             {
                 // I18N: migrate this to an ActionFactory
-                btnStop.setText(Msg.RESULTS_STOP.toString());
+                btnStop.setText(LimboMsg.RESULTS_STOP.toString());
             }
         });
 
@@ -263,7 +263,7 @@ public class CompareResultsPane extends JPanel implements Runnable
             public void run()
             {
                 // I18N: migrate this to an ActionFactory
-                btnStop.setText(Msg.RESULTS_START.toString());
+                btnStop.setText(LimboMsg.RESULTS_START.toString());
             }
         });
     }

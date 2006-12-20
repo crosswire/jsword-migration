@@ -86,14 +86,14 @@ public class DebugPane extends JPanel
     private void init()
     {
         lblMethod.setLabelFor(cboMethod);
-        lblMethod.setText(Msg.DEBUG_METHOD.toString());
+        lblMethod.setText(LimboMsg.DEBUG_METHOD.toString());
 
         cboMethod.setModel(mdlMethods);
         cboMethod.setRenderer(new CustomListCellRenderer());
 
         // I18N: migrate this to an ActionFactory
-        btnMethod.setText(Msg.DEBUG_GO.toString());
-        btnMethod.setMnemonic(Msg.DEBUG_GO.toString().charAt(0));
+        btnMethod.setText(LimboMsg.DEBUG_GO.toString());
+        btnMethod.setMnemonic(LimboMsg.DEBUG_GO.toString().charAt(0));
         btnMethod.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent ev)
@@ -150,7 +150,7 @@ public class DebugPane extends JPanel
         StringBuffer reply = new StringBuffer();
 
         reply.append('\n');
-        reply.append(Msg.DEBUG_VIEWS.toString());
+        reply.append(LimboMsg.DEBUG_VIEWS.toString());
         int i = 0;
         Iterator it = desktop.getViews().iterator();
         while (it.hasNext())
@@ -192,7 +192,7 @@ public class DebugPane extends JPanel
             {
                 Progress job = JobManager.createJob(predictbase, predicturl, Thread.currentThread(), fake);
 
-                job.setSectionName(Msg.DEBUG_STEPS.toString(new Object[] { new Integer(0), new Integer(steps) }));
+                job.setSectionName(LimboMsg.DEBUG_STEPS.toString(new Object[] { new Integer(0), new Integer(steps) }));
                 log.debug("starting test job:"); //$NON-NLS-1$
 
                 for (int i = 1; i <= steps && !Thread.interrupted(); i++)
@@ -207,7 +207,7 @@ public class DebugPane extends JPanel
                     }
 
                     job.setWork((i * 100) / steps);
-                    job.setSectionName(Msg.DEBUG_STEPS.toString(new Object[] { new Integer(i), new Integer(steps) }));
+                    job.setSectionName(LimboMsg.DEBUG_STEPS.toString(new Object[] { new Integer(i), new Integer(steps) }));
                 }
 
                 job.done();

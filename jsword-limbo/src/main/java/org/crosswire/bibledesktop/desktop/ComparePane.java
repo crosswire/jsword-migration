@@ -81,7 +81,7 @@ public class ComparePane extends EirPanel
         cboBible2.setRenderer(new BookListCellRenderer());
         pnlBibles.setLayout(new BoxLayout(pnlBibles, BoxLayout.Y_AXIS));
         pnlBibles.setAlignmentX((float) 0.5);
-        pnlBibles.setBorder(new TitledBorder(Msg.COMPARE_TITLE.toString()));
+        pnlBibles.setBorder(new TitledBorder(LimboMsg.COMPARE_TITLE.toString()));
         btnGo.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent ev)
@@ -95,24 +95,24 @@ public class ComparePane extends EirPanel
 
         // TODO(joe): don't hard code this, read it from a Book
         txtVerses.setText("Gen-Rev"); //$NON-NLS-1$
-        lblVerses.setText(Msg.COMPARE_VERSES.toString());
+        lblVerses.setText(LimboMsg.COMPARE_VERSES.toString());
         lblVerses.setLabelFor(txtVerses);
         pnlVerses.setLayout(new BorderLayout());
         pnlVerses.add(lblVerses, BorderLayout.WEST);
         pnlVerses.add(txtVerses, BorderLayout.CENTER);
-        txtWords.setToolTipText(Msg.COMPARE_WORDS_TIP.toString());
-        lblWords.setText(Msg.COMPARE_WORDS.toString());
+        txtWords.setToolTipText(LimboMsg.COMPARE_WORDS_TIP.toString());
+        lblWords.setText(LimboMsg.COMPARE_WORDS.toString());
         lblWords.setLabelFor(txtWords);
         pnlWords.setLayout(new BorderLayout());
         pnlWords.add(lblWords, BorderLayout.WEST);
         pnlWords.add(txtWords, BorderLayout.CENTER);
-        pnlUsing.setBorder(new TitledBorder(Msg.COMPARE_USING.toString()));
+        pnlUsing.setBorder(new TitledBorder(LimboMsg.COMPARE_USING.toString()));
         pnlUsing.setLayout(new BoxLayout(pnlUsing, BoxLayout.Y_AXIS));
         pnlUsing.add(pnlVerses, null);
         pnlUsing.add(pnlWords, null);
 
         // I18N: Migrate this to an ActionFactory
-        btnGo.setText(Msg.COMPARE_GO.toString());
+        btnGo.setText(LimboMsg.COMPARE_GO.toString());
         pnlButtons.setLayout(new FlowLayout(FlowLayout.RIGHT));
         pnlButtons.add(btnGo, null);
 
@@ -130,7 +130,7 @@ public class ComparePane extends EirPanel
      */
     public void showInDialog(Component parent)
     {
-        showInDialog(parent, Msg.COMPARE_DIALOG.toString(), false);
+        showInDialog(parent, LimboMsg.COMPARE_DIALOG.toString(), false);
     }
 
     /**
@@ -143,7 +143,7 @@ public class ComparePane extends EirPanel
 
         if (book1.equals(book2))
         {
-            if (JOptionPane.showConfirmDialog(this, Msg.COMPARE_IDENT_QUESTION.toString(), Msg.COMPARE_IDENT_TITLE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
+            if (JOptionPane.showConfirmDialog(this, LimboMsg.COMPARE_IDENT_QUESTION.toString(), LimboMsg.COMPARE_IDENT_TITLE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
             {
                 return;
             }

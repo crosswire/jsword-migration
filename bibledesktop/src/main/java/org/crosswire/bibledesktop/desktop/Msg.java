@@ -45,11 +45,9 @@ public final class Msg extends MsgBase
 
     // Strings for hyperlink urls
     static final Msg UNKNOWN_PROTOCOL = new Msg("Desktop.UnknownProtocol"); //$NON-NLS-1$
-    static final Msg BAD_PROTOCOL_URL = new Msg("Desktop.BadProtocolUrl"); //$NON-NLS-1$
 
     // Strings for the startup job
     static final Msg STARTUP_TITLE = new Msg("Desktop.StartupTitle"); //$NON-NLS-1$
-    static final Msg STARTUP_CONFIG = new Msg("Desktop.StartupConfig"); //$NON-NLS-1$
     static final Msg STARTUP_GENERATE = new Msg("Desktop.StartupGenerate"); //$NON-NLS-1$
     static final Msg STARTUP_GENERAL_CONFIG = new Msg("Desktop.StartupGeneral"); //$NON-NLS-1$
 
@@ -59,12 +57,8 @@ public final class Msg extends MsgBase
 
     // Strings for DesktopAction
     static final Msg NO_HELP = new Msg("DesktopActions.NoHelp"); //$NON-NLS-1$
-    static final Msg NOT_IMPLEMENTED = new Msg("DesktopActions.NotImplemented"); //$NON-NLS-1$
     static final Msg NO_PASSAGE = new Msg("DesktopActions.NoPassage"); //$NON-NLS-1$
     static final Msg SOURCE_MISSING = new Msg("DesktopActions.SourceMissing"); //$NON-NLS-1$
-
-    // Strings for AbstractViewLayout
-    static final Msg UNTITLED = new Msg("AbstractViewLayout.Untitled"); //$NON-NLS-1$
 
     // Strings for AboutPane and Splash
     // The splash image is of an English version of the application
@@ -72,10 +66,7 @@ public final class Msg extends MsgBase
     static final Msg ABOUT_TITLE = new Msg("AboutPane.AboutTitle"); //$NON-NLS-1$
     static final Msg WARRANTY_TAB_TITLE = new Msg("AboutPane.Warranty"); //$NON-NLS-1$
     static final Msg DETAILS_TAB_TITLE = new Msg("AboutPane.Details"); //$NON-NLS-1$
-    static final Msg TASK_TAB_TITLE = new Msg("AboutPane.TaskTabTitle"); //$NON-NLS-1$
-    static final Msg ERROR_TAB_TITLE = new Msg("AboutPane.ErrorTabTitle"); //$NON-NLS-1$
     static final Msg SYSTEM_PROPS_TAB_TITLE = new Msg("AboutPane.SystemPropsTabTitle"); //$NON-NLS-1$
-    static final Msg DEBUG_TAB_TITLE = new Msg("AboutPane.DebugTabTitle"); //$NON-NLS-1$
 
     // Strings for StatusBar
     static final Msg STATUS_DEFAULT = new Msg("StatusBar.StatusDefault"); //$NON-NLS-1$
@@ -83,43 +74,7 @@ public final class Msg extends MsgBase
     // Strings for OptionsAction
     static final Msg CONFIG_TITLE = new Msg("OptionsAction.ConfigTitle"); //$NON-NLS-1$
 
-    // Strings for ComparePane
-    static final Msg COMPARE_DIALOG = new Msg("ComparePane.Dialog"); //$NON-NLS-1$
-    static final Msg COMPARE_IDENT_QUESTION = new Msg("ComparePane.IdentQuestion"); //$NON-NLS-1$
-    static final Msg COMPARE_IDENT_TITLE = new Msg("ComparePane.IdentTitle"); //$NON-NLS-1$
-    static final Msg COMPARE_WORDS = new Msg("ComparePane.Words"); //$NON-NLS-1$
-    // I18N: migrate this to an ActionFactory
-    static final Msg COMPARE_GO = new Msg("ComparePane.Go"); //$NON-NLS-1$
-    static final Msg COMPARE_USING = new Msg("ComparePane.Using"); //$NON-NLS-1$
-    static final Msg COMPARE_WORDS_TIP = new Msg("ComparePane.WordsTip"); //$NON-NLS-1$
-    static final Msg COMPARE_TITLE = new Msg("ComparePane.Title"); //$NON-NLS-1$
-    static final Msg COMPARE_VERSES = new Msg("ComparePane.Verses"); //$NON-NLS-1$
-
-    // Strings for CompareResultsPane
-    static final Msg RESULTS_TITLE = new Msg("CompareResultsPane.Title"); //$NON-NLS-1$
-    // I18N: migrate this to an ActionFactory
-    static final Msg RESULTS_START = new Msg("CompareResultsPane.Start"); //$NON-NLS-1$
-    // I18N: migrate this to an ActionFactory
-    static final Msg RESULTS_CLOSE = new Msg("CompareResultsPane.Close"); //$NON-NLS-1$
-    static final Msg RESULTS_DIALOG = new Msg("CompareResultsPane.Dialog"); //$NON-NLS-1$
-    static final Msg RESULTS_BOOKS = new Msg("CompareResultsPane.Books"); //$NON-NLS-1$
-    static final Msg RESULTS_COMPARING = new Msg("CompareResultsPane.Comparing"); //$NON-NLS-1$
-    static final Msg RESULTS_PASSAGE = new Msg("CompareResultsPane.Passage"); //$NON-NLS-1$
-    static final Msg RESULTS_WORDS = new Msg("CompareResultsPane.Words"); //$NON-NLS-1$
-    // I18N: migrate this to an ActionFactory
-    static final Msg RESULTS_STOP = new Msg("CompareResultsPane.ResultsStop"); //$NON-NLS-1$
-
-    // Strings for DebugPane
-    static final Msg DEBUG_STEPS = new Msg("DebugPane.Steps"); //$NON-NLS-1$
-    static final Msg DEBUG_VIEWS = new Msg("DebugPane.Views"); //$NON-NLS-1$
-    // I18N: migrate this to an ActionFactory
-    static final Msg DEBUG_GO = new Msg("DebugPane.Go"); //$NON-NLS-1$
-    static final Msg DEBUG_METHOD = new Msg("DebugPane.Method"); //$NON-NLS-1$
-
-    // I18N: migrate this to an ActionFactory
-    static final Msg COPY_TO_CLIP = new Msg("ViewSourcePane.CopyToClipboard"); //$NON-NLS-1$
-    // I18N: migrate this to an ActionFactory
-    static final Msg CLOSE = new Msg("ViewSourcePane.Close"); //$NON-NLS-1$
+    // Strings for ViewSourcePane
     static final Msg TEXT_VIEWER = new Msg("ViewSourcePane.TextViewer"); //$NON-NLS-1$
     static final Msg ORIG = new Msg("ViewSourcePane.ORIG"); //$NON-NLS-1$
     static final Msg OSIS = new Msg("ViewSourcePane.OSIS"); //$NON-NLS-1$
