@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Crosswire Common
+Bundle-SymbolicName: org.crosswire.common
+Bundle-Version: 1.0.0
+Bundle-Activator: org.crosswire.common.internal.osgi.Activator
+Bundle-Vendor: crosswire.org
+Bundle-Localization: plugin
+Require-Bundle: com.ice.tar,
+ org.jdom,
+ org.apache.commons.logging,
+ org.apache.commons.codec,
+ org.apache.commons.httpclient,
+ org.apache.commons.net
+Eclipse-AutoStart: true
+Import-Package: org.osgi.framework;version="1.3.0",
+ org.osgi.util.tracker;version="1.3.0"
+Export-Package: gnu.gpl,
+ gnu.lgpl,
+ org.crosswire.common.activate,
+ org.crosswire.common.config,
+ org.crosswire.common.crypt,
+ org.crosswire.common.history,
+ org.crosswire.common.progress,
+ org.crosswire.common.util,
+ org.crosswire.common.xml
