@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Rcp Plug-in
+Bundle-SymbolicName: org.crosswire.jsword.test.rcp; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.crosswire.jsword.test.rcp.RcpPlugin
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ com.ice.tar,
+ org.apache.commons.codec,
+ org.apache.commons.httpclient,
+ org.apache.commons.logging,
+ org.apache.commons.net,
+ org.apache.lucene,
+ org.crosswire.common,
+ org.crosswire.jsword,
+ org.crosswire.jsword.test,
+ org.jdom
+Eclipse-AutoStart: true
