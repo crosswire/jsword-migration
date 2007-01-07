@@ -40,9 +40,21 @@ import org.crosswire.jsword.book.FeatureType;
 import org.crosswire.jsword.book.filter.Filter;
 import org.crosswire.jsword.book.filter.FilterException;
 import org.crosswire.jsword.book.filter.FilterFactory;
+import org.crosswire.jsword.index.IndexManager;
+import org.crosswire.jsword.index.IndexManagerFactory;
 import org.crosswire.jsword.index.IndexStatus;
 import org.crosswire.jsword.index.IndexStatusListener;
+import org.crosswire.jsword.index.lucene.LuceneIndexManager;
+import org.crosswire.jsword.index.lucene.LuceneQueryBuilder;
+import org.crosswire.jsword.index.lucene.LuceneQueryDecorator;
+import org.crosswire.jsword.index.lucene.LuceneSearcher;
+import org.crosswire.jsword.index.query.QueryBuilder;
+import org.crosswire.jsword.index.query.QueryBuilderFactory;
+import org.crosswire.jsword.index.query.QueryDecorator;
+import org.crosswire.jsword.index.query.QueryDecoratorFactory;
 import org.crosswire.jsword.index.search.SearchRequest;
+import org.crosswire.jsword.index.search.Searcher;
+import org.crosswire.jsword.index.search.SearcherFactory;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.jdom.Document;
@@ -65,8 +77,47 @@ public class Activator implements BundleActivator {
 		testCustomFilter(context);
 		testCustomLogger(context);
 		testCustomBookDriver(context);
+        testDefaultIndex(context);
 		System.out.println("Done!");
 		
+	}
+
+	/**
+	 * @param context
+	 */
+	private void testDefaultIndex(BundleContext context) {
+		IndexManager manager = IndexManagerFactory.getIndexManager();
+        if (manager instanceof LuceneIndexManager) {
+            System.out.println("Success: Found the lucene index manager");
+        } else {
+            System.err.println("Error: Could not find the lucene index manager");
+        }
+        
+        QueryBuilder builder = QueryBuilderFactory.getQueryBuilder();
+        if (builder instanceof LuceneQueryBuilder) {
+            System.out.println("Success: Found the lucene query builder");
+        } else {
+            System.err.println("Error: Could not find the lucene query builder");
+        }
+        
+        QueryDecorator decorator = QueryDecoratorFactory.getSearchSyntax();
+        if (decorator instanceof LuceneQueryDecorator) {
+            System.out.println("Success: Found the lucene query decorator");
+        } else {
+            System.err.println("Error: Could not find the lucene query decorator");
+        }
+        
+        try {
+			Searcher searcher = SearcherFactory.createSearcher(new CustomBook());
+            if (searcher instanceof LuceneSearcher) {
+                System.out.println("Success: Found the lucene searcher");
+            } else {
+                System.err.println("Error: Could not find the lucene searcher");
+            }
+		} catch (InstantiationException e) {
+            System.err.println("Error: Failed to create dummy searcher: " + e);
+		}
+
 	}
 
 	/**
@@ -232,118 +283,119 @@ public class Activator implements BundleActivator {
 	}
 	
 	private static final class CustomBook implements Book {
+		private static final class CustomBookMetaData implements BookMetaData {
+			public String getName() {
+				return "mybookmetadata";
+			}
+
+			public BookCategory getBookCategory() {
+				return BookCategory.OTHER;
+			}
+
+			public BookDriver getDriver() {
+				return new CustomBookDriver();
+			}
+
+			public String getLanguage() {
+				return "en";
+			}
+
+			public String getInitials() {
+				return "mybook";
+			}
+
+			public String getOsisID() {
+				return null;
+			}
+
+			public String getFullName() {
+				return null;
+			}
+
+			public boolean isSupported() {
+				return false;
+			}
+
+			public boolean isEnciphered() {
+				return false;
+			}
+
+			public boolean isLocked() {
+				return false;
+			}
+
+			public boolean unlock(String unlockKey) {
+				return false;
+			}
+
+			public String getUnlockKey() {
+				return null;
+			}
+
+			public boolean isQuestionable() {
+				return false;
+			}
+
+			public String getDriverName() {
+				return "mybookdriver";
+			}
+
+			public boolean isLeftToRight() {
+				return false;
+			}
+
+			public boolean hasFeature(FeatureType feature) {
+				return false;
+			}
+
+			public URL getLibrary() {
+				return null;
+			}
+
+			public void setLibrary(URL library) {
+			}
+
+			public URL getLocation() {
+				return null;
+			}
+
+			public void setLocation(URL library) {
+			}
+
+			public Map getProperties() {
+				return null;
+			}
+
+			public String getProperty(String key) {
+				return null;
+			}
+
+			public void putProperty(String key, String value) {
+			}
+
+			public IndexStatus getIndexStatus() {
+				return null;
+			}
+
+			public void setIndexStatus(IndexStatus status) {
+			}
+
+			public Document toOSIS() {
+				return null;
+			}
+
+			public int compareTo(Object o) {
+				if (o == null) {
+					return 1;
+				}
+				if (o.getClass().equals(this.getClass())) {
+					return 0;
+				}
+				return -1;
+			}
+		}
 		public BookMetaData getBookMetaData() {
-			return new BookMetaData() {
-				public String getName() {
-					return "mybookmetadata";
-				}
-
-				public BookCategory getBookCategory() {
-					return BookCategory.OTHER;
-				}
-
-				public BookDriver getDriver() {
-					return new CustomBookDriver();
-				}
-
-				public String getLanguage() {
-					return "en";
-				}
-
-				public String getInitials() {
-					return "mybook";
-				}
-
-				public String getOsisID() {
-					return null;
-				}
-
-				public String getFullName() {
-					return null;
-				}
-
-				public boolean isSupported() {
-					return false;
-				}
-
-				public boolean isEnciphered() {
-					return false;
-				}
-
-				public boolean isLocked() {
-					return false;
-				}
-
-				public boolean unlock(String unlockKey) {
-					return false;
-				}
-
-				public String getUnlockKey() {
-					return null;
-				}
-
-				public boolean isQuestionable() {
-					return false;
-				}
-
-				public String getDriverName() {
-					return null;
-				}
-
-				public boolean isLeftToRight() {
-					return false;
-				}
-
-				public boolean hasFeature(FeatureType feature) {
-					return false;
-				}
-
-				public URL getLibrary() {
-					return null;
-				}
-
-				public void setLibrary(URL library) {
-				}
-
-				public URL getLocation() {
-					return null;
-				}
-
-				public void setLocation(URL library) {
-				}
-
-				public Map getProperties() {
-					return null;
-				}
-
-				public String getProperty(String key) {
-					return null;
-				}
-
-				public void putProperty(String key, String value) {
-				}
-
-				public IndexStatus getIndexStatus() {
-					return null;
-				}
-
-				public void setIndexStatus(IndexStatus status) {
-				}
-
-				public Document toOSIS() {
-					return null;
-				}
-
-				public int compareTo(Object o) {
-					if (o == null) {
-						return 1;
-					}
-					if (o.getClass().equals(this.getClass())) {
-						return 0;
-					}
-					return -1;
-				}
-			};
+			return new CustomBookMetaData();
 		}
 		public void setBookMetaData(BookMetaData bmd) {
 		}
@@ -477,7 +529,7 @@ public class Activator implements BundleActivator {
 		}
 
 		public String getDriverName() {
-			return "my driver";
+			return "mybookdriver";
 		}
 	}
 }
