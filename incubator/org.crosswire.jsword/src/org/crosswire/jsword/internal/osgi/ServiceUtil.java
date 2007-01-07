@@ -20,9 +20,14 @@
  */
 package org.crosswire.jsword.internal.osgi;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 import org.crosswire.common.util.Logger;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -67,6 +72,52 @@ final class ServiceUtil
         return run(new ServiceTracker(context, filter, null), operation);
     }
 
+    /**
+     * This method returns the first service of the given class with the given id value.
+     * 
+     * @param klass The returned service will implement this class. The service must have been
+     * registered under this class name.
+     * @param idName The name of the id property.
+     * @param idValue The value of the id property. 
+     * @return A service that implements a particular class with a particular id, or <code>null</code>
+     * if not found.
+     */
+    public static Object getServiceById(Class klass, String idName, String idValue) {
+        BundleContext context = Activator.currentContext;
+        if (context == null)
+        {
+            //The bundle isn't registered.
+            return null;
+        }
+
+        org.osgi.framework.Filter osgiFilter;
+        try
+        {
+            osgiFilter = FrameworkUtil.createFilter("(&(objectclass=" + klass.getName() + ")(" + idName + "=" + idValue + "))");
+        }
+        catch (InvalidSyntaxException e)
+        {
+            //This will never occur... but in case it does, bail out to the highest level.
+            throw new RuntimeException("Unexpected syntax exception", e);
+        }
+
+        return ServiceUtil.runOperation(context, osgiFilter, new GetServiceOperation());
+    }
+    
+    /**
+     * This method creates a dictionary with a single name-value pair, comprised
+     * of the two given parameters. The returned dictionary is fit for use as a 
+     * service's properties. 
+     * @param idName The name of the id property to associate with a service.
+     * @param idValue The value of the id property to associate with a service. 
+     * @return A dictionary containing a single name-value pair.
+     */
+    public static Dictionary createIdDictionary(String idName, String idValue) {
+        Hashtable properties = new Hashtable();
+        properties.put(idName, idValue);
+        return properties;
+    }
+    
     /**
      * This method runs the operation. The given tracker is converted to a 
      * <code>ServiceContext</code> object and passed to the operation.

@@ -21,10 +21,7 @@
  */
 package org.crosswire.jsword.index.query;
 
-import java.io.IOException;
-
-import org.crosswire.common.util.ClassUtil;
-import org.crosswire.common.util.Logger;
+import org.crosswire.jsword.internal.osgi.IndexRegistry;
 
 /**
  * A Factory class for QueryDecorator.
@@ -47,48 +44,6 @@ public final class QueryDecoratorFactory
      */
     public static QueryDecorator getSearchSyntax()
     {
-        return instance;
-    }
-
-    /**
-     * The singleton
-     */
-    private static QueryDecorator instance;
-
-    /**
-     * The log stream
-     */
-    private static final Logger log = Logger.getLogger(QueryDecoratorFactory.class);
-
-    /**
-     * Setup the instance
-     */
-    static
-    {
-        try
-        {
-            Class impl = ClassUtil.getImplementor(QueryDecorator.class);
-            instance = (QueryDecorator) impl.newInstance();
-        }
-        catch (IOException e)
-        {
-            log.error("create QueryDecorator failed", e); //$NON-NLS-1$
-        }
-        catch (ClassCastException e)
-        {
-            log.error("create QueryDecorator failed", e); //$NON-NLS-1$
-        }
-        catch (ClassNotFoundException e)
-        {
-            log.error("create QueryDecorator failed", e); //$NON-NLS-1$
-        }
-        catch (InstantiationException e)
-        {
-            log.error("create QueryDecorator failed", e); //$NON-NLS-1$
-        }
-        catch (IllegalAccessException e)
-        {
-            log.error("create QueryDecorator failed", e); //$NON-NLS-1$
-        }
+        return IndexRegistry.getDefaultIndexQueryDecorator();
     }
 }

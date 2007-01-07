@@ -21,15 +21,13 @@
  */
 package org.crosswire.jsword.index.search;
 
-import java.io.IOException;
-
-import org.crosswire.common.util.ClassUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.index.Index;
 import org.crosswire.jsword.index.IndexManager;
 import org.crosswire.jsword.index.IndexManagerFactory;
+import org.crosswire.jsword.internal.osgi.IndexRegistry;
 
 /**
  * Factory method for creating a new Searcher.
@@ -57,16 +55,10 @@ public final class SearcherFactory
             IndexManager imanager = IndexManagerFactory.getIndexManager();
             Index index = imanager.getIndex(book);
 
-            Class impl = ClassUtil.getImplementor(Searcher.class);
-            Searcher parser = (Searcher) impl.newInstance();
+            Searcher parser = IndexRegistry.getDefaultIndexSearcher();
             parser.init(index);
 
             return parser;
-        }
-        catch (IOException e)
-        {
-            log.error("createSearcher failed", e); //$NON-NLS-1$
-            throw new InstantiationException();
         }
         catch (BookException e)
         {
@@ -74,16 +66,6 @@ public final class SearcherFactory
             throw new InstantiationException();
         }
         catch (ClassCastException e)
-        {
-            log.error("createSearcher failed", e); //$NON-NLS-1$
-            throw new InstantiationException();
-        }
-        catch (ClassNotFoundException e)
-        {
-            log.error("createSearcher failed", e); //$NON-NLS-1$
-            throw new InstantiationException();
-        }
-        catch (IllegalAccessException e)
         {
             log.error("createSearcher failed", e); //$NON-NLS-1$
             throw new InstantiationException();

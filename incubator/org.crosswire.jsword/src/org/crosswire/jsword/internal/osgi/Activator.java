@@ -45,6 +45,7 @@ public class Activator implements BundleActivator
         //The registries manage the services themselves. 
         FilterRegistry.register(context);
         BookRegistry.register(context);
+        IndexRegistry.register(context);
     }
 
     /**
@@ -55,5 +56,6 @@ public class Activator implements BundleActivator
         Activator.currentContext = null;
         FilterRegistry.unregister(context);
         BookRegistry.unregister(context);
+        IndexRegistry.unregister(context);
     }
 }

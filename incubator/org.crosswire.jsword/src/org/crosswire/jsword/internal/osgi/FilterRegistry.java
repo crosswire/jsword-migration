@@ -20,16 +20,12 @@
  */
 package org.crosswire.jsword.internal.osgi;
 
-import java.util.Hashtable;
-
 import org.crosswire.jsword.book.filter.Filter;
 import org.crosswire.jsword.book.filter.gbf.GBFFilter;
 import org.crosswire.jsword.book.filter.osis.OSISFilter;
 import org.crosswire.jsword.book.filter.plaintext.PlainTextFilter;
 import org.crosswire.jsword.book.filter.thml.THMLFilter;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.InvalidSyntaxException;
 
 /**
  * This class provides Filter-related data to the classes
@@ -49,24 +45,17 @@ public class FilterRegistry
         String filterClassName = Filter.class.getName();
         //don't reuse the same PlainText service object for the two ids, 
         //we want them to be managed separately.
-        context.registerService(filterClassName, new PlainTextFilter(), createFilterProperties("plaintext"));
-        context.registerService(filterClassName, new PlainTextFilter(), createFilterProperties("default"));
-        context.registerService(filterClassName, new GBFFilter(), createFilterProperties("gbf"));
-        context.registerService(filterClassName, new OSISFilter(), createFilterProperties("osis"));
-        context.registerService(filterClassName, new THMLFilter(), createFilterProperties("thml"));
+        context.registerService(filterClassName, new PlainTextFilter(), ServiceUtil.createIdDictionary(ID_FILTER, "plaintext"));
+        context.registerService(filterClassName, new PlainTextFilter(), ServiceUtil.createIdDictionary(ID_FILTER, "default"));
+        context.registerService(filterClassName, new GBFFilter(), ServiceUtil.createIdDictionary(ID_FILTER, "gbf"));
+        context.registerService(filterClassName, new OSISFilter(), ServiceUtil.createIdDictionary(ID_FILTER, "osis"));
+        context.registerService(filterClassName, new THMLFilter(), ServiceUtil.createIdDictionary(ID_FILTER, "thml"));
 
     }
 
     static void unregister(BundleContext context)
     {
         //Nothing to purge.
-    }
-
-    private static Hashtable createFilterProperties(String filterId)
-    {
-        Hashtable properties = new Hashtable();
-        properties.put("filter.id", filterId);
-        return properties;
     }
 
     /**
@@ -81,24 +70,7 @@ public class FilterRegistry
      */
     public static Filter getFilterById(String filterId)
     {
-        BundleContext context = Activator.currentContext;
-        if (context == null)
-        {
-            return null;
-        }
-
-        org.osgi.framework.Filter osgiFilter;
-        try
-        {
-            osgiFilter = FrameworkUtil.createFilter("(&(objectclass=" + Filter.class.getName() + ")(filter.id=" + filterId + "))");
-        }
-        catch (InvalidSyntaxException e)
-        {
-            //This will never occur... but in case it does, bail out to the highest level.
-            throw new RuntimeException("Unexpected syntax exception", e);
-        }
-
-        return (Filter) ServiceUtil.runOperation(context, osgiFilter, new FindFilterOperation());
+        return (Filter) ServiceUtil.getServiceById(Filter.class, ID_FILTER, filterId);
     }
 
     /**
@@ -110,12 +82,7 @@ public class FilterRegistry
     {
         return getFilterById("default");
     }
-
-    private static final class FindFilterOperation implements ServiceOperation
-    {
-        public Object run(OperationContext context) throws Exception
-        {
-            return context.getService();
-        }
-    }
+    
+    private static final String ID_FILTER = "filter.id";
+    
 }

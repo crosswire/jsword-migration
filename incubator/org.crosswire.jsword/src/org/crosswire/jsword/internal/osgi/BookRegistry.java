@@ -23,7 +23,6 @@ package org.crosswire.jsword.internal.osgi;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EventListener;
-import java.util.Hashtable;
 
 import org.crosswire.common.util.EventListenerList;
 import org.crosswire.common.util.Filter;
@@ -32,8 +31,6 @@ import org.crosswire.jsword.book.BookDriver;
 import org.crosswire.jsword.book.readings.ReadingsBookDriver;
 import org.crosswire.jsword.book.sword.SwordBookDriver;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -47,9 +44,6 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public final class BookRegistry
 {
-
-    private static ArrayList books = new ArrayList();
-    private static ServiceTracker driverTracker;
 
     /**
      * This method returns an array of the available
@@ -105,8 +99,9 @@ public final class BookRegistry
     static void register(BundleContext context)
     {
         String bookDriverClassName = BookDriver.class.getName();
-        context.registerService(bookDriverClassName, new SwordBookDriver(), createBookDriverProperties("sword"));
-        context.registerService(bookDriverClassName, new ReadingsBookDriver(), createBookDriverProperties("readings"));
+        context.registerService(bookDriverClassName, new SwordBookDriver(), ServiceUtil.createIdDictionary(ID_BOOKDRIVER, "sword"));
+        context.registerService(bookDriverClassName, new ReadingsBookDriver(), ServiceUtil.createIdDictionary(ID_BOOKDRIVER, "sword"));
+        
         driverTracker = new ServiceTracker(context, bookDriverClassName, null)
         {
             public Object addingService(ServiceReference reference)
@@ -207,44 +202,9 @@ public final class BookRegistry
      */
     public static BookDriver getBookDriverById(String bookDriverId)
     {
-        if (Activator.currentContext == null || bookDriverId == null) {
-            return null;
-        }
-        
-        //Don't use the driverTracker here. Just create a new
-        //OSGi filter and let the framework find a match. 
-        org.osgi.framework.Filter osgiFilter;
-        try
-        {
-            osgiFilter = FrameworkUtil.createFilter("(&(objectclass=" + Filter.class.getName() + ")(bookdriver.id=" + bookDriverId + "))");
-        }
-        catch (InvalidSyntaxException e)
-        {
-            //This will never occur... but in case it does, bail out to the highest level.
-            throw new RuntimeException("Unexpected syntax exception", e);
-        }
-        Object result = ServiceUtil.runOperation(Activator.currentContext, osgiFilter, new ServiceOperation() {
-            public Object run(OperationContext context) throws Exception
-            {
-                return context.getService();
-            }
-        });
-        
-        if (result == null) {
-            //the requested driver wasn't found
-            return null;
-        } 
-        
-        return (BookDriver) result;
+        return (BookDriver) ServiceUtil.getServiceById(BookDriver.class, ID_BOOKDRIVER, bookDriverId);
     }
     
-    private static Hashtable createBookDriverProperties(String bookDriverId)
-    {
-        Hashtable properties = new Hashtable();
-        properties.put("bookdriver.id", bookDriverId);
-        return properties;
-    }
-
     private static BookDriver[] getBookDrivers(Filter filter)
     {
         BundleContext context = Activator.currentContext;
@@ -315,4 +275,9 @@ public final class BookRegistry
             addBooks(driver);
         }
     }
+    
+    private static final String ID_BOOKDRIVER = "bookdriver.id";
+    private static ArrayList books = new ArrayList();
+    private static ServiceTracker driverTracker;
+    
 }
