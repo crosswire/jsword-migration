@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RCP Prototype Plug-in
+Bundle-SymbolicName: org.crosswire.jsword.rcp.prototype; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.crosswire.jsword.rcp.prototype.workbench.PrototypePlugin
+Bundle-Vendor: crosswire.org
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.crosswire.common,
+ org.crosswire.jsword,
+ org.eclipse.ui.forms,
+ org.eclipse.jface.text,
+ org.jdom
+Eclipse-AutoStart: true
