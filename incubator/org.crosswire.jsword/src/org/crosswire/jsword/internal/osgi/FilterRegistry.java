@@ -70,7 +70,7 @@ public class FilterRegistry
      */
     public static Filter getFilterById(String filterId)
     {
-        return (Filter) ServiceUtil.getServiceById(Filter.class, ID_FILTER, filterId);
+        return (Filter) ServiceUtil.getServiceById(Filter.class, ID_FILTER, filterId.toLowerCase());
     }
 
     /**

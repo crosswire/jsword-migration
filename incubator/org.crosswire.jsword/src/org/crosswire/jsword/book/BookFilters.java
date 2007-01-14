@@ -113,8 +113,7 @@ public final class BookFilters
         public boolean test(Book book)
         {
             BookCategory category = book.getBookCategory();
-            return (category.equals(BookCategory.DICTIONARY) || category.equals(BookCategory.GLOSSARY))
-                  && !book.isLocked();
+            return (category.equals(BookCategory.DICTIONARY) || category.equals(BookCategory.GLOSSARY)) && !book.isLocked();
         }
     }
 
@@ -265,6 +264,17 @@ public final class BookFilters
         {
             return book.hasFeature(FeatureType.HEBREW_PARSE) && !book.isLocked();
         }
+    }
+
+    public static BookFilter not(final BookFilter filter)
+    {
+        return new BookFilter()
+        {
+            public boolean test(Book book)
+            {
+                return !filter.test(book);
+            }
+        };
     }
 
     /**
