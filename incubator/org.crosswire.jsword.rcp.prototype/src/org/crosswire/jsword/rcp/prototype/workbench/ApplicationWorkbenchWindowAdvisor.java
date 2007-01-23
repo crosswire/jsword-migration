@@ -49,6 +49,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
         configurer.setShowCoolBar(false);
         configurer.setShowMenuBar(true);
         configurer.setShowStatusLine(false);
+        configurer.setShowPerspectiveBar(true);
         configurer.setTitle("Crosswire RCP Prototype");
     }
 }

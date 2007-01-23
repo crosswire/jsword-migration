@@ -32,6 +32,7 @@ import org.osgi.framework.BundleContext;
 public class PrototypePlugin extends AbstractUIPlugin
 {
 
+    public static final String PLUGIN_ID = "org.crosswire.jsword.rcp.prototype";
     //The shared instance.
     private static PrototypePlugin plugin;
 
@@ -93,6 +94,7 @@ public class PrototypePlugin extends AbstractUIPlugin
         registry.put("image.category." + BookCategory.GLOSSARY, getImageDescriptor("icons/book-g16.gif"));
         registry.put("image.category." + BookCategory.OTHER, getImageDescriptor("icons/book-o16.gif"));
         registry.put("image.category." + BookCategory.QUESTIONABLE, getImageDescriptor("icons/book-o16.gif"));
+        registry.put("image.general.bd16", getImageDescriptor("icons/bd-icon16.gif"));
         return registry;
     }
     /**

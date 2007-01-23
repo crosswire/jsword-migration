@@ -39,6 +39,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor
     private IWorkbenchAction quitAction;
     private IContributionItem viewsItem;
     private IWorkbenchAction aboutAction;
+    private IWorkbenchAction copyAction;
 
     public ApplicationActionBarAdvisor(IActionBarConfigurer configurer)
     {
@@ -55,12 +56,18 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor
         this.aboutAction = ActionFactory.ABOUT.create(window);
         register(aboutAction);
         
+        this.copyAction = ActionFactory.COPY.create(window);
+        register(copyAction);
+        
     }
 
     protected void fillMenuBar(IMenuManager menuBar)
     {
         MenuManager fileManager = new MenuManager("&File", "file");
         fileManager.add(quitAction);
+        
+//        MenuManager editManager = new MenuManager("&Edit", "edit");
+//        editManager.add(copyAction);
         
         MenuManager windowManager = new MenuManager("&Window", "window");
         MenuManager showViewManager = new MenuManager("Show &View", "show.view");
@@ -71,6 +78,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor
         helpManager.add(aboutAction);
         
         menuBar.add(fileManager);
+//        menuBar.add(editManager);
         menuBar.add(windowManager);
         menuBar.add(helpManager);
     }

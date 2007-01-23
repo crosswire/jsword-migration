@@ -19,16 +19,23 @@
  */
 package org.crosswire.jsword.rcp.prototype.views;
 
+import java.util.List;
+
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookException;
+import org.crosswire.jsword.book.BookFilters;
+import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.rcp.prototype.actions.ViewPassageAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
+import org.eclipse.ui.forms.events.HyperlinkEvent;
+import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormText;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
@@ -46,7 +53,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class ContentView extends ViewPart
 {
 
-    public static final String PART_ID = "org.crosswire.jsword.rcp.prototype.contentview";
+	public static final String PART_ID = "org.crosswire.jsword.rcp.prototype.contentview";
     private FormText text;
     private ScrolledForm form;
     private Key currentKey;
@@ -67,6 +74,7 @@ public class ContentView extends ViewPart
         text = toolkit.createFormText(body, false);
         text.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL_GRAB));
         text.setText("", false, false);
+        text.addHyperlinkListener(new HyperLinkListener());
         IWorkbenchPartSite site = getSite();
         keySelectionListener = new KeySelectionListener();
         site.getPage().addPostSelectionListener(KeysView.PART_ID, keySelectionListener);
@@ -78,6 +86,7 @@ public class ContentView extends ViewPart
         site.getPage().removePostSelectionListener(KeysView.PART_ID, keySelectionListener);
         super.dispose();
     }
+
     /**
      * 
      */
@@ -92,12 +101,13 @@ public class ContentView extends ViewPart
     {
         this.currentKey = key;
         ISelection selection = getSite().getWorkbenchWindow().getSelectionService().getSelection(BooksView.PART_ID);
-        if (selection == null || selection.isEmpty() || !(selection instanceof IStructuredSelection)) {
+        if (selection == null || selection.isEmpty() || !(selection instanceof IStructuredSelection))
+        {
             return;
         }
-        
-        Book currentBook = (Book) ((IStructuredSelection)selection).getFirstElement();
-        
+
+        Book currentBook = (Book) ((IStructuredSelection) selection).getFirstElement();
+
         if (currentBook == null || currentKey == null)
         {
             this.form.setText(key.toString());
@@ -112,12 +122,15 @@ public class ContentView extends ViewPart
             FormTextContentHandler handler = new FormTextContentHandler();
             content.getSAXEventProvider().provideSAXEvents(handler);
             String title = handler.getTitle();
-            if (title != null) {
+            if (title != null)
+            {
                 form.setText(title);
-            } else {
+            }
+            else
+            {
                 form.setText(key.toString());
             }
-            text.setText(handler.getFormText(), false, false);
+            text.setText(handler.getFormText(), true, false);
             form.reflow(true);
         }
         catch (BookException e)
@@ -146,7 +159,8 @@ public class ContentView extends ViewPart
         private boolean inDiv;
         private String title;
         private boolean inTitle;
-        
+        private boolean closeReference;
+
 
         private FormTextContentHandler()
         {
@@ -158,38 +172,66 @@ public class ContentView extends ViewPart
          */
         public String getFormText()
         {
-            return buffer.toString();
+            return "<form><p>" + buffer.toString() + "</p></form>";
         }
-        
-        public String getTitle() {
+
+        public String getTitle()
+        {
             return title;
         }
 
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException
         {
-            if (localName.equals("div")) {
+            if (localName.equals("div"))
+            {
                 this.inDiv = true;
-            } else if (localName.equals("title")) {
+            }
+            else if (localName.equals("title"))
+            {
                 this.inTitle = true;
             }
-            
+            else if (localName.equals("reference"))
+            {
+                int refIndex = attributes.getIndex("osisRef");
+                if (refIndex != -1)
+                {
+                    //not all references have osisRef ids
+                    closeReference = true;
+                    String value = attributes.getValue(refIndex);
+                    buffer.append("<a href='").append(value).append("'>");
+                }
+            }
+
         }
 
         public void endElement(String uri, String localName, String qName) throws SAXException
         {
-            if (localName.equals("div")) {
+            if (localName.equals("div"))
+            {
                 this.inDiv = false;
-            } else if (localName.equals("title")) {
+            }
+            else if (localName.equals("title"))
+            {
                 this.inTitle = false;
             }
+            else if (localName.equals("reference") && closeReference)
+            {
+                buffer.append("</a>");
+                closeReference = false;
+            }
+
         }
 
         public void characters(char[] ch, int start, int length) throws SAXException
         {
-            if (inDiv) {
-                if (inTitle) {
+            if (inDiv)
+            {
+                if (inTitle)
+                {
                     title = new String(ch, start, length);
-                } else {
+                }
+                else
+                {
                     buffer.append(ch, start, length);
                 }
             }
@@ -214,4 +256,30 @@ public class ContentView extends ViewPart
             }
         }
     }
+    
+    public class HyperLinkListener implements IHyperlinkListener
+    {
+
+        public void linkEntered(HyperlinkEvent e)
+        {
+        }
+
+        public void linkExited(HyperlinkEvent e)
+        {
+        }
+
+        public void linkActivated(HyperlinkEvent e)
+        {
+            String href = e.getHref().toString();
+            //TODO the user's default or current bible should be managed in a view
+            //or a preference. For now, open the passage in the first installed bible.
+            List bibles = Books.installed().getBooks(BookFilters.getBibles());
+            if (bibles != null && !bibles.isEmpty()) {
+                ViewPassageAction action = new ViewPassageAction(getSite().getWorkbenchWindow(), ((Book)bibles.get(0)).getInitials(), href);
+                action.run();
+            }
+        }
+
+    }
+    
 }

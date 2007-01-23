@@ -19,60 +19,29 @@
  */
 package org.crosswire.jsword.rcp.prototype.editors;
 
-import java.io.InputStream;
 import java.io.StringWriter;
-import java.io.Writer;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Map;
-
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.rcp.prototype.workbench.PrototypePlugin;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.browser.LocationAdapter;
 import org.eclipse.swt.browser.LocationEvent;
-import org.eclipse.swt.browser.LocationListener;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.part.EditorPart;
-import org.jdom.transform.JDOMSource;
 
 /**
  * @author Phillip [phillip at paristano dot org]
  *
  */
-public class PassageEditor extends EditorPart
+public class ClassicHtmlPassageEditor extends AbstractHtmlPassageEditor
 {
+    public static final String PART_ID = "org.crosswire.jsword.rcp.prototype.classichtmlpassageeditor";
 
-    public static final String PART_ID = "org.crosswire.jsword.rcp.prototype.passageeditor";
-    private Browser browser;
-
-    public PassageEditor()
+    public ClassicHtmlPassageEditor()
     {
         super();
-    }
-
-    public void doSave(IProgressMonitor monitor)
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public void doSaveAs()
-    {
-        throw new UnsupportedOperationException();
     }
 
     public void init(IEditorSite site, IEditorInput input) throws PartInitException
@@ -82,21 +51,10 @@ public class PassageEditor extends EditorPart
         setPartName(input.getName());
     }
 
-    public boolean isDirty()
-    {
-        return false;
-    }
 
-    public boolean isSaveAsAllowed()
+    protected void fill(final Browser browser)
     {
-        return false;
-    }
-
-    public void createPartControl(Composite parent)
-    {
-        browser = new Browser(parent, SWT.BORDER | SWT.WRAP);
-        IEditorInput input = getEditorInput();
-        BookData data = (BookData) input.getAdapter(BookData.class);
+        BookData data = (BookData) getEditorInput().getAdapter(BookData.class);
         if (data == null)
         {
             //The editor assumes the input data is valid -- this
@@ -104,6 +62,7 @@ public class PassageEditor extends EditorPart
             //TODO display an error message.
             return;
         }
+        
         StringWriter writer = new StringWriter();
         try
         {
@@ -116,7 +75,8 @@ public class PassageEditor extends EditorPart
             writer.write(e.toString());
         }
         browser.setText(writer.toString());
-        browser.addLocationListener(new LocationListener()
+
+        browser.addLocationListener(new LocationAdapter()
         {
             public void changing(LocationEvent event)
             {
@@ -129,29 +89,6 @@ public class PassageEditor extends EditorPart
                     event.doit = false;
                 }
             }
-
-            public void changed(LocationEvent event)
-            {
-            }
         });
-    }
-
-    public void setFocus()
-    {
-        if (browser != null && !browser.isDisposed())
-        {
-            browser.setFocus();
-        }
-    }
-
-
-    private static void transformBookData(BookData data, InputStream xsl, Writer writer) throws TransformerFactoryConfigurationError,
-                    TransformerException
-    {
-        Source xslSource = new StreamSource(xsl);
-        Transformer transformer = TransformerFactory.newInstance().newTransformer(xslSource);
-        StreamResult result = new StreamResult(writer);
-        Source source = new JDOMSource(data.getOsis());
-        transformer.transform(source, result);
     }
 }

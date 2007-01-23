@@ -19,11 +19,6 @@
  */
 package org.crosswire.jsword.rcp.prototype.views;
 
-import java.util.ArrayList;
-
-import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookCategory;
-import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Books;
 import org.eclipse.jface.viewers.ArrayContentProvider;

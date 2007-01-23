@@ -14,9 +14,15 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            name="Prototype Perspective"
             class="org.crosswire.jsword.rcp.prototype.workbench.ClassicPerspective"
-            id="org.crosswire.jsword.rcp.prototype.classicperspective">
+            icon="icons/bd-icon16.gif"
+            id="org.crosswire.jsword.rcp.prototype.classicperspective"
+            name="Classic Perspective">
+      </perspective>
+      <perspective
+            name="Test Perspective"
+            class="org.crosswire.jsword.rcp.prototype.workbench.TestPerspective"
+            id="org.crosswire.jsword.rcp.prototype.testperspective">
       </perspective>
    </extension>
    <extension
@@ -47,6 +53,10 @@
       <category
             id="org.crosswire.jsword.rcp.prototype.classiccategory"
             name="Classic"/>
+      <view
+            class="org.crosswire.jsword.rcp.prototype.views.PassageNotesView"
+            id="org.crosswire.jsword.rcp.prototype.passagenotesview"
+            name="Passage Notes"/>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
@@ -55,16 +65,29 @@
          <viewShortcut id="org.crosswire.jsword.rcp.prototype.keysview"/>
          <viewShortcut id="org.crosswire.jsword.rcp.prototype.contentview"/>
          <viewShortcut id="org.crosswire.jsword.rcp.prototype.classicsearchview"/>
+         <perspectiveShortcut id="org.crosswire.jsword.rcp.prototype.testperspective"/>
+      </perspectiveExtension>
+      <perspectiveExtension targetID="org.crosswire.jsword.rcp.prototype.testperspective">
+         <viewShortcut id="org.crosswire.jsword.rcp.prototype.booksview"/>
+         <viewShortcut id="org.crosswire.jsword.rcp.prototype.keysview"/>
+         <viewShortcut id="org.crosswire.jsword.rcp.prototype.contentview"/>
+         <perspectiveShortcut id="org.crosswire.jsword.rcp.prototype.classicperspective"/>
       </perspectiveExtension>
    </extension>
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="org.crosswire.jsword.rcp.prototype.editors.PassageEditor"
+            class="org.crosswire.jsword.rcp.prototype.editors.ClassicHtmlPassageEditor"
             default="false"
             icon="icons/book-b16.gif"
-            id="org.crosswire.jsword.rcp.prototype.passageeditor"
-            name="Passage Editor"/>
+            id="org.crosswire.jsword.rcp.prototype.classichtmlpassageeditor"
+            name="Classic Html Passage Editor"/>
+      <editor
+            class="org.crosswire.jsword.rcp.prototype.editors.HtmlPassageEditor"
+            default="false"
+            icon="icons/book-b16.gif"
+            id="org.crosswire.jsword.rcp.prototype.htmlpassageeditor"
+            name="Html Passage Editor"/>
    </extension>
    <extension
          point="org.eclipse.ui.elementFactories">

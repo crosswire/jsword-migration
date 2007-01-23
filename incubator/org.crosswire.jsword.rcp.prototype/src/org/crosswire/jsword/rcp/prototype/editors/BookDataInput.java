@@ -43,11 +43,12 @@ public class BookDataInput implements IEditorInput
     private String bookId;
     private String bookKey;
 
-    public BookDataInput(String bookId, String bookKey) {
+    public BookDataInput(String bookId, String bookKey)
+    {
         this.bookId = bookId;
         this.bookKey = bookKey;
     }
-    
+
     public boolean exists()
     {
         return false;
@@ -68,11 +69,15 @@ public class BookDataInput implements IEditorInput
      */
     public IPersistableElement getPersistable()
     {
-        return new IPersistableElement(){
-            public String getFactoryId() {
+        return new IPersistableElement()
+        {
+            public String getFactoryId()
+            {
                 return InputElementFactory.FACTORY_ID;
             }
-            public void saveState(IMemento memento) {
+
+            public void saveState(IMemento memento)
+            {
                 IMemento child = memento.createChild("input");
                 child.putString("type", INPUT_TYPE);
                 child.putString("bookId", bookId);
@@ -105,13 +110,16 @@ public class BookDataInput implements IEditorInput
      */
     public Object getAdapter(Class adapter)
     {
-        if (adapter.isAssignableFrom(BookDataInput.class)) {
+        if (adapter.isAssignableFrom(BookDataInput.class))
+        {
             return this;
         }
 
-        if (adapter.equals(BookData.class)) {
+        if (adapter.equals(BookData.class))
+        {
             Book book = Books.installed().getBook(bookId);
-            if (book == null) {
+            if (book == null)
+            {
                 //TODO handle this better
                 return null;
             }
@@ -129,4 +137,28 @@ public class BookDataInput implements IEditorInput
         return null;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object obj)
+    {
+        if (obj == this)
+        {
+            return true;
+
+        }
+        if (obj == null || !obj.getClass().equals(BookDataInput.class))
+        {
+            return false;
+        }
+
+        BookDataInput rhs = (BookDataInput) obj;
+
+        return rhs.bookId.equals(this.bookId) && rhs.bookKey.equals(this.bookKey);
+    }
+
+    public int hashCode()
+    {
+        return (bookId.hashCode() << 7) + (bookKey.hashCode() << 3) + 13;
+    }
 }
