@@ -26,12 +26,12 @@
 
 <h1>Bible Desktop</h1>
 <p>
-  The Desktop GUI of J-Sword is called Bible Desktop and it has it's own
+  The Desktop GUI of JSword is called Bible Desktop and it has it's own
   <a href="/bibledesktop/download.html">download page</a>. This provides a WebStart installer and
   installers for Windows, Linux and Apple.
 </p>
 
-<h1>J-Sword</h1>
+<h1>JSword</h1>
 <h2>Stable Release</h2>
 <p>
   If the Bible Desktop installers do not work for you or you want an earlier release,

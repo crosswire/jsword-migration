@@ -90,7 +90,7 @@
 
       <p>
         Related Projects:<br/>
-        <a href="/jsword">J-Sword</a><br/>
+        <a href="/jsword">JSword</a><br/>
         <a href="/sword">Sword</a>
       </p>
 

@@ -162,7 +162,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
 //            locale += country;
 //        }
 
-        if (locale != null && ! "en".equals(locale)) //$NON-NLS-1$
+        if (locale != null && !"en".equals(locale)) //$NON-NLS-1$
         {
             Locale.setDefault(new Locale(locale));
         }
