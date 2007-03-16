@@ -677,7 +677,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
                 Book book = Defaults.getCommentary();
                 if (book != null && Books.installed().getBook(book.getName()) != null)
                 {
-                    reference.selectDictionary(book);
+                    reference.selectBook(book);
                     Key key = reference.getBook().getKey(data);
                     reference.setKey(key);
                 }
@@ -723,7 +723,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         // TODO(DM): If it is not installed, offer to install it.
         if (book != null && Books.installed().getBook(book.getName()) != null)
         {
-            reference.selectDictionary(book);
+            reference.selectBook(book);
             reference.setWord(data);
         }
     }

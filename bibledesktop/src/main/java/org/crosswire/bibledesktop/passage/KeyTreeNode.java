@@ -25,6 +25,7 @@ import java.util.Enumeration;
 
 import javax.swing.tree.TreeNode;
 
+import org.crosswire.common.util.EmptyIterator;
 import org.crosswire.common.util.IteratorEnumeration;
 import org.crosswire.jsword.passage.Key;
 
@@ -51,7 +52,7 @@ public class KeyTreeNode implements TreeNode
      */
     public int getChildCount()
     {
-        return key.getCardinality();
+        return key == null ? 0 : key.getCardinality();
     }
 
     /* (non-Javadoc)
@@ -59,7 +60,7 @@ public class KeyTreeNode implements TreeNode
      */
     public boolean getAllowsChildren()
     {
-        return key.canHaveChildren();
+        return key != null && key.canHaveChildren();
     }
 
     /* (non-Javadoc)
@@ -67,7 +68,7 @@ public class KeyTreeNode implements TreeNode
      */
     public boolean isLeaf()
     {
-        return key.isEmpty();
+        return key == null || key.isEmpty();
     }
 
     /* (non-Javadoc)
@@ -75,7 +76,11 @@ public class KeyTreeNode implements TreeNode
      */
     public Enumeration children()
     {
-        return new IteratorEnumeration(key.iterator());
+        if (key != null)
+        {
+            return new IteratorEnumeration(key.iterator());
+        }
+        return new IteratorEnumeration(new EmptyIterator());
     }
 
     /* (non-Javadoc)
@@ -100,7 +105,7 @@ public class KeyTreeNode implements TreeNode
      */
     public int getIndex(TreeNode node)
     {
-        if (node instanceof KeyTreeNode)
+        if (key != null && node instanceof KeyTreeNode)
         {
             KeyTreeNode keynode = (KeyTreeNode) node;
             Key that = keynode.getKey();
