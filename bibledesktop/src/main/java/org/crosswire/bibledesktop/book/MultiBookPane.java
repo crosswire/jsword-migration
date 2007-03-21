@@ -39,6 +39,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.TreePath;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
@@ -46,6 +47,7 @@ import org.crosswire.bibledesktop.display.URLEventListener;
 import org.crosswire.bibledesktop.passage.KeyListListModel;
 import org.crosswire.bibledesktop.passage.KeyTreeCellRenderer;
 import org.crosswire.bibledesktop.passage.KeyTreeModel;
+import org.crosswire.bibledesktop.passage.KeyTreeNode;
 import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.book.Book;
@@ -339,7 +341,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
         {
             public void valueChanged(TreeSelectionEvent ev)
             {
-                // treeSelected();
+                selected();
             }
         });
 
@@ -450,6 +452,24 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
         {
             display.setBookData(book, key);
         }
+    }
+
+    /**
+     * Something has been (un)selected in the tree
+     */
+    /*private*/ void selected()
+    {
+        TreePath path = genBookKeyTree.getSelectionPath();
+
+        if (path != null)
+        {
+            KeyTreeNode node = (KeyTreeNode) path.getLastPathComponent();
+            if (node != null)
+            {
+                display.setBookData(book, node.getKey());
+            }
+        }
+
     }
 
     /**
