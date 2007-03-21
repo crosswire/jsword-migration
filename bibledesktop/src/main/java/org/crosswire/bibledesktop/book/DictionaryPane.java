@@ -44,6 +44,7 @@ import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
 import org.crosswire.bibledesktop.display.URLEventListener;
 import org.crosswire.bibledesktop.passage.KeyListListModel;
+import org.crosswire.bibledesktop.passage.KeyTreeCellRenderer;
 import org.crosswire.bibledesktop.passage.KeyTreeModel;
 import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.util.Logger;
@@ -333,6 +334,7 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
         genBookKeyTree.setShowsRootHandles(true);
         genBookKeyTree.setRootVisible(false);
         genBookKeyTree.putClientProperty("JTree.lineStyle", "Angled"); //$NON-NLS-1$//$NON-NLS-2$
+        genBookKeyTree.setCellRenderer(new KeyTreeCellRenderer());
         genBookKeyTree.addTreeSelectionListener(new TreeSelectionListener()
         {
             public void valueChanged(TreeSelectionEvent ev)

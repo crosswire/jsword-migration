@@ -52,7 +52,7 @@ public class KeyTreeNode implements TreeNode
      */
     public int getChildCount()
     {
-        return key == null ? 0 : key.getCardinality();
+        return key == null ? 0 : key.getChildCount();
     }
 
     /* (non-Javadoc)

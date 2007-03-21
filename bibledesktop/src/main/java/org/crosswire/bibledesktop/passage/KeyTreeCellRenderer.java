@@ -51,7 +51,10 @@ public class KeyTreeCellRenderer extends DefaultTreeCellRenderer
         {
             KeyTreeNode keytn = (KeyTreeNode) value;
             Key key = keytn.getKey();
-            setText(key.getName());
+            if (key != null)
+            {
+                setText(key.getName());
+            }
         }
         else // if (value != null)
         {
