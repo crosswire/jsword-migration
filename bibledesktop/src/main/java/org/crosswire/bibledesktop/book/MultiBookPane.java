@@ -67,12 +67,12 @@ import org.crosswire.jsword.passage.Verse;
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class DictionaryPane extends JSplitPane implements BookDataDisplay
+public class MultiBookPane extends JSplitPane implements BookDataDisplay
 {
     /**
      * Setup the GUI 
      */
-    public DictionaryPane()
+    public MultiBookPane()
     {
         init();
 
@@ -485,7 +485,7 @@ public class DictionaryPane extends JSplitPane implements BookDataDisplay
     /**
      * The log stream
      */
-    private static final Logger log = Logger.getLogger(DictionaryPane.class);
+    private static final Logger log = Logger.getLogger(MultiBookPane.class);
 
     /**
      * Serialization ID

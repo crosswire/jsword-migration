@@ -56,7 +56,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
-import org.crosswire.bibledesktop.book.DictionaryPane;
+import org.crosswire.bibledesktop.book.MultiBookPane;
 import org.crosswire.bibledesktop.book.DisplaySelectEvent;
 import org.crosswire.bibledesktop.book.DisplaySelectListener;
 import org.crosswire.bibledesktop.book.DisplaySelectPane;
@@ -238,7 +238,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
 
         //barSide = new SidebarPane();
         //barBook = new ReferencedPane();
-        reference = new DictionaryPane();
+        reference = new MultiBookPane();
         sptBooks = new FixedSplitPane(false);
         sptBlog = new FixedSplitPane(false);
 //        blogPanel = BlogClientFrame.getInstance();
@@ -1162,7 +1162,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     private JSplitPane sptBlog;
     private JCheckBoxMenuItem sidebarToggle;
     private StatusBar barStatus;
-    private DictionaryPane reference;
+    private MultiBookPane reference;
     private JSplitPane sptBooks;
     private JPanel mainPanel;
     private transient History history;

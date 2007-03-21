@@ -58,7 +58,7 @@ public class SidebarPane extends JPanel
         // Make resizing affect the right only
         split.setResizeWeight(0.0);
         split.setTopComponent(comments);
-        split.setBottomComponent(dicts);
+        split.setBottomComponent(multiBooks);
 
         this.setLayout(new BorderLayout());
         this.add(split, BorderLayout.CENTER);
@@ -69,7 +69,7 @@ public class SidebarPane extends JPanel
      */
     public void addURLEventListener(URLEventListener li)
     {
-        dicts.addURLEventListener(li);
+        multiBooks.addURLEventListener(li);
         comments.addURLEventListener(li);
     }
 
@@ -78,7 +78,7 @@ public class SidebarPane extends JPanel
      */
     public void removeURLEventListener(URLEventListener li)
     {
-        dicts.removeURLEventListener(li);
+        multiBooks.removeURLEventListener(li);
         comments.removeURLEventListener(li);
     }
 
@@ -91,16 +91,16 @@ public class SidebarPane extends JPanel
     }
 
     /**
-     * Accessor for the DictionaryPane
+     * Accessor for the MultiBookPane
      */
-    public DictionaryPane getDictionaryPane()
+    public MultiBookPane getMultiBookPane()
     {
-        return dicts;
+        return multiBooks;
     }
 
     private CommentaryPane comments = new CommentaryPane();
     private JSplitPane split = new FixedSplitPane();
-    private DictionaryPane dicts = new DictionaryPane();
+    private MultiBookPane multiBooks = new MultiBookPane();
 
     /**
      * Serialization ID
