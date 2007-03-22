@@ -1,4 +1,4 @@
-#Fri Apr 07 21:09:26 EDT 2006
+#Thu Mar 22 15:51:51 EDT 2007
 eclipse.preferences.version=1
 org.eclipse.jdt.core.builder.cleanOutputFolder=clean
 org.eclipse.jdt.core.builder.duplicateResourceTask=warning
@@ -71,8 +71,5 @@ org.eclipse.jdt.core.compiler.problem.unusedParameterWhenOverridingConcrete=disa
 org.eclipse.jdt.core.compiler.problem.unusedPrivateMember=warning
 org.eclipse.jdt.core.compiler.problem.varargsArgumentNeedCast=warning
 org.eclipse.jdt.core.compiler.source=1.4
-org.eclipse.jdt.core.compiler.taskCaseSensitive=enabled
-org.eclipse.jdt.core.compiler.taskPriorities=NORMAL,HIGH,NORMAL,LOW,LOW,NORMAL,NORMAL,LOW,LOW,HIGH,LOW,LOW,LOW
-org.eclipse.jdt.core.compiler.taskTags=TODO,URGENT,PENDING,NOTE,LATER,BUG,DEAD,SPEEDUP,I18N,JDK14,NOWARN,PARANOIA,BORROWED
 org.eclipse.jdt.core.incompatibleJDKLevel=ignore
 org.eclipse.jdt.core.incompleteClasspath=error

@@ -164,7 +164,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
      */
     public void hyperlinkUpdate(HyperlinkEvent ev)
     {
-        // SPEED(DMS): This needs to be optimized. It takes too much CPU
+        // SPEEDUP(DMS): This needs to be optimized. It takes too much CPU
         try
         {
             HyperlinkEvent.EventType type = ev.getEventType();

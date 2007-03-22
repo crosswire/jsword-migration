@@ -33,7 +33,7 @@ public class TimeoutReader extends Reader implements Runnable
             // Kill the thread that is blocked
             if (calling != null)
             {
-                // This was borken at JDK 1.1.3
+                // This was broken at JDK 1.1.3
                 calling.interrupt();
 
                 // This is deprecated as of JDK 1.2
