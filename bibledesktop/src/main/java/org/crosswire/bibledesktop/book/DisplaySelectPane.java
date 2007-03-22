@@ -35,7 +35,6 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -161,26 +160,26 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         });
         btnKey = new JButton(actions.getAction(MORE));
         btnKey.setIcon(ICON_SELECT);
-        btnKey.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
+        //btnKey.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
         btnKeyGo = new JButton(actions.getAction(GO_PASSAGE));
-        btnKeyGo.setBorder(BorderFactory.createEmptyBorder(4, 5, 4, 5));
+        //btnKeyGo.setBorder(BorderFactory.createEmptyBorder(4, 5, 4, 5));
 
         txtSearch = new JTextField();
         txtSearch.setAction(actions.getAction(SEARCH_FIELD));
         JLabel lblSearch = actions.createJLabel(SEARCH_LABEL);
         lblSearch.setLabelFor(txtSearch);
         btnSearch = new JButton(actions.getAction(GO_SEARCH));
-        btnSearch.setBorder(BorderFactory.createEmptyBorder(4, 5, 4, 5));
+        //btnSearch.setBorder(BorderFactory.createEmptyBorder(4, 5, 4, 5));
 
         JButton btnHelp = new JButton(actions.getAction(HELP));
-        btnHelp.setBorder(BorderFactory.createEmptyBorder(2, 5, 2, 5));
+        //btnHelp.setBorder(BorderFactory.createEmptyBorder(2, 5, 2, 5));
         btnHelp.setText(null);
         dlgHelp = new QuickHelpDialog(GuiUtil.getFrame(this), Msg.HELP_TITLE.toString(), Msg.HELP_TEXT.toString());
 
         btnAdvanced = new JButton(actions.getAction(ADVANCED));
-        btnAdvanced.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
+        //btnAdvanced.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
         btnIndex = new JButton(actions.getAction(INDEX));
-        btnIndex.setBorder(BorderFactory.createEmptyBorder(3, 15, 3, 15));
+        //btnIndex.setBorder(BorderFactory.createEmptyBorder(3, 15, 3, 15));
 
         this.setLayout(new GridBagLayout());
         this.add(lblBible,    new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));

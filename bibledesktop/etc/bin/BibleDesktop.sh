@@ -89,12 +89,12 @@ fi
 
 # define the location of the jar files
 JSWORD_LIB="$JSWORD_HOME"
-if [-e "${JSWORD_LIB}/lib"] ; then
+if [ -e "${JSWORD_LIB}/lib" ] ; then
   JSWORD_LIB=$JSWORD_HOME
 fi
 
 # This is redundant if we are using the endorsed.dirs method
-for i in "${JSWORD_LIB}"*.jar
+for i in "${JSWORD_LIB}"/*.jar
 do
   # if the directory is empty, then it will return the input string
   # this is stupid, so case for it
@@ -121,7 +121,7 @@ fi
 # Note: We always pass the "apple" arguments, even when not on a mac.
 JSWORD_PROPERTIES=-Dapple.laf.useScreenMenuBar=true
 JSWORD_PROPERTIES="$JSWORD_PROPERTIES -Dcom.apple.mrj.application.apple.menu.about.name=BibleDesktop"
-[-e "$JSWORD_HOME/JSword"] && JSWORD_PROPERTIES="$JSWORD_PROPERTIES -Djsword.home=$JSWORD_HOME/JSword"
-[-e "$ROOT/mods.d"]        && JSWORD_PROPERTIES="$JSWORD_PROPERTIES -Dsword.home=$ROOT"
+[ -e "$JSWORD_HOME/JSword" ] && JSWORD_PROPERTIES="$JSWORD_PROPERTIES -Djsword.home=$JSWORD_HOME/JSword"
+[ -e "$ROOT/mods.d" ]        && JSWORD_PROPERTIES="$JSWORD_PROPERTIES -Dsword.home=$ROOT"
 
 "$JAVACMD" -classpath "${LOCALCLASSPATH}" $JSWORD_PROPERTIES org.crosswire.bibledesktop.desktop.Desktop
