@@ -111,6 +111,14 @@ import org.jdom.JDOMException;
  */
 public class Desktop extends JFrame implements URLEventListener, ViewEventListener, DisplaySelectListener, ViewGenerator
 {
+    // This must be the first static in the program.
+    // To ensure this we place it at the top of the class!
+    // Calling Project.instance() will set up the project's home directory
+    //     ~/.jsword
+    // This will set it as a place to look for overrides for
+    // ResourceBundles, properties and other resources
+    private static final Project project = Project.instance();
+
     /**
      * Central start point.
      * @param args The command line arguments
@@ -137,12 +145,6 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
      */
     public Desktop()
     {
-        // Calling Project.instance() will set up the project's home directory
-        //     ~/.jsword
-        // This will set it as a place to look for overrides for
-        // ResourceBundles, properties and other resources
-        Project project = Project.instance();
-
         // Allow the setting of user.language and user.country to influence the default locale
         String language = System.getProperty("user.language"); //$NON-NLS-1$
         String locale = null;

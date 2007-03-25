@@ -141,7 +141,19 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
 
             htmlsep.setParameter("direction", direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             String text = XMLUtil.writeToString(htmlsep);
-
+            /* BUG_PARADE(DMS): 4775730
+             * This bug shows up before Java 5 in GenBook Practice "/Part 1/THE THIRD STAGE" and elsewhere.
+             * It appears that it is a line too long issue.
+             */
+            /* Apply the fix if the text is too long and we are not Java 1.5 or greater */
+            if (text.length() > 32768)
+            {
+                String javaVersion = System.getProperty("java.specification.version"); //$NON-NLS-1$
+                if (javaVersion == null || "1.5".compareTo(javaVersion) > 0) //$NON-NLS-1$
+                {
+                    text = text.substring(0,32760) + "..."; //$NON-NLS-1$
+                }
+            }
             txtView.setText(text);
             txtView.select(0, 0);
         }
