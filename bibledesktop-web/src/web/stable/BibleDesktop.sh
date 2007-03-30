@@ -15,7 +15,7 @@ case "`uname`" in
            ;;
 esac
 
-if [ -z "$JSWORD" ] ; then
+if [ -z "$JSWORD_HOME" ] ; then
   ## resolve links - $0 may be a link to jsword's home
   PRG="$0"
   progname=`basename "$0"`
@@ -29,26 +29,29 @@ if [ -z "$JSWORD" ] ; then
     ls=`ls -ld "$PRG"`
     link=`expr "$ls" : '.*-> \(.*\)$'`
     if expr "$link" : '.*/.*' > /dev/null; then
-	PRG="$link"
+      PRG="$link"
     else
-	PRG=`dirname "$PRG"`"/$link"
+      PRG=`dirname "$PRG"`"/$link"
     fi
   done
 
-  JSWORD=`dirname "$PRG"`
+  JSWORD_HOME=`dirname "$PRG"`
 
   cd "$saveddir"
 
   # make it fully qualified
-  JSWORD=`cd "$JSWORD" && pwd`
+  JSWORD_HOME=`cd "$JSWORD_HOME" && pwd`
 fi
 
-cd $JSWORD
+cd $JSWORD_HOME
+
+# Root contains Java directory with JREs, modules and mods.d
+ROOT=`dirname $JSWORD_HOME`
 
 # For Cygwin, ensure paths are in UNIX format before anything is touched
 if $cygwin ; then
-  [ -n "$JSWORD" ] &&
-    JSWORD=`cygpath --unix "$JSWORD"`
+  [ -n "$JSWORD_HOME" ] &&
+    JSWORD_HOME=`cygpath --unix "$JSWORD_HOME"`
   [ -n "$JAVA_HOME" ] &&
     JAVA_HOME=`cygpath --unix "$JAVA_HOME"`
   [ -n "$CLASSPATH" ] &&
@@ -64,9 +67,12 @@ if [ -z "$JAVACMD" ] ; then
       JAVACMD="$JAVA_HOME/bin/java"
     fi
   else
-    JAVACMD=`which java 2> /dev/null `
+    JAVACMD=`ls -d $ROOT/Java/linux/jre*/bin/java 2> /dev/null`
     if [ -z "$JAVACMD" ] ; then 
+      JAVACMD=`which java 2> /dev/null `
+      if [ -z "$JAVACMD" ] ; then 
         JAVACMD=java
+      fi
     fi
   fi
 fi
@@ -81,8 +87,14 @@ if [ -n "$CLASSPATH" ] ; then
   LOCALCLASSPATH="$CLASSPATH"
 fi
 
+# define the location of the jar files
+JSWORD_LIB="$JSWORD_HOME"
+if [ -e "${JSWORD_LIB}/lib" ] ; then
+  JSWORD_LIB=$JSWORD_HOME
+fi
+
 # This is redundant if we are using the endorsed.dirs method
-for i in "${JSWORD}/"*.jar
+for i in "${JSWORD_LIB}"/*.jar
 do
   # if the directory is empty, then it will return the input string
   # this is stupid, so case for it
@@ -97,13 +109,19 @@ done
 
 # For Cygwin, switch paths to Windows format before running java
 if $cygwin; then
-  JSWORD=`cygpath --windows "$JSWORD"`
+  JSWORD_HOME=`cygpath --windows "$JSWORD_HOME"`
   JAVA_HOME=`cygpath --windows "$JAVA_HOME"`
   CLASSPATH=`cygpath --path --windows "$CLASSPATH"`
   LOCALCLASSPATH=`cygpath --path --windows "$LOCALCLASSPATH"`
   CYGHOME=`cygpath --windows "$HOME"`
 fi
 
-# "-Djava.endorsed.dirs=${JSWORD}/lib"
-# -classpath "${JSWORD}/resource"
-"$JAVACMD" -classpath "${LOCALCLASSPATH}" org.crosswire.bibledesktop.desktop.Desktop
+# "-Djava.endorsed.dirs=${JSWORD_LIB}"
+# -classpath "${JSWORD_HOME}/resource"
+# Note: We always pass the "apple" arguments, even when not on a mac.
+JSWORD_PROPERTIES=-Dapple.laf.useScreenMenuBar=true
+JSWORD_PROPERTIES="$JSWORD_PROPERTIES -Dcom.apple.mrj.application.apple.menu.about.name=BibleDesktop"
+[ -e "$JSWORD_HOME/JSword" ] && JSWORD_PROPERTIES="$JSWORD_PROPERTIES -Djsword.home=$JSWORD_HOME/JSword"
+[ -e "$ROOT/mods.d" ]        && JSWORD_PROPERTIES="$JSWORD_PROPERTIES -Dsword.home=$ROOT"
+
+"$JAVACMD" -classpath "${LOCALCLASSPATH}" $JSWORD_PROPERTIES org.crosswire.bibledesktop.desktop.Desktop

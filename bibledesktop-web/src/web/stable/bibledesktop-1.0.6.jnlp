@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="1.0+" codebase="http://www.crosswire.org/bibledesktop/stable" href="bibledesktop-1.0.5.jnlp">
+<jnlp spec="1.0+" codebase="http://www.crosswire.org/bibledesktop/release" href="bibledesktop-1.0.6.jnlp">
 
   <information>
-    <title>Bible Desktop v.1.0.5</title>
+    <title>Bible Desktop v.1.0.6</title>
     <vendor>Crosswire Bible Society</vendor>
-    <homepage href="http://www.crosswire.org/bibledesktop/stable"/>
+    <homepage href="http://www.crosswire.org/bibledesktop"/>
     <description>Bible Desktop - Bible Study Software based on the Sword project</description>
     <description kind="short">Bible Desktop is a Bible study package available over the internet</description>
     <description kind="tooltip">Bible Desktop Application</description>
@@ -28,17 +28,17 @@
 
   <resources>
     <j2se version="1.4+"/>
-    <jar href="bibledesktop-1.0.5.jar"/>
-    <jar href="jsword-1.0.5.jar"/>
-    <jar href="jsword-common-1.0.5.jar"/>
-    <jar href="jsword-common-swing-1.0.5.jar"/>
+    <jar href="bibledesktop-1.0.6.jar"/>
+    <jar href="jsword-1.0.6.jar"/>
+    <jar href="jsword-common-1.0.6.jar"/>
+    <jar href="jsword-common-swing-1.0.6.jar"/>
     <jar href="javatar-2.5.jar"/>
     <jar href="jdom-1.0.jar"/>
     <jar href="commons-codec-1.3.jar"/>
     <jar href="commons-httpclient-3.0.1.jar"/>
     <jar href="commons-logging-1.1.jar"/>
     <jar href="commons-net-1.4.1.jar"/>
-    <jar href="lucene-core-2.0.0.jar"/>
+    <jar href="lucene-core-2.1.0.jar"/>
     <jar href="jlfgr-1_0.jar"/>
     <property name="apple.laf.useScreenMenuBar" value="true"/>
     <property name="com.apple.mrj.application.apple.menu.about.name" value="BibleDesktop"/>
