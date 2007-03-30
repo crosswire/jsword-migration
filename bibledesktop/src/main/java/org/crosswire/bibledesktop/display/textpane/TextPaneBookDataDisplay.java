@@ -151,7 +151,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
                 String javaVersion = System.getProperty("java.specification.version"); //$NON-NLS-1$
                 if (javaVersion == null || "1.5".compareTo(javaVersion) > 0) //$NON-NLS-1$
                 {
-                    text = text.substring(0,32760) + "..."; //$NON-NLS-1$
+                    text = text.substring(0, 32760) + "..."; //$NON-NLS-1$
                 }
             }
             txtView.setText(text);

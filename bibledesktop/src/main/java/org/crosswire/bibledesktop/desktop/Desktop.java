@@ -113,11 +113,11 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
 {
     // This must be the first static in the program.
     // To ensure this we place it at the top of the class!
-    // Calling Project.instance() will set up the project's home directory
+    // Calling Project.instance() will set up the PROJECT's home directory
     //     ~/.jsword
     // This will set it as a place to look for overrides for
     // ResourceBundles, properties and other resources
-    private static final Project project = Project.instance();
+    private static final Project PROJECT = Project.instance();
 
     /**
      * Central start point.
@@ -182,7 +182,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         Reporter.grabAWTExecptions(true);
 
         // Splash screen
-        URL predicturl = project.getWritablePropertiesURL(SPLASH_PROPS);
+        URL predicturl = PROJECT.getWritablePropertiesURL(SPLASH_PROPS);
         Progress startJob = JobManager.createJob(Msg.STARTUP_TITLE.toString(), predicturl, true);
 
         //startJob.setProgress(Msg.STARTUP_CONFIG.toString());
