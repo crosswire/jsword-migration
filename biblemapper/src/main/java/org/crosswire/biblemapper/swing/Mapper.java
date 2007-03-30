@@ -159,7 +159,7 @@ public class Mapper extends JFrame
 
             config.localToApplication();
 
-            List dicts = Books.installed().getBooks(BookFilters.getBibles());
+            List dicts = Books.installed().getBooks(BookFilters.getOnlyBibles());
             Book book = (Book) dicts.get(0);
 
             la = new LinkArray(book);
@@ -906,7 +906,7 @@ public class Mapper extends JFrame
     {
         try
         {
-            BookChooser chooser = new BookChooser(BookFilters.getBibles());
+            BookChooser chooser = new BookChooser(BookFilters.getOnlyBibles());
             int reply = chooser.showDialog(this);
 
             if (reply == BookChooser.APPROVE_OPTION)

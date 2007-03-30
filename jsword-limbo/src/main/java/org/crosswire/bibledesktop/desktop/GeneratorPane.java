@@ -231,7 +231,7 @@ public class GeneratorPane extends EirPanel
      * The model for the sources.
      * Bibles are required in GeneratorRunnable.run()
      */
-    protected BooksComboBoxModel mdlSource = new BooksComboBoxModel(BookFilters.getBibles());
+    protected BooksComboBoxModel mdlSource = new BooksComboBoxModel(BookFilters.getOnlyBibles());
 
     /**
      * Layout for the destination panel

@@ -97,7 +97,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
         actions = new ActionFactory(DisplaySelectPane.class, this);
 
-        // search() and version() rely on this returning only Bibles
+        // search() and version() rely on this returning only Books indexed by verses
         mdlBible = new BooksComboBoxModel(BookFilters.getBibles());
         JComboBox cboBible = new JComboBox(mdlBible);
         cboBible.setPrototypeDisplayValue(" "); //$NON-NLS-1$

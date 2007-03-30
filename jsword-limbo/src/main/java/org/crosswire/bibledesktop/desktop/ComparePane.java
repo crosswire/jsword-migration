@@ -185,13 +185,13 @@ public class ComparePane extends EirPanel
      * The first Bible selection combo.
      * We cast to Bible in compare() so we need to filter
      */
-    private BooksComboBoxModel mdlBibles1 = new BooksComboBoxModel(BookFilters.getBibles());
+    private BooksComboBoxModel mdlBibles1 = new BooksComboBoxModel(BookFilters.getOnlyBibles());
 
     /**
      * The second Bible selection combo
      * We cast to Bible in compare() so we need to filter
      */
-    private BooksComboBoxModel mdlBibles2 = new BooksComboBoxModel(BookFilters.getBibles());
+    private BooksComboBoxModel mdlBibles2 = new BooksComboBoxModel(BookFilters.getOnlyBibles());
 
     /* GUI Components */
     private Box boxTop;

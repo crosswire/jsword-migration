@@ -309,7 +309,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
         panel.add(cboVerse, null);
         return panel;
     }
-   
+
     /**
      * Build a tree for a GenBook
      */
@@ -325,7 +325,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
         });
         return new JScrollPane(dictionaryKeyList);
     }
-   
+
     /**
      * Build a tree for a GenBook
      */

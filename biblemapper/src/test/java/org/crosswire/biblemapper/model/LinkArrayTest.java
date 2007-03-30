@@ -60,7 +60,7 @@ public class LinkArrayTest extends TestCase
     {
         RawBook.setDefaultCacheData(true);
 
-        List dicts = Books.installed().getBooks(BookFilters.getBibles());
+        List dicts = Books.installed().getBooks(BookFilters.getOnlyBibles());
         Book book = (Book) dicts.get(0);
 
         LinkArray la = new LinkArray(book);

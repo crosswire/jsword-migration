@@ -196,7 +196,7 @@ public class MaintenancePane extends EirPanel
     /**
      * The BiblesModel for the list
      */
-    private BooksComboBoxModel mdl_versions = new BooksComboBoxModel(BookFilters.getBibles());
+    private BooksComboBoxModel mdl_versions = new BooksComboBoxModel(BookFilters.getOnlyBibles());
 
     /**
      * The button bar

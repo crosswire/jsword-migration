@@ -70,7 +70,7 @@ public class CliMapper
             PrintWriter dbout = new PrintWriter(new FileOutputStream("c:\\database.csv"));
             PrintWriter xlout = new PrintWriter(new FileOutputStream("c:\\sheet.csv"));
 
-            List dicts = Books.installed().getBooks(BookFilters.getBibles());
+            List dicts = Books.installed().getBooks(BookFilters.getOnlyBibles());
             Book book = (Book) dicts.get(0);
             //Matcher engine = new Matcher(bible);
 

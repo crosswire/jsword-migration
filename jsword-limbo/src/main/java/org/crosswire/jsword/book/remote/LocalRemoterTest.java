@@ -53,7 +53,7 @@ public class LocalRemoterTest extends TestCase
 
     public void testGetBibles() throws Exception
     {
-        BookFilter filter = BookFilters.getBibles();
+        BookFilter filter = BookFilters.getOnlyBibles();
         List lbooks = Books.installed().getBooks(filter);
         Book[] names1 = (Book[]) lbooks.toArray(new Book[lbooks.size()]);
         RemoteBookDriver rbd = new LocalRemoteBookDriver();

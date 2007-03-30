@@ -132,6 +132,10 @@
     <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="BibleViewReused"/>
   </option>
 
+  <option key="BibleDisplay.Commentaries" type="boolean">
+    <introspect class="org.crosswire.jsword.book.BookFilters" property="CommentariesWithBibles"/>
+  </option>
+
   <option key="BibleDisplay.Sidebar" type="boolean">
     <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="SidebarShowing"/>
   </option>
