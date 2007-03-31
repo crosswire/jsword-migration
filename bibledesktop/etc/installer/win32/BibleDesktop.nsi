@@ -48,12 +48,13 @@ Section ""
   ; Use the following for USB/CD installs
   ;StrCpy $0 '"$R0" -classpath "$R1" -Djsword.home="$EXEDIR\JSword" -Dsword.home="$EXEDIR\.." ${CLASS}'
 
-;ClearErrors
-;FileOpen $1 $EXEDIR\java.log w
-;IfErrors done
-;FileWrite $1 $0
-;FileClose $1
-;done:
+  ; The following is for debugging
+  ClearErrors
+  FileOpen $1 $EXEDIR\java.log w
+  IfErrors done
+  FileWrite $1 $0
+  FileClose $1
+  done:
 
   SetOutPath $EXEDIR
   Exec $0
@@ -72,6 +73,7 @@ Function BuildClassPath
   StrCpy $R0 ""
   
   ; Iterate over all the jar files in JAVALIB
+  ClearErrors
   FindFirst $R1 $R2 "$JavaLib\*.jar"
   ${Unless} ${Errors}
     ${Do}

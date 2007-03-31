@@ -30,6 +30,7 @@ Right click on bibledesktop/etc/installer/win32/BibleDesktopSetup.nsi and compil
 You need to be in Windows with NSIS installed.
 This installer also requires the InetLoad plugin available here:
 	http://nsis.sourceforge.net/InetLoad
+	Out of that zip file, copy inetload.dll to the NSIS/plugins directory.
 Verify that the installer works.
 You can perform part of step 7 now.
 
