@@ -36,6 +36,8 @@ import org.crosswire.common.util.FileUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.jsword.book.BookException;
+import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.passage.KeyUtil;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.versification.BibleInfo;
 
@@ -177,9 +179,16 @@ public class BookDataCache implements Activatable
     /**
      * Write unparsed data for a given verse
      */
-    public void setText(Verse verse, String text) throws BookException
+    public void setRawText(Key key, String text) throws BookException
     {
         checkActive();
+
+        Verse verse = KeyUtil.getVerse(key);
+
+        if (verse == null)
+        {
+            throw new BookException(Msg.WRITE_ERROR);
+        }
 
         try
         {

@@ -130,9 +130,9 @@ public class JDBCBook extends AbstractPassageBook
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getText(org.crosswire.jsword.passage.Verse)
+     * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getRawText(org.crosswire.jsword.passage.Key)
      */
-    protected String getText(Key key)
+    public String getRawText(Key key)
     {
         String reply = ""; //$NON-NLS-1$
         ResultSet rs = null;
@@ -176,9 +176,17 @@ public class JDBCBook extends AbstractPassageBook
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.basic.AbstractPassageBook#setText(org.crosswire.jsword.passage.Verse, java.lang.String)
+     * @see org.crosswire.jsword.book.basic.AbstractPassageBook#setRawText(org.crosswire.jsword.passage.Key, java.lang.String)
      */
-    protected void setText(Verse verse, String text) throws BookException
+    public void setRawText(Key key, String rawData) throws BookException
+    {
+        throw new BookException(Msg.DRIVER_READONLY);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.jsword.book.Book#setAliasKey(org.crosswire.jsword.passage.Key, org.crosswire.jsword.passage.Key)
+     */
+    public void setAliasKey(Key alias, Key source) throws BookException
     {
         throw new BookException(Msg.DRIVER_READONLY);
     }

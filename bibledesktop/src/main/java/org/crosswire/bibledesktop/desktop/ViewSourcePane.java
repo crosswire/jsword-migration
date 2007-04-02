@@ -28,6 +28,7 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
+import java.util.Iterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -74,9 +75,19 @@ public class ViewSourcePane extends JPanel
     {
         try
         {
-            String orig = book.getRawData(key);
+            StringBuffer buf = new StringBuffer();
 
-            BookData bdata = book.getData(key);
+            Iterator iter = key.iterator();
+            while (iter.hasNext())
+            {
+                if (buf.length() > 0)
+                {
+                    buf.append('\n');
+                }
+                buf.append(book.getRawText((Key) iter.next()));
+            }
+
+            BookData bdata = book.getText(key);
 
             BookMetaData bmd = book.getBookMetaData();
             boolean direction = bmd.isLeftToRight();
@@ -100,7 +111,7 @@ public class ViewSourcePane extends JPanel
             ContentHandler html = new PrettySerializingContentHandler(FormatType.CLASSIC_INDENT);
             htmlsep.provideSAXEvents(html);
 
-            init(orig, osis.toString(), html.toString());
+            init(buf.toString(), osis.toString(), html.toString());
         }
         catch (SAXException e)
         {

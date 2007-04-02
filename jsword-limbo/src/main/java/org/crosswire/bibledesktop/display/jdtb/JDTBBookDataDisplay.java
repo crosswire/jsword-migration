@@ -86,7 +86,7 @@ public class JDTBBookDataDisplay implements BookDataDisplay
 //            boolean direction = bmd.isLeftToRight();
 //            txtView.applyComponentOrientation(direction ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
 
-            BookData bdata = book.getData(key);
+            BookData bdata = book.getText(key);
             if (bdata == null)
             {
 //                txtView.setURL();

@@ -38,6 +38,7 @@ class Msg extends MsgBase
     static final Msg REMOTE_NOSUPPORT = new Msg("Converter.RemoteNoSupport"); //$NON-NLS-1$
     static final Msg REMOTE_FAIL = new Msg("RemoteBook.Fail"); //$NON-NLS-1$
     static final Msg PARSE_FAIL = new Msg("RemoteBook.ParseFail"); //$NON-NLS-1$
+    static final Msg DRIVER_READONLY = new Msg("RemoteBook.DriverReadonly"); //$NON-NLS-1$
 
     /**
      * Passthrough ctor#

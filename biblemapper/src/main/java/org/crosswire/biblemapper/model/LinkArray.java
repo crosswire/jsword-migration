@@ -228,7 +228,7 @@ public class LinkArray implements Serializable
             for (int v=1; v<=BibleInfo.versesInChapter(b, c); v++)
             {
                 Verse find = new Verse(b, c, v);
-                BookData bdata = book.getData(find);
+                BookData bdata = book.getText(find);
                 String text = bdata.getPlainText();
                 PassageTally temp = (PassageTally) book.find(text);
                 temp.setOrdering(PassageTally.ORDER_TALLY);

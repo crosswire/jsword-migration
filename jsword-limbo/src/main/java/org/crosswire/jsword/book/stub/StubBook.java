@@ -28,7 +28,6 @@ import org.crosswire.jsword.book.basic.DefaultBookMetaData;
 import org.crosswire.jsword.book.filter.Filter;
 import org.crosswire.jsword.book.filter.FilterFactory;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.passage.Verse;
 
 /**
  * StubBook is a simple stub implementation of Book that is pretty much
@@ -58,19 +57,26 @@ public class StubBook extends AbstractPassageBook
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getText(org.crosswire.jsword.passage.Verse)
+     * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getRawText(org.crosswire.jsword.passage.Key)
      */
     /* @Override */
-    protected String getText(Key key)
+    public String getRawText(Key key)
     {
         return "stub implementation"; //$NON-NLS-1$
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.basic.AbstractPassageBook#setText(org.crosswire.jsword.passage.Verse, java.lang.String)
+     * @see org.crosswire.jsword.book.basic.AbstractPassageBook#setRawText(org.crosswire.jsword.passage.Key, java.lang.String)
      */
-    /* @Override */
-    protected void setText(Verse verse, String text) throws BookException
+    public void setRawText(Key key, String rawData) throws BookException
+    {
+        throw new BookException(Msg.DRIVER_READONLY);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.jsword.book.Book#setAliasKey(org.crosswire.jsword.passage.Key, org.crosswire.jsword.passage.Key)
+     */
+    public void setAliasKey(Key alias, Key source) throws BookException
     {
         throw new BookException(Msg.DRIVER_READONLY);
     }
