@@ -97,6 +97,14 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
         actions = new ActionFactory(DisplaySelectPane.class, this);
 
+        isl = new IndexStatusListener()
+        {
+            public void statusChanged(IndexStatusEvent ev)
+            {
+                enableComponents();
+            }
+        };
+
         // search() and version() rely on this returning only Books indexed by verses
         mdlBible = new BooksComboBoxModel(BookFilters.getBibles());
         JComboBox cboBible = new JComboBox(mdlBible);
@@ -336,6 +344,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         if (reply != null)
         {
             txtSearch.setText(reply);
+            doSearchAction();
         }
     }
 
@@ -567,17 +576,6 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     }
 
     /**
-     * Keep the selection up to date with indexing.
-     */
-    private transient IndexStatusListener isl = new IndexStatusListener()
-    {
-        public void statusChanged(IndexStatusEvent ev)
-        {
-            enableComponents();
-        }
-    };
-
-    /**
      * Display a dialog indicating that no Bible is installed.
      */
     private void noBookInstalled()
@@ -784,6 +782,12 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     private static final ImageIcon ICON_SELECT = GuiUtil.getIcon("toolbarButtonGraphics/general/Edit16.gif"); //$NON-NLS-1$
 
 //    private static final ImageIcon ICON_MENU = GuiUtil.getIcon("toolbarButtonGraphics/general/Preferences16.gif"); //$NON-NLS-1$
+
+
+    /**
+     * Keep the selection up to date with indexing.
+     */
+    private transient IndexStatusListener isl;
 
     private static int base = 1;
 
