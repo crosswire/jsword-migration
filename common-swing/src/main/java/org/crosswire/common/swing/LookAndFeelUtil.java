@@ -21,10 +21,13 @@
  */
 package org.crosswire.common.swing;
 
+import java.util.Enumeration;
+
 import javax.swing.JOptionPane;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
 import org.crosswire.common.swing.plaf.MetalLFCustoms;
@@ -92,6 +95,28 @@ public final class LookAndFeelUtil
 
         currentLAF = newLaFClass;
     }
+
+    /**
+     * Set the default font for all Swing components.
+     * E.g. <code>setUIFont(new FontUIResource("Serif", Font.ITALIC, 12));</code>
+     * <br/>Note: a single resources can be changed with:
+     *   <code>UIManager.put("Label.font", new Font("Serif", Font.ITALIC, 12));</code>
+     * @param f the font to use
+     */
+    public static void setUIFont(FontUIResource f)
+    {
+        Enumeration keys = UIManager.getDefaults().keys();
+        while (keys.hasMoreElements()) {
+          Object key = keys.nextElement();
+          Object value = UIManager.get (key);
+
+          if (value instanceof FontUIResource)
+          {
+//              System.err.println(key + " = " + value);
+              UIManager.put (key, f);
+          }
+        }
+    }    
 
     /**
      * The current PLAF
