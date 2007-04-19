@@ -27,6 +27,7 @@ import javax.swing.JTextPane;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.xml.transform.TransformerException;
 
+import org.crosswire.bibledesktop.desktop.XSLTProperty;
 import org.crosswire.common.swing.AntiAliasedTextPane;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
@@ -76,6 +77,7 @@ public class TextPaneBookMetaDataDisplay
 
             SAXEventProvider osissep = new JDOMSAXEventProvider(book.toOSIS());
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
+            XSLTProperty.FONT.setProperty(htmlsep);
             String text = XMLUtil.writeToString(htmlsep);
 
             txtView.setText(text);

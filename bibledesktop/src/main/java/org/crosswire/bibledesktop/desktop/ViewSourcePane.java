@@ -28,6 +28,7 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
+import java.net.URL;
 import java.util.Iterator;
 
 import javax.swing.BorderFactory;
@@ -90,7 +91,6 @@ public class ViewSourcePane extends JPanel
             BookData bdata = book.getText(key);
 
             BookMetaData bmd = book.getBookMetaData();
-            boolean direction = bmd.isLeftToRight();
 
             SAXEventProvider osissep = bdata.getSAXEventProvider();
 
@@ -100,11 +100,23 @@ public class ViewSourcePane extends JPanel
             osissep.provideSAXEvents(osis);
 
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
+  
+            XSLTProperty.DIRECTION.setState(bmd.isLeftToRight() ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$
+
+            URL loc = bmd.getLocation();
+            XSLTProperty.BASE_URL.setState(loc == null ? "" : loc.toExternalForm()); //$NON-NLS-1$
+
             if (bmd.getBookCategory() == BookCategory.BIBLE)
             {
                 XSLTProperty.setProperties(htmlsep);
             }
-            htmlsep.setParameter("direction", direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            else
+            {
+                XSLTProperty.CSS.setProperty(htmlsep);
+                XSLTProperty.FONT.setProperty(htmlsep);
+                XSLTProperty.BASE_URL.setProperty(htmlsep);
+                XSLTProperty.DIRECTION.setProperty(htmlsep);
+            }
 
             // This really looks nice but its performance was terrible.
 //            ContentHandler html = new HTMLSerializingContentHandler(FormatType.CLASSIC_INDENT);

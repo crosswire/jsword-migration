@@ -28,6 +28,7 @@ import java.util.MissingResourceException;
 
 import javax.xml.transform.TransformerException;
 
+import org.crosswire.bibledesktop.desktop.XSLTProperty;
 import org.crosswire.common.util.FileUtil;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.ResourceUtil;
@@ -123,6 +124,7 @@ public class ConfigurableSwingConverter implements Converter
     public static void setFont(String font)
     {
         ConfigurableSwingConverter.font = font;
+        XSLTProperty.FONT.setState(font);
     }
 
     /**

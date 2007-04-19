@@ -128,18 +128,29 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
 
             SAXEventProvider osissep = bdata.getSAXEventProvider();
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
+
+            XSLTProperty.DIRECTION.setState(bmd.isLeftToRight() ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$
+
+            URL loc = bmd.getLocation();
+            XSLTProperty.BASE_URL.setState(loc == null ? "" : loc.toExternalForm()); //$NON-NLS-1$
+
+            if (bmd.getBookCategory() == BookCategory.BIBLE)
+            {
+                XSLTProperty.setProperties(htmlsep);
+            }
+            else
+            {
+                XSLTProperty.CSS.setProperty(htmlsep);
+                XSLTProperty.FONT.setProperty(htmlsep);
+                XSLTProperty.BASE_URL.setProperty(htmlsep);
+                XSLTProperty.DIRECTION.setProperty(htmlsep);
+            }
+
             if (bmd.getBookCategory() == BookCategory.BIBLE)
             {
                 XSLTProperty.setProperties(htmlsep);
             }
 
-            URL loc = bmd.getLocation();
-            if (loc != null)
-            {
-                htmlsep.setParameter("baseURL", loc.toExternalForm()); //$NON-NLS-1$
-            }
-
-            htmlsep.setParameter("direction", direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             String text = XMLUtil.writeToString(htmlsep);
             /* BUG_PARADE(DMS): 4775730
              * This bug shows up before Java 5 in GenBook Practice "/Part 1/THE THIRD STAGE" and elsewhere.

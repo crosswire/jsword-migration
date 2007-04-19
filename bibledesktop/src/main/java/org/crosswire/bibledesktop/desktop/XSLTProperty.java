@@ -35,7 +35,6 @@ import org.crosswire.common.xml.TransformingSAXEventProvider;
  */
 public final class XSLTProperty implements Serializable
 {
-
     /**
      * Determines whether Strong's Numbers should show
      */
@@ -92,9 +91,42 @@ public final class XSLTProperty implements Serializable
     public static final XSLTProperty XREF = new XSLTProperty("XRef", true); //$NON-NLS-1$
 
     /**
+     * What is the base of the current document.
+     * Note this needs to be set each time the document is shown.
+     */
+    public static final XSLTProperty BASE_URL = new XSLTProperty("baseURL", ""); //$NON-NLS-1$ //$NON-NLS-2$
+
+    /**
+     * What is the base of the current document.
+     *  Note this needs to be set each time the document is shown.
+     */
+    public static final XSLTProperty DIRECTION = new XSLTProperty("direction", ""); //$NON-NLS-1$ //$NON-NLS-2$
+
+    /**
+     * What is the base of the current document.
+     * Note this needs to be set each time the font changes.
+     */
+    public static final XSLTProperty FONT = new XSLTProperty("font", "Serif,0,14"); //$NON-NLS-1$ //$NON-NLS-2$
+
+    /**
+     * What is the base of the current document.
+     */
+    public static final XSLTProperty CSS = new XSLTProperty("css", ""); //$NON-NLS-1$ //$NON-NLS-2$
+
+    /**
      * @param name The name of this property
+     * @param defaultState The initial state of the property.
      */
     private XSLTProperty(String name, boolean defaultState)
+    {
+        this(name, Boolean.toString(defaultState));
+    }
+
+    /**
+     * @param name The name of this property
+     * @param defaultState The initial state of the property.
+     */
+    private XSLTProperty(String name, String defaultState)
     {
         this.name = name;
         this.defaultState = defaultState;
@@ -109,24 +141,32 @@ public final class XSLTProperty implements Serializable
         return name;
     }
 
-    public boolean getDefault()
+    public boolean getDefaultState()
     {
-        return defaultState;
+        return Boolean.valueOf(defaultState).booleanValue();
     }
 
     public boolean getState()
     {
-        return state;
+        return Boolean.valueOf(state).booleanValue();
     }
 
     public void setState(boolean newState)
+    {
+        state = Boolean.toString(newState);
+    }
+
+    public void setState(String newState)
     {
         state = newState;
     }
 
     public void setProperty(TransformingSAXEventProvider provider)
     {
-        provider.setParameter(name, Boolean.toString(state));
+        if (state != null && state.length() > 0)
+        {
+            provider.setParameter(name, state);
+        }
     }
 
     public static void setProperties(TransformingSAXEventProvider provider)
@@ -178,12 +218,12 @@ public final class XSLTProperty implements Serializable
     /**
      * The default state of the XSLTProperty
      */
-    private boolean defaultState;
+    private String defaultState;
 
     /**
      * The current state of the XSLTProperty
      */
-    private boolean state;
+    private String state;
 
     // Support for serialization
     private static int nextObj;
@@ -207,6 +247,10 @@ public final class XSLTProperty implements Serializable
         HEADINGS,
         NOTES,
         XREF,
+        BASE_URL,
+        DIRECTION,
+        FONT,
+        CSS,
     };
 
     /**
