@@ -420,7 +420,7 @@ public class ActionFactory implements ActionListener
         cwAction.putValue(Action.SHORT_DESCRIPTION, short_desc);
         cwAction.putValue(Action.LONG_DESCRIPTION, long_desc);
         // Mac's don't have mnemonics
-        if (OSType.MAC.equals(OSType.getOSType()))
+        if (!OSType.MAC.equals(OSType.getOSType()))
         {
             cwAction.putValue(Action.MNEMONIC_KEY, mnemonic);
         }
