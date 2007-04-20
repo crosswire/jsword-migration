@@ -41,6 +41,7 @@ import javax.swing.KeyStroke;
 
 import org.crosswire.common.util.CWClassLoader;
 import org.crosswire.common.util.Logger;
+import org.crosswire.common.util.OSType;
 import org.crosswire.common.util.StringUtil;
 
 /**
@@ -165,8 +166,9 @@ public class ActionFactory implements ActionListener
         if (action != null)
         {
             label.setText(action.getValue(Action.NAME).toString());
+            // Mac's don't have mnemonics
             Integer mnemonic = (Integer) action.getValue(Action.MNEMONIC_KEY);
-            if (mnemonic != null)
+            if (mnemonic != null && !OSType.MAC.equals(OSType.getOSType()))
             {
                 label.setDisplayedMnemonic(mnemonic.intValue());
             }
@@ -359,6 +361,7 @@ public class ActionFactory implements ActionListener
             if ("ctrl".equalsIgnoreCase(modifier)) //$NON-NLS-1$
             {
                 // use this so MacOS users are happy
+                // It will map to the CMD key on Mac; CTRL otherwise.
                 keyModifier |= Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
             }
             else if ("shift".equalsIgnoreCase(modifier)) //$NON-NLS-1$
@@ -416,7 +419,11 @@ public class ActionFactory implements ActionListener
         cwAction.putValue(Action.SMALL_ICON, small_icon);
         cwAction.putValue(Action.SHORT_DESCRIPTION, short_desc);
         cwAction.putValue(Action.LONG_DESCRIPTION, long_desc);
-        cwAction.putValue(Action.MNEMONIC_KEY, mnemonic);
+        // Mac's don't have mnemonics
+        if (OSType.MAC.equals(OSType.getOSType()))
+        {
+            cwAction.putValue(Action.MNEMONIC_KEY, mnemonic);
+        }
         cwAction.putValue(Action.ACCELERATOR_KEY, accel);
         cwAction.setEnabled(enabled);
 
