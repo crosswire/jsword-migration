@@ -54,6 +54,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.book.install.InstallManager;
@@ -91,9 +92,8 @@ public class EditSitePane extends JPanel
         actions = new ActionFactory(EditSitePane.class, this);
 
         lstSite = new JList(new InstallManagerComboBoxModel(imanager));
-        JScrollPane scrSite = new JScrollPane();
-        scrSite.add(lstSite, null);
-        scrSite.getViewport().add(lstSite, null);
+        JScrollPane scrSite = new CWScrollPane(lstSite);
+
         lstSite.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         lstSite.addListSelectionListener(new ListSelectionListener()
         {

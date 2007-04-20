@@ -39,6 +39,7 @@ import javax.swing.event.ListSelectionListener;
 import org.crosswire.bibledesktop.book.DisplaySelectEvent;
 import org.crosswire.bibledesktop.book.DisplaySelectListener;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
@@ -88,8 +89,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
             }
         });
 
-        JScrollPane scroll = new JScrollPane();
-        scroll.getViewport().add(list);
+        JScrollPane scroll = new CWScrollPane(list);
 
         ActionFactory actions = new ActionFactory(KeySidebar.class, this);
 

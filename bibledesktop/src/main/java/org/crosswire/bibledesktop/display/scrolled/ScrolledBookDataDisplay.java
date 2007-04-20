@@ -28,6 +28,7 @@ import javax.swing.JScrollPane;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.proxy.ProxyBookDataDisplay;
+import org.crosswire.common.swing.CWScrollPane;
 
 /**
  * An inner component of Passage pane that can't show the list.
@@ -44,9 +45,9 @@ public class ScrolledBookDataDisplay extends ProxyBookDataDisplay
     public ScrolledBookDataDisplay(BookDataDisplay child)
     {
         super(child);
-
+        scrView = new CWScrollPane(getProxy().getComponent());
         scrView.getViewport().setPreferredSize(new Dimension(500, 400));
-        scrView.getViewport().add(getProxy().getComponent(), null);
+//        scrView.getViewport().add(getProxy().getComponent(), null);
     }
 
     /* (non-Javadoc)
@@ -61,5 +62,5 @@ public class ScrolledBookDataDisplay extends ProxyBookDataDisplay
     /**
      * The scroller for the TextPaneBookDataDisplay component
      */
-    private JScrollPane scrView = new JScrollPane();
+    private JScrollPane scrView;
 }

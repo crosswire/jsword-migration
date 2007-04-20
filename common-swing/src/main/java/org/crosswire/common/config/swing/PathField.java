@@ -41,6 +41,7 @@ import javax.swing.border.Border;
 
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.util.Convert;
 
 /**
@@ -70,8 +71,7 @@ public class PathField extends JPanel implements Field
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         // list.setPreferredScrollableViewportSize(new Dimension(30, 100));
 
-        JScrollPane scroll = new JScrollPane();
-        scroll.setViewportView(list);
+        JScrollPane scroll = new CWScrollPane(list);
 
         buttons.add(new JButton(actions.getAction(ADD)));
         buttons.add(new JButton(actions.getAction(REMOVE)));

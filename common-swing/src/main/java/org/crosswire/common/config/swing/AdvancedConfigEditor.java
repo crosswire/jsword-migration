@@ -39,6 +39,7 @@ import javax.swing.UIManager;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
 import org.crosswire.common.config.Choice;
+import org.crosswire.common.swing.CWScrollPane;
 
 /**
  * A mutable view of Fields setting array.
@@ -56,7 +57,9 @@ public class AdvancedConfigEditor extends TreeConfigEditor
     {
         ctm = new AdvancedConfigureTreeModel();
         tree = new JTree();
-        JScrollPane scroll = new JScrollPane();
+        JScrollPane scroll = new CWScrollPane(tree);
+        scroll.setPreferredSize(new Dimension(150, 150));
+
         CustomTreeCellRenderer render = new CustomTreeCellRenderer();
         comps = new HashMap();
 
@@ -67,9 +70,6 @@ public class AdvancedConfigEditor extends TreeConfigEditor
         // This seems to be broken ...
         render.setLeafIcon(TASK_ICON_SMALL);
         render.setBackgroundNonSelectionColor(bg);
-
-        scroll.setPreferredSize(new Dimension(150, 150));
-        scroll.setViewportView(tree);
 
         tree.setBackground(bg);
         tree.setModel(ctm);

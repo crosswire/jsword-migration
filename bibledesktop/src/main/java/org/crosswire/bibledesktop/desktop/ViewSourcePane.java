@@ -35,7 +35,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
@@ -44,6 +43,7 @@ import javax.xml.transform.TransformerException;
 
 import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.xml.Converter;
@@ -155,7 +155,7 @@ public class ViewSourcePane extends JPanel
         txtOrig.setTabSize(2);
         txtOrig.setEditable(false);
         JPanel pnlOrig = new JPanel(new BorderLayout());
-        pnlOrig.add(new JScrollPane(txtOrig), BorderLayout.CENTER);
+        pnlOrig.add(new CWScrollPane(txtOrig), BorderLayout.CENTER);
         pnlOrig.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         // This really looks nice but its performance was terrible.
@@ -172,7 +172,7 @@ public class ViewSourcePane extends JPanel
         txtOsis.setTabSize(2);
         txtOsis.setEditable(false);
         JPanel pnlOsis = new JPanel(new BorderLayout());
-        pnlOsis.add(new JScrollPane(txtOsis), BorderLayout.CENTER);
+        pnlOsis.add(new CWScrollPane(txtOsis), BorderLayout.CENTER);
         pnlOsis.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         // This really looks nice but its performance was terrible.
@@ -189,7 +189,7 @@ public class ViewSourcePane extends JPanel
         txtHtml.setTabSize(2);
         txtHtml.setEditable(false);
         JPanel pnlHtml = new JPanel(new BorderLayout());
-        pnlHtml.add(new JScrollPane(txtHtml), BorderLayout.CENTER);
+        pnlHtml.add(new CWScrollPane(txtHtml), BorderLayout.CENTER);
         pnlHtml.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         textAreas = new JTextComponent[] { txtOrig, txtOsis, txtHtml };

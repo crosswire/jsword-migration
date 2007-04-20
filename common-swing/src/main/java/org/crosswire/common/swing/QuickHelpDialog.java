@@ -83,8 +83,7 @@ public class QuickHelpDialog extends JDialog
             }
         });
 
-        JScrollPane scrHelp = new JScrollPane();
-        scrHelp.setViewportView(txtHelp);
+        JScrollPane scrHelp = new CWScrollPane(txtHelp);
         scrHelp.setBorder(null);
 
         JButton btnOK = new JButton(actions.getAction(OK));

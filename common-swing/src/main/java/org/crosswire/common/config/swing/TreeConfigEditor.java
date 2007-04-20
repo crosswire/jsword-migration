@@ -47,6 +47,7 @@ import javax.swing.tree.TreePath;
 
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.config.Config;
+import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.FormPane;
 
 /**
@@ -125,7 +126,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         //if (cards > 1)
-        add(BorderLayout.WEST, new JScrollPane(tree));
+        add(BorderLayout.WEST, new CWScrollPane(tree));
 
         add(BorderLayout.CENTER, panel);
         add(BorderLayout.SOUTH, new ButtonPane(this));
@@ -158,7 +159,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
         FormPane card = (FormPane) decks.get(path);
         if (card != null && card.getParent() == null)
         {
-            JScrollPane scroll = new JScrollPane(card);
+            JScrollPane scroll = new CWScrollPane(card);
             scroll.setBorder(BorderFactory.createEmptyBorder());
             deck.add(path, scroll);
         }

@@ -56,6 +56,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.index.search.SearchType;
 
@@ -187,7 +188,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         txtSummary.setLineWrap(true);
         txtSummary.setEditable(false);
         txtSummary.setRows(2);
-        scrSummary = new JScrollPane(txtSummary);
+        scrSummary = new CWScrollPane(txtSummary);
         scrSummary.setVisible(false);
 
 //        chkHebGrk = new JCheckBox(actions.getAction(HEAD_ORIGINAL));

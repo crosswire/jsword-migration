@@ -134,7 +134,7 @@ public final class ExceptionPane extends JPanel
         text = new JTextArea();
         text.setEditable(false);
         text.setFont(courier);
-        JScrollPane textScroll = new JScrollPane(text);
+        JScrollPane textScroll = new CWScrollPane(text);
         textScroll.setColumnHeaderView(label);
 
         List causes = new ArrayList();
@@ -158,7 +158,7 @@ public final class ExceptionPane extends JPanel
         split.setResizeWeight(0.2D);
         split.setOrientation(JSplitPane.VERTICAL_SPLIT);
         split.setContinuousLayout(true);
-        split.setTopComponent(new JScrollPane(list));
+        split.setTopComponent(new CWScrollPane(list));
         split.setBottomComponent(textScroll);
         split.setBorder(BorderFactory.createEmptyBorder());
         split.setPreferredSize(new Dimension(500, 300));

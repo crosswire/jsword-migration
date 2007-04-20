@@ -41,7 +41,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.KeyStroke;
@@ -58,6 +57,7 @@ import org.crosswire.bibledesktop.passage.RangeListModel;
 import org.crosswire.bibledesktop.passage.WholeBibleTreeModel;
 import org.crosswire.bibledesktop.passage.WholeBibleTreeNode;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.passage.KeyFactory;
 import org.crosswire.jsword.passage.NoSuchKeyException;
@@ -132,7 +132,7 @@ public class PassageSelectionPane extends JPanel
 
         label.setLabelFor(treAll);
 
-        return new JScrollPane(treAll);
+        return new CWScrollPane(treAll);
     }
 
     /**
@@ -152,7 +152,7 @@ public class PassageSelectionPane extends JPanel
 
         label.setLabelFor(lstSel);
 
-        return new JScrollPane(lstSel);
+        return new CWScrollPane(lstSel);
     }
 
     /**

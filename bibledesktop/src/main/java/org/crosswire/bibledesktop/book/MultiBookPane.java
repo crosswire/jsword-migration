@@ -48,6 +48,7 @@ import org.crosswire.bibledesktop.passage.KeyListListModel;
 import org.crosswire.bibledesktop.passage.KeyTreeCellRenderer;
 import org.crosswire.bibledesktop.passage.KeyTreeModel;
 import org.crosswire.bibledesktop.passage.KeyTreeNode;
+import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.book.Book;
@@ -97,7 +98,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
 
         genBookKeyScroller = createGenBookPicker();
 
-        JScrollPane scrDisplay = new JScrollPane(display.getComponent());
+        JScrollPane scrDisplay = new CWScrollPane(display.getComponent());
 
         sptMain = new FixedSplitPane(false);
         sptMain.setOrientation(JSplitPane.VERTICAL_SPLIT);
@@ -277,7 +278,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
             }
         });
 
-        return new JScrollPane(bookList);
+        return new CWScrollPane(bookList);
     }
 
     /**
@@ -323,7 +324,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
                 newEntry();
             }
         });
-        return new JScrollPane(dictionaryKeyList);
+        return new CWScrollPane(dictionaryKeyList);
     }
 
     /**
@@ -345,7 +346,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
             }
         });
 
-        return new JScrollPane(genBookKeyTree);
+        return new CWScrollPane(genBookKeyTree);
     }
 
     /**

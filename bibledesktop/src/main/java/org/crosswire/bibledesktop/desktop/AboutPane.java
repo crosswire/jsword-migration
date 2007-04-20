@@ -46,6 +46,7 @@ import javax.swing.text.html.HTMLEditorKit;
 
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.AntiAliasedTextPane;
+import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.swing.MapTableModel;
 import org.crosswire.common.util.CollectionUtil;
@@ -120,9 +121,8 @@ public class AboutPane
         warranty.setEditorKit(new HTMLEditorKit());
         warranty.setText(license.getWarranty());
         warranty.setCaretPosition(0);
-        JScrollPane warrantyScr = new JScrollPane();
+        JScrollPane warrantyScr = new CWScrollPane(warranty);
         warrantyScr.setPreferredSize(new Dimension(500, 300));
-        warrantyScr.getViewport().add(warranty);
         JPanel warrantyPnl = new JPanel(new BorderLayout());
         warrantyPnl.add(warrantyScr, BorderLayout.CENTER);
         warrantyPnl.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -134,9 +134,8 @@ public class AboutPane
         details.setEditorKit(new HTMLEditorKit());
         details.setText(license.getDetails());
         details.setCaretPosition(0);
-        JScrollPane detailScr = new JScrollPane();
+        JScrollPane detailScr = new CWScrollPane(details);
         detailScr.setPreferredSize(new Dimension(500, 300));
-        detailScr.getViewport().add(details);
         JPanel detailsPnl = new JPanel(new BorderLayout());
         detailsPnl.add(detailScr, BorderLayout.CENTER);
         detailsPnl.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -150,9 +149,8 @@ public class AboutPane
             MapTableModel mdlProps = new MapTableModel(CollectionUtil.properties2Map(System.getProperties()));
             tblProps.setModel(mdlProps);
 
-            JScrollPane scrProps = new JScrollPane();
+            JScrollPane scrProps = new CWScrollPane(tblProps);
             scrProps.setPreferredSize(new Dimension(500, 300));
-            scrProps.getViewport().add(tblProps);
 
             JPanel pnlProps = new JPanel();
             pnlProps.setLayout(new BorderLayout());

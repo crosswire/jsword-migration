@@ -45,6 +45,7 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
@@ -197,7 +198,7 @@ public class SitePane extends JPanel
         display = new TextPaneBookMetaDataDisplay();
         lblSelected.setLabelFor(display.getComponent());
 
-        JScrollPane scrSelected = new JScrollPane();
+        JScrollPane scrSelected = new CWScrollPane();
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.add(lblSelected, BorderLayout.PAGE_START);
@@ -231,10 +232,7 @@ public class SitePane extends JPanel
             }
         });
 
-        JScrollPane scroller = new JScrollPane();
-        scroller.getViewport().add(treAvailable);
-
-        return scroller;
+        return new CWScrollPane(treAvailable);
     }
 
     private TreeModel createTreeModel(BookList books)

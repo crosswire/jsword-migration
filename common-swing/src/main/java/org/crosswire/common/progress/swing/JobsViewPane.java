@@ -47,6 +47,7 @@ import org.crosswire.common.progress.JobManager;
 import org.crosswire.common.progress.Progress;
 import org.crosswire.common.progress.WorkEvent;
 import org.crosswire.common.progress.WorkListener;
+import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Logger;
 
@@ -90,7 +91,7 @@ public class JobsViewPane extends JPanel implements WorkListener
         JPanel pnl = new JPanel(new BorderLayout());
         pnl.add(jobsPanel, BorderLayout.NORTH);
 
-        JScrollPane scrollPane = new JScrollPane(pnl);
+        JScrollPane scrollPane = new CWScrollPane(pnl);
         scrollPane.setBorder(null);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 

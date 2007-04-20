@@ -47,6 +47,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.EdgeBorder;
 import org.crosswire.common.swing.FormPane;
 import org.crosswire.common.util.Logger;
@@ -130,7 +131,7 @@ public class WizardConfigEditor extends AbstractConfigEditor
             FormPane card = (FormPane) decks.get(path);
             if (card.getParent() == null)
             {
-                JScrollPane scroll = new JScrollPane(card);
+                JScrollPane scroll = new CWScrollPane(card);
                 scroll.setBorder(BorderFactory.createEmptyBorder());
                 deck.add(path, scroll);
                 wcards++;
