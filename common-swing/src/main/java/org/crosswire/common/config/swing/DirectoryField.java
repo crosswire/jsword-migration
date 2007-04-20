@@ -21,7 +21,12 @@
  */
 package org.crosswire.common.config.swing;
 
+import java.awt.FileDialog;
+
 import javax.swing.JFileChooser;
+
+import org.crosswire.common.swing.GuiUtil;
+import org.crosswire.common.util.OSType;
 
 /**
  * A Directory selection.
@@ -38,11 +43,27 @@ public class DirectoryField extends FileField
     /* @Override */
     public void doBrowse()
     {
-        JFileChooser chooser = new JFileChooser(text.getText());
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        if (chooser.showOpenDialog(DirectoryField.this) == JFileChooser.APPROVE_OPTION)
+        if (OSType.MAC.equals(OSType.getOSType()))
         {
-            text.setText(chooser.getSelectedFile().getPath());
+            FileDialog chooser = new FileDialog(GuiUtil.getFrame(getParent()), text.getText());
+            String prop = "apple.awt.fileDialogForDirectories"; //$NON-NLS-1$
+            System.setProperty(prop, "true"); //$NON-NLS-1$
+            chooser.show();
+            System.setProperty(prop, "false"); //$NON-NLS-1$
+            String dir = chooser.getFile();
+            if (dir != null)
+            {
+                text.setText(dir);
+            }
+        }
+        else
+        {
+            JFileChooser chooser = new JFileChooser(text.getText());
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            if (chooser.showOpenDialog(DirectoryField.this) == JFileChooser.APPROVE_OPTION)
+            {
+                text.setText(chooser.getSelectedFile().getPath());
+            }
         }
     }
 
