@@ -56,10 +56,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
-import org.crosswire.bibledesktop.book.MultiBookPane;
 import org.crosswire.bibledesktop.book.DisplaySelectEvent;
 import org.crosswire.bibledesktop.book.DisplaySelectListener;
 import org.crosswire.bibledesktop.book.DisplaySelectPane;
+import org.crosswire.bibledesktop.book.MultiBookPane;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.URLEvent;
 import org.crosswire.bibledesktop.display.URLEventListener;
@@ -84,6 +84,7 @@ import org.crosswire.common.swing.desktop.event.ViewEventListener;
 import org.crosswire.common.util.CWClassLoader;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.LucidRuntimeException;
+import org.crosswire.common.util.OSType;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.common.xml.XMLUtil;
@@ -359,8 +360,6 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     private ToolBar createToolBar()
     {
         ToolBar toolbar = new ToolBar(this);
-        toolbar.setRollover(true);
-        toolbar.setFloatable(true);
 
         toolbar.add(views.getContextAction(ViewManager.NEW_TAB)).addMouseListener(barStatus);
         toolbar.add(actions.getAction(DesktopActions.OPEN)).addMouseListener(barStatus);
@@ -377,7 +376,14 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         //toolbar.add(actions.getAction("Diff")).addMouseListener(barStatus);
         //toolbar.addSeparator();
         toolbar.add(actions.getAction(DesktopActions.CONTENTS)).addMouseListener(barStatus);
-        toolbar.add(actions.getAction(DesktopActions.ABOUT)).addMouseListener(barStatus);
+        toolbar.setRollover(true);
+
+        // Floating is not appropriate on a Mac
+        // It is the default on all others
+        if (!OSType.MAC.equals(OSType.getOSType()))
+        {
+            toolbar.add(actions.getAction(DesktopActions.ABOUT)).addMouseListener(barStatus);
+        }
 
         return toolbar;
     }
@@ -401,8 +407,14 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         menuFile.add(actions.getAction(DesktopActions.SAVE)).addMouseListener(barStatus);
         menuFile.add(actions.getAction(DesktopActions.SAVE_AS)).addMouseListener(barStatus);
         menuFile.add(actions.getAction(DesktopActions.SAVE_ALL)).addMouseListener(barStatus);
-        menuFile.addSeparator();
-        menuFile.add(actions.getAction(DesktopActions.EXIT)).addMouseListener(barStatus);
+
+        // Mac OSX provides "Quit" on the Program menu
+        if (!OSType.MAC.equals(OSType.getOSType()))
+        {
+            menuFile.addSeparator();
+            menuFile.add(actions.getAction(DesktopActions.EXIT)).addMouseListener(barStatus);
+        }
+
         menuFile.setToolTipText(null);
         return menuFile;
     }
@@ -518,8 +530,14 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     {
         JMenu menuHelp = new JMenu(actions.getAction(DesktopActions.HELP));
         menuHelp.add(actions.getAction(DesktopActions.CONTENTS)).addMouseListener(barStatus);
-        menuHelp.addSeparator();
-        menuHelp.add(actions.getAction(DesktopActions.ABOUT)).addMouseListener(barStatus);
+
+        // Mac provides the About action on the Program menu.
+        if (!OSType.MAC.equals(OSType.getOSType()))
+        {
+            menuHelp.addSeparator();
+            menuHelp.add(actions.getAction(DesktopActions.ABOUT)).addMouseListener(barStatus);
+        }
+
         menuHelp.setToolTipText(null);
         return menuHelp;
     }
@@ -1050,6 +1068,13 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         /* @Override */
         public void run()
         {
+            // These Mac properties give the application a Mac behavior
+            if (OSType.MAC.equals(OSType.getOSType()))
+            {
+                System.setProperty("apple.laf.useScreenMenuBar","true"); //$NON-NLS-1$ //$NON-NLS-2$
+                System.setProperty("com.apple.mrj.application.apple.menu.about.name", Msg.getApplicationTitle()); //$NON-NLS-1$
+            }
+
 //            new BusStart();
             ExceptionPane.setHelpDeskListener(true);
             LookAndFeelUtil.initialize();

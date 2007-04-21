@@ -39,6 +39,7 @@ import javax.swing.SwingConstants;
 
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWAction;
+import org.crosswire.common.util.OSType;
 
 /**
  * This toolbar allows for manipulating how it looks. That is it allows for:<ul>
@@ -60,6 +61,15 @@ public class ToolBar extends JToolBar
     {
         this.frame = frame;
         actions = new ActionFactory(ToolBar.class, this);
+
+        setRollover(true);
+
+        // Floating is not appropriate on a Mac
+        // It is the default on all others
+        if (OSType.MAC.equals(OSType.getOSType()))
+        {
+            setFloatable(false);
+        }
     }
 
     /**

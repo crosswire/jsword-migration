@@ -24,6 +24,7 @@ package org.crosswire.bibledesktop.desktop;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Iterator;
 
@@ -38,8 +39,11 @@ import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.splitlist.SplitBookDataDisplay;
 import org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay;
 import org.crosswire.common.config.swing.ConfigEditorFactory;
+import org.crosswire.common.swing.Actionable;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.desktop.ViewVisitor;
+import org.crosswire.common.util.Logger;
+import org.crosswire.common.util.OSType;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
@@ -59,7 +63,7 @@ import org.crosswire.jsword.util.Project;
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at gmail dot com]
  */
-public class DesktopActions
+public class DesktopActions implements Actionable
 {
     /**
      * Create the actions for the desktop
@@ -69,6 +73,8 @@ public class DesktopActions
     {
         this.desktop = desktop;
         actions = new ActionFactory(Desktop.class, this);
+
+        macOSXRegistration();
     }
 
     /**
@@ -79,6 +85,14 @@ public class DesktopActions
     public Action getAction(String key)
     {
         return actions.getAction(key);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.common.swing.Actionable#actionPerformed(java.lang.String)
+     */
+    public void actionPerformed(String action)
+    {
+        actions.actionPerformed(action);
     }
 
     /**
@@ -453,6 +467,54 @@ public class DesktopActions
     }
 
     /**
+     * Register the application with Apple EAWT, which provides support for the Application Menu, with
+     * About, Preferences (Options) and Quit (Exit).
+     */
+    public void macOSXRegistration()
+    {
+        if (OSType.MAC.equals(OSType.getOSType()))
+        {
+            try
+            {
+                //org.crosswire.common.aqua.OSXAdapter.registerMacOSXApplication(actions, DesktopActions.ABOUT, DesktopActions.OPTIONS, DesktopActions.EXIT);
+                
+                Class osxAdapter = ClassLoader.getSystemClassLoader().loadClass("org.crosswire.common.aqua.OSXAdapter"); //$NON-NLS-1$
+
+                Class[] defRegisterArgs = { Actionable.class, String.class, String.class, String.class };
+                Method registerMethod = osxAdapter.getDeclaredMethod("registerMacOSXApplication", defRegisterArgs); //$NON-NLS-1$
+                if (registerMethod != null)
+                {
+                    Object[] args = { actions, DesktopActions.ABOUT, DesktopActions.OPTIONS, DesktopActions.EXIT };
+                    registerMethod.invoke(osxAdapter, args);
+                }
+
+                Class[] defEnablePrefArgs = { boolean.class };
+                Method prefsEnableMethod = osxAdapter.getDeclaredMethod("enablePrefs", defEnablePrefArgs); //$NON-NLS-1$
+                if (prefsEnableMethod != null)
+                {
+                    Object args[] = { Boolean.TRUE };
+                    prefsEnableMethod.invoke(osxAdapter, args);
+                }
+            }
+            catch (NoClassDefFoundError e)
+            {
+                // This is thrown when EAWT or MacOSXadapter is not present.
+                log.error("This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled (" + e + ")");  //$NON-NLS-1$//$NON-NLS-2$
+            }
+            catch (ClassNotFoundException e)
+            {
+                // Should not happen
+                log.error("This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled (" + e + ")");  //$NON-NLS-1$//$NON-NLS-2$
+            }
+            catch (Exception e)
+            {
+                // Everything else.
+                log.error("Exception while loading the OSXAdapter:", e); //$NON-NLS-1$
+            }
+        }
+    }
+
+    /**
      *
      */
     private static final class ShowSideBarVisitor implements ViewVisitor
@@ -526,4 +588,9 @@ public class DesktopActions
      * The Book installer window
      */
     private SitesPane sites;
+
+    /**
+     * The log stream
+     */
+    protected static final Logger log = Logger.getLogger(DesktopActions.class);
 }

@@ -58,7 +58,7 @@ import org.crosswire.common.util.StringUtil;
  * @author DM Smith [dmsmith555 at yahoo dot com]
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ActionFactory implements ActionListener
+public class ActionFactory implements ActionListener, Actionable
 {
     /**
      * Constructor that distinguishes between the object to call and the type
@@ -73,6 +73,15 @@ public class ActionFactory implements ActionListener
         buildActionMap(type);
 
         this.bean = bean;
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.common.swing.Actionable#performAction(java.lang.String)
+     */
+    public void actionPerformed(String action)
+    {
+        Action act = getAction(action);
+        act.actionPerformed(new ActionEvent(this, 0, action));
     }
 
     /* (non-Javadoc)
