@@ -1,0 +1,14 @@
+<project name="jsword-common-aqua" default="all">
+
+  <!-- This build uses the core build targets -->
+  <import file="../common/core.xml"/>
+  <property name="dependency" value="common-swing"/>
+  <property name="dependency.jar" value="../${dependency}/${target.jar}"/>
+
+  <target name="install"
+          depends="build"
+          unless="jar.uptodate"
+          description="Install the built project.">
+    <copy verbose="${verbose.copy}" todir="../bibledesktop/jar/${ant.project.name}-${release.version}" file="${target.jar}/${ant.project.name}-${release.version}.jar"/>
+  </target>
+</project>
