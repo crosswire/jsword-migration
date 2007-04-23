@@ -80,7 +80,7 @@ public class StatusBar extends JComponent implements MouseListener, URLEventList
         panelProgress.setPreferredSize(dim);
         */
 
-        labelName.setText(' ' + Msg.getVersionedApplicationTitle() + ' ');
+        labelName.setText(Msg.getVersionedApplicationTitle());
 
         this.setBorder(BorderFactory.createEtchedBorder());
         this.setLayout(new GridBagLayout());
@@ -92,7 +92,9 @@ public class StatusBar extends JComponent implements MouseListener, URLEventList
         this.add(separator,     new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
         this.add(panelProgress, new GridBagConstraints(2, 0, 1, 1, 0.5, 0.0, GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         this.add(separator2,    new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(labelName,     new GridBagConstraints(4, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        // Right pad this so that it stays away from the corner.
+        // On the Mac, the "grow" handle is in the corner of the app.
+        this.add(labelName,     new GridBagConstraints(4, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 20, 5));
     }
 
     /* (non-Javadoc)

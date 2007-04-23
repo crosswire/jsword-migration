@@ -521,7 +521,12 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         //menuTools.add(actions.getAction(DesktopActions.DIFF)).addMouseListener(barStatus);
         //menuTools.addSeparator();
         menuTools.add(actions.getAction(DesktopActions.BOOKS)).addMouseListener(barStatus);
-        menuTools.add(actions.getAction(DesktopActions.OPTIONS)).addMouseListener(barStatus);
+
+        if (!OSType.MAC.equals(OSType.getOSType()))
+        {
+            menuTools.add(actions.getAction(DesktopActions.OPTIONS)).addMouseListener(barStatus);
+        }
+
         menuTools.setToolTipText(null);
         return menuTools;
     }
