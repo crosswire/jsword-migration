@@ -1076,8 +1076,10 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
             // These Mac properties give the application a Mac behavior
             if (OSType.MAC.equals(OSType.getOSType()))
             {
-                System.setProperty("apple.laf.useScreenMenuBar","true"); //$NON-NLS-1$ //$NON-NLS-2$
+                System.setProperty("apple.laf.useScreenMenuBar", "true"); //$NON-NLS-1$ //$NON-NLS-2$
                 System.setProperty("com.apple.mrj.application.apple.menu.about.name", Msg.getApplicationTitle()); //$NON-NLS-1$
+                System.setProperty("com.apple.mrj.application.growbox.intrudes", "true"); //$NON-NLS-1$ //$NON-NLS-2$
+                System.setProperty("com.apple.mrj.application.live-resize", "true"); //$NON-NLS-1$ //$NON-NLS-2$
             }
 
 //            new BusStart();
