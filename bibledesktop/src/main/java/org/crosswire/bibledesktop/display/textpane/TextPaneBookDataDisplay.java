@@ -146,11 +146,6 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
                 XSLTProperty.DIRECTION.setProperty(htmlsep);
             }
 
-            if (bmd.getBookCategory() == BookCategory.BIBLE)
-            {
-                XSLTProperty.setProperties(htmlsep);
-            }
-
             String text = XMLUtil.writeToString(htmlsep);
             /* BUG_PARADE(DMS): 4775730
              * This bug shows up before Java 5 in GenBook Practice "/Part 1/THE THIRD STAGE" and elsewhere.
