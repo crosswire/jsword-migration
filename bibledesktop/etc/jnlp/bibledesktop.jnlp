@@ -2,10 +2,10 @@
 <jnlp spec="1.0+" codebase="@jnlp.codebase@" href="bibledesktop-@release.version@.jnlp">
 
   <information>
-    <title>Bible Desktop v.@release.version@</title>
+    <title>Bible Desktop</title>
     <vendor>Crosswire Bible Society</vendor>
     <homepage href="@jnlp.homepage@"/>
-    <description>Bible Desktop - Bible Study Software based on the Sword project</description>
+    <description>Bible Desktop v@release.version@ - Bible Study Software based on the Sword project</description>
     <description kind="short">Bible Desktop is a Bible study package available over the internet</description>
     <description kind="tooltip">Bible Desktop Application</description>
     <icon href="icon32.gif"/>
