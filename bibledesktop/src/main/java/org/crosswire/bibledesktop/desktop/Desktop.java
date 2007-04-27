@@ -1078,7 +1078,6 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
             {
                 System.setProperty("apple.laf.useScreenMenuBar", "true"); //$NON-NLS-1$ //$NON-NLS-2$
                 System.setProperty("com.apple.mrj.application.apple.menu.about.name", Msg.getApplicationTitle()); //$NON-NLS-1$
-                System.setProperty("com.apple.mrj.application.growbox.intrudes", "true"); //$NON-NLS-1$ //$NON-NLS-2$
                 System.setProperty("com.apple.mrj.application.live-resize", "true"); //$NON-NLS-1$ //$NON-NLS-2$
             }
 

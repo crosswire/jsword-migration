@@ -36,6 +36,7 @@
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="bibledesktop-${release.version}.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jsword-common-${release.version}.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jsword-common-swing-${release.version}.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jsword-common-aqua-${release.version}.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jsword-${release.version}.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-codec-1.3.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-httpclient-3.0.1.jar"/>

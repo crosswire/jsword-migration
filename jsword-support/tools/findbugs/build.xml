@@ -27,6 +27,7 @@
       <class location="${target.jar}/jsword-${release.version}.jar"/>
       <class location="${target.jar}/jsword-common-${release.version}.jar"/>
       <class location="${target.jar}/jsword-common-swing-${release.version}.jar"/>
+      <class location="${target.jar}/jsword-common-aqua-${release.version}.jar"/>
       <auxClasspath path="${target.jar}/commons-net-1.4.1.jar"/>
       <auxClasspath path="${target.jar}/commons-httpclient-3.0.1.jar"/>
       <auxClasspath path="${target.jar}/commons-codec-1.3.jar"/>
