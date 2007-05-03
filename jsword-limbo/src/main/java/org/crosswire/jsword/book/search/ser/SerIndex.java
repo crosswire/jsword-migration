@@ -22,6 +22,7 @@
 package org.crosswire.jsword.book.search.ser;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -40,6 +41,7 @@ import org.crosswire.common.activate.Lock;
 import org.crosswire.common.progress.JobManager;
 import org.crosswire.common.progress.Progress;
 import org.crosswire.common.util.FileUtil;
+import org.crosswire.common.util.IOUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
@@ -342,14 +344,17 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus
      */
     public final void activate(Lock lock)
     {
+        URI dataUri = NetUtil.lengthenURI(uri, FILE_DATA);
+        URI indexUri = NetUtil.lengthenURI(uri, FILE_INDEX);
+        BufferedReader indexIn = null;
+
+        IOUtil.close(dataRaf);
         try
         {
-            URI dataUri = NetUtil.lengthenURI(uri, FILE_DATA);
             dataRaf = new RandomAccessFile(NetUtil.getAsFile(dataUri), FileUtil.MODE_READ);
-        
-            URI indexUri = NetUtil.lengthenURI(uri, FILE_INDEX);
-            BufferedReader indexIn = new BufferedReader(new InputStreamReader(NetUtil.getInputStream(indexUri)));
-        
+
+            indexIn = new BufferedReader(new InputStreamReader(NetUtil.getInputStream(indexUri)));
+
             while (true)
             {
                 String line = indexIn.readLine();
@@ -357,16 +362,16 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus
                 {
                     break;
                 }
-        
+
                 try
                 {
                     int colon1 = line.indexOf(":"); //$NON-NLS-1$
                     int colon2 = line.lastIndexOf(":"); //$NON-NLS-1$
                     String word = line.substring(0, colon1);
-        
+
                     long offset = Long.parseLong(line.substring(colon1 + 1, colon2));
                     int length = Integer.parseInt(line.substring(colon2 + 1));
-        
+
                     Section section = new Section(offset, length);
                     datamap.put(word, section);
                 }
@@ -376,9 +381,18 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus
                 }
             }
         }
+        catch (FileNotFoundException ex)
+        {
+            log.error("File not found exception", ex); //$NON-NLS-1$
+        }
         catch (IOException ex)
         {
-            log.error("Read failed on indexin", ex); //$NON-NLS-1$
+            log.error("IOException", ex); //$NON-NLS-1$
+        }
+        finally
+        {
+            IOUtil.close(dataRaf);
+            IOUtil.close(indexIn);
         }
 
         active = true;

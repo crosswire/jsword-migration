@@ -21,14 +21,17 @@
  */
 package org.crosswire.jsword.book.raw;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.crosswire.common.util.IOUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
-import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.basic.AbstractBookDriver;
 import org.crosswire.jsword.book.basic.BookRoot;
@@ -47,9 +50,11 @@ public class RawBookDriver extends AbstractBookDriver
      */
     public Book[] getBooks()
     {
+        URI dir = null;
+        String[] names = null;
         try
         {
-            URI dir = BookRoot.findBibleRoot(getDriverName());
+            dir = BookRoot.findBibleRoot(getDriverName());
 
             if (!NetUtil.isDirectory(dir))
             {
@@ -57,7 +62,6 @@ public class RawBookDriver extends AbstractBookDriver
                 return new Book[0];
             }
 
-            String[] names = null;
             if (dir == null)
             {
                 names = new String[0];
@@ -66,14 +70,27 @@ public class RawBookDriver extends AbstractBookDriver
             {
                 names = NetUtil.list(dir, new NetUtil.IsDirectoryURIFilter(dir));
             }
+        }
+        catch (MalformedURLException e1)
+        {
+            names = new String[0];
+        }
+        catch (IOException e)
+        {
+            names = new String[0];
+        }
 
-            List books = new ArrayList();
+        List books = new ArrayList();
 
-            for (int i=0; i<names.length; i++)
+        for (int i = 0; i < names.length; i++)
+        {
+            InputStream is = null;
+            try
             {
                 URI uri = NetUtil.lengthenURI(dir, names[i]);
                 URI propURI = NetUtil.lengthenURI(uri, RawConstants.FILE_BIBLE_PROPERTIES);
 
+                is = NetUtil.getInputStream(propURI);
                 Properties prop = new Properties();
                 prop.load(NetUtil.getInputStream(propURI));
 
@@ -81,14 +98,17 @@ public class RawBookDriver extends AbstractBookDriver
 
                 books.add(book);
             }
+            catch (IOException e)
+            {
+                continue;
+            }
+            finally
+            {
+                IOUtil.close(is);
+            }
+        }
 
-            return (Book[]) books.toArray(new Book[books.size()]);
-        }
-        catch (Exception ex)
-        {
-            Reporter.informUser(this, ex);
-            return new Book[0];
-        }
+        return (Book[]) books.toArray(new Book[books.size()]);
     }
 
     /* (non-Javadoc)

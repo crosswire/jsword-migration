@@ -33,6 +33,7 @@ import org.crosswire.common.activate.Activatable;
 import org.crosswire.common.activate.Activator;
 import org.crosswire.common.activate.Lock;
 import org.crosswire.common.util.FileUtil;
+import org.crosswire.common.util.IOUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.jsword.book.BookException;
@@ -68,17 +69,20 @@ public class BookDataCache implements Activatable
      */
     public final void activate(Lock lock)
     {
+        dataUri = NetUtil.lengthenURI(uri, FILE_DATA);
+        indexUri = NetUtil.lengthenURI(uri, FILE_INDEX);
+
+        IOUtil.close(dataRaf);
+        IOUtil.close(indexIn);
         try
         {
             // Create blank indexes
             indexArr = new long[BibleInfo.versesInBible()];
         
             // Open the XML RAF
-            dataUri = NetUtil.lengthenURI(uri, FILE_DATA);
             dataRaf = new RandomAccessFile(NetUtil.getAsFile(dataUri), FileUtil.MODE_READ);
 
             // Open the index file
-            indexUri = NetUtil.lengthenURI(uri, FILE_INDEX);
             indexIn = new BufferedReader(new InputStreamReader(NetUtil.getInputStream(indexUri)));
 
             // Load the ascii XML index
@@ -118,6 +122,11 @@ public class BookDataCache implements Activatable
         {
             log.warn("failed to open stream", ex); //$NON-NLS-1$
         }
+        finally
+        {
+            IOUtil.close(dataRaf);
+            IOUtil.close(indexIn);
+        }
     }
 
     /* (non-Javadoc)
@@ -125,14 +134,7 @@ public class BookDataCache implements Activatable
      */
     public final void deactivate(Lock lock)
     {
-        try
-        {
-            indexIn.close();
-        }
-        catch (IOException ex)
-        {
-            log.warn("failed to close stream", ex); //$NON-NLS-1$
-        }
+        IOUtil.close(indexIn);
 
         active = false;
     }

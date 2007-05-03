@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 
+import org.crosswire.common.util.IOUtil;
 import org.crosswire.common.util.NetUtil;
 
 /**
@@ -110,6 +111,7 @@ public abstract class Mem
 
     /**
      * Load the Resource from a named file
+     * @throws IOException 
      */
     public void load() throws IOException
     {
@@ -121,19 +123,25 @@ public abstract class Mem
         // For the gzip version
         //String filename = raw.getDir()+leafname+".gz";
 
-        InputStream in = NetUtil.getInputStream(uri);
+        InputStream in = null;
+        try
+        {
+            in = NetUtil.getInputStream(uri);
 
-        // For the pkzip version
-        //ZipInputStream in = new ZipInputStream(new FileInputStream(filename));
-        //ZipEntry entry = in.getNextEntry();
-        //if (entry == null) throw new IOException("Empty ZIP file");
+            // For the pkzip version
+            //ZipInputStream in = new ZipInputStream(new FileInputStream(filename));
+            //ZipEntry entry = in.getNextEntry();
+            //if (entry == null) throw new IOException("Empty ZIP file");
 
-        // For the gzip version
-        //GZIPInputStream in = new GZIPInputStream(new FileInputStream(filename));
+            // For the gzip version
+            //GZIPInputStream in = new GZIPInputStream(new FileInputStream(filename));
 
-        load(in);
-
-        in.close();
+            load(in);
+        }
+        finally
+        {
+            IOUtil.close(in);
+        }
     }
 
     /**

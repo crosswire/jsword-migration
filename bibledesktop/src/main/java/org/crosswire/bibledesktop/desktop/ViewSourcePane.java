@@ -100,7 +100,7 @@ public class ViewSourcePane extends JPanel
             osissep.provideSAXEvents(osis);
 
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
-  
+
             XSLTProperty.DIRECTION.setState(bmd.isLeftToRight() ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$
 
             URI loc = bmd.getLocation();

@@ -111,14 +111,14 @@ public class StatusBar extends JComponent implements MouseListener, URIEventList
     public void enterURI(URIEvent ev)
     {
         String protocol = ev.getScheme();
-        String URI = ev.getURI();
+        String uri = ev.getURI();
         if (protocol.length() == 0)
         {
-            labelMessage.setText(URI);
+            labelMessage.setText(uri);
         }
         else
         {
-            labelMessage.setText(protocol + "://" + URI); //$NON-NLS-1$
+            labelMessage.setText(protocol + "://" + uri); //$NON-NLS-1$
         }
     }
 

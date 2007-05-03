@@ -183,8 +183,8 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         Reporter.grabAWTExecptions(true);
 
         // Splash screen
-        URI predicturl = PROJECT.getWritablePropertiesURI(SPLASH_PROPS);
-        Progress startJob = JobManager.createJob(Msg.STARTUP_TITLE.toString(), predicturl, true);
+        URI predictURI = PROJECT.getWritablePropertiesURI(SPLASH_PROPS);
+        Progress startJob = JobManager.createJob(Msg.STARTUP_TITLE.toString(), predictURI, true);
 
         //startJob.setProgress(Msg.STARTUP_CONFIG.toString());
 

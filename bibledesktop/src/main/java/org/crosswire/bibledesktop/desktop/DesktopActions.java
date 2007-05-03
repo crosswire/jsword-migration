@@ -477,7 +477,7 @@ public class DesktopActions implements Actionable
             try
             {
                 //org.crosswire.common.aqua.OSXAdapter.registerMacOSXApplication(actions, DesktopActions.ABOUT, DesktopActions.OPTIONS, DesktopActions.EXIT);
-                
+
                 Class osxAdapter = ClassLoader.getSystemClassLoader().loadClass("org.crosswire.common.aqua.OSXAdapter"); //$NON-NLS-1$
 
                 Class[] defRegisterArgs = { Actionable.class, String.class, String.class, String.class };
@@ -492,7 +492,7 @@ public class DesktopActions implements Actionable
                 Method prefsEnableMethod = osxAdapter.getDeclaredMethod("enablePrefs", defEnablePrefArgs); //$NON-NLS-1$
                 if (prefsEnableMethod != null)
                 {
-                    Object args[] = { Boolean.TRUE };
+                    Object[] args = { Boolean.TRUE };
                     prefsEnableMethod.invoke(osxAdapter, args);
                 }
             }

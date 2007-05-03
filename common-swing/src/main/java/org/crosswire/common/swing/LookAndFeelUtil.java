@@ -106,17 +106,18 @@ public final class LookAndFeelUtil
     public static void setUIFont(FontUIResource f)
     {
         Enumeration keys = UIManager.getDefaults().keys();
-        while (keys.hasMoreElements()) {
-          Object key = keys.nextElement();
-          Object value = UIManager.get (key);
+        while (keys.hasMoreElements())
+        {
+            Object key = keys.nextElement();
+            Object value = UIManager.get(key);
 
-          if (value instanceof FontUIResource)
-          {
+            if (value instanceof FontUIResource)
+            {
 //              System.err.println(key + " = " + value);
-              UIManager.put (key, f);
-          }
+                UIManager.put(key, f);
+            }
         }
-    }    
+    }
 
     /**
      * The current PLAF
