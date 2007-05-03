@@ -38,7 +38,7 @@ import javax.swing.event.ChangeListener;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
-import org.crosswire.bibledesktop.display.URLEventListener;
+import org.crosswire.bibledesktop.display.URIEventListener;
 import org.crosswire.bibledesktop.display.scrolled.ScrolledBookDataDisplay;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.book.Book;
@@ -200,7 +200,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#copy()
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#copy()
      */
     public void copy()
     {
@@ -208,9 +208,9 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addHyperlinkListener(javax.swing.event.HyperlinkListener)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
      */
-    public synchronized void addURLEventListener(URLEventListener listener)
+    public synchronized void addURIEventListener(URIEventListener listener)
     {
         // First add to our list of listeners so when we get more event syncs
         // we can add this new listener to the new sync
@@ -236,14 +236,14 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         while (iter.hasNext())
         {
             BookDataDisplay bdd = (BookDataDisplay) iter.next();
-            bdd.addURLEventListener(listener);
+            bdd.addURIEventListener(listener);
         }
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
      */
-    public synchronized void removeURLEventListener(URLEventListener listener)
+    public synchronized void removeURIEventListener(URIEventListener listener)
     {
         // First remove from the list of listeners
         if (hyperlis != null && hyperlis.contains(listener))
@@ -259,7 +259,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         while (iter.hasNext())
         {
             BookDataDisplay bdd = (BookDataDisplay) iter.next();
-            bdd.removeURLEventListener(listener);
+            bdd.removeURIEventListener(listener);
         }
     }
 
@@ -342,8 +342,8 @@ public class TabbedBookDataDisplay implements BookDataDisplay
             Iterator iter = hyperlis.iterator();
             while (iter.hasNext())
             {
-                URLEventListener li = (URLEventListener) iter.next();
-                display.addURLEventListener(li);
+                URIEventListener li = (URIEventListener) iter.next();
+                display.addURIEventListener(li);
             }
         }
 
@@ -394,7 +394,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     private static int pageSize = 50;
 
     /**
-     * A list of all the HyperlinkListeners
+     * A list of all the URIEventListeners
      */
     private List hyperlis;
 

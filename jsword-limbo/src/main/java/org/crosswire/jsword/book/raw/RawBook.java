@@ -22,7 +22,7 @@
 package org.crosswire.jsword.book.raw;
 
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -212,12 +212,12 @@ public class RawBook extends AbstractPassageBook
     /**
      * Simple ctor
      */
-    public RawBook(BookDriver driver, Map prop, URL url)
+    public RawBook(BookDriver driver, Map prop, URI uri)
     {
         super(null); // set the BookMetaData later
         setBookMetaData(new DefaultBookMetaData(driver, this, prop));
 
-        this.url = url;
+        this.uri = uri;
 
         boolean create = false;
         if (create)
@@ -484,9 +484,9 @@ public class RawBook extends AbstractPassageBook
     /**
      * The base URL from which to read files
      */
-    protected URL getURL()
+    protected URI getURI()
     {
-        return url;
+        return uri;
     }
 
     /* (non-Javadoc)
@@ -593,9 +593,9 @@ public class RawBook extends AbstractPassageBook
     }
 
     /**
-     * The URL from which we read data
+     * The URI from which we read data
      */
-    private URL url;
+    private URI uri;
 
     /**
      * Do we instruct new RawBibles to cache data in memory?

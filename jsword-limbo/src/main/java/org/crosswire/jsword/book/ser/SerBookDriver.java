@@ -21,7 +21,7 @@
  */
 package org.crosswire.jsword.book.ser;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,11 +50,11 @@ public class SerBookDriver extends AbstractBookDriver
     {
         try
         {
-            URL dir = BookRoot.findBibleRoot(getDriverName());
+            URI dir = BookRoot.findBibleRoot(getDriverName());
 
             if (!NetUtil.isDirectory(dir))
             {
-                log.debug("Missing ser directory: "+dir.toExternalForm()); //$NON-NLS-1$
+                log.debug("Missing ser directory: " + dir); //$NON-NLS-1$
                 return new Book[0];
             }
 
@@ -65,17 +65,17 @@ public class SerBookDriver extends AbstractBookDriver
             }
             else
             {
-                names = NetUtil.list(dir, new NetUtil.IsDirectoryURLFilter(dir));
+                names = NetUtil.list(dir, new NetUtil.IsDirectoryURIFilter(dir));
             }
 
             List books = new ArrayList();
 
             for (int i=0; i<names.length; i++)
             {
-                URL url = NetUtil.lengthenURL(dir, names[i]);
-                URL propUrl = NetUtil.lengthenURL(url, "bible.properties"); //$NON-NLS-1$
+                URI uri = NetUtil.lengthenURI(dir, names[i]);
+                URI propUri = NetUtil.lengthenURI(uri, "bible.properties"); //$NON-NLS-1$
 
-                Book book = new RawBook(this, CollectionUtil.properties2Map(propUrl), url);
+                Book book = new RawBook(this, CollectionUtil.properties2Map(propUri), uri);
 
                 books.add(book);
             }

@@ -21,7 +21,7 @@
  */
 package org.crosswire.jsword.book.raw;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -49,11 +49,11 @@ public class RawBookDriver extends AbstractBookDriver
     {
         try
         {
-            URL dir = BookRoot.findBibleRoot(getDriverName());
+            URI dir = BookRoot.findBibleRoot(getDriverName());
 
             if (!NetUtil.isDirectory(dir))
             {
-                log.debug("Missing raw directory: "+dir.toExternalForm()); //$NON-NLS-1$
+                log.debug("Missing raw directory: " + dir); //$NON-NLS-1$
                 return new Book[0];
             }
 
@@ -64,20 +64,20 @@ public class RawBookDriver extends AbstractBookDriver
             }
             else
             {
-                names = NetUtil.list(dir, new NetUtil.IsDirectoryURLFilter(dir));
+                names = NetUtil.list(dir, new NetUtil.IsDirectoryURIFilter(dir));
             }
 
             List books = new ArrayList();
 
             for (int i=0; i<names.length; i++)
             {
-                URL url = NetUtil.lengthenURL(dir, names[i]);
-                URL prop_url = NetUtil.lengthenURL(url, RawConstants.FILE_BIBLE_PROPERTIES);
+                URI uri = NetUtil.lengthenURI(dir, names[i]);
+                URI propURI = NetUtil.lengthenURI(uri, RawConstants.FILE_BIBLE_PROPERTIES);
 
                 Properties prop = new Properties();
-                prop.load(prop_url.openStream());
+                prop.load(NetUtil.getInputStream(propURI));
 
-                Book book = new RawBook(this, prop, url);
+                Book book = new RawBook(this, prop, uri);
 
                 books.add(book);
             }

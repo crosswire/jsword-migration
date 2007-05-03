@@ -27,7 +27,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
 
 import org.crosswire.common.activate.Activatable;
 import org.crosswire.common.activate.Activator;
@@ -53,13 +53,13 @@ public class BookDataCache implements Activatable
     /**
      * Constructor for BookDataCache.
      */
-    public BookDataCache(URL url) throws MalformedURLException
+    public BookDataCache(URI uri) throws MalformedURLException
     {
-        this.url = url;
+        this.uri = uri;
 
-        if (!url.getProtocol().equals(NetUtil.PROTOCOL_FILE))
+        if (!uri.getScheme().equals(NetUtil.PROTOCOL_FILE))
         {
-            throw new MalformedURLException(Msg.NON_FILE_URL.toString(url));
+            throw new MalformedURLException(Msg.NON_FILE_URL.toString(uri));
         }
     }
 
@@ -74,12 +74,12 @@ public class BookDataCache implements Activatable
             indexArr = new long[BibleInfo.versesInBible()];
         
             // Open the XML RAF
-            dataUrl = NetUtil.lengthenURL(url, FILE_DATA);
-            dataRaf = new RandomAccessFile(NetUtil.getAsFile(dataUrl), FileUtil.MODE_READ);
+            dataUri = NetUtil.lengthenURI(uri, FILE_DATA);
+            dataRaf = new RandomAccessFile(NetUtil.getAsFile(dataUri), FileUtil.MODE_READ);
 
             // Open the index file
-            indexUrl = NetUtil.lengthenURL(url, FILE_INDEX);
-            indexIn = new BufferedReader(new InputStreamReader(indexUrl.openStream()));
+            indexUri = NetUtil.lengthenURI(uri, FILE_INDEX);
+            indexIn = new BufferedReader(new InputStreamReader(NetUtil.getInputStream(indexUri)));
 
             // Load the ascii XML index
             for (int i = 0; i < BibleInfo.versesInBible(); i++)
@@ -214,10 +214,10 @@ public class BookDataCache implements Activatable
         try
         {
             // re-open the RAF read-write
-            dataRaf = new RandomAccessFile(NetUtil.getAsFile(dataUrl), FileUtil.MODE_WRITE);
+            dataRaf = new RandomAccessFile(NetUtil.getAsFile(dataUri), FileUtil.MODE_WRITE);
 
             // Save the ascii XML index
-            PrintWriter indexOut = new PrintWriter(NetUtil.getOutputStream(indexUrl));
+            PrintWriter indexOut = new PrintWriter(NetUtil.getOutputStream(indexUri));
             for (int i = 0; i < indexArr.length; i++)
             {
                 indexOut.println(indexArr[i]);
@@ -249,17 +249,17 @@ public class BookDataCache implements Activatable
     /**
      * The directory in which the cache is stored
      */
-    private URL url;
+    private URI uri;
 
     /**
      * URL of the index file
      */
-    private URL indexUrl;
+    private URI indexUri;
 
     /**
      * URL of the text file
      */
-    private URL dataUrl;
+    private URI dataUri;
 
     /**
      * The text random access file

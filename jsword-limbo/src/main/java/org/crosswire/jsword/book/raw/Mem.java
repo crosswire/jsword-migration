@@ -24,7 +24,7 @@ package org.crosswire.jsword.book.raw;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URL;
+import java.net.URI;
 
 import org.crosswire.common.util.NetUtil;
 
@@ -113,7 +113,7 @@ public abstract class Mem
      */
     public void load() throws IOException
     {
-        URL url = NetUtil.lengthenURL(raw.getURL(), leafname);
+        URI uri = NetUtil.lengthenURI(raw.getURI(), leafname);
 
         // For the pkzip version
         //String filename = raw.getDir()+leafname+".zip";
@@ -121,7 +121,7 @@ public abstract class Mem
         // For the gzip version
         //String filename = raw.getDir()+leafname+".gz";
 
-        InputStream in = url.openStream();
+        InputStream in = NetUtil.getInputStream(uri);
 
         // For the pkzip version
         //ZipInputStream in = new ZipInputStream(new FileInputStream(filename));
@@ -148,7 +148,7 @@ public abstract class Mem
      */
     public void save() throws IOException
     {
-        URL url = NetUtil.lengthenURL(raw.getURL(), leafname);
+        URI uri = NetUtil.lengthenURI(raw.getURI(), leafname);
 
         // For the pkzip version
         //String filename = raw.getDir()+leafname+".zip";
@@ -156,7 +156,7 @@ public abstract class Mem
         // For the gzip version
         //String filename = raw.getDir()+leafname+".gz";
 
-        OutputStream out = NetUtil.getOutputStream(url);
+        OutputStream out = NetUtil.getOutputStream(uri);
 
         // For the pkzip version
         //ZipOutputStream out = new ZipOutputStream(new FileOutputStream(filename));

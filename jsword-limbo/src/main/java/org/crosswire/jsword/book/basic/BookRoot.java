@@ -23,6 +23,8 @@ package org.crosswire.jsword.book.basic;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.crosswire.common.util.Logger;
@@ -41,9 +43,9 @@ public class BookRoot
     /**
      * Search for versions directories
      */
-    public static URL findBibleRoot(String subdir) throws MalformedURLException
+    public static URI findBibleRoot(String subdir) throws MalformedURLException
     {
-        URL root = null;
+        URI root = null;
 
         // First see if there is a System property that can help us out
         String sysprop = System.getProperty(PROP_HOMEDIR);
@@ -51,33 +53,41 @@ public class BookRoot
 
         if (sysprop != null)
         {
-            URL found = NetUtil.lengthenURL(new URL(NetUtil.PROTOCOL_FILE, null, sysprop), DIR_VERSIONS);
-            URL test = NetUtil.lengthenURL(found, FILE_LOCATOR);
+            try
+            {
+                URI found = NetUtil.lengthenURI(new URI(NetUtil.PROTOCOL_FILE, null, sysprop, null), DIR_VERSIONS);
+                URI test = NetUtil.lengthenURI(found, FILE_LOCATOR);
 
-            if (NetUtil.isFile(test))
-            {
-                log.debug("Found BibleRoot using system property " + PROP_HOMEDIR + " at " + test); //$NON-NLS-1$ //$NON-NLS-2$
-                root = found;
+                if (NetUtil.isFile(test))
+                {
+                    log.debug("Found BibleRoot using system property " + PROP_HOMEDIR + " at " + test); //$NON-NLS-1$ //$NON-NLS-2$
+                    root = found;
+                }
+                else
+                {
+                    log.warn("Missing " + PROP_HOMEDIR + " under: " + test); //$NON-NLS-1$ //$NON-NLS-2$
+                }
             }
-            else
+            catch (URISyntaxException e)
             {
-                log.warn("Missing " + PROP_HOMEDIR + " under: " + test.toExternalForm()); //$NON-NLS-1$ //$NON-NLS-2$
+                root = null;
             }
+
         }
 
         // If not then try a wild guess
         if (root == null)
         {
             URL found = ResourceUtil.getResource(DIR_VERSIONS + File.separator + FILE_LOCATOR);
-            URL test = NetUtil.shortenURL(found, FILE_LOCATOR);
+            URI test = NetUtil.shortenURI(NetUtil.toURI(found), FILE_LOCATOR);
             if (NetUtil.isFile(test))
             {
-                log.debug("Found BibleRoot from current directory: " + test.toExternalForm()); //$NON-NLS-1$
+                log.debug("Found BibleRoot from current directory: " + test); //$NON-NLS-1$
                 root = test;
             }
             else
             {
-                log.warn("Missing BibleRoot from current directory: " + test.toExternalForm()); //$NON-NLS-1$
+                log.warn("Missing BibleRoot from current directory: " + test); //$NON-NLS-1$
             }
         }
 
@@ -85,7 +95,7 @@ public class BookRoot
         {
             return null;
         }
-        return NetUtil.lengthenURL(root, subdir);
+        return NetUtil.lengthenURI(root, subdir);
     }
 
     /**

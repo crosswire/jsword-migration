@@ -67,7 +67,7 @@ public class ConfigurableSwingConverter implements Converter
         {
             String search = "xsl/cswing/" + NetUtil.INDEX_FILE; //$NON-NLS-1$
             URL index = ResourceUtil.getResource(search);
-            return NetUtil.listByIndexFile(index, new XSLTFilter());
+            return NetUtil.listByIndexFile(NetUtil.toURI(index), new XSLTFilter());
         }
         catch (IOException ex)
         {
@@ -85,7 +85,7 @@ public class ConfigurableSwingConverter implements Converter
             String path = "xsl/cswing/" + style; //$NON-NLS-1$
             URL xslurl = ResourceUtil.getResource(path);
 
-            TransformingSAXEventProvider tsep = new TransformingSAXEventProvider(xslurl, xmlsep);
+            TransformingSAXEventProvider tsep = new TransformingSAXEventProvider(NetUtil.toURI(xslurl), xmlsep);
             // We used to do:
             // tsep.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             // however for various reasons, now we don't but nothing seems to be broken ...

@@ -25,7 +25,7 @@ import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.event.MouseListener;
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
 import java.text.MessageFormat;
 
 import javax.swing.JTextPane;
@@ -40,8 +40,8 @@ import javax.xml.transform.TransformerException;
 
 import org.crosswire.bibledesktop.desktop.XSLTProperty;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
-import org.crosswire.bibledesktop.display.URLEvent;
-import org.crosswire.bibledesktop.display.URLEventListener;
+import org.crosswire.bibledesktop.display.URIEvent;
+import org.crosswire.bibledesktop.display.URIEventListener;
 import org.crosswire.common.swing.AntiAliasedTextPane;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
@@ -131,8 +131,8 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
 
             XSLTProperty.DIRECTION.setState(bmd.isLeftToRight() ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$
 
-            URL loc = bmd.getLocation();
-            XSLTProperty.BASE_URL.setState(loc == null ? "" : loc.toExternalForm()); //$NON-NLS-1$
+            URI loc = bmd.getLocation();
+            XSLTProperty.BASE_URL.setState(loc == null ? "" : loc.toString()); //$NON-NLS-1$
 
             if (bmd.getBookCategory() == BookCategory.BIBLE)
             {
@@ -188,8 +188,8 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             HyperlinkEvent.EventType type = ev.getEventType();
             JTextPane pane = (JTextPane) ev.getSource();
 
-            String url = ev.getDescription();
-            String[] parts = getParts(url);
+            String uri = ev.getDescription();
+            String[] parts = getParts(uri);
             if (type == HyperlinkEvent.EventType.ACTIVATED)
             {
                 // There are some errors which make an empty url
@@ -197,19 +197,19 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
                 {
                     if (parts[1].charAt(0) == '#')
                     {
-                        log.debug(MessageFormat.format(SCROLL_TO_URL, new Object[] { url }));
+                        log.debug(MessageFormat.format(SCROLL_TO_URI, new Object[] { uri }));
                         // This must be relative to the current document
                         // in which case we assume that it is an in page reference.
                         // We ignore the frame case (example code within JEditorPane
                         // JavaDoc).
                         // Remove the leading #
-                        url = url.substring(1);
-                        pane.scrollToReference(url);
+                        uri = uri.substring(1);
+                        pane.scrollToReference(uri);
                     }
                     else
                     {
                         // Fully formed, so we hand it off to be processed
-                        fireActivateURL(new URLEvent(this, parts[0], parts[1]));
+                        fireActivateURI(new URIEvent(this, parts[0], parts[1]));
                     }
                 }
             }
@@ -236,11 +236,11 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
 
                 if (isEnter)
                 {
-                    fireEnterURL(new URLEvent(this, parts[0], parts[1]));
+                    fireEnterURI(new URIEvent(this, parts[0], parts[1]));
                 }
                 else
                 {
-                    fireLeaveURL(new URLEvent(this, parts[0], parts[1]));
+                    fireLeaveURI(new URIEvent(this, parts[0], parts[1]));
                 }
             }
         }
@@ -252,7 +252,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
 
     private String[] getParts(String reference) throws MalformedURLException
     {
-        String protocol = RELATIVE_URL_PROTOCOL;
+        String protocol = RELATIVE_URI_PROTOCOL;
         String data = reference;
         int match = data.indexOf(':');
         if (match == -1)
@@ -288,41 +288,36 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#copy()
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#copy()
      */
     public void copy()
     {
         txtView.copy();
     }
 
-    /**
-     * Adds a hyperlink listener for notification of any changes, for example
-     * when a link is selected and entered.
-     *
-     * @param listener the listener
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
      */
-    public synchronized void addURLEventListener(URLEventListener listener)
+    public synchronized void addURIEventListener(URIEventListener listener)
     {
-        listenerList.add(URLEventListener.class, listener);
+        listenerList.add(URIEventListener.class, listener);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
+     */
+    public synchronized void removeURIEventListener(URIEventListener listener)
+    {
+        listenerList.remove(URIEventListener.class, listener);
     }
 
     /**
-     * Removes a hyperlink listener.
-     *
-     * @param listener the listener
-     */
-    public synchronized void removeURLEventListener(URLEventListener listener)
-    {
-        listenerList.remove(URLEventListener.class, listener);
-    }
-
-    /**
-     * Notify the listeners that the hyperlink (URL) has been activated.
+     * Notify the listeners that the hyperlink (URI) has been activated.
      *
      * @param e the event
      * @see EventListenerList
      */
-    public void fireActivateURL(URLEvent e)
+    public void fireActivateURI(URIEvent e)
     {
         // Guaranteed to return a non-null array
         Object[] listeners = listenerList.getListenerList();
@@ -330,20 +325,20 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
         // those that are interested in this event
         for (int i = listeners.length - 2; i >= 0; i -= 2)
         {
-            if (listeners[i] == URLEventListener.class)
+            if (listeners[i] == URIEventListener.class)
             {
-                ((URLEventListener) listeners[i + 1]).activateURL(e);
+                ((URIEventListener) listeners[i + 1]).activateURI(e);
             }
         }
     }
 
     /**
-     * Notify the listeners that the hyperlink (URL) has been entered.
+     * Notify the listeners that the hyperlink (URI) has been entered.
      *
      * @param e the event
      * @see EventListenerList
      */
-    public void fireEnterURL(URLEvent e)
+    public void fireEnterURI(URIEvent e)
     {
         // Guaranteed to return a non-null array
         Object[] listeners = listenerList.getListenerList();
@@ -351,20 +346,20 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
         // those that are interested in this event
         for (int i = listeners.length - 2; i >= 0; i -= 2)
         {
-            if (listeners[i] == URLEventListener.class)
+            if (listeners[i] == URIEventListener.class)
             {
-                ((URLEventListener) listeners[i + 1]).enterURL(e);
+                ((URIEventListener) listeners[i + 1]).enterURI(e);
             }
         }
     }
 
     /**
-     * Notify the listeners that the hyperlink (URL) has been left.
+     * Notify the listeners that the hyperlink (URI) has been left.
      *
      * @param e the event
      * @see EventListenerList
      */
-    public void fireLeaveURL(URLEvent e)
+    public void fireLeaveURI(URIEvent e)
     {
         // Guaranteed to return a non-null array
         Object[] listeners = listenerList.getListenerList();
@@ -372,9 +367,9 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
         // those that are interested in this event
         for (int i = listeners.length - 2; i >= 0; i -= 2)
         {
-            if (listeners[i] == URLEventListener.class)
+            if (listeners[i] == URIEventListener.class)
             {
-                ((URLEventListener) listeners[i + 1]).leaveURL(e);
+                ((URIEventListener) listeners[i + 1]).leaveURI(e);
             }
         }
     }
@@ -414,8 +409,8 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     // Strings for hyperlinks
     private static final String HYPERLINK_STYLE = "Hyperlink"; //$NON-NLS-1$
     private static final String DOUBLE_SLASH = "//"; //$NON-NLS-1$
-    private static final String SCROLL_TO_URL = "scrolling to: {0}"; //$NON-NLS-1$
-    private static final String RELATIVE_URL_PROTOCOL = ""; //$NON-NLS-1$
+    private static final String SCROLL_TO_URI = "scrolling to: {0}"; //$NON-NLS-1$
+    private static final String RELATIVE_URI_PROTOCOL = ""; //$NON-NLS-1$
 
     /**
      * The log stream
@@ -463,7 +458,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     private StyledDocument styledDoc;
 
     /**
-     * The listeners for handling urls
+     * The listeners for handling URIs
      */
     private EventListenerList listenerList = new EventListenerList();
 }

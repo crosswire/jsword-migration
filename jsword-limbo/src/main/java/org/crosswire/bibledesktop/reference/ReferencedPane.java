@@ -45,7 +45,7 @@ import org.crosswire.bibledesktop.book.BookListCellRenderer;
 import org.crosswire.bibledesktop.book.BooksComboBoxModel;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
-import org.crosswire.bibledesktop.display.URLEventListener;
+import org.crosswire.bibledesktop.display.URIEventListener;
 import org.crosswire.bibledesktop.passage.KeyTreeNode;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
@@ -147,7 +147,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.FocusablePart#getComponent()
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getComponent()
      */
     public Component getComponent()
     {
@@ -155,7 +155,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#copy()
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#copy()
      */
     public void copy()
     {
@@ -163,7 +163,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#getKey()
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getKey()
      */
     public Key getKey()
     {
@@ -178,7 +178,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.FocusablePart#getBook()
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBook()
      */
     public Book getBook()
     {
@@ -186,19 +186,19 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#addHyperlinkListener(javax.swing.event.HyperlinkListener)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
      */
-    public void addURLEventListener(URLEventListener listener)
+    public void addURIEventListener(URIEventListener listener)
     {
-        txtDisplay.addURLEventListener(listener);
+        txtDisplay.addURIEventListener(listener);
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
      */
-    public void removeURLEventListener(URLEventListener listener)
+    public void removeURIEventListener(URIEventListener listener)
     {
-        txtDisplay.removeURLEventListener(listener);
+        txtDisplay.removeURIEventListener(listener);
     }
 
     /**

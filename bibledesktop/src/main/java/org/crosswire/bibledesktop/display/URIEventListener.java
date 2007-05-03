@@ -17,54 +17,37 @@
  * Copyright: 2005
  *     The copyright to this program is held by it's authors.
  *
- * ID: $Id$
+ * ID: $Id: URIEventListener.java 758 2005-06-22 03:50:55Z dmsmith $
  */
 package org.crosswire.bibledesktop.display;
 
-import java.util.EventObject;
+import java.util.EventListener;
 
 /**
- * A URLEvent happens whenever a user changes an URL.
+ * Implement URIEventListener to recieve URIEvents whenever someone
+ * activates an URI.
  * 
  * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class URLEvent extends EventObject
+public interface URIEventListener extends EventListener
 {
     /**
-     * For when a command has been made
-     * @param source The thing that started this off
+     * This method is called to indicate that an URI can be processed.
+     * @param ev Describes the URI
      */
-    public URLEvent(Object source, String protocol, String url)
-    {
-        super(source);
-
-        this.protocol = protocol;
-        this.url = url;
-    }
+    void activateURI(URIEvent ev);
 
     /**
-     * @return Returns the protocol.
+     * This method is called to indicate that the mouse has entered the URI.
+     * @param ev Describes the URI
      */
-    public String getProtocol()
-    {
-        return protocol;
-    }
+    void enterURI(URIEvent ev);
 
     /**
-     * @return Returns the url.
+     * This method is called to indicate that the mouse has left the URI.
+     * @param ev Describes the URI
      */
-    public String getURL()
-    {
-        return url;
-    }
-
-    private String protocol;
-    private String url;
-
-    /**
-     * Serialization ID
-     */
-    private static final long serialVersionUID = 3978710575457187634L;
+    void leaveURI(URIEvent ev);
 }

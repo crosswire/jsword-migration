@@ -5,6 +5,7 @@ import java.util.MissingResourceException;
 
 import javax.xml.transform.TransformerException;
 
+import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
@@ -31,7 +32,7 @@ public class SimpleWebConverter implements Converter
             // We used to do:
             // transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             // however for various reasons, now we don't but nothing seems to be broken ...
-            return new TransformingSAXEventProvider(xslurl, xmlsep);
+            return new TransformingSAXEventProvider(NetUtil.toURI(xslurl), xmlsep);
         }
         catch (MissingResourceException ex)
         {

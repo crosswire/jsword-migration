@@ -25,7 +25,7 @@ import java.awt.Component;
 import java.net.URL;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
-import org.crosswire.bibledesktop.display.URLEventListener;
+import org.crosswire.bibledesktop.display.URIEventListener;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
@@ -77,7 +77,7 @@ public class JDTBBookDataDisplay implements BookDataDisplay
         {
             if (book == null && key == null)
             {
-//                txtView.setURL();
+//                txtView.setURI();
                 return;
             }
 
@@ -89,11 +89,11 @@ public class JDTBBookDataDisplay implements BookDataDisplay
             BookData bdata = book.getText(key);
             if (bdata == null)
             {
-//                txtView.setURL();
+//                txtView.setURI();
                 return;
             }
 
-//            txtView.setURL(JDTBURLConnection.createURL(book, key));
+//            txtView.setURI(JDTBURLConnection.createURL(book, key));
         }
         catch (Exception ex)
         {
@@ -110,23 +110,23 @@ public class JDTBBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#copy()
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#copy()
      */
     public void copy()
     {
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#addHyperlinkListener(javax.swing.event.HyperlinkListener)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
      */
-    public void addURLEventListener(URLEventListener listener)
+    public void addURIEventListener(URIEventListener listener)
     {
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#removeHyperlinkListener(javax.swing.event.HyperlinkListener)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
      */
-    public void removeURLEventListener(URLEventListener listener)
+    public void removeURIEventListener(URIEventListener listener)
     {
     }
 

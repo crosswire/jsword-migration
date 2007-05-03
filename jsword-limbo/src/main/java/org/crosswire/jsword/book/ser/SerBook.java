@@ -21,7 +21,7 @@
  */
 package org.crosswire.jsword.book.ser;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.Properties;
 
 import org.crosswire.jsword.book.BookDriver;
@@ -147,14 +147,14 @@ public class SerBook extends AbstractPassageBook
     /**
      * Simple ctor
      */
-    public SerBook(BookDriver driver, Properties prop, URL url) throws BookException
+    public SerBook(BookDriver driver, Properties prop, URI uri) throws BookException
     {
         super(null); // set the BookMetaData later
         setBookMetaData(new DefaultBookMetaData(driver, this, prop));
 
         try
         {
-            cache = new BookDataCache(url);
+            cache = new BookDataCache(uri);
         }
         catch (Exception ex)
         {

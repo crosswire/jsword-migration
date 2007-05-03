@@ -28,7 +28,7 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
-import java.net.URL;
+import java.net.URI;
 import java.util.Iterator;
 
 import javax.swing.BorderFactory;
@@ -63,7 +63,7 @@ import org.xml.sax.SAXException;
 
 /**
  * ViewSourcePane allow viewing of some text in its own standalone frame.
- * The text to be viewed can be grabbed from a String, a URL, or a file.
+ * The text to be viewed can be grabbed from a String, a URI, or a file.
  *
  * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
@@ -103,8 +103,8 @@ public class ViewSourcePane extends JPanel
   
             XSLTProperty.DIRECTION.setState(bmd.isLeftToRight() ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$
 
-            URL loc = bmd.getLocation();
-            XSLTProperty.BASE_URL.setState(loc == null ? "" : loc.toExternalForm()); //$NON-NLS-1$
+            URI loc = bmd.getLocation();
+            XSLTProperty.BASE_URL.setState(loc == null ? "" : loc.toString()); //$NON-NLS-1$
 
             if (bmd.getBookCategory() == BookCategory.BIBLE)
             {

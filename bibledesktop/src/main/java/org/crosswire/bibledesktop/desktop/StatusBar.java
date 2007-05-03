@@ -36,8 +36,8 @@ import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
-import org.crosswire.bibledesktop.display.URLEvent;
-import org.crosswire.bibledesktop.display.URLEventListener;
+import org.crosswire.bibledesktop.display.URIEvent;
+import org.crosswire.bibledesktop.display.URIEventListener;
 import org.crosswire.common.progress.swing.JobsProgressBar;
 
 /**
@@ -54,7 +54,7 @@ import org.crosswire.common.progress.swing.JobsProgressBar;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class StatusBar extends JComponent implements MouseListener, URLEventListener
+public class StatusBar extends JComponent implements MouseListener, URIEventListener
 {
     /**
      * Create a new StatusBar
@@ -98,34 +98,34 @@ public class StatusBar extends JComponent implements MouseListener, URLEventList
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.URLEventListener#processURL(org.crosswire.bibledesktop.display.URLEvent)
+     * @see org.crosswire.bibledesktop.display.URIEventListener#activateURI(org.crosswire.bibledesktop.display.URIEvent)
      */
-    public void activateURL(URLEvent ev)
+    public void activateURI(URIEvent ev)
     {
         // We don't care about activate events
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.URLEventListener#enterURL(org.crosswire.bibledesktop.display.URLEvent)
+     * @see org.crosswire.bibledesktop.display.URIEventListener#enterURI(org.crosswire.bibledesktop.display.URIEvent)
      */
-    public void enterURL(URLEvent ev)
+    public void enterURI(URIEvent ev)
     {
-        String protocol = ev.getProtocol();
-        String url = ev.getURL();
+        String protocol = ev.getScheme();
+        String URI = ev.getURI();
         if (protocol.length() == 0)
         {
-            labelMessage.setText(url);
+            labelMessage.setText(URI);
         }
         else
         {
-            labelMessage.setText(protocol + "://" + url); //$NON-NLS-1$
+            labelMessage.setText(protocol + "://" + URI); //$NON-NLS-1$
         }
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.URLEventListener#leaveURL(org.crosswire.bibledesktop.display.URLEvent)
+     * @see org.crosswire.bibledesktop.display.URIEventListener#leaveURI(org.crosswire.bibledesktop.display.URIEvent)
      */
-    public void leaveURL(URLEvent ev)
+    public void leaveURI(URIEvent ev)
     {
         labelMessage.setText(Msg.STATUS_DEFAULT.toString());
     }

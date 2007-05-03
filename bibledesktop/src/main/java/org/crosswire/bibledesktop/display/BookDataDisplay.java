@@ -44,13 +44,13 @@ public interface BookDataDisplay
      * Add a listener for when someone clicks on a browser 'link'
      * @param listener The listener to add
      */
-    void addURLEventListener(URLEventListener listener);
+    void addURIEventListener(URIEventListener listener);
 
     /**
      * Remove a listener for when someone clicks on a browser 'link'
      * @param listener The listener to remove
      */
-    void removeURLEventListener(URLEventListener listener);
+    void removeURIEventListener(URIEventListener listener);
 
     /**
      * Accessor for the Swing component

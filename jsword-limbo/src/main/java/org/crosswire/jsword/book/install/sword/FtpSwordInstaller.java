@@ -23,8 +23,8 @@ package org.crosswire.jsword.book.install.sword;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -73,9 +73,9 @@ public class FtpSwordInstaller extends AbstractSwordInstaller implements Compara
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.install.Installer#toURL(org.crosswire.jsword.book.BookMetaData)
+     * @see org.crosswire.jsword.book.install.Installer#toRemoveURI(org.crosswire.jsword.book.BookMetaData)
      */
-    public URL toRemoteURL(Book book)
+    public URI toRemoteURI(Book book)
     {
         BookMetaData bmd = book.getBookMetaData();
         if (!(bmd instanceof SwordBookMetaData))
@@ -88,19 +88,19 @@ public class FtpSwordInstaller extends AbstractSwordInstaller implements Compara
 
         try
         {
-            return new URL(NetUtil.PROTOCOL_FTP, host, directory + "/" + sbmd.getInitials() + ZIP_SUFFIX); //$NON-NLS-1$ 
+            return new URI(NetUtil.PROTOCOL_FTP, host, directory + "/" + sbmd.getInitials() + ZIP_SUFFIX, null); //$NON-NLS-1$ 
         }
-        catch (MalformedURLException ex)
+        catch (URISyntaxException ex)
         {
             return null;
         }
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.install.sword.AbstractSwordInstaller#download(java.lang.String, java.lang.String, java.net.URL)
+     * @see org.crosswire.jsword.book.install.sword.AbstractSwordInstaller#download(java.lang.String, java.lang.String, java.net.URI)
      */
     /* @Override */
-    protected void download(Progress job, String dir, String file, URL dest) throws InstallException
+    protected void download(Progress job, String dir, String file, URI dest) throws InstallException
     {
         FTPClient ftp = new FTPClient();
 
@@ -148,7 +148,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller implements Compara
             Thread.yield();
 
             // Check the download directory exists
-            URL parent = NetUtil.shortenURL(dest, FILE_LIST_GZ);
+            URI parent = NetUtil.shortenURI(dest, FILE_LIST_GZ);
             NetUtil.makeDirectory(parent);
 
             // Download the index file

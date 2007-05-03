@@ -25,7 +25,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
 
 import org.crosswire.common.config.Config;
 import org.crosswire.common.util.ClassUtil;
@@ -101,23 +101,23 @@ public final class ConfigEditorFactory
      * @param parent A component to use to find a frame to use as a dialog
      *            parent
      */
-    public static void showDialog(Config config, Component parent, URL url)
+    public static void showDialog(Config config, Component parent, URI uri)
     {
-        showDialog(config, parent, new URLActionListener(config, url));
+        showDialog(config, parent, new URLActionListener(config, uri));
     }
 
     /**
-     * A quick class to save a config to a url
+     * A quick class to save a config to a uri
      */
     static class URLActionListener implements ActionListener
     {
         /**
          * To save to a URL
          */
-        public URLActionListener(Config config, URL url)
+        public URLActionListener(Config config, URI uri)
         {
             this.config = config;
-            this.url = url;
+            this.uri = uri;
         }
 
         /**
@@ -128,11 +128,11 @@ public final class ConfigEditorFactory
             try
             {
                 config.localToApplication();
-                config.localToPermanent(url);
+                config.localToPermanent(uri);
             }
             catch (IOException ex)
             {
-                throw new LucidRuntimeException(Msg.CONFIG_SAVE_FAILED, ex, new Object[] { url });
+                throw new LucidRuntimeException(Msg.CONFIG_SAVE_FAILED, ex, new Object[] { uri });
             }
         }
 
@@ -144,6 +144,6 @@ public final class ConfigEditorFactory
         /**
          * The URL to save to if needed
          */
-        private URL url;
+        private URI uri;
     }
 }

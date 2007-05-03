@@ -29,7 +29,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.net.URL;
+import java.net.URI;
 import java.util.Iterator;
 
 import javax.swing.BorderFactory;
@@ -181,7 +181,7 @@ public class DebugPane extends JPanel
      */
     public static void createTestJob(final long millis, final String predictbase, final int steps, final boolean fake)
     {
-        final URL predicturl = Project.instance().getWritablePropertiesURL(predictbase);
+        final URI predicturl = Project.instance().getWritablePropertiesURI(predictbase);
         final Thread test = new Thread()
         {
             /* (non-Javadoc)

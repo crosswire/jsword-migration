@@ -26,7 +26,7 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import org.crosswire.bibledesktop.display.URLEventListener;
+import org.crosswire.bibledesktop.display.URIEventListener;
 import org.crosswire.common.swing.FixedSplitPane;
 
 /**
@@ -67,19 +67,19 @@ public class SidebarPane extends JPanel
     /**
      * Add a listener when someone clicks on a browser 'link'
      */
-    public void addURLEventListener(URLEventListener li)
+    public void addURIEventListener(URIEventListener li)
     {
-        multiBooks.addURLEventListener(li);
-        comments.addURLEventListener(li);
+        multiBooks.addURIEventListener(li);
+        comments.addURIEventListener(li);
     }
 
     /**
      * Remove a listener when someone clicks on a browser 'link'
      */
-    public void removeURLEventListener(URLEventListener li)
+    public void removeURIEventListener(URIEventListener li)
     {
-        multiBooks.removeURLEventListener(li);
-        comments.removeURLEventListener(li);
+        multiBooks.removeURIEventListener(li);
+        comments.removeURIEventListener(li);
     }
 
     /**

@@ -145,24 +145,24 @@ public class SplitBookDataDisplay extends JPanel
     }
 
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#getKey()
+    /**
+     * @return the key
      */
     public Key getKey()
     {
         return key;
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.FocusablePart#getBook()
+    /**
+     * @return the book
      */
     public Book getBook()
     {
         return book;
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.FocusablePart#copy()
+    /**
+     * copy the child
      */
     public void copy()
     {

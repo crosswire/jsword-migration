@@ -17,51 +17,51 @@
  * Copyright: 2005
  *     The copyright to this program is held by it's authors.
  *
- * ID: $Id$
+ * ID: $Id: URIEvent.java 758 2005-06-22 03:50:55Z dmsmith $
  */
 package org.crosswire.bibledesktop.display;
 
 import java.util.EventObject;
 
 /**
- * A URLEvent happens whenever a user changes an URL.
+ * A URIEvent happens whenever a user selects a URI.
  * 
  * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class URLEvent extends EventObject
+public class URIEvent extends EventObject
 {
     /**
      * For when a command has been made
      * @param source The thing that started this off
      */
-    public URLEvent(Object source, String protocol, String url)
+    public URIEvent(Object source, String scheme, String uri)
     {
         super(source);
 
-        this.protocol = protocol;
-        this.url = url;
+        this.scheme = scheme;
+        this.uri = uri;
     }
 
     /**
-     * @return Returns the protocol.
+     * @return Returns the scheme.
      */
-    public String getProtocol()
+    public String getScheme()
     {
-        return protocol;
+        return scheme;
     }
 
     /**
-     * @return Returns the url.
+     * @return Returns the uri.
      */
-    public String getURL()
+    public String getURI()
     {
-        return url;
+        return uri;
     }
 
-    private String protocol;
-    private String url;
+    private String scheme;
+    private String uri;
 
     /**
      * Serialization ID

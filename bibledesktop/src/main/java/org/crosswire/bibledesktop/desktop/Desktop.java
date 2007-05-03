@@ -31,7 +31,7 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -61,8 +61,8 @@ import org.crosswire.bibledesktop.book.DisplaySelectListener;
 import org.crosswire.bibledesktop.book.DisplaySelectPane;
 import org.crosswire.bibledesktop.book.MultiBookPane;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
-import org.crosswire.bibledesktop.display.URLEvent;
-import org.crosswire.bibledesktop.display.URLEventListener;
+import org.crosswire.bibledesktop.display.URIEvent;
+import org.crosswire.bibledesktop.display.URIEventListener;
 import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.config.ChoiceFactory;
 import org.crosswire.common.config.Config;
@@ -110,7 +110,7 @@ import org.jdom.JDOMException;
  * @author Mark Goodwin [mark at thorubio dot org]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class Desktop extends JFrame implements URLEventListener, ViewEventListener, DisplaySelectListener, ViewGenerator
+public class Desktop extends JFrame implements URIEventListener, ViewEventListener, DisplaySelectListener, ViewGenerator
 {
     // This must be the first static in the program.
     // To ensure this we place it at the top of the class!
@@ -183,7 +183,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         Reporter.grabAWTExecptions(true);
 
         // Splash screen
-        URL predicturl = PROJECT.getWritablePropertiesURL(SPLASH_PROPS);
+        URI predicturl = PROJECT.getWritablePropertiesURI(SPLASH_PROPS);
         Progress startJob = JobManager.createJob(Msg.STARTUP_TITLE.toString(), predicturl, true);
 
         //startJob.setProgress(Msg.STARTUP_CONFIG.toString());
@@ -273,9 +273,9 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         TDIViewLayout tdi = (TDIViewLayout) LayoutType.TDI.getLayout();
         tdi.addPopup(createPopupMenu());
 
-        //barBook.addHyperlinkListener(this);
-        //barSide.addHyperlinkListener(this);
-        reference.addURLEventListener(this);
+        //barBook.addURIEventListener(this);
+        //barSide.addURIEventListener(this);
+        reference.addURIEventListener(this);
 
         sptBooks.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         sptBooks.setRightComponent(reference);
@@ -572,8 +572,8 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         boolean show = sidebarToggle == null ? isSidebarShowing() : sidebarToggle.isSelected();
         BibleViewPane view = new BibleViewPane(show);
         BookDataDisplay display = view.getPassagePane().getBookDataDisplay();
-        display.addURLEventListener(this);
-        display.addURLEventListener(barStatus);
+        display.addURIEventListener(this);
+        display.addURIEventListener(barStatus);
         DisplaySelectPane dsp = view.getSelectPane();
         dsp.addCommandListener(this);
         return view;
@@ -586,8 +586,8 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     {
         BibleViewPane view = (BibleViewPane) event.getSource();
         BookDataDisplay display = view.getPassagePane().getBookDataDisplay();
-        display.removeURLEventListener(this);
-        display.removeURLEventListener(barStatus);
+        display.removeURIEventListener(this);
+        display.removeURIEventListener(barStatus);
         DisplaySelectPane dsp = view.getSelectPane();
         dsp.removeCommandListener(this);
     }
@@ -618,18 +618,18 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
         Object obj = history.go(i);
         if (obj != null)
         {
-            activateURL(new URLEvent(this, Desktop.BIBLE_PROTOCOL, (String) obj));
+            activateURI(new URIEvent(this, Desktop.BIBLE_PROTOCOL, (String) obj));
         }
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.URLEventListener#processURL(org.crosswire.bibledesktop.display.URLEvent)
+     * @see org.crosswire.bibledesktop.display.URIEventListener#activateURI(org.crosswire.bibledesktop.display.URIEvent)
      */
-    public void activateURL(URLEvent ev)
+    public void activateURI(URIEvent ev)
     {
-        barStatus.activateURL(ev);
-        String protocol = ev.getProtocol();
-        String data = ev.getURL();
+        barStatus.activateURI(ev);
+        String protocol = ev.getScheme();
+        String data = ev.getURI();
 
         try
         {
@@ -754,17 +754,17 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.URLEventListener#enterURL(org.crosswire.bibledesktop.display.URLEvent)
+     * @see org.crosswire.bibledesktop.display.URIEventListener#enterURI(org.crosswire.bibledesktop.display.URIEvent)
      */
-    public void enterURL(URLEvent ev)
+    public void enterURI(URIEvent ev)
     {
         // We don't care about enter events
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.URLEventListener#leaveURL(org.crosswire.bibledesktop.display.URLEvent)
+     * @see org.crosswire.bibledesktop.display.URIEventListener#leaveURI(org.crosswire.bibledesktop.display.URIEvent)
      */
-    public void leaveURL(URLEvent ev)
+    public void leaveURI(URIEvent ev)
     {
         // We don't care about leave events
     }
@@ -857,15 +857,15 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
             ExceptionPane.showExceptionDialog(null, ex);
         }
 
-        URL configUrl = Project.instance().getWritablePropertiesURL("desktop"); //$NON-NLS-1$
+        URI configUri = Project.instance().getWritablePropertiesURI("desktop"); //$NON-NLS-1$
         try
         {
             config.localToApplication();
-            config.localToPermanent(configUrl);
+            config.localToPermanent(configUri);
         }
         catch (IOException ex)
         {
-            throw new LucidRuntimeException(Msg.CONFIG_SAVE_FAILED, ex, new Object[] { configUrl });
+            throw new LucidRuntimeException(Msg.CONFIG_SAVE_FAILED, ex, new Object[] { configUri });
         }
 
     }
@@ -1134,7 +1134,7 @@ public class Desktop extends JFrame implements URLEventListener, ViewEventListen
     // Strings for the names of property files.
     private static final String SPLASH_PROPS = "splash"; //$NON-NLS-1$
 
-    // Strings for URL protocols
+    // Strings for URL protocols/URI schemes
     private static final String BIBLE_PROTOCOL = "bible"; //$NON-NLS-1$
     private static final String DICTIONARY_PROTOCOL = "dict"; //$NON-NLS-1$
     private static final String GREEK_DEF_PROTOCOL = "gdef"; //$NON-NLS-1$

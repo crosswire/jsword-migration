@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
-import java.net.URL;
+import java.net.URI;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -71,22 +71,22 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus
     /**
      * Default ctor
      */
-    public SerIndex(Book newbook, URL storage)
+    public SerIndex(Book newbook, URI storage)
     {
         this.book = newbook;
-        this.url = storage;
+        this.uri = storage;
     }
 
     /**
      * Generate an index to use, telling the job about progress as you go.
      * @throws BookException If we fail to read the index files
      */
-    public SerIndex(Book book, URL storage, boolean create) throws BookException
+    public SerIndex(Book book, URI storage, boolean create) throws BookException
     {
         assert create;
 
         this.book = book;
-        this.url = storage;
+        this.uri = storage;
 
         Progress job = JobManager.createJob(Msg.INDEX_START.toString(), Thread.currentThread(), false);
 
@@ -202,9 +202,9 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus
         // Now we need to write the words into our index
         try
         {
-            NetUtil.makeDirectory(url);
-            URL dataUrl = NetUtil.lengthenURL(url, FILE_DATA);
-            dataRaf = new RandomAccessFile(NetUtil.getAsFile(dataUrl), FileUtil.MODE_WRITE);
+            NetUtil.makeDirectory(uri);
+            URI dataUri = NetUtil.lengthenURI(uri, FILE_DATA);
+            dataRaf = new RandomAccessFile(NetUtil.getAsFile(dataUri), FileUtil.MODE_WRITE);
         }
         catch (IOException ex)
         {
@@ -237,8 +237,8 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus
             job.setWork(PERCENT_READ + PERCENT_WRITE);
 
             // Save the ascii Passage index
-            URL indexurl = NetUtil.lengthenURL(url, FILE_INDEX);
-            PrintWriter indexout = new PrintWriter(NetUtil.getOutputStream(indexurl));
+            URI indexuri = NetUtil.lengthenURI(uri, FILE_INDEX);
+            PrintWriter indexout = new PrintWriter(NetUtil.getOutputStream(indexuri));
             Iterator it = datamap.keySet().iterator();
             while (it.hasNext())
             {
@@ -344,11 +344,11 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus
     {
         try
         {
-            URL dataUrl = NetUtil.lengthenURL(url, FILE_DATA);
-            dataRaf = new RandomAccessFile(NetUtil.getAsFile(dataUrl), FileUtil.MODE_READ);
+            URI dataUri = NetUtil.lengthenURI(uri, FILE_DATA);
+            dataRaf = new RandomAccessFile(NetUtil.getAsFile(dataUri), FileUtil.MODE_READ);
         
-            URL indexUrl = NetUtil.lengthenURL(url, FILE_INDEX);
-            BufferedReader indexIn = new BufferedReader(new InputStreamReader(indexUrl.openStream()));
+            URI indexUri = NetUtil.lengthenURI(uri, FILE_INDEX);
+            BufferedReader indexIn = new BufferedReader(new InputStreamReader(NetUtil.getInputStream(indexUri)));
         
             while (true)
             {
@@ -434,7 +434,7 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus
     /**
      * The directory to which to write the index
      */
-    private URL url;
+    private URI uri;
 
     /**
      * The passages random access file

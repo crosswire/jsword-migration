@@ -23,7 +23,7 @@ package org.crosswire.jsword.book.raw;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.net.URL;
+import java.net.URI;
 
 import org.crosswire.common.util.FileUtil;
 import org.crosswire.common.util.NetUtil;
@@ -67,8 +67,8 @@ public class WordInstsDisk extends InstsDisk
     /* @Override */
     public void load() throws IOException
     {
-        URL url = NetUtil.lengthenURL(raw.getURL(), leafname);
-        raf = new RandomAccessFile(url.getFile(), FileUtil.MODE_READ);
+        URI uri = NetUtil.lengthenURI(raw.getURI(), leafname);
+        raf = new RandomAccessFile(uri.getPath(), FileUtil.MODE_READ);
 
         byte[] asig = new byte[6];
         raf.readFully(asig);

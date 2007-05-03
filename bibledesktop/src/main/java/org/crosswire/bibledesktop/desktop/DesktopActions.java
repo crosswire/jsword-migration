@@ -25,7 +25,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.net.URL;
+import java.net.URI;
 import java.util.Iterator;
 
 import javax.swing.Action;
@@ -39,8 +39,8 @@ import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.splitlist.SplitBookDataDisplay;
 import org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay;
 import org.crosswire.common.config.swing.ConfigEditorFactory;
-import org.crosswire.common.swing.Actionable;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.Actionable;
 import org.crosswire.common.swing.desktop.ViewVisitor;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.OSType;
@@ -404,8 +404,8 @@ public class DesktopActions implements Actionable
      */
     public void doOptions()
     {
-        URL configUrl = Project.instance().getWritablePropertiesURL("desktop"); //$NON-NLS-1$
-        ConfigEditorFactory.showDialog(desktop.getConfig(), desktop, configUrl);
+        URI configUri = Project.instance().getWritablePropertiesURI("desktop"); //$NON-NLS-1$
+        ConfigEditorFactory.showDialog(desktop.getConfig(), desktop, configUri);
     }
 
     /**

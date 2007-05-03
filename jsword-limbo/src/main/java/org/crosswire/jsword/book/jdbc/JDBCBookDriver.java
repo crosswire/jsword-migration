@@ -21,7 +21,7 @@
  */
 package org.crosswire.jsword.book.jdbc;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -49,11 +49,11 @@ public class JDBCBookDriver extends AbstractBookDriver
     {
         try
         {
-            URL dir = BookRoot.findBibleRoot(getDriverName());
+            URI dir = BookRoot.findBibleRoot(getDriverName());
 
             if (!NetUtil.isDirectory(dir))
             {
-                log.debug("Missing jdbc directory: "+dir.toExternalForm()); //$NON-NLS-1$
+                log.debug("Missing jdbc directory: " + dir); //$NON-NLS-1$
                 return new Book[0];
             }
 
@@ -64,18 +64,18 @@ public class JDBCBookDriver extends AbstractBookDriver
             }
             else
             {
-                names = NetUtil.list(dir, new NetUtil.IsDirectoryURLFilter(dir));
+                names = NetUtil.list(dir, new NetUtil.IsDirectoryURIFilter(dir));
             }
 
             List books = new ArrayList();
 
             for (int i=0; i<names.length; i++)
             {
-                URL url = NetUtil.lengthenURL(dir, names[i]);
-                URL propUrl = NetUtil.lengthenURL(url, "bible.properties"); //$NON-NLS-1$
+                URI url = NetUtil.lengthenURI(dir, names[i]);
+                URI propUri = NetUtil.lengthenURI(url, "bible.properties"); //$NON-NLS-1$
 
                 Properties prop = new Properties();
-                prop.load(propUrl.openStream());
+                prop.load(NetUtil.getInputStream(propUri));
 
                 Book book = new JDBCBook(this, prop);
 
