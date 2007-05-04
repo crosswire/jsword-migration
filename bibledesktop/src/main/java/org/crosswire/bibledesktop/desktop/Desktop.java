@@ -380,7 +380,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
 
         // Floating is not appropriate on a Mac
         // It is the default on all others
-        if (!OSType.MAC.equals(OSType.getOSType()))
+        if (!actions.isOSXRegistered())
         {
             toolbar.add(actions.getAction(DesktopActions.ABOUT)).addMouseListener(barStatus);
         }
@@ -409,7 +409,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         menuFile.add(actions.getAction(DesktopActions.SAVE_ALL)).addMouseListener(barStatus);
 
         // Mac OSX provides "Quit" on the Program menu
-        if (!OSType.MAC.equals(OSType.getOSType()))
+        if (!actions.isOSXRegistered())
         {
             menuFile.addSeparator();
             menuFile.add(actions.getAction(DesktopActions.EXIT)).addMouseListener(barStatus);
@@ -522,7 +522,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         //menuTools.addSeparator();
         menuTools.add(actions.getAction(DesktopActions.BOOKS)).addMouseListener(barStatus);
 
-        if (!OSType.MAC.equals(OSType.getOSType()))
+        if (!actions.isOSXRegistered())
         {
             menuTools.add(actions.getAction(DesktopActions.OPTIONS)).addMouseListener(barStatus);
         }
@@ -537,7 +537,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         menuHelp.add(actions.getAction(DesktopActions.CONTENTS)).addMouseListener(barStatus);
 
         // Mac provides the About action on the Program menu.
-        if (!OSType.MAC.equals(OSType.getOSType()))
+        if (!actions.isOSXRegistered())
         {
             menuHelp.addSeparator();
             menuHelp.add(actions.getAction(DesktopActions.ABOUT)).addMouseListener(barStatus);

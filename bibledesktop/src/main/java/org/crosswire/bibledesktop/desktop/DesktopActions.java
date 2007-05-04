@@ -74,7 +74,7 @@ public class DesktopActions implements Actionable
         this.desktop = desktop;
         actions = new ActionFactory(Desktop.class, this);
 
-        macOSXRegistration();
+        osxRegistered = macOSXRegistration();
     }
 
     /**
@@ -101,6 +101,15 @@ public class DesktopActions implements Actionable
     public Desktop getDesktop()
     {
         return desktop;
+    }
+
+    /**
+     * Determines whether MacOSX has been registered.
+     * @return true when there is full MacOSX integration.
+     */
+    public boolean isOSXRegistered()
+    {
+        return osxRegistered;
     }
 
     /**
@@ -469,16 +478,16 @@ public class DesktopActions implements Actionable
     /**
      * Register the application with Apple EAWT, which provides support for the Application Menu, with
      * About, Preferences (Options) and Quit (Exit).
+     * @return true on success
      */
-    public void macOSXRegistration()
+    public boolean macOSXRegistration()
     {
         if (OSType.MAC.equals(OSType.getOSType()))
         {
             try
             {
-                //org.crosswire.common.aqua.OSXAdapter.registerMacOSXApplication(actions, DesktopActions.ABOUT, DesktopActions.OPTIONS, DesktopActions.EXIT);
-
-                Class osxAdapter = ClassLoader.getSystemClassLoader().loadClass("org.crosswire.common.aqua.OSXAdapter"); //$NON-NLS-1$
+                // Get a class object
+                Class osxAdapter = Class.forName("org.crosswire.common.aqua.OSXAdapter"); //$NON-NLS-1$
 
                 Class[] defRegisterArgs = { Actionable.class, String.class, String.class, String.class };
                 Method registerMethod = osxAdapter.getDeclaredMethod("registerMacOSXApplication", defRegisterArgs); //$NON-NLS-1$
@@ -495,6 +504,7 @@ public class DesktopActions implements Actionable
                     Object[] args = { Boolean.TRUE };
                     prefsEnableMethod.invoke(osxAdapter, args);
                 }
+                return true;
             }
             catch (NoClassDefFoundError e)
             {
@@ -512,6 +522,7 @@ public class DesktopActions implements Actionable
                 log.error("Exception while loading the OSXAdapter:", e); //$NON-NLS-1$
             }
         }
+        return false;
     }
 
     /**
@@ -579,6 +590,10 @@ public class DesktopActions implements Actionable
      */
     private ActionFactory actions;
 
+    /**
+     * Indicates whether there is MacOSX integration.
+     */
+    boolean osxRegistered;
     /**
      * The About window
      */
