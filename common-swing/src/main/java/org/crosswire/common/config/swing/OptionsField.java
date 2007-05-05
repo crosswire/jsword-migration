@@ -21,6 +21,8 @@
  */
 package org.crosswire.common.config.swing;
 
+import java.awt.Dimension;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -38,6 +40,18 @@ import org.crosswire.common.util.Logger;
  */
 public class OptionsField implements Field
 {
+
+    /**
+     * Create an empty OptionsField
+     */
+    public OptionsField()
+    {
+        list = new String[0];
+        combo = new JComboBox(new String[] { Msg.NO_OPTIONS.toString() });
+        // Set the preferred width. Note, the actual combo box will resize to the width of it's container
+        combo.setPreferredSize(new Dimension(100, combo.getPreferredSize().height));
+    }
+
     /**
      * Some fields will need some extra info to display properly
      * like the options in an options field. FieldMap calls this
@@ -116,7 +130,7 @@ public class OptionsField implements Field
     /**
      * The component that we are wrapping in a field
      */
-    private JComboBox combo = new JComboBox(new String[] { Msg.NO_OPTIONS.toString() });
+    private JComboBox combo;
 
     /**
      * The options
