@@ -48,8 +48,11 @@ public class SwordSiteEditor extends JPanel implements SiteEditor
         host = new JTextField();
         JLabel hostLabel = getLabelForText(Msg.HOST, host);
 
-        directory = new JTextField();
-        JLabel directoryLabel = getLabelForText(Msg.DIRECTORY, directory);
+        catalogDir = new JTextField();
+        JLabel catalogDirLabel = getLabelForText(Msg.CATALOG_DIR, catalogDir);
+
+        packageDir = new JTextField();
+        JLabel packageDirLabel = getLabelForText(Msg.PACKAGE_DIR, packageDir);
 
         proxyHost = new JTextField();
         JLabel proxyHostLabel = getLabelForText(Msg.PROXY_HOST, proxyHost);
@@ -58,14 +61,16 @@ public class SwordSiteEditor extends JPanel implements SiteEditor
         JLabel proxyPortLabel = getLabelForText(Msg.PROXY_PORT, proxyPort);
 
         setLayout(new GridBagLayout());
-        add(hostLabel,      new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
-        add(host,           new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
-        add(directoryLabel, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
-        add(directory,      new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
-        add(proxyHostLabel, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
-        add(proxyHost,      new GridBagConstraints(1, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
-        add(proxyPortLabel, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
-        add(proxyPort,      new GridBagConstraints(1, 3, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
+        add(hostLabel,       new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
+        add(host,            new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
+        add(catalogDirLabel, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
+        add(catalogDir,      new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
+        add(packageDirLabel, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
+        add(packageDir,      new GridBagConstraints(1, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
+        add(proxyHostLabel,  new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
+        add(proxyHost,       new GridBagConstraints(1, 3, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
+        add(proxyPortLabel,  new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
+        add(proxyPort,       new GridBagConstraints(1, 4, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
 
         reset();
     }
@@ -81,7 +86,8 @@ public class SwordSiteEditor extends JPanel implements SiteEditor
         }
 
         installer.setHost(host.getText());
-        installer.setDirectory(directory.getText());
+        installer.setCatalogDirectory(catalogDir.getText());
+        installer.setPackageDirectory(packageDir.getText());
         installer.setProxyHost(proxyHost.getText());
         Integer pport = null;
         try
@@ -106,7 +112,8 @@ public class SwordSiteEditor extends JPanel implements SiteEditor
         }
 
         host.setText(installer.getHost());
-        directory.setText(installer.getDirectory());
+        catalogDir.setText(installer.getCatalogDirectory());
+        packageDir.setText(installer.getPackageDirectory());
         proxyHost.setText(installer.getProxyHost());
         Integer port = installer.getProxyPort();
         proxyPort.setText(port == null ? null : port.toString());
@@ -122,9 +129,14 @@ public class SwordSiteEditor extends JPanel implements SiteEditor
             host.setEditable(editable);
         }
 
-        if (directory != null)
+        if (catalogDir != null)
         {
-            directory.setEditable(editable);
+            catalogDir.setEditable(editable);
+        }
+
+        if (packageDir != null)
+        {
+            packageDir.setEditable(editable);
         }
 
         if (proxyHost != null)
@@ -188,7 +200,8 @@ public class SwordSiteEditor extends JPanel implements SiteEditor
 
     private transient AbstractSwordInstaller installer;
     private JTextField host;
-    private JTextField directory;
+    private JTextField catalogDir;
+    private JTextField packageDir;
     private JTextField proxyHost;
     private JTextField proxyPort;
 

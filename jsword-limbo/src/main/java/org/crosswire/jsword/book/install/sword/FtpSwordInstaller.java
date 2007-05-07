@@ -69,7 +69,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller implements Compara
     /* @Override */
     public String getInstallerDefinition()
     {
-        return PROTOCOL_SWORD + "://" + username + ":" + password + "@" + host + directory; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        return PROTOCOL_SWORD + "://" + username + ":" + password + "@" + host + packageDirectory; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     /* (non-Javadoc)
@@ -88,7 +88,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller implements Compara
 
         try
         {
-            return new URI(NetUtil.PROTOCOL_FTP, host, directory + "/" + sbmd.getInitials() + ZIP_SUFFIX, null); //$NON-NLS-1$ 
+            return new URI(NetUtil.PROTOCOL_FTP, host, packageDirectory + "/" + sbmd.getInitials() + ZIP_SUFFIX, null); //$NON-NLS-1$ 
         }
         catch (URISyntaxException ex)
         {

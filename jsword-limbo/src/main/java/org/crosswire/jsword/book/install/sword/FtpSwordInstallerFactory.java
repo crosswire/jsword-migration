@@ -79,7 +79,7 @@ public class FtpSwordInstallerFactory implements InstallerFactory
         {
             reply.setHost(part2);
         }
-        reply.setDirectory(NetUtil.SEPARATOR + parts[3]);
+        reply.setPackageDirectory(NetUtil.SEPARATOR + parts[3]);
 
         return reply;
     }

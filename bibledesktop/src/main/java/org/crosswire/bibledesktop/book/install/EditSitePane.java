@@ -173,6 +173,7 @@ public class EditSitePane extends JPanel
         siteEditorPane = new JPanel();
         siteEditorPane.setLayout(new GridBagLayout());
         JPanel pnlMain = new JPanel();
+        pnlMain.setPreferredSize(new Dimension(300, 300));
         pnlMain.setLayout(new GridBagLayout());
         pnlMain.add(lblMesg, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
         pnlMain.add(lblName, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
@@ -236,7 +237,7 @@ public class EditSitePane extends JPanel
         dlgMain.setResizable(true);
         dlgMain.setModal(true);
 
-        GuiUtil.setSize(dlgMain, new Dimension(480, 320));
+        GuiUtil.setSize(dlgMain, new Dimension(750, 400));
         GuiUtil.centerWindow(dlgMain);
         dlgMain.setVisible(true);
         dlgMain.toFront();
