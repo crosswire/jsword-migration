@@ -33,6 +33,7 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 import org.crosswire.common.swing.plaf.MetalLFCustoms;
 import org.crosswire.common.swing.plaf.OtherLFCustoms;
 import org.crosswire.common.swing.plaf.WindowsLFCustoms;
+import org.crosswire.common.util.StringUtil;
 
 /**
  * LookAndFeelUtil declares the Choices and actions
@@ -95,6 +96,33 @@ public final class LookAndFeelUtil
 
         currentLAF = newLaFClass;
     }
+    /**
+     * Accessor for the stylesheet we are transforming using
+     */
+    public static String getFont()
+    {
+        return font;
+    }
+
+    /**
+     * Converts the font spec to something useful.
+     */
+    public static FontUIResource toFontUIResource()
+    {
+        String[] fontSpec = StringUtil.split(LookAndFeelUtil.font, ","); //$NON-NLS-1$
+        int fontStyle = Integer.parseInt(fontSpec[1]);
+        int fontSize = Integer.parseInt(fontSpec[2]);
+        return new FontUIResource(fontSpec[0], fontStyle, fontSize);
+    }
+
+    /**
+     * Accessor for the stylesheet we are transforming using
+     */
+    public static void setFont(String font)
+    {
+        LookAndFeelUtil.font = font;
+        setUIFont(toFontUIResource());
+    }
 
     /**
      * Set the default font for all Swing components.
@@ -128,6 +156,11 @@ public final class LookAndFeelUtil
      * The default PLAF (and the default value)
      */
     private static Class defaultLAF;
+
+    /**
+     * The font to be used for the application
+     */
+    private static String font = "Dialog,0,12"; //$NON-NLS-1$
 
     /**
      * Setup the default PLAF
