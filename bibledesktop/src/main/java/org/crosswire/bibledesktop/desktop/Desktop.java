@@ -147,12 +147,12 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     public Desktop()
     {
         // Allow the setting of user.language and user.country to influence the default locale
-        String language = System.getProperty("user.language"); //$NON-NLS-1$
-        String locale = null;
-        if (language != null)
-        {
-            locale = language;
-        }
+//        String language = System.getProperty("user.language"); //$NON-NLS-1$
+//        String locale = null;
+//        if (language != null)
+//        {
+//            locale = language;
+//        }
 
 //        LATER(DMS): support country based locales
 //        String country = System.getProperty("user.country"); //$NON-NLS-1$
@@ -165,16 +165,18 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
 //            locale += country;
 //        }
 
-        if (locale != null && !"en".equals(locale)) //$NON-NLS-1$
-        {
-            Locale.setDefault(new Locale(locale));
-        }
+//        if (locale != null && !"en".equals(locale)) //$NON-NLS-1$
+//        {
+//            Locale.setDefault(new Locale(locale));
+//        }
 
         // Load the configuration.
         // This has to be done before any gui components are created.
         // (Including the splash)
         // This includes code that is invoked by it.
         generateConfig();
+
+        Locale.setDefault(Translations.getCurrentLocale());
 
         // Make this be the root frame of optiondialogs
         JOptionPane.setRootFrame(this);
@@ -988,6 +990,8 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     /*private*/ final void fillChoiceFactory()
     {
         refreshBooks();
+
+        Translations.register();
 
         // And the array of allowed osis>html converters
         Map converters = ConverterFactory.getKnownConverters();

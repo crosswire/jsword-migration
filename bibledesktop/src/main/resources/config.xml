@@ -198,6 +198,11 @@
   </option>
 -->
 
+  <option key="Application.Language" type="string-options">
+    <introspect class="org.crosswire.bibledesktop.desktop.Translations" property="CurrentTranslation"/>
+    <map name="translation-codes"/>
+  </option>
+
   <option key="Application.InitialLayout" type="int-options">
     <introspect class="org.crosswire.common.swing.desktop.ViewManager" property="InitialLayoutType"/>
     <alternative number="0"/>
