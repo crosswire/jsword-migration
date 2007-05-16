@@ -593,7 +593,8 @@ public class DesktopActions implements Actionable
     /**
      * Indicates whether there is MacOSX integration.
      */
-    boolean osxRegistered;
+    private boolean osxRegistered;
+
     /**
      * The About window
      */
