@@ -84,7 +84,7 @@
         Other Bible Software on the Net:<br/>
         <a href="/sword/software/biblecs">The SWORD Project for Windows</a><br/>
         <a href="http://www.MacSword.com">MacSword</a><br/>
-        <a href="http://www.BibleTime.info">BibleTime for Linux</a>
+        <a href="http://www.BibleTime.info">BibleTime for Linux</a><br/>
         <a href="http://gnomesword.sourceforge.net">GnomeSword for Linux</a>
       </p>
 
