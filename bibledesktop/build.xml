@@ -59,7 +59,8 @@
 
     <!-- Create a flag file used to determine whether the set of jars needs to be signed -->
     <touch file="${target.root}/.flagfile"/>
-    <!-- Copy the files needed for the distribution -->
+
+  	<!-- Copy the files needed for the distribution -->
     <mkdir dir="${jnlp.uninstalled}"/>
     <copy todir="${jnlp.uninstalled}"
           preservelastmodified="true">
@@ -67,7 +68,7 @@
       <fileset dir="${source.etc}/jnlp">
         <include name="bibledesktop.jnlp"/>
         <include name="*.gif"/>
-	    </fileset>
+	  </fileset>
       <fileset dir="${source.etc}/bin"/>
       <fileset dir="${source.etc}/installer">
         <include name="bibledesktop.exe"/>
@@ -114,6 +115,31 @@
         <exclude name="**/*.jnlp"/>
       </fileset>
     </copy>
+
+	<!--
+		Prepare the Mac distribution.
+		Use the unsigned jars to minimize space.
+	-->
+    <mkdir dir="${jnlp.installed}/BibleDesktop.app"/>
+	<copy todir="${jnlp.installed}/BibleDesktop.app">
+      <fileset dir="${source.etc}/installer/macosx/BibleDesktop.app">
+		<exclude name="**/.DS_Store"/>
+		<exclude name="**/.svn"/>
+	  </fileset>
+    </copy>
+	<!-- copy does not preserve execution privs. So we reset it -->
+    <chmod perm="a+x" file="${jnlp.installed}/BibleDesktop.app/Contents/MacOS/JavaApplicationStub"/>
+
+	<copy todir="${jnlp.installed}/BibleDesktop.app/Contents/Resources/Java">
+      <fileset dir="${target.jar}">
+        <patternset refid="internal.built.jars"/>
+        <patternset refid="external.runtime.jars"/>
+	  </fileset>
+    </copy>
+
+	<zip destfile="${jnlp.installed}/BibleDesktop.app.zip" update="true">
+      <zipfileset dir="${jnlp.installed}/BibleDesktop.app" prefix="BibleDesktop.app"/>
+	</zip>
   </target>
 
   <target name="install.check">
