@@ -47,7 +47,6 @@
 			<string>$JAVAROOT/jsword-1.0.6.jar</string>
 			<string>$JAVAROOT/jsword-common-1.0.6.jar</string>
 			<string>$JAVAROOT/jsword-common-swing-1.0.6.jar</string>
-			<string>$JAVAROOT/jsword-common-aqua-1.0.6.jar</string>
 			<string>$JAVAROOT/lucene-core-2.1.0.jar</string>
 			</array>
 		<key>Properties</key>
