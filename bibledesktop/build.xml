@@ -6,12 +6,10 @@
   <property name="dependency.jar"   value="../${dependency}/${target.jar}"/>
 
   <!--=======================================================================-->
+  <property name="jnlp.homepage"     value="file:///${basedir}/${target.installed}"/> <!-- override -->
+  <property name="jnlp.codebase"     value="file:///${basedir}/${target.installed}"/> <!-- override -->
+
   <property name="gener.root"        value="${target.root}/gener"/>
-  <!-- The following works on Windows. Others may need file:// -->
-  <property name="jnlp.uninstalled"  value="${target.root}/uninstalled"/>
-  <property name="jnlp.installed"    value="${target.root}/installed"/> <!-- override -->
-  <property name="jnlp.homepage"     value="file:///${basedir}/${jnlp.installed}"/> <!-- override -->
-  <property name="jnlp.codebase"     value="file:///${basedir}/${jnlp.installed}"/> <!-- override -->
 
   <!--=======================================================================-->
   <target name="testcompile.extra">
@@ -31,42 +29,80 @@
           depends="build, keygen, install.check"
           unless="install.uptodate"
           description="Prepares for web based jnlp deploy">
-    <echo message="Building JNLP: uninstalled files in: ${jnlp.uninstalled} and installed in ${jnlp.installed}"/>
+
+  	<echo message="Building distribution: installed files in: ${target.installed}"/>
+
+  	<!-- Create the installation directory -->
+    <mkdir dir="${target.installed}"/>
+
+    <!--
+      == Prepare the Mac distribution as a zip file.
+	  -->
+  	<copy file="${source.etc}/installer/macosx/BibleDesktop.app/Contents/Info.plist"
+          toFile="${target.installed}/Info.plist"
+          preservelastmodified="true">
+  	  <filterset>
+        <filter token="release.version" value="${release.version}"/>
+  	  </filterset>
+  	</copy>
+
+  	<zip destfile="${target.installed}/BibleDesktop.app.zip" update="true">
+      <!-- Copy everything but the executable (zip will not preserve permissions)
+        == And Info.plist, which needs to be filtered.
+        -->
+      <zipfileset prefix="BibleDesktop.app"
+      	          dir="${source.etc}/installer/macosx/BibleDesktop.app">
+      	<exclude name="**/*JavaApplicationStub*"/>
+      	<exclude name="**/*Info.plist"/>
+      </zipfileset>
+      <!-- Copy the executable and set the right permissions -->
+      <zipfileset prefix="BibleDesktop.app/Contents/MacOS"
+      	          filemode="755"
+                  file="${source.etc}/installer/macosx/BibleDesktop.app/Contents/MacOS/JavaApplicationStub"/>
+      <!-- Copy the filtered Info.plist file -->
+      <zipfileset prefix="BibleDesktop.app/Contents"
+                  file="${target.installed}/Info.plist"/>
+      <!-- Add in all the unsigned jars -->
+      <zipfileset prefix="BibleDesktop.app/Contents/Resources/Java"
+		          dir="${target.jar}">
+        <patternset refid="internal.built.jars"/>
+        <patternset refid="external.runtime.jars"/>
+	  </zipfileset>
+	</zip>
+    <delete file="${target.installed}/Info.plist"/>
+
     <!-- sign the jars to a temporary location so they can be reused -->
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="bibledesktop-${release.version}.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jsword-common-${release.version}.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jsword-common-swing-${release.version}.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jsword-common-aqua-${release.version}.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jsword-${release.version}.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-codec-1.3.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-httpclient-3.0.1.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-logging-1.1.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="commons-net-1.4.1.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jdom-1.0.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="javatar-2.5.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="jlfgr-1_0.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="lucene-core-2.1.0.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="bibledesktop-${release.version}.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="jsword-common-${release.version}.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="jsword-common-swing-${release.version}.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="jsword-common-aqua-${release.version}.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="jsword-${release.version}.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="commons-codec-1.3.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="commons-httpclient-3.0.1.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="commons-logging-1.1.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="commons-net-1.4.1.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="jdom-1.0.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="javatar-2.5.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="jlfgr-1_0.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="lucene-core-2.1.0.jar"/>
   	<!--
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="blogapps-1.0.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="gnu-regexp-1.1.4.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="kafenio-0.8.5.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="kafenio-config-0.8.5.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="kafenio-icons-0.8.5.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="rome-0.7.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="werx-051405.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.signed}" jar="xmlrpc-2.0.1.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="blogapps-1.0.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="gnu-regexp-1.1.4.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="kafenio-0.8.5.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="kafenio-config-0.8.5.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="kafenio-icons-0.8.5.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="rome-0.7.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="werx-051405.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="xmlrpc-2.0.1.jar"/>
     -->
 
     <!-- Create a flag file used to determine whether the set of jars needs to be signed -->
     <touch file="${target.root}/.flagfile"/>
 
   	<!-- Copy the files needed for the distribution -->
-    <mkdir dir="${jnlp.uninstalled}"/>
-    <copy todir="${jnlp.uninstalled}"
+    <copy todir="${target.installed}"
           preservelastmodified="true">
-      <fileset dir="${target.signed}"/>
       <fileset dir="${source.etc}/jnlp">
-        <include name="bibledesktop.jnlp"/>
         <include name="*.gif"/>
 	  </fileset>
       <fileset dir="${source.etc}/bin"/>
@@ -74,32 +110,10 @@
         <include name="bibledesktop.exe"/>
       </fileset>
     </copy>
-    <chmod perm="a+x">
-      <fileset dir="${jnlp.uninstalled}">
-        <include name="**/*.sh"/>
-      </fileset>
-    </chmod>
-    <fixcrlf srcdir="${jnlp.uninstalled}" eol="lf">
-      <include name="**/*.sh"/>
-    </fixcrlf>
-    <fixcrlf srcdir="${jnlp.uninstalled}" eol="crlf">
-      <include name="**/*.bat"/>
-    </fixcrlf>
-  	<!--
-  	This was done in 2 steps so that we could deploy in other methods, however
-  	we now customize this deploy so it isn't needed any more. Sometime we should
-  	perhaps think about making ${jnlp.installed} = ${jnlp.uninstalled}
-  	The only real difference between installed and uninstalled is that the jnlp
-  	file has had the homepage and codebase parts filled in.
-  	-->
-    <!--
-    Attempt a local deploy, we might be able to get the jnlp file to work
-    locally on a relative path, but in the mean time there is always the *.exe
-    and *.sh startup files.
-    -->
-    <mkdir dir="${jnlp.installed}"/>
-    <copy file="${jnlp.uninstalled}/bibledesktop.jnlp"
-          tofile="${jnlp.installed}/bibledesktop-${release.version}.jnlp"
+
+  	<!-- Copy and filter to make it work -->
+  	<copy file="${source.etc}/jnlp/bibledesktop.jnlp"
+          tofile="${target.installed}/bibledesktop-${release.version}.jnlp"
           filtering="true"
           preservelastmodified="true">
       <filterset>
@@ -108,38 +122,20 @@
         <filter token="release.version" value="${release.version}"/>
       </filterset>
     </copy>
-    <copy todir="${jnlp.installed}"
-          filtering="false"
-          preservelastmodified="true">
-      <fileset dir="${jnlp.uninstalled}">
-        <exclude name="**/*.jnlp"/>
+
+  	<!-- copy does not preserve file permissions, so we reset them -->
+    <chmod perm="a+x">
+      <fileset dir="${target.installed}">
+        <include name="**/*.sh"/>
       </fileset>
-    </copy>
-
-	<!--
-		Prepare the Mac distribution.
-		Use the unsigned jars to minimize space.
-	-->
-    <mkdir dir="${jnlp.installed}/BibleDesktop.app"/>
-	<copy todir="${jnlp.installed}/BibleDesktop.app">
-      <fileset dir="${source.etc}/installer/macosx/BibleDesktop.app">
-		<exclude name="**/.DS_Store"/>
-		<exclude name="**/.svn"/>
-	  </fileset>
-    </copy>
-	<!-- copy does not preserve execution privs. So we reset it -->
-    <chmod perm="a+x" file="${jnlp.installed}/BibleDesktop.app/Contents/MacOS/JavaApplicationStub"/>
-
-	<copy todir="${jnlp.installed}/BibleDesktop.app/Contents/Resources/Java">
-      <fileset dir="${target.jar}">
-        <patternset refid="internal.built.jars"/>
-        <patternset refid="external.runtime.jars"/>
-	  </fileset>
-    </copy>
-
-	<zip destfile="${jnlp.installed}/BibleDesktop.app.zip" update="true">
-      <zipfileset dir="${jnlp.installed}/BibleDesktop.app" prefix="BibleDesktop.app"/>
-	</zip>
+    </chmod>
+  	<!-- Ensure that line endings are consistent with their target platform -->
+    <fixcrlf srcdir="${target.installed}" eol="lf">
+      <include name="**/*.sh"/>
+    </fixcrlf>
+    <fixcrlf srcdir="${target.installed}" eol="crlf">
+      <include name="**/*.bat"/>
+    </fixcrlf>
   </target>
 
   <target name="install.check">

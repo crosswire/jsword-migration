@@ -36,18 +36,19 @@
 		<string>1.4+</string>
 		<key>ClassPath</key>
 			<array>
-			<string>$JAVAROOT/bibledesktop-1.0.6.jar</string>
+			<string>$JAVAROOT/bibledesktop-@release.version@.jar</string>
+			<string>$JAVAROOT/jsword-@release.version@.jar</string>
+			<string>$JAVAROOT/jsword-common-@release.version@.jar</string>
+			<string>$JAVAROOT/jsword-common-swing-@release.version@.jar</string>
+			<string>$JAVAROOT/jsword-common-aqua-@release.version@.jar</string>
+			<string>$JAVAROOT/lucene-core-2.1.0.jar</string>
+			<string>$JAVAROOT/jdom-1.0.jar</string>
 			<string>$JAVAROOT/commons-codec-1.3.jar</string>
 			<string>$JAVAROOT/commons-httpclient-3.0.1.jar</string>
 			<string>$JAVAROOT/commons-logging-1.1.jar</string>
 			<string>$JAVAROOT/commons-net-1.4.1.jar</string>
 			<string>$JAVAROOT/javatar-2.5.jar</string>
-			<string>$JAVAROOT/jdom-1.0.jar</string>
 			<string>$JAVAROOT/jlfgr-1_0.jar</string>
-			<string>$JAVAROOT/jsword-1.0.6.jar</string>
-			<string>$JAVAROOT/jsword-common-1.0.6.jar</string>
-			<string>$JAVAROOT/jsword-common-swing-1.0.6.jar</string>
-			<string>$JAVAROOT/lucene-core-2.1.0.jar</string>
 			</array>
 		<key>Properties</key>
 		<dict>
