@@ -119,7 +119,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
 
         try
         {
-            BookData bdata = book.getText(key);
+            BookData bdata = book.getBookData(key);
             if (bdata == null)
             {
                 txtView.setText(""); //$NON-NLS-1$

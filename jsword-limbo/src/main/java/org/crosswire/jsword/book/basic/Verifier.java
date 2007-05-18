@@ -123,8 +123,8 @@ public class Verifier
                 try
                 {
                     // Read the document from the first bible
-                    BookData text1 = book1.getText(subkey);
-                    BookData text2 = book2.getText(subkey);
+                    BookData text1 = book1.getBookData(subkey);
+                    BookData text2 = book2.getBookData(subkey);
 
                     // Check - this needs some work
                     if (!text1.equals(text2))

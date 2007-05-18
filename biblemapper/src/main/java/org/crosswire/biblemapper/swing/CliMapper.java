@@ -30,6 +30,7 @@ import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Books;
+import org.crosswire.jsword.book.OSISUtil;
 import org.crosswire.jsword.book.search.parse.IndexSearcher;
 import org.crosswire.jsword.book.search.parse.PhraseParamWord;
 import org.crosswire.jsword.passage.Key;
@@ -101,8 +102,8 @@ public class CliMapper
                     for (int v=1; v<=BibleInfo.versesInChapter(b, c); v++)
                     {
                         Verse find = new Verse(b, c, v);
-                        BookData bdata = book.getText(find);
-                        String text = bdata.getPlainText();
+                        BookData bdata = book.getBookData(find);
+                        String text = OSISUtil.getPlainText(bdata.getOsis());
                         String quote = IndexSearcher.getPreferredSyntax(PhraseParamWord.class);
                         text = quote + text + quote;
                         PassageTally temp = (PassageTally) book.find(text);

@@ -50,7 +50,7 @@ public class StudyTool
     public Collection getTranslations(Book bible, String word) throws BookException
     {
         Key key = bible.find(new DefaultSearchRequest(word, null));
-        BookData data = bible.getText(key);
+        BookData data = bible.getBookData(key);
 
         Map reply = new HashMap();
 
@@ -106,7 +106,7 @@ public class StudyTool
     public Collection getTranslations(Book bible, Strongs number) throws BookException
     {
         Key key = bible.find(new DefaultSearchRequest(number.getOLBName(), null));
-        BookData data = bible.getText(key);
+        BookData data = bible.getBookData(key);
 
         Map reply = new HashMap();
 

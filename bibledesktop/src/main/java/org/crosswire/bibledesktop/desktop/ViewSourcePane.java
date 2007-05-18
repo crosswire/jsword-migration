@@ -88,7 +88,7 @@ public class ViewSourcePane extends JPanel
                 buf.append(book.getRawText((Key) iter.next()));
             }
 
-            BookData bdata = book.getText(key);
+            BookData bdata = book.getBookData(key);
 
             BookMetaData bmd = book.getBookMetaData();
 

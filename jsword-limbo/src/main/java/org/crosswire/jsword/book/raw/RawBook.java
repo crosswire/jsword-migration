@@ -398,10 +398,7 @@ public class RawBook extends AbstractPassageBook
         return ((WordItemsMem) wordItems).getStartsWith(word);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.basic.AbstractBible#setDocument(org.crosswire.jsword.passage.Verse, org.crosswire.jsword.book.filter.BookData)
-     */
-    public void setDocument(Verse verse, BookData bdata)
+    public void setDocument(Verse verse, BookData bdata) throws BookException
     {
         // For all of the sections
         Iterator sit = bdata.getOsis().getChild(OSISUtil.OSIS_ELEMENT_OSISTEXT).getChildren(OSISUtil.OSIS_ELEMENT_DIV).iterator();

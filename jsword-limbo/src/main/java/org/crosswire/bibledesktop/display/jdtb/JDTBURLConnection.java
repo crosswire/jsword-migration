@@ -82,7 +82,7 @@ public class JDTBURLConnection extends URLConnection
     {
         try
         {
-            BookData data = book.getText(key);
+            BookData data = book.getBookData(key);
             BookMetaData bmd = book.getBookMetaData();
             boolean direction = bmd.isLeftToRight();
 

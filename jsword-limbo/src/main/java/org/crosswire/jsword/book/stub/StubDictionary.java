@@ -21,10 +21,11 @@
  */
 package org.crosswire.jsword.book.stub;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.crosswire.jsword.book.BookCategory;
-import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.OSISUtil;
 import org.crosswire.jsword.book.basic.AbstractBook;
@@ -54,28 +55,24 @@ public class StubDictionary extends AbstractBook
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.Book#getData(org.crosswire.jsword.passage.Key)
+     * @see org.crosswire.jsword.book.Book#getOsisIterator(org.crosswire.jsword.passage.Key, boolean)
      */
-    public BookData getText(Key key) throws BookException
+    public Iterator getOsisIterator(Key key, boolean allowEmpty) throws BookException
     {
         assert key != null;
 
         try
         {
-            Element osis = OSISUtil.createOsisFramework(getBookMetaData());
-            Element text = osis.getChild(OSISUtil.OSIS_ELEMENT_OSISTEXT);
-
-            Element div = OSISUtil.factory().createDiv();
+            List content = new ArrayList();
+            
             Element title = OSISUtil.factory().createTitle();
             title.addContent(key.getName());
-            div.addContent(title);
-            text.addContent(div);
+            content.add(title);
 
             List osisContent = FilterFactory.getDefaultFilter().toOSIS(this, key, "stub implementation"); //$NON-NLS-1$
-            div.addContent(osisContent);
+            content.add(osisContent);
 
-            BookData bdata = new BookData(osis, this, key);
-            return bdata;
+            return content.iterator();
         }
         catch (Exception ex)
         {

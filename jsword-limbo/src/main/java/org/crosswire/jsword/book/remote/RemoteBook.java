@@ -21,11 +21,14 @@
  */
 package org.crosswire.jsword.book.remote;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.xml.JDOMSAXEventProvider;
 import org.crosswire.common.xml.SAXEventProvider;
 import org.crosswire.jsword.book.BookCategory;
-import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.basic.AbstractBook;
 import org.crosswire.jsword.book.basic.DefaultBookMetaData;
@@ -36,6 +39,7 @@ import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageKeyFactory;
 import org.jdom.Document;
+import org.jdom.input.SAXHandler;
 import org.xml.sax.SAXException;
 
 /**
@@ -64,9 +68,9 @@ public class RemoteBook extends AbstractBook
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.Bible#getData(org.crosswire.jsword.passage.Passage)
+     * @see org.crosswire.jsword.book.Book#getOsisIterator(org.crosswire.jsword.passage.Key, boolean)
      */
-    public BookData getText(Key key) throws BookException
+    public Iterator getOsisIterator(Key key, boolean allowEmpty) throws BookException
     {
         try
         {
@@ -78,8 +82,12 @@ public class RemoteBook extends AbstractBook
 
             Document doc = remoter.execute(method);
             SAXEventProvider provider = new JDOMSAXEventProvider(doc);
+            SAXHandler handler = new SAXHandler();
+            provider.provideSAXEvents(handler);
 
-            return new BookData(provider, this, key);
+            List content = new ArrayList();
+            content.add(handler.getDocument().getRootElement());
+            return content.iterator();
         }
         catch (RemoterException ex)
         {
