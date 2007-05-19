@@ -102,7 +102,7 @@ public class CliMapper
                     for (int v=1; v<=BibleInfo.versesInChapter(b, c); v++)
                     {
                         Verse find = new Verse(b, c, v);
-                        BookData bdata = book.getBookData(find);
+                        BookData bdata = new BookData(book, find);
                         String text = OSISUtil.getPlainText(bdata.getOsis());
                         String quote = IndexSearcher.getPreferredSyntax(PhraseParamWord.class);
                         text = quote + text + quote;

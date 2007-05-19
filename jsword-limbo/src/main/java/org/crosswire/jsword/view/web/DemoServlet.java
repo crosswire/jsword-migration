@@ -103,7 +103,7 @@ public class DemoServlet extends HttpServlet
                     request.setAttribute("next-overview", waiting.getOverview()); //$NON-NLS-1$
                 }
 
-                BookData data = book.getBookData(ref);
+                BookData data = new BookData(book, ref);
                 SAXEventProvider osissep = data.getSAXEventProvider();
                 SAXEventProvider htmlsep = style.convert(osissep);
                 String text = XMLUtil.writeToString(htmlsep);

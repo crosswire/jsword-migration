@@ -77,7 +77,7 @@ public class LocalRemoter implements Remoter
                 Book book = lookupBook(uid);
                 String refstr = method.getParameter(ParamName.PARAM_PASSAGE);
                 Key ref = book.getKey(refstr);
-                BookData data = book.getBookData(ref);
+                BookData data = new BookData(book, ref);
 
                 SAXEventProvider provider = data.getSAXEventProvider();
                 SAXHandler handler = new SAXHandler();

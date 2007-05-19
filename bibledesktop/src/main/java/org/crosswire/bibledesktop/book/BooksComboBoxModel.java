@@ -67,7 +67,7 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
             // the others if this is a broad list of books
             tryInitialSelection(Defaults.getCommentary());
             tryInitialSelection(Defaults.getDictionary());
-            tryInitialSelection(Defaults.getBible());
+            tryInitialSelection(Defaults.getCurrentBible());
         }
     }
 

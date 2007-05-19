@@ -119,13 +119,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
 
         try
         {
-            BookData bdata = book.getBookData(key);
-            if (bdata == null)
-            {
-                txtView.setText(""); //$NON-NLS-1$
-                return;
-            }
-
+            BookData bdata = new BookData(book, key);
             SAXEventProvider osissep = bdata.getSAXEventProvider();
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
 

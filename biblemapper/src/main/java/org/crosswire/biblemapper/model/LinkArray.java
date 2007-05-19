@@ -229,7 +229,7 @@ public class LinkArray implements Serializable
             for (int v=1; v<=BibleInfo.versesInChapter(b, c); v++)
             {
                 Verse find = new Verse(b, c, v);
-                BookData bdata = book.getBookData(find);
+                BookData bdata = new BookData(book, find);
                 String text = OSISUtil.getPlainText(bdata.getOsis());
                 PassageTally temp = (PassageTally) book.find(text);
                 temp.setOrdering(PassageTally.ORDER_TALLY);
