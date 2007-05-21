@@ -28,9 +28,7 @@ import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.URIEventListener;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.passage.Key;
-//import org.jdesktop.jdic.browser.WebBrowser;
 
 /**
  * A JDK JTextPane implementation of an OSIS displayer.
