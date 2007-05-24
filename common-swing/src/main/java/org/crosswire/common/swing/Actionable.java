@@ -17,7 +17,7 @@
  * Copyright: 2005
  *     The copyright to this program is held by it's authors.
  *
- * ID: $Id: ActionFactory.java 1286 2007-04-20 13:59:19 -0400 (Fri, 20 Apr 2007) dmsmith $
+ * ID: $Id$
  */
 package org.crosswire.common.swing;
 

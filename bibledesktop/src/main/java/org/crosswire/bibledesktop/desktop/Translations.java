@@ -17,7 +17,7 @@
  * Copyright: 2005
  *     The copyright to this program is held by it's authors.
  *
- * ID: $Id: ViewSourcePane.java 1312 2007-05-03 21:39:51Z dmsmith $
+ * ID: $Id$
  */
 package org.crosswire.bibledesktop.desktop;
 

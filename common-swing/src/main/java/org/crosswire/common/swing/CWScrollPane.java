@@ -17,7 +17,7 @@
  * Copyright: 2005
  *     The copyright to this program is held by it's authors.
  *
- * ID: $Id: CWAction.java 1168 2006-10-19 21:47:42Z dmsmith $
+ * ID: $Id$
  */
 package org.crosswire.common.swing;
 

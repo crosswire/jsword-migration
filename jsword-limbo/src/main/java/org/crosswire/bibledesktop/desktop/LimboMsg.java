@@ -17,7 +17,7 @@
  * Copyright: 2005
  *     The copyright to this program is held by it's authors.
  *
- * ID: $Id: Msg.java 1225 2006-12-20 21:18:31Z dmsmith $
+ * ID: $Id$
  */
 package org.crosswire.bibledesktop.desktop;
 
