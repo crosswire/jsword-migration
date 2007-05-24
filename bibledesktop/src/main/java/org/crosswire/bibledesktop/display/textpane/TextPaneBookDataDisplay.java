@@ -146,7 +146,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
              * It appears that it is a line too long issue.
              */
             /* Apply the fix if the text is too long and we are not Java 1.5 or greater */
-            if (text.length() > 32768)
+            if (text.length() > 32768 && BookCategory.GENERAL_BOOK.equals(book.getBookCategory()))
             {
                 String javaVersion = System.getProperty("java.specification.version"); //$NON-NLS-1$
                 if (javaVersion == null || "1.5".compareTo(javaVersion) > 0) //$NON-NLS-1$
