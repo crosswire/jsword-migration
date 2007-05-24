@@ -12,14 +12,14 @@
   <!--=======================================================================-->
   <target name="webapp" description="Build an unpacked war file">
     <mkdir dir="${webapp.bibledesktop}"/>
-    <style basedir="${source.web}" extension=".html" style="${source.web}/template.xsl" destdir="${webapp.bibledesktop}">
+    <xslt basedir="${source.web}" extension=".html" style="${source.web}/template.xsl" destdir="${webapp.bibledesktop}">
       <outputproperty name="method" value="html"/>
       <outputproperty name="omit-xml-declaration" value="yes"/>
       <include name="**/*.html"/>
       <xmlcatalog>
         <dtd publicid="-//W3C//DTD XHTML 1.0 Transitional//EN" location="${source.etc}/xhtml1-transitional.dtd"/>
       </xmlcatalog>
-    </style>
+    </xslt>
     <copy todir="${webapp.bibledesktop}">
       <fileset dir="${source.web}">
         <exclude name="*.jsp"/>

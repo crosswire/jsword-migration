@@ -113,15 +113,15 @@
   <!--=======================================================================-->
   <target name="webapp" description="Build an unpacked war file">
     <mkdir dir="${target.web}"/>
-    <style basedir="${source.web}" extension=".html" style="${source.web}/template.xsl" destdir="${target.web}">
+    <xslt basedir="${source.web}" extension=".html" style="${source.web}/template.xsl" destdir="${target.web}">
       <include name="**/*.html"/>
       <xmlcatalog>
         <dtd publicid="-//W3C//DTD XHTML 1.0 Transitional//EN" location="${source.etc}/xhtml1-transitional.dtd"/>
       </xmlcatalog>
-    </style>
-    <style basedir="${source.web}" extension=".jsp" style="${source.web}/template.xsl" destdir="${target.web}">
+    </xslt>
+    <xslt basedir="${source.web}" extension=".jsp" style="${source.web}/template.xsl" destdir="${target.web}">
       <include name="*.jsp"/>
-    </style>
+    </xslt>
     <mkdir dir="${target.web}/WEB-INF"/>
     <copy todir="${target.web}/WEB-INF" filtering="true">
       <filterset>

@@ -1,11 +1,14 @@
 <project name="java2html" default="java2html">
 
+  <property name="support.j2h" value="${support.tools}/java2html"/>
+  <property name="version.j2h" value="1.3.1"/>
+
   <!-- this should be overridden by the parent file -->
   <property name="support.tools" value=".."/>
 
   <taskdef name="java2html" classname="com.java2html.Java2HTMLTask">
     <classpath>
-      <fileset dir="${support.tools}/java2html" includes="**/*.jar"/>
+      <fileset dir="${support.j2h}/java2html-${version.j2h}" includes="**/*.jar"/>
     </classpath>
   </taskdef>
 

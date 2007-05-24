@@ -22,7 +22,7 @@ Otherwise, run the jdepend.antlibs task to copy jars to ANT_HOME/lib</echo>
         <fileset dir="${support.depend}" includes="**/*.jar"/>
       </classpath>
     </jdepend>
-    <style
+    <xslt
         in="${target.web}/jdepend/jdepend-report.xml"
         out="${target.web}/jdepend/jdepend-report.html"
         style="${support.depend}/jdepend.xsl"/>

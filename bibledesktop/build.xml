@@ -14,7 +14,7 @@
   <!--=======================================================================-->
   <target name="testcompile.extra">
     <mkdir dir="${gener.root}/config"/>
-    <style
+    <xslt
         in="${source.res}/config.xml"
         out="${gener.root}/config/ConfigTest.java"
         style="../common/etc/config-test.xsl"/>
