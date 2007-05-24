@@ -45,12 +45,41 @@ import org.crosswire.jsword.book.Book;
 public class BookListCellRenderer extends JLabel implements ListCellRenderer
 {
     /**
-     * Constructs a default renderer object for an item in a list.
+     * Constructs a default renderer object for an item in a list,
+     * using full names.
      */
     public BookListCellRenderer()
     {
+        this(false);
+    }
+
+    /**
+     * Constructs a renderer object for an item in a list,
+     * using abbreviated names if desired.
+     * 
+     * @param abbreviated use the initials in the list.
+     */
+    public BookListCellRenderer(boolean abbreviated)
+    {
+        this.abbreviated = abbreviated;
         setOpaque(true);
         setBorder(noFocus);
+    }
+
+    /**
+     * @return the abbreviated
+     */
+    public boolean isAbbreviated()
+    {
+        return abbreviated;
+    }
+
+    /**
+     * @param newAbbreviated the abbreviated to set
+     */
+    public void setAbbreviated(boolean newAbbreviated)
+    {
+        this.abbreviated = newAbbreviated;
     }
 
     /**
@@ -101,9 +130,17 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
         {
             Book book = (Book) value;
 
-            String displayName = book.toString();
-            setText(displayName);
-            setToolTipText(displayName);
+            if (abbreviated)
+            {
+                setText(book.getInitials());
+                setToolTipText(book.getName());
+            }
+            else
+            {
+                String displayName = book.toString();
+                setText(displayName);
+                setToolTipText(displayName);
+            }
 
             setIcon(BookIcon.getIcon(book));
             setEnabled(list.isEnabled());
@@ -113,6 +150,11 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
 
         return this;
     }
+
+    /**
+     * If true then the initials of a book are shown, otherwise the full name.
+     */
+    private boolean abbreviated;
 
     /**
      * border if we do not have focus

@@ -123,7 +123,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
             // But here we don't have a book yet.
             key = new RocketPassage();
         }
-        cboBible.setRenderer(new BookListCellRenderer());
+        cboBible.setRenderer(new BookListCellRenderer(true));
         cboBible.addItemListener(new ItemListener()
         {
             /* (non-Javadoc)
