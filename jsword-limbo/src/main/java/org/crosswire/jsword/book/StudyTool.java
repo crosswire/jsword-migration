@@ -55,7 +55,7 @@ public class StudyTool
         Map reply = new HashMap();
 
         // Loop through all the divs in this BookData
-        Iterator oit = data.getOsis().getChild(OSISUtil.OSIS_ELEMENT_OSISTEXT).getChildren(OSISUtil.OSIS_ELEMENT_DIV).iterator();
+        Iterator oit = OSISUtil.getFragment(data.getOsis()).iterator();
         while (oit.hasNext())
         {
             Element div = (Element) oit.next();
@@ -111,7 +111,7 @@ public class StudyTool
         Map reply = new HashMap();
 
         // Loop through all the divs in this BookData
-        Iterator oit = data.getOsis().getChild(OSISUtil.OSIS_ELEMENT_OSISTEXT).getChildren(OSISUtil.OSIS_ELEMENT_DIV).iterator();
+        Iterator oit = OSISUtil.getFragment(data.getOsis()).iterator();
         while (oit.hasNext())
         {
             Element div = (Element) oit.next();
