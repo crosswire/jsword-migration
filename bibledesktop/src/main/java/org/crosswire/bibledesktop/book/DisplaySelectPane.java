@@ -54,6 +54,7 @@ import org.crosswire.common.swing.desktop.event.TitleChangedEvent;
 import org.crosswire.common.swing.desktop.event.TitleChangedListener;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookComparators;
 import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.index.IndexStatus;
@@ -106,7 +107,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         };
 
         // search() and version() rely on this returning only Books indexed by verses
-        mdlBible = new BooksComboBoxModel(BookFilters.getBibles());
+        mdlBible = new BooksComboBoxModel(BookFilters.getBibles(), BookComparators.getInitialComparator());
         JComboBox cboBible = new JComboBox(mdlBible);
         cboBible.setPrototypeDisplayValue(" "); //$NON-NLS-1$
         selected = mdlBible.getSelectedBook();

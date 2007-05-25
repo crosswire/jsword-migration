@@ -29,6 +29,7 @@ import javax.swing.JComponent;
 
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.config.MultipleChoice;
+import org.crosswire.common.diff.Distance;
 import org.crosswire.common.util.Logger;
 
 /**
@@ -103,6 +104,7 @@ public class OptionsField implements Field
     {
         if (list != null && list.length > 0)
         {
+            int distance = value.length();
             for (int i = 0; i < list.length; i++)
             {
                 if (value.equals(list[i]))
@@ -110,9 +112,28 @@ public class OptionsField implements Field
                     combo.setSelectedItem(list[i]);
                     return;
                 }
+                distance = Math.max(distance, list[i].length());
             }
 
-            combo.setSelectedItem(list[0]);
+            // We didn't find an exact match so look for the closest one.
+            distance++; // A number larger than the length of any of the strings in question.
+            int bestMatch = 0;
+            for (int i = 0; i < list.length; i++)
+            {
+                int newDistance = Distance.getLevenshteinDistance(value, list[i]);
+                if (distance > newDistance)
+                {
+                    bestMatch = i;
+                    distance = newDistance;
+                }
+            }
+
+            combo.setSelectedItem(list[bestMatch]);
+            if (bestMatch > 0)
+            {
+                log.warn("Checked for options without finding exact match: '" + value + "'. Best match is: " + combo.getSelectedItem());  //$NON-NLS-1$//$NON-NLS-2$
+                return;
+            }
         }
 
         log.warn("Checked for options without finding: '" + value + "'. Defaulting to first option: " + combo.getSelectedItem());  //$NON-NLS-1$//$NON-NLS-2$

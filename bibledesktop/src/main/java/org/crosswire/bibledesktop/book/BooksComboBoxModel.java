@@ -23,6 +23,7 @@ package org.crosswire.bibledesktop.book;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.Comparator;
 
 import javax.swing.ComboBoxModel;
 
@@ -45,7 +46,7 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
      */
     public BooksComboBoxModel()
     {
-        this(null);
+        this(null, null);
     }
 
     /**
@@ -53,7 +54,14 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
      */
     public BooksComboBoxModel(BookFilter filter)
     {
-        super(filter);
+        this(filter, null);
+    }
+    /**
+     * Basic Constructor
+     */
+    public BooksComboBoxModel(BookFilter filter, Comparator comparator)
+    {
+        super(filter, comparator);
 
         postCacheData();
 

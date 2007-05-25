@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
@@ -55,7 +56,7 @@ public class BooksListModel extends AbstractListModel
      */
     public BooksListModel()
     {
-        this(null);
+        this(null, null);
     }
 
     /**
@@ -63,16 +64,25 @@ public class BooksListModel extends AbstractListModel
      */
     public BooksListModel(BookFilter filter)
     {
-        this(filter, Books.installed());
+        this(filter, Books.installed(), null);
     }
 
     /**
-     * Basic constructor
+     * Basic constructor, redefining ordering.
      */
-    public BooksListModel(BookFilter filter, BookList bookList)
+    public BooksListModel(BookFilter filter, Comparator comp)
+    {
+        this(filter, Books.installed(), comp);
+    }
+
+    /**
+     * Basic constructor for a filtered list of books, ordered as requested.
+     */
+    public BooksListModel(BookFilter filter, BookList bookList, Comparator comparator)
     {
         this.filter = filter;
         this.bookList = bookList;
+        this.comparator = comparator;
 
         cacheData();
     }
@@ -159,7 +169,7 @@ public class BooksListModel extends AbstractListModel
     {
         books = new ArrayList();
         books.addAll(bookList.getBooks(filter));
-        Collections.sort(books);
+        Collections.sort(books, comparator);
     }
 
     /**
@@ -237,6 +247,11 @@ public class BooksListModel extends AbstractListModel
      * trying to create a JList based on this class.
      */
     protected List books;
+
+    /**
+     * The sort algorithm to use.
+     */
+    protected Comparator comparator;
 
     /**
      * The log stream
