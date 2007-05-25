@@ -126,7 +126,7 @@ public class Model
         for (Iterator it = list.iterator(); it.hasNext();)
         {
             Book book = (Book) it.next();
-            buffer.append(book.getFullName());
+            buffer.append(book.getName());
             
             if (it.hasNext())
             {

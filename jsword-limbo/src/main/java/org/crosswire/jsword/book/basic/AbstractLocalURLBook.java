@@ -41,7 +41,7 @@ public abstract class AbstractLocalURLBook
         try
         {
             Properties wprop = new Properties();
-            wprop.put("Version", getFullName());
+            wprop.put("Version", getName());
 
             URL prop_url = NetUtil.lengthenURL(getURL(), "bible.properties");
             OutputStream prop_out = NetUtil.getOutputStream(prop_url);

@@ -137,7 +137,7 @@ public class BookListCellRenderer extends JLabel implements ListCellRenderer
             }
             else
             {
-                String displayName = book.toString();
+                String displayName = book.getName();
                 setText(displayName);
                 setToolTipText(displayName);
             }
