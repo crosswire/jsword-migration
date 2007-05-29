@@ -61,7 +61,7 @@ import org.crosswire.jsword.util.Project;
  * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
- * @author DM Smith [dmsmith555 at gmail dot com]
+ * @author DM Smith [dmsmith555 at yahoo dot com]
  */
 public class DesktopActions implements Actionable
 {

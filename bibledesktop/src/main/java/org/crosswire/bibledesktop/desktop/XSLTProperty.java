@@ -31,7 +31,7 @@ import org.crosswire.common.xml.TransformingSAXEventProvider;
  * 
  * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
- * @author DM Smith [ dmsmith555 at hotmail dot com]
+ * @author DM Smith [ dmsmith555 at yahoo dot com]
  */
 public final class XSLTProperty implements Serializable
 {
