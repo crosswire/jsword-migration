@@ -19,12 +19,10 @@
  *
  * ID: $Id$
  */
-package org.crosswire.bibledesktop.display.proxy;
+package org.crosswire.bibledesktop.display;
 
 import java.awt.Component;
 
-import org.crosswire.bibledesktop.display.BookDataDisplay;
-import org.crosswire.bibledesktop.display.URIEventListener;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 

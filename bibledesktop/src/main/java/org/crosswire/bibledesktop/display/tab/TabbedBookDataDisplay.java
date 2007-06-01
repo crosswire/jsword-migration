@@ -38,8 +38,8 @@ import javax.swing.event.ChangeListener;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
+import org.crosswire.bibledesktop.display.ScrolledBookDataDisplay;
 import org.crosswire.bibledesktop.display.URIEventListener;
-import org.crosswire.bibledesktop.display.scrolled.ScrolledBookDataDisplay;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;

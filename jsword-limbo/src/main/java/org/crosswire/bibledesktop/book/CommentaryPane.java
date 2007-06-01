@@ -33,8 +33,8 @@ import javax.swing.JPanel;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
+import org.crosswire.bibledesktop.display.ScrolledBookDataDisplay;
 import org.crosswire.bibledesktop.display.URIEventListener;
-import org.crosswire.bibledesktop.display.scrolled.ScrolledBookDataDisplay;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;

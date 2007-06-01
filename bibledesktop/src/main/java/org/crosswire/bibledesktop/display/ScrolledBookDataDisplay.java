@@ -19,15 +19,13 @@
  *
  * ID: $Id$
  */
-package org.crosswire.bibledesktop.display.scrolled;
+package org.crosswire.bibledesktop.display;
 
 import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.JScrollPane;
 
-import org.crosswire.bibledesktop.display.BookDataDisplay;
-import org.crosswire.bibledesktop.display.proxy.ProxyBookDataDisplay;
 import org.crosswire.common.swing.CWScrollPane;
 
 /**
