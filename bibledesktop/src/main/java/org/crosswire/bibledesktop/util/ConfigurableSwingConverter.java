@@ -33,7 +33,7 @@ import org.crosswire.common.util.FileUtil;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.common.util.StringUtil;
-import org.crosswire.common.util.URLFilter;
+import org.crosswire.common.util.URIFilter;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
 import org.crosswire.common.xml.TransformingSAXEventProvider;
@@ -146,7 +146,7 @@ public class ConfigurableSwingConverter implements Converter
     /**
      *
      */
-    static final class XSLTFilter implements URLFilter
+    static final class XSLTFilter implements URIFilter
     {
         /* (non-Javadoc)
          * @see org.crosswire.common.util.URLFilter#accept(java.lang.String)

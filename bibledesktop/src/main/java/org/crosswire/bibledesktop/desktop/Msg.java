@@ -43,7 +43,7 @@ public final class Msg extends MsgBase
     // Auto save of config failed
     static final Msg CONFIG_SAVE_FAILED = new Msg("Desktop.ConfigSaveFailed"); //$NON-NLS-1$
 
-    // Strings for hyperlink urls
+    // Strings for hyperlink URIs
     static final Msg UNKNOWN_PROTOCOL = new Msg("Desktop.UnknownProtocol"); //$NON-NLS-1$
 
     // Strings for the startup job
