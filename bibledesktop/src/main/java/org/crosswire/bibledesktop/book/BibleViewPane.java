@@ -37,7 +37,7 @@ import javax.swing.event.EventListenerList;
 import javax.swing.filechooser.FileFilter;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
-import org.crosswire.bibledesktop.display.splitlist.SplitBookDataDisplay;
+import org.crosswire.bibledesktop.display.basic.SplitBookDataDisplay;
 import org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay;
 import org.crosswire.bibledesktop.passage.KeySidebar;
 import org.crosswire.common.swing.desktop.Clearable;

@@ -19,7 +19,7 @@
  *
  * ID: $Id$
  */
-package org.crosswire.bibledesktop.display.splitlist;
+package org.crosswire.bibledesktop.display.basic;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
