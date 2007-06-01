@@ -94,8 +94,8 @@ public final class ConfigEditorFactory
 
     /**
      * Create a dialog to house a TreeConfig component using the default set of
-     * Fields, with the default accept action of config.localToAppliation and
-     * config,localToPermanentURL
+     * Fields, with the default accept action of config.localToApplication and
+     * config,localToPermanent
      * 
      * @param config The set of Choices to display
      * @param parent A component to use to find a frame to use as a dialog
@@ -103,18 +103,18 @@ public final class ConfigEditorFactory
      */
     public static void showDialog(Config config, Component parent, URI uri)
     {
-        showDialog(config, parent, new URLActionListener(config, uri));
+        showDialog(config, parent, new URIActionListener(config, uri));
     }
 
     /**
      * A quick class to save a config to a uri
      */
-    static class URLActionListener implements ActionListener
+    static class URIActionListener implements ActionListener
     {
         /**
-         * To save to a URL
+         * To save to a URI
          */
-        public URLActionListener(Config config, URI uri)
+        public URIActionListener(Config config, URI uri)
         {
             this.config = config;
             this.uri = uri;
@@ -137,12 +137,12 @@ public final class ConfigEditorFactory
         }
 
         /**
-         * The URL to save to if needed
+         * The config to save if needed
          */
         private Config config;
 
         /**
-         * The URL to save to if needed
+         * The URI to save to if needed
          */
         private URI uri;
     }
