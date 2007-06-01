@@ -96,6 +96,24 @@ public class Translations
         Translations.translation = lang;
     }
 
+    /**
+     * Set the locale for the program to the one the user has selected.
+     * But don't set it to the default translation, so that the user's
+     * actual locale, is used for Bible book names.
+     * 
+     * This only makes sense after config has called setCurrentTranslation.
+     */
+    public static void setLocale()
+    {
+        if (!translation.equals(Translations.DEFAULT_TRANSLATION))
+        {
+            Locale.setDefault(Translations.getCurrentLocale());
+        }
+    }
+
+    /**
+     * Register this class with the common config engine.
+     */
     public static void register()
     {
         ChoiceFactory.getDataMap().put(TRANSLATION_KEY, getSupportedTranslations());
@@ -109,7 +127,7 @@ public class Translations
     /**
      * The default translation, if the user has not chosen anything else.
      */
-    private static final String DEFAULT_TRANSLATION = "en"; //$NON-NLS-1$
+    public static final String DEFAULT_TRANSLATION = "en"; //$NON-NLS-1$
 
     /**
      * The language that BibleDesktop should use.

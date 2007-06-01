@@ -146,37 +146,14 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
      */
     public Desktop()
     {
-        // Allow the setting of user.language and user.country to influence the default locale
-//        String language = System.getProperty("user.language"); //$NON-NLS-1$
-//        String locale = null;
-//        if (language != null)
-//        {
-//            locale = language;
-//        }
-
-//        LATER(DMS): support country based locales
-//        String country = System.getProperty("user.country"); //$NON-NLS-1$
-//        if (country != null)
-//        {
-//            if (locale != null)
-//            {
-//                locale += '_';
-//            }
-//            locale += country;
-//        }
-
-//        if (locale != null && !"en".equals(locale)) //$NON-NLS-1$
-//        {
-//            Locale.setDefault(new Locale(locale));
-//        }
-
         // Load the configuration.
-        // This has to be done before any gui components are created.
-        // (Including the splash)
+        // This has to be done before any gui components are created
+        // (Including the splash) and before setting the locale.
         // This includes code that is invoked by it.
         generateConfig();
 
-        Locale.setDefault(Translations.getCurrentLocale());
+        // Now set the locale to the one the user chose, if any.
+        Translations.setLocale();
 
         // Make this be the root frame of optiondialogs
         JOptionPane.setRootFrame(this);
