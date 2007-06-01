@@ -141,7 +141,7 @@
   </option>
 
   <option key="BibleDisplay.VersesPerTab" type="number">
-    <introspect class="org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay" property="PageSize"/>
+    <introspect class="org.crosswire.bibledesktop.display.basic.TabbedBookDataDisplay" property="PageSize"/>
   </option>
 
   <option key="BibleDisplay.RankedVerses" type="number">

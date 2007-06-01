@@ -37,7 +37,7 @@ import org.crosswire.bibledesktop.book.BibleViewPane;
 import org.crosswire.bibledesktop.book.install.SitesPane;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.basic.SplitBookDataDisplay;
-import org.crosswire.bibledesktop.display.tab.TabbedBookDataDisplay;
+import org.crosswire.bibledesktop.display.basic.TabbedBookDataDisplay;
 import org.crosswire.common.config.swing.ConfigEditorFactory;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.Actionable;

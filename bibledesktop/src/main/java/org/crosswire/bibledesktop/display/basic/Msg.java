@@ -36,6 +36,9 @@ final class Msg extends MsgBase
     // Strings for hyperlink urls
     static final Msg BAD_PROTOCOL_URL = new Msg("TextPaneBookDataDisplay.BadProtocolUrl"); //$NON-NLS-1$
 
+    // Used when there are more tabs to show.
+    static final Msg MORE = new Msg("MORE"); //$NON-NLS-1$
+
 
     /**
      * Passthrough ctor
