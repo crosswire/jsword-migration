@@ -38,27 +38,27 @@ public class Openness implements Serializable
     /**
      * If the data of unknown distribution status
      */
-    public static final Openness UNKNOWN = new Openness(Msg.OPEN_UNKNOWN);
+    public static final Openness UNKNOWN = new Openness(LimboMsg.OPEN_UNKNOWN);
 
     /**
      * If the data free of copyright restrictions
      */
-    public static final Openness PD = new Openness(Msg.OPEN_PD);
+    public static final Openness PD = new Openness(LimboMsg.OPEN_PD);
 
     /**
      * Does the data have a license that permits free use
      */
-    public static final Openness FREE = new Openness(Msg.OPEN_FREE);
+    public static final Openness FREE = new Openness(LimboMsg.OPEN_FREE);
 
     /**
      * Is the data freely redistributable
      */
-    public static final Openness COPYABLE = new Openness(Msg.OPEN_COPYABLE);
+    public static final Openness COPYABLE = new Openness(LimboMsg.OPEN_COPYABLE);
 
     /**
      * Is the data sold for commercial profit
      */
-    public static final Openness COMMERCIAL = new Openness(Msg.OPEN_COMMERCIAL);
+    public static final Openness COMMERCIAL = new Openness(LimboMsg.OPEN_COMMERCIAL);
 
     /**
      * Prevent anyone else from doing this

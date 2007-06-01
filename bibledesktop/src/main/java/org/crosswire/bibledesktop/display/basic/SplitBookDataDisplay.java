@@ -17,7 +17,7 @@
  * Copyright: 2005
  *     The copyright to this program is held by it's authors.
  *
- * ID: $Id$
+ * ID: $Id:SplitBookDataDisplay.java 1369 2007-06-01 13:35:27Z dmsmith $
  */
 package org.crosswire.bibledesktop.display.basic;
 

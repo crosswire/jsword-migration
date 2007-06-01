@@ -17,7 +17,7 @@
  * Copyright: 2005
  *     The copyright to this program is held by it's authors.
  *
- * ID: $Id$
+ * ID: $Id:KeyTreeModel.java 1253 2007-03-16 21:16:26Z dmsmith $
  */
 package org.crosswire.bibledesktop.passage;
 

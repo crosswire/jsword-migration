@@ -58,7 +58,7 @@ public class Strongs
                 // It's a Greek or Hebrew number
                 if (desc.charAt(desc.length() - 1) != '>')
                 {
-                    throw new BookException(Msg.STRONGS_ERROR_PARSE, new Object[] { desc });
+                    throw new BookException(LimboMsg.STRONGS_ERROR_PARSE, new Object[] { desc });
                 }
 
                 if (desc.charAt(1) == '0')
@@ -75,17 +75,17 @@ public class Strongs
                 // It's a parsing number
                 if (desc.charAt(desc.length() - 1) != ')')
                 {
-                    throw new BookException(Msg.STRONGS_ERROR_PARSE, new Object[] { desc });
+                    throw new BookException(LimboMsg.STRONGS_ERROR_PARSE, new Object[] { desc });
                 }
 
                 set(PARSING, Integer.parseInt(desc.substring(1, desc.length() - 1)));
             }
 
-            throw new BookException(Msg.STRONGS_ERROR_PARSE, new Object[] { desc });
+            throw new BookException(LimboMsg.STRONGS_ERROR_PARSE, new Object[] { desc });
         }
         catch (NumberFormatException ex)
         {
-            throw new BookException(Msg.STRONGS_ERROR_NUMBER, new Object[] { desc });
+            throw new BookException(LimboMsg.STRONGS_ERROR_NUMBER, new Object[] { desc });
         }
     }
 
@@ -165,11 +165,11 @@ public class Strongs
         switch (type)
         {
         case GREEK:
-            return Msg.STRONGS_GREEK.toString() + number;
+            return LimboMsg.STRONGS_GREEK.toString() + number;
         case HEBREW:
-            return Msg.STRONGS_HEBREW.toString() + number;
+            return LimboMsg.STRONGS_HEBREW.toString() + number;
         case PARSING:
-            return Msg.STRONGS_PARSING.toString() + number;
+            return LimboMsg.STRONGS_PARSING.toString() + number;
         default:
             assert false : type;
             return "!Error!"; //$NON-NLS-1$
@@ -247,14 +247,14 @@ public class Strongs
         case HEBREW:
             if (number > HEBREW_MAX || number < 1)
             {
-                throw new BookException(Msg.STRONGS_ERROR_HEBREW, new Object[] { new Integer(HEBREW_MAX), new Integer(number) });
+                throw new BookException(LimboMsg.STRONGS_ERROR_HEBREW, new Object[] { new Integer(HEBREW_MAX), new Integer(number) });
             }
             break;
 
         case GREEK:
             if (number > GREEK_MAX || number < 1)
             {
-                throw new BookException(Msg.STRONGS_ERROR_GREEK, new Object[] { new Integer(GREEK_MAX), new Integer(number) });
+                throw new BookException(LimboMsg.STRONGS_ERROR_GREEK, new Object[] { new Integer(GREEK_MAX), new Integer(number) });
             }
             // We have not checked for 1418, 2717, 3203-3302, 4452 which do not appear to
             // but legal numbers for Greek words. Should we do this?
@@ -263,14 +263,14 @@ public class Strongs
         case PARSING:
             if (number < 1)
             {
-                throw new BookException(Msg.STRONGS_ERROR_PARSING, new Object[] { new Integer(number) });
+                throw new BookException(LimboMsg.STRONGS_ERROR_PARSING, new Object[] { new Integer(number) });
             }
             // The correct range seems to be: 0, 5625-5773, 8675-8809, but not 5626, 5653, 5687, 5767, 8679
             // I'm not sure if this is 100% correct so I'll not check it at the mo.
             break;
 
         default:
-            throw new BookException(Msg.STRONGS_ERROR_TYPE, new Object[] { new Integer(number) });
+            throw new BookException(LimboMsg.STRONGS_ERROR_TYPE, new Object[] { new Integer(number) });
         }
     }
 
