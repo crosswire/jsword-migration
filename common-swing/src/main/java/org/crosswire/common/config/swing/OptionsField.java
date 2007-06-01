@@ -136,7 +136,12 @@ public class OptionsField implements Field
             }
         }
 
-        log.warn("Checked for options without finding: '" + value + "'. Defaulting to first option: " + combo.getSelectedItem());  //$NON-NLS-1$//$NON-NLS-2$
+        // Equate null and empty string
+        Object selected = combo.getSelectedItem();
+        if (value.length() > 0 && selected != null)
+        {
+            log.warn("Checked for options without finding: '" + value + "'. Defaulting to first option: " + selected);  //$NON-NLS-1$//$NON-NLS-2$
+        }
     }
 
     /**
