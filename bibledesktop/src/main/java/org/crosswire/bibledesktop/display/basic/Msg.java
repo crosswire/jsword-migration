@@ -19,7 +19,7 @@
  *
  * ID: $Id$
  */
-package org.crosswire.bibledesktop.display.textpane;
+package org.crosswire.bibledesktop.display.basic;
 
 import org.crosswire.common.util.MsgBase;
 
