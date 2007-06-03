@@ -104,7 +104,7 @@ public class BookVerseColor implements VerseColor
     {
         try
         {
-            return "Book - "+BibleInfo.getLongBookName(book);
+            return "Book - "+BibleInfo.getBookName(book);
         }
         catch (NoSuchVerseException ex)
         {

@@ -118,7 +118,7 @@ public class BibleComboBoxModelSet
             Verse oldverse = verse;
             verse = newverse;
             int bookval = newverse.getBook();
-            String book = BibleInfo.getLongBookName(bookval);
+            String book = BibleInfo.getBookName(bookval);
             if (oldverse.getBook() != bookval || !cboBook.getSelectedItem().equals(book))
             {
                 cboBook.setSelectedItem(book);

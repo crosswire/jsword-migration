@@ -51,7 +51,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
         case LEVEL_BOOK:
             try
             {
-                selected = BibleInfo.getLongBookName(set.getVerse().getBook());
+                selected = BibleInfo.getBookName(set.getVerse().getBook());
             }
             catch (NoSuchVerseException ex)
             {
@@ -153,7 +153,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
             switch (level)
             {
             case LEVEL_BOOK:
-                return BibleInfo.getLongBookName(index + 1);
+                return BibleInfo.getBookName(index + 1);
 
             default:
                 return new Integer(index + 1);
