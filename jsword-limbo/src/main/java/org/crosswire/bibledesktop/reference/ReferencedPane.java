@@ -131,11 +131,19 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#clearBookData()
      */
-    public void setBookData(Book book, Key key)
+    public void clearBookData()
     {
-        throw new UnsupportedOperationException(); 
+        setBookData(null, null);        
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book[], org.crosswire.jsword.passage.Key)
+     */
+    public void setBookData(Book[] books, Key key)
+    {
+        throw new UnsupportedOperationException();
     }
 
     /* (non-Javadoc)
@@ -178,11 +186,11 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBook()
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBooks()
      */
-    public Book getBook()
+    public Book[] getBooks()
     {
-        return book;
+        return new Book[] {book};
     }
 
     /* (non-Javadoc)
@@ -282,7 +290,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
             Key key = getKey();
             if (key != null)
             {
-                txtDisplay.setBookData(book, key);
+                txtDisplay.setBookData(new Book[] {book}, key);
             }
         }
         catch (Exception ex)

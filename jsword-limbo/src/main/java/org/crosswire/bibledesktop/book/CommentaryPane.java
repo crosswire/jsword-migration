@@ -130,7 +130,7 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
         try
         {
             Verse verse = set.getVerse();
-            display.setBookData(book, verse);
+            display.setBookData(new Book[] {book}, verse);
         }
         catch (Exception ex)
         {
@@ -155,18 +155,32 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBook()
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBooks()
      */
-    public Book getBook()
+    public Book[] getBooks()
     {
-        return (Book) cboComments.getSelectedItem();
+        return new Book[] {(Book) cboComments.getSelectedItem()};
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#clearBookData()
      */
-    public void setBookData(Book book, Key key)
+    public void clearBookData()
     {
+        setBookData(null, null);        
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book[], org.crosswire.jsword.passage.Key)
+     */
+    public void setBookData(Book[] books, Key key)
+    {
+        Book book = null;
+        if (books != null && books.length > 0)
+        {
+            book = books[0];
+        }
+
         cboComments.setSelectedItem(book);
 
         setKey(key);

@@ -69,7 +69,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
     {
         listeners = new EventListenerList();
         pnlSelect = new DisplaySelectPane();
-        KeySidebar sidebar = new KeySidebar(pnlSelect.getBook());
+        KeySidebar sidebar = new KeySidebar(pnlSelect.getBooks());
         BookDataDisplay display = new TabbedBookDataDisplay();
         pnlPassg = new SplitBookDataDisplay(sidebar, display);
         pnlPassg.showSidebar(showSidebar);
@@ -104,7 +104,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
              */
             public void bookChosen(DisplaySelectEvent ev)
             {
-                pnlPassg.setBookData(ev.getBook(), ev.getKey());
+                pnlPassg.setBookData(ev.getBooks(), ev.getKey());
             }
         });
 
@@ -299,11 +299,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
      */
     public final void setKey(Key key)
     {
-        pnlPassg.setBookData(pnlSelect.getBook(), key);
-//        if (saved == null)
-//        {
-//            fireTitleChanged(new TitleChangedEvent(BibleViewPane.this, getTitle()));
-//        }
+        pnlPassg.setBookData(pnlSelect.getBooks(), key);
     }
 
     /**

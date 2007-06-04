@@ -43,7 +43,7 @@ import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.versification.BibleInfo;
 
 /**
- * A cache of BibleData that can be shared amongst Bibles.
+ * A cache of BookData that can be shared amongst Books.
  * 
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.

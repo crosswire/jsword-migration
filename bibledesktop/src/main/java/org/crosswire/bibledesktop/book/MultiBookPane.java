@@ -122,9 +122,17 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#clearBookData()
      */
-    public void setBookData(Book book, Key key)
+    public void clearBookData()
+    {
+        setBookData(null, null);        
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book[], org.crosswire.jsword.passage.Key)
+     */
+    public void setBookData(Book[] books, Key key)
     {
         throw new UnsupportedOperationException();
     }
@@ -178,11 +186,11 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBook()
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBooks()
      */
-    public Book getBook()
+    public Book[] getBooks()
     {
-        return book;
+        return new Book[] {book};
     }
 
     /**
@@ -378,7 +386,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
             }
         }
         // Make sure that the display is emtpy.
-        display.setBookData(null, null);
+        display.clearBookData();
 
         Object selected = bookList.getSelectedValue();
         if (selected != null)
@@ -440,7 +448,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
         }
 
         Verse verse = set.getVerse();
-        display.setBookData(selectedBook, verse);
+        display.setBookData(new Book[] {selectedBook}, verse);
     }
 
     /**
@@ -451,7 +459,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
         Key key = (Key) dictionaryKeyList.getSelectedValue();
         if (key != null)
         {
-            display.setBookData(book, key);
+            display.setBookData(new Book[] {book}, key);
         }
     }
 
@@ -467,7 +475,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
             KeyTreeNode node = (KeyTreeNode) path.getLastPathComponent();
             if (node != null)
             {
-                display.setBookData(book, node.getKey());
+                display.setBookData(new Book[] {book}, node.getKey());
             }
         }
 

@@ -59,9 +59,9 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     /**
      * Initialize the SplitBookDataDisplay
      */
-    public KeySidebar(Book book)
+    public KeySidebar(Book[] books)
     {
-        this.book = book;
+        this.books = books;
         init();
         setActive();
     }
@@ -264,7 +264,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
 
         if (selected.length > 0)
         {
-            partial = book.createEmptyKeyList();
+            partial = books[0].createEmptyKeyList();
 
             for (int i = 0; i < selected.length; i++)
             {
@@ -309,7 +309,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
      */
     public void bookChosen(DisplaySelectEvent ev)
     {
-        book = ev.getBook();
+        books = ev.getBooks();
     }
 
     /* (non-Javadoc)
@@ -384,9 +384,9 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     private Key partial;
 
     /**
-     * The book who's keys we are looking at
+     * The books who's keys we are looking at
      */
-    private transient Book book;
+    private transient Book[] books;
 
     /**
      * The listener for KeyChangeEvents

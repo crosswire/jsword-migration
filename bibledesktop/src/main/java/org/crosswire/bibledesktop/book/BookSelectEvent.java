@@ -14,7 +14,7 @@
  *      59 Temple Place - Suite 330
  *      Boston, MA 02111-1307, USA
  *
- * Copyright: 2005
+ * Copyright: 2007
  *     The copyright to this program is held by it's authors.
  *
  * ID: $Id$
@@ -24,38 +24,25 @@ package org.crosswire.bibledesktop.book;
 import java.util.EventObject;
 
 import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.passage.Key;
 
 /**
- * A DisplaySelectEvent happens whenever a user makes a command.
+ * A BookSelectEvent happens whenever a user selects a book.
  * 
  * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
- * @author Joe Walker [joe at eireneh dot com]
+ * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class DisplaySelectEvent extends EventObject
+public class BookSelectEvent extends EventObject
 {
     /**
      * For when a command has been made
      * @param source The thing that started this off
-     * @param key The selected Key
-     * @param book The selected book
+     * @param books The selected books
      */
-    public DisplaySelectEvent(Object source, Key key, Book[] books)
+    public BookSelectEvent(Object source, Book[] books)
     {
         super(source);
-
-        this.key = key;
         this.books = books;
-    }
-
-    /**
-     * Get the type of command
-     * @return The type of command
-     */
-    public Key getKey()
-    {
-        return key;
     }
 
     /**
@@ -68,17 +55,12 @@ public class DisplaySelectEvent extends EventObject
     }
 
     /**
-     * The new passage
-     */
-    private Key key;
-
-    /**
-     * The new Book
+     * The new list of Books
      */
     private transient Book[] books;
 
     /**
      * Serialization ID
      */
-    private static final long serialVersionUID = 3689068456540910136L;
+    private static final long serialVersionUID = 6018474028417993389L;
 }

@@ -87,12 +87,20 @@ public class ProxyBookDataDisplay implements BookDataDisplay
         return proxy.getComponent();
     }
 
-    /*
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(Book, Key)
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#clearBookData()
      */
-    public void setBookData(Book book, Key key)
+    public void clearBookData()
     {
-        proxy.setBookData(book, key);
+        setBookData(null, null);        
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book[], org.crosswire.jsword.passage.Key)
+     */
+    public void setBookData(Book[] books, Key key)
+    {
+        proxy.setBookData(books, key);
     }
 
     /* (non-Javadoc)
@@ -121,11 +129,11 @@ public class ProxyBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBook()
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBooks()
      */
-    public Book getBook()
+    public Book[] getBooks()
     {
-        return getProxy().getBook();
+        return getProxy().getBooks();
     }
 
     /**

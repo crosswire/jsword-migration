@@ -56,11 +56,24 @@ public class JDTBBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#clearBookData()
      */
-    public void setBookData(Book book, Key key)
+    public void clearBookData()
     {
-        this.book = book;
+        setBookData(null, null);        
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book[], org.crosswire.jsword.passage.Key)
+     */
+    public void setBookData(Book[] books, Key key)
+    {
+        this.book = null;
+        if (books != null && books.length > 0)
+        {
+            this.book = books[0];
+        }
+
         this.key = key;
 
         refresh();
@@ -148,25 +161,20 @@ public class JDTBBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBook()
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBooks()
      */
-    public Book getBook()
+    public Book[] getBooks()
     {
-        return book;
+        return new Book[] {book};
     }
 
     /**
      * The current book
      */
-    private Book book = null;
+    private Book book;
 
     /**
      * The current key
      */
-    private Key key =  null;
-
-    /**
-     * The display component
-     */
-//    private WebBrowser txtView;
+    private Key key;
 }

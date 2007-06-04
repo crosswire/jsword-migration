@@ -95,12 +95,12 @@ public class SplitBookDataDisplay extends JPanel
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
      */
-    public void setBookData(Book book, Key key)
+    public void setBookData(Book[] books, Key key)
     {
         boolean keyChanged = this.key == null || !this.key.equals(key);
-        boolean bookChanged = this.book == null || !this.book.equals(book);
+        boolean bookChanged = this.books == null || !this.books.equals(books);
 
-        this.book = book;
+        this.books = books;
         this.key = key;
 
         // Only set the passage if it has changed
@@ -114,9 +114,9 @@ public class SplitBookDataDisplay extends JPanel
         {
             if (bookChanged)
             {
-                log.debug("new bible chosen: " + book); //$NON-NLS-1$
+                log.debug("new bible chosen: " + books); //$NON-NLS-1$
             }
-            child.setBookData(book, key);
+            child.setBookData(books, key);
         }
     }
 
@@ -156,9 +156,9 @@ public class SplitBookDataDisplay extends JPanel
     /**
      * @return the book
      */
-    public Book getBook()
+    public Book[] getBooks()
     {
-        return book;
+        return books;
     }
 
     /**
@@ -229,9 +229,9 @@ public class SplitBookDataDisplay extends JPanel
     private transient List keyChangeListeners;
 
     /**
-     * What book are we currently viewing?
+     * What books are we currently viewing?
      */
-    private transient Book book;
+    private transient Book[] books;
 
     /**
      * The log stream

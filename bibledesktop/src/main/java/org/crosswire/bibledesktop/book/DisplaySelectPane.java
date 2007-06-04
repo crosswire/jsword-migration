@@ -26,10 +26,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -37,7 +33,6 @@ import java.io.ObjectInputStream;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -75,7 +70,7 @@ import org.crosswire.jsword.passage.RocketPassage;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class DisplaySelectPane extends JPanel implements KeyChangeListener
+public class DisplaySelectPane extends JPanel implements KeyChangeListener, BookSelectListener
 {
     /**
      * General constructor
@@ -107,15 +102,13 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         };
 
         // search() and version() rely on this returning only Books indexed by verses
-        mdlBible = new BooksComboBoxModel(BookFilters.getBibles(), BookComparators.getInitialComparator());
-        JComboBox cboBible = new JComboBox(mdlBible);
-        cboBible.setPrototypeDisplayValue(" "); //$NON-NLS-1$
-        selected = mdlBible.getSelectedBook();
-        if (selected != null)
+        ParallelBookPicker picker = new ParallelBookPicker(BookFilters.getBibles(), BookComparators.getInitialComparator());
+        picker.addBookListener(this);
+        selected = picker.getBooks();
+        if (selected.length > 0)
         {
-            selected.addIndexStatusListener(isl);
-            cboBible.setToolTipText(selected.toString());
-            key = selected.createEmptyKeyList();
+            selected[0].addIndexStatusListener(isl);
+            key = selected[0].createEmptyKeyList();
         }
         else
         {
@@ -124,31 +117,9 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
             // But here we don't have a book yet.
             key = new RocketPassage();
         }
-        cboBible.setRenderer(new BookListCellRenderer(true));
-        cboBible.addItemListener(new ItemListener()
-        {
-            /* (non-Javadoc)
-             * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
-             */
-            public void itemStateChanged(ItemEvent ev)
-            {
-                if (ev.getStateChange() == ItemEvent.SELECTED)
-                {
-                    changeVersion();
-                    JComboBox combo = (JComboBox) ev.getSource();
-                    combo.setToolTipText(combo.getSelectedItem().toString());
-                }
-            }
-        });
-        cboBible.addActionListener(new SelectedActionListener());
-        JLabel lblBible = actions.createJLabel(BIBLE);
-        lblBible.setLabelFor(cboBible);
 
-        /* LATER(JOE):
-        JButton btnMenu = new JButton();
-        btnMenu.setIcon(ICON_MENU);
-        btnMenu.setBorderPainted(false);
-        */
+        JLabel lblBible = actions.createJLabel(BIBLE);
+        lblBible.setLabelFor(picker);
 
         JLabel lblKey = actions.createJLabel(VIEW_LABEL);
         txtKey = new JTextField();
@@ -192,7 +163,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
         this.setLayout(new GridBagLayout());
         this.add(lblBible,    new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));
-        this.add(cboBible,    new GridBagConstraints(2, 0, 4, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(picker,      new GridBagConstraints(2, 0, 4, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         this.add(lblKey,      new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));
         this.add(txtKey,      new GridBagConstraints(2, 1, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 0, 1, 2), 0, 0));
@@ -210,9 +181,9 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     }
 
     /**
-     * What is the currently selected Book?
+     * What are the currently selected Books?
      */
-    public Book getBook()
+    public Book[] getBooks()
     {
         return selected;
     }
@@ -222,7 +193,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
      */
     public void clear()
     {
-        setKey(selected == null ? new RocketPassage() : selected.createEmptyKeyList());
+        setKey(selected.length == 0 ? new RocketPassage() : selected[0].createEmptyKeyList());
         setTitle(CLEAR);
     }
 
@@ -295,7 +266,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
             DefaultSearchModifier modifier = new DefaultSearchModifier();
             modifier.setRanked(rank);
 
-            Key results = selected.find(new DefaultSearchRequest(param, modifier));
+            Key results = selected[0].find(new DefaultSearchRequest(param, modifier));
             int total = results.getCardinality();
             int partial = total;
 
@@ -378,7 +349,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
             return;
         }
 
-        IndexResolver.scheduleIndex(selected, this);
+        IndexResolver.scheduleIndex(selected[0], this);
         enableComponents();
     }
 
@@ -414,7 +385,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
         try
         {
-            setKey(selected.getKey(newKey));
+            setKey(selected[0].getKey(newKey));
         }
         catch (NoSuchKeyException e)
         {
@@ -428,7 +399,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         {
             if (!key.isEmpty())
             {
-                key = selected.createEmptyKeyList();
+                key = selected[0].createEmptyKeyList();
                 txtKey.setText(""); //$NON-NLS-1$
                 txtSearch.setText(""); //$NON-NLS-1$
 
@@ -450,28 +421,6 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         }
     }
 
-    /**
-     * Sets the default name
-     */
-//    public void setTitle(String title)
-//    {
-//        this.title = title;
-//    }
-
-//    /**
-//     * Sets the default name
-//     */
-//    public void setText(String text)
-//    {
-//        String currentText = txtKey.getText();
-//        if (!currentText.equals(text))
-//        {
-//            txtKey.setText(text);
-//            setTitle(text);
-//            updateDisplay();
-//        }
-//    }
-//
     /**
      * Gets the number of verses that should be shown when a search result is
      * ranked. A value of 0 means show all.
@@ -523,32 +472,6 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         maxNumRankedVerses = count;
     }
 
-    /**
-     * Someone changed the version combo
-     */
-    public final void changeVersion()
-    {
-        Book newSelected = mdlBible.getSelectedBook();
-
-        if (selected != null && selected != newSelected)
-        {
-            selected.removeIndexStatusListener(isl);
-            newSelected.addIndexStatusListener(isl);
-        }
-
-        selected = newSelected;
-
-        enableComponents();
-
-        if (selected == null)
-        {
-            noBookInstalled();
-            return;
-        }
-
-        fireVersionChanged(new DisplaySelectEvent(this, key, selected));
-    }
-
     private void setTitle(int newMode)
     {
         mode = newMode;
@@ -591,8 +514,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
     /*private*/ final void enableComponents()
     {
         boolean readable = selected != null;
-        boolean searchable = readable && selected.getIndexStatus().equals(IndexStatus.DONE);
-        boolean indexable = readable && selected.getIndexStatus().equals(IndexStatus.UNDONE);
+        boolean searchable = readable && selected[0].getIndexStatus().equals(IndexStatus.DONE);
+        boolean indexable = readable && selected[0].getIndexStatus().equals(IndexStatus.UNDONE);
 
         txtSearch.setEnabled(searchable);
         txtSearch.setBackground(searchable ? SystemColor.text : SystemColor.control);
@@ -623,6 +546,35 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
             txtKey.setText(passg);
             doPassageAction();
         }
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.book.BookSelectListener#booksChosen(org.crosswire.bibledesktop.book.BookSelectEvent)
+     */
+    public void booksChosen(BookSelectEvent ev)
+    {
+        Book[] books = ev.getBooks();
+        assert books.length > 0;
+
+        Book newSelected = books[0];
+
+        if (selected.length > 0 && selected[0] != newSelected)
+        {
+            selected[0].removeIndexStatusListener(isl);
+            newSelected.addIndexStatusListener(isl);
+        }
+
+        selected = books;
+
+        enableComponents();
+
+        if (selected == null)
+        {
+            noBookInstalled();
+            return;
+        }
+
+        fireVersionChanged(new DisplaySelectEvent(this, key, selected));
     }
 
     /* (non-Javadoc)
@@ -749,24 +701,6 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
         is.defaultReadObject();
     }
 
-    /**
-     *
-     */
-    static final class SelectedActionListener implements ActionListener
-    {
-        /* (non-Javadoc)
-         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-         */
-        public void actionPerformed(ActionEvent e)
-        {
-            JComboBox cbo = (JComboBox) e.getSource();
-            if (cbo.getSelectedIndex() == -1 && cbo.getItemCount() > 0)
-            {
-                cbo.setSelectedIndex(0);
-            }
-        }
-    }
-
     // For the Passage card
     private static final String VIEW_LABEL = "ViewLabel"; //$NON-NLS-1$
     private static final String PASSAGE_FIELD = "PassageAction"; //$NON-NLS-1$
@@ -798,12 +732,11 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener
 
     private transient ActionFactory actions;
 
-    private transient Book selected;
+    private transient Book[] selected;
 
     /*
      * GUI Components
      */
-    private BooksComboBoxModel mdlBible;
     private PassageSelectionPane dlgSelect;
     private JTextField txtKey;
     private JTextField txtSearch;

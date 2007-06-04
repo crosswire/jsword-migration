@@ -394,9 +394,9 @@ public class DesktopActions implements Actionable
             return;
         }
 
-        Book book = da.getBook();
+        Book[] books = da.getBooks();
 
-        ViewSourcePane viewer = new ViewSourcePane(book, key);
+        ViewSourcePane viewer = new ViewSourcePane(books[0], key);
         viewer.showInFrame(getDesktop());
     }
 

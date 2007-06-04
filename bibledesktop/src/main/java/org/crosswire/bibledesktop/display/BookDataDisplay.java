@@ -58,15 +58,20 @@ public interface BookDataDisplay
     Component getComponent();
 
     /**
+     * Clear any BookData that is displayed.
+     */
+    void clearBookData();
+
+    /**
      * Set the BookData to be displayed.
      * The data to be displayed is specified as a book and key rather than the
      * more obvious BookData (the result of reading a book using a key)
      * since some displays may wish so split up the display and only look up
      * smaller sections at a time.
-     * @param book The Book to read data from
+     * @param books The Books to read data from
      * @param key The key to read from the given book
      */
-    void setBookData(Book book, Key key);
+    void setBookData(Book[] books, Key key);
 
     /**
      * Cause the BookData to be re-displayed.
@@ -81,9 +86,9 @@ public interface BookDataDisplay
     Key getKey();
 
     /**
-     * Accessor for the Book used in the current display, or null if we are not
+     * Accessor for the Books used in the current display, or null if we are not
      * displaying anything.
-     * @return The current book
+     * @return The current books
      */
-    Book getBook();
+    Book[] getBooks();
 }

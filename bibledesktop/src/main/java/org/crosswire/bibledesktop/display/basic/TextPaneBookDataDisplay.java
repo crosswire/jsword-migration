@@ -85,11 +85,19 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#clearBookData()
      */
-    public void setBookData(Book book, Key key)
+    public void clearBookData()
     {
-        this.book = book;
+        setBookData(null, null);        
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book[], org.crosswire.jsword.passage.Key)
+     */
+    public void setBookData(Book[] books, Key key)
+    {
+        this.books = books;
         this.key = key;
 
         refresh();
@@ -100,14 +108,14 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
      */
     public void refresh()
     {
-        if (book == null || key == null)
+        if (books == null || books.length == 0 || books[0] == null || key == null)
         {
             txtView.setText(""); //$NON-NLS-1$
             return;
         }
 
         // Make sure Hebrew displays from Right to Left
-        BookMetaData bmd = book.getBookMetaData();
+        BookMetaData bmd = books[0].getBookMetaData();
         if (bmd == null)
         {
             txtView.setText(""); //$NON-NLS-1$
@@ -119,7 +127,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
 
         try
         {
-            BookData bdata = new BookData(book, key);
+            BookData bdata = new BookData(books, key);
             SAXEventProvider osissep = bdata.getSAXEventProvider();
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
 
@@ -146,7 +154,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
              * It appears that it is a line too long issue.
              */
             /* Apply the fix if the text is too long and we are not Java 1.5 or greater */
-            if (text.length() > 32768 && BookCategory.GENERAL_BOOK.equals(book.getBookCategory()))
+            if (text.length() > 32768 && BookCategory.GENERAL_BOOK.equals(books[0].getBookCategory()))
             {
                 String javaVersion = System.getProperty("java.specification.version"); //$NON-NLS-1$
                 if (javaVersion == null || "1.5".compareTo(javaVersion) > 0) //$NON-NLS-1$
@@ -395,9 +403,9 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBook()
      */
-    public Book getBook()
+    public Book[] getBooks()
     {
-        return book;
+        return books;
     }
 
     // Strings for hyperlinks
@@ -412,9 +420,9 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     protected static final Logger log = Logger.getLogger(TextPaneBookDataDisplay.class);
 
     /**
-     * The current book
+     * The current books
      */
-    private Book book;
+    private Book[] books;
 
     /**
      * The current key

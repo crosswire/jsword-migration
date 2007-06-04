@@ -105,11 +105,19 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#clearBookData()
+     */
+    public void clearBookData()
+    {
+        setBookData(null, null);        
+    }
+
+    /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
      */
-    public void setBookData(Book book, Key newkey)
+    public void setBookData(Book[] books, Key newkey)
     {
-        this.book = book;
+        this.books = books;
         this.key = KeyUtil.getPassage(newkey);
 
         // Tabbed view or not we should clear out the old tabs
@@ -146,7 +154,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
 
             // Create the first tab
             BookDataDisplay pnlNew = createInnerDisplayPane();
-            pnlNew.setBookData(book, first);
+            pnlNew.setBookData(books, first);
 
             Component display = pnlNew.getComponent();
             views.put(display, pnlNew);
@@ -158,7 +166,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         }
         else
         {
-            pnlView.setBookData(book, key);
+            pnlView.setBookData(books, key);
 
             setCenterComponent(pnlView.getComponent());
         }
@@ -194,9 +202,9 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBook()
      */
-    public Book getBook()
+    public Book[] getBooks()
     {
-        return book;
+        return books;
     }
 
     /* (non-Javadoc)
@@ -297,7 +305,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
 
         // Create a new tab
         BookDataDisplay pnlNew = createInnerDisplayPane();
-        pnlNew.setBookData(book, next);
+        pnlNew.setBookData(books, next);
 
         Component display = pnlNew.getComponent();
         views.put(display, pnlNew);
@@ -411,7 +419,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * The version used for display
      */
-    private Book book;
+    private Book[] books;
 
     /**
      * Are we using tabs?

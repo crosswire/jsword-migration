@@ -626,10 +626,10 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
                         clearView = view;
                         continue;
                     }
-                    Book book = view.getSelectPane().getBook();
-                    if (book != null)
+                    Book[] books = view.getSelectPane().getBooks();
+                    if (books.length > 0)
                     {
-                        Key key = book.getKey(data);
+                        Key key = books[0].getKey(data);
                         String dataPassage = key.getName();
                         if (view.getTitle().equals(dataPassage))
                         {
@@ -654,11 +654,11 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
                 // Do we have an empty view we can use?
                 if (clearView != null)
                 {
-                    Book book = clearView.getSelectPane().getBook();
-                    if (book != null)
+                    Book[] books = clearView.getSelectPane().getBooks();
+                    if (books.length > 0)
                     {
-                        Key key = book.getKey(data);
-                        clearView.setKey(book.createEmptyKeyList()); // force it to be a clear view, if it is not really.
+                        Key key = books[0].getKey(data);
+                        clearView.setKey(books[0].createEmptyKeyList()); // force it to be a clear view, if it is not really.
                         clearView.setKey(key);
                         views.select(clearView);
                     }
@@ -669,10 +669,10 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
                 // and load it up.
                 BibleViewPane view = (BibleViewPane) views.addView();
 
-                Book book = view.getSelectPane().getBook();
-                if (book != null)
+                Book[] books = view.getSelectPane().getBooks();
+                if (books.length > 0)
                 {
-                    Key key = book.getKey(data);
+                    Key key = books[0].getKey(data);
                     view.setKey(key);
                 }
             }
@@ -682,7 +682,8 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
                 if (book != null && Books.installed().getBook(book.getName()) != null)
                 {
                     reference.selectBook(book);
-                    Key key = reference.getBook().getKey(data);
+                    Book[] books = reference.getBooks();
+                    Key key = books[0].getKey(data);
                     reference.setKey(key);
                 }
             }
