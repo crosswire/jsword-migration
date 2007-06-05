@@ -21,6 +21,7 @@
  */
 package org.crosswire.common.swing;
 
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,6 +37,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.Action;
 import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.KeyStroke;
 
@@ -188,6 +190,20 @@ public class ActionFactory implements ActionListener, Actionable
         }
 
         return label;
+    }
+
+    /**
+     * Build a button from an action that consist solely of the icon.
+     * @param key
+     * @return
+     */
+    public JButton createJButton(String key)
+    {
+        JButton button = new JButton(getAction(key));
+        button.setBorderPainted(false);
+        button.setText(null);
+        button.setMargin(new Insets(0, 0, 0, 0));
+        return button;
     }
 
     /**

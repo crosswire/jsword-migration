@@ -132,6 +132,10 @@
     <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="BibleViewReused"/>
   </option>
 
+  <option key="BibleDisplay.MaxPickers" type="number">
+    <introspect class="org.crosswire.bibledesktop.book.ParallelBookPicker" property="MaxPickers"/>
+  </option>
+
   <option key="BibleDisplay.Commentaries" type="boolean">
     <introspect class="org.crosswire.jsword.book.BookFilters" property="CommentariesWithBibles"/>
   </option>

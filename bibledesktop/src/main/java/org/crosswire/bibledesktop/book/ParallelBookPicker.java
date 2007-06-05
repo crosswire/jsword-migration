@@ -22,7 +22,7 @@
 package org.crosswire.bibledesktop.book;
 
 import java.awt.Component;
-import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
@@ -70,13 +69,16 @@ public class ParallelBookPicker extends JPanel
      */
     private void initialize()
     {
-        selected = new ArrayList();
+        setLayout(new FlowLayout(FlowLayout.LEADING, 1, 1));
         listeners = new EventListenerList();
         actions = new ActionFactory(ParallelBookPicker.class, this);
 
+        JPanel buttonBox = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
+        buttonBox.add(actions.createJButton("RemovePicker")); //$NON-NLS-1$
+        buttonBox.add(actions.createJButton("AddPicker")); //$NON-NLS-1$
+        add(buttonBox);
 
         // Add the first picker
-        doAddPicker();
         doAddPicker();
     }
 
@@ -85,48 +87,20 @@ public class ParallelBookPicker extends JPanel
      */
     public void doAddPicker()
     {
-        JPanel pickerPanel = new JPanel();
-
-        int currentPickerCount = getComponentCount();
-
-        // If there is more than one picker, then we need to remove the buttons from the
-        // previous one, since we only want the last one to have the buttons.
-        Container lastPanel = null;
-        if (currentPickerCount > 0)
-        {
-            Component last = getComponent(currentPickerCount - 1);
-            if (last instanceof Container)
-            {
-                lastPanel = (Container) last;
-            }
-        }
-
         BooksComboBoxModel mdlBook = new BooksComboBoxModel(filter, comparator);
         JComboBox cboBook = new JComboBox(mdlBook);
         cboBook.setRenderer(new BookListCellRenderer(true));
-        cboBook.addItemListener(new SelectedItemListener(currentPickerCount));
+        cboBook.addItemListener(new SelectedItemListener());
         cboBook.addActionListener(new SelectedActionListener());
-        pickerPanel.add(cboBook);
-        add(pickerPanel);
-        currentPickerCount++;
-
-        // Before adding, we make sure that the previous entry's buttons are removed.
-        if (currentPickerCount > 1)
-        {
-            while (lastPanel.getComponentCount() > 1)
-            {
-                lastPanel.remove(1);
-            }
-        }
-
-        addButtons(pickerPanel, currentPickerCount);
+        add(cboBook);
 
         Book book = mdlBook.getSelectedBook();
-        selected.add(book);
         if (book != null)
         {
             cboBook.setToolTipText(book.getName());
         }
+
+        enableButtons();
 
         GuiUtil.refresh(this);
     }
@@ -136,16 +110,13 @@ public class ParallelBookPicker extends JPanel
      */
     public void doRemovePicker()
     {
+        // There should always be 2 components present:
+        // the first picker and the panel holding the add/remove buttons
         int size = getComponentCount();
-        if (size > 1)
+        if (size > 2)
         {
             remove(size - 1);
-            size = getComponentCount();
-            Component comp = getComponent(size - 1);
-            if (comp instanceof JPanel)
-            {
-                addButtons((JPanel) comp, size - 1); 
-            }
+            enableButtons();
             GuiUtil.refresh(this);
         }
 
@@ -156,7 +127,34 @@ public class ParallelBookPicker extends JPanel
      */
     public Book[] getBooks()
     {
-        return (Book[]) selected.toArray(new Book[selected.size()]);
+        List books = new ArrayList();
+        int count = getComponentCount();
+        for (int i = 1; i < count; i++)
+        {
+            Component comp = getComponent(i);
+            if (comp instanceof JComboBox)
+            {
+                JComboBox combo = (JComboBox) comp;
+                books.add(combo.getSelectedItem());
+            }
+        }
+        return (Book[]) books.toArray(new Book[books.size()]);
+    }
+
+    /**
+     * @return the maxPickers
+     */
+    public static int getMaxPickers()
+    {
+        return maxPickers;
+    }
+
+    /**
+     * @param maxPickers the maxPickers to set
+     */
+    public static void setMaxPickers(int maxPickers)
+    {
+        ParallelBookPicker.maxPickers = maxPickers;
     }
 
     /**
@@ -194,19 +192,12 @@ public class ParallelBookPicker extends JPanel
         }
     }
 
-    private void addButtons(JPanel pickerPanel, int currentPickerCount)
+    private void enableButtons()
     {
-        // If there are more than one picker, we allow a user to remove a picker
-        if (currentPickerCount > 0)
-        {
-            pickerPanel.add(new JButton(actions.getAction("RemovePicker"))); //$NON-NLS-1$
-        }
-
-        // Only allow the user to add a certain amount of pickers.
-        if (currentPickerCount < MAX_PICKERS)
-        {
-            pickerPanel.add(new JButton(actions.getAction("AddPicker"))); //$NON-NLS-1$
-        }
+        int count = getComponentCount();
+        actions.getAction("RemovePicker").setEnabled(count > 2); //$NON-NLS-1$
+        actions.getAction("AddPicker").setEnabled(count <= maxPickers); //$NON-NLS-1$
+        getComponent(0).setVisible(maxPickers >= 2);
     }
 
     /**
@@ -218,9 +209,6 @@ public class ParallelBookPicker extends JPanel
      */
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
     {
-        // We don't serialize views
-        selected = null;
-
         listeners = new EventListenerList();
 
         is.defaultReadObject();
@@ -231,15 +219,6 @@ public class ParallelBookPicker extends JPanel
      */
     final class SelectedItemListener implements ItemListener
     {
-        /**
-         * Track the selected item in the combo box indicated by index.
-         * @param index
-         */
-        public SelectedItemListener(int index)
-        {
-            this.index = index;
-        }
-
         /* (non-Javadoc)
          * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
          */
@@ -249,14 +228,13 @@ public class ParallelBookPicker extends JPanel
             {
                 JComboBox combo = (JComboBox) ev.getSource();
                 
-                selected.set(index, combo.getSelectedItem());
+                Book selected = (Book) combo.getSelectedItem();
 
                 fireBooksChosen(new BookSelectEvent(this, getBooks()));
-                combo.setToolTipText(selected.toString());
+                combo.setToolTipText(selected.getName());
             }
         }
 
-        private int index;
     }
 
     /**
@@ -288,11 +266,6 @@ public class ParallelBookPicker extends JPanel
     private Comparator comparator;
 
     /**
-     * The selected items in each combo.
-     */
-    protected transient List selected;
-
-    /**
      * Allow for adding and removing pickers.
      */
     private ActionFactory actions;
@@ -306,6 +279,11 @@ public class ParallelBookPicker extends JPanel
      * What is the default maximum number of pickers.
      */
     private static final int MAX_PICKERS = 5;
+
+    /**
+     * The maximum number of pickers.
+     */
+    private static int maxPickers = MAX_PICKERS;
 
     /**
      * Serialization ID
