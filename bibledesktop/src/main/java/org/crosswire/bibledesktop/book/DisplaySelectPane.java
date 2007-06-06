@@ -102,7 +102,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         };
 
         // search() and version() rely on this returning only Books indexed by verses
-        ParallelBookPicker picker = new ParallelBookPicker(BookFilters.getBibles(), BookComparators.getInitialComparator());
+        picker = new ParallelBookPicker(BookFilters.getBibles(), BookComparators.getInitialComparator());
         picker.addBookListener(this);
         selected = picker.getBooks();
         if (selected.length > 0)
@@ -366,6 +366,14 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     public String getTitle()
     {
         return title;
+    }
+
+    /**
+     * @return the picker
+     */
+    public ParallelBookPicker getPicker()
+    {
+        return picker;
     }
 
     public void setKey(String newKey)
@@ -723,11 +731,11 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     private transient ActionFactory actions;
 
     private transient Book[] selected;
-
     /*
      * GUI Components
      */
     private PassageSelectionPane dlgSelect;
+    private ParallelBookPicker picker;
     private JTextField txtKey;
     private JTextField txtSearch;
     private JButton btnAdvanced;

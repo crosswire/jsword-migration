@@ -28,6 +28,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.MalformedURLException;
@@ -63,6 +65,7 @@ import org.crosswire.bibledesktop.book.MultiBookPane;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.URIEvent;
 import org.crosswire.bibledesktop.display.URIEventListener;
+import org.crosswire.bibledesktop.display.basic.SplitBookDataDisplay;
 import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.config.ChoiceFactory;
 import org.crosswire.common.config.Config;
@@ -83,7 +86,6 @@ import org.crosswire.common.swing.desktop.event.ViewEvent;
 import org.crosswire.common.swing.desktop.event.ViewEventListener;
 import org.crosswire.common.util.CWClassLoader;
 import org.crosswire.common.util.Logger;
-import org.crosswire.common.util.LucidRuntimeException;
 import org.crosswire.common.util.OSType;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.util.ResourceUtil;
@@ -837,17 +839,32 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
             ExceptionPane.showExceptionDialog(null, ex);
         }
 
-        URI configUri = Project.instance().getWritablePropertiesURI("desktop"); //$NON-NLS-1$
-        try
+        config.localToApplication();
+        config.addPropertyChangeListener(new PropertyChangeListener()
         {
-            config.localToApplication();
-            config.localToPermanent(configUri);
-        }
-        catch (IOException ex)
-        {
-            throw new LucidRuntimeException(Msg.CONFIG_SAVE_FAILED, ex, new Object[] { configUri });
-        }
+            /* (non-Javadoc)
+             * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+             */
+            public void propertyChange(PropertyChangeEvent evt)
+            {
+                // When the font changes update all the visible locations using it.
+                if (evt.getPropertyName().equals("BibleDisplay.ConfigurableFont")) //$NON-NLS-1$
+                {
+                    BibleViewPane view = (BibleViewPane) getViews().getSelected();
+                    SplitBookDataDisplay da = view.getPassagePane();
+                    da.getBookDataDisplay().refresh();
 
+                    reference.refresh();
+                }
+
+                if (evt.getPropertyName().equals("BibleDisplay.MaxPickers")) //$NON-NLS-1$
+                {
+                    BibleViewPane view = (BibleViewPane) getViews().getSelected();
+                    DisplaySelectPane selector = view.getSelectPane();
+                    selector.getPicker().enableButtons();
+                }
+            }            
+        });
     }
 
     public void checkForBooks()
@@ -1177,7 +1194,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     private JSplitPane sptBlog;
     private JCheckBoxMenuItem sidebarToggle;
     private StatusBar barStatus;
-    private MultiBookPane reference;
+    protected MultiBookPane reference;
     private JSplitPane sptBooks;
     private JPanel mainPanel;
     private transient History history;

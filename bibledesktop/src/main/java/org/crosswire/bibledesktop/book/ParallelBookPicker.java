@@ -193,12 +193,12 @@ public class ParallelBookPicker extends JPanel
         }
     }
 
-    private void enableButtons()
+    public void enableButtons()
     {
-        int count = getComponentCount();
-        actions.getAction("RemovePicker").setEnabled(count > 2); //$NON-NLS-1$
-        actions.getAction("AddPicker").setEnabled(count <= maxPickers); //$NON-NLS-1$
-        getComponent(0).setVisible(maxPickers >= 2);
+        int count = getComponentCount() - 1;
+        actions.getAction("RemovePicker").setEnabled(count > 1); //$NON-NLS-1$
+        actions.getAction("AddPicker").setEnabled(count < maxPickers); //$NON-NLS-1$
+        getComponent(0).setVisible(maxPickers >= 2 || count > maxPickers);
     }
 
     /**
