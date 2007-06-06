@@ -145,9 +145,6 @@ public class Mapper extends JFrame
 
         try
         {
-            // NOTE: when we tried dynamic laf update, 'this' needed special treatment
-            //LookAndFeelUtil.addComponentToUpdate(this);
-
             Document xmlconfig = XMLUtil.getDocument("config");
             config.add(xmlconfig, null);
 

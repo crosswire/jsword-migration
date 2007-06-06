@@ -69,14 +69,6 @@ public class TabbedBookDataDisplay implements BookDataDisplay
 
         center = pnlView.getComponent();
         pnlMain.add(center, BorderLayout.CENTER);
-
-        // NOTE: when we tried dynamic laf update, these needed special treatment
-        // There are times when tab_main or pnl_view are not in visible or
-        // attached to the main widget hierachy, so when we change L&F the
-        // changes do not get propagated through. The solution is to register
-        // them with the L&F handler to be altered when the L&F changes.
-        //LookAndFeelUtil.addComponentToUpdate(pnlView);
-        //LookAndFeelUtil.addComponentToUpdate(tabMain);
     }
 
     /**

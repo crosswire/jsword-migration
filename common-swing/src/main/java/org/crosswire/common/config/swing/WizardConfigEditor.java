@@ -251,9 +251,6 @@ public class WizardConfigEditor extends AbstractConfigEditor
     public void showDialog(Component parent)
     {
         dialog = new JDialog((JFrame) SwingUtilities.getRoot(parent));
-        // NOTE: when we tried dynamic laf update, dialog needed special treatment
-        //LookAndFeelUtil.addComponentToUpdate(dialog);
-
         dialog.getRootPane().setDefaultButton(next);
         dialog.getContentPane().add(this);
         dialog.setTitle(config.getTitle());
