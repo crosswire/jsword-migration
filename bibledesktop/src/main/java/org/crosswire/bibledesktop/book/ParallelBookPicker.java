@@ -101,8 +101,8 @@ public class ParallelBookPicker extends JPanel
         }
 
         enableButtons();
-
         GuiUtil.refresh(this);
+        fireBooksChosen(new BookSelectEvent(this, getBooks()));
     }
 
     /**
@@ -118,6 +118,7 @@ public class ParallelBookPicker extends JPanel
             remove(size - 1);
             enableButtons();
             GuiUtil.refresh(this);
+            fireBooksChosen(new BookSelectEvent(this, getBooks()));
         }
 
     }
