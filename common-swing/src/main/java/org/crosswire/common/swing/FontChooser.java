@@ -31,8 +31,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
@@ -204,28 +202,6 @@ public class FontChooser extends JPanel
     }
 
     /**
-     * Interface for people to be notified of changes to the
-     * current Font.
-     * @param li The new listener class
-     */
-    /* @Override */
-    public void addPropertyChangeListener(PropertyChangeListener li)
-    {
-        listeners.addPropertyChangeListener(li);
-    }
-
-    /**
-     * Interface for people to be notified of changes to the
-     * current Font.
-     * @param li The listener class to be deleted
-     */
-    /* @Override */
-    public void removePropertyChangeListener(PropertyChangeListener li)
-    {
-        listeners.removePropertyChangeListener(li);
-    }
-
-    /**
      * When something chenages we must inform out listeners.
      */
     protected void fireStateChange()
@@ -235,7 +211,7 @@ public class FontChooser extends JPanel
 
         if (!suppressEvents)
         {
-            listeners.firePropertyChange("style", old, font); //$NON-NLS-1$
+            firePropertyChange(PROPERTY_STYLE, old, font);
         }
     }
 
@@ -355,6 +331,8 @@ public class FontChooser extends JPanel
         private static final long serialVersionUID = 3256726195025358905L;
     }
 
+    public static final String PROPERTY_STYLE = "style"; // //$NON-NLS-1$
+
     /**
      * A label that we can use to get defaults
      */
@@ -364,11 +342,6 @@ public class FontChooser extends JPanel
      * The dialog box
      */
     protected JDialog dialog;
-
-    /**
-     * People that want to know about font changes
-     */
-    protected PropertyChangeSupport listeners = new PropertyChangeSupport(this);
 
     /**
      * The current font
