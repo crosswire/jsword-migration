@@ -162,6 +162,14 @@ public class SplitBookDataDisplay extends JPanel
     }
 
     /**
+     * Get the first book being displayed
+     */
+    public Book getFirstBook()
+    {
+        return books != null && books.length > 0 ? books[0] : null;
+    }
+
+    /**
      * copy the child
      */
     public void copy()

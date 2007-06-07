@@ -194,6 +194,14 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     }
 
     /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getFirstBook()
+     */
+    public Book getFirstBook()
+    {
+        return book;
+    }
+
+    /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#addURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
      */
     public void addURIEventListener(URIEventListener listener)

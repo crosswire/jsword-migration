@@ -136,6 +136,14 @@ public class ProxyBookDataDisplay implements BookDataDisplay
         return getProxy().getBooks();
     }
 
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getFirstBook()
+     */
+    public Book getFirstBook()
+    {
+        return getProxy().getFirstBook();
+    }
+
     /**
      * The component to which we proxy
      */

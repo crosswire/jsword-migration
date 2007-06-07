@@ -115,7 +115,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
         }
 
         // Make sure Hebrew displays from Right to Left
-        BookMetaData bmd = books[0].getBookMetaData();
+        BookMetaData bmd = getFirstBook().getBookMetaData();
         if (bmd == null)
         {
             txtView.setText(""); //$NON-NLS-1$
@@ -154,7 +154,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
              * It appears that it is a line too long issue.
              */
             /* Apply the fix if the text is too long and we are not Java 1.5 or greater */
-            if (text.length() > 32768 && BookCategory.GENERAL_BOOK.equals(books[0].getBookCategory()))
+            if (text.length() > 32768 && BookCategory.GENERAL_BOOK.equals(getFirstBook().getBookCategory()))
             {
                 String javaVersion = System.getProperty("java.specification.version"); //$NON-NLS-1$
                 if (javaVersion == null || "1.5".compareTo(javaVersion) > 0) //$NON-NLS-1$
@@ -406,6 +406,14 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     public Book[] getBooks()
     {
         return books;
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getFirstBook()
+     */
+    public Book getFirstBook()
+    {
+        return books != null && books.length > 0 ? books[0] : null;
     }
 
     // Strings for hyperlinks

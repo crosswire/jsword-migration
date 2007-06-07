@@ -163,6 +163,14 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
     }
 
     /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getFirstBook()
+     */
+    public Book getFirstBook()
+    {
+        return (Book) cboComments.getSelectedItem();
+    }
+
+    /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#clearBookData()
      */
     public void clearBookData()

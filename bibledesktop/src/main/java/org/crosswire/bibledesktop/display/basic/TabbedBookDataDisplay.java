@@ -200,6 +200,14 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getFirstBook()
+     */
+    public Book getFirstBook()
+    {
+        return books != null && books.length > 0 ? books[0] : null;
+    }
+
+    /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#copy()
      */
     public void copy()

@@ -193,6 +193,14 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
         return new Book[] {book};
     }
 
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getFirstBook()
+     */
+    public Book getFirstBook()
+    {
+        return book;
+    }
+
     /**
      * See if the current dictionary has a mention of the word in question.
      * LATER(joe): add a background task to highlight other dictionaries that have the word.

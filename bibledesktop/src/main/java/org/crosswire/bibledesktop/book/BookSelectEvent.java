@@ -46,12 +46,21 @@ public class BookSelectEvent extends EventObject
     }
 
     /**
-     * Get the type of command
-     * @return The type of command
+     * Get all the books.
+     * @return the books
      */
     public Book[] getBooks()
     {
         return books;
+    }
+
+    /**
+     * Get the first book.
+     * @return the first book
+     */
+    public Book getFirstBook()
+    {
+        return books != null && books.length > 0 ? books[0] : null;
     }
 
     /**

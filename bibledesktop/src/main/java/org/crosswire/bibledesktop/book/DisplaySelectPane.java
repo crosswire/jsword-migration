@@ -182,6 +182,14 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     }
 
     /**
+     * What is the first currently selected book?
+     */
+    public Book getFirstBook()
+    {
+        return selected != null && selected.length > 0 ? selected[0] : null;
+    }
+
+    /**
      *
      */
     public void clear()
@@ -557,7 +565,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         Book[] books = ev.getBooks();
         assert books.length > 0;
 
-        Book newSelected = books[0];
+        Book newSelected = ev.getFirstBook();
 
         if (selected.length > 0 && selected[0] != newSelected)
         {

@@ -91,4 +91,11 @@ public interface BookDataDisplay
      * @return The current books
      */
     Book[] getBooks();
+
+    /**
+     * Accessor for the first Book used in the current display, or null if we are not
+     * displaying anything.
+     * @return The current books
+     */
+    Book getFirstBook();
 }

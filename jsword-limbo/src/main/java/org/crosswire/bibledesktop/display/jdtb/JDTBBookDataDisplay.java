@@ -168,6 +168,14 @@ public class JDTBBookDataDisplay implements BookDataDisplay
         return new Book[] {book};
     }
 
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getFirstBook()
+     */
+    public Book getFirstBook()
+    {
+        return book;
+    }
+
     /**
      * The current book
      */

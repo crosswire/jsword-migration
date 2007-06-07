@@ -628,10 +628,10 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
                         clearView = view;
                         continue;
                     }
-                    Book[] books = view.getSelectPane().getBooks();
-                    if (books.length > 0)
+                    Book book = view.getSelectPane().getFirstBook();
+                    if (book != null)
                     {
-                        Key key = books[0].getKey(data);
+                        Key key = book.getKey(data);
                         String dataPassage = key.getName();
                         if (view.getTitle().equals(dataPassage))
                         {
@@ -656,11 +656,11 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
                 // Do we have an empty view we can use?
                 if (clearView != null)
                 {
-                    Book[] books = clearView.getSelectPane().getBooks();
-                    if (books.length > 0)
+                    Book book = clearView.getSelectPane().getFirstBook();
+                    if (book != null)
                     {
-                        Key key = books[0].getKey(data);
-                        clearView.setKey(books[0].createEmptyKeyList()); // force it to be a clear view, if it is not really.
+                        Key key = book.getKey(data);
+                        clearView.setKey(book.createEmptyKeyList()); // force it to be a clear view, if it is not really.
                         clearView.setKey(key);
                         views.select(clearView);
                     }
@@ -671,10 +671,10 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
                 // and load it up.
                 BibleViewPane view = (BibleViewPane) views.addView();
 
-                Book[] books = view.getSelectPane().getBooks();
-                if (books.length > 0)
+                Book book = view.getSelectPane().getFirstBook();
+                if (book != null)
                 {
-                    Key key = books[0].getKey(data);
+                    Key key = book.getKey(data);
                     view.setKey(key);
                 }
             }
