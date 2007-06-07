@@ -100,8 +100,6 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
         if (dialog == null)
         {
             dialog = new JDialog((JFrame) SwingUtilities.getRoot(parent));
-            // NOTE: when we tried dynamic laf update, dialog needed special treatment
-            // LookAndFeelUtil.addComponentToUpdate(dialog);
 
             dialog.getContentPane().add(this);
 
@@ -228,8 +226,6 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
     {
         if (dialog != null)
         {
-            // NOTE: when we tried dynamic laf update, dialog needed special treatment
-            //LookAndFeelUtil.removeComponentToUpdate(dialog);
             dialog.setVisible(false);
         }
     }
