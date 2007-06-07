@@ -932,6 +932,22 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     }
 
     /**
+     * @param override The path to the CSS that should be used to override.
+     */
+    public static void setCSSOverride(String override)
+    {
+        XSLTProperty.CSS.setState(override);
+    }
+
+    /**
+     * @return the current override
+     */
+    public static String getCSSOverride()
+    {
+        return XSLTProperty.CSS.getStringState();
+    }
+
+    /**
      * @param maxHeight The maxHeight to set.
      */
     public static void setMaxHeight(int maxHeight)

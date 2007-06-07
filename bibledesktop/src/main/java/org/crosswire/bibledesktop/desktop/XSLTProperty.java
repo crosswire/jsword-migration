@@ -21,8 +21,12 @@
  */
 package org.crosswire.bibledesktop.desktop;
 
+import java.io.File;
 import java.io.Serializable;
+import java.net.MalformedURLException;
 
+import org.crosswire.common.util.NetUtil;
+import org.crosswire.common.util.Reporter;
 import org.crosswire.common.xml.TransformingSAXEventProvider;
 
 
@@ -33,7 +37,7 @@ import org.crosswire.common.xml.TransformingSAXEventProvider;
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at yahoo dot com]
  */
-public final class XSLTProperty implements Serializable
+public class XSLTProperty implements Serializable
 {
     /**
      * Determines whether Strong's Numbers should show
@@ -94,7 +98,7 @@ public final class XSLTProperty implements Serializable
      * What is the base of the current document.
      * Note this needs to be set each time the document is shown.
      */
-    public static final XSLTProperty BASE_URL = new XSLTProperty("baseURL", ""); //$NON-NLS-1$ //$NON-NLS-2$
+    public static final XSLTProperty BASE_URL = new XSLTProperty("baseURL", "", true); //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * What is the base of the current document.
@@ -111,7 +115,7 @@ public final class XSLTProperty implements Serializable
     /**
      * What is the base of the current document.
      */
-    public static final XSLTProperty CSS = new XSLTProperty("css", ""); //$NON-NLS-1$ //$NON-NLS-2$
+    public static final XSLTProperty CSS = new XSLTProperty("css", "", true); //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * @param name The name of this property
@@ -128,9 +132,19 @@ public final class XSLTProperty implements Serializable
      */
     private XSLTProperty(String name, String defaultState)
     {
+        this(name, defaultState, false);
+    }
+
+    /**
+     * @param name The name of this property
+     * @param defaultState The initial state of the property.
+     */
+    private XSLTProperty(String name, String defaultState, boolean asURL)
+    {
         this.name = name;
         this.defaultState = defaultState;
         this.state = defaultState;
+        this.asURL = asURL;
     }
 
     /**
@@ -146,9 +160,19 @@ public final class XSLTProperty implements Serializable
         return Boolean.valueOf(defaultState).booleanValue();
     }
 
+    public String getDefaultStringState()
+    {
+        return defaultState;
+    }
+
     public boolean getState()
     {
         return Boolean.valueOf(state).booleanValue();
+    }
+
+    public String getStringState()
+    {
+        return state;
     }
 
     public void setState(boolean newState)
@@ -165,7 +189,19 @@ public final class XSLTProperty implements Serializable
     {
         if (state != null && state.length() > 0)
         {
-            provider.setParameter(name, state);
+            String theState = state;
+            if (asURL)
+            {
+                try
+                {
+                    theState = NetUtil.getURI(new File(state)).toURL().toString();
+                }
+                catch (MalformedURLException ex)
+                {
+                    Reporter.informUser(this, ex);
+                }
+            }
+            provider.setParameter(name, theState);
         }
     }
 
@@ -224,6 +260,11 @@ public final class XSLTProperty implements Serializable
      * The current state of the XSLTProperty
      */
     private String state;
+
+    /**
+     * Whether the string state should be converted to an URL when setting the property.
+     */
+    private boolean asURL;
 
     // Support for serialization
     private static int nextObj;

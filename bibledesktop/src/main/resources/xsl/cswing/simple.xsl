@@ -127,9 +127,6 @@
     <html dir="{$direction}">
       <head>
         <base href="{$baseURL}"/>
-        <xsl:if test="$css != ''">
-          <link rel="stylesheet" type="text/css" href="{$css}" title="styling" />
-        </xsl:if>
         <style type="text/css">
           BODY { <xsl:value-of select="$fontspec" /> }
           A { text-decoration: none; }
@@ -159,6 +156,8 @@
           TD.notes { width:20%; background:#f4f4e8; }
           TD.text { width:80%; }
         </style>
+        <!-- Always include the user's stylesheet even if "" -->
+        <link rel="stylesheet" type="text/css" href="{$css}" title="styling" />
       </head>
       <body>
         <!-- If there are notes, output a table with notes in the 2nd column. -->

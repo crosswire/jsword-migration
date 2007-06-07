@@ -107,8 +107,9 @@ public class AdvancedConfigEditor extends TreeConfigEditor
     /**
      * Add a Choice to our set of panels
      */
-    protected void addChoice(String key, Choice model)
+    protected void addChoice(Choice model)
     {
+        String key = model.getKey();
         Field field = FieldMap.getField(model);
         fields.put(key, field);
 
@@ -125,8 +126,9 @@ public class AdvancedConfigEditor extends TreeConfigEditor
     /**
      * Add a Choice to our set of panels
      */
-    protected void removeChoice(String key)
+    protected void removeChoice(Choice choice)
     {
+        String key = choice.getKey();
         Field field = (Field) fields.get(key);
         if (field != null)
         {
@@ -204,10 +206,16 @@ public class AdvancedConfigEditor extends TreeConfigEditor
         {
             List retcode = new ArrayList();
 
-            Iterator it = config.getNames();
+            Iterator it = config.iterator();
             while (it.hasNext())
             {
-                String temp = (String) it.next();
+                Choice choice = (Choice) it.next();
+                if (choice.isHidden())
+                {
+                    continue;
+                }
+
+                String temp = choice.getKey();
 
                 if (temp.startsWith(path) && !temp.equals(path))
                 {

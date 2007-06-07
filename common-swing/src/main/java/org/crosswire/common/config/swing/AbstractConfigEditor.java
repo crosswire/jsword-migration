@@ -65,24 +65,23 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
         {
             public void choiceAdded(ConfigEvent ev)
             {
-                addChoice(ev.getKey(), ev.getChoice());
+                addChoice(ev.getChoice());
                 updateTree();
             }
             public void choiceRemoved(ConfigEvent ev)
             {
-                removeChoice(ev.getKey(), ev.getChoice());
+                removeChoice(ev.getChoice());
                 updateTree();
             }
         });
 
         // For each of the Fields put it in a FieldPanel
-        Iterator it = config.getNames();
+        Iterator it = config.iterator();
         while (it.hasNext())
         {
-            String key = (String) it.next();
-            Choice model = config.getChoice(key);
+            Choice model = (Choice) it.next();
 
-            addChoice(key, model);
+            addChoice(model);
         }
 
         updateTree();
@@ -165,8 +164,14 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
     /**
      * Add a Choice to our set of panels
      */
-    protected void addChoice(String key, Choice model)
+    protected void addChoice(Choice model)
     {
+        if (model.isHidden())
+        {
+            return;
+        }
+
+        String key = model.getKey();
         String path = Config.getPath(model.getFullPath());
 
         // Check if we want to display this option
@@ -197,8 +202,9 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
     /**
      * Add a Choice to our set of panels
      */
-    protected void removeChoice(String key, Choice model)
+    protected void removeChoice(Choice model)
     {
+        String key = model.getKey();
         String path = Config.getPath(model.getFullPath());
 
         Field field = (Field) fields.get(key);
@@ -235,10 +241,16 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
      */
     protected void screenToLocal()
     {
-        Iterator it = config.getNames();
+        Iterator it = config.iterator();
         while (it.hasNext())
         {
-            String key = (String) it.next();
+            Choice choice = (Choice) it.next();
+            if (choice.isHidden())
+            {
+                continue;
+            }
+
+            String key = choice.getKey();
             Field field = (Field) fields.get(key);
             String value = field.getValue();
 
@@ -256,10 +268,16 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
      */
     protected void localToScreen()
     {
-        Iterator it = config.getNames();
+        Iterator it = config.iterator();
         while (it.hasNext())
         {
-            String key = (String) it.next();
+            Choice choice = (Choice) it.next();
+            if (choice.isHidden())
+            {
+                continue;
+            }
+
+            String key = choice.getKey();
 
             Field field = (Field) fields.get(key);
             String value = config.getLocal(key);

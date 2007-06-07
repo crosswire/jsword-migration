@@ -46,6 +46,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.EdgeBorder;
@@ -120,10 +121,16 @@ public class WizardConfigEditor extends AbstractConfigEditor
     {
         // We need to Enumerate thru the Model names not the Path names in the
         // deck because the deck is a Hashtable that re-orders them.
-        Iterator it = config.getNames();
+        Iterator it = config.iterator();
         while (it.hasNext())
         {
-            String key = (String) it.next();
+            Choice choice = (Choice) it.next();
+            if (choice.isHidden())
+            {
+                continue;
+            }
+
+            String key = choice.getKey();
 
             int last_dot = key.lastIndexOf('.');
             String path = key.substring(0, last_dot);

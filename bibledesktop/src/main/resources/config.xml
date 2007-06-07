@@ -36,6 +36,7 @@
 <!ATTLIST option
   key CDATA #REQUIRED
   static (true|false) 'true'
+  hidden (true|false) 'false'
   priority NMTOKEN '5'
   type (string|boolean|int-options|string-options|string-array|file|path|directory|number|font|class|custom|password) #REQUIRED
   class CDATA #IMPLIED
@@ -78,19 +79,17 @@
     <map name="daily-devotional-names"/>
   </option>
 
-<!-- Does not mean anything right now
-  <option key="Bibles.DefaultDictionary" type="string-options">
+<!-- Does not mean anything right now -->
+  <option key="Bibles.DefaultDictionary" type="string-options" hidden="true">
     <introspect class="org.crosswire.jsword.book.Defaults" property="DictionaryByName"/>
     <map name="dictionary-names"/>
   </option>
--->
 
-<!-- Does not mean anything right now
-  <option key="Bibles.DefaultCommentary" type="string-options">
+<!-- Does not mean anything right now -->
+  <option key="Bibles.DefaultCommentary" type="string-options" hidden="true">
     <introspect class="org.crosswire.jsword.book.Defaults" property="CommentaryByName"/>
     <map name="commentary-names"/>
   </option>
--->
 
   <option key="Bibles.DefaultGreekDefinitions" type="string-options">
     <introspect class="org.crosswire.jsword.book.Defaults" property="GreekDefinitionsByName"/>
@@ -107,26 +106,28 @@
     <map name="greekparse-names"/>
   </option>
 
-<!-- There are no Hebrew parsing guides at this time.
-  <option key="Bibles.DefaultHebrewParse" type="string-options">
+<!-- There are no Hebrew parsing guides at this time. -->
+  <option key="Bibles.DefaultHebrewParse" type="string-options" hidden="true">
     <introspect class="org.crosswire.jsword.book.Defaults" property="HebrewParseByName"/>
     <map name="hebrewparse-names"/>
   </option>
--->
 
-<!-- At this time we only have one converter
-  <option key="BibleDisplay.Converter" type="string-options">
+<!-- At this time we only have one converter -->
+  <option key="BibleDisplay.Converter" type="string-options" hidden="true">
     <introspect class="org.crosswire.jsword.util.ConverterFactory" property="CurrentConverterName"/>
     <map name="converters"/>
   </option>
--->
 
-<!-- We only provide one style sheet at this time
-  <option key="BibleDisplay.ConfigurableStylesheet" type="string-options">
+<!-- We only provide one style sheet at this time -->
+  <option key="BibleDisplay.ConfigurableStylesheet" type="string-options" hidden="true">
     <introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="ResourceName"/>
     <map name="cswing-styles"/>
   </option>
--->
+
+<!-- This really only useful for developers -->
+  <option key="BibleDisplay.CSSOverride" type="string" hidden="false">
+    <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="CSSOverride"/>
+  </option>
 
   <option key="BibleDisplay.Reuse" type="boolean">
     <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="BibleViewReused"/>
@@ -168,7 +169,7 @@
     <introspect class="org.crosswire.jsword.book.sword.SwordBookPath" property="DownloadDir"/>
   </option>
 
-<!-- Currently not used
+<!-- Limbo: Currently not used
   <option key="Remote.RemoteHost" type="string-array" separator=" ">
     <introspect class="org.crosswire.jsword.book.remote.HttpRemoteBookDriver" property="URLs"/>
   </option>
@@ -196,11 +197,10 @@
     <alternative number="2"/>
   </option>
 
-<!-- Useful only to developers. Developers may uncomment this.
-  <option key="Application.LookAndFeel" type="class">
+<!-- This really only useful for developers -->
+  <option key="Application.LookAndFeel" type="class" hidden="true">
     <introspect class="org.crosswire.common.swing.LookAndFeelUtil" property="LookAndFeel"/>
   </option>
--->
 
   <option key="Application.Language" type="string-options">
     <introspect class="org.crosswire.bibledesktop.desktop.Translations" property="CurrentTranslation"/>
@@ -225,47 +225,44 @@
     <introspect class="org.crosswire.common.swing.LookAndFeelUtil" property="Font"/>
   </option>
 
-<!-- Currently not used
-  <option key="Advanced.Raw.CacheData" type="boolean">
-    <introspect class="org.crosswire.jsword.book.raw.RawBook" property="DefaultCacheData"/>
-  </option>
--->
-
-<!-- This really only useful for developers, they can uncomment it.
-  <option key="Advanced.Reports.ShowErrorsInDialogBox" type="boolean" priority="8">
-    <introspect class="org.crosswire.common.swing.ExceptionPane" property="HelpDeskListener"/>
-  </option>
--->
-
-<!-- This really only useful for developers, they can uncomment it.
-  <option key="Advanced.Reports.LogErrorsInLogWindow" type="boolean" priority="8">
-    <introspect class="org.crosswire.common.swing.ExceptionShelf" property="HelpDeskListener"/>
-  </option>
--->
-
-<!-- This really only useful for developers, they can uncomment it.
-  <option key="Advanced.SourcePath" type="path" priority="9">
+<!-- This really only useful for developers -->
+  <option key="Advanced.SourcePath" type="path" priority="9" hidden="false">
     <introspect class="org.crosswire.common.swing.ExceptionPane" property="SourcePath"/>
   </option>
--->
 
-<!-- This really only useful for developers, they can uncomment it.
-  <option key="Advanced.Passage.DefaultType" type="int-options">
+<!-- This really only useful for developers -->
+  <option key="Advanced.DefaultPassageType" type="int-options" hidden="false">
     <introspect class="org.crosswire.jsword.passage.PassageKeyFactory" property="DefaultPassage"/>
     <alternative number="0"/>
     <alternative number="1"/>
     <alternative number="2"/>
     <alternative number="3"/>
   </option>
--->
 
-<!-- This really only useful for developers, they can uncomment it.
-  <option key="Advanced.IncludeAdvancedTabs" type="boolean">
-    <introspect class="org.crosswire.bibledesktop.desktop.AboutPane" property="Advanced"/>
+<!-- Limbo: Currently not used
+  <option key="Advanced.Raw.CacheData" type="boolean">
+    <introspect class="org.crosswire.jsword.book.raw.RawBook" property="DefaultCacheData"/>
   </option>
 -->
 
-<!--  Temporarily remove Blog code
+<!-- Limbo: This really only useful for developers
+  <option key="Advanced.Reports.ShowErrorsInDialogBox" type="boolean" priority="8">
+    <introspect class="org.crosswire.common.swing.ExceptionPane" property="HelpDeskListener"/>
+  </option>
+-->
+
+<!-- Limbo: This really only useful for developers
+  <option key="Advanced.Reports.LogErrorsInLogWindow" type="boolean" priority="8">
+    <introspect class="org.crosswire.common.swing.ExceptionShelf" property="HelpDeskListener"/>
+  </option>
+-->
+
+<!-- This really only useful for developers -->
+  <option key="Advanced.IncludeAdvancedTabs" type="boolean" hidden="true">
+    <introspect class="org.crosswire.bibledesktop.desktop.AboutPane" property="Advanced"/>
+  </option>
+
+<!-- Limbo: Temporarily remove Blog code
   <option key="WebJournal.Url" type="string" priority="1">
     <introspect class="org.crosswire.bibledesktop.journal.BlogClientFrame" property="Url"/>
   </option>

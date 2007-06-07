@@ -150,9 +150,14 @@ public class TreeConfigEditor extends AbstractConfigEditor
     /**
      * Add a Choice to our set of panels
      */
-    protected void addChoice(String key, Choice model)
+    protected void addChoice(Choice model)
     {
-        super.addChoice(key, model);
+        if (model.isHidden())
+        {
+            return;
+        }
+
+        super.addChoice(model);
 
         // Sort the tree out
         String path = Config.getPath(model.getFullPath());
@@ -168,9 +173,9 @@ public class TreeConfigEditor extends AbstractConfigEditor
     /**
      * Add a Choice to our set of panels
      */
-    protected void removeChoice(String key, Choice model)
+    protected void removeChoice(Choice model)
     {
-        super.removeChoice(key, model);
+        super.removeChoice(model);
 
         // Sort the tree out
         String path = Config.getPath(model.getFullPath());
@@ -274,16 +279,22 @@ public class TreeConfigEditor extends AbstractConfigEditor
         }
 
         /**
-         * Get a Vector of the children rooted at path
+         * Get a List of the children rooted at path
          */
         protected List getChildren(String path)
         {
             List retcode = new ArrayList();
 
-            Iterator it = config.getPaths();
+            Iterator it = config.iterator();
             while (it.hasNext())
             {
-                String temp = (String) it.next();
+                Choice choice = (Choice) it.next();
+                if (choice.isHidden())
+                {
+                    continue;
+                }
+
+                String temp = choice.getFullPath();
 
                 if (temp.startsWith(path) && !temp.equals(path))
                 {
@@ -296,10 +307,11 @@ public class TreeConfigEditor extends AbstractConfigEditor
 
                     // Chop off all after the first dot
                     int dot_pos = temp.indexOf('.');
-                    if (dot_pos != -1)
+                    if (dot_pos == -1)
                     {
-                        temp = temp.substring(0, dot_pos);
+                        continue;
                     }
+                    temp = temp.substring(0, dot_pos);
 
                     // Add it to the list if needed
                     if (temp.length() > 0 && !retcode.contains(temp))

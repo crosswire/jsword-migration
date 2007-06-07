@@ -31,6 +31,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
 
+import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.FormPane;
 
 /**
@@ -69,10 +70,11 @@ public class TabbedConfigEditor extends AbstractConfigEditor
         }
         tab = new JTabbedPane();
 
-        Iterator it = config.getPaths();
+        Iterator it = config.iterator();
         while (it.hasNext())
         {
-            String path = (String) it.next();
+            Choice choice = (Choice) it.next();
+            String path = choice.getFullPath();
             // log.fine("TAB: path="+path);
 
             JTabbedPane nest = tab;
