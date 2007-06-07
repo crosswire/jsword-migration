@@ -48,7 +48,7 @@ public class DirectoryField extends FileField
             FileDialog chooser = new FileDialog(GuiUtil.getFrame(getParent()), text.getText());
             String prop = "apple.awt.fileDialogForDirectories"; //$NON-NLS-1$
             System.setProperty(prop, "true"); //$NON-NLS-1$
-            chooser.show();
+            chooser.setVisible(true);
             System.setProperty(prop, "false"); //$NON-NLS-1$
             String dir = chooser.getFile();
             if (dir != null)
