@@ -51,9 +51,10 @@ public class FormPane extends JPanel
      * @param prompt The name for the field
      * @param comp The component to add alongside the label
      */
-    public void addEntry(String prompt, Component comp)
+    public void addEntry(String prompt, String tooltip, Component comp)
     {
         JLabel label = new JLabel(prompt);
+        label.setToolTipText(tooltip);
 
         add(label);
         add(comp);

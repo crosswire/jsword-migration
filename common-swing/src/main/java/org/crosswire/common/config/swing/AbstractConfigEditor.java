@@ -185,10 +185,9 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
 
         // Add the Field to the FieldPanel
         JComponent comp = field.getComponent();
-        comp.setToolTipText(model.getHelpText());
 
         String name = Config.getLeaf(model.getFullPath()) + ':';
-        card.addEntry(name, comp);
+        card.addEntry(name, model.getHelpText(), comp);
 
         // Fill in the current value
         String value = config.getLocal(key);
