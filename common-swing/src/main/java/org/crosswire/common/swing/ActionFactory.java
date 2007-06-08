@@ -194,8 +194,8 @@ public class ActionFactory implements ActionListener, Actionable
 
     /**
      * Build a button from an action that consist solely of the icon.
-     * @param key
-     * @return
+     * @param key the action to use
+     * @return the button
      */
     public JButton createJButton(String key)
     {

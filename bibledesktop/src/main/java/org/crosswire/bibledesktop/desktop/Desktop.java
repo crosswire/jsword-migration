@@ -30,6 +30,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.MalformedURLException;
@@ -56,6 +57,7 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+import javax.swing.event.SwingPropertyChangeSupport;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
 import org.crosswire.bibledesktop.book.DisplaySelectEvent;
@@ -227,6 +229,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         sptBlog = new FixedSplitPane(false);
 //        blogPanel = BlogClientFrame.getInstance();
 
+        changeSupport = new SwingPropertyChangeSupport(this);
         views = new ViewManager(this);
         views.addViewEventListener(this);
         history = new History();
@@ -451,6 +454,8 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         verseMenu.add(radio).addMouseListener(barStatus);
 
         menuView.addSeparator();
+        toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.COMPARE_TOGGLE));
+        menuView.add(toggle).addMouseListener(barStatus);
         toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.HEADINGS.getName()));
         toggle.setSelected(XSLTProperty.HEADINGS.getDefaultState());
         menuView.add(toggle).addMouseListener(barStatus);
@@ -555,6 +560,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         BookDataDisplay display = view.getPassagePane().getBookDataDisplay();
         display.addURIEventListener(this);
         display.addURIEventListener(barStatus);
+        changeSupport.addPropertyChangeListener(BookDataDisplay.COMPARE_BOOKS, display);
         DisplaySelectPane dsp = view.getSelectPane();
         dsp.addCommandListener(this);
         return view;
@@ -569,6 +575,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         BookDataDisplay display = view.getPassagePane().getBookDataDisplay();
         display.removeURIEventListener(this);
         display.removeURIEventListener(barStatus);
+        changeSupport.removePropertyChangeListener(BookDataDisplay.COMPARE_BOOKS, display);
         DisplaySelectPane dsp = view.getSelectPane();
         dsp.removeCommandListener(this);
     }
@@ -900,6 +907,24 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     }
 
     /**
+     * @param show Whether to show differences between versions of the Bible
+     */
+    public void setCompareShowing(boolean show)
+    {
+        boolean old = compareShowing;
+        compareShowing = show;
+        changeSupport.firePropertyChange(BookDataDisplay.COMPARE_BOOKS, old, compareShowing);
+    }
+
+    /**
+     * @return Whether to show differences between versions of the Bible
+     */
+    public boolean isCompareShowing()
+    {
+        return compareShowing;
+    }
+
+    /**
      * @param show Whether to show the web journal at start up.
      */
     public static void setWebJournalShowing(boolean show)
@@ -1178,6 +1203,11 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     private static boolean sidebarShowing;
 
     /**
+     * Whether to show differences between versions of the Bible
+     */
+    private static boolean compareShowing;
+
+    /**
      * Whether to show the web journal at startup
      */
     private static boolean webJournalShowing = true;
@@ -1214,6 +1244,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     private JSplitPane sptBooks;
     private JPanel mainPanel;
     private transient History history;
+    private PropertyChangeSupport changeSupport;
 
     /**
      * Serialization ID

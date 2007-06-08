@@ -26,6 +26,7 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
@@ -219,6 +220,14 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
         }
 
         updateDisplay();
+    }
+
+    /* (non-Javadoc)
+     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+     */
+    public void propertyChange(PropertyChangeEvent evt)
+    {
+        display.propertyChange(evt);
     }
 
     /* (non-Javadoc)

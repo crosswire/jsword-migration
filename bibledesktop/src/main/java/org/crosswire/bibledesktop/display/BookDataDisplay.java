@@ -22,6 +22,7 @@
 package org.crosswire.bibledesktop.display;
 
 import java.awt.Component;
+import java.beans.PropertyChangeListener;
 
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
@@ -33,8 +34,13 @@ import org.crosswire.jsword.passage.Key;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public interface BookDataDisplay
+public interface BookDataDisplay extends PropertyChangeListener
 {
+    /**
+     * Used by property change listeners to listen for when books should be compared.
+     */
+    String COMPARE_BOOKS = "ComparingBooks"; //$NON-NLS-1$
+
     /**
      * Copy the selection to the clipboard
      */
@@ -64,8 +70,8 @@ public interface BookDataDisplay
 
     /**
      * Set the BookData to be displayed.
-     * The data to be displayed is specified as a book and key rather than the
-     * more obvious BookData (the result of reading a book using a key)
+     * The data to be displayed is specified as a books and key rather than the
+     * more obvious BookData (the result of reading books using a key)
      * since some displays may wish so split up the display and only look up
      * smaller sections at a time.
      * @param books The Books to read data from

@@ -25,6 +25,7 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
@@ -167,6 +168,14 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
     public Key getKey()
     {
         return (Key) dictionaryKeyList.getSelectedValue();
+    }
+
+    /* (non-Javadoc)
+     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+     */
+    public void propertyChange(PropertyChangeEvent evt)
+    {
+        display.propertyChange(evt);
     }
 
     /* (non-Javadoc)

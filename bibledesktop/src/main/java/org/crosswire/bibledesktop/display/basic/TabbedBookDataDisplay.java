@@ -23,6 +23,7 @@ package org.crosswire.bibledesktop.display.basic;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -213,6 +214,20 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     public void copy()
     {
         getInnerDisplayPane().copy();
+    }
+
+    /* (non-Javadoc)
+     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+     */
+    public void propertyChange(PropertyChangeEvent evt)
+    {
+        // Now go through all the known syncs and add this one in
+        Iterator iter = displays.iterator();
+        while (iter.hasNext())
+        {
+            BookDataDisplay bdd = (BookDataDisplay) iter.next();
+            bdd.propertyChange(evt);
+        }
     }
 
     /* (non-Javadoc)

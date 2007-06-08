@@ -24,6 +24,8 @@ package org.crosswire.bibledesktop.display.basic;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.text.MessageFormat;
@@ -66,7 +68,7 @@ import org.xml.sax.SAXException;
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListener
+public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListener, PropertyChangeListener
 {
     /**
      * Simple ctor
@@ -100,6 +102,15 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
         this.books = books;
         this.key = key;
 
+        if (books == null || books.length == 0 || books[0] == null || key == null)
+        {
+            bdata = null;
+        }
+        else if (bdata == null || !books.equals(bdata.getBooks()) || !key.equals(bdata.getKey()))
+        {
+           bdata = new BookData(books, key, compareBooks); 
+        }
+
         refresh();
     }
 
@@ -108,7 +119,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
      */
     public void refresh()
     {
-        if (books == null || books.length == 0 || books[0] == null || key == null)
+        if (bdata == null)
         {
             txtView.setText(""); //$NON-NLS-1$
             return;
@@ -127,7 +138,6 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
 
         try
         {
-            BookData bdata = new BookData(books, key);
             SAXEventProvider osissep = bdata.getSAXEventProvider();
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
 
@@ -250,6 +260,23 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
         {
             Reporter.informUser(this, ex);
         }
+    }
+
+    /* (non-Javadoc)
+     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+     */
+    public void propertyChange(PropertyChangeEvent evt)
+    {
+        if (evt.getPropertyName().equals(BookDataDisplay.COMPARE_BOOKS))
+        {
+            compareBooks = Boolean.valueOf(evt.getNewValue().toString()).booleanValue();
+            if (bdata != null)
+            {
+                bdata = new BookData(bdata.getBooks(), bdata.getKey(), compareBooks);
+                refresh();
+            }
+        }
+        
     }
 
     private String[] getParts(String reference) throws MalformedURLException
@@ -428,6 +455,11 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     protected static final Logger log = Logger.getLogger(TextPaneBookDataDisplay.class);
 
     /**
+     * The book data being shown.
+     */
+    private BookData bdata;
+
+    /**
      * The current books
      */
     private Book[] books;
@@ -436,6 +468,11 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
      * The current key
      */
     private Key key;
+
+    /**
+     * Whether the books should be compared.
+     */
+    private boolean compareBooks;
 
     /**
      * To convert OSIS to HTML

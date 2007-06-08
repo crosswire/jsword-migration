@@ -342,6 +342,15 @@ public class DesktopActions implements Actionable
         da.getBookDataDisplay().refresh();
     }
 
+    /**
+     * Show differences between Bible Book versions.
+     */
+    public void doCompareToggle(ActionEvent ev)
+    {
+        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
+        getDesktop().setCompareShowing(toggle.getState());
+    }
+
     public void doHeadings(ActionEvent ev)
     {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
@@ -569,6 +578,7 @@ public class DesktopActions implements Actionable
     static final String COPY = "Copy"; //$NON-NLS-1$
     static final String BACK = "Back"; //$NON-NLS-1$
     static final String FORWARD = "Forward"; //$NON-NLS-1$
+    static final String COMPARE_TOGGLE = "CompareToggle"; //$NON-NLS-1$
     static final String TOOLTIP_TOGGLE = "ToolTipToggle"; //$NON-NLS-1$
     static final String STATUS_TOGGLE = "StatusToggle"; //$NON-NLS-1$
     static final String SIDEBAR_TOGGLE = "SidebarToggle"; //$NON-NLS-1$

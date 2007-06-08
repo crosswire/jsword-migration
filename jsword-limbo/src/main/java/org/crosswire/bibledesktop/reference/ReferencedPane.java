@@ -23,6 +23,7 @@ package org.crosswire.bibledesktop.reference;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,7 +119,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
         });
         scrEntries.setViewportView(treEntries);
 
-        scrDisplay.setViewportView(txtDisplay.getComponent());
+        scrDisplay.setViewportView(display.getComponent());
 
         sptMain.setOrientation(JSplitPane.VERTICAL_SPLIT);
         sptMain.setTopComponent(scrEntries);
@@ -167,7 +168,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
      */
     public void copy()
     {
-        txtDisplay.copy();
+        display.copy();
     }
 
     /* (non-Javadoc)
@@ -202,11 +203,19 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     }
 
     /* (non-Javadoc)
+     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+     */
+    public void propertyChange(PropertyChangeEvent evt)
+    {
+        display.propertyChange(evt);
+    }
+
+    /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#addURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
      */
     public void addURIEventListener(URIEventListener listener)
     {
-        txtDisplay.addURIEventListener(listener);
+        display.addURIEventListener(listener);
     }
 
     /* (non-Javadoc)
@@ -214,7 +223,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
      */
     public void removeURIEventListener(URIEventListener listener)
     {
-        txtDisplay.removeURIEventListener(listener);
+        display.removeURIEventListener(listener);
     }
 
     /**
@@ -298,7 +307,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
             Key key = getKey();
             if (key != null)
             {
-                txtDisplay.setBookData(new Book[] {book}, key);
+                display.setBookData(new Book[] {book}, key);
             }
         }
         catch (Exception ex)
@@ -310,7 +319,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     /**
      * The display of OSIS data
      */
-    private BookDataDisplay txtDisplay = BookDataDisplayFactory.createBookDataDisplay();
+    private BookDataDisplay display = BookDataDisplayFactory.createBookDataDisplay();
 
     /*
      * Gui components

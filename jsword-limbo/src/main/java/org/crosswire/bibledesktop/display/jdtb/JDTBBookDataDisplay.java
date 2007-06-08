@@ -22,6 +22,7 @@
 package org.crosswire.bibledesktop.display.jdtb;
 
 import java.awt.Component;
+import java.beans.PropertyChangeEvent;
 import java.net.URL;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
@@ -119,6 +120,13 @@ public class JDTBBookDataDisplay implements BookDataDisplay
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#copy()
      */
     public void copy()
+    {
+    }
+
+    /* (non-Javadoc)
+     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+     */
+    public void propertyChange(PropertyChangeEvent evt)
     {
     }
 
