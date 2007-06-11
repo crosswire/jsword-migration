@@ -201,6 +201,7 @@ public class ActionFactory implements ActionListener, Actionable
     {
         JButton button = new JButton(getAction(key));
         button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
         button.setText(null);
         button.setMargin(new Insets(0, 0, 0, 0));
         return button;
