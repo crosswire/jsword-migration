@@ -39,6 +39,7 @@ import javax.swing.SwingConstants;
 import org.crosswire.bibledesktop.display.URIEvent;
 import org.crosswire.bibledesktop.display.URIEventListener;
 import org.crosswire.common.progress.swing.JobsProgressBar;
+import org.crosswire.common.util.OSType;
 
 /**
  * The status bar provides useful info to the user as to the current
@@ -80,21 +81,23 @@ public class StatusBar extends JComponent implements MouseListener, URIEventList
         panelProgress.setPreferredSize(dim);
         */
 
-        labelName.setText(Msg.getVersionedApplicationTitle());
-
         this.setBorder(BorderFactory.createEtchedBorder());
         this.setLayout(new GridBagLayout());
 
         JSeparator separator  = new JSeparator(SwingConstants.VERTICAL);
-        JSeparator separator2 = new JSeparator(SwingConstants.VERTICAL);
 
-        this.add(labelMessage,  new GridBagConstraints(0, 0, 1, 1, 0.5, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(separator,     new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(panelProgress, new GridBagConstraints(2, 0, 1, 1, 0.5, 0.0, GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(separator2,    new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
-        // Right pad this so that it stays away from the corner.
+        // Right pad the last entry so that it stays away from the corner.
         // On the Mac, the "grow" handle is in the corner of the app.
-        this.add(labelName,     new GridBagConstraints(4, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 20, 5));
+        int finalPadX = 0;
+        int finalPadY = 0;
+        if (OSType.MAC.equals(OSType.getOSType()))
+        {
+            finalPadX = 20;
+            finalPadY = 5;
+        }
+        this.add(labelMessage,  new GridBagConstraints(0, 0, 1, 1, 0.3, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(separator,     new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(panelProgress, new GridBagConstraints(2, 0, 1, 1, 0.7, 0.0, GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), finalPadX, finalPadY));
     }
 
     /* (non-Javadoc)
@@ -230,11 +233,6 @@ public class StatusBar extends JComponent implements MouseListener, URIEventList
      * Where the help messages go
      */
     protected JLabel labelMessage = new JLabel();
-
-    /**
-     * Where the product name goes
-     */
-    private JLabel labelName = new JLabel();
 
     /**
      * Serialization ID
