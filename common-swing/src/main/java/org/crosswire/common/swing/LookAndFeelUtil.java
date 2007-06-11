@@ -171,12 +171,11 @@ public final class LookAndFeelUtil
         String systemLAF = UIManager.getSystemLookAndFeelClassName();
         try
         {
-            // GTKLookAndFeel and MotiflLookAndFeel doesn't look good currently.
-            // Only WindowsLookAndFeel and MetalLookAndFeel looks fine.
-            // Not sure how AquaLookAndFeel looks, so allow it for now.
-            // NOTE(DM): test with the gtk laf before allowing it.
+            // Note: GTK looks good under Java 1.5
+            // Motif still does not look good.
             if (systemLAF.indexOf("WindowsLookAndFeel") != -1 ||  //$NON-NLS-1$
-                systemLAF.indexOf("AquaLookAndfeel") != -1) //$NON-NLS-1$
+                systemLAF.indexOf("AquaLookAndfeel") != -1 || //$NON-NLS-1$
+                systemLAF.indexOf("GTKLookAndFeel") != -1) //$NON-NLS-1$
             {
                 UIManager.setLookAndFeel(systemLAF);
                 // MetalLookAndFeel.setCurrentTheme(new DefaultMetalTheme());
