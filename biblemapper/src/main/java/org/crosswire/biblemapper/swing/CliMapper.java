@@ -103,7 +103,7 @@ public class CliMapper
                     {
                         Verse find = new Verse(b, c, v);
                         BookData bdata = new BookData(book, find);
-                        String text = OSISUtil.getPlainText(bdata.getOsis());
+                        String text = OSISUtil.getPlainText(bdata.getOsisFragment());
                         String quote = IndexSearcher.getPreferredSyntax(PhraseParamWord.class);
                         text = quote + text + quote;
                         PassageTally temp = (PassageTally) book.find(text);

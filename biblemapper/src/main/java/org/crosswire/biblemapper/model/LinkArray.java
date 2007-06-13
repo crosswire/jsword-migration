@@ -33,6 +33,8 @@ import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.OSISUtil;
+import org.crosswire.jsword.index.search.DefaultSearchModifier;
+import org.crosswire.jsword.index.search.DefaultSearchRequest;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.PassageTally;
 import org.crosswire.jsword.passage.Verse;
@@ -230,8 +232,11 @@ public class LinkArray implements Serializable
             {
                 Verse find = new Verse(b, c, v);
                 BookData bdata = new BookData(book, find);
-                String text = OSISUtil.getPlainText(bdata.getOsis());
-                PassageTally temp = (PassageTally) book.find(text);
+                String text = OSISUtil.getCanonicalText(bdata.getOsisFragment());
+                DefaultSearchModifier modifier = new DefaultSearchModifier();
+                modifier.setRanked(true);
+
+                PassageTally temp = (PassageTally) book.find(new DefaultSearchRequest(text, modifier));
                 temp.setOrdering(PassageTally.ORDER_TALLY);
                 total.addAll(temp);
             }

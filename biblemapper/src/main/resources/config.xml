@@ -1,0 +1,284 @@
+<?xml version="1.0"?>
+
+<!--
+ * Distribution License:
+ * JSword is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License, version 2.1 as published by
+ * the Free Software Foundation. This program is distributed in the hope
+ * that it will be useful, but WITHOUT ANY WARRANTY; without even the
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * The License is available on the internet at:
+ *       http://www.gnu.org/copyleft/lgpl.html
+ * or by writing to:
+ *      Free Software Foundation, Inc.
+ *      59 Temple Place - Suite 330
+ *      Boston, MA 02111-1307, USA
+ *
+ * Copyright: 2005
+ *     The copyright to this program is held by it's authors.
+ *
+ * ID: $Id: config.xml 1393 2007-06-07 18:37:44Z dmsmith $
+ -->
+ <!--
+ * Transforms OSIS to HTML for viewing within JSword browsers.
+ * Note: There are custom protocols which the browser must handle.
+ * 
+ * @see gnu.lgpl.License for license details.
+ *      The copyright to this program is held by it's authors.
+ * @author Joe Walker [joe at eireneh dot com]
+ * @author DM Smith [dmsmith555 at yahoo dot com]
+ -->
+<!DOCTYPE config [
+<!ELEMENT config (option)+>
+<!ELEMENT option (introspect?, map?, alternative*, custom?)>
+<!ATTLIST option
+  key CDATA #REQUIRED
+  static (true|false) 'true'
+  hidden (true|false) 'false'
+  priority NMTOKEN '5'
+  type (string|boolean|int-options|string-options|string-array|file|path|directory|number|font|class|custom|password) #REQUIRED
+  class CDATA #IMPLIED
+  separator CDATA #IMPLIED
+>
+<!ELEMENT introspect EMPTY>
+<!ATTLIST introspect
+  class CDATA #REQUIRED
+  property CDATA #REQUIRED
+>
+
+<!ELEMENT map EMPTY>
+<!ATTLIST map
+  name CDATA #REQUIRED
+>
+<!ELEMENT custom EMPTY>
+<!ATTLIST custom
+  class CDATA #REQUIRED
+>
+<!ELEMENT alternative (#PCDATA)>
+<!ATTLIST alternative
+  number NMTOKEN #REQUIRED
+>
+]>
+
+<config>
+
+  <option key="Bibles.RetainCurrent" type="boolean">
+    <introspect class="org.crosswire.jsword.book.Defaults" property="CurrentBible"/>
+  </option>
+
+  <option key="Bibles.DefaultBible" type="string-options">
+    <introspect class="org.crosswire.jsword.book.Defaults" property="BibleByName"/>
+    <map name="bible-names"/>
+    <!-- set up in OptionsAction.refreshBooks() along with dict and commentary versions -->
+  </option>
+
+  <option key="Bibles.DefaultDailyDevotional" type="string-options">
+    <introspect class="org.crosswire.jsword.book.Defaults" property="DailyDevotionalByName"/>
+    <map name="daily-devotional-names"/>
+  </option>
+
+<!-- Does not mean anything right now -->
+  <option key="Bibles.DefaultDictionary" type="string-options" hidden="true">
+    <introspect class="org.crosswire.jsword.book.Defaults" property="DictionaryByName"/>
+    <map name="dictionary-names"/>
+  </option>
+
+<!-- Does not mean anything right now -->
+  <option key="Bibles.DefaultCommentary" type="string-options" hidden="true">
+    <introspect class="org.crosswire.jsword.book.Defaults" property="CommentaryByName"/>
+    <map name="commentary-names"/>
+  </option>
+
+  <option key="Bibles.DefaultGreekDefinitions" type="string-options">
+    <introspect class="org.crosswire.jsword.book.Defaults" property="GreekDefinitionsByName"/>
+    <map name="greekdef-names"/>
+  </option>
+
+  <option key="Bibles.DefaultHebrewDefinitions" type="string-options">
+    <introspect class="org.crosswire.jsword.book.Defaults" property="HebrewDefinitionsByName"/>
+    <map name="hebrewdef-names"/>
+  </option>
+
+  <option key="Bibles.DefaultGreekParse" type="string-options">
+    <introspect class="org.crosswire.jsword.book.Defaults" property="GreekParseByName"/>
+    <map name="greekparse-names"/>
+  </option>
+
+<!-- There are no Hebrew parsing guides at this time. -->
+  <option key="Bibles.DefaultHebrewParse" type="string-options" hidden="true">
+    <introspect class="org.crosswire.jsword.book.Defaults" property="HebrewParseByName"/>
+    <map name="hebrewparse-names"/>
+  </option>
+
+<!-- At this time we only have one converter -->
+  <option key="BibleDisplay.Converter" type="string-options" hidden="true">
+    <introspect class="org.crosswire.jsword.util.ConverterFactory" property="CurrentConverterName"/>
+    <map name="converters"/>
+  </option>
+
+<!-- We only provide one style sheet at this time -->
+  <option key="BibleDisplay.ConfigurableStylesheet" type="string-options" hidden="true">
+    <introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="ResourceName"/>
+    <map name="cswing-styles"/>
+  </option>
+
+<!-- This really only useful for developers -->
+  <option key="BibleDisplay.CSSOverride" type="string" hidden="false">
+    <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="CSSOverride"/>
+  </option>
+
+  <option key="BibleDisplay.Reuse" type="boolean">
+    <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="BibleViewReused"/>
+  </option>
+
+  <option key="BibleDisplay.MaxPickers" type="number">
+    <introspect class="org.crosswire.bibledesktop.book.ParallelBookPicker" property="MaxPickers"/>
+  </option>
+
+  <option key="BibleDisplay.Commentaries" type="boolean">
+    <introspect class="org.crosswire.jsword.book.BookFilters" property="CommentariesWithBibles"/>
+  </option>
+
+  <option key="BibleDisplay.Sidebar" type="boolean">
+    <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="SidebarShowing"/>
+  </option>
+
+  <option key="BibleDisplay.VersesPerTab" type="number">
+    <introspect class="org.crosswire.bibledesktop.display.basic.TabbedBookDataDisplay" property="PageSize"/>
+  </option>
+
+  <option key="BibleDisplay.RankedVerses" type="number">
+    <introspect class="org.crosswire.bibledesktop.book.DisplaySelectPane" property="NumRankedVerses"/>
+  </option>
+
+  <option key="BibleDisplay.AntiAliasDisplay" type="boolean">
+    <introspect class="org.crosswire.common.swing.AntiAliasedTextPane" property="AntiAliasing"/>
+  </option>
+
+  <option key="BibleDisplay.ConfigurableFont" type="font">
+    <introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="Font"/>
+  </option>
+
+  <option key="SwordBook.BookSearchPath" type="path">
+    <introspect class="org.crosswire.jsword.book.sword.SwordBookPath" property="AugmentPath"/>
+  </option>
+
+  <option key="SwordBook.DownloadDirectory" type="directory">
+    <introspect class="org.crosswire.jsword.book.sword.SwordBookPath" property="DownloadDir"/>
+  </option>
+
+<!-- Limbo: Currently not used
+  <option key="Remote.RemoteHost" type="string-array" separator=" ">
+    <introspect class="org.crosswire.jsword.book.remote.HttpRemoteBookDriver" property="URLs"/>
+  </option>
+-->
+
+  <option key="Passages.PersistentNaming" type="boolean">
+    <introspect class="org.crosswire.jsword.passage.PassageUtil" property="PersistentNaming"/>
+  </option>
+
+  <option key="Passages.FullBookName" type="boolean">
+    <introspect class="org.crosswire.jsword.versification.BibleInfo" property="FullBookName"/>
+  </option>
+
+  <option key="Passages.BlurringRules" type="int-options">
+    <introspect class="org.crosswire.jsword.passage.RestrictionType" property="BlurRestriction"/>
+    <alternative number="0"/>
+    <alternative number="1"/>
+    <!-- Remove Book for now <alternative number="2"/> -->
+  </option>
+
+  <option key="Passages.BookCase" type="int-options">
+    <introspect class="org.crosswire.jsword.versification.BibleInfo" property="Case"/>
+    <alternative number="0"/>
+    <alternative number="1"/>
+    <alternative number="2"/>
+  </option>
+
+<!-- This really only useful for developers -->
+  <option key="Application.LookAndFeel" type="class" hidden="true">
+    <introspect class="org.crosswire.common.swing.LookAndFeelUtil" property="LookAndFeel"/>
+  </option>
+
+  <option key="Application.Language" type="string-options">
+    <introspect class="org.crosswire.bibledesktop.desktop.Translations" property="CurrentTranslation"/>
+    <map name="translation-codes"/>
+  </option>
+
+  <option key="Application.InitialLayout" type="int-options">
+    <introspect class="org.crosswire.common.swing.desktop.ViewManager" property="InitialLayoutType"/>
+    <alternative number="0"/>
+    <alternative number="1"/>
+  </option>
+
+  <option key="Application.MaxWidth" type="number">
+    <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="MaxWidth"/>
+  </option>
+
+  <option key="Application.MaxHeight" type="number">
+    <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="MaxHeight"/>
+  </option>
+
+  <option key="Application.UIFont" type="font">
+    <introspect class="org.crosswire.common.swing.LookAndFeelUtil" property="Font"/>
+  </option>
+
+<!-- This really only useful for developers -->
+  <option key="Advanced.SourcePath" type="path" priority="9" hidden="false">
+    <introspect class="org.crosswire.common.swing.ExceptionPane" property="SourcePath"/>
+  </option>
+
+<!-- This really only useful for developers -->
+  <option key="Advanced.DefaultPassageType" type="int-options" hidden="false">
+    <introspect class="org.crosswire.jsword.passage.PassageKeyFactory" property="DefaultPassage"/>
+    <alternative number="0"/>
+    <alternative number="1"/>
+    <alternative number="2"/>
+    <alternative number="3"/>
+  </option>
+
+<!-- Limbo: Currently not used
+  <option key="Advanced.Raw.CacheData" type="boolean">
+    <introspect class="org.crosswire.jsword.book.raw.RawBook" property="DefaultCacheData"/>
+  </option>
+-->
+
+<!-- Limbo: This really only useful for developers
+  <option key="Advanced.Reports.ShowErrorsInDialogBox" type="boolean" priority="8">
+    <introspect class="org.crosswire.common.swing.ExceptionPane" property="HelpDeskListener"/>
+  </option>
+-->
+
+<!-- Limbo: This really only useful for developers
+  <option key="Advanced.Reports.LogErrorsInLogWindow" type="boolean" priority="8">
+    <introspect class="org.crosswire.common.swing.ExceptionShelf" property="HelpDeskListener"/>
+  </option>
+-->
+
+<!-- This really only useful for developers -->
+  <option key="Advanced.IncludeAdvancedTabs" type="boolean" hidden="true">
+    <introspect class="org.crosswire.bibledesktop.desktop.AboutPane" property="Advanced"/>
+  </option>
+
+<!-- Limbo: Temporarily remove Blog code
+  <option key="WebJournal.Url" type="string" priority="1">
+    <introspect class="org.crosswire.bibledesktop.journal.BlogClientFrame" property="Url"/>
+  </option>
+
+  <option key="WebJournal.UserName" type="string">
+    <introspect class="org.crosswire.bibledesktop.journal.BlogClientFrame" property="UserName"/>
+  </option>
+  
+  <option key="WebJournal.Password" type="password">
+    <introspect class="org.crosswire.bibledesktop.journal.BlogClientFrame" property="Password"/>
+  </option>
+  
+  <option key="WebJournal.Type" type="int-options">
+    <introspect class="org.crosswire.bibledesktop.journal.BlogClientFrame" property="Type"/>
+    <alternative number="0" />
+    <alternative number="1" />
+  </option>
+ -->
+</config>

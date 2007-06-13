@@ -38,7 +38,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -70,6 +72,7 @@ import org.crosswire.biblemapper.model.VBAExport;
 import org.crosswire.common.config.Config;
 import org.crosswire.common.swing.ExceptionPane;
 import org.crosswire.common.swing.GuiUtil;
+import org.crosswire.common.util.CWClassLoader;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.common.xml.XMLUtil;
@@ -146,7 +149,10 @@ public class Mapper extends JFrame
         try
         {
             Document xmlconfig = XMLUtil.getDocument("config");
-            config.add(xmlconfig, null);
+            Locale defaultLocale = Locale.getDefault();
+            ResourceBundle configResources = ResourceBundle.getBundle("config", defaultLocale, CWClassLoader.instance(Mapper.class));
+
+            config.add(xmlconfig, configResources);
 
             Properties prop = ResourceUtil.getProperties("mapper");
             if (prop != null)

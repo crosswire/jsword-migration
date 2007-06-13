@@ -189,7 +189,8 @@ public class BookChooser extends JPanel
      */
     public void selection()
     {
-        selected = (String) lstBibles.getSelectedValue();
+        Book book = (Book) lstBibles.getSelectedValue();
+        selected = book.getName();
         btnOk.setEnabled(selected != null);
     }
 
