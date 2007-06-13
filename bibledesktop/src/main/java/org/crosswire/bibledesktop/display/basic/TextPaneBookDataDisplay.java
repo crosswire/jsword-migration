@@ -26,6 +26,7 @@ import java.awt.ComponentOrientation;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.text.MessageFormat;
@@ -46,6 +47,7 @@ import org.crosswire.bibledesktop.display.URIEvent;
 import org.crosswire.bibledesktop.display.URIEventListener;
 import org.crosswire.common.swing.AntiAliasedTextPane;
 import org.crosswire.common.util.Logger;
+import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
@@ -144,7 +146,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             XSLTProperty.DIRECTION.setState(bmd.isLeftToRight() ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$
 
             URI loc = bmd.getLocation();
-            XSLTProperty.BASE_URL.setState(loc == null ? "" : loc.toString()); //$NON-NLS-1$
+            XSLTProperty.BASE_URL.setState(loc == null ? "" : NetUtil.getAsFile(loc).getCanonicalPath()); //$NON-NLS-1$
 
             if (bmd.getBookCategory() == BookCategory.BIBLE)
             {
@@ -184,6 +186,10 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             Reporter.informUser(this, e);
         }
         catch (TransformerException e)
+        {
+            Reporter.informUser(this, e);
+        }
+        catch (IOException e)
         {
             Reporter.informUser(this, e);
         }

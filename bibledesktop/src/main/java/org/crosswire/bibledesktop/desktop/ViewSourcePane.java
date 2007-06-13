@@ -28,6 +28,7 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
+import java.io.IOException;
 import java.net.URI;
 import java.util.Iterator;
 
@@ -45,6 +46,7 @@ import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiUtil;
+import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.FormatType;
@@ -104,7 +106,7 @@ public class ViewSourcePane extends JPanel
             XSLTProperty.DIRECTION.setState(bmd.isLeftToRight() ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$
 
             URI loc = bmd.getLocation();
-            XSLTProperty.BASE_URL.setState(loc == null ? "" : loc.toString()); //$NON-NLS-1$
+            XSLTProperty.BASE_URL.setState(loc == null ? "" : NetUtil.getAsFile(loc).getCanonicalPath()); //$NON-NLS-1$
 
             if (bmd.getBookCategory() == BookCategory.BIBLE)
             {
@@ -134,6 +136,10 @@ public class ViewSourcePane extends JPanel
             Reporter.informUser(null, e);
         }
         catch (BookException e)
+        {
+            Reporter.informUser(null, e);
+        }
+        catch (IOException e)
         {
             Reporter.informUser(null, e);
         }
