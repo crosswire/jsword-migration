@@ -28,6 +28,7 @@ import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.versification.BibleInfo;
+import org.crosswire.jsword.versification.BookName;
 
 /**
  * A ComboBoxModel for selecting book/chapter/verse.
@@ -82,8 +83,8 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
         switch (level)
         {
         case LEVEL_BOOK:
-            String bsel = (String) selected;
-            int book = BibleInfo.getBookNumber(bsel);
+            BookName bsel = (BookName) selected;
+            int book = bsel.getNumber();
             assert book > 0;
             setBook(book);
             break;
@@ -184,7 +185,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
             verse = Math.min(verse, BibleInfo.versesInChapter(book, chapter));
 
             Verse update = new Verse(book, chapter, verse);
-            set.setViewedVerse(update);
+            set.setVerse(update);
         }
         catch (NoSuchVerseException ex)
         {
@@ -208,7 +209,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
             verse = Math.min(verse, BibleInfo.versesInChapter(book, chapter));
 
             Verse update = new Verse(book, chapter, verse);
-            set.setViewedVerse(update);
+            set.setVerse(update);
         }
         catch (NoSuchVerseException ex)
         {
@@ -225,7 +226,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
         {
             Verse old = set.getVerse();
             Verse update = new Verse(old.getBook(), old.getChapter(), verse);
-            set.setViewedVerse(update);
+            set.setVerse(update);
         }
         catch (NoSuchVerseException ex)
         {

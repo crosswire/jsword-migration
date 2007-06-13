@@ -145,7 +145,7 @@ public class BookTreeNode extends BibleTreeNode
     {
         try
         {
-            String bookName = BibleInfo.getBookName(book);
+            String bookName = BibleInfo.getPreferredBookName(book);
             if (ref == null)
             {
                 return bookName;

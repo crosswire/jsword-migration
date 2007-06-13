@@ -81,7 +81,7 @@ public class CliMapper
             {
                 Element eb = new Element("book");
                 eb.setAttribute("num", ""+b);
-                eb.setAttribute("name", BibleInfo.getBookName(b));
+                eb.setAttribute("name", BibleInfo.getPreferredBookName(b));
                 links.addContent(eb);
 
                 int chff = BibleInfo.chaptersInBook(b);

@@ -26,25 +26,22 @@ import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
-import org.crosswire.bibledesktop.book.install.BookIcon;
-import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.versification.BookName;
 
 /**
- * A custom list view that paints icons alongside the words, with a ToolTip
- * of the name of the Book.
+ * Render a list of Bible Book names with their full name as a tooltip
  *
  * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
- * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class BookListCellRenderer extends DefaultListCellRenderer
+public class BibleNameCellRenderer extends DefaultListCellRenderer
 {
     /**
      * Constructs a default renderer object for an item in a list,
      * using full names.
      */
-    public BookListCellRenderer()
+    public BibleNameCellRenderer()
     {
         this(false);
     }
@@ -55,7 +52,7 @@ public class BookListCellRenderer extends DefaultListCellRenderer
      * 
      * @param abbreviated use the initials in the list.
      */
-    public BookListCellRenderer(boolean abbreviated)
+    public BibleNameCellRenderer(boolean abbreviated)
     {
         super();
         this.abbreviated = abbreviated;
@@ -95,14 +92,13 @@ public class BookListCellRenderer extends DefaultListCellRenderer
         }
 
         // Hack to allow us to use PROTOTYPE_BOOK_NAME as a prototype value
-        if (value instanceof Book)
+        if (value instanceof BookName)
         {
-            Book book = (Book) value;
-            String name = book.getName();
+            BookName bookName = (BookName) value;
+            String name = bookName.getLongName();
 
-            setText(abbreviated ? book.getInitials() : name);
+            setText(abbreviated ? bookName.getShortName() : name);
             setToolTipText(name);
-            setIcon(BookIcon.getIcon(book));
         }
 
         return comp;

@@ -324,10 +324,6 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
             }
         });
 
-        cboBooks.setToolTipText(Msg.SELECT_BOOK.toString());
-        cboChaps.setToolTipText(Msg.SELECT_CHAPTER.toString());
-        cboVerse.setToolTipText(Msg.SELECT_VERSE.toString());
-
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         panel.add(cboBooks, null);

@@ -160,7 +160,7 @@ public class LinkArray implements Serializable
             {
                 Element eb = new Element("book");
                 eb.setAttribute("num", ""+b);
-                eb.setAttribute("name", BibleInfo.getBookName(b));
+                eb.setAttribute("name", BibleInfo.getPreferredBookName(b));
                 elinks.addContent(eb);
 
                 for (int c=1; c<=BibleInfo.chaptersInBook(b); c++)

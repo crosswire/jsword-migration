@@ -158,7 +158,7 @@ public final class WholeBibleTreeNode implements TreeNode
                 return Msg.WHOLE.toString();
 
             case LEVEL_BOOK:
-                return BibleInfo.getBookName(range.getStart().getBook());
+                return BibleInfo.getPreferredBookName(range.getStart().getBook());
 
             case LEVEL_CHAPTER:
                 return Integer.toString(range.getStart().getChapter());

@@ -32,6 +32,7 @@ import javax.swing.event.EventListenerList;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.versification.BibleInfo;
+import org.crosswire.jsword.versification.BookName;
 
 /**
  * A set of correctly constructed and linked BibleComboBoxModels.
@@ -39,14 +40,26 @@ import org.crosswire.jsword.versification.BibleInfo;
  * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
+ * @author DM Smith [dmsmith555 at yahoo dot com]
  */
 public class BibleComboBoxModelSet
 {
     public BibleComboBoxModelSet(JComboBox books, JComboBox chapters, JComboBox verses)
     {
+        listeners = new EventListenerList();
+        cil = new CustomItemListener();
+
+        mdlBook = new BibleComboBoxModel(this, BibleComboBoxModel.LEVEL_BOOK);
         setBookComboBox(books);
+
+        mdlChapter = new BibleComboBoxModel(this, BibleComboBoxModel.LEVEL_CHAPTER);
         setChapterComboBox(chapters);
-        setVerseComboBox(verses);
+
+        if (verses != null)
+        {
+            mdlVerse = new BibleComboBoxModel(this, BibleComboBoxModel.LEVEL_VERSE);
+            setVerseComboBox(verses);
+        }
     }
 
     /**
@@ -58,6 +71,16 @@ public class BibleComboBoxModelSet
 
         cboBook.setModel(mdlBook);
         cboBook.addItemListener(cil);
+        cboBook.setRenderer(new BibleNameCellRenderer(true));
+
+        try
+        {
+            cboBook.setToolTipText(BibleInfo.getLongBookName(verse.getBook()));
+        }
+        catch (NoSuchVerseException ex)
+        {
+            assert false : ex;
+        }
     }
 
     /**
@@ -82,7 +105,7 @@ public class BibleComboBoxModelSet
 
         cboVerse.setModel(mdlVerse);
         // There are over 100 verses in some chapters
-        cboChapter.setPrototypeDisplayValue(new Integer(999));
+        cboVerse.setPrototypeDisplayValue(new Integer(999));
         cboVerse.addItemListener(cil);
     }
 
@@ -92,15 +115,6 @@ public class BibleComboBoxModelSet
     public Verse getVerse()
     {
         return verse;
-    }
-
-    /**
-     * Sets the verse.
-     * @param newverse The verse to set
-     */
-    protected void setViewedVerse(Verse newverse)
-    {
-        setVerse(newverse);
     }
 
     /**
@@ -118,10 +132,11 @@ public class BibleComboBoxModelSet
             Verse oldverse = verse;
             verse = newverse;
             int bookval = newverse.getBook();
-            String book = BibleInfo.getBookName(bookval);
-            if (oldverse.getBook() != bookval || !cboBook.getSelectedItem().equals(book))
+            BookName bookName = BibleInfo.getBookName(bookval);
+            if (oldverse.getBook() != bookval || !cboBook.getSelectedItem().equals(bookName))
             {
-                cboBook.setSelectedItem(book);
+                cboBook.setSelectedItem(bookName);
+                cboBook.setToolTipText(bookName.getLongName());
             }
 
             int chapterval = newverse.getChapter();
@@ -131,11 +146,14 @@ public class BibleComboBoxModelSet
                 cboChapter.setSelectedItem(chapternum);
             }
 
-            int verseval = newverse.getVerse();
-            Integer versenum = new Integer(verseval);
-            if (oldverse.getVerse() != verseval || !cboVerse.getSelectedItem().equals(versenum))
+            if (cboVerse != null)
             {
-                cboVerse.setSelectedItem(versenum);
+                int verseval = newverse.getVerse();
+                Integer versenum = new Integer(verseval);
+                if (oldverse.getVerse() != verseval || !cboVerse.getSelectedItem().equals(versenum))
+                {
+                    cboVerse.setSelectedItem(versenum);
+                }
             }
 
             fireContentsChanged();
@@ -145,19 +163,6 @@ public class BibleComboBoxModelSet
             assert false : ex;
         }
     }
-
-    private Verse verse = Verse.DEFAULT;
-
-    protected JComboBox cboBook;
-    protected JComboBox cboChapter;
-    private JComboBox cboVerse;
-
-    protected BibleComboBoxModel mdlBook = new BibleComboBoxModel(this, BibleComboBoxModel.LEVEL_BOOK);
-    protected BibleComboBoxModel mdlChapter = new BibleComboBoxModel(this, BibleComboBoxModel.LEVEL_CHAPTER);
-    protected BibleComboBoxModel mdlVerse = new BibleComboBoxModel(this, BibleComboBoxModel.LEVEL_VERSE);
-
-    protected EventListenerList listeners = new EventListenerList();
-    private ItemListener cil = new CustomItemListener();
 
     /**
      * Add a listener to the list that's notified each time a change
@@ -220,11 +225,24 @@ public class BibleComboBoxModelSet
                     mdlChapter.fireContentsChanged(this, 0, mdlChapter.getSize());
                 }
 
-                if (source.equals(cboBook) || source.equals(cboChapter))
+                if (mdlVerse != null && (source.equals(cboBook) || source.equals(cboChapter)))
                 {
                     mdlVerse.fireContentsChanged(this, 0, mdlVerse.getSize());
                 }
             }
         }
     }
+
+    private Verse verse = Verse.DEFAULT;
+
+    protected JComboBox cboBook;
+    protected JComboBox cboChapter;
+    private JComboBox cboVerse;
+
+    protected BibleComboBoxModel mdlBook;
+    protected BibleComboBoxModel mdlChapter;
+    protected BibleComboBoxModel mdlVerse;
+
+    protected EventListenerList listeners;
+    private ItemListener cil;
 }
