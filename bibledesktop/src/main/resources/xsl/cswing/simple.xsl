@@ -123,7 +123,7 @@
   <xsl:variable name="keyf" select="jsword:org.crosswire.jsword.passage.PassageKeyFactory.instance()"/>
 
   <!--=======================================================================-->
-  <xsl:template match="/osis">
+  <xsl:template match="/">
     <html dir="{$direction}">
       <head>
         <base href="{$baseURL}"/>
@@ -202,6 +202,15 @@
         </xsl:choose>
       </body>
     </html>
+  </xsl:template>
+
+  <!--=======================================================================-->
+  <!--
+    == A proper OSIS document has osis as it's root.
+    == We dig deeper for it's content.
+    -->
+  <xsl:template match="osis">
+    <xsl:apply-templates/>
   </xsl:template>
 
   <!--=======================================================================-->

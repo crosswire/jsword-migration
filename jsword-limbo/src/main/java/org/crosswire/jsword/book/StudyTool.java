@@ -55,43 +55,39 @@ public class StudyTool
         Map reply = new HashMap();
 
         // Loop through all the divs in this BookData
-        Iterator oit = OSISUtil.getFragment(data.getOsis()).iterator();
-        while (oit.hasNext())
+        Element div = data.getOsisFragment();
+
+        // Get all the w elements in this div
+        Iterator dit = OSISUtil.getDeepContent(div, OSISUtil.OSIS_ELEMENT_W).iterator();
+        while (dit.hasNext())
         {
-            Element div = (Element) oit.next();
+            // LATER(joe): This only looks at L1 content, we need a deep scan for 'W's.
+            Object ele = dit.next();
+            Element w = (Element) ele;
+            String content = OSISUtil.getPlainText(w);
 
-            // And loop over the content in this div
-            Iterator dit = OSISUtil.getDeepContent(div, OSISUtil.OSIS_ELEMENT_W).iterator();
-            while (dit.hasNext())
+            // There will be many words in the passage in question,
+            // but not all of them will be translations of our word
+            if (content.indexOf(word) != -1)
             {
-                // LATER(joe): This only looks at L1 content, we need a deep scan for 'W's.
-                Object ele = dit.next();
-                Element w = (Element) ele;
-                String content = OSISUtil.getPlainText(w);
+                Strongs strongs = new Strongs(w);
 
-                // There will be many words in the passage in question,
-                // but not all of them will be translations of our word
-                if (content.indexOf(word) != -1)
+                Translation trans = (Translation) reply.get(strongs);
+                if (trans == null)
                 {
-                    Strongs strongs = new Strongs(w);
-
-                    Translation trans = (Translation) reply.get(strongs);
-                    if (trans == null)
+                    try
                     {
-                        try
-                        {
-                            trans = new Translation(word, strongs, bible.getKey(null));
-                        }
-                        catch (NoSuchKeyException ex)
-                        {
-                            log.warn("Failed to create key", ex); //$NON-NLS-1$
-                        }
-
-                        reply.put(strongs, trans);
+                        trans = new Translation(word, strongs, bible.getKey(null));
+                    }
+                    catch (NoSuchKeyException ex)
+                    {
+                        log.warn("Failed to create key", ex); //$NON-NLS-1$
                     }
 
-                    trans.getKey().addAll(OSISUtil.getVerse(w));
+                    reply.put(strongs, trans);
                 }
+
+                trans.getKey().addAll(OSISUtil.getVerse(w));
             }
         }
 
@@ -111,44 +107,40 @@ public class StudyTool
         Map reply = new HashMap();
 
         // Loop through all the divs in this BookData
-        Iterator oit = OSISUtil.getFragment(data.getOsis()).iterator();
-        while (oit.hasNext())
+        Element div = data.getOsisFragment();
+
+        // Get all the w elements in this div
+        Iterator dit = OSISUtil.getDeepContent(div, OSISUtil.OSIS_ELEMENT_W).iterator();
+        while (dit.hasNext())
         {
-            Element div = (Element) oit.next();
+            // see note above on deep scanning for W
+            Object ele = dit.next();
+            Element w = (Element) ele;
+            Strongs strongs = new Strongs(w);
 
-            // And loop over the content in this div
-            Iterator dit = OSISUtil.getDeepContent(div, OSISUtil.OSIS_ELEMENT_W).iterator();
-            while (dit.hasNext())
+            // There will be many strongs number in the passage in
+            // question, but not all of them will be translations of our
+            // strongs number
+            if (strongs.equals(number))
             {
-                // see note above on deep scanning for W
-                Object ele = dit.next();
-                Element w = (Element) ele;
-                Strongs strongs = new Strongs(w);
+                String translated = OSISUtil.getPlainText(w);
 
-                // There will be many strongs number in the passage in
-                // question, but not all of them will be translations of our
-                // strongs number
-                if (strongs.equals(number))
+                Translation trans = (Translation) reply.get(translated);
+                if (trans == null)
                 {
-                    String translated = OSISUtil.getPlainText(w);
-
-                    Translation trans = (Translation) reply.get(translated);
-                    if (trans == null)
+                    try
                     {
-                        try
-                        {
-                            trans = new Translation(translated, number, bible.getKey(null));
-                        }
-                        catch (NoSuchKeyException ex)
-                        {
-                            log.warn("Failed to create key", ex); //$NON-NLS-1$
-                        }
-
-                        reply.put(translated, trans);
+                        trans = new Translation(translated, number, bible.getKey(null));
+                    }
+                    catch (NoSuchKeyException ex)
+                    {
+                        log.warn("Failed to create key", ex); //$NON-NLS-1$
                     }
 
-                    trans.getKey().addAll(OSISUtil.getVerse(w));
+                    reply.put(translated, trans);
                 }
+
+                trans.getKey().addAll(OSISUtil.getVerse(w));
             }
         }
 

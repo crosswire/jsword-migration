@@ -401,7 +401,7 @@ public class RawBook extends AbstractPassageBook
     public void setDocument(Verse verse, BookData bdata) throws BookException
     {
         // For all of the sections
-        Iterator sit = OSISUtil.getFragment(bdata.getOsis()).iterator();
+        Iterator sit = bdata.getOsisFragment().getContent().iterator();
         while (sit.hasNext())
         {
             Element div = (Element) sit.next();

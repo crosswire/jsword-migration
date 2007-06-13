@@ -275,7 +275,7 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus
             else
             {
                 BookData data = new BookData(book, sublist);
-                String text = OSISUtil.getPlainText(data.getOsis());
+                String text = OSISUtil.getPlainText(data.getOsisFragment());
 
                 String[] words = SentenceUtil.getWords(text);
                 for (int i = 0; i < words.length; i++)
