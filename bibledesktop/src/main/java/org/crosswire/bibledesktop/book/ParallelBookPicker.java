@@ -228,7 +228,7 @@ public class ParallelBookPicker extends JPanel
             if (ev.getStateChange() == ItemEvent.SELECTED)
             {
                 JComboBox combo = (JComboBox) ev.getSource();
-                
+
                 Book selected = (Book) combo.getSelectedItem();
 
                 fireBooksChosen(new BookSelectEvent(this, getBooks()));

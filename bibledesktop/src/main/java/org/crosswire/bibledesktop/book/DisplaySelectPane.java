@@ -147,7 +147,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
                 }
                 catch (NoSuchVerseException ex)
                 {
-                    assert false: ex;
+                    assert false : ex;
                 }
             }
         });

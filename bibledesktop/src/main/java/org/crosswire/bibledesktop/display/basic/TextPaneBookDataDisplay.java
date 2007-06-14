@@ -93,7 +93,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
      */
     public void clearBookData()
     {
-        setBookData(null, null);        
+        setBookData(null, null);
     }
 
     /* (non-Javadoc)
@@ -110,7 +110,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
         }
         else if (bdata == null || !books.equals(bdata.getBooks()) || !key.equals(bdata.getKey()))
         {
-           bdata = new BookData(books, key, compareBooks); 
+           bdata = new BookData(books, key, compareBooks);
         }
 
         refresh();
@@ -282,7 +282,6 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
                 refresh();
             }
         }
-        
     }
 
     private String[] getParts(String reference) throws MalformedURLException

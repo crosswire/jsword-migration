@@ -127,7 +127,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
      */
     public void clearBookData()
     {
-        setBookData(null, null);        
+        setBookData(null, null);
     }
 
     /* (non-Javadoc)

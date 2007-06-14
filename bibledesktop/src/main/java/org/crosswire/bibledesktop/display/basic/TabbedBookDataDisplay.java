@@ -102,7 +102,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
      */
     public void clearBookData()
     {
-        setBookData(null, null);        
+        setBookData(null, null);
     }
 
     /* (non-Javadoc)
