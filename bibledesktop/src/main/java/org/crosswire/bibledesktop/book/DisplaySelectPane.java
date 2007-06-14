@@ -14,18 +14,21 @@
  *      59 Temple Place - Suite 330
  *      Boston, MA 02111-1307, USA
  *
- * Copyright: 2005
+ * Copyright: 2007
  *     The copyright to this program is held by it's authors.
  *
  * ID: $Id$
  */
 package org.crosswire.bibledesktop.book;
 
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -33,6 +36,7 @@ import java.io.ObjectInputStream;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -59,9 +63,13 @@ import org.crosswire.jsword.index.search.DefaultSearchModifier;
 import org.crosswire.jsword.index.search.DefaultSearchRequest;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchKeyException;
+import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.PassageTally;
 import org.crosswire.jsword.passage.RestrictionType;
 import org.crosswire.jsword.passage.RocketPassage;
+import org.crosswire.jsword.passage.Verse;
+import org.crosswire.jsword.passage.VerseRange;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * Passage Selection area.
@@ -69,6 +77,7 @@ import org.crosswire.jsword.passage.RocketPassage;
  * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
+ * @author DM Smith [dmsmith555 at yahoo dot com]
  */
 public class DisplaySelectPane extends JPanel implements KeyChangeListener, BookSelectListener
 {
@@ -102,9 +111,9 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         };
 
         // search() and version() rely on this returning only Books indexed by verses
-        picker = new ParallelBookPicker(BookFilters.getBibles(), BookComparators.getInitialComparator());
-        picker.addBookListener(this);
-        selected = picker.getBooks();
+        biblePicker = new ParallelBookPicker(BookFilters.getBibles(), BookComparators.getInitialComparator());
+        biblePicker.addBookListener(this);
+        selected = biblePicker.getBooks();
         if (selected.length > 0)
         {
             selected[0].addIndexStatusListener(isl);
@@ -118,8 +127,38 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
             key = new RocketPassage();
         }
 
+        JComboBox cboBooks = new JComboBox();
+        JComboBox cboChaps = new JComboBox();
+        BibleComboBoxModelSet quickSet = new BibleComboBoxModelSet(cboBooks, cboChaps, null);
+        quickSet.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent ev)
+            {
+                BibleComboBoxModelSet set = (BibleComboBoxModelSet) ev.getSource();
+                Verse start = set.getVerse();
+                int book = start.getBook();
+                int chapter = start.getChapter();
+                try
+                {
+                    VerseRange range = new VerseRange(start, new Verse(book, chapter, BibleInfo.versesInChapter(book, chapter)));
+                    txtSearch.setText(""); //$NON-NLS-1$
+                    txtKey.setText(range.getName());
+                    doGoPassage();
+                }
+                catch (NoSuchVerseException ex)
+                {
+                    assert false: ex;
+                }
+            }
+        });
+
+        JPanel quickPicker = new JPanel();
+        quickPicker.setLayout(new FlowLayout());
+        quickPicker.add(cboBooks);
+        quickPicker.add(cboChaps);
+
         JLabel lblBible = actions.createJLabel(BIBLE);
-        lblBible.setLabelFor(picker);
+        lblBible.setLabelFor(biblePicker);
 
         JLabel lblKey = actions.createJLabel(VIEW_LABEL);
         txtKey = new JTextField();
@@ -155,8 +194,9 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         btnIndex = new JButton(actions.getAction(INDEX));
 
         this.setLayout(new GridBagLayout());
-        this.add(lblBible,    new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));
-        this.add(picker,      new GridBagConstraints(2, 0, 4, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(lblBible,    new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 5), 0, 0));
+        this.add(biblePicker, new GridBagConstraints(2, 0, 2, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(quickPicker, new GridBagConstraints(4, 0, 2, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         this.add(lblKey,      new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));
         this.add(txtKey,      new GridBagConstraints(2, 1, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 0, 1, 2), 0, 0));
@@ -379,9 +419,9 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     /**
      * @return the picker
      */
-    public ParallelBookPicker getPicker()
+    public ParallelBookPicker getBiblePicker()
     {
-        return picker;
+        return biblePicker;
     }
 
     public void setKey(String newKey)
@@ -743,9 +783,9 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
      * GUI Components
      */
     private PassageSelectionPane dlgSelect;
-    private ParallelBookPicker picker;
-    private JTextField txtKey;
-    private JTextField txtSearch;
+    private ParallelBookPicker biblePicker;
+    protected JTextField txtKey;
+    protected JTextField txtSearch;
     private JButton btnAdvanced;
     private JButton btnSearch;
     private JButton btnKey;

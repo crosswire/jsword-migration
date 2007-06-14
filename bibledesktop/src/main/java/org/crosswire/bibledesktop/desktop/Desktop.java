@@ -868,7 +868,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
                 {
                     BibleViewPane view = (BibleViewPane) getViews().getSelected();
                     DisplaySelectPane selector = view.getSelectPane();
-                    selector.getPicker().enableButtons();
+                    selector.getBiblePicker().enableButtons();
                 }
             }            
         });
