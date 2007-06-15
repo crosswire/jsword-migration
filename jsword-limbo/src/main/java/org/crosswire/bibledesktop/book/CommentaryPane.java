@@ -36,6 +36,7 @@ import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
 import org.crosswire.bibledesktop.display.ScrolledBookDataDisplay;
 import org.crosswire.bibledesktop.display.URIEventListener;
+import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
@@ -220,6 +221,22 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
         }
 
         updateDisplay();
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
+     */
+    public void addKeyChangeListener(KeyChangeListener listener)
+    {
+        display.addKeyChangeListener(listener);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
+     */
+    public void removeKeyChangeListener(KeyChangeListener listener)
+    {
+        display.removeKeyChangeListener(listener);
     }
 
     /* (non-Javadoc)

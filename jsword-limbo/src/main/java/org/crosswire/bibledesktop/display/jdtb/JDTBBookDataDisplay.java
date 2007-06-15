@@ -27,6 +27,7 @@ import java.net.URL;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.URIEventListener;
+import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
@@ -120,6 +121,20 @@ public class JDTBBookDataDisplay implements BookDataDisplay
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#copy()
      */
     public void copy()
+    {
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
+     */
+    public void addKeyChangeListener(KeyChangeListener listener)
+    {
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
+     */
+    public void removeKeyChangeListener(KeyChangeListener listener)
     {
     }
 

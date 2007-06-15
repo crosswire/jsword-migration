@@ -47,7 +47,7 @@ import org.crosswire.jsword.book.basic.BookRoot;
 public class JDBCBookDriver extends AbstractBookDriver
 {
     /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.BookDriver#getBooks()
+     * @see org.crosswire.jsword.book.BookProvider#getBooks()
      */
     public Book[] getBooks()
     {
