@@ -174,19 +174,13 @@ public class ActionFactory implements ActionListener, Actionable
         Action action = getAction(key);
 
         JLabel label = new JLabel();
-        if (action != null)
+        label.setText(action.getValue(Action.NAME).toString());
+
+        // Mac's don't have mnemonics
+        Integer mnemonic = (Integer) action.getValue(Action.MNEMONIC_KEY);
+        if (mnemonic != null && !OSType.MAC.equals(OSType.getOSType()))
         {
-            label.setText(action.getValue(Action.NAME).toString());
-            // Mac's don't have mnemonics
-            Integer mnemonic = (Integer) action.getValue(Action.MNEMONIC_KEY);
-            if (mnemonic != null && !OSType.MAC.equals(OSType.getOSType()))
-            {
-                label.setDisplayedMnemonic(mnemonic.intValue());
-            }
-        }
-        else
-        {
-            label.setText(key);
+            label.setDisplayedMnemonic(mnemonic.intValue());
         }
 
         return label;
