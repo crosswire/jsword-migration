@@ -1,7 +1,7 @@
 <project name="findbugs" default="findbugs">
 
   <property name="support.bugs" value="${support.tools}/findbugs"/>
-  <property name="version.bugs" value="1.2.0"/>
+  <property name="version.bugs" value="1.2.1"/>
 
   <!-- this should be overridden by the parent file -->
   <property name="support.tools" value=".."/>
