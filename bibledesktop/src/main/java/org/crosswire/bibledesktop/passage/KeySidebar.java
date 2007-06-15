@@ -61,7 +61,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
      */
     public KeySidebar(Book[] books)
     {
-        this.books = books;
+        this.books = books == null ? null : (Book[]) books.clone();
         init();
         setActive();
     }
@@ -309,7 +309,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
      */
     public void bookChosen(DisplaySelectEvent ev)
     {
-        books = ev.getBooks();
+        books = ev.getBookProvider().getBooks();
     }
 
     /* (non-Javadoc)

@@ -271,7 +271,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
     /**
      * What is currently selected?
      */
-    private Object selected;
+    private transient Object selected;
 
     /**
      * Are we a book, chapter or verse selector

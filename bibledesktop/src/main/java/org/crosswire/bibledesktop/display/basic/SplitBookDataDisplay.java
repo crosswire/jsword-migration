@@ -23,30 +23,31 @@ package org.crosswire.bibledesktop.display.basic;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.event.EventListenerList;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
-import org.crosswire.bibledesktop.passage.KeyChangeEvent;
 import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.bibledesktop.passage.KeySidebar;
 import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.util.Logger;
+import org.crosswire.common.util.StringUtil;
 import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookProvider;
 import org.crosswire.jsword.passage.Key;
 
 /**
- * A quick Swing Bible display pane.
+ * A SplitBookDataDisplay consists of a KeySidebar and a BookDataDisplay in a SplitPane.
  *
  * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class SplitBookDataDisplay extends JPanel
+public class SplitBookDataDisplay extends JPanel implements BookProvider
 {
     /**
      * Initialize the SplitBookDataDisplay
@@ -55,14 +56,8 @@ public class SplitBookDataDisplay extends JPanel
     {
         this.child = child;
         this.sidebar = sidebar;
-        init();
-    }
+        listenerList = new EventListenerList();
 
-    /**
-     * Create the GUI
-     */
-    private void init()
-    {
         split = new FixedSplitPane();
         split.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         split.setLeftComponent(sidebar);
@@ -97,25 +92,22 @@ public class SplitBookDataDisplay extends JPanel
      */
     public void setBookData(Book[] books, Key key)
     {
-        boolean keyChanged = this.key == null || !this.key.equals(key);
-        boolean bookChanged = this.books == null || !this.books.equals(books);
+        boolean keyChanged = child.getKey() == null || !child.getKey().equals(key);
+        boolean bookChanged = child.getBooks() == null || !Arrays.equals(child.getBooks(), books);
 
-        this.books = books;
-        this.key = key;
-
-        // Only set the passage if it has changed
+       // Only set the passage if it has changed
         if (keyChanged)
         {
             log.debug("new passage chosen: " + key.getName()); //$NON-NLS-1$
-            fireKeyChanged(new KeyChangeEvent(this, key));
+        }
+
+        if (bookChanged)
+        {
+            log.debug("new book(s) chosen: " + StringUtil.toString(books)); //$NON-NLS-1$
         }
 
         if (bookChanged || keyChanged)
         {
-            if (bookChanged)
-            {
-                log.debug("new bible chosen: " + books); //$NON-NLS-1$
-            }
             child.setBookData(books, key);
         }
     }
@@ -144,13 +136,12 @@ public class SplitBookDataDisplay extends JPanel
         validate();
     }
 
-
     /**
      * @return the key
      */
     public Key getKey()
     {
-        return key;
+        return child.getKey();
     }
 
     /**
@@ -158,7 +149,7 @@ public class SplitBookDataDisplay extends JPanel
      */
     public Book[] getBooks()
     {
-        return books;
+        return child.getBooks();
     }
 
     /**
@@ -166,7 +157,7 @@ public class SplitBookDataDisplay extends JPanel
      */
     public Book getFirstBook()
     {
-        return books != null && books.length > 0 ? books[0] : null;
+        return child.getFirstBook();
     }
 
     /**
@@ -178,68 +169,24 @@ public class SplitBookDataDisplay extends JPanel
     }
 
     /**
-     * Add a command listener
+     * Add a listener for changes in the Key.
+     * 
+     * @param listener the listener to add
      */
     public synchronized void addKeyChangeListener(KeyChangeListener listener)
     {
-        List temp = new ArrayList(2);
-
-        if (keyChangeListeners != null)
-        {
-            temp.addAll(keyChangeListeners);
-        }
-
-        if (!temp.contains(listener))
-        {
-            temp.add(listener);
-            keyChangeListeners = temp;
-        }
+        child.addKeyChangeListener(listener);
     }
 
     /**
-     * Remove a command listener
+     * Remove a listener for changes in the Key.
+     * 
+     * @param listener the listener to remove
      */
     public synchronized void removeKeyChangeListener(KeyChangeListener listener)
     {
-        if (keyChangeListeners != null && keyChangeListeners.contains(listener))
-        {
-            List temp = new ArrayList();
-            temp.addAll(keyChangeListeners);
-
-            temp.remove(listener);
-            keyChangeListeners = temp;
-        }
+        child.removeKeyChangeListener(listener);
     }
-
-    /**
-     * Inform the command keyChangeListeners
-     */
-    protected synchronized void fireKeyChanged(KeyChangeEvent ev)
-    {
-        if (keyChangeListeners != null)
-        {
-            for (int i = 0; i < keyChangeListeners.size(); i++)
-            {
-                KeyChangeListener listener = (KeyChangeListener) keyChangeListeners.get(i);
-                listener.keyChanged(ev);
-            }
-        }
-    }
-
-    /**
-     * The whole passage that we are viewing
-     */
-    private Key key;
-
-    /**
-     * The listener for KeyChangeEvents
-     */
-    private transient List keyChangeListeners;
-
-    /**
-     * What books are we currently viewing?
-     */
-    private transient Book[] books;
 
     /**
      * The log stream

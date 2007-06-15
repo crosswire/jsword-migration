@@ -56,6 +56,7 @@ import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookComparators;
 import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookFilters;
+import org.crosswire.jsword.book.BookProvider;
 import org.crosswire.jsword.index.IndexStatus;
 import org.crosswire.jsword.index.IndexStatusEvent;
 import org.crosswire.jsword.index.IndexStatusListener;
@@ -79,7 +80,7 @@ import org.crosswire.jsword.versification.BibleInfo;
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class DisplaySelectPane extends JPanel implements KeyChangeListener, BookSelectListener
+public class DisplaySelectPane extends JPanel implements KeyChangeListener, BookSelectListener, BookProvider
 {
     /**
      * General constructor
@@ -218,7 +219,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
      */
     public Book[] getBooks()
     {
-        return selected;
+        return (Book[]) selected.clone();
     }
 
     /**
@@ -405,7 +406,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
             return;
         }
 
-        fireCommandMade(new DisplaySelectEvent(this, key, selected));
+        fireCommandMade(new DisplaySelectEvent(this, key));
     }
 
     /**
@@ -602,10 +603,10 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
      */
     public void booksChosen(BookSelectEvent ev)
     {
-        Book[] books = ev.getBooks();
+        Book[] books = ev.getBookProvider().getBooks();
         assert books.length > 0;
 
-        Book newSelected = ev.getFirstBook();
+        Book newSelected = ev.getBookProvider().getFirstBook();
 
         if (selected.length > 0 && selected[0] != newSelected)
         {
@@ -623,7 +624,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
             return;
         }
 
-        fireVersionChanged(new DisplaySelectEvent(this, key, selected));
+        fireVersionChanged(new DisplaySelectEvent(this, key));
     }
 
     /* (non-Javadoc)

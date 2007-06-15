@@ -45,7 +45,6 @@ public class ScrolledBookDataDisplay extends ProxyBookDataDisplay
         super(child);
         scrView = new CWScrollPane(getProxy().getComponent());
         scrView.getViewport().setPreferredSize(new Dimension(500, 400));
-//        scrView.getViewport().add(getProxy().getComponent(), null);
     }
 
     /* (non-Javadoc)

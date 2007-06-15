@@ -251,7 +251,7 @@ public class BooksListModel extends AbstractListModel
     /**
      * The sort algorithm to use.
      */
-    protected Comparator comparator;
+    protected transient Comparator comparator;
 
     /**
      * The log stream

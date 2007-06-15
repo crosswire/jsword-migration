@@ -813,10 +813,51 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         fillChoiceFactory();
 
         config = new Config(Msg.CONFIG_TITLE.toString());
-        Document xmlconfig = null;
         try
         {
-            xmlconfig = XMLUtil.getDocument(CONFIG_KEY);
+            Document xmlconfig = XMLUtil.getDocument(CONFIG_KEY);
+
+            Locale defaultLocale = Locale.getDefault();
+            ResourceBundle configResources = ResourceBundle.getBundle(CONFIG_KEY, defaultLocale, CWClassLoader.instance(Desktop.class));
+
+            config.add(xmlconfig, configResources);
+
+            try
+            {
+                config.setProperties(ResourceUtil.getProperties(DESKTOP_KEY));
+            }
+            catch (IOException ex)
+            {
+                ex.printStackTrace(System.err);
+                ExceptionPane.showExceptionDialog(null, ex);
+            }
+
+            config.localToApplication();
+            config.addPropertyChangeListener(new PropertyChangeListener()
+            {
+                /* (non-Javadoc)
+                 * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+                 */
+                public void propertyChange(PropertyChangeEvent evt)
+                {
+                    // When the font changes update all the visible locations using it.
+                    if (evt.getPropertyName().equals("BibleDisplay.ConfigurableFont")) //$NON-NLS-1$
+                    {
+                        BibleViewPane view = (BibleViewPane) getViews().getSelected();
+                        SplitBookDataDisplay da = view.getPassagePane();
+                        da.getBookDataDisplay().refresh();
+
+                        reference.refresh();
+                    }
+
+                    if (evt.getPropertyName().equals("BibleDisplay.MaxPickers")) //$NON-NLS-1$
+                    {
+                        BibleViewPane view = (BibleViewPane) getViews().getSelected();
+                        DisplaySelectPane selector = view.getSelectPane();
+                        selector.getBiblePicker().enableButtons();
+                    }
+                }
+            });
         }
         // Something went wrong before we've managed to get on our feet.
         // so we want the best possible shot at working out what failed.
@@ -831,47 +872,6 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
             ExceptionPane.showExceptionDialog(null, e);
         }
 
-        Locale defaultLocale = Locale.getDefault();
-        ResourceBundle configResources = ResourceBundle.getBundle(CONFIG_KEY, defaultLocale, CWClassLoader.instance(Desktop.class));
-
-        config.add(xmlconfig, configResources);
-
-        try
-        {
-            config.setProperties(ResourceUtil.getProperties(DESKTOP_KEY));
-        }
-        catch (IOException ex)
-        {
-            ex.printStackTrace(System.err);
-            ExceptionPane.showExceptionDialog(null, ex);
-        }
-
-        config.localToApplication();
-        config.addPropertyChangeListener(new PropertyChangeListener()
-        {
-            /* (non-Javadoc)
-             * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
-             */
-            public void propertyChange(PropertyChangeEvent evt)
-            {
-                // When the font changes update all the visible locations using it.
-                if (evt.getPropertyName().equals("BibleDisplay.ConfigurableFont")) //$NON-NLS-1$
-                {
-                    BibleViewPane view = (BibleViewPane) getViews().getSelected();
-                    SplitBookDataDisplay da = view.getPassagePane();
-                    da.getBookDataDisplay().refresh();
-
-                    reference.refresh();
-                }
-
-                if (evt.getPropertyName().equals("BibleDisplay.MaxPickers")) //$NON-NLS-1$
-                {
-                    BibleViewPane view = (BibleViewPane) getViews().getSelected();
-                    DisplaySelectPane selector = view.getSelectPane();
-                    selector.getBiblePicker().enableButtons();
-                }
-            }
-        });
     }
 
     public void checkForBooks()

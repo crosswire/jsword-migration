@@ -45,6 +45,7 @@ import javax.swing.tree.TreePath;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
 import org.crosswire.bibledesktop.display.URIEventListener;
+import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.bibledesktop.passage.KeyListListModel;
 import org.crosswire.bibledesktop.passage.KeyTreeCellRenderer;
 import org.crosswire.bibledesktop.passage.KeyTreeModel;
@@ -168,6 +169,22 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
     public Key getKey()
     {
         return (Key) dictionaryKeyList.getSelectedValue();
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
+     */
+    public void addKeyChangeListener(KeyChangeListener listener)
+    {
+        display.addKeyChangeListener(listener);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
+     */
+    public void removeKeyChangeListener(KeyChangeListener listener)
+    {
+        display.removeKeyChangeListener(listener);
     }
 
     /* (non-Javadoc)

@@ -24,7 +24,9 @@ package org.crosswire.bibledesktop.display;
 import java.awt.Component;
 import java.beans.PropertyChangeListener;
 
+import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookProvider;
 import org.crosswire.jsword.passage.Key;
 
 /**
@@ -34,7 +36,7 @@ import org.crosswire.jsword.passage.Key;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public interface BookDataDisplay extends PropertyChangeListener
+public interface BookDataDisplay extends BookProvider, PropertyChangeListener
 {
     /**
      * Used by property change listeners to listen for when books should be compared.
@@ -42,29 +44,8 @@ public interface BookDataDisplay extends PropertyChangeListener
     String COMPARE_BOOKS = "ComparingBooks"; //$NON-NLS-1$
 
     /**
-     * Copy the selection to the clipboard
-     */
-    void copy();
-
-    /**
-     * Add a listener for when someone clicks on a browser 'link'
-     * @param listener The listener to add
-     */
-    void addURIEventListener(URIEventListener listener);
-
-    /**
-     * Remove a listener for when someone clicks on a browser 'link'
-     * @param listener The listener to remove
-     */
-    void removeURIEventListener(URIEventListener listener);
-
-    /**
-     * Accessor for the Swing component
-     */
-    Component getComponent();
-
-    /**
-     * Clear any BookData that is displayed.
+     * Clear any BookData that is displayed. This is equivalent to:
+     * <code>setBookData(null, null)</code>.
      */
     void clearBookData();
 
@@ -80,11 +61,6 @@ public interface BookDataDisplay extends PropertyChangeListener
     void setBookData(Book[] books, Key key);
 
     /**
-     * Cause the BookData to be re-displayed.
-     */
-    void refresh();
-
-    /**
      * The Book Key that we are displaying, or null if we are not displaying
      * anything
      * @return The current key
@@ -92,16 +68,45 @@ public interface BookDataDisplay extends PropertyChangeListener
     Key getKey();
 
     /**
-     * Accessor for the Books used in the current display, or null if we are not
-     * displaying anything.
-     * @return The current books
+     * Cause the BookData to be re-displayed.
      */
-    Book[] getBooks();
+    void refresh();
 
     /**
-     * Accessor for the first Book used in the current display, or null if we are not
-     * displaying anything.
-     * @return The current books
+     * Copy the selection to the clipboard
      */
-    Book getFirstBook();
+    void copy();
+
+    /**
+     * Add a listener for when the key changes.
+     * 
+     * @param listener
+     */
+    void addKeyChangeListener(KeyChangeListener listener);
+
+    /**
+     * Remove a listener for when the key changes.
+     * 
+     * @param listener
+     */
+    void removeKeyChangeListener(KeyChangeListener listener);
+
+    /**
+     * Add a listener for when someone clicks on a browser 'link'
+     * @param listener The listener to add
+     */
+    void addURIEventListener(URIEventListener listener);
+
+    /**
+     * Remove a listener for when someone clicks on a browser 'link'
+     * @param listener The listener to remove
+     */
+    void removeURIEventListener(URIEventListener listener);
+
+
+    /**
+     * Accessor for the Swing component
+     */
+    Component getComponent();
+
 }

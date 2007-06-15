@@ -24,6 +24,7 @@ package org.crosswire.bibledesktop.display;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 
+import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 
@@ -54,6 +55,22 @@ public class ProxyBookDataDisplay implements BookDataDisplay
     protected BookDataDisplay getProxy()
     {
         return proxy;
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
+     */
+    public void addKeyChangeListener(KeyChangeListener listener)
+    {
+        proxy.addKeyChangeListener(listener);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
+     */
+    public void removeKeyChangeListener(KeyChangeListener listener)
+    {
+        proxy.removeKeyChangeListener(listener);
     }
 
     /* (non-Javadoc)

@@ -104,7 +104,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
              */
             public void bookChosen(DisplaySelectEvent ev)
             {
-                pnlPassg.setBookData(ev.getBooks(), ev.getKey());
+                pnlPassg.setBookData(ev.getBookProvider().getBooks(), ev.getKey());
             }
         });
 

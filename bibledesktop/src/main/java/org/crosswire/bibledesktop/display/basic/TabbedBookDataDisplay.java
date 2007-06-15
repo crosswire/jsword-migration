@@ -39,8 +39,9 @@ import javax.swing.event.ChangeListener;
 
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
-import org.crosswire.bibledesktop.display.ScrolledBookDataDisplay;
 import org.crosswire.bibledesktop.display.URIEventListener;
+import org.crosswire.bibledesktop.passage.KeyChangeListener;
+import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
@@ -64,19 +65,14 @@ public class TabbedBookDataDisplay implements BookDataDisplay
      */
     public TabbedBookDataDisplay()
     {
-        pnlView = createInnerDisplayPane();
+        views = new HashMap();
+        displays = new ArrayList();
+        pnlMore = new JPanel();
+        pnlMain = new JPanel();
 
-        init();
+        bookDataDisplay = createInnerDisplayPane();
 
-        center = pnlView.getComponent();
-        pnlMain.add(center, BorderLayout.CENTER);
-    }
-
-    /**
-     * GUI creation
-     */
-    private void init()
-    {
+        tabMain = new JTabbedPane();
         tabMain.setTabPlacement(SwingConstants.BOTTOM);
         tabMain.addChangeListener(new ChangeListener()
         {
@@ -87,6 +83,10 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         });
 
         pnlMain.setLayout(new BorderLayout());
+
+        center = bookDataDisplay.getComponent();
+        scrMain = new CWScrollPane(center);
+        pnlMain.add(scrMain, BorderLayout.CENTER);
     }
 
     /* (non-Javadoc)
@@ -110,14 +110,14 @@ public class TabbedBookDataDisplay implements BookDataDisplay
      */
     public void setBookData(Book[] books, Key newkey)
     {
-        this.books = books;
+        this.books = books == null ? null : (Book[]) books.clone();
         this.key = KeyUtil.getPassage(newkey);
 
         // Tabbed view or not we should clear out the old tabs
         tabMain.removeAll();
         views.clear();
         displays.clear();
-        displays.add(pnlView);
+        displays.add(bookDataDisplay);
 
         // So use purely Keys and not Passage, create a utility to cut up
         // a key into a number of keys.
@@ -150,22 +150,23 @@ public class TabbedBookDataDisplay implements BookDataDisplay
             pnlNew.setBookData(books, first);
 
             Component display = pnlNew.getComponent();
-            views.put(display, pnlNew);
+            JScrollPane scrView = new CWScrollPane(display);
+            views.put(scrView, pnlNew);
 
-            tabMain.add(getTabName(first), display);
+            tabMain.add(getTabName(first), scrView);
             tabMain.add(Msg.MORE.toString(), pnlMore);
 
             setCenterComponent(tabMain);
         }
         else
         {
-            pnlView.setBookData(books, key);
+            bookDataDisplay.setBookData(books, key);
 
-            setCenterComponent(pnlView.getComponent());
+            setCenterComponent(bookDataDisplay.getComponent());
         }
 
         // Since we changed the contents of the page we need to cause it to repaint
-        GuiUtil.refresh(center);
+        GuiUtil.refresh(scrMain);
         GuiUtil.refresh(pnlMain);
     }
 
@@ -197,7 +198,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
      */
     public Book[] getBooks()
     {
-        return books;
+        return books == null ? null : (Book[]) books.clone();
     }
 
     /* (non-Javadoc)
@@ -214,6 +215,60 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     public void copy()
     {
         getInnerDisplayPane().copy();
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
+     */
+    public void addKeyChangeListener(KeyChangeListener listener)
+    {
+        // First add to our list of listeners so when we add a new tab
+        // we can add this new listener to the new tab
+        List temp = new ArrayList();
+        if (keyEventListeners == null)
+        {
+            temp.add(listener);
+            keyEventListeners = temp;
+        }
+        else
+        {
+            temp.addAll(keyEventListeners);
+
+            if (!temp.contains(listener))
+            {
+                temp.add(listener);
+                keyEventListeners = temp;
+            }
+        }
+
+        Iterator iter = displays.iterator();
+        while (iter.hasNext())
+        {
+            BookDataDisplay bdd = (BookDataDisplay) iter.next();
+            bdd.addKeyChangeListener(listener);
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
+     */
+    public void removeKeyChangeListener(KeyChangeListener listener)
+    {
+        // First remove from the list of listeners
+        if (keyEventListeners != null && keyEventListeners.contains(listener))
+        {
+            List temp = new ArrayList();
+            temp.addAll(keyEventListeners);
+            temp.remove(listener);
+            keyEventListeners = temp;
+        }
+
+        Iterator iter = displays.iterator();
+        while (iter.hasNext())
+        {
+            BookDataDisplay bdd = (BookDataDisplay) iter.next();
+            bdd.removeKeyChangeListener(listener);
+        }
     }
 
     /* (non-Javadoc)
@@ -235,22 +290,22 @@ public class TabbedBookDataDisplay implements BookDataDisplay
      */
     public synchronized void addURIEventListener(URIEventListener listener)
     {
-        // First add to our list of listeners so when we get more event syncs
-        // we can add this new listener to the new sync
+        // First add to our list of listeners so when we add a new tab
+        // we can add this new listener to the new tab
         List temp = new ArrayList();
-        if (hyperlis == null)
+        if (uriEventListeners == null)
         {
             temp.add(listener);
-            hyperlis = temp;
+            uriEventListeners = temp;
         }
         else
         {
-            temp.addAll(hyperlis);
+            temp.addAll(uriEventListeners);
 
             if (!temp.contains(listener))
             {
                 temp.add(listener);
-                hyperlis = temp;
+                uriEventListeners = temp;
             }
         }
 
@@ -269,12 +324,12 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     public synchronized void removeURIEventListener(URIEventListener listener)
     {
         // First remove from the list of listeners
-        if (hyperlis != null && hyperlis.contains(listener))
+        if (uriEventListeners != null && uriEventListeners.contains(listener))
         {
             List temp = new ArrayList();
-            temp.addAll(hyperlis);
+            temp.addAll(uriEventListeners);
             temp.remove(listener);
-            hyperlis = temp;
+            uriEventListeners = temp;
         }
 
         // Now remove from all the known syncs
@@ -291,12 +346,28 @@ public class TabbedBookDataDisplay implements BookDataDisplay
      */
     private void setCenterComponent(Component comp)
     {
-        // And show it is needed
+        // We are currently viewing either a set of tabs (tabMain)
+        // or a single page (bookDataDisplay.getComponent()).
+        // The new center component is either tabMain
+        // or something that should be wrapped with a scroller.
+        // 
+        // So when we go from tabMain, we need to remove center
+        // and when we go from a single page we need to remove the scroller
+        //
+
         if (center != comp)
         {
-            pnlMain.remove(center);
+            pnlMain.removeAll();
             center = comp;
-            pnlMain.add(center, BorderLayout.CENTER);
+            if (center == tabMain)
+            {
+            	pnlMain.add(tabMain, BorderLayout.CENTER);
+   	        }
+   	        else
+   	        {
+   	        	pnlMain.add(scrMain, BorderLayout.CENTER);
+				//scrMain.setViewportView(center);
+   	 	    }
         }
     }
 
@@ -322,10 +393,10 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         BookDataDisplay pnlNew = createInnerDisplayPane();
         pnlNew.setBookData(books, next);
 
-        Component display = pnlNew.getComponent();
-        views.put(display, pnlNew);
+        JScrollPane scrView = new CWScrollPane(pnlNew.getComponent());
+        views.put(scrView, pnlNew);
 
-        tabMain.add(getTabName(next), display);
+        tabMain.add(getTabName(next), scrView);
 
         // Do we need a new more tab
         if (waiting != null)
@@ -334,7 +405,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         }
 
         // Select the real new tab in place of any more tabs
-        tabMain.setSelectedComponent(display);
+        tabMain.setSelectedComponent(scrView);
     }
 
     /**
@@ -348,7 +419,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
             JScrollPane sp = (JScrollPane) o;
             return (BookDataDisplay) views.get(sp);
         }
-        return pnlView;
+        return bookDataDisplay;
     }
 
     /**
@@ -356,17 +427,28 @@ public class TabbedBookDataDisplay implements BookDataDisplay
      */
     private synchronized BookDataDisplay createInnerDisplayPane()
     {
-        BookDataDisplay display = new ScrolledBookDataDisplay(BookDataDisplayFactory.createBookDataDisplay());
+        BookDataDisplay display = BookDataDisplayFactory.createBookDataDisplay();
         displays.add(display);
 
         // Add all the known listeners to this new BookDataDisplay
-        if (hyperlis != null)
+        if (uriEventListeners != null)
         {
-            Iterator iter = hyperlis.iterator();
+            Iterator iter = uriEventListeners.iterator();
             while (iter.hasNext())
             {
                 URIEventListener li = (URIEventListener) iter.next();
                 display.addURIEventListener(li);
+            }
+        }
+
+        // Add all the known listeners to this new BookDataDisplay
+        if (keyEventListeners != null)
+        {
+            Iterator iter = keyEventListeners.iterator();
+            while (iter.hasNext())
+            {
+                KeyChangeListener li = (KeyChangeListener) iter.next();
+                display.addKeyChangeListener(li);
             }
         }
 
@@ -419,7 +501,12 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * A list of all the URIEventListeners
      */
-    private List hyperlis;
+    private List uriEventListeners;
+
+    /**
+     * A list of all the keyEventListeners
+     */
+    private List keyEventListeners;
 
     /**
      * The passage that we are displaying (in one or more tabs)
@@ -444,22 +531,22 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * If we are using tabs, this is the main view
      */
-    private JTabbedPane tabMain = new JTabbedPane();
+    private JTabbedPane tabMain;
 
     /**
      * If we are not using tabs, this is the main view
      */
-    private BookDataDisplay pnlView;
+    private BookDataDisplay bookDataDisplay;
 
     /**
      * An map of compnents to their views
      */
-    private Map views = new HashMap();
+    private Map views;
 
     /**
      * A list of all the InnerDisplayPanes so we can control listeners
      */
-    private List displays = new ArrayList();
+    private List displays;
 
     /**
      * Pointer to whichever of the above is currently in use
@@ -469,10 +556,15 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * Blank thing for the "More..." button
      */
-    private JPanel pnlMore = new JPanel();
+    private JPanel pnlMore;
 
     /**
      * The top level component
      */
-    private JPanel pnlMain = new JPanel();
+    private JPanel pnlMain;
+
+    /**
+     * The top level component
+     */
+    private JScrollPane scrMain;
 }

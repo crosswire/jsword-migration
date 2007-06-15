@@ -23,7 +23,7 @@ package org.crosswire.bibledesktop.book;
 
 import java.util.EventObject;
 
-import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookProvider;
 
 /**
  * A BookSelectEvent happens whenever a user selects a book.
@@ -39,34 +39,19 @@ public class BookSelectEvent extends EventObject
      * @param source The thing that started this off
      * @param books The selected books
      */
-    public BookSelectEvent(Object source, Book[] books)
+    public BookSelectEvent(BookProvider source)
     {
         super(source);
-        this.books = books;
     }
 
     /**
      * Get all the books.
      * @return the books
      */
-    public Book[] getBooks()
+    public BookProvider getBookProvider()
     {
-        return books;
+        return (BookProvider) getSource();
     }
-
-    /**
-     * Get the first book.
-     * @return the first book
-     */
-    public Book getFirstBook()
-    {
-        return books != null && books.length > 0 ? books[0] : null;
-    }
-
-    /**
-     * The new list of Books
-     */
-    private transient Book[] books;
 
     /**
      * Serialization ID

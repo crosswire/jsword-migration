@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.text.MessageFormat;
+import java.util.Arrays;
 
 import javax.swing.JTextPane;
 import javax.swing.event.EventListenerList;
@@ -45,6 +46,7 @@ import org.crosswire.bibledesktop.desktop.XSLTProperty;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.URIEvent;
 import org.crosswire.bibledesktop.display.URIEventListener;
+import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.common.swing.AntiAliasedTextPane;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
@@ -101,14 +103,12 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
      */
     public void setBookData(Book[] books, Key key)
     {
-        this.books = books;
-        this.key = key;
-
+        
         if (books == null || books.length == 0 || books[0] == null || key == null)
         {
             bdata = null;
         }
-        else if (bdata == null || !books.equals(bdata.getBooks()) || !key.equals(bdata.getKey()))
+        else if (bdata == null || !Arrays.equals(books, bdata.getBooks()) || !key.equals(bdata.getKey()))
         {
            bdata = new BookData(books, key, compareBooks);
         }
@@ -313,8 +313,9 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
 
         return new String[] { protocol, data };
     }
-    /**
-     * Accessor for the Swing component
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getComponent()
      */
     public Component getComponent()
     {
@@ -327,6 +328,22 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     public void copy()
     {
         txtView.copy();
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
+     */
+    public synchronized void addKeyChangeListener(KeyChangeListener listener)
+    {
+        listenerList.add(KeyChangeListener.class, listener);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
+     */
+    public synchronized void removeKeyChangeListener(KeyChangeListener listener)
+    {
+        listenerList.remove(KeyChangeListener.class, listener);
     }
 
     /* (non-Javadoc)
@@ -429,7 +446,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
      */
     public Key getKey()
     {
-        return key;
+        return bdata.getKey();
     }
 
     /* (non-Javadoc)
@@ -437,7 +454,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
      */
     public Book[] getBooks()
     {
-        return books;
+        return bdata.getBooks();
     }
 
     /* (non-Javadoc)
@@ -445,7 +462,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
      */
     public Book getFirstBook()
     {
-        return books != null && books.length > 0 ? books[0] : null;
+        return bdata.getFirstBook();
     }
 
     // Strings for hyperlinks
@@ -463,16 +480,6 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
      * The book data being shown.
      */
     private BookData bdata;
-
-    /**
-     * The current books
-     */
-    private Book[] books;
-
-    /**
-     * The current key
-     */
-    private Key key;
 
     /**
      * Whether the books should be compared.
