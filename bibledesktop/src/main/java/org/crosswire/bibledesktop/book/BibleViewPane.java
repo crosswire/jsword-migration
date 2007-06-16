@@ -96,7 +96,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
              */
             public void passageSelected(DisplaySelectEvent ev)
             {
-                setKey(ev.getKey());
+                pnlPassg.setBookData(ev.getBookProvider().getBooks(), ev.getKey());
             }
 
             /* (non-Javadoc)
@@ -291,6 +291,8 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
      */
     public Key getKey()
     {
+        // Get it from the pnlPassg because the user may be in the middle of an edit
+        // and pnlSelect may be inconsistent.
         return pnlPassg.getKey();
     }
 
@@ -299,7 +301,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
      */
     public final void setKey(Key key)
     {
-        pnlPassg.setBookData(pnlSelect.getBooks(), key);
+        pnlSelect.setKey(key);
     }
 
     /**
