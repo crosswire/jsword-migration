@@ -61,8 +61,9 @@ public class TextPaneBookMetaDataDisplay
         txtView.setEditorKit(new HTMLEditorKit());
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
+    /**
+     * Change the book being displayed to a new one.
+     * @param book
      */
     public void setBook(Book book)
     {

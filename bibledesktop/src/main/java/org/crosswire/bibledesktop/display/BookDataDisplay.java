@@ -61,6 +61,13 @@ public interface BookDataDisplay extends BookProvider, PropertyChangeListener
     void setBookData(Book[] books, Key key);
 
     /**
+     * Establish whether books in the book array should be compared.
+     * 
+     * @param compare
+     */
+    void setCompareBooks(boolean compare);
+
+    /**
      * The Book Key that we are displaying, or null if we are not displaying
      * anything
      * @return The current key
@@ -108,5 +115,4 @@ public interface BookDataDisplay extends BookProvider, PropertyChangeListener
      * Accessor for the Swing component
      */
     Component getComponent();
-
 }

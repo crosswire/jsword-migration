@@ -87,8 +87,10 @@ public class SplitBookDataDisplay extends JPanel implements BookProvider
         return child;
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
+    /**
+     * Set the books and/or key to display.
+     * @param books
+     * @param key
      */
     public void setBookData(Book[] books, Key key)
     {

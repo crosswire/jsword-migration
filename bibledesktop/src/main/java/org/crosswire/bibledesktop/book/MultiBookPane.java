@@ -136,7 +136,15 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
      */
     public void setBookData(Book[] books, Key key)
     {
-        throw new UnsupportedOperationException();
+        display.setBookData(books, key);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setCompareBooks(boolean)
+     */
+    public void setCompareBooks(boolean compare)
+    {
+        display.setCompareBooks(compare);
     }
 
     /* (non-Javadoc)

@@ -130,6 +130,14 @@ public class ProxyBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setCompareBooks(boolean)
+     */
+    public void setCompareBooks(boolean compare)
+    {
+        proxy.setCompareBooks(compare);
+    }
+
+    /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#refresh()
      */
     public void refresh()

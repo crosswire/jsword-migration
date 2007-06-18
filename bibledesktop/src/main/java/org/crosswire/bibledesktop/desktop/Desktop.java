@@ -560,6 +560,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         BookDataDisplay display = view.getPassagePane().getBookDataDisplay();
         display.addURIEventListener(this);
         display.addURIEventListener(barStatus);
+        display.setCompareBooks(compareShowing);
         changeSupport.addPropertyChangeListener(BookDataDisplay.COMPARE_BOOKS, display);
         DisplaySelectPane dsp = view.getSelectPane();
         dsp.addCommandListener(this);

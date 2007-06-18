@@ -149,6 +149,14 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     }
 
     /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setCompareBooks(boolean)
+     */
+    public void setCompareBooks(boolean compare)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#refresh()
      */
     public void refresh()

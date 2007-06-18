@@ -117,6 +117,19 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     }
 
     /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setCompareBooks(boolean)
+     */
+    public void setCompareBooks(boolean compare)
+    {
+        compareBooks = compare;
+        if (bdata != null)
+        {
+            bdata = new BookData(bdata.getBooks(), bdata.getKey(), compareBooks);
+            refresh();
+        }
+    }
+
+    /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#refresh()
      */
     public void refresh()
@@ -275,12 +288,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     {
         if (evt.getPropertyName().equals(BookDataDisplay.COMPARE_BOOKS))
         {
-            compareBooks = Boolean.valueOf(evt.getNewValue().toString()).booleanValue();
-            if (bdata != null)
-            {
-                bdata = new BookData(bdata.getBooks(), bdata.getKey(), compareBooks);
-                refresh();
-            }
+            setCompareBooks(Boolean.valueOf(evt.getNewValue().toString()).booleanValue());
         }
     }
 

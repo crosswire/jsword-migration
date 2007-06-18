@@ -617,7 +617,7 @@
     <xsl:variable name="orig-morph" select="substring-after($morph, ':')"/>
     <xsl:variable name="protocol">
       <xsl:choose>
-        <xsl:when test="starts-with($orig-work, 'x-Robinson:') or starts-with($orig-work, 'robinson:')">
+        <xsl:when test="starts-with($orig-work, 'x-Robinson') or starts-with($orig-work, 'robinson')">
           <xsl:value-of select="$greek.morph.protocol"/>
         </xsl:when>
         <xsl:otherwise>

@@ -106,7 +106,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     }
 
     /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book, org.crosswire.jsword.passage.Key)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book[], org.crosswire.jsword.passage.Key)
      */
     public void setBookData(Book[] books, Key newkey)
     {
@@ -168,6 +168,20 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         // Since we changed the contents of the page we need to cause it to repaint
         GuiUtil.refresh(scrMain);
         GuiUtil.refresh(pnlMain);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setCompareBooks(boolean)
+     */
+    public void setCompareBooks(boolean compare)
+    {
+        // Now go through all the known tabs and refresh each
+        Iterator iter = displays.iterator();
+        while (iter.hasNext())
+        {
+            BookDataDisplay bdd = (BookDataDisplay) iter.next();
+            bdd.setCompareBooks(compare);
+        }
     }
 
     /* (non-Javadoc)
