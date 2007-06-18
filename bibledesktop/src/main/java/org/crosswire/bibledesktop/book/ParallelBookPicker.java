@@ -137,7 +137,11 @@ public class ParallelBookPicker extends JPanel implements BookProvider
             if (comp instanceof JComboBox)
             {
                 JComboBox combo = (JComboBox) comp;
-                books.add(combo.getSelectedItem());
+                Object book = combo.getSelectedItem();
+                if (book != null)
+                {
+                    books.add(book);
+                }
             }
         }
         return (Book[]) books.toArray(new Book[books.size()]);

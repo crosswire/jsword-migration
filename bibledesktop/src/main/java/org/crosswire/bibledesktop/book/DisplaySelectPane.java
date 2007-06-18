@@ -563,7 +563,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
      */
     /*private*/ final void enableComponents()
     {
-        boolean readable = selected != null;
+        boolean readable = selected != null && selected.length > 0;
         boolean searchable = readable && selected[0].getIndexStatus().equals(IndexStatus.DONE);
         boolean indexable = readable && selected[0].getIndexStatus().equals(IndexStatus.UNDONE);
 
