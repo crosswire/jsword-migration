@@ -375,13 +375,13 @@ public class TabbedBookDataDisplay implements BookDataDisplay
             center = comp;
             if (center == tabMain)
             {
-            	pnlMain.add(tabMain, BorderLayout.CENTER);
-   	        }
-   	        else
-   	        {
-   	        	pnlMain.add(scrMain, BorderLayout.CENTER);
-				//scrMain.setViewportView(center);
-   	 	    }
+                pnlMain.add(tabMain, BorderLayout.CENTER);
+            }
+            else
+            {
+                pnlMain.add(scrMain, BorderLayout.CENTER);
+                //scrMain.setViewportView(center);
+            }
         }
     }
 

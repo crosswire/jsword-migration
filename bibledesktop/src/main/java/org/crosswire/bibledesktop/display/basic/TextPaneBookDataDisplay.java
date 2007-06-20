@@ -103,7 +103,6 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
      */
     public void setBookData(Book[] books, Key key)
     {
-        
         if (books == null || books.length == 0 || books[0] == null || key == null)
         {
             bdata = null;
