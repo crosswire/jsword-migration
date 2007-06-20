@@ -84,7 +84,7 @@
     <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="jdom-1.0.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="javatar-2.5.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="jlfgr-1_0.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="lucene-core-2.1.0.jar"/>
+    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="lucene-core-2.2.0.jar"/>
   	<!--
     <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="blogapps-1.0.jar"/>
     <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="gnu-regexp-1.1.4.jar"/>

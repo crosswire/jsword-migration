@@ -34,7 +34,7 @@
       <auxClasspath path="${target.jar}/commons-logging-1.1.jar"/>
       <auxClasspath path="${target.jar}/javatar-2.5.jar"/>
       <auxClasspath path="${target.jar}/jdom-1.0.jar"/>
-      <auxClasspath path="${target.jar}/lucene-core-2.1.0.jar"/>
+      <auxClasspath path="${target.jar}/lucene-core-2.2.0.jar"/>
       <auxClasspath path="../common/jar/jaf-1.1/activation.jar"/>
       <auxClasspath path="${target.jar}/jlfgr-1_0.jar"/>
 <!--
