@@ -7,8 +7,7 @@ The first gets changed if there is a super major change.
 Pretend that 1.0.9 is the next release number (because the current release is 1.0.8).
 Change org.crosswire.bibledesktop.desktop.Msg.properties Desktop.Version=1.0.9
 In the ant file common/core.xml change to <property name="release.version" value="1.0.9"/>
-Update bibledesktop/etc/installer/macosx/info.plist. The release number is repeated many times.
-Update bibledesktop/etc/installer/win32/BibleDesktop.nsi PROCUCT_VERSION "1.09"
+Update bibledesktop/etc/installer/win32/BibleDesktop.nsi PROCUCT_VERSION "1.0.9"
 Update bibledesktop-web/src/web/download.html.
 
 Step 2: Update the release files for the current jar names.

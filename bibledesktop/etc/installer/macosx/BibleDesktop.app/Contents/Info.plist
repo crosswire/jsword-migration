@@ -7,7 +7,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>org.crosswire.jsword</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.6</string>
+	<string>@release.version@</string>
 	<key>CFBundleAllowMixedLocalizations</key>
 	<string>true</string>
 	<key>CFBundleExecutable</key>
@@ -19,7 +19,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleGetInfoString</key>
-	<string>Bible Desktop v1.0.6 (c) 2006</string>
+	<string>Bible Desktop v@release.version@ (c) 2006</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleIconFile</key>
