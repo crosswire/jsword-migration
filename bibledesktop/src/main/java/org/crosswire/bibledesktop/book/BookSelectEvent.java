@@ -35,9 +35,9 @@ import org.crosswire.jsword.book.BookProvider;
 public class BookSelectEvent extends EventObject
 {
     /**
-     * For when a command has been made
+     * Create a BookSelectionEvent, declaring that the BookProvider has a new selection.
+     * 
      * @param source The thing that started this off
-     * @param books The selected books
      */
     public BookSelectEvent(BookProvider source)
     {
