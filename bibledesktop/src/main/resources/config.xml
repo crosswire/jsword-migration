@@ -125,7 +125,7 @@
   </option>
 
 <!-- This really only useful for developers -->
-  <option key="BibleDisplay.CSSOverride" type="string" hidden="false">
+  <option key="BibleDisplay.CSSOverride" type="string" hidden="true">
     <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="CSSOverride"/>
   </option>
 
@@ -183,18 +183,18 @@
     <introspect class="org.crosswire.jsword.versification.BibleInfo" property="FullBookName"/>
   </option>
 
-  <option key="Passages.BlurringRules" type="int-options">
-    <introspect class="org.crosswire.jsword.passage.RestrictionType" property="BlurRestriction"/>
-    <alternative number="0"/>
-    <alternative number="1"/>
-    <!-- Remove Book for now <alternative number="2"/> -->
-  </option>
-
   <option key="Passages.BookCase" type="int-options">
     <introspect class="org.crosswire.jsword.versification.BibleInfo" property="Case"/>
     <alternative number="0"/>
     <alternative number="1"/>
     <alternative number="2"/>
+  </option>
+
+  <option key="Passages.BlurringRules" type="int-options">
+    <introspect class="org.crosswire.jsword.passage.RestrictionType" property="BlurRestriction"/>
+    <alternative number="0"/>
+    <alternative number="1"/>
+    <!-- Remove Book for now <alternative number="2"/> -->
   </option>
 
 <!-- This really only useful for developers -->
@@ -226,12 +226,12 @@
   </option>
 
 <!-- This really only useful for developers -->
-  <option key="Advanced.SourcePath" type="path" priority="9" hidden="false">
+  <option key="Advanced.SourcePath" type="path" priority="9" hidden="true">
     <introspect class="org.crosswire.common.swing.ExceptionPane" property="SourcePath"/>
   </option>
 
 <!-- This really only useful for developers -->
-  <option key="Advanced.DefaultPassageType" type="int-options" hidden="false">
+  <option key="Advanced.DefaultPassageType" type="int-options" hidden="true">
     <introspect class="org.crosswire.jsword.passage.PassageKeyFactory" property="DefaultPassage"/>
     <alternative number="0"/>
     <alternative number="1"/>
