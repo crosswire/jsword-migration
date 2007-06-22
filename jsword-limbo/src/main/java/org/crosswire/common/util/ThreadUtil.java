@@ -135,7 +135,7 @@ public final class ThreadUtil
             }
             catch (SecurityException ex)
             {
-                addItem(list, depth, Msg.UNAVILABLE.toString());
+                addItem(list, depth, LimboMsg.UNAVILABLE.toString());
             }
 
             for (int i = 0; i < num_threads; i++)
@@ -173,7 +173,7 @@ public final class ThreadUtil
         }
         catch (SecurityException ex)
         {
-            addItem(list, depth, Msg.UNAVILABLE.toString());
+            addItem(list, depth, LimboMsg.UNAVILABLE.toString());
         }
     }
 

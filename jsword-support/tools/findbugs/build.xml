@@ -6,9 +6,6 @@
   <!-- this should be overridden by the parent file -->
   <property name="support.tools" value=".."/>
 
-  <!-- Unified location of source -->
-  <property name="target.bugs.src" value="${target.temp}/findbugs/src"/>
-
   <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
     <classpath>
       <fileset dir="${support.bugs}/findbugs-${version.bugs}/lib" includes="**/*.jar"/>

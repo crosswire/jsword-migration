@@ -16,10 +16,8 @@ Update bibledesktop/etc/jnlp/bibledesktop.jnlp
 Check in the changes for these 2 steps.
 
 Step 3: Perform a clean build
-
 Execute an ant build all in jsword-web. (jsword-web-ant-all in Eclipse)
 Clean up all findbugs, pmd and checkstyle issues that make sense to do.
-(Currently there are 1 findbugs, 1 pmd and 2 checkstyle issues that can be ignored.)
 Fix any javadoc issues.
 Check in any files that changed.
 Re-execute the ant if any files changed.

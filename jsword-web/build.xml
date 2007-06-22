@@ -1,6 +1,9 @@
 <project name="jsword-web" default="all">
 
+  <property name="target.installed" value="../bibledesktop/target/installed"/> <!-- override -->
+
   <import file="../common/core.xml"/>
+
   <property name="dependency"         value="bibledesktop-web"/>
   <property name="dependency.jar"     value="../bibledesktop/${target.jar}"/>
 
@@ -11,7 +14,6 @@
   <property name="jnlp.hostname"    value="localhost:8080"/> <!-- override -->
   <property name="ftp.base"         value="${basedir}/${target.root}/download"/> <!-- override -->
   <property name="ftp.prefix"       value="../download"/> <!-- override -->
-  <property name="target.installed"   value="../bibledesktop/target/installed"/> <!-- override -->
 
   <property name="nightly.dir"      value="${ftp.base}/nightly"/>
   <property name="release.dir"      value="${ftp.base}/release"/>
@@ -81,7 +83,7 @@
         version="true"
         source="1.4"
         failonerror="false">
-      <footer>Copyright &#168; 2003-2006</footer>
+      <footer>Copyright &#168; 2003-2007</footer>
       <link offline="true" href="http://java.sun.com/j2se/1.4/docs/api/" packagelistLoc="${source.etc}/javadoc"/>
     </javadoc>
   </target>
@@ -170,6 +172,7 @@
   <!--=======================================================================-->
   <target name="release.version" depends="javadoc">
     <echo message="Building release ${version} to ${directory}"/>
+    <echo message="Target.installed is ${target.installed}"/>
     <!-- source packages -->
     <mkdir dir="${directory}"/>
     <zip zipfile="${directory}/jsword-${version}-src.zip">
