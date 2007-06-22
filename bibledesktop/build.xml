@@ -72,29 +72,25 @@
     <delete file="${target.installed}/Info.plist"/>
 
     <!-- sign the jars to a temporary location so they can be reused -->
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="bibledesktop-${release.version}.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="jsword-common-${release.version}.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="jsword-common-swing-${release.version}.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="jsword-${release.version}.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="jsword-common-aqua-1.0.6.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="commons-codec-1.3.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="commons-httpclient-3.0.1.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="commons-logging-1.1.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="commons-net-1.4.1.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="jdom-1.0.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="javatar-2.5.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="jlfgr-1_0.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="lucene-core-2.2.0.jar"/>
-  	<!--
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="blogapps-1.0.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="gnu-regexp-1.1.4.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="kafenio-0.8.5.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="kafenio-config-0.8.5.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="kafenio-icons-0.8.5.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="rome-0.7.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="werx-051405.jar"/>
-    <jar.sign srcdir="${target.jar}" destdir="${target.installed}" jar="xmlrpc-2.0.1.jar"/>
-    -->
+  	<copy todir="${target.installed}" preservelastmodified="true">
+      <fileset dir="${target.jar}">
+        <patternset refid="external.runtime.jars"/>
+        <patternset refid="internal.built.jars"/>
+      </fileset>
+    </copy> 		
+    <signjar
+          storepass="${keystore.pswd}"
+          alias="${keystore.alias}"
+          keystore="${keystore.file}"
+    	  preservelastmodified="true"
+          lazy="true">
+      <path>
+      	<fileset dir="${target.installed}">
+          <patternset refid="external.runtime.jars"/>
+          <patternset refid="internal.built.jars"/>
+        </fileset>
+      </path>
+    </signjar>
 
     <!-- Create a flag file used to determine whether the set of jars needs to be signed -->
     <touch file="${target.root}/.flagfile"/>
