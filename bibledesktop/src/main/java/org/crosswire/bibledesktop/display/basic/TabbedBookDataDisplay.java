@@ -166,7 +166,6 @@ public class TabbedBookDataDisplay implements BookDataDisplay
         }
 
         // Since we changed the contents of the page we need to cause it to repaint
-        GuiUtil.refresh(scrMain);
         GuiUtil.refresh(pnlMain);
     }
 
