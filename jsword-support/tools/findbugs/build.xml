@@ -18,7 +18,8 @@
   <target name="findbugs">
     <mkdir dir="${target.web}/findbugs"/>
     <findbugs home="${support.bugs}/findbugs-${version.bugs}"
-        output="html"
+    	projectName="JSword/BibleDesktop"
+    	output="html"
         outputFile="${target.web}/findbugs/index.html"
         reportLevel="low"
         workHard="true"
@@ -27,26 +28,14 @@
       <class location="${target.jar}/jsword-${release.version}.jar"/>
       <class location="${target.jar}/jsword-common-${release.version}.jar"/>
       <class location="${target.jar}/jsword-common-swing-${release.version}.jar"/>
-      <class location="${target.jar}/jsword-common-aqua-${release.version}.jar"/>
-      <auxClasspath path="${target.jar}/commons-net-1.4.1.jar"/>
-      <auxClasspath path="${target.jar}/commons-httpclient-3.0.1.jar"/>
-      <auxClasspath path="${target.jar}/commons-codec-1.3.jar"/>
-      <auxClasspath path="${target.jar}/commons-logging-1.1.jar"/>
-      <auxClasspath path="${target.jar}/javatar-2.5.jar"/>
-      <auxClasspath path="${target.jar}/jdom-1.0.jar"/>
-      <auxClasspath path="${target.jar}/lucene-core-2.2.0.jar"/>
-      <auxClasspath path="../common/jar/jaf-1.1/activation.jar"/>
-      <auxClasspath path="${target.jar}/jlfgr-1_0.jar"/>
-<!--
-      <auxClasspath path="${target.jar}/blogapps-1.0.jar"/>
-      <auxClasspath path="${target.jar}/gnu-regexp-1.1.4.jar"/>
-      <auxClasspath path="${target.jar}/rome-0.7.jar"/>
-      <auxClasspath path="${target.jar}/werx-051405.jar"/>
-      <auxClasspath path="${target.jar}/xmlrpc-2.0.1.jar"/>
-      <auxClasspath path="${target.jar}/kafenio-0.8.5.jar"/>
-      <auxClasspath path="${target.jar}/kafenio-config-0.8.5.jar"/>
-      <auxClasspath path="${target.jar}/kafenio-icons-0.8.5.jar"/>
--->
+      <sourcePath>
+        <dirset dir=".." includes="**/${source.java}"/>
+      </sourcePath>
+      <auxClasspath>
+      	<fileset dir="${target.jar}">
+          <patternset refid="external.runtime.jars"/>
+        </fileset>
+      </auxClasspath>
     </findbugs>
   </target>
 
