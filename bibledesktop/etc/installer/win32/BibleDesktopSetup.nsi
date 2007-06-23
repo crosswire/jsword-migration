@@ -59,7 +59,7 @@ Section "MainSection" SEC01
   ; remove all previous jars
   Delete   /REBOOTOK $INSTDIR\*.jar
   ; use the unsigned jars
-  File ..\..\..\target\uninstalled\*.jar
+  File ..\..\..\target\jar\*.jar
 SectionEnd
 
 Section -AdditionalIcons
