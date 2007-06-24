@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="1.0+" codebase="http://www.crosswire.org/bibledesktop/stable" href="bibledesktop-1.0.7.jnlp">
+<jnlp spec="1.0+" codebase="http://www.crosswire.org/bibledesktop/nightly" href="bibledesktop-1.0.7.jnlp">
 
   <information>
     <title>Bible Desktop</title>
