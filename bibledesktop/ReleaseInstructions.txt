@@ -49,9 +49,8 @@ Step 6: Build the Linux installers
 (None at this time)
 
 Step 7: Copy the release files to stable
-Delete all the files in bibledesktop-web/src/web/stable
-Copy the following to bibledesktop-web/src/web/stable
-	All the files in bibledesktop/target/installed
+Delete all the jar, dmg, exe files in bibledesktop-web/src/web/stable
+Run a nightly build, download it and copy it's files into bibledesktop-web/src/web/stable
 Move the following to bibledesktop-web/src/web/stable
 	From bibledesktop/etc/installer/macosx move BibleDesktop-v1.0.9.dmg
 	From bibledesktop/etc/installer/win32 copy BibleDesktop.exe and move BibleDesktopSetup.exe
