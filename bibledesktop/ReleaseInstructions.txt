@@ -34,11 +34,8 @@ You can perform part of step 7 now.
 
 Step 5: Build the MacOS X installer
 Get bibledesktop-web/src/web/stable/BibleDesktop-v1.0.8.dmg
-Open it to get a copy of the BibleDesktop.app
-Get a copy of the previous BibleDesktop.app from the previous dmg.
-Replace BibleDesktop.app/Contents/info.plist with bibledesktop/etc/installer/macosx/info.plist
-Replace all the jar files in BibleDesktop.app/Contents/Resources/Java with those from bibledesktop/target/installed
-Control(Right) Click on the BibleDesktop dmg and Open With Disk Utility.
+The BibleDesktop*.dmg will be reused, but renamed, as it laid out parts of the installer.
+All we will be doing is replacing BibleDesktop.app in it.
 Convert the dmg to read/write, mount and open it.
 Copy the modified BibleDesktop.app into the opened, r/w disk image.
 Eject the disk image.
@@ -56,8 +53,8 @@ Delete all the files in bibledesktop-web/src/web/stable
 Copy the following to bibledesktop-web/src/web/stable
 	All the files in bibledesktop/target/installed
 Move the following to bibledesktop-web/src/web/stable
-	From bibledesktop/etc/installer/macosx copy BibleDesktop-v1.0.9.dmg
-	From bibledesktop/etc/installer/win32 copy BibleDesktop.exe and BibleDesktopSetup.exe
+	From bibledesktop/etc/installer/macosx move BibleDesktop-v1.0.9.dmg
+	From bibledesktop/etc/installer/win32 copy BibleDesktop.exe and move BibleDesktopSetup.exe
 	From bibldesktop/etc/installers/rpm copy ??? (rpm and deb files)
 Update bibledesktop-web/src/web/stable/bibledesktop-1.0.9.jnlp with the following
 	codebase="http://www.crosswire.org/bibledesktop/stable"
