@@ -34,8 +34,8 @@ import javax.swing.SwingConstants;
  * CENTER:
  *      icon1 is drawn first, icon2 is drawn over it
  * and with horizontal and vertical orientations within the alloted space
- * It's useful with VTextIcon when you want an icon with your text: 
- *      if icon1 is the graphic icon and icon2 is the VTextIcon, 
+ * It's useful with VTextIcon when you want an icon with your text:
+ *      if icon1 is the graphic icon and icon2 is the VTextIcon,
  *      you get a similar effect to a JLabel with a graphic icon and text
  *
  * @see gnu.lgpl.License for license details.
@@ -50,7 +50,7 @@ public class CompositeIcon implements Icon
      * Create a CompositeIcon from the specified Icons,
      * using the default relative position (icon1 above icon2)
      * and orientations (centered horizontally and vertically).
-     * 
+     *
      * @param icon1 Icon
      * @param icon2 Icon
      */
@@ -63,7 +63,7 @@ public class CompositeIcon implements Icon
      * Create a CompositeIcon from the specified Icons,
      * using the specified relative position
      * and default orientations (centered horizontally and vertically).
-     * 
+     *
      * @param icon1 Icon
      * @param icon2 Icon
      * @param position int
@@ -76,7 +76,7 @@ public class CompositeIcon implements Icon
     /**
      * Create a CompositeIcon from the specified Icons,
      * using the specified relative position and orientations.
-     * 
+     *
      * @param icon1 Icon
      * @param icon2 Icon
      * @param position int
@@ -170,7 +170,7 @@ public class CompositeIcon implements Icon
 
     /**
      * Paints one icon in the specified rectangle with the given orientations.
-     * 
+     *
      * @param c Component
      * @param g Graphics
      * @param icon Icon

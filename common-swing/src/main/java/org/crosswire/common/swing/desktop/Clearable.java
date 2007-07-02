@@ -23,7 +23,7 @@ package org.crosswire.common.swing.desktop;
 
 /**
  * A Clearable object can be cleared and can be queried to see if it is cleared.
- * 
+ *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at yahoo dot com]

@@ -35,7 +35,7 @@ import org.crosswire.common.util.Reporter;
  * however the practical advantages of compile time type-checking and
  * make simplicity, overweigh the possible re-use gains of a
  * properties file.
- * 
+ *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]

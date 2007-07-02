@@ -370,7 +370,7 @@ public class ActionFactory implements ActionListener, Actionable
     }
 
     /**
-     * 
+     *
      */
     private int getModifier(String[] modifiers)
     {

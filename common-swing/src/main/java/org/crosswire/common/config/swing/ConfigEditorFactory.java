@@ -35,7 +35,7 @@ import org.crosswire.common.util.Reporter;
 /**
  * Allow a swing program to display a Dialog box displaying a set of
  * config options.
- * 
+ *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
@@ -96,7 +96,7 @@ public final class ConfigEditorFactory
      * Create a dialog to house a TreeConfig component using the default set of
      * Fields, with the default accept action of config.localToApplication and
      * config,localToPermanent
-     * 
+     *
      * @param config The set of Choices to display
      * @param parent A component to use to find a frame to use as a dialog
      *            parent

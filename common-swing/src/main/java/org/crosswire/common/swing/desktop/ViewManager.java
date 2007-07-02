@@ -43,7 +43,7 @@ import org.crosswire.common.util.CallContext;
  *
  * A ViewManager is an abstraction of a desktop that displays views
  * as tabs or sub-windows. All the views are of the same type.
- * 
+ *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]

@@ -27,7 +27,7 @@ import java.awt.Component;
  * A ViewGenerator is able to create an object which can be used as a view.
  * Typically it extends JPanel. Note, this design allows for only one kind
  * of view.
- * 
+ *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at yahoo dot com]

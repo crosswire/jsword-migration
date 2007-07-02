@@ -38,7 +38,7 @@ import javax.swing.event.InternalFrameListener;
 /**
  * MDI (Multiple documet interface) manager of how we layout views
  * as sub-windows.
- * 
+ *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]

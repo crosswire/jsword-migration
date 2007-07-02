@@ -27,7 +27,7 @@ import org.crosswire.common.config.Choice;
 
 /**
  * A Field is an interface for a visual representation of a Choice.
- * 
+ *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]

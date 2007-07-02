@@ -47,7 +47,7 @@ import org.crosswire.common.util.OSType;
  * <li>small/large icons</li>
  * <li>showing/hiding toolbar</li>
  * </ul>
- * 
+ *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at yahoo dot com]
@@ -221,7 +221,7 @@ public class ToolBar extends JToolBar
 
     /**
      * Serialization support.
-     * 
+     *
      * @param is
      * @throws IOException
      * @throws ClassNotFoundException

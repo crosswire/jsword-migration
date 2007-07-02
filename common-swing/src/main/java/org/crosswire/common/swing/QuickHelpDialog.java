@@ -40,7 +40,7 @@ import javax.swing.text.html.HTMLEditorKit;
 
 /**
  * .
- * 
+ *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
@@ -139,7 +139,7 @@ public class QuickHelpDialog extends JDialog
     }
 
     /**
-     * 
+     *
      */
     public final void close()
     {

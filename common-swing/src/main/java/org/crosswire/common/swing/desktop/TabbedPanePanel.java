@@ -66,9 +66,9 @@ public class TabbedPanePanel extends JPanel
     }
 
     /**
-     * If we setBorder on this JPanel, the border width will be part of the insets. 
+     * If we setBorder on this JPanel, the border width will be part of the insets.
      * We return an insets of 0 so the child components will paint on top of the
-     * border. 
+     * border.
      */
     /* @Override */
     public Insets getInsets()

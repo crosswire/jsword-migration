@@ -50,7 +50,7 @@ import org.crosswire.common.util.Convert;
  * A StringArrayField allows editing of an array of Strings in a JList.
  * It allows the user to specify additional classes that extend the
  * functionality of the program.
- * 
+ *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
@@ -195,7 +195,7 @@ public class StringArrayField extends JPanel implements Field
 
     /**
      * Serialization support.
-     * 
+     *
      * @param is
      * @throws IOException
      * @throws ClassNotFoundException

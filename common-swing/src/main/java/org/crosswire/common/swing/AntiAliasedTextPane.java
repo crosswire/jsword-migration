@@ -30,7 +30,7 @@ import javax.swing.JTextPane;
 /**
  * An extension of JTextPane that does Anti-Aliasing.
  * JDK15(joe): we will need to take a bit of care not clashing with J2SE5 AA
- * 
+ *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
@@ -69,7 +69,7 @@ public class AntiAliasedTextPane extends JTextPane
     {
         AntiAliasedTextPane.antiAliasing = antiAliasing;
         // Set it system wide for the next run
-        System.setProperty("swing.aatext", Boolean.toString(antiAliasing)); //$NON-NLS-1$ 
+        System.setProperty("swing.aatext", Boolean.toString(antiAliasing)); //$NON-NLS-1$
 
     }
 

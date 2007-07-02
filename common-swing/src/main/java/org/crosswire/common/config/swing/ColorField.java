@@ -41,7 +41,7 @@ import org.crosswire.common.swing.GuiConvert;
 
 /**
  * A color selection.
- * 
+ *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
@@ -105,7 +105,7 @@ public class ColorField extends JPanel implements Field
 
     /**
      * Serialization support.
-     * 
+     *
      * @param is
      * @throws IOException
      * @throws ClassNotFoundException

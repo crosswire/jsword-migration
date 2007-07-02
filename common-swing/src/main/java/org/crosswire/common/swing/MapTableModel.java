@@ -37,7 +37,7 @@ import org.crosswire.common.util.Convert;
  * interface we can't do the same - SO if you change the Map whilst
  * we are displaying it then don't expect the changes to be automatically
  * reflected in the JTable.
- * 
+ *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]

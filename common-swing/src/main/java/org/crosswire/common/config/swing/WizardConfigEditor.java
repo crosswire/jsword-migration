@@ -62,7 +62,7 @@ import org.crosswire.common.util.Logger;
  * and that the rest of the app didn't care much, and that the tree style
  * view was the only one you would ever need. This package is a re-write
  * that addresses these shortcomings and others.
- * 
+ *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
@@ -279,7 +279,7 @@ public class WizardConfigEditor extends AbstractConfigEditor
 
     /**
      * Serialization support.
-     * 
+     *
      * @param is
      * @throws IOException
      * @throws ClassNotFoundException

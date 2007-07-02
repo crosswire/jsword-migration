@@ -41,7 +41,7 @@ public class WindowsBorderlessTabbedPaneUI extends WindowsTabbedPaneUI
 
     /**
      * Return the content border insets based on <CODE>tabPlacement</CODE>.
-     * E.g. 
+     * E.g.
      * <CODE>tabPlacement</CODE> = SwingConstants.TOP returns new Insets(1, 0, 0, 0)
      * <CODE>tabPlacement</CODE> = SwingConstants.RIGHT returns new Insets(0, 0, 0, 1)
      * @param tabPlacement tab placement of the tabbed pane

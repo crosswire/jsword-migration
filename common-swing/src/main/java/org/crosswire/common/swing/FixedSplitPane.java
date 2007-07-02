@@ -218,7 +218,7 @@ public class FixedSplitPane extends JSplitPane
 
     /**
      * Whether visible borders are hinted
-     * 
+     *
      * @return the divider border visiblity hint
      */
     public boolean isVisibleDividerBorder()
@@ -229,7 +229,7 @@ public class FixedSplitPane extends JSplitPane
     /**
      * Set a hint whether the border should be visible or not.
      * Look and feels may ignore this.
-     * 
+     *
      * @param newVisibility
      */
     public void setVisibleDividerBorder(boolean newVisibility)
