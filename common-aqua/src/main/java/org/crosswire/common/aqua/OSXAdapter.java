@@ -19,10 +19,10 @@ public class OSXAdapter extends ApplicationAdapter
 		this.prefAction = prefAction;
 		this.quitAction = quitAction;
 	}
-	
+
 	// The main entry-point for this functionality.  This is the only method
 	// that needs to be called at runtime, and it can easily be done using
-	// reflection (see MyApp.java) 
+	// reflection (see MyApp.java)
 	/**
 	 * Register the application so that About and Quit on the Application menu are hooked to the applications About and Quit choices.
 	 */
@@ -40,7 +40,7 @@ public class OSXAdapter extends ApplicationAdapter
 
 		theApplication.addApplicationListener(theAdapter);
 	}
-	
+
 	/**
 	 * Enables the Preferences menu item in the application menu.
 	 */
@@ -60,7 +60,7 @@ public class OSXAdapter extends ApplicationAdapter
 	{
 		handle(aboutAction, ae, true);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see com.apple.eawt.ApplicationAdapter#handlePreferences(com.apple.eawt.ApplicationEvent)
 	 */
@@ -68,13 +68,13 @@ public class OSXAdapter extends ApplicationAdapter
 	{
 		handle(prefAction, ae, true);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see com.apple.eawt.ApplicationAdapter#handleQuit(com.apple.eawt.ApplicationEvent)
 	 */
 	public void handleQuit(ApplicationEvent ae)
 	{
-		/*	
+		/*
 		 * You MUST setHandled(false) if you want to delay or cancel the quit.
 		 * This is important for cross-platform development -- have a universal quit
 		 * routine that chooses whether or not to quit, so the functionality is identical
@@ -114,5 +114,5 @@ public class OSXAdapter extends ApplicationAdapter
 	private String 					prefAction;
 
 	/** The application's Quit action */
-	private String 					quitAction;	
+	private String 					quitAction;
 }
