@@ -52,6 +52,7 @@ import org.crosswire.bibledesktop.passage.KeyTreeModel;
 import org.crosswire.bibledesktop.passage.KeyTreeNode;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.FixedSplitPane;
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
@@ -328,7 +329,9 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
             }
         });
 
-        return new CWScrollPane(bookList);
+        Component scroller = new CWScrollPane(bookList);
+        GuiUtil.applyDefaultOrientation(scroller);
+        return scroller;
     }
 
     /**
@@ -354,6 +357,9 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
         panel.add(cboBooks, null);
         panel.add(cboChaps, null);
         panel.add(cboVerse, null);
+
+        GuiUtil.applyDefaultOrientation(panel);
+
         return panel;
     }
 
@@ -370,7 +376,9 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
                 newEntry();
             }
         });
-        return new CWScrollPane(dictionaryKeyList);
+        Component scroller = new CWScrollPane(dictionaryKeyList);
+        GuiUtil.applyDefaultOrientation(scroller);
+        return scroller;
     }
 
     /**
@@ -392,7 +400,9 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
             }
         });
 
-        return new CWScrollPane(genBookKeyTree);
+        Component scroller = new CWScrollPane(genBookKeyTree);
+        GuiUtil.applyDefaultOrientation(scroller);
+        return scroller;
     }
 
     /**

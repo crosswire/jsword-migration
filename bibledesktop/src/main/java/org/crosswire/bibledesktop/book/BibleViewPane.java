@@ -40,6 +40,7 @@ import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.basic.SplitBookDataDisplay;
 import org.crosswire.bibledesktop.display.basic.TabbedBookDataDisplay;
 import org.crosswire.bibledesktop.passage.KeySidebar;
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.swing.desktop.Clearable;
 import org.crosswire.common.swing.desktop.TabbedPanePanel;
 import org.crosswire.common.swing.desktop.Titleable;
@@ -114,6 +115,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
         this.setMinimumSize(new Dimension(0, 0));
         this.add(pnlSelect, BorderLayout.NORTH);
         this.add(pnlPassg, BorderLayout.CENTER);
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /**

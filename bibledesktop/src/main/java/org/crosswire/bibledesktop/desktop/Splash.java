@@ -145,6 +145,8 @@ public class Splash extends JWindow
                 close();
             }
         });
+
+        GuiUtil.applyDefaultOrientation(this);
         this.pack();
         this.setVisible(true);
     }

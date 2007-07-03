@@ -211,6 +211,7 @@ public class ViewSourcePane extends JPanel
         this.setLayout(new BorderLayout());
         this.add(tabMain, BorderLayout.CENTER);
         this.add(pnlButtons, BorderLayout.SOUTH);
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /**

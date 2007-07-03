@@ -158,6 +158,7 @@ public class AboutPane
             pnlProps.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
             tabMain.add(pnlProps, Msg.SYSTEM_PROPS_TAB_TITLE.toString());
         }
+        GuiUtil.applyDefaultOrientation(pnlMain);
     }
 
     /**
@@ -193,6 +194,7 @@ public class AboutPane
                 doAboutOK();
             }
         });
+        GuiUtil.applyDefaultOrientation(dlgMain);
         dlgMain.pack();
         dlgMain.setLocationRelativeTo(parent);
         dlgMain.setVisible(true);

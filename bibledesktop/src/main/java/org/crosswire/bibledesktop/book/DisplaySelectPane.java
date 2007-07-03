@@ -212,6 +212,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         this.add(btnSearch,   new GridBagConstraints(5, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 
         enableComponents();
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /**

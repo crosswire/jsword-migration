@@ -27,6 +27,8 @@ import java.awt.LayoutManager;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+import org.crosswire.common.swing.GuiUtil;
+
 /**
  * A JPanel class where it's child components will paint on top of its border.
  *
@@ -63,6 +65,7 @@ public class TabbedPanePanel extends JPanel
     private void init()
     {
         this.setBorder(UIManager.getBorder("TabbedPanePanel.border")); //$NON-NLS-1$
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /**

@@ -102,6 +102,7 @@ public class ParallelBookPicker extends JPanel implements BookProvider
         }
 
         enableButtons();
+        GuiUtil.applyDefaultOrientation(this);
         GuiUtil.refresh(this);
         fireBooksChosen(new BookSelectEvent(this));
     }

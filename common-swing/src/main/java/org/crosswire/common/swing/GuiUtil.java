@@ -23,6 +23,8 @@ package org.crosswire.common.swing;
 
 import java.awt.Button;
 import java.awt.Component;
+import java.awt.ComponentOrientation;
+import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -31,6 +33,7 @@ import java.awt.TextComponent;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.net.URL;
+import java.util.Locale;
 import java.util.MissingResourceException;
 
 import javax.swing.AbstractButton;
@@ -38,6 +41,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JToolTip;
@@ -527,6 +531,47 @@ public final class GuiUtil
         }
 
         return comp.toString();
+    }
+
+    /**
+     * Recurisvely apply default component orientation to the component and all it contains.
+     * 
+     * @param comp the root of the tree to which orientation needs to be applied
+     * @param o the orientation to be applied
+     */
+    public static void applyDefaultOrientation(Component comp)
+    {
+        applyOrientation(comp, ComponentOrientation.getOrientation(Locale.getDefault()));
+    }
+
+    /**
+     * Recurisvely apply component orientation to the component and all it contains.
+     * 
+     * @param comp the root of the tree to which orientation needs to be applied
+     * @param orientation the orientation to be applied
+     */
+    public static void applyOrientation(Component comp, ComponentOrientation orientation)
+    {
+        comp.setComponentOrientation(orientation);
+
+        if (comp instanceof JMenu)
+        {
+            JMenu menu = (JMenu) comp;
+            int ncomponents = menu.getMenuComponentCount();
+            for (int i = 0; i < ncomponents; ++i)
+            {
+                applyOrientation(menu.getMenuComponent(i), orientation);
+            }
+        }
+        else if (comp instanceof Container)
+        {
+            Container container = (Container) comp;
+            int ncomponents = container.getComponentCount();
+            for (int i = 0; i < ncomponents; ++i)
+            {
+                applyOrientation(container.getComponent(i), orientation);
+            }
+        }
     }
 
     /**

@@ -29,6 +29,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.plaf.TabbedPaneUI;
 
+import org.crosswire.common.swing.GuiUtil;
+
 
 /**
  * TDI (Tabbed Document Interface) manager of how we layout views
@@ -53,6 +55,7 @@ public class TDIViewLayout extends AbstractViewLayout
             tabs.setUI((TabbedPaneUI) UIManager.get("BibleViewPane.TabbedPaneUI")); //$NON-NLS-1$
         }
         tabs.setMinimumSize(new Dimension(0, 0));
+        GuiUtil.applyDefaultOrientation(tabs);
     }
 
     /* (non-Javadoc)

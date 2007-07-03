@@ -110,6 +110,7 @@ public class PassageSelectionPane extends JPanel
         this.add(createScrolledList(lblSel), new GridBagConstraints(2, 1, 1, 4, 0.5, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 2, 10, 10), 0, 0));
         this.add(createMessageLabel(), new GridBagConstraints(0, 5, 3, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 10, 5, 10), 0, 0));
         this.add(createDisplayPanel(), new GridBagConstraints(0, 6, 3, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 10, 0, 10), 0, 0));
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /**
@@ -316,6 +317,7 @@ public class PassageSelectionPane extends JPanel
         dlgMain.setTitle(title);
         dlgMain.setModal(modal);
 
+        GuiUtil.applyDefaultOrientation(dlgMain);
         GuiUtil.restrainedPack(dlgMain, 0.5f, 0.75f);
         GuiUtil.centerWindow(dlgMain);
         dlgMain.setVisible(true);

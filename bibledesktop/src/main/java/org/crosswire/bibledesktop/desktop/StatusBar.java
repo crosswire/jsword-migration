@@ -39,6 +39,7 @@ import javax.swing.SwingConstants;
 import org.crosswire.bibledesktop.display.URIEvent;
 import org.crosswire.bibledesktop.display.URIEventListener;
 import org.crosswire.common.progress.swing.JobsProgressBar;
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.OSType;
 
 /**
@@ -98,6 +99,7 @@ public class StatusBar extends JComponent implements MouseListener, URIEventList
         this.add(labelMessage,  new GridBagConstraints(0, 0, 1, 1, 0.3, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
         this.add(separator,     new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
         this.add(panelProgress, new GridBagConstraints(2, 0, 1, 1, 0.7, 0.0, GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), finalPadX, finalPadY));
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /* (non-Javadoc)

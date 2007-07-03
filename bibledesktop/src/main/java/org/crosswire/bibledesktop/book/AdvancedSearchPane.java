@@ -274,6 +274,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         this.add(lblSummary,  new GridBagConstraints(0, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,   GridBagConstraints.NONE,       new Insets(0, 0, 0, 0), 0, 0));
         this.add(scrSummary,  new GridBagConstraints(1,   gridy, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,       new Insets(2, 5, 2, 5), 0, 0));
         this.add(btnGo,       new GridBagConstraints(2, ++gridy, 1, 1, 0.0, 0.0, GridBagConstraints.SOUTH,  GridBagConstraints.NONE,       new Insets(10, 0, 5, 5), 0, 0));
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /**
@@ -314,6 +315,8 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         {
             return null;
         }
+        GuiUtil.applyDefaultOrientation(dlgMain);
+
         return txtSummary.getText();
     }
 

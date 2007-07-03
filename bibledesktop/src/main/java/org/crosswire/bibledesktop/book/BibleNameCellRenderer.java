@@ -26,6 +26,7 @@ import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.versification.BookName;
 
 /**
@@ -44,6 +45,7 @@ public class BibleNameCellRenderer extends DefaultListCellRenderer
     public BibleNameCellRenderer()
     {
         this(false);
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /**

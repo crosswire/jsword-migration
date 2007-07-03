@@ -22,6 +22,7 @@
 package org.crosswire.common.progress.swing;
 
 import java.awt.Component;
+import java.awt.ComponentOrientation;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -82,6 +84,8 @@ public class JobsProgressBar extends JPanel implements WorkListener
         }
 
         this.setLayout(new GridLayout(1, 0, 2, 0));
+
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /* (non-Javadoc)
@@ -131,6 +135,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
         log.debug("adding job to panel at " + i + ": " + job.getJobName()); //$NON-NLS-1$ //$NON-NLS-2$
 
         JProgressBar progress = new JProgressBar();
+        GuiUtil.applyOrientation(progress, ComponentOrientation.getOrientation(Locale.getDefault()));
         progress.setStringPainted(true);
         progress.setToolTipText(job.getJobName());
         progress.setBorder(null);

@@ -35,6 +35,8 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
+import org.crosswire.common.swing.GuiUtil;
+
 /**
  * MDI (Multiple documet interface) manager of how we layout views
  * as sub-windows.
@@ -75,6 +77,7 @@ public class MDIViewLayout extends AbstractViewLayout
         iframe.addInternalFrameListener(new CustomInternalFrameAdapter());
         iframe.addVetoableChangeListener(new CloseListener());
 
+        GuiUtil.applyDefaultOrientation(iframe);
         iframe.setVisible(true);
         iframe.pack();
     }

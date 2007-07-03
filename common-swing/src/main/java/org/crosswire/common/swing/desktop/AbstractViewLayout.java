@@ -31,6 +31,7 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.swing.desktop.event.ViewEvent;
 import org.crosswire.common.swing.desktop.event.ViewEventListener;
 import org.crosswire.common.util.Iterable;
@@ -52,6 +53,7 @@ public abstract class AbstractViewLayout implements Viewable, Iterable
     protected AbstractViewLayout()
     {
         panel = new JPanel(new BorderLayout());
+        GuiUtil.applyDefaultOrientation(panel);
         views = new ArrayList();
         listenerList = new EventListenerList();
     }

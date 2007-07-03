@@ -202,6 +202,9 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         };
         Books.installed().addBooksListener(cbl);
 
+        // Set the left-to-right or right-to-left orientation for this and all sub-components
+        GuiUtil.applyDefaultOrientation(this);
+
         startJob.done();
     }
 
@@ -566,6 +569,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         changeSupport.addPropertyChangeListener(BookDataDisplay.COMPARE_BOOKS, display);
         DisplaySelectPane dsp = view.getSelectPane();
         dsp.addCommandListener(this);
+        GuiUtil.applyDefaultOrientation(view);
         return view;
     }
 
@@ -1123,6 +1127,9 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
                 System.setProperty("com.apple.mrj.application.apple.menu.about.name", Msg.getApplicationTitle()); //$NON-NLS-1$
                 System.setProperty("com.apple.mrj.application.live-resize", "true"); //$NON-NLS-1$ //$NON-NLS-2$
             }
+
+            // The first thing that has to be done is to set the locale.
+            Translations.instance().setLocale();
 
 //            new BusStart();
             ExceptionPane.setHelpDeskListener(true);
