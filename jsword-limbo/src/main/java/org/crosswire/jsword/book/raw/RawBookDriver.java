@@ -22,14 +22,12 @@
 package org.crosswire.jsword.book.raw;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.crosswire.common.util.IOUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.jsword.book.Book;
@@ -84,15 +82,12 @@ public class RawBookDriver extends AbstractBookDriver
 
         for (int i = 0; i < names.length; i++)
         {
-            InputStream is = null;
             try
             {
                 URI uri = NetUtil.lengthenURI(dir, names[i]);
                 URI propURI = NetUtil.lengthenURI(uri, RawConstants.FILE_BIBLE_PROPERTIES);
 
-                is = NetUtil.getInputStream(propURI);
-                Properties prop = new Properties();
-                prop.load(NetUtil.getInputStream(propURI));
+                Properties prop = NetUtil.loadProperties(propURI);
 
                 Book book = new RawBook(this, prop, uri);
 
@@ -101,10 +96,6 @@ public class RawBookDriver extends AbstractBookDriver
             catch (IOException e)
             {
                 continue;
-            }
-            finally
-            {
-                IOUtil.close(is);
             }
         }
 

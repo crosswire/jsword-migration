@@ -150,14 +150,16 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
      */
     public Desktop()
     {
+        // The first thing that has to be done is to set the locale.
+        Translations.instance().setLocale();
+
         // Load the configuration.
         // This has to be done before any gui components are created
-        // (Including the splash) and before setting the locale.
+        // (Including the splash).
         // This includes code that is invoked by it.
+        // This has to be done after setting the locale.
         generateConfig();
 
-        // Now set the locale to the one the user chose, if any.
-        Translations.setLocale();
 
         // Make this be the root frame of optiondialogs
         JOptionPane.setRootFrame(this);
@@ -1028,7 +1030,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     {
         refreshBooks();
 
-        Translations.register();
+        Translations.instance().register();
 
         // And the array of allowed osis>html converters
         Map converters = ConverterFactory.getKnownConverters();

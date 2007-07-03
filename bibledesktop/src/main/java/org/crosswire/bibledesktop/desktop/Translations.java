@@ -21,12 +21,18 @@
  */
 package org.crosswire.bibledesktop.desktop;
 
+import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 
 import org.crosswire.common.config.ChoiceFactory;
 import org.crosswire.common.util.Languages;
+import org.crosswire.common.util.Logger;
+import org.crosswire.common.util.NetUtil;
+import org.crosswire.jsword.util.Project;
 
 /**
  * Translations provides a list of languages that BibleDesktop has been translated into.
@@ -38,13 +44,38 @@ import org.crosswire.common.util.Languages;
 public class Translations
 {
     /**
-     * Utility classes have private constructors.
+     * Singleton classes have private constructors.
      */
     private Translations()
     {
+        try
+        {
+            URI inputURI = Project.instance().getWritablePropertiesURI(getClass().getName());
+            Properties props = NetUtil.loadProperties(inputURI);
+            translation = props.getProperty(TRANSLATION_KEY, DEFAULT_TRANSLATION);
+        }
+        catch (IOException e)
+        {
+            translation = DEFAULT_TRANSLATION;
+        }
+    }
+    
+    /**
+     * All access to Translations is through this single instance.
+     * 
+     * @return the singleton instance
+     */
+    public static Translations instance()
+    {
+        return instance;
     }
 
-    public static String[] getSupportedTranslations()
+    /**
+     * Gets a listing of all the translations that Bible Desktop supports.
+     * 
+     * @return an string array of translations in locale friendly names.
+     */
+    public String[] getSupported()
     {
         List names = new ArrayList();
 
@@ -60,7 +91,7 @@ public class Translations
      * Get the locale for the current translation.
      * @return the translation's locale
      */
-    public static Locale getCurrentLocale()
+    public Locale getCurrentLocale()
     {
         return new Locale(translation);
     }
@@ -70,7 +101,7 @@ public class Translations
      * 
      * @return the current translation
      */
-    public static String getCurrentTranslation()
+    public String getCurrent()
     {
         return Languages.getLanguage(translation);
     }
@@ -80,20 +111,31 @@ public class Translations
      * 
      * @param translation the translation to use
      */
-    public static void setCurrentTranslation(String translation)
+    public void setCurrent(String newTranslation)
     {
         String lang = DEFAULT_TRANSLATION;
         String currentLang = ""; //$NON-NLS-1$
         for (int i = 0; i < translations.length; i++)
         {
             currentLang = Languages.getLanguage(translations[i]);
-            if (currentLang.equals(translation))
+            if (currentLang.equals(newTranslation))
             {
                 lang = translations[i];
             }
         }
 
-        Translations.translation = lang;
+        try
+        {
+            translation = lang;
+            Properties props = new Properties();
+            props.put(TRANSLATION_KEY, translation);
+            URI outputURI = Project.instance().getWritablePropertiesURI(getClass().getName());
+            NetUtil.storeProperties(props, outputURI, "BibleDesktop UI Translation"); //$NON-NLS-1$
+        }
+        catch (IOException ex)
+        {
+            log.error("Failed to save BibleDesktop UI Translation", ex); //$NON-NLS-1$
+        }
     }
 
     /**
@@ -103,20 +145,50 @@ public class Translations
      * 
      * This only makes sense after config has called setCurrentTranslation.
      */
-    public static void setLocale()
+    public void setLocale()
     {
         if (!translation.equals(Translations.DEFAULT_TRANSLATION))
         {
-            Locale.setDefault(Translations.getCurrentLocale());
+            Locale.setDefault(getCurrentLocale());
         }
     }
 
     /**
      * Register this class with the common config engine.
      */
-    public static void register()
+    public void register()
     {
         ChoiceFactory.getDataMap().put(TRANSLATION_KEY, getSupportedTranslations());
+    }
+
+    /**
+     * Get the current translation as a human readable string.
+     * 
+     * @return the current translation
+     */
+    public static String getCurrentTranslation()
+    {
+        return Translations.instance().getCurrent();
+    }
+
+    /**
+     * Set the current translation, using human readable string.
+     * 
+     * @param translation the translation to use
+     */
+    public static void setCurrentTranslation(String newTranslation)
+    {
+        Translations.instance().setCurrent(newTranslation);
+    }
+
+    /**
+     * Gets a listing of all the translations that Bible Desktop supports.
+     * 
+     * @return an string array of translations in locale friendly names.
+     */
+    public static String[] getSupportedTranslations()
+    {
+        return Translations.instance().getSupported();
     }
 
     /**
@@ -132,16 +204,22 @@ public class Translations
     /**
      * The language that BibleDesktop should use.
      */
-    private static String translation = DEFAULT_TRANSLATION;
+    private String translation = DEFAULT_TRANSLATION;
 
     /**
      * List of available languages.
-     * TODO(DMS): externalize this list.
      */
-    private static String[] translations = {
+    private String[] translations =
+        {
             "en", //$NON-NLS-1$
             "de", //$NON-NLS-1$
             "fa", //$NON-NLS-1$
-    };
+        };
 
+    private static Translations instance = new Translations();
+
+    /**
+     * The log stream
+     */
+    private static final Logger log = Logger.getLogger(Translations.class);
 }

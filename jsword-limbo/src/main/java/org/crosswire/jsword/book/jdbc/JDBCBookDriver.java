@@ -22,14 +22,12 @@
 package org.crosswire.jsword.book.jdbc;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.crosswire.common.util.IOUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.jsword.book.Book;
@@ -87,12 +85,9 @@ public class JDBCBookDriver extends AbstractBookDriver
         {
             URI url = NetUtil.lengthenURI(dir, names[i]);
             URI propUri = NetUtil.lengthenURI(url, "bible.properties"); //$NON-NLS-1$
-            InputStream is = null;
             try
             {
-                is = NetUtil.getInputStream(propUri);
-                Properties prop = new Properties();
-                prop.load(is);
+                Properties prop = NetUtil.loadProperties(propUri);
 
                 Book book = new JDBCBook(this, prop);
 
@@ -105,10 +100,6 @@ public class JDBCBookDriver extends AbstractBookDriver
             catch (BookException e)
             {
                 continue;
-            }
-            finally
-            {
-                IOUtil.close(is);
             }
         }
 
