@@ -569,7 +569,6 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         changeSupport.addPropertyChangeListener(BookDataDisplay.COMPARE_BOOKS, display);
         DisplaySelectPane dsp = view.getSelectPane();
         dsp.addCommandListener(this);
-        GuiUtil.applyDefaultOrientation(view);
         return view;
     }
 

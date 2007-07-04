@@ -46,6 +46,7 @@ public class CWScrollPane extends JScrollPane
     public CWScrollPane(Component view)
     {
         super(view, verticalPolicy, horizontalPolicy);
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     private static int getXPlatformVerticalScrollBarPolicy()
