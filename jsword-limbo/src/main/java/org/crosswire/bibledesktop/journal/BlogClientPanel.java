@@ -425,7 +425,7 @@ public class BlogClientPanel extends JPanel implements BlogClientTab
         setLayout(new BorderLayout());
         add(propsPanel, BorderLayout.NORTH);
         add(textPanel, BorderLayout.CENTER);
-        add(btnPanel, BorderLayout.EAST);
+        add(btnPanel, BorderLayout.LINE_END);
     }
 
 

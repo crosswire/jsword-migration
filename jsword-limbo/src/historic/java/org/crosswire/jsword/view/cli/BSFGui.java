@@ -77,7 +77,7 @@ public class BSFGui extends JPanel
         lblcmd.setText(" > "); //$NON-NLS-1$
 
         pnlcmd.setLayout(new BorderLayout());
-        pnlcmd.add(lblcmd, BorderLayout.WEST);
+        pnlcmd.add(lblcmd, BorderLayout.LINE_START);
         pnlcmd.add(txtcmd, BorderLayout.CENTER);
 
         txtresult.setEditable(false);

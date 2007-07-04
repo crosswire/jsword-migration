@@ -488,7 +488,7 @@ public class Mapper extends JFrame
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         this.getContentPane().setLayout(new BorderLayout());
         this.getContentPane().add(tab_main, BorderLayout.CENTER);
-        this.getContentPane().add(pnl_tools, BorderLayout.EAST);
+        this.getContentPane().add(pnl_tools, BorderLayout.LINE_END);
         this.setJMenuBar(menubar);
         this.setEnabled(true);
         // this.setIconImage(GuiUtil.loadImageIcon("org.crosswire.common.resource.task_small.gif"));

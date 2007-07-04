@@ -24,10 +24,10 @@ package org.crosswire.jsword.book;
 import org.jdom.Element;
 
 /**
- * Strongs is a convenience way of recording a Strongs number instead of
+ * Strongs is a convenience way of recording a Strong's number instead of
  * using a String with a number in it.
  * 
- * <p>A Strongs number can not be a number because Hebrew and Greek numbers are
+ * <p>A Strong's number can not be a number because Hebrew and Greek numbers are
  * distinguished only by the Hebrew having a 0 at the start.
  * <p>The class is immutable.
  * <p>Numbers that exist:<ul>
@@ -43,7 +43,7 @@ import org.jdom.Element;
 public class Strongs
 {
     /**
-     * Create a Strongs number from an OLB descriptive string.
+     * Create a Strong's number from an OLB descriptive string.
      * @param desc The OLB style descriptive string
      */
     public Strongs(String desc) throws BookException
@@ -90,7 +90,7 @@ public class Strongs
     }
 
     /**
-     * Create a Strongs number from a type and a number
+     * Create a Strong's number from a type and a number
      * @param type 0=HEBREW, 1=GREEK, 2=PARSING
      * @param number The strongs number
      */
@@ -100,7 +100,7 @@ public class Strongs
     }
 
     /**
-     * Work out what the Strongs number is from the W element
+     * Work out what the Strong's number is from the W element
      * @param w The element to investigate
      */
     public Strongs(Element w) throws BookException
@@ -157,7 +157,7 @@ public class Strongs
     }
 
     /**
-     * A very short description of the Strongs number
+     * A very short description of the Strong's number
      * @return The short description
      */
     public String getDescription()
@@ -187,7 +187,7 @@ public class Strongs
     }
 
     /**
-     * @return The type of this Strongs number
+     * @return The type of this Strong's number
      */
     public int getType()
     {
@@ -230,7 +230,7 @@ public class Strongs
     }
 
     /**
-     * Create a Strongs number from a type and a number.
+     * Create a Strong's number from a type and a number.
      * This is private since it should only be called from a constructor
      * to keep this class immutable.
      * @param type 0=HEBREW, 1=GREEK, 2=PARSING
@@ -300,7 +300,7 @@ public class Strongs
     public static final int HEBREW_MAX = 8674;
 
     /**
-     * The type of this Strongs number
+     * The type of this Strong's number
      */
     private int type;
 

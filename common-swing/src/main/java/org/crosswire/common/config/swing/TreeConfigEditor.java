@@ -126,7 +126,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         //if (cards > 1)
-        add(BorderLayout.WEST, new CWScrollPane(tree));
+        add(BorderLayout.LINE_START, new CWScrollPane(tree));
 
         add(BorderLayout.CENTER, panel);
         add(BorderLayout.SOUTH, new ButtonPane(this));

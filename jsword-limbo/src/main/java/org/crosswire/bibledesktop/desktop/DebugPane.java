@@ -103,9 +103,9 @@ public class DebugPane extends JPanel
         });
 
         pnlMethod.setLayout(new BorderLayout(5, 5));
-        pnlMethod.add(lblMethod, BorderLayout.WEST);
+        pnlMethod.add(lblMethod, BorderLayout.LINE_START);
         pnlMethod.add(cboMethod, BorderLayout.CENTER);
-        pnlMethod.add(btnMethod, BorderLayout.EAST);
+        pnlMethod.add(btnMethod, BorderLayout.LINE_END);
 
         scrResults.getViewport().add(txtResults);
 

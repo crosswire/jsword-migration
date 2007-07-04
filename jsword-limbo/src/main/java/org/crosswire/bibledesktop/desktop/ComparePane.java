@@ -98,13 +98,13 @@ public class ComparePane extends EirPanel
         lblVerses.setText(LimboMsg.COMPARE_VERSES.toString());
         lblVerses.setLabelFor(txtVerses);
         pnlVerses.setLayout(new BorderLayout());
-        pnlVerses.add(lblVerses, BorderLayout.WEST);
+        pnlVerses.add(lblVerses, BorderLayout.LINE_START);
         pnlVerses.add(txtVerses, BorderLayout.CENTER);
         txtWords.setToolTipText(LimboMsg.COMPARE_WORDS_TIP.toString());
         lblWords.setText(LimboMsg.COMPARE_WORDS.toString());
         lblWords.setLabelFor(txtWords);
         pnlWords.setLayout(new BorderLayout());
-        pnlWords.add(lblWords, BorderLayout.WEST);
+        pnlWords.add(lblWords, BorderLayout.LINE_START);
         pnlWords.add(txtWords, BorderLayout.CENTER);
         pnlUsing.setBorder(new TitledBorder(LimboMsg.COMPARE_USING.toString()));
         pnlUsing.setLayout(new BoxLayout(pnlUsing, BoxLayout.Y_AXIS));

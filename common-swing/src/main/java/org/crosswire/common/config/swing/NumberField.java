@@ -49,7 +49,7 @@ public class NumberField extends JPanel implements Field
         text.setColumns(10);
 
         setLayout(new BorderLayout(10, 0));
-        add(BorderLayout.WEST, text);
+        add(BorderLayout.LINE_START, text);
     }
 
     /**

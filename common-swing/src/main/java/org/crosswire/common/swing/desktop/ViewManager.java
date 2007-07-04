@@ -33,6 +33,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.swing.desktop.event.TitleChangedEvent;
 import org.crosswire.common.swing.desktop.event.TitleChangedListener;
 import org.crosswire.common.swing.desktop.event.ViewEvent;
@@ -87,6 +88,7 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
         }
         addViewEventListener(this);
         addView();
+        GuiUtil.applyDefaultOrientation(panel);
     }
 
     /**

@@ -76,7 +76,7 @@ public class ExceptionShelf extends JPanel
         setLayout(new BorderLayout());
 
         add(shelf, BorderLayout.CENTER);
-        add(toggle, BorderLayout.EAST);
+        add(toggle, BorderLayout.LINE_END);
 
         addPanel(noproblems);
         SHELVES.add(this);
@@ -311,7 +311,7 @@ public class ExceptionShelf extends JPanel
 
         retcode.setLayout(new BorderLayout());
         retcode.add(report, BorderLayout.CENTER);
-        retcode.add(remove, BorderLayout.EAST);
+        retcode.add(remove, BorderLayout.LINE_END);
 
         return retcode;
     }

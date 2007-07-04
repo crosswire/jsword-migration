@@ -39,6 +39,7 @@ import javax.swing.SwingConstants;
 
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWAction;
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.OSType;
 
 /**
@@ -70,6 +71,7 @@ public class ToolBar extends JToolBar
         {
             setFloatable(false);
         }
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /**
@@ -90,7 +92,7 @@ public class ToolBar extends JToolBar
             }
             else
             {
-                contentPane.add(this, BorderLayout.WEST);
+                contentPane.add(this, BorderLayout.LINE_START);
             }
         }
         else

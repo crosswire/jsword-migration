@@ -120,7 +120,7 @@ public final class ExceptionPane extends JPanel
 
         JPanel buttons = new JPanel(new BorderLayout());
         buttons.add(spacer, BorderLayout.CENTER);
-        buttons.add(detail, BorderLayout.WEST);
+        buttons.add(detail, BorderLayout.LINE_START);
 
         upper = new JPanel(new BorderLayout());
         upper.add(banner, BorderLayout.NORTH);

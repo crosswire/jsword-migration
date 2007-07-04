@@ -95,7 +95,7 @@ public class GeneratorPane extends EirPanel
         lblSource.setText("  Source Bible: "); //$NON-NLS-1$
         pnlSource.setLayout(new BorderLayout());
         pnlSource.setBorder(BorderFactory.createTitledBorder("Source")); //$NON-NLS-1$
-        pnlSource.add(lblSource, BorderLayout.WEST);
+        pnlSource.add(lblSource, BorderLayout.LINE_START);
         pnlSource.add(cboSource, BorderLayout.CENTER);
 
         lblName.setText("New Name:"); //$NON-NLS-1$

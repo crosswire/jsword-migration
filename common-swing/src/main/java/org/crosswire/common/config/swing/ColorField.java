@@ -60,8 +60,8 @@ public class ColorField extends JPanel implements Field
         edit.setMargin(new Insets(1, 2, 1, 1));
 
         setLayout(new BorderLayout());
-        add(edit, BorderLayout.WEST);
-        //add(text, BorderLayout.EAST);
+        add(edit, BorderLayout.LINE_START);
+        //add(text, BorderLayout.LINE_END);
     }
 
     /**

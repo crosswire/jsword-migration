@@ -75,6 +75,7 @@ public class JobsViewPane extends JPanel implements WorkListener
             Progress job = (Progress) it.next();
             addJob(job);
         }
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /**
@@ -99,8 +100,8 @@ public class JobsViewPane extends JPanel implements WorkListener
         this.setLayout(new BorderLayout());
         this.add(scrollPane, BorderLayout.CENTER);
         this.add(new JPanel(), BorderLayout.SOUTH);
-        this.add(new JPanel(), BorderLayout.EAST);
-        this.add(new JPanel(), BorderLayout.WEST);
+        this.add(new JPanel(), BorderLayout.LINE_END);
+        this.add(new JPanel(), BorderLayout.LINE_START);
         this.add(new JPanel(), BorderLayout.NORTH);
     }
 
@@ -150,7 +151,7 @@ public class JobsViewPane extends JPanel implements WorkListener
         }
         cancel.addActionListener(new CancelListener(job));
 
-        jobsPanel.add(label, new GridBagConstraints(0, i, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 0, 0));
+        jobsPanel.add(label, new GridBagConstraints(0, i, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 0, 0));
         jobsPanel.add(progress, new GridBagConstraints(1, i, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
         jobsPanel.add(cancel, new GridBagConstraints(2, i, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(5, 5, 5, 5), 0, 0));
         GuiUtil.refresh(this);
@@ -206,7 +207,7 @@ public class JobsViewPane extends JPanel implements WorkListener
      */
     protected void addEmptyLabel()
     {
-        jobsPanel.add(noJobLabel, new GridBagConstraints(0, 0, 3, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 0, 0));
+        jobsPanel.add(noJobLabel, new GridBagConstraints(0, 0, 3, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 0, 0));
         GuiUtil.refresh(this);
     }
 

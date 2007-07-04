@@ -95,7 +95,7 @@ public class RuleSlider extends JPanel
         this.setLayout(new BorderLayout());
         this.setBorder(bdrRule);
         this.add(sdrRule, BorderLayout.CENTER);
-        this.add(txtRule, BorderLayout.EAST);
+        this.add(txtRule, BorderLayout.LINE_END);
     }
 
     /**

@@ -60,8 +60,8 @@ public class ScriptPane extends EirPanel
         });
         pnl_command.setLayout(new BorderLayout(5, 0));
         pnl_command.add(txt_command, BorderLayout.CENTER);
-        pnl_command.add(btn_go, BorderLayout.EAST);
-        pnl_command.add(lbl_prompt, BorderLayout.WEST);
+        pnl_command.add(btn_go, BorderLayout.LINE_END);
+        pnl_command.add(lbl_prompt, BorderLayout.LINE_START);
 
         txt_results.setColumns(40);
         txt_results.setRows(10);

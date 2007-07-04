@@ -384,6 +384,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
             gbc.gridwidth = GridBagConstraints.REMAINDER;
             gbc.fill = GridBagConstraints.HORIZONTAL;
             panel.add(progress, gbc);
+            GuiUtil.applyDefaultOrientation(panel);
             return panel;
         }
 

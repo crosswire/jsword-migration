@@ -49,7 +49,7 @@ public class WebBrowserPane extends EirPanel
         });
         pnl_url.setLayout(new BorderLayout(5, 5));
         pnl_url.add(txt_url, BorderLayout.CENTER);
-        pnl_url.add(btn_go, BorderLayout.EAST);
+        pnl_url.add(btn_go, BorderLayout.LINE_END);
 
         txt_browser.setPreferredSize(new Dimension(300, 200));
         txt_browser.setEditable(false);
