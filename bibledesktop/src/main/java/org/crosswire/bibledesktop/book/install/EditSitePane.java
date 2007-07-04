@@ -175,16 +175,16 @@ public class EditSitePane extends JPanel
         JPanel pnlMain = new JPanel();
         pnlMain.setPreferredSize(new Dimension(300, 300));
         pnlMain.setLayout(new GridBagLayout());
-        pnlMain.add(lblMesg, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
-        pnlMain.add(lblName, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
+        pnlMain.add(lblMesg, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
+        pnlMain.add(lblName, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
         pnlMain.add(txtName, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
         // If there is only one type, then don't give the user a choice
         if (imanager.getInstallerFactoryNames().size() > 1)
         {
-            pnlMain.add(lblType, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
+            pnlMain.add(lblType, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
             pnlMain.add(cboType, new GridBagConstraints(1, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
         }
-        pnlMain.add(new JSeparator(), new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
+        pnlMain.add(new JSeparator(), new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
         pnlMain.add(siteEditorPane, new GridBagConstraints(0, 4, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         pnlMain.add(pnlBtn2, new GridBagConstraints(0, 5, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
@@ -228,8 +228,8 @@ public class EditSitePane extends JPanel
         dlgMain.getContentPane().add(new JPanel(), BorderLayout.NORTH);
         dlgMain.getContentPane().add(pnlAction, BorderLayout.SOUTH);
         dlgMain.getContentPane().add(this, BorderLayout.CENTER);
-        dlgMain.getContentPane().add(new JPanel(), BorderLayout.EAST);
-        dlgMain.getContentPane().add(new JPanel(), BorderLayout.WEST);
+        dlgMain.getContentPane().add(new JPanel(), BorderLayout.LINE_END);
+        dlgMain.getContentPane().add(new JPanel(), BorderLayout.LINE_START);
         dlgMain.getRootPane().setDefaultButton(btnClose);
         dlgMain.getRootPane().registerKeyboardAction(closer, esc, JComponent.WHEN_IN_FOCUSED_WINDOW);
         dlgMain.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

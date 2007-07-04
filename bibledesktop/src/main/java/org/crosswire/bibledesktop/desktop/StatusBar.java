@@ -96,9 +96,9 @@ public class StatusBar extends JComponent implements MouseListener, URIEventList
             finalPadX = 20;
             finalPadY = 5;
         }
-        this.add(labelMessage,  new GridBagConstraints(0, 0, 1, 1, 0.3, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(separator,     new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(panelProgress, new GridBagConstraints(2, 0, 1, 1, 0.7, 0.0, GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), finalPadX, finalPadY));
+        this.add(labelMessage,  new GridBagConstraints(0, 0, 1, 1, 0.3, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(separator,     new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(panelProgress, new GridBagConstraints(2, 0, 1, 1, 0.7, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), finalPadX, finalPadY));
         GuiUtil.applyDefaultOrientation(this);
     }
 

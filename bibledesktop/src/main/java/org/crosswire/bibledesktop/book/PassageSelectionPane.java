@@ -100,13 +100,13 @@ public class PassageSelectionPane extends JPanel
 
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         this.setLayout(new GridBagLayout());
-        this.add(lblAll, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 10, 5, 5), 0, 0));
+        this.add(lblAll, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(5, 10, 5, 5), 0, 0));
         this.add(createScrolledTree(lblAll), new GridBagConstraints(0, 1, 1, 4, 0.5, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 10, 10, 2), 0, 0));
         this.add(new JPanel(), new GridBagConstraints(1, 1, 1, 1, 0.0, 0.5, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         this.add(new JButton(actions.getAction(DELETE)), new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
         this.add(new JButton(actions.getAction(ADD)), new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
         this.add(new JPanel(), new GridBagConstraints(1, 4, 1, 1, 0.0, 0.5, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(lblSel, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 5, 5, 10), 0, 0));
+        this.add(lblSel, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(5, 5, 5, 10), 0, 0));
         this.add(createScrolledList(lblSel), new GridBagConstraints(2, 1, 1, 4, 0.5, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 2, 10, 10), 0, 0));
         this.add(createMessageLabel(), new GridBagConstraints(0, 5, 3, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 10, 5, 10), 0, 0));
         this.add(createDisplayPanel(), new GridBagConstraints(0, 6, 3, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 10, 0, 10), 0, 0));
@@ -170,7 +170,7 @@ public class PassageSelectionPane extends JPanel
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.add(txtDisplay, BorderLayout.CENTER);
-        panel.add(lblDisplay, BorderLayout.WEST);
+        panel.add(lblDisplay, BorderLayout.LINE_START);
         return panel;
     }
 
@@ -298,7 +298,7 @@ public class PassageSelectionPane extends JPanel
 
         pnlAction.setLayout(new BorderLayout());
         pnlAction.setBorder(BorderFactory.createEmptyBorder(5, 5, 15, 20));
-        pnlAction.add(btnGo, BorderLayout.EAST);
+        pnlAction.add(btnGo, BorderLayout.LINE_END);
 
         ActionListener closer = new ActionListener()
         {
