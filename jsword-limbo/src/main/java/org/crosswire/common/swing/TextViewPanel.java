@@ -134,7 +134,7 @@ public class TextViewPanel extends JPanel
         });
         btnClipboard.setText("Copy"); //$NON-NLS-1$
 
-        layButtons.setAlignment(FlowLayout.RIGHT);
+        layButtons.setAlignment(FlowLayout.TRAILING);
         pnlButtons.setLayout(layButtons);
         pnlButtons.add(btnClipboard, null);
 

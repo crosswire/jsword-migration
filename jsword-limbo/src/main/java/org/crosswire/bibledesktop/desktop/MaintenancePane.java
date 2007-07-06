@@ -124,7 +124,7 @@ public class MaintenancePane extends EirPanel
             }
         });
 
-        lay_buttons.setAlignment(FlowLayout.RIGHT);
+        lay_buttons.setAlignment(FlowLayout.TRAILING);
         pnl_buttons.setLayout(lay_buttons);
         pnl_buttons.add(btn_add, null);
         pnl_buttons.add(btn_remove, null);

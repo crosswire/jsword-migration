@@ -81,7 +81,7 @@ public class WizardConfigEditor extends AbstractConfigEditor
         layout = new CardLayout();
         deck = new JPanel(layout);
 
-        title = new JLabel(Msg.PROPERTIES.toString(), SwingConstants.LEFT);
+        title = new JLabel(Msg.PROPERTIES.toString(), SwingConstants.LEADING);
         title.setIcon(TASK_ICON_LARGE);
         title.setFont(new Font(getFont().getName(), Font.PLAIN, 16));
         title.setPreferredSize(new Dimension(30, 30));

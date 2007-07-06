@@ -122,7 +122,7 @@ public class MenuUtil
         URL url = getResource(name+SUFFIX_IMAGE);
         if (url != null)
         {
-            menuitem.setHorizontalTextPosition(SwingConstants.RIGHT);
+            menuitem.setHorizontalTextPosition(SwingConstants.TRAILING);
             menuitem.setIcon(new ImageIcon(url));
         }
         String action_name = getResourceString(name+SUFFIX_ACTIOIN);

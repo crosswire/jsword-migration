@@ -202,7 +202,7 @@ public class EditSitePane extends JPanel
 
         pnlAction = new JPanel();
         pnlAction.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        pnlAction.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        pnlAction.setLayout(new FlowLayout(FlowLayout.TRAILING));
         pnlAction.add(btnClose, null);
     }
 

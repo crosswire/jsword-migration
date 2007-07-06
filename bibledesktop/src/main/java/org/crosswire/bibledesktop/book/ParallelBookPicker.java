@@ -90,6 +90,7 @@ public class ParallelBookPicker extends JPanel implements BookProvider
     {
         BooksComboBoxModel mdlBook = new BooksComboBoxModel(filter, comparator);
         JComboBox cboBook = new JComboBox(mdlBook);
+        cboBook.setPrototypeDisplayValue(BookListCellRenderer.PROTOTYPE_BOOK_NAME);
         cboBook.setRenderer(new BookListCellRenderer(true));
         cboBook.addItemListener(new SelectedItemListener(this));
         cboBook.addActionListener(new SelectedActionListener());

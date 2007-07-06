@@ -55,7 +55,7 @@ public class BooleanField extends JPanel implements Field
         group.add(on);
         group.add(off);
 
-        setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
         add(on);
         add(off);
     }

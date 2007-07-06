@@ -109,7 +109,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
         title.setForeground(Color.white);
         title.setOpaque(true);
         title.setText(Msg.PROPERTIES.toString());
-        title.setAlignmentX(SwingConstants.LEFT);
+        title.setAlignmentX(SwingConstants.LEADING);
 
         // Use this if you want to have the tree touch the bottom. Then add
         // the button panel to content.South

@@ -200,7 +200,7 @@ public class ViewSourcePane extends JPanel
 
         textAreas = new JTextComponent[] { txtOrig, txtOsis, txtHtml };
 
-        pnlButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        pnlButtons = new JPanel(new FlowLayout(FlowLayout.TRAILING));
         pnlButtons.add(new JButton(actions.getAction("SourceClip")), null); //$NON-NLS-1$
 
         tabMain = new JTabbedPane();

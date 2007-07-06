@@ -93,7 +93,7 @@ public class Splash extends JWindow
         lblText.setForeground(new Color(0x99, 0x66, 0xAA));
         lblText.setOpaque(false);
         lblText.setVerticalAlignment(SwingConstants.BOTTOM);
-        lblText.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblText.setHorizontalAlignment(SwingConstants.TRAILING);
         lblText.setText(Msg.SPLASH_TITLE.toString());
         */
 
@@ -108,7 +108,7 @@ public class Splash extends JWindow
         lblInfo.setForeground(Color.WHITE);
         lblInfo.setBackground(Color.BLACK);
         //lblInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
-        lblInfo.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblInfo.setHorizontalAlignment(SwingConstants.TRAILING);
         lblInfo.setText(Msg.getVersionInfo() + ' ');
         lblInfo.setOpaque(true);
 

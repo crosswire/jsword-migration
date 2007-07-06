@@ -88,7 +88,7 @@ public class QuickHelpDialog extends JDialog
 
         JButton btnOK = new JButton(actions.getAction(OK));
         JPanel pnlOK = new JPanel();
-        pnlOK.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        pnlOK.setLayout(new FlowLayout(FlowLayout.TRAILING));
         pnlOK.add(btnOK, null);
         pnlOK.setBackground(Color.WHITE);
         pnlOK.setOpaque(true);

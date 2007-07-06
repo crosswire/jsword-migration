@@ -134,7 +134,7 @@ public class GeneratorPane extends EirPanel
         chkVerify.setText("Verify After Generation"); //$NON-NLS-1$
         chkVerify.setMnemonic('V');
         chkVerify.setSelected(false);
-        layButtons.setAlignment(FlowLayout.RIGHT);
+        layButtons.setAlignment(FlowLayout.TRAILING);
         pnlButtons.setLayout(layButtons);
         pnlButtons.add(chkVerify, null);
         pnlButtons.add(btnGenerate, null);

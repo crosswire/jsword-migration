@@ -284,7 +284,7 @@ public class ExceptionShelf extends JPanel
         }
 
         report.setFocusPainted(false);
-        report.setHorizontalAlignment(SwingConstants.LEFT);
+        report.setHorizontalAlignment(SwingConstants.LEADING);
 
         remove.setFocusPainted(false);
         // remove.setBorderPainted(false);

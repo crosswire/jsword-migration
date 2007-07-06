@@ -178,7 +178,7 @@ public class SitesPane extends JPanel
             JButton btnAdd = new JButton(actions.getAction(EDIT_SITE));
 
             pnlButtons = new JPanel();
-            pnlButtons.setLayout(new FlowLayout(FlowLayout.RIGHT));
+            pnlButtons.setLayout(new FlowLayout(FlowLayout.TRAILING));
             pnlButtons.add(btnAdd, null);
             pnlButtons.add(btnOK);
         }

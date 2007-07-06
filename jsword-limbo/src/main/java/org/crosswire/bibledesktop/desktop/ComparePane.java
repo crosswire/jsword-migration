@@ -113,7 +113,7 @@ public class ComparePane extends EirPanel
 
         // I18N: Migrate this to an ActionFactory
         btnGo.setText(LimboMsg.COMPARE_GO.toString());
-        pnlButtons.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        pnlButtons.setLayout(new FlowLayout(FlowLayout.TRAILING));
         pnlButtons.add(btnGo, null);
 
         boxTop = Box.createVerticalBox();

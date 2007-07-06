@@ -86,7 +86,7 @@ public class AboutPane
         lblInfo.setFont(new Font(SPLASH_FONT, 1, 14));
         lblInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
         lblInfo.setOpaque(true);
-        lblInfo.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblInfo.setHorizontalAlignment(SwingConstants.TRAILING);
         lblInfo.setText(Msg.getVersionInfo());
 
         ActionFactory actions = new ActionFactory(AboutPane.class, this);
