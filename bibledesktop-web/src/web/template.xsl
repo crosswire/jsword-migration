@@ -37,7 +37,9 @@
         {
           var div = document.createElement("div");
           parent.appendChild(div);
-          div.setAttribute("class", "lsidecell current");
+          // IE and W3C differ on the attribute name.
+          //div.setAttribute("class", "lsidecell current");
+          div.className = "lsidecell current";
           div.appendChild(document.createTextNode(title));
         }
         else
@@ -45,7 +47,9 @@
           var div = document.createElement("div");
           var a = document.createElement("a");
           parent.appendChild(div);
-          div.setAttribute("class", "lsidecell pagelink");
+          // IE and W3C differ on the attribute name.
+          //div.setAttribute("class", "lsidecell pagelink");
+          div.className = "lsidecell pagelink";
           div.appendChild(a);
           a.setAttribute("href", dest);
           a.appendChild(document.createTextNode(title));
