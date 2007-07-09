@@ -6,6 +6,11 @@
   <!-- this should be overridden by the parent file -->
   <property name="support.tools" value=".."/>
 
+  <!-- Make the ant task visible -->
+  <taskdef name="nsis" classname="net.sf.nsisant.Task">
+    <classpath location="${support.tools}/${support.nsis}/nsisant-${version.nsis}/nsisant-${version.nsis}.jar"/>
+  </taskdef>
+
   <!-- the only purpose of this is to provide a useful diagnostic. -->
   <target name="nsis">
     <echo>NSIS may fail if nsisant.jar is not visible to Ant and makensis is not in your path.
@@ -17,8 +22,8 @@ Otherwise, run the nsis.antlibs task to copy jars to ANT_HOME/lib</echo>
 
   <!-- This does not need to be done in Eclipse. Add it to Ant preferences instead -->
   <target name="nsis.antlibs" description="Copy required jars to ant/lib">
-    <echo message="copy ${basedir}/${support.nsis}/nsis-${version.nsis}/nsis-${version.nsis}.jar"/>
-    <copy file="${support.tools}/${support.nsis}/nsis-${version.nsis}/nsis-${version.nsis}.jar" todir="${ant.home}/lib"/>
+    <echo message="copy ${basedir}/${support.nsis}/nsisant-${version.nsis}/nsisant-${version.nsis}.jar"/>
+    <copy file="${support.tools}/${support.nsis}/nsisant-${version.nsis}/nsisant-${version.nsis}.jar" todir="${ant.home}/lib"/>
   </target>
 
 </project>
