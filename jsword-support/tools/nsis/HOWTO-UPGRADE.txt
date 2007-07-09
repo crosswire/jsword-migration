@@ -1,0 +1,19 @@
+Instructions on how to upgrade nsis ant task.
+
+Obtain the most recent version of nsis ant task from:
+   http://sourceforge.net/projects/nsisant
+
+Since the zip (at least with version 1.2) does not have a root directory,
+create a versioned root directory (e.g. nsisant-1.2)
+Unzip the file into this directory.
+
+In the new directory, remove the following:
+   api
+   src
+
+Change the references to the old directory to the new directory in the following files:
+   build.xml
+
+In SVN remove the old nsis directory.
+
+For instructions on use see: http://nsisant.sourceforge.net
