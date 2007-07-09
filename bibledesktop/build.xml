@@ -80,7 +80,7 @@
         <patternset refid="external.runtime.jars"/>
         <patternset refid="internal.built.jars"/>
       </fileset>
-    </copy> 		
+    </copy>
     <signjar
           storepass="${keystore.pswd}"
           alias="${keystore.alias}"
@@ -112,7 +112,7 @@
 
   	<!-- Copy and filter to make it work -->
   	<copy file="${source.etc}/jnlp/bibledesktop.jnlp"
-          tofile="${target.installed}/bibledesktop-${release.version}.jnlp"
+          tofile="${target.installed}/bibledesktop.jnlp"
           filtering="true"
           preservelastmodified="true">
       <filterset>
@@ -139,6 +139,11 @@
   	<!-- Build the Windows installers from the installed/signed jars -->
   	<nsis verbosity="4" script="${source.etc}/installer/win32/BibleDesktop.nsi"/>
   	<nsis verbosity="4" script="${source.etc}/installer/win32/BibleDesktopSetup.nsi"/>
+    <copy todir="${target.installed}" preservelastmodified="true">
+      <fileset dir="${source.etc}/installer/win32">
+        <include name="**/*.exe"/>
+      </fileset>
+    </copy>
   </target>
 
   <target name="install.check">
