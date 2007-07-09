@@ -11,6 +11,9 @@
 
   <property name="gener.root"        value="${target.root}/gener"/>
 
+  <property name="support.tools" value="../jsword-support/tools"/>
+  <import file="${support.tools}/nsis/build.xml"/>
+
   <!--=======================================================================-->
   <target name="testcompile.extra">
     <mkdir dir="${gener.root}/config"/>
@@ -26,7 +29,7 @@
 
   <!--=======================================================================-->
   <target name="install"
-          depends="build, keygen, install.check"
+          depends="build, keygen, install.check, nsis"
           unless="install.uptodate"
           description="Prepares for web based jnlp deploy">
 
@@ -132,6 +135,10 @@
     <fixcrlf srcdir="${target.installed}" eol="crlf">
       <include name="**/*.bat"/>
     </fixcrlf>
+
+  	<!-- Build the Windows installers from the installed/signed jars -->
+  	<nsis script="${source.etc}/installer/win32/BibleDesktop.nsi"/>
+  	<nsis script="${source.etc}/installer/win32/BibleDesktopSetup.nsi"/>
   </target>
 
   <target name="install.check">
