@@ -20,7 +20,7 @@ Caption "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 Icon "bibledesktop.ico"
 OutFile "${PRODUCT_NAME}.exe"
 BrandingText " "
-
+SS
 AutoCloseWindow true
 ShowInstDetails nevershow
 

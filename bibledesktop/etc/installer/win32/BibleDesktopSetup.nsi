@@ -48,6 +48,8 @@ InstallDir "$PROGRAMFILES\CrossWire\${PRODUCT_NAME}"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
 ShowUnInstDetails show
+; Under Windows Vista run this as an admin.
+RequestExecutionLevel admin
 
 Section "MainSection" SEC01
   SetOutPath "$INSTDIR"
