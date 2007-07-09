@@ -17,7 +17,7 @@ Var JavaLIB
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 Caption "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-Icon "bibledesktop.ico"
+Icon "BibleDesktop.ico"
 OutFile "${PRODUCT_NAME}.exe"
 BrandingText " "
 ; Under Windows Vista run this as a user.
