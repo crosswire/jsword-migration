@@ -20,7 +20,9 @@ Caption "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 Icon "bibledesktop.ico"
 OutFile "${PRODUCT_NAME}.exe"
 BrandingText " "
-SS
+; Under Windows Vista run this as a user.
+RequestExecutionLevel user
+
 AutoCloseWindow true
 ShowInstDetails nevershow
 

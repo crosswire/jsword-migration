@@ -60,8 +60,8 @@ Section "MainSection" SEC01
   CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.exe"
   ; remove all previous jars
   Delete   /REBOOTOK $INSTDIR\*.jar
-  ; use the unsigned jars
-  File ..\..\..\target\jar\*.jar
+  ; use the signed jars for Vista's sake
+  File ..\..\..\target\installed\*.jar
 SectionEnd
 
 Section -AdditionalIcons
