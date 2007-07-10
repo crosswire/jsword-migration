@@ -140,7 +140,7 @@
   	<copy todir="${target.installed}"
           filtering="true"
           preservelastmodified="true">
-      <fileset dir="${target.jar}">
+      <fileset dir="${source.etc}/installer/win32">
         <include name="*.nsi"/>
       </fileset>
       <filterset>
@@ -149,6 +149,8 @@
     </copy>
   	<nsis verbosity="4" script="${target.installed}/BibleDesktop.nsi"/>
   	<nsis verbosity="4" script="${target.installed}/BibleDesktopSetup.nsi"/>
+    <delete file="${target.installed}/BibleDesktop.nsi"/>
+    <delete file="${target.installed}/BibleDesktopSetup.nsi"/>
   </target>
 
   <target name="install.check">
