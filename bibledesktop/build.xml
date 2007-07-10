@@ -137,13 +137,24 @@
     </fixcrlf>
 
   	<!-- Build the Windows installers from the installed/signed jars -->
-  	<nsis verbosity="4" script="${source.etc}/installer/win32/BibleDesktop.nsi"/>
-  	<nsis verbosity="4" script="${source.etc}/installer/win32/BibleDesktopSetup.nsi"/>
-    <copy todir="${target.installed}" preservelastmodified="true">
-      <fileset dir="${source.etc}/installer/win32">
-        <include name="**/*.exe"/>
+  	<copy todir="${target.installed}" preservelastmodified="true">
+      <fileset dir="${target.jar}">
+        <patternset refid="external.runtime.jars"/>
+        <patternset refid="internal.built.jars"/>
       </fileset>
     </copy>
+  	<copy todir="${target.installed}"
+          filtering="true"
+          preservelastmodified="true">
+      <fileset dir="${target.jar}">
+        <include name="*.nsi"/>
+      </fileset>
+      <filterset>
+        <filter token="release.version" value="${release.version}"/>
+      </filterset>
+    </copy>
+  	<nsis verbosity="4" script="${target.installed}/BibleDesktop.nsi"/>
+  	<nsis verbosity="4" script="${target.installed}/BibleDesktopSetup.nsi"/>
   </target>
 
   <target name="install.check">
