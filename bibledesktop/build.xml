@@ -137,12 +137,6 @@
     </fixcrlf>
 
   	<!-- Build the Windows installers from the installed/signed jars -->
-  	<copy todir="${target.installed}" preservelastmodified="true">
-      <fileset dir="${target.jar}">
-        <patternset refid="external.runtime.jars"/>
-        <patternset refid="internal.built.jars"/>
-      </fileset>
-    </copy>
   	<copy todir="${target.installed}"
           filtering="true"
           preservelastmodified="true">
