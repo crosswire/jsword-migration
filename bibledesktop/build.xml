@@ -147,6 +147,13 @@
         <filter token="release.version" value="${release.version}"/>
       </filterset>
     </copy>
+  	<copy todir="${target.installed}"
+          preservelastmodified="true">
+      <fileset dir="${source.etc}/installer/win32">
+        <include name="*.ico"/>
+        <include name="gpl.txt"/>
+      </fileset>
+    </copy>
   	<nsis verbosity="4" script="${target.installed}/BibleDesktop.nsi"/>
   	<nsis verbosity="4" script="${target.installed}/BibleDesktopSetup.nsi"/>
     <delete file="${target.installed}/BibleDesktop.nsi"/>
