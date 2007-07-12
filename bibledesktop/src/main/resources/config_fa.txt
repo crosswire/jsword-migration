@@ -2,32 +2,32 @@
 # keys of the options in the config.xml file.
 # Since the keys may have spaces these need to be escaped here.
 
-Bibles.RetainCurrent.path= کتاب مقدس.از کتاب مقدس اخیر استفاده کنید
-Bibles.RetainCurrent.help= هر شماحل ترژومەی قبلی یا ترژومەیاعدی استفدە میکند
-Bibles.DefaultBible.path= کتب مقدس. کدامیک از کتاب مقدس های موجود متن اصلی است    
-Bibles.DefaultBible.help= کدامیک از کتاب مقدس های موجود متن اصلی است 
-Bibles.DefaultDictionary.path= کتاب مقدس. لغت نامه اصلیکتب مقدس ها
-Bibles.DefaultDictionary.help=  ؟کدامیک از لغت نامه های موجود لغت نامه اصل است
+Bibles.RetainCurrent.path=کتاب مقدس.از کتاب مقدس اخیر استفاده کنید
+Bibles.RetainCurrent.help=هر شماحل ترژومەی قبلی یا ترژومەیاعدی استفدە میکند
+Bibles.DefaultBible.path=کتب مقدس. کدامیک از کتاب مقدس های موجود متن اصلی است    
+Bibles.DefaultBible.help=کدامیک از کتاب مقدس های موجود متن اصلی است 
+Bibles.DefaultDictionary.path=کتاب مقدس. لغت نامه اصلیکتب مقدس ها
+Bibles.DefaultDictionary.help=؟کدامیک از لغت نامه های موجود لغت نامه اصل است
 Bibles.DefaultCommentary.path=کتاب مقدس. کتاب تفسیر اصلی
-Bibles.DefaultCommentary.help= کدامیک از کتب تفسیر موجود، کتاب اصلی است.
-Bibles.DefaultDailyDevotional.path= کتب مقدس. کتاب رازگاهان روزانه اصلی
-Bibles.DefaultDailyDevotional.help= کدامیک از کتب رازگان، کتاب اصلی است.
+Bibles.DefaultCommentary.help=کدامیک از کتب تفسیر موجود، کتاب اصلی است.
+Bibles.DefaultDailyDevotional.path=کتب مقدس. کتاب رازگاهان روزانه اصلی
+Bibles.DefaultDailyDevotional.help=کدامیک از کتب رازگان، کتاب اصلی است.
 Bibles.DefaultGreekDefinitions.path=کتب مقدس. معانی اصلی یونانی (سترانگز
 Bibles.DefaultGreekDefinitions.help=.کدامیک از معانی یونانی موجود(سترانگز) اصلی است.
-Bibles.DefaultHebrewDefinitions.path= (کتب مقدس. معانی اصلی عبری (سترانگز
-Bibles.DefaultHebrewDefinitions.help= کدامیک از معانی موجود عبری (سترانگز) معنی اصلی است.
-Bibles.DefaultGreekParse.path= کتب مقدس.راهنمای اصلی مورفولوژی یونانی
-Bibles.DefaultGreekParse.help= کدامیک از راهنماهای مورفولوژی یونانی اصلی است.
-Bibles.DefaultHebrewParse.path= کتب مقدس. راهنمای
+Bibles.DefaultHebrewDefinitions.path=(کتب مقدس. معانی اصلی عبری (سترانگز
+Bibles.DefaultHebrewDefinitions.help=کدامیک از معانی موجود عبری (سترانگز) معنی اصلی است.
+Bibles.DefaultGreekParse.path=کتب مقدس.راهنمای اصلی مورفولوژی یونانی
+Bibles.DefaultGreekParse.help=کدامیک از راهنماهای مورفولوژی یونانی اصلی است.
+Bibles.DefaultHebrewParse.path=کتب مقدس. راهنمای
 Bibles.DefaultHebrewParse.help=کدامیک از راهنماهای مورفولوژی عبری موجود اصلی است.
 
 # All above refer to the Bible tab in the settings. Lines with "Path" need a "Ketab moghadass" as initial bit. The "Help" lines are free floati8ng text explaining the box.
 # I have choses the singular Ketab moghadass on purpose to avoid silly discussions about Christians having many bibles. The plural in English obviously 
 # refers to multiplicity of  translations 
 
-# BibleDisplay.Reuse.path= نمایش کتاب مقدس. پیوندهای مربوط به همین ترجمه را باز کن
+# BibleDisplay.Reuse.path=نمایش کتاب مقدس. پیوندهای مربوط به همین ترجمه را باز کن
 # BibleDisplay.Reuse.help=.برای پیوندها از همین ترجمه استفاده کن
-# BibleDisplay.MaxPickers.path= عایش کتاب مقدس. جند کتاب در شمیل
+# BibleDisplay.MaxPickers.path=عایش کتاب مقدس. جند کتاب در شمیل
 # BibleDisplay.MaxPickers.help=Limit the number of Bibles to show at once.
 # BibleDisplay.Commentaries.path=.نمایش کتاب مقدس List Commentaries with Bibles
 # BibleDisplay.Commentaries.path=
