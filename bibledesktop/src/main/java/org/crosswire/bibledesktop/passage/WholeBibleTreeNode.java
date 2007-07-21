@@ -25,6 +25,7 @@ import java.util.Enumeration;
 
 import javax.swing.tree.TreeNode;
 
+import org.crosswire.common.icu.NumberShaper;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.passage.VerseRange;
@@ -40,7 +41,7 @@ import org.crosswire.jsword.versification.BibleInfo;
 public final class WholeBibleTreeNode implements TreeNode
 {
     /**
-     * The starrt point for all WholeBibleTreeNodes.
+     * The start point for all WholeBibleTreeNodes.
      */
     public static WholeBibleTreeNode getRootNode()
     {
@@ -110,6 +111,7 @@ public final class WholeBibleTreeNode implements TreeNode
 
         this.range = range;
         this.level = level;
+        shaper = new NumberShaper();
     }
 
     /**
@@ -161,10 +163,10 @@ public final class WholeBibleTreeNode implements TreeNode
                 return BibleInfo.getPreferredBookName(range.getStart().getBook());
 
             case LEVEL_CHAPTER:
-                return Integer.toString(range.getStart().getChapter());
+                return shaper.shape(Integer.toString(range.getStart().getChapter()));
 
             case LEVEL_VERSE:
-                return Integer.toString(range.getStart().getVerse());
+                return shaper.shape(Integer.toString(range.getStart().getVerse()));
 
             default:
                 return Msg.ERROR.toString();
@@ -288,6 +290,9 @@ public final class WholeBibleTreeNode implements TreeNode
     private static final int LEVEL_BOOK = 1;
     private static final int LEVEL_CHAPTER = 2;
     private static final int LEVEL_VERSE = 3;
+
+    /** Change the number representation as needed */
+    private NumberShaper shaper;
 
     /** The range that this node refers to */
     private VerseRange range;

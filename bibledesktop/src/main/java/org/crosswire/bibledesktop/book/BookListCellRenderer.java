@@ -27,6 +27,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
 import org.crosswire.bibledesktop.book.install.BookIcon;
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.book.Book;
 
 /**
@@ -59,6 +60,7 @@ public class BookListCellRenderer extends DefaultListCellRenderer
     {
         super();
         this.abbreviated = abbreviated;
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /**

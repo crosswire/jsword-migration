@@ -14,20 +14,19 @@
  *      59 Temple Place - Suite 330
  *      Boston, MA 02111-1307, USA
  *
- * Copyright: 2005
+ * Copyright: 2007
  *     The copyright to this program is held by it's authors.
  *
- * ID: $Id$
+ * ID: $Id: BibleNameCellRenderer.java 1471 2007-07-03 21:01:02Z dmsmith $
  */
-package org.crosswire.bibledesktop.book;
+package org.crosswire.common.swing;
 
 import java.awt.Component;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
-import org.crosswire.common.swing.GuiUtil;
-import org.crosswire.jsword.versification.BookName;
+import org.crosswire.common.icu.NumberShaper;
 
 /**
  * Render a list of Bible Book names with their full name as a tooltip
@@ -36,44 +35,14 @@ import org.crosswire.jsword.versification.BookName;
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class BibleNameCellRenderer extends DefaultListCellRenderer
+public class NumberCellRenderer extends DefaultListCellRenderer
 {
     /**
-     * Constructs a default renderer object for an item in a list,
-     * using full names.
+     * Constructs a default renderer for a list of numbers.
      */
-    public BibleNameCellRenderer()
+    public NumberCellRenderer()
     {
-        this(false);
-    }
-
-    /**
-     * Constructs a renderer object for an item in a list,
-     * using abbreviated names if desired.
-     * 
-     * @param abbreviated use the initials in the list.
-     */
-    public BibleNameCellRenderer(boolean abbreviated)
-    {
-        super();
-        this.abbreviated = abbreviated;
-        GuiUtil.applyDefaultOrientation(this);
-    }
-
-    /**
-     * @return the abbreviated
-     */
-    public boolean isAbbreviated()
-    {
-        return abbreviated;
-    }
-
-    /**
-     * @param newAbbreviated the abbreviated to set
-     */
-    public void setAbbreviated(boolean newAbbreviated)
-    {
-        this.abbreviated = newAbbreviated;
+        this.shaper = new NumberShaper();
     }
 
     /* (non-Javadoc)
@@ -89,32 +58,21 @@ public class BibleNameCellRenderer extends DefaultListCellRenderer
 
         if (value == null)
         {
-            setText(Msg.NONE.toString());
+            setText(""); //$NON-NLS-1$
             setEnabled(false);
         }
-
-        // Hack to allow us to use PROTOTYPE_BOOK_NAME as a prototype value
-        if (value instanceof BookName)
+        else
         {
-            BookName bookName = (BookName) value;
-            String name = bookName.getLongName();
-
-            setText(abbreviated ? bookName.getShortName() : name);
-            setToolTipText(name);
+            setText(shaper.shape(value.toString()));
         }
 
         return comp;
     }
 
     /**
-     * If true then the initials of a book are shown, otherwise the full name.
+     * Used to display numbers in the user's expected representations.
      */
-    private boolean abbreviated;
-
-    /**
-     * Make sure that book names are not too wide
-     */
-    public static final String PROTOTYPE_BOOK_NAME = "0123456789"; //$NON-NLS-1$
+    private NumberShaper shaper;
 
     /**
      * Serialization ID

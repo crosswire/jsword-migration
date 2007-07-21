@@ -29,6 +29,7 @@ import java.awt.event.ItemListener;
 import javax.swing.JComboBox;
 import javax.swing.event.EventListenerList;
 
+import org.crosswire.common.swing.NumberCellRenderer;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.versification.BibleInfo;
@@ -94,6 +95,7 @@ public class BibleComboBoxModelSet
         // There are over 100 chapters in some books
         cboChapter.setPrototypeDisplayValue(new Integer(999));
         cboChapter.addItemListener(cil);
+        cboChapter.setRenderer(new NumberCellRenderer());
     }
 
     /**
@@ -107,6 +109,7 @@ public class BibleComboBoxModelSet
         // There are over 100 verses in some chapters
         cboVerse.setPrototypeDisplayValue(new Integer(999));
         cboVerse.addItemListener(cil);
+        cboVerse.setRenderer(new NumberCellRenderer());
     }
 
     /**

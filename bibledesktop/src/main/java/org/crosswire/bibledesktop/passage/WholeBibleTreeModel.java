@@ -36,8 +36,6 @@ public class WholeBibleTreeModel extends DefaultTreeModel
 {
     /**
      * Basic constructor.
-     * At some stage when editing this and PassageTreeNode we should be able to
-     * remove the JTree param.
      */
     public WholeBibleTreeModel()
     {
