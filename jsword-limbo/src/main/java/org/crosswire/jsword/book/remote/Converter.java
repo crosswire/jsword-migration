@@ -57,7 +57,7 @@ public class Converter
     private static final String ELEMENT_METADATA = "metadata"; //$NON-NLS-1$
 
     /**
-     * Prevent Instansiation
+     * Prevent instantiation
      */
     private Converter()
     {

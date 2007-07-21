@@ -35,7 +35,7 @@ import org.crosswire.common.util.Reporter;
 public class JDBCBibleUtil
 {
     /**
-     * Ensure that we can't be instansiated
+     * Ensure that we can't be instantiated
      */
     private JDBCBibleUtil()
     {

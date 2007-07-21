@@ -43,7 +43,7 @@ import org.crosswire.common.util.Reporter;
 public final class ConfigEditorFactory
 {
     /**
-     * Prevent Instansiation
+     * Prevent instantiation
      */
     private ConfigEditorFactory()
     {

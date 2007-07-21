@@ -34,7 +34,7 @@ import org.crosswire.common.util.Logger;
 public class ThesaurusFactory
 {
     /**
-     * Prevent Instansiation
+     * Prevent instantiation
      */
     private ThesaurusFactory()
     {

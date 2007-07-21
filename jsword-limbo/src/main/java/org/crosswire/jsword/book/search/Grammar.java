@@ -33,7 +33,7 @@ import org.crosswire.common.util.StringUtil;
 public class Grammar
 {
     /**
-     * Prevent Instansiation
+     * Prevent instantiation
      */
     private Grammar()
     {

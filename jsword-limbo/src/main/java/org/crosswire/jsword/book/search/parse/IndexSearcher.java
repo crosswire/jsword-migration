@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.crosswire.common.util.Logger;
+import org.crosswire.common.util.ReflectionUtil;
 import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.index.Index;
@@ -285,8 +286,7 @@ public class IndexSearcher implements Searcher
                     {
                         try
                         {
-                            Class clazz = Class.forName(value);
-                            wordMap.put(key, clazz.newInstance());
+                            wordMap.put(key, ReflectionUtil.construct(value));
                         }
                         catch (Exception ex)
                         {

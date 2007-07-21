@@ -52,10 +52,11 @@ import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageKeyFactory;
+import org.crosswire.jsword.util.Project;
 
 /**
  * A BibleViewPane consists of three areas for looking up passages,
- * for navigating and minipulating parts of passage and for viewing a passage.
+ * for navigating and manipulating parts of passage and for viewing a passage.
  *
  * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
@@ -86,6 +87,15 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
      */
     private void init()
     {
+        try
+        {
+            chooser = new JFileChooser(Project.instance().getUserSubProjectDir(BOOKMARK_DIR, true).getPath());
+        }
+        catch (IOException ex)
+        {
+            chooser = new JFileChooser(Project.instance().getUserProjectDir().getPath());
+        }
+
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         chooser.addChoosableFileFilter(new CustomFileFilter());
         chooser.setMultiSelectionEnabled(false);
@@ -196,6 +206,12 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
      */
     private void saveKey(Key key) throws IOException
     {
+        //TODO(DMS): change this to save:
+        // The version of the save file, incremented everytime this method changes.
+        // the search request,
+        // the set of bibles,
+        // and any advanced search options.
+        // perhaps by having and creating a book mark object.
         assert saved != null;
 
         Writer out = null;
@@ -237,6 +253,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
      */
     public void open() throws NoSuchVerseException, IOException
     {
+        // TODO(DMS): make this sensitive to a version marker in the file!
         int reply = chooser.showOpenDialog(getRootPane());
         if (reply == JFileChooser.APPROVE_OPTION)
         {
@@ -386,7 +403,8 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
     private transient EventListenerList listeners;
     private DisplaySelectPane pnlSelect;
     protected SplitBookDataDisplay pnlPassg;
-    private JFileChooser chooser = new JFileChooser();
+    private JFileChooser chooser;
+    private static final String BOOKMARK_DIR = "bookmarks"; //$NON-NLS-1$
     private static final String EXTENSION = ".lst"; //$NON-NLS-1$
 
     /**

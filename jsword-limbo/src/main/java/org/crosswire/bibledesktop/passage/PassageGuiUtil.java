@@ -37,7 +37,7 @@ import org.crosswire.jsword.passage.VerseRange;
 public final class PassageGuiUtil
 {
     /**
-     * Prevent Instansiation
+     * Prevent instantiation
      */
     private PassageGuiUtil()
     {

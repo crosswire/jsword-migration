@@ -41,7 +41,7 @@ import org.crosswire.jsword.book.BookException;
 public class CustomTokenizer
 {
     /**
-     * Prevent Instansiation
+     * Prevent instantiation
      */
     private CustomTokenizer()
     {

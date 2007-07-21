@@ -11,7 +11,7 @@ package org.crosswire.common.util;
 public final class Validator
 {
     /**
-     * Ensure that we can not be instansiated
+     * Ensure that we can not be instantiated
      */
     private Validator()
     {

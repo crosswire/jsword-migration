@@ -50,7 +50,7 @@ import org.crosswire.common.util.StringUtil;
 public final class LookAndFeelUtil
 {
     /**
-     * Prevent Instansiation
+     * Prevent instantiation
      */
     private LookAndFeelUtil()
     {

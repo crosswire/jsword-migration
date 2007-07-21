@@ -161,7 +161,7 @@ public class SerIndexManager implements IndexManager
         assert driverName != null;
         assert bookName != null;
 
-        URI base = Project.instance().getTempScratchSpace(DIR_SER, false);
+        URI base = Project.instance().getUserSubProjectDir(DIR_SER, false);
         URI driver = NetUtil.lengthenURI(base, driverName);
 
         return NetUtil.lengthenURI(driver, bookName);

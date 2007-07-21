@@ -60,7 +60,7 @@ import org.crosswire.common.util.ResourceUtil;
 public final class GuiUtil
 {
     /**
-     * Prevent Instansiation
+     * Prevent instantiation
      */
     private GuiUtil()
     {

@@ -80,13 +80,13 @@ import org.crosswire.common.util.Logger;
  * order text area, <i>or</i> no index area (i.e. v=0) However having v=0
  * would force us to do in memory cacheing.
  * <p>The OLB v8 seems to do some form of (offset,length) indexing to
- * compress files sizes further (or is it simply to obfusticate the file
+ * compress files sizes further (or is it simply to obfuscate the file
  * format?) I'd rather use .zip technology for compression.
  *
  * <p>Consider whether and to what extent this class should be static and
  * public. I think that it should be package scope - Use of this class
  * does not make sense outside of the RawBook package. There should
- * only ever be one WordIndex for a given file, but if we can instansiate
+ * only ever be one WordIndex for a given file, but if we can instantiate
  * this class for several sets of files - it does not make sense to make
  * it static.
  *

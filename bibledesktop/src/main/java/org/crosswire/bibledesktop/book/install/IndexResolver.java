@@ -52,7 +52,7 @@ import org.crosswire.jsword.util.IndexDownloader;
 public final class IndexResolver
 {
     /**
-     * Prevent instansiation
+     * Prevent instantiation
      */
     private IndexResolver()
     {

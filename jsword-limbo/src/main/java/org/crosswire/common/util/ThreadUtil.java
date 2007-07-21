@@ -35,7 +35,7 @@ import java.util.List;
 public final class ThreadUtil
 {
     /**
-     * Prevent Instansiation
+     * Prevent instantiation
      */
     private ThreadUtil()
     {

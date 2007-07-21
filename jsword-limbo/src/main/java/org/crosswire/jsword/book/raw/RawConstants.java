@@ -49,7 +49,7 @@ public class RawConstants
     static final String FILE_BIBLE_PROPERTIES = "bible.properties"; //$NON-NLS-1$
     
     /**
-     * Prevent instansiation
+     * Prevent instantiation
      */
     private RawConstants()
     {

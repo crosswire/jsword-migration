@@ -183,7 +183,7 @@ public class MapField extends JPanel implements Field
     /**
      * Create an instance of a class for the Map
      * @param name The name of the class to create
-     * @return The instansiated object or null if the name is not valid
+     * @return The instantiated object or null if the name is not valid
      */
     public boolean isValid(String name)
     {

@@ -24,7 +24,6 @@ package org.crosswire.bibledesktop.desktop;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.Iterator;
 
@@ -44,6 +43,7 @@ import org.crosswire.common.swing.Actionable;
 import org.crosswire.common.swing.desktop.ViewVisitor;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.OSType;
+import org.crosswire.common.util.ReflectionUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
@@ -495,24 +495,14 @@ public class DesktopActions implements Actionable
         {
             try
             {
-                // Get a class object
                 Class osxAdapter = Class.forName("org.crosswire.common.aqua.OSXAdapter"); //$NON-NLS-1$
+                Object[] registerOSXArgs = { actions, DesktopActions.ABOUT, DesktopActions.OPTIONS, DesktopActions.EXIT };
+                ReflectionUtil.invoke(osxAdapter, osxAdapter, "registerMacOSXApplication", registerOSXArgs); //$NON-NLS-1$
 
-                Class[] defRegisterArgs = { Actionable.class, String.class, String.class, String.class };
-                Method registerMethod = osxAdapter.getDeclaredMethod("registerMacOSXApplication", defRegisterArgs); //$NON-NLS-1$
-                if (registerMethod != null)
-                {
-                    Object[] args = { actions, DesktopActions.ABOUT, DesktopActions.OPTIONS, DesktopActions.EXIT };
-                    registerMethod.invoke(osxAdapter, args);
-                }
-
-                Class[] defEnablePrefArgs = { boolean.class };
-                Method prefsEnableMethod = osxAdapter.getDeclaredMethod("enablePrefs", defEnablePrefArgs); //$NON-NLS-1$
-                if (prefsEnableMethod != null)
-                {
-                    Object[] args = { Boolean.TRUE };
-                    prefsEnableMethod.invoke(osxAdapter, args);
-                }
+                // To call a method taking a type of boolean, the type has to match but the object has to be wrapped
+                Class[] enablePrefTypes = { boolean.class };
+                Object[] enablePrefArgs = { Boolean.TRUE };
+                ReflectionUtil.invoke(osxAdapter, osxAdapter, "enablePrefs", enablePrefArgs, enablePrefTypes); //$NON-NLS-1$
                 return true;
             }
             catch (NoClassDefFoundError e)

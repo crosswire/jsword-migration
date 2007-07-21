@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.MissingResourceException;
 import java.util.Properties;
 
+import org.crosswire.common.util.ReflectionUtil;
 import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.jsword.book.install.Installer;
 
@@ -53,8 +54,7 @@ public final class SiteEditorFactory
         {
             Properties properties = ResourceUtil.getProperties(SiteEditorFactory.class);
             String className = properties.getProperty(installer.getType());
-            Class clazz = Class.forName(className);
-            SiteEditor editor = (SiteEditor) clazz.newInstance();
+            SiteEditor editor = (SiteEditor) ReflectionUtil.construct(className);
             editor.setInstaller(installer);
             return editor;
         }
