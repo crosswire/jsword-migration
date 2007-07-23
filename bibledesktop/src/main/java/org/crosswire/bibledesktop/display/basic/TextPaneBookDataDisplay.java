@@ -23,6 +23,7 @@ package org.crosswire.bibledesktop.display.basic;
 
 import java.awt.Component;
 import java.awt.ComponentOrientation;
+import java.awt.Font;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -48,9 +49,11 @@ import org.crosswire.bibledesktop.display.URIEvent;
 import org.crosswire.bibledesktop.display.URIEventListener;
 import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.common.swing.AntiAliasedTextPane;
+import org.crosswire.common.swing.GuiConvert;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
+import org.crosswire.common.util.StringUtil;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
 import org.crosswire.common.xml.TransformingSAXEventProvider;
@@ -150,6 +153,20 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
         boolean direction = bmd.isLeftToRight();
         txtView.applyComponentOrientation(direction ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
 
+        String fontName = bmd.getProperty(BookMetaData.KEY_FONT);
+        String fontSpec = XSLTProperty.FONT.getStringState();
+        if (fontName != null)
+        {
+            String[] fontParts = StringUtil.split(fontSpec, ","); //$NON-NLS-1$
+            String newFontSpec = fontName + ',' + fontParts[1] + ',' + fontParts[2];
+            Font bookFont = GuiConvert.string2Font(newFontSpec);
+            // Make sure it is installed. Java does substitution. Make sure we got what we wanted.
+            if (bookFont.getFamily().equalsIgnoreCase(fontName))
+            {
+                fontSpec = newFontSpec;
+            }
+        }
+
         try
         {
             SAXEventProvider osissep = bdata.getSAXEventProvider();
@@ -167,10 +184,11 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             else
             {
                 XSLTProperty.CSS.setProperty(htmlsep);
-                XSLTProperty.FONT.setProperty(htmlsep);
                 XSLTProperty.BASE_URL.setProperty(htmlsep);
                 XSLTProperty.DIRECTION.setProperty(htmlsep);
             }
+            // Override the default if needed
+            htmlsep.setParameter(XSLTProperty.FONT.getName(), fontSpec);
 
             String text = XMLUtil.writeToString(htmlsep);
             /* BUG_PARADE(DMS): 4775730

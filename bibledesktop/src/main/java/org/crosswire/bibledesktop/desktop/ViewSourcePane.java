@@ -45,9 +45,11 @@ import javax.xml.transform.TransformerException;
 import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWScrollPane;
+import org.crosswire.common.swing.GuiConvert;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
+import org.crosswire.common.util.StringUtil;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.FormatType;
 import org.crosswire.common.xml.PrettySerializingContentHandler;
@@ -94,6 +96,20 @@ public class ViewSourcePane extends JPanel
 
             BookMetaData bmd = book.getBookMetaData();
 
+            String fontName = bmd.getProperty(BookMetaData.KEY_FONT);
+            String fontSpec = XSLTProperty.FONT.getStringState();
+            if (fontName != null)
+            {
+                String[] fontParts = StringUtil.split(fontSpec, ","); //$NON-NLS-1$
+                String newFontSpec = fontName + ',' + fontParts[1] + ',' + fontParts[2];
+                Font bookFont = GuiConvert.string2Font(newFontSpec);
+                // Make sure it is installed. Java does substitution. Make sure we got what we wanted.
+                if (bookFont.getFamily().equalsIgnoreCase(fontName))
+                {
+                    fontSpec = newFontSpec;
+                }
+            }
+
             SAXEventProvider osissep = bdata.getSAXEventProvider();
 
             // This really looks nice but its performance was terrible.
@@ -115,10 +131,11 @@ public class ViewSourcePane extends JPanel
             else
             {
                 XSLTProperty.CSS.setProperty(htmlsep);
-                XSLTProperty.FONT.setProperty(htmlsep);
                 XSLTProperty.BASE_URL.setProperty(htmlsep);
                 XSLTProperty.DIRECTION.setProperty(htmlsep);
             }
+            // Override the default if needed
+            htmlsep.setParameter(XSLTProperty.FONT.getName(), fontSpec);
 
             // This really looks nice but its performance was terrible.
 //            ContentHandler html = new HTMLSerializingContentHandler(FormatType.CLASSIC_INDENT);

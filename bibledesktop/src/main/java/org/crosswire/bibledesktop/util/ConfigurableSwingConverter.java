@@ -89,8 +89,6 @@ public class ConfigurableSwingConverter implements Converter
             // We used to do:
             // tsep.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             // however for various reasons, now we don't but nothing seems to be broken ...
-            tsep.setParameter("font", font); //$NON-NLS-1$
-
             return tsep;
         }
         catch (MissingResourceException ex)
