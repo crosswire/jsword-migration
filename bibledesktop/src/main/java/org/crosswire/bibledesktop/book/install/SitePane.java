@@ -44,6 +44,7 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
+import org.crosswire.common.icu.NumberShaper;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.FixedSplitPane;
@@ -97,6 +98,8 @@ public class SitePane extends JPanel
         installer = bookListInstaller;
 
         actions = new ActionFactory(SitePane.class, this);
+
+        shaper = new NumberShaper();
 
         BookList bl = installer;
         if (bl == null)
@@ -298,7 +301,8 @@ public class SitePane extends JPanel
 
         try
         {
-            if (JOptionPane.showConfirmDialog(this, Msg.CONFIRM_DELETE_BOOK.toString(new Object[] {book.getName()}),
+            String msg = shaper.shape(Msg.CONFIRM_DELETE_BOOK.toString(new Object[] {book.getName()}));
+            if (JOptionPane.showConfirmDialog(this, msg,
                             Msg.CONFIRM_DELETE_TITLE.toString(),
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
             {
@@ -434,6 +438,7 @@ public class SitePane extends JPanel
                 size /= 1024.0F;
                 msg = Msg.MB_SIZE;
             }
+            
             if (JOptionPane.showConfirmDialog(this, msg.toString(new Object[] {name.getName(), new Float(size)}),
                             Msg.CONFIRMATION_TITLE.toString(),
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
@@ -562,6 +567,7 @@ public class SitePane extends JPanel
      */
     private transient ActionFactory actions;
 
+    private NumberShaper shaper;
     /*
      * GUI Components
      */
