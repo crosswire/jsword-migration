@@ -44,6 +44,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 
+import org.crosswire.common.icu.NumberShaper;
 import org.crosswire.common.progress.Job;
 import org.crosswire.common.progress.JobManager;
 import org.crosswire.common.progress.Progress;
@@ -68,6 +69,8 @@ public class JobsProgressBar extends JPanel implements WorkListener
     {
         jobs = new HashMap();
         positions = new ArrayList();
+        shaper = new NumberShaper();
+
         if (small)
         {
             // They start off at 15pt (on Windows at least)
@@ -172,7 +175,11 @@ public class JobsProgressBar extends JPanel implements WorkListener
         JobData jobdata = (JobData) jobs.get(job);
 
         int percent = job.getWork();
-        jobdata.getProgress().setString(job.getSectionName() + ": (" + percent + "%)"); //$NON-NLS-1$ //$NON-NLS-2$
+        StringBuffer buf = new StringBuffer(job.getSectionName());
+        buf.append(": "); //$NON-NLS-1$
+        buf.append(shaper.shape(Integer.toString(percent)));
+        buf.append('%');
+        jobdata.getProgress().setString(buf.toString());
         jobdata.getProgress().setValue(percent);
     }
 
@@ -232,6 +239,11 @@ public class JobsProgressBar extends JPanel implements WorkListener
      * The font for the progress-bars
      */
     private Font font;
+
+    /**
+     * Shape numbers into locale representation.
+     */
+    private NumberShaper shaper = new NumberShaper();
 
     /**
      * The log stream

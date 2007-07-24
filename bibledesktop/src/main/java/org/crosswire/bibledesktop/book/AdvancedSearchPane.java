@@ -32,6 +32,8 @@ import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
@@ -55,6 +57,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import org.crosswire.common.icu.NumberShaper;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiUtil;
@@ -84,6 +87,8 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
      */
     private void initialize()
     {
+        shaper = new NumberShaper();
+
         actions = new ActionFactory(AdvancedSearchPane.class, this);
 
         // SystemColor.controlShadow
@@ -134,6 +139,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
                     0, DisplaySelectPane.getMaxNumRankedVerses(), DisplaySelectPane.getNumRankedVerses());
         sliderRank.setMajorTickSpacing(DisplaySelectPane.getMaxNumRankedVerses() / 5);
         sliderRank.setMinorTickSpacing(DisplaySelectPane.getMaxNumRankedVerses() / 20);
+        sliderRank.setLabelTable(createSliderLabels());
         sliderRank.setPaintTicks(true);
         sliderRank.setPaintLabels(true);
         sliderRank.setVisible(false);
@@ -329,15 +335,15 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     {
         if (val == 0)
         {
-            lblRank.setText(Msg.RANK.toString("All")); //$NON-NLS-1$
+            lblRank.setText(shaper.shape(Msg.RANK.toString("All"))); //$NON-NLS-1$
         }
         else if (val == 1)
         {
-            lblRank.setText(Msg.RANK_ONE.toString());
+            lblRank.setText(shaper.shape(Msg.RANK_ONE.toString()));
         }
         else
         {
-            lblRank.setText(Msg.RANK.toString(new Integer(val)));
+            lblRank.setText(shaper.shape(Msg.RANK.toString(new Integer(val))));
         }
     }
 
@@ -620,6 +626,22 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
 //        System.exit(0);
 //    }
 
+    /**
+     * Create the internationalized labels for the slider.
+     * @return the labels
+     */
+    private Dictionary createSliderLabels()
+    {
+        Dictionary labels = new Hashtable();
+        int max = DisplaySelectPane.getMaxNumRankedVerses();
+        for (int i = 0; i <= max; i += 20)
+        {
+            Integer label = new Integer(i);
+            labels.put(label, new JLabel(shaper.shape(label.toString()), SwingConstants.CENTER));
+        }
+        return labels;
+    }
+
     /*
      * Action constants
      */
@@ -666,6 +688,11 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
      * The ActionFactory holding the actions used by this Component.
      */
     private transient ActionFactory actions;
+
+    /**
+     * The transformer of numeric representation.
+     */
+    private NumberShaper shaper;
 
     /**
      * The entries in the restrictions preset
