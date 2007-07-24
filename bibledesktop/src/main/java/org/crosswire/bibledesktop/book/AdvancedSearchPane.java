@@ -88,6 +88,8 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     private void initialize()
     {
         shaper = new NumberShaper();
+        presetStart = Msg.PRESET_START.toString();
+        presetEnd = Msg.PRESET_END.toString();
 
         actions = new ActionFactory(AdvancedSearchPane.class, this);
 
@@ -479,8 +481,8 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         String preset = (String) cboPresets.getSelectedItem();
         if (preset != null)
         {
-            int open = preset.indexOf(PRESET_START);
-            int close = preset.indexOf(PRESET_END);
+            int open = preset.indexOf(presetStart);
+            int close = preset.indexOf(presetEnd);
 
             if (open != -1 && close != -1)
             {
@@ -570,7 +572,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         editingRestrict = true;
         boolean match = false;
         ComboBoxModel model = cboPresets.getModel();
-        String find = PRESET_START + restrict + PRESET_END;
+        String find = presetStart + restrict + presetEnd;
         for (int i = 0; !match && i < model.getSize(); i++)
         {
             String element = (String) model.getElementAt(i);
@@ -675,9 +677,9 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
      */
     private static final String SPACE = " "; //$NON-NLS-1$
 
-    private static final String PRESET_END = ")"; //$NON-NLS-1$
+    private String presetEnd;
 
-    private static final String PRESET_START = "("; //$NON-NLS-1$
+    private String presetStart;
 
     /**
      * If escape was pressed we don't want to update the parent

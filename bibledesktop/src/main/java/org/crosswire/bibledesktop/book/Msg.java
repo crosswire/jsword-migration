@@ -61,6 +61,8 @@ final class Msg extends MsgBase
     static final Msg ERROR = new Msg("PassageSelectionPane.Error"); //$NON-NLS-1$
     static final Msg SUMMARY = new Msg("PassageSelectionPane.Summary"); //$NON-NLS-1$
 
+    static final Msg PRESET_START = new Msg("AdvancedSearchPane.PresetStart"); //$NON-NLS-1$
+    static final Msg PRESET_END = new Msg("AdvancedSearchPane.PresetEnd"); //$NON-NLS-1$
     static final Msg PRESETS = new Msg("AdvancedSearchPane.Presets"); //$NON-NLS-1$
     static final Msg ADVANCED_SELECT_TITLE = new Msg("AdvancedSearchPane.SelectPassageTitle"); //$NON-NLS-1$
     static final Msg RANK = new Msg("AdvancedSearchPane.Rank"); //$NON-NLS-1$

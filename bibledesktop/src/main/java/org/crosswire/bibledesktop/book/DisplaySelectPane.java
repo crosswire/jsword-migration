@@ -313,8 +313,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
             int total = results.getCardinality();
             int partial = total;
 
-            // we get PassageTallys for rank searches
-            if (results instanceof PassageTally || rank)
+            // we should get PassageTallys for rank searches
+            if (results instanceof PassageTally)
             {
                 PassageTally tally = (PassageTally) results;
                 tally.setOrdering(PassageTally.ORDER_TALLY);
