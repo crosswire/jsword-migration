@@ -41,6 +41,7 @@ import javax.swing.JTabbedPane;
 
 import org.crosswire.common.progress.swing.JobsProgressBar;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.book.install.InstallManager;
 import org.crosswire.jsword.book.install.Installer;
 import org.crosswire.jsword.book.install.InstallerEvent;
@@ -73,6 +74,7 @@ public class SitesPane extends JPanel
         addAllInstallers();
 
         imanager.addInstallerListener(new SiteInstallerListener());
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /**
@@ -164,6 +166,7 @@ public class SitesPane extends JPanel
         dlgMain.setLocationRelativeTo(parent);
         dlgMain.setVisible(true);
         dlgMain.toFront();
+        GuiUtil.applyDefaultOrientation(dlgMain);
     }
 
     /**

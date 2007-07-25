@@ -204,6 +204,7 @@ public class EditSitePane extends JPanel
         pnlAction.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         pnlAction.setLayout(new FlowLayout(FlowLayout.TRAILING));
         pnlAction.add(btnClose, null);
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /**
@@ -518,6 +519,7 @@ public class EditSitePane extends JPanel
         {
             siteEditor = SiteEditorFactory.createSiteEditor(installer);
             siteEditorPane.add((Component) siteEditor, new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+            GuiUtil.applyDefaultOrientation(siteEditorPane);
         }
 
         GuiUtil.refresh(this);
