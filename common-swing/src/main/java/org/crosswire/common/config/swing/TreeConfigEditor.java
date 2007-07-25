@@ -49,6 +49,7 @@ import org.crosswire.common.config.Choice;
 import org.crosswire.common.config.Config;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.FormPane;
+import org.crosswire.common.swing.GuiUtil;
 
 /**
  * A Tabbed view of a config class.
@@ -130,6 +131,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
 
         add(BorderLayout.CENTER, panel);
         add(BorderLayout.SOUTH, new ButtonPane(this));
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /**

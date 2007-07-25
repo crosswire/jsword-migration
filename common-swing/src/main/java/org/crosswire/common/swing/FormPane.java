@@ -22,6 +22,9 @@
 package org.crosswire.common.swing;
 
 import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.util.Hashtable;
 
 import javax.swing.BorderFactory;
@@ -42,8 +45,9 @@ public class FormPane extends JPanel
      */
     public FormPane()
     {
-        setLayout(new FieldLayout(15, 20));
+        setLayout(new GridBagLayout());
         setBorder(BorderFactory.createEmptyBorder());
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /**
@@ -56,8 +60,19 @@ public class FormPane extends JPanel
         JLabel label = new JLabel(prompt);
         label.setToolTipText(tooltip);
 
-        add(label);
-        add(comp);
+        GridBagConstraints c = new GridBagConstraints();
+        c.anchor = GridBagConstraints.LINE_END;
+        c.insets = new Insets(5, 5, 5, 5);
+
+        c.gridwidth = GridBagConstraints.RELATIVE; //next-to-last
+        c.fill = GridBagConstraints.NONE;      //reset to default
+        c.weightx = 0.0;                       //reset to default
+        add(label, c);
+
+        c.gridwidth = GridBagConstraints.REMAINDER;     //end row
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 1.0;
+        add(comp, c);
 
         comps.put(prompt + SUFFIX_LABEL, label);
         comps.put(prompt + SUFFIX_COMP, comp);

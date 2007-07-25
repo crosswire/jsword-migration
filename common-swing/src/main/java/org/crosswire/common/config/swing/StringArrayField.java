@@ -24,6 +24,9 @@ package org.crosswire.common.config.swing;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
@@ -43,7 +46,6 @@ import javax.swing.border.Border;
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWScrollPane;
-import org.crosswire.common.swing.FieldLayout;
 import org.crosswire.common.util.Convert;
 
 /**
@@ -71,7 +73,6 @@ public class StringArrayField extends JPanel implements Field
 
         list.setFont(new Font("Monospaced", Font.PLAIN, 12)); //$NON-NLS-1$
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        // list.setPreferredScrollableViewportSize(new Dimension(30, 100));
 
         JScrollPane scroll = new CWScrollPane(list);
 
@@ -217,12 +218,23 @@ public class StringArrayField extends JPanel implements Field
          */
         public InputPane()
         {
-            super(new FieldLayout(10, 10));
+            super(new GridBagLayout());
 
-            add(new JLabel(Msg.NAME.toString() + ':'));
-            add(name_field);
+            GridBagConstraints c = new GridBagConstraints();
+            c.anchor = GridBagConstraints.LINE_END;
+            c.insets = new Insets(0, 5, 0, 5);
 
-            setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            c.gridwidth = GridBagConstraints.RELATIVE; //next-to-last
+            c.fill = GridBagConstraints.NONE;      //reset to default
+            c.weightx = 0.0;                       //reset to default
+            add(new JLabel(Msg.NAME.toString() + ':'), c);
+
+            c.gridwidth = GridBagConstraints.REMAINDER;     //end row
+            c.fill = GridBagConstraints.HORIZONTAL;
+            c.weightx = 1.0;
+            add(name_field, c);
+
+            setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
         }
 
         /**

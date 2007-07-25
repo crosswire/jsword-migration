@@ -86,6 +86,7 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
 
         updateTree();
 
+        GuiUtil.applyDefaultOrientation(this);
         SwingUtilities.updateComponentTreeUI(this);
     }
 
@@ -115,6 +116,8 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
         dialog.pack();
         GuiUtil.centerWindow(dialog);
         dialog.setModal(true);
+
+        GuiUtil.applyDefaultOrientation(dialog);
 
         // show
         dialog.setVisible(true);

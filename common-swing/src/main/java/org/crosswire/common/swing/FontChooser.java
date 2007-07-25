@@ -89,7 +89,7 @@ public class FontChooser extends JPanel
         italic.setSelected(font.isItalic());
         italic.addItemListener(changer);
 
-        setLayout(new GridLayout(2, 2));
+        setLayout(new GridLayout(2, 2, 5, 5));
 
         add(name);
         add(size);

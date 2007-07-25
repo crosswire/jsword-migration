@@ -51,6 +51,7 @@ import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.EdgeBorder;
 import org.crosswire.common.swing.FormPane;
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Logger;
 
 /**
@@ -108,7 +109,7 @@ public class WizardConfigEditor extends AbstractConfigEditor
 
         add(panel, BorderLayout.CENTER);
         add(getButtonPane(), BorderLayout.PAGE_END);
-
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /**
