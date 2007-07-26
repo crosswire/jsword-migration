@@ -28,6 +28,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.crosswire.common.config.Choice;
+import org.crosswire.common.icu.NumberShaper;
 import org.crosswire.common.swing.NumericDocument;
 
 /**
@@ -45,6 +46,8 @@ public class NumberField extends JPanel implements Field
      */
     public NumberField()
     {
+        shaper = new NumberShaper();
+        text = new JTextField();
         text.setDocument(new NumericDocument());
         text.setColumns(10);
 
@@ -68,7 +71,7 @@ public class NumberField extends JPanel implements Field
      */
     public String getValue()
     {
-        return text.getText();
+        return shaper.unshape(text.getText());
     }
 
     /**
@@ -77,7 +80,7 @@ public class NumberField extends JPanel implements Field
      */
     public void setValue(String value)
     {
-        text.setText(value);
+        text.setText(shaper.shape(value));
     }
 
     /**
@@ -93,6 +96,11 @@ public class NumberField extends JPanel implements Field
      * The text field
      */
     private JTextField text = new JTextField();
+
+    /**
+     * The internationalizer for numbers.
+     */
+    private NumberShaper shaper;
 
     /**
      * Serialization ID

@@ -75,6 +75,7 @@ public class FontChooser extends JPanel
         name.setSelectedItem(font.deriveFont(Font.PLAIN, RENDERED_FONT_SIZE));
         name.addItemListener(changer);
 
+        size.setRenderer(new NumberCellRenderer());
         for (int i = MIN_FONT_SIZE; i <= MAX_FONT_SIZE; i++)
         {
             size.addItem(new Integer(i));
@@ -202,7 +203,7 @@ public class FontChooser extends JPanel
     }
 
     /**
-     * When something chenages we must inform out listeners.
+     * When something changes we must inform out listeners.
      */
     protected void fireStateChange()
     {
