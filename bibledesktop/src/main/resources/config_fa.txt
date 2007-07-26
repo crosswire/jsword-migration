@@ -25,40 +25,23 @@ Bibles.DefaultHebrewParse.help=کدامیک از راهنماهای مورفول
 # I have choses the singular Ketab moghadass on purpose to avoid silly discussions about Christians having many bibles. The plural in English obviously 
 # refers to multiplicity of  translations 
 
-# BibleDisplay.Reuse.path=نمایش کتاب مقدس. پیوندهای مربوط به همین ترجمه را باز کن
-# BibleDisplay.Reuse.help=.برای پیوندها از همین ترجمه استفاده کن
-# BibleDisplay.MaxPickers.path=عایش کتاب مقدس. جند کتاب در شمیل
-# BibleDisplay.MaxPickers.help=Limit the number of Bibles to show at once.
-# BibleDisplay.Commentaries.path=.نمایش کتاب مقدس List Commentaries with Bibles
-# BibleDisplay.Commentaries.path=
-# BibleDisplay.Commentaries.help=List Commentaries with Bibles
-# BibleDisplay.Sidebar.path=.نمایش کتاب مقدسShow the Passage Sidebar
-# BibleDisplay.Sidebar.help=Show the Passage Sidebar
-# BibleDisplay.VersesPerTab.path=.نمایش کتاب مقدسVerses Per Tab
-# BibleDisplay.VersesPerTab.help=How many verses do you want to display on a page before spilling to tabbed mode.
-# BibleDisplay.RankedVerses.path=.نمایش کتاب مقدسDefault Number of Matched Verses
-# BibleDisplay.RankedVerses.help=How many verses do you want to return from a Matched search.
-# BibleDisplay.ConfigurableFont.path=.نمایش کتاب مقدسBible Select Font
-# BibleDisplay.ConfigurableFont.help=The font to be used to display books.
-# BibleDisplay.AntiAliasDisplay.path=.نمایش کتاب مقدسFont Smoothing
-# BibleDisplay.AntiAliasDisplay.help=Font smoothing can be slow, but can help the appearance of some fonts.
-
-BibleDisplay.Reuse.path=Bible Display.Open links in same Bible View
-BibleDisplay.Reuse.help=Reuse Bible View for links.
-BibleDisplay.MaxPickers.path=Bible Display.Parallel Bible Limit
+BibleDisplay.Reuse.path=نمایش کتاب مقدس. پیوندهای مربوط به همین ترجمه را باز کن
+BibleDisplay.Reuse.help=.برای پیوندها از همین ترجمه استفاده کن
+BibleDisplay.MaxPickers.path=نمایش کتاب مقدس. جند کتاب در شمیل
 BibleDisplay.MaxPickers.help=Limit the number of Bibles to show at once.
-BibleDisplay.Commentaries.path=Bible Display.List Commentaries with Bibles
-BibleDisplay.Commentaries.help=List Commentaries with Bibles
-BibleDisplay.Sidebar.path=Bible Display.Show the Passage Sidebar
+BibleDisplay.Commentaries.path=نمایش کتاب مقدس. کتابه تفسیری با کتاب مقدسها
+BibleDisplay.Commentaries.help=کتابها تفسیری در لیست کتاب مقدسهابگسر
+BibleDisplay.Sidebar.path=..نمایش کتاب مقدسShow the Passage Sidebar
 BibleDisplay.Sidebar.help=Show the Passage Sidebar
-BibleDisplay.VersesPerTab.path=Bible Display.Verses Per Tab
+BibleDisplay.VersesPerTab.path=.نمایش کتاب مقدسVerses Per Tab
 BibleDisplay.VersesPerTab.help=How many verses do you want to display on a page before spilling to tabbed mode.
-BibleDisplay.RankedVerses.path=Bible Display.Default Number of Matched Verses
+BibleDisplay.RankedVerses.path=.نمایش کتاب مقدسDefault Number of Matched Verses
 BibleDisplay.RankedVerses.help=How many verses do you want to return from a Matched search.
-BibleDisplay.ConfigurableFont.path=Bible Display.Select Font
-BibleDisplay.ConfigurableFont.help=The font to be used to display books.
-BibleDisplay.AntiAliasDisplay.path=Bible Display.Font Smoothing
-BibleDisplay.AntiAliasDisplay.help=Font smoothing can be slow, but can help the appearance of some fonts.
+BibleDisplay.ConfigurableFont.path=نمایش کتاب مقدس.انتخاب فونت نمایش کتاب مقدس
+BibleDisplay.ConfigurableFont.help=فونت  نمایش کتابها
+BibleDisplay.AntiAliasDisplay.path=.نمایش کتاب مقدس.تمیس کردن فونتها
+BibleDisplay.AntiAliasDisplay.help=تمیس کردن فونت ها کر یواش هست ولی قشنگتر هست در بعسی فینتها
+
 
 # All the above refers to the presentation of the Bibles in the central viewing pane.
 
@@ -67,6 +50,7 @@ SwordBook.BookSearchPath.path=Sword Books.Additional Book locations
 SwordBook.BookSearchPath.help=Additional places to look for SWORD books.
 SwordBook.DownloadDirectory.path=Sword Books.Download Directory
 SwordBook.DownloadDirectory.help=Where should we store newly downloaded books.
+
 Passages.PersistentNaming.path=Passages.Persistent Naming
 Passages.PersistentNaming.help=Should your input of names .
 Passages.FullBookName.path=Passages.Use Full Book Names
@@ -81,18 +65,19 @@ Passages.BookCase.help=What case should we use to display the Bible book names.
 Passages.BookCase.alternative.0=lower
 Passages.BookCase.alternative.1=Sentence
 Passages.BookCase.alternative.2=UPPER
-Application.Language.path=Application.Language
-Application.Language.help=The language of the application. (Requires restart)
-Application.InitialLayout.path=Application.Initial Layout
+
+Application.Language.path=برنامه.زبان
+Application.Language.help=زبان برنامه. شروع تازه لزم هست
+Application.InitialLayout.path=برنامه.ترتیب
 Application.InitialLayout.help=Do you want to start in Tabbed or Multiple Document view mode (Requires restart)
 Application.InitialLayout.alternative.0=Tabbed Document Interface
 Application.InitialLayout.alternative.1=Multiple Document Interface
-Application.MaxHeight.path=Application.Maximum Window Height
+Application.MaxHeight.path=برنامه.Maximum Window Height
 Application.MaxHeight.help=The maximum height you want the window to be
-Application.MaxWidth.path=Application.Maximum Window Width
+Application.MaxWidth.path=برنامه.Maximum Window Width
 Application.MaxWidth.help=The maximum width you want the window to be
-Application.UIFont.path=Application.General Font
-Application.UIFont.help=The font for the application (Requires restart)
+Application.UIFont.path=برنامه.فونت ومومی
+Application.UIFont.help=فونت برنامه. شروع تازه لزم هست
 
 # The following are not for general use and are hidden from view
 BibleDisplay.CSSOverride.path=Bible Display.CSS Override
