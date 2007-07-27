@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/jsword/src/test/java/org/crosswire/jsword/book/ReadEverything.java"/>
+<listEntry value="/bibledesktop/src/main/java/org/crosswire/bibledesktop/desktop/Desktop.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
 </listAttribute>
 <booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
+<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+<listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
+<listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
+</listAttribute>
 <stringAttribute key="org.eclipse.debug.ui.target_debug_perspective" value="perspective_default"/>
 <stringAttribute key="org.eclipse.debug.ui.target_run_perspective" value="perspective_default"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.crosswire.jsword.book.ReadEverything"/>
+<stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/gcj-1.4.2"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.crosswire.bibledesktop.desktop.Desktop"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="bibledesktop"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx512m -ea"/>
 </launchConfiguration>
