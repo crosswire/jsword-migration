@@ -22,27 +22,46 @@
 
 <h2>Obtain and install Sun's Java 1.4.2_x</h2>
 <p>
-  To develop JSword with Eclipse, you will need to tell it to use
-  Sun's Java 1.4.2. We recommend using the most recent point release
-  which at the time of this writing was 1.4.2_11. You can get Sun's Java 
+  To develop JSword and BibleDesktop Java code with Eclipse, you will need to tell it to use
+  Sun's Java 1.4.2. You will need to get the J2SE SDK.
+  We recommend using the most recent point release
+  which at the time of this writing was &quot;J2SE v1.4.2_15 SDK&quot;.
+  You can get Sun's Java 1.4.2
   <a href="http://java.sun.com/j2se/1.4.2/download.html">here</a>.
   You can find instructions on installing Sun's Java for Linux under
   <a name="linuxjava" href="linuxjava.html">Installing Java for Linux</a>.
 </p>
 <p>
   If possible set an environment variable, <code>JAVA_HOME</code> to point to 
-  the directory you just created. This might be something like <code>C:\Java\j2sdk1.4.2_11</code>.
-</p>
-<p>
-  We develop under 1.4.2, but routinely test against 1.5. We will move to 1.5
-  when it is well supported on all the platforms to which we deploy. Currently
-  these are Windows, Mac and Linux. At this time MacOS 10.3 does not support Java 1.5
-  and probably will not.
+  the directory you just created. This might be something like <code>C:\Java\j2sdk1.4.2_15</code>.
 </p>
 
-<h2>Obtain and install Eclipse 3.1</h2>
+<h2>Obtain and install Sun's Java 1.5 (aka Java 5)</h2>
 <p>
-  Any version of Eclipse 3.2 or higher will work well. The screenshots that
+  We develop under Java 1.4.2, but routinely test against Java 5. We will move to Java 5
+  when it is well supported on all the platforms to which we deploy. Currently
+  these are Windows, Mac and Linux. At this time MacOS 10.3 does not support Java 5
+  and probably will not. (Soon enough we will start testing with Java 6)
+</p>
+<p>
+  <strong>NOTE:</strong>BibleDesktop looks best in Java 5 or later and for
+  <em>right-to-left</em> languages it is almost a necessity. For this reason,
+  it is strongly recommended that the builds are done with Java 1.4.2,
+  but that running is done with Java 1.5 or better. If you are not changing
+  java code, but only working on translations, you only need to install Java 1.5.0 SDK.
+</p>
+<p>
+  We recommend using the most recent point release
+  which at the time of this writing was &quot;JDK 5.0 Update 12&quot;.
+  You can get Sun's Java 5
+  <a href="http://java.sun.com/javase/downloads/index_jdk5.jsp">here</a>.
+  You can find instructions on installing Sun's Java for Linux under
+  <a name="linuxjava" href="linuxjava.html">Installing Java for Linux</a>.
+</p>
+
+<h2>Obtain and install Eclipse 3.3</h2>
+<p>
+  Any version of Eclipse 3.3 or higher will work well. The screenshots that
   are provided are from 3.1, Linux, GTK version, running under
   the Gnome desktop.
 </p>
@@ -51,23 +70,21 @@
   <a href="http://www.eclipse.org/downloads">http://www.eclipse.org/downloads</a>.
   Some Linux distributions provide Eclipse, but they are generally a release or two behind
   and often lack some functionality. For this reason only, they are not recommended.
-  The download will be about 100M, so it is best to have a broadband connection.
-  With Windows and Mac, you will only have one choice. If you are running Linux, you will
-  have a choice between Motif and GTK versions and if you are running Fedora Core 4 or greater,
-  Eclipse is provided in the distribution as a native GTK build.
-  The screenshots are from the GTK version.
+  The download will be about 80-140M, so it is best to have a broadband connection.
+  The page will provide you with several choices, but the
+  &quot;Eclipse IDE for Java Developers&quot; is sufficient.
+  The screenshots below are from the Linux GTK version.
 </p>
 
 <h2>Installing Eclipse</h2>
 <p>
-  As root on Linux or an administrator on Windows, install the program to a directory of your choice.
+  If you are installing Eclipse for your own use, you can install it to any directory
+  for which you have permissions. Otherwise you will need Linux root or
+  Windows' administrator permissions.
   Do not install it to a directory containing an existing <q>eclipse</q> directory.
-  Either rename the <q>eclipse</q> directory, delete it or choose a different Eclipse location.
-  For example, you might use <code>/usr/java</code> on Linux and <code>c:\java</code> on Windows.
   It will create the Eclipse installation in that directory. For Windows, just unzip
-  it to the c:\java directory. For Linux, if possible, use Eclipse that comes with the distribution.
-  For Linux distributions that do not provide Eclipse, in the /usr/java directory,
-  run <code>gtar zxvf eclipse-SDK-3.1-linux-gtk.tar.gz</code>.
+  it to the c:\java directory. For Linux, in the directory of your choosing,
+  run <code>gtar zxvf eclipse-java-europa-linux-gtk.tar.gz</code>.
 </p>
 <p>
   On Windows, you will probably will want to create a shortcut for Eclipse.
@@ -75,9 +92,8 @@
   <code>c:\eclipse\eclipse.exe -vm %JAVA_HOME%\bin\javaw -vmargs -Xmx1024M</code><br/>
 </p>  
 
-<h2>Installing Subclipse, a Subversion client</h2>
+<h2>Install Subclipse, a Subversion client</h2>
 <p>
-  
   Follow the instructions on the <a href="http://subclipse.tigris.org/install.html" target="subclipse">Subclipse website</a>.
 </p>
 
@@ -107,9 +123,6 @@
 </p>
 
 <h3>Connect to JSword's SVN repository</h3>
-<p>Add the subclipse plugin from <a href="http://subclipse.tigris.org">http://subclipse.tigris.org</a>.
-   Instructions are on that website.
-</p>
 <p>
   Add the SVN Respository Exploring perspective.
   <a href="images/eclipse/repositoryperspective.png">[Image]</a>
@@ -117,7 +130,7 @@
 <ul>
   <li>This will automatically open the SVN Repository Exploring perspective.</li>
   <li>Click on the <q>Add SVN Repository</q> button.</li>
-  <li>For the URL use the value: https://www.crosswire.org/svn/jsword/trunk.<br/>
+  <li>For the URL use the value: http://www.crosswire.org/svn/jsword/trunk.<br/>
     This will provide you with read-only access to the repository.
     To change the code you will submit patches which is explained below.
   </li>
@@ -144,30 +157,20 @@
   coding that is currently used. Everyone has their own favorite way of doing
   things, so we had to establish one style standard. And we try to maintain these.
   You can read more about these standards <a href="writingcode.html">here</a>.
+  These are loaded with each project.
+</p>
+
+<h3>Letting Eclipse Know Where Java is Installed</h3>
+<p>
+  Under Windows -> Preferences (on the Mac it is Eclipse -> Preferences), 
+  expand <q>Java</q> and then select <q>Installed JRE</q>. Here add entries labelled,
+  jdk-1.4.2 and jdk-1.5.0. Under Linux, installed according to the instructions above,
+  Java 1.4.2 would have a path something like <code>/usr/lib/jvm/java-1.4.2-sun-1.4.2.12</code>.
+  You can use the search button to find them and re-label them afterwards.
 </p>
 <p>
-  We have saved per project settings for Eclipse 3.1. If you use an earlier version
-  and you want to know how to setup Eclipse to use the same compiler settings
-  as we do then the following screenshots (from an earlier version of Eclipse)
-  ought to help:
-</p>
-<ul>
-  <li><a href="images/eclipse/compiler1-style.gif">Style Tab</a></li>
-  <li><a href="images/eclipse/compiler2-advanced.gif">Advanced Tab</a></li>
-  <li><a href="images/eclipse/compiler3-unused.gif">Unused Code Tab</a></li>
-  <li><a href="images/eclipse/compiler4-javadoc.gif">JavaDoc Tab</a></li>
-  <li><a href="images/eclipse/compiler5-compliance.gif">Compliance and Classfiles Tab</a></li>
-  <li><a href="images/eclipse/compiler6-build.gif">Build Path Tab</a></li>
-</ul>
-<p>
-  In addition Eclipse provides a code formatter
-  <a href="images/eclipse/FormatPrefs.png">[Image]</a>
-  We have a file you can import to get the basic settings. You can find the
-  file in the jsword project in the etc/eclipse/jsword-format.xml file.
-  Just click on the Import button and navigate to it.
-  <a href="images/eclipse/FormatPrefsLocation.png">[Image]</a>
-  It is about as close as we can get to our formatting standards, but it is
-  not exact. For this reason, we do not let Eclipse reformat the entire file.
+  During development we want <q>assertions</q> to be turned on. So double click on the entry
+  and add <q>-ea</q> for the <q>Default VM Args</q>.
 </p>
 
 <h3>Working under the Java Perspective</h3>
@@ -177,12 +180,23 @@
   that the SVN Repository Exploring Perspective was added.
 </p>
 
+<h3>Initial testing</h3>
+<p>
+  Initial testing is nothing more than running the application and seeing it work as expected.
+  This has been made easy. If you have named the <q>Installed JREs</q> as instructed above.
+  In the <q>Java Perspective</q>, click on the triangle on the right of the <q>Run</q> button and
+  choose <q>BD-app-jdk15</q> or <q>BD-app-jdk142</q>, depending on your needs, wants and desires.
+  During the run, output will go to the <q>Console</q>, and from there you can terminate the
+  application if it becomes unresponsive.
+</p>
+
 <h3>Working under the Team Synchronization Perspective</h3>
 <p>
   This can be added in the same manner that the
   <q>SVN Repository Exploring Perspective</q> was added.
   To initially connect this perspective to the SVN Repository, click on the
-  <q>Synchronize...</q> button. Click on the <q>Next</q> button and then
+  <q>Synchronize...</q> button and select <q>SVN</q> if it is not highlighted.
+  Click on the <q>Next</q> button and then click <q>Select All</q> followed by
   the <q>Finish</q> button.
 </p>
 <p>
@@ -190,6 +204,18 @@
   Also, you can click the same button, now labelled <q>Sychronize SVN (Workspace)</q>
   to get the latest changes from the repository.
 </p>
+
+<h3>Checking for Updates</h3>
+<p>
+  In the <q>Team Synchronization Perspective</q> click on the <q>Synchronize SVN (Workspace)</q>
+  button. Click the <q>Incoming</q> button and then select everything that is shown.
+  Right clicking will give you all the options that are available to you. Choose <q>Update</q>.
+  If you see <q>Override and Update</q>, stay away from it. It means that one or more of the files
+  being updated have been changed by you and choosing it will throw away your work. Probably
+  not what you want.
+</p>
+
+<h3>Submitting Patches</h3>
 <p>
   To submit changes you will create a patch file, one for each project.
   Zip them all up and email it to
@@ -202,6 +228,18 @@
   If we are in the middle of a big change that we cannot check in at the moment,
   your change may have to wait until we can commit our changes. Typically, turn
   around is a week or less.
+</p>
+
+<h3>Checking in Changes</h3>
+<p>
+  Everyone has permission to check in for the <q>incubator</q> project. A select
+  few people have permissions elsewhere. To check in, go to the <q>Team Synchronization Perspective</q>
+  and click on the <q>Outgoing</q> button. Select what you want to check in. Right clicking
+  on something selected will provide you with the opportunity
+  to choose <q>Commit</q>, which will bring up a dialog box. In that dialog box, type a short
+  explanation describing the change. Below this is a list of everything that has changed and
+  a terse label for the change. Review the items in the list and check or uncheck them depending
+  on whether the changes should be checked in. Finally, click on <q>OK</q>.
 </p>
 </body>
 </html>
