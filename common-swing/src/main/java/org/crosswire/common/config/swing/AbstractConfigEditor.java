@@ -44,7 +44,7 @@ import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Logger;
 
 /**
- * Page of a Config.
+ * An abstract base of a Configuration Editor.
  *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.

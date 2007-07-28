@@ -27,7 +27,7 @@ import java.awt.event.ActionListener;
 import org.crosswire.common.config.Config;
 
 /**
- * Some static methods for using the Config package.
+ * An abstraction of a Configuration Editor.
  *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.

@@ -33,7 +33,7 @@ import org.crosswire.common.util.Reporter;
  * This class provides mapping between Choice types and Fields.
  * There is an argument that this class should be a properties file
  * however the practical advantages of compile time type-checking and
- * make simplicity, overweigh the possible re-use gains of a
+ * make simplicity, outweigh the possible re-use gains of a
  * properties file.
  *
  * @see gnu.lgpl.License for license details.
@@ -110,7 +110,7 @@ public final class FieldMap
     private static Map map;
 
     /**
-     * Default hashtable configuration
+     * Default map configuration
      */
     static
     {

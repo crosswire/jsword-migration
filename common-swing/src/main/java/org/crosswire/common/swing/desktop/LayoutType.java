@@ -51,6 +51,14 @@ public abstract class LayoutType implements Serializable
             return new TDIViewLayout();
         }
 
+        /* (non-Javadoc)
+         * @see org.crosswire.common.swing.desktop.LayoutType#toString()
+         */
+        public String toString()
+        {
+            return Msg.TDI.toString();
+        }
+
         /**
          * Serialization ID
          */
@@ -68,6 +76,14 @@ public abstract class LayoutType implements Serializable
         public AbstractViewLayout createLayout()
         {
             return new MDIViewLayout();
+        }
+
+        /* (non-Javadoc)
+         * @see org.crosswire.common.swing.desktop.LayoutType#toString()
+         */
+        public String toString()
+        {
+            return Msg.MDI.toString();
         }
 
         /**

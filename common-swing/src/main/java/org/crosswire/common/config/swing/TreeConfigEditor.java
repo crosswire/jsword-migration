@@ -52,7 +52,7 @@ import org.crosswire.common.swing.FormPane;
 import org.crosswire.common.swing.GuiUtil;
 
 /**
- * A Tabbed view of a config class.
+ * A Configuration Editor that provides a tree for navigating to options.
  *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
@@ -191,7 +191,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
     /**
      * Used to update the configuration panel whenever someone
      * selects a different item form the tree on the LHS of the
-     * configuation dialog.
+     * configuration dialog.
      */
     public void selectCard()
     {

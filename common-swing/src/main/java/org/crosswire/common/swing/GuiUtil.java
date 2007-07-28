@@ -51,7 +51,7 @@ import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.ResourceUtil;
 
 /**
- * Various Gui Utilities.
+ * Various GUI Utilities.
  *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
@@ -68,7 +68,7 @@ public final class GuiUtil
 
     /**
      * Returns the Icon associated with the name from the resources.
-     * The resouce should be in the path.
+     * The resource should be in the path.
      * @param name Name of the icon file i.e., help16.gif
      * @return the image or null if the icon is not found.
      */
@@ -199,7 +199,7 @@ public final class GuiUtil
     }
 
     /**
-     * Move the specified window to the centre of the screen.
+     * Move the specified window to the center of the screen.
      * It is the programmer's responsibility to ensure that the window
      * fits on the screen.
      *
@@ -534,7 +534,7 @@ public final class GuiUtil
     }
 
     /**
-     * Recurisvely apply default component orientation to the component and all it contains.
+     * Recursively apply default component orientation to the component and all it contains.
      * 
      * @param comp the root of the tree to which orientation needs to be applied
      * @param o the orientation to be applied
@@ -545,7 +545,7 @@ public final class GuiUtil
     }
 
     /**
-     * Recurisvely apply component orientation to the component and all it contains.
+     * Recursively apply component orientation to the component and all it contains.
      * 
      * @param comp the root of the tree to which orientation needs to be applied
      * @param orientation the orientation to be applied

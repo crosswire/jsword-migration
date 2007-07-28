@@ -36,8 +36,6 @@
 <!ATTLIST option
   key CDATA #REQUIRED
   static (true|false) 'true'
-  hidden (true|false) 'false'
-  priority NMTOKEN '5'
   type (string|boolean|int-options|string-options|string-array|file|path|directory|number|font|class|custom|password) #REQUIRED
   class CDATA #IMPLIED
   separator CDATA #IMPLIED
@@ -80,13 +78,13 @@
   </option>
 
 <!-- Does not mean anything right now -->
-  <option key="Bibles.DefaultDictionary" type="string-options" hidden="true">
+  <option key="Bibles.DefaultDictionary" type="string-options">
     <introspect class="org.crosswire.jsword.book.Defaults" property="DictionaryByName"/>
     <map name="dictionary-names"/>
   </option>
 
 <!-- Does not mean anything right now -->
-  <option key="Bibles.DefaultCommentary" type="string-options" hidden="true">
+  <option key="Bibles.DefaultCommentary" type="string-options">
     <introspect class="org.crosswire.jsword.book.Defaults" property="CommentaryByName"/>
     <map name="commentary-names"/>
   </option>
@@ -107,25 +105,25 @@
   </option>
 
 <!-- There are no Hebrew parsing guides at this time. -->
-  <option key="Bibles.DefaultHebrewParse" type="string-options" hidden="true">
+  <option key="Bibles.DefaultHebrewParse" type="string-options">
     <introspect class="org.crosswire.jsword.book.Defaults" property="HebrewParseByName"/>
     <map name="hebrewparse-names"/>
   </option>
 
 <!-- At this time we only have one converter -->
-  <option key="BibleDisplay.Converter" type="string-options" hidden="true">
+  <option key="BibleDisplay.Converter" type="string-options">
     <introspect class="org.crosswire.jsword.util.ConverterFactory" property="CurrentConverterName"/>
     <map name="converters"/>
   </option>
 
 <!-- We only provide one style sheet at this time -->
-  <option key="BibleDisplay.ConfigurableStylesheet" type="string-options" hidden="true">
+  <option key="BibleDisplay.ConfigurableStylesheet" type="string-options">
     <introspect class="org.crosswire.bibledesktop.util.ConfigurableSwingConverter" property="ResourceName"/>
     <map name="cswing-styles"/>
   </option>
 
 <!-- This really only useful for developers -->
-  <option key="BibleDisplay.CSSOverride" type="string" hidden="true">
+  <option key="BibleDisplay.CSSOverride" type="string">
     <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="CSSOverride"/>
   </option>
 
@@ -198,7 +196,7 @@
   </option>
 
 <!-- This really only useful for developers -->
-  <option key="Application.LookAndFeel" type="class" hidden="true">
+  <option key="Application.LookAndFeel" type="class">
     <introspect class="org.crosswire.common.swing.LookAndFeelUtil" property="LookAndFeel"/>
   </option>
 
@@ -226,12 +224,12 @@
   </option>
 
 <!-- This really only useful for developers -->
-  <option key="Advanced.SourcePath" type="path" priority="9" hidden="true">
+  <option key="Advanced.SourcePath" type="path">
     <introspect class="org.crosswire.common.swing.ExceptionPane" property="SourcePath"/>
   </option>
 
 <!-- This really only useful for developers -->
-  <option key="Advanced.DefaultPassageType" type="int-options" hidden="true">
+  <option key="Advanced.DefaultPassageType" type="int-options">
     <introspect class="org.crosswire.jsword.passage.PassageKeyFactory" property="DefaultPassage"/>
     <alternative number="0"/>
     <alternative number="1"/>
@@ -246,24 +244,24 @@
 -->
 
 <!-- Limbo: This really only useful for developers
-  <option key="Advanced.Reports.ShowErrorsInDialogBox" type="boolean" priority="8">
+  <option key="Advanced.Reports.ShowErrorsInDialogBox" type="boolean">
     <introspect class="org.crosswire.common.swing.ExceptionPane" property="HelpDeskListener"/>
   </option>
 -->
 
 <!-- Limbo: This really only useful for developers
-  <option key="Advanced.Reports.LogErrorsInLogWindow" type="boolean" priority="8">
+  <option key="Advanced.Reports.LogErrorsInLogWindow" type="boolean">
     <introspect class="org.crosswire.common.swing.ExceptionShelf" property="HelpDeskListener"/>
   </option>
 -->
 
 <!-- This really only useful for developers -->
-  <option key="Advanced.IncludeAdvancedTabs" type="boolean" hidden="true">
+  <option key="Advanced.IncludeAdvancedTabs" type="boolean">
     <introspect class="org.crosswire.bibledesktop.desktop.AboutPane" property="Advanced"/>
   </option>
 
 <!-- Limbo: Temporarily remove Blog code
-  <option key="WebJournal.Url" type="string" priority="1">
+  <option key="WebJournal.Url" type="string">
     <introspect class="org.crosswire.bibledesktop.journal.BlogClientFrame" property="Url"/>
   </option>
 

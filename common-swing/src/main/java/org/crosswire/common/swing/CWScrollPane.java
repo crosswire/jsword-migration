@@ -14,7 +14,7 @@
  *      59 Temple Place - Suite 330
  *      Boston, MA 02111-1307, USA
  *
- * Copyright: 2005
+ * Copyright: 2007
  *     The copyright to this program is held by it's authors.
  *
  * ID: $Id$
@@ -23,6 +23,7 @@ package org.crosswire.common.swing;
 
 import java.awt.Component;
 
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
@@ -31,6 +32,7 @@ import org.crosswire.common.util.OSType;
 /**
  * A ScrollPane that give appropriate cross platform behavior.
  * Specifically, on the Mac the vertical and horizontal scrollbars should always appear.
+ * Further, scroll bars should show proper RTL or LTR component orientation.
  *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
@@ -65,6 +67,26 @@ public class CWScrollPane extends JScrollPane
             return ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
         }
         return ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
+    }
+
+    /* (non-Javadoc)
+     * @see javax.swing.JScrollPane#createHorizontalScrollBar()
+     */
+    public JScrollBar createHorizontalScrollBar()
+    {
+        JScrollBar scroller = super.createHorizontalScrollBar();
+        GuiUtil.applyDefaultOrientation(this);
+        return scroller;
+    }
+
+    /* (non-Javadoc)
+     * @see javax.swing.JScrollPane#createVerticalScrollBar()
+     */
+    public JScrollBar createVerticalScrollBar()
+    {
+        JScrollBar scroller = super.createVerticalScrollBar();
+        GuiUtil.applyDefaultOrientation(this);
+        return scroller;
     }
 
     private static int verticalPolicy = getXPlatformVerticalScrollBarPolicy();

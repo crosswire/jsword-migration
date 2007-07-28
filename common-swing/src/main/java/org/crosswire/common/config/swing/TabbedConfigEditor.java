@@ -35,7 +35,7 @@ import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.FormPane;
 
 /**
- * Some static methods for using the Config package.
+ * A Configuration Editor that lays its pages in tabs.
  *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.

@@ -42,7 +42,7 @@ import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.CWScrollPane;
 
 /**
- * A mutable view of Fields setting array.
+ * A further refinement of a Tree Configuration Editor
  *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
@@ -144,7 +144,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor
 
     /**
      * Used to update the configuration panel whenever someone selects a
-     * different item form the tree on the LHS of the configuation dialog.
+     * different item form the tree on the LHS of the configuration dialog.
      */
     public void selectCard()
     {

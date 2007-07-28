@@ -55,7 +55,8 @@ import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Logger;
 
 /**
- * A mutable view of Fields setting array.
+ * A Configuration Editor that presents configuration as a Wizard.
+ * 
  * <p>A few of the ideas in this code came from an article in the JDJ about
  * configuration. However the Config package has a number of huge
  * differences, the biggest being what it does with its config info. The
