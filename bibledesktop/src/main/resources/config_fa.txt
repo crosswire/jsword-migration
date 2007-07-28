@@ -9,95 +9,94 @@ Bibles.DefaultBible.name=کدامیک از کتاب مقدس های موجود �
 Bibles.DefaultBible.help=کدامیک از کتاب مقدس های موجود متن اصلی است 
 Bibles.DefaultDictionary.name=لغت نامه اصلیکتب مقدس ها
 Bibles.DefaultDictionary.help=؟کدامیک از لغت نامه های موجود لغت نامه اصل است
-Bibles.DefaultCommentary.name=کتاب مقدس. کتاب تفسیر اصلی
+Bibles.DefaultCommentary.name=کتاب تفسیر اصلی
 Bibles.DefaultCommentary.help=کدامیک از کتب تفسیر موجود، کتاب اصلی است.
-Bibles.DefaultDailyDevotional.name= کتاب رازگاهان روزانه اصلی
+Bibles.DefaultDailyDevotional.name=کتاب رازگاهان روزانه اصلی
 Bibles.DefaultDailyDevotional.help=کدامیک از کتب رازگان، کتاب اصلی است.
-Bibles.DefaultGreekDefinitions.name= معانی اصلی یونانی (سترانگز
-Bibles.DefaultGreekDefinitions.help=.کدامیک از معانی یونانی موجود(سترانگز) اصلی است.
-Bibles.DefaultHebrewDefinitions.name=( معانی اصلی عبری (سترانگز
+Bibles.DefaultGreekDefinitions.name=معانی اصلی یونانی (سترانگز
+Bibles.DefaultGreekDefinitions.help=کدامیک از معانی یونانی موجود(سترانگز) اصلی است.
+Bibles.DefaultHebrewDefinitions.name=معانی اصلی عبری (سترانگز
 Bibles.DefaultHebrewDefinitions.help=کدامیک از معانی موجود عبری (سترانگز) معنی اصلی است.
 Bibles.DefaultGreekParse.name=راهنمای اصلی مورفولوژی یونانی
 Bibles.DefaultGreekParse.help=کدامیک از راهنماهای مورفولوژی یونانی اصلی است.
-Bibles.DefaultHebrewParse.name= راهنمای
+Bibles.DefaultHebrewParse.name=راهنمای
 Bibles.DefaultHebrewParse.help=کدامیک از راهنماهای مورفولوژی عبری موجود اصلی است.
 
 # All above refer to the Bible tab in the settings. Lines with "Path" need a "Ketab moghadass" as initial bit. The "Help" lines are free floati8ng text explaining the box.
-# I have choses the singular Ketab moghadass on purpose to avoid silly discussions about Christians having many bibles. The plural in English obviously 
+# I have chosen the singular Ketab moghadass on purpose to avoid silly discussions about Christians having many bibles. The plural in English obviously 
 # refers to multiplicity of  translations 
 
 BibleDisplay.name=نمایش کتاب مقدس
-BibleDisplay.Reuse.name=. پیوندهای مربوط به همین ترجمه را باز کن
-BibleDisplay.Reuse.help=.برای پیوندها از همین ترجمه استفاده کن
-BibleDisplay.MaxPickers.name= جند کتاب در شمیل
-BibleDisplay.MaxPickers.help=Limit the number of Bibles to show at once.
-BibleDisplay.Commentaries.name= کتابه تفسیری با کتاب مقدسها
+BibleDisplay.Reuse.name=پیوندهای مربوط به همین ترجمه را باز کن
+BibleDisplay.Reuse.help=برای پیوندها از همین ترجمه استفاده کن
+BibleDisplay.MaxPickers.name=جند کتاب در شمیل
+BibleDisplay.MaxPickers.help=
+BibleDisplay.Commentaries.name=کتابه تفسیری با کتاب مقدسها
 BibleDisplay.Commentaries.help=کتابها تفسیری در لیست کتاب مقدسهابگسر
-BibleDisplay.Sidebar.name=..نمایش کتاب مقدسShow the Passage Sidebar
-BibleDisplay.Sidebar.help=Show the Passage Sidebar
-BibleDisplay.VersesPerTab.name=.نمایش کتاب مقدسVerses Per Tab
-BibleDisplay.VersesPerTab.help=How many verses do you want to display on a page before spilling to tabbed mode.
-BibleDisplay.RankedVerses.name=.نمایش کتاب مقدسDefault Number of Matched Verses
-BibleDisplay.RankedVerses.help=How many verses do you want to return from a Matched search.
+BibleDisplay.Sidebar.name=
+BibleDisplay.Sidebar.help=
+BibleDisplay.VersesPerTab.name=جند عیات در صفه؟
+BibleDisplay.VersesPerTab.help=
+BibleDisplay.RankedVerses.name=جند عیات در جواب بازرسی
+BibleDisplay.RankedVerses.help=
 BibleDisplay.ConfigurableFont.name=انتخاب فونت نمایش کتاب مقدس
 BibleDisplay.ConfigurableFont.help=فونت  نمایش کتابها
-BibleDisplay.AntiAliasDisplay.name=.تمیس کردن فونتها
+BibleDisplay.AntiAliasDisplay.name=تمیس کردن فونتها
 BibleDisplay.AntiAliasDisplay.help=تمیس کردن فونت ها کر یواش هست ولی قشنگتر هست در بعسی فینتها
 
-
 # All the above refers to the presentation of the Bibles in the central viewing pane.
+SwordBook.name=مدولها کتابها
+SwordBook.BookSearchPath.name=فهرست کتابها
+SwordBook.BookSearchPath.help=
+SwordBook.DownloadDirectory.name=فهرست 
+SwordBook.DownloadDirectory.help=
+Passages.name=قسمتها
+Passages.PersistentNaming.name=حسمها نوزی
+Passages.PersistentNaming.help=
+Passages.FullBookName.name=عسم کتابها کامل
+Passages.FullBookName.help=
+Passages.BlurringRules.ignore=true
+Passages.BlurringRules.name=جقدر در هر صفه 
+Passages.BlurringRules.help=بیشتر اس یک باب در هر صفه؟
+Passages.BlurringRules.alternative.0=هیج
+Passages.BlurringRules.alternative.1=باب
+#Passages.BlurringRules.alternative.2=کتاب
 
-SwordBook.name=Sword Books
-SwordBook.BookSearchPath.name=Additional Book locations
-SwordBook.BookSearchPath.help=Additional places to look for SWORD books.
-SwordBook.DownloadDirectory.name=Download Directory
-SwordBook.DownloadDirectory.help=Where should we store newly downloaded books.
+# The BookCase option is relevant only for scripts with upper case. I have therefore taken them out. I also do not know exactly how to translate them anyway...
+Passages.BookCase.ignore=true
 
-Passages.PersistentNaming.name=Passages.Persistent Naming
-Passages.PersistentNaming.help=Should your input of names .
-Passages.FullBookName.name=Passages.Use Full Book Names
-Passages.FullBookName.help=Should full Bible book names or abbreviations be used.
-Passages.BlurringRules.name=Passages.Passage Expansion Rules
-Passages.BlurringRules.help=What is the default expansion - Stay within chapter boundaries or not.
-Passages.BlurringRules.alternative.0=None
-Passages.BlurringRules.alternative.1=Chapter
-#Passages.BlurringRules.alternative.2=Book
-Passages.BookCase.name=Passages.Book Case
-Passages.BookCase.help=What case should we use to display the Bible book names.
-Passages.BookCase.alternative.0=lower
-Passages.BookCase.alternative.1=Sentence
-Passages.BookCase.alternative.2=UPPER
-
-Application.Language.name=برنامه.زبان
-Application.Language.help=زبان برنامه. شروع تازه لزم هست
-Application.InitialLayout.name=برنامه.ترتیب
-Application.InitialLayout.help=Do you want to start in Tabbed or Multiple Document view mode (Requires restart)
-Application.InitialLayout.alternative.0=Tabbed Document Interface
-Application.InitialLayout.alternative.1=Multiple Document Interface
-Application.MaxHeight.name=برنامه.Maximum Window Height
-Application.MaxHeight.help=The maximum height you want the window to be
-Application.MaxWidth.name=برنامه.Maximum Window Width
-Application.MaxWidth.help=The maximum width you want the window to be
-Application.UIFont.name=برنامه.فونت ومومی
+Application.name=برنامه
+Application.Language.name=زبان
+Application.Language.help=شروع تازه لزم هست
+Application.InitialLayout.ignore=true
+Application.InitialLayout.name=ترتیب
+Application.InitialLayout.help=نمایش با پنجرهها یا با جدول بند
+Application.InitialLayout.alternative.0=جدول بند
+Application.InitialLayout.alternative.1=پنجرهها
+Application.MaxHeight.name=بلندی پنجره
+Application.MaxHeight.help=
+Application.MaxWidth.name=برنامه.پهنا پنجره
+Application.MaxWidth.help=
+Application.UIFont.name=فونت ومومی
 Application.UIFont.help=فونت برنامه. شروع تازه لزم هست
 
 # The following are not for general use and are hidden from view
-BibleDisplay.CSSOverride.name=Bible Display.CSS Override
+BibleDisplay.CSSOverride.name=CSS Override
 BibleDisplay.CSSOverride.help=Use an alternate CSS Stylesheet.
-BibleDisplay.Converter.name=Bible Display.Converter
-BibleDisplay.Converter.help=The engine used to genterate the book display
-BibleDisplay.ConfigurableStylesheet.name=Bible Display.Configurable Stylesheet
+BibleDisplay.Converter.name=Converter
+BibleDisplay.Converter.help=The engine used to generate the book display
+BibleDisplay.ConfigurableStylesheet.name=Configurable Stylesheet
 BibleDisplay.ConfigurableStylesheet.help=The style applied to displayed Books when using the configurable styler.
-Application.LookAndFeel.name=Application.Look and Feel
+Application.LookAndFeel.name=Look and Feel
 Application.LookAndFeel.help=The look and feel of the application.
-Advanced.SourcePath.name=Advanced.Source Path
+Advanced.name=Advanced
+Advanced.SourcePath.name=Source Path
 Advanced.SourcePath.help=The directories to search for source code in when investigating an exception.
-Advanced.DefaultPassageType.name=Advanced.Default Passage Type
+Advanced.DefaultPassageType.name=Default Passage Type
 Advanced.DefaultPassageType.help=What type of passage does the PassageFactory create by default.
 Advanced.DefaultPassageType.alternative.0=Speed (Rocket)
 Advanced.DefaultPassageType.alternative.1=Write Speed (Bitwise)
 Advanced.DefaultPassageType.alternative.2=Size (Distinct)
 Advanced.DefaultPassageType.alternative.3=Mix (Ranged)
-Advanced.IncludeAdvancedTabs.name=Advanced.Include Advanced Tabs
+Advanced.IncludeAdvancedTabs.name=Include Advanced Tabs
 Advanced.IncludeAdvancedTabs.help=Are the advanced tabs visible in the "About ..." Dialog. (Requires restart)
-
