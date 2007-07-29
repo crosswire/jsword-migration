@@ -186,10 +186,10 @@
     </tar>
     <!-- binary packages -->
     <zip zipfile="${directory}/jsword-${version}-bin.zip">
-      <zipfileset prefix="jsword-${version}" dir="${target.installed}" excludes="BibleDesktop.app.zip"/>
+      <zipfileset prefix="jsword-${version}" dir="${target.installed}" excludes="BibleDesktop.app.zip,BibleDesktopSetup.exe"/>
     </zip>
     <tar tarfile="${directory}/jsword-${version}-bin.tar.gz" compression="gzip">
-      <tarfileset prefix="jsword-${version}" dir="${target.installed}" excludes="BibleDesktop.app.zip"/>
+      <tarfileset prefix="jsword-${version}" dir="${target.installed}" excludes="BibleDesktop.app.zip,BibleDesktopSetup.exe"/>
     </tar>
   	<!-- documentation packages -->
     <zip zipfile="${directory}/jsword-${version}-doc.zip">
