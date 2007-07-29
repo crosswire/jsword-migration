@@ -14,23 +14,24 @@
  *      59 Temple Place - Suite 330
  *      Boston, MA 02111-1307, USA
  *
- * Copyright: 2005
+ * Copyright: 2007
  *     The copyright to this program is held by it's authors.
  *
- * ID: $Id$
+ * ID: $Id: MappedOptionsField.java 1464 2007-07-02 02:34:40Z dmsmith $
  */
 package org.crosswire.common.config.swing;
 
 import java.awt.Dimension;
 import java.util.Map;
 
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 
 import org.crosswire.common.config.Choice;
-import org.crosswire.common.config.MultipleChoice;
-import org.crosswire.common.diff.Distance;
+import org.crosswire.common.config.MappedChoice;
+import org.crosswire.common.swing.MapComboBoxModel;
+import org.crosswire.common.swing.MapEntryRenderer;
 import org.crosswire.common.util.Logger;
 
 /**
@@ -38,15 +39,14 @@ import org.crosswire.common.util.Logger;
  *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
- * @author Joe Walker [joe at eireneh dot com]
+ * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class OptionsField implements Field
+public class MappedOptionsField implements Field
 {
-
     /**
-     * Create an empty OptionsField
+     * Create an empty MappedOptionsField
      */
-    public OptionsField()
+    public MappedOptionsField()
     {
         combo = new JComboBox(new String[] { Msg.NO_OPTIONS.toString() });
         // Set the preferred width. Note, the actual combo box will resize to the width of it's container
@@ -61,22 +61,19 @@ public class OptionsField implements Field
      */
     public void setChoice(Choice param)
     {
-        if (param instanceof MultipleChoice)
+        if (!(param instanceof MappedChoice))
         {
-            MultipleChoice mc = (MultipleChoice) param;
-            list = mc.getOptions();
-
-            if (list == null)
-            {
-                throw new IllegalArgumentException("getOptions() returns null for option with help text " + mc.getHelpText()); //$NON-NLS-1$
-            }
-            combo.setModel(new DefaultComboBoxModel(list));
+            throw new IllegalArgumentException("Illegal type for Choice. Not a MappedChoice. " + param.getKey()); //$NON-NLS-1$
         }
-        else
+        MappedChoice mc = (MappedChoice) param;
+        Map map = mc.getOptions();
+        if (map == null)
         {
-            list = new String[] { Msg.ERROR.toString() };
+            throw new IllegalArgumentException("getOptions() returns null for option: " + param.getKey()); //$NON-NLS-1$
         }
-    }
+        combo.setModel(new MapComboBoxModel(map));
+        combo.setRenderer(new MapEntryRenderer());
+   }
 
     /**
      * Return a string for use in the properties file
@@ -99,37 +96,19 @@ public class OptionsField implements Field
      */
     public void setValue(String value)
     {
-        if (list != null && list.length > 0)
+        ComboBoxModel model = combo.getModel();
+        int size = model.getSize();
+        for (int i = 0; i < size; i++)
         {
-            int distance = value.length();
-            for (int i = 0; i < list.length; i++)
+            Object match = model.getElementAt(i);
+            if (match instanceof Map.Entry)
             {
-                if (value.equals(list[i]))
+                Map.Entry mapEntry = (Map.Entry) match;
+                if (mapEntry.getKey().toString().equals(value))
                 {
-                    combo.setSelectedItem(list[i]);
+                    combo.setSelectedItem(mapEntry);
                     return;
                 }
-                distance = Math.max(distance, list[i].length());
-            }
-
-            // We didn't find an exact match so look for the closest one.
-            distance++; // A number larger than the length of any of the strings in question.
-            int bestMatch = 0;
-            for (int i = 0; i < list.length; i++)
-            {
-                int newDistance = Distance.getLevenshteinDistance(value, list[i]);
-                if (distance > newDistance)
-                {
-                    bestMatch = i;
-                    distance = newDistance;
-                }
-            }
-
-            combo.setSelectedItem(list[bestMatch]);
-            if (bestMatch > 0)
-            {
-                log.warn("Checked for options without finding exact match: '" + value + "'. Best match is: " + combo.getSelectedItem());  //$NON-NLS-1$//$NON-NLS-2$
-                return;
             }
         }
 
@@ -156,12 +135,7 @@ public class OptionsField implements Field
     private JComboBox combo;
 
     /**
-     * The options
-     */
-    private String[] list;
-
-    /**
      * The log stream
      */
-    private static final Logger log = Logger.getLogger(OptionsField.class);
+    private static final Logger log = Logger.getLogger(MappedOptionsField.class);
 }

@@ -36,7 +36,7 @@
 <!ATTLIST option
   key CDATA #REQUIRED
   static (true|false) 'true'
-  type (string|boolean|int-options|string-options|string-array|file|path|directory|number|font|class|custom|password) #REQUIRED
+  type (string|boolean|int-options|map-options|string-options|string-array|file|path|directory|number|font|class|custom|password) #REQUIRED
   class CDATA #IMPLIED
   separator CDATA #IMPLIED
 >
