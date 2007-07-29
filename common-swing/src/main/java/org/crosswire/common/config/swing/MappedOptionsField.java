@@ -104,7 +104,7 @@ public class MappedOptionsField implements Field
             if (match instanceof Map.Entry)
             {
                 Map.Entry mapEntry = (Map.Entry) match;
-                if (mapEntry.getKey().toString().equals(value))
+                if (mapEntry.getKey().toString().equals(value) || mapEntry.getValue().toString().equals(value))
                 {
                     combo.setSelectedItem(mapEntry);
                     return;

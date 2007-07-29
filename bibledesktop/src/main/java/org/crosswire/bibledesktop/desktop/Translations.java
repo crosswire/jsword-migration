@@ -23,9 +23,9 @@ package org.crosswire.bibledesktop.desktop;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 
 import org.crosswire.common.config.ChoiceFactory;
@@ -75,16 +75,16 @@ public class Translations
      * 
      * @return an string array of translations in locale friendly names.
      */
-    public String[] getSupported()
+    public Map getSupported()
     {
-        List names = new ArrayList();
+        Map names = new LinkedHashMap();
 
         for (int i = 0; i < translations.length; i++)
         {
-            names.add(Languages.getLanguage(translations[i]));
+            names.put(translations[i], Languages.getLanguage(translations[i]));
         }
 
-        return (String[]) names.toArray(new String[names.size()]);
+        return names;
     }
 
     /**
@@ -117,10 +117,12 @@ public class Translations
         String currentLang = ""; //$NON-NLS-1$
         for (int i = 0; i < translations.length; i++)
         {
-            currentLang = Languages.getLanguage(translations[i]);
-            if (currentLang.equals(newTranslation))
+            String trans = translations[i];
+            currentLang = Languages.getLanguage(translation);
+            if (trans.equals(newTranslation) || currentLang.equals(newTranslation))
             {
-                lang = translations[i];
+                lang = trans;
+                break;
             }
         }
 
@@ -186,7 +188,7 @@ public class Translations
      * 
      * @return an string array of translations in locale friendly names.
      */
-    public static String[] getSupportedTranslations()
+    public static Map getSupportedTranslations()
     {
         return Translations.instance().getSupported();
     }

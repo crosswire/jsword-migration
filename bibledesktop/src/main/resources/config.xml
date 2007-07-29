@@ -66,46 +66,46 @@
     <introspect class="org.crosswire.jsword.book.Defaults" property="CurrentBible"/>
   </option>
 
-  <option key="Bibles.DefaultBible" type="string-options">
+  <option key="Bibles.DefaultBible" type="map-options">
     <introspect class="org.crosswire.jsword.book.Defaults" property="BibleByName"/>
     <map name="bible-names"/>
     <!-- set up in OptionsAction.refreshBooks() along with dict and commentary versions -->
   </option>
 
-  <option key="Bibles.DefaultDailyDevotional" type="string-options">
+  <option key="Bibles.DefaultDailyDevotional" type="map-options">
     <introspect class="org.crosswire.jsword.book.Defaults" property="DailyDevotionalByName"/>
     <map name="daily-devotional-names"/>
   </option>
 
 <!-- Does not mean anything right now -->
-  <option key="Bibles.DefaultDictionary" type="string-options">
+  <option key="Bibles.DefaultDictionary" type="map-options">
     <introspect class="org.crosswire.jsword.book.Defaults" property="DictionaryByName"/>
     <map name="dictionary-names"/>
   </option>
 
 <!-- Does not mean anything right now -->
-  <option key="Bibles.DefaultCommentary" type="string-options">
+  <option key="Bibles.DefaultCommentary" type="map-options">
     <introspect class="org.crosswire.jsword.book.Defaults" property="CommentaryByName"/>
     <map name="commentary-names"/>
   </option>
 
-  <option key="Bibles.DefaultGreekDefinitions" type="string-options">
+  <option key="Bibles.DefaultGreekDefinitions" type="map-options">
     <introspect class="org.crosswire.jsword.book.Defaults" property="GreekDefinitionsByName"/>
     <map name="greekdef-names"/>
   </option>
 
-  <option key="Bibles.DefaultHebrewDefinitions" type="string-options">
+  <option key="Bibles.DefaultHebrewDefinitions" type="map-options">
     <introspect class="org.crosswire.jsword.book.Defaults" property="HebrewDefinitionsByName"/>
     <map name="hebrewdef-names"/>
   </option>
 
-  <option key="Bibles.DefaultGreekParse" type="string-options">
+  <option key="Bibles.DefaultGreekParse" type="map-options">
     <introspect class="org.crosswire.jsword.book.Defaults" property="GreekParseByName"/>
     <map name="greekparse-names"/>
   </option>
 
 <!-- There are no Hebrew parsing guides at this time. -->
-  <option key="Bibles.DefaultHebrewParse" type="string-options">
+  <option key="Bibles.DefaultHebrewParse" type="map-options">
     <introspect class="org.crosswire.jsword.book.Defaults" property="HebrewParseByName"/>
     <map name="hebrewparse-names"/>
   </option>
@@ -200,7 +200,7 @@
     <introspect class="org.crosswire.common.swing.LookAndFeelUtil" property="LookAndFeel"/>
   </option>
 
-  <option key="Application.Language" type="string-options">
+  <option key="Application.Language" type="map-options">
     <introspect class="org.crosswire.bibledesktop.desktop.Translations" property="CurrentTranslation"/>
     <map name="translation-codes"/>
   </option>

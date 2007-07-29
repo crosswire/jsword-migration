@@ -57,12 +57,11 @@ Passages.PersistentNaming.name=حسمها نوزی
 Passages.PersistentNaming.help=
 Passages.FullBookName.name=عسم کتابها کامل
 Passages.FullBookName.help=
-Passages.BlurringRules.ignore=true
-#Passages.BlurringRules.name=جقدر در هر صفه
-#Passages.BlurringRules.help=بیشتر اس یک باب در هر صفه؟
-#Passages.BlurringRules.alternative.0=هیج
-#Passages.BlurringRules.alternative.1=باب
-##Passages.BlurringRules.alternative.2=کتاب
+Passages.BlurringRules.name=جقدر در هر صفه
+Passages.BlurringRules.help=بیشتر اس یک باب در هر صفه؟
+Passages.BlurringRules.alternative.0=هیج
+Passages.BlurringRules.alternative.1=باب
+#Passages.BlurringRules.alternative.2=کتاب
 
 # The BookCase option is relevant only for scripts with upper case. I have therefore taken them out. I also do not know exactly how to translate them anyway...
 
@@ -71,11 +70,10 @@ Passages.BookCase.ignore=true
 Application.name=برنامه
 Application.Language.name=زبان
 Application.Language.help=شروع تازه لزم هست
-Application.InitialLayout.ignore=true
-#Application.InitialLayout.name=ترتیب
-#Application.InitialLayout.help=نمایش با پنجرهها یا با جدول بند
-#Application.InitialLayout.alternative.0=جدول بند
-#Application.InitialLayout.alternative.1=پنجرهها
+Application.InitialLayout.name=ترتیب
+Application.InitialLayout.help=نمایش با پنجرهها یا با جدول بند
+Application.InitialLayout.alternative.0=جدول بند
+Application.InitialLayout.alternative.1=پنجرهها
 Application.MaxHeight.name=بلندی پنجره
 Application.MaxHeight.help=
 Application.MaxWidth.name=پهنا پنجره
