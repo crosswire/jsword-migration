@@ -103,38 +103,13 @@
     This needs to be changed into a CSS style specification
   -->
   <xsl:param name="font" select="Serif"/>
-  <xsl:variable name="fontSeparator">
-    <xsl:choose>
-      <xsl:when test="contains($font, ',')">
-        <xsl:value-of select="','"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="'-'"/>
-      </xsl:otherwise>
-    </xsl:choose>
+
+  <xsl:variable name="fontspec">
+      <xsl:call-template name="generateFontStyle">
+        <xsl:with-param name="fontspec" select="$font"/>
+        <xsl:with-param name="style" select="css"/>
+      </xsl:call-template>
   </xsl:variable>
-  <xsl:variable name="aFont">
-    <xsl:choose>
-      <xsl:when test="substring-before($font, $fontSeparator) = ''"><xsl:value-of select="$font"/>,0,16</xsl:when>
-      <xsl:otherwise><xsl:value-of select="$font"/></xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-  <xsl:variable name="fontfamily" select='concat("font-family: &apos;", substring-before($aFont, $fontSeparator), "&apos;, Serif;")' />
-  <xsl:variable name="fontsize" select="concat(' font-size: ', substring-after(substring-after($aFont, $fontSeparator), $fontSeparator), 'pt;')" />
-  <xsl:variable name="styling" select="substring-before(substring-after($aFont, $fontSeparator), $fontSeparator)" />
-  <xsl:variable name="fontweight">
-    <xsl:choose>
-      <xsl:when test="$styling = '1' or $styling = '3' or contains($styling, 'bold')"> font-weight: bold;</xsl:when>
-      <xsl:otherwise> font-weight: normal;</xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-  <xsl:variable name="fontstyle">
-    <xsl:choose>
-      <xsl:when test="$styling = '2' or $styling = '3' or contains($styling, 'italic')"> font-style: italic;</xsl:when>
-      <xsl:otherwise> font-style: normal;</xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-  <xsl:variable name="fontspec" select="concat($fontfamily, $fontsize, $fontweight, $fontstyle)"/>
 
   <!-- Create a global key factory from which OSIS ids will be generated -->
   <xsl:variable name="keyf" select="jsword:org.crosswire.jsword.passage.PassageKeyFactory.instance()"/>
@@ -1392,6 +1367,65 @@
 
   <xsl:template match="text()" mode="small-caps">
   <xsl:value-of select="translate(., 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
+  </xsl:template>
+
+  <!--
+    Generate a css or an inline style representation of a font spec.
+    The fontspec that is passed in is in one of two forms:
+    FamilyName-STYLE-size, where STYLE is either PLAIN, BOLD, ITALIC or BOLDITALIC
+    or
+    FamilyName,style,size, where STYLE is 0 for PLAIN, 1 for BOLD, 2 for ITALIC or 3 for BOLDITALIC.
+
+    The style attribute is css for a css style specification or anything else for an inline style one.
+  -->
+  <xsl:template name="generateFontStyle">
+    <xsl:param name="fontspec"/>
+    <xsl:param name="style"/>
+    <xsl:variable name="fontSeparator">
+      <xsl:choose>
+        <xsl:when test="contains($fontspec, ',')">
+          <xsl:value-of select="','"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="'-'"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="aFont">
+      <xsl:choose>
+        <xsl:when test="substring-before($fontspec, $fontSeparator) = ''"><xsl:value-of select="$fontspec"/>,0,16</xsl:when>
+        <xsl:otherwise><xsl:value-of select="$fontspec"/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="fontfamily" select='concat("font-family: &apos;", substring-before($aFont, $fontSeparator), "&apos;, Serif;")' />
+    <xsl:variable name="fontsize" select="concat(' font-size: ', substring-after(substring-after($aFont, $fontSeparator), $fontSeparator), 'pt;')" />
+    <xsl:variable name="styling" select="substring-before(substring-after($aFont, $fontSeparator), $fontSeparator)" />
+    <xsl:variable name="fontweight">
+      <xsl:choose>
+        <xsl:when test="$styling = '1' or $styling = '3' or contains($styling, 'bold')">bold</xsl:when>
+        <xsl:otherwise>normal</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="fontstyle">
+      <xsl:choose>
+        <xsl:when test="$styling = '2' or $styling = '3' or contains($styling, 'italic')">italic</xsl:when>
+        <xsl:otherwise>normal</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$style = 'css'">
+        <xsl:value-of select="concat('font-family: ', $fontfamily, ', Serif;',
+                                     'font-size:   ', $fontsize,   'pt;',
+                                     'font-weight: ', $fontweight, ';',
+                                     'font-style:  ', $fontstyle,  ';')"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="concat('font-family=', $fontfamily, ';',
+                                     'font-size=',   $fontsize,   ';',
+                                     'font-weight=', $fontweight, ';',
+                                     'font-style=',  $fontstyle,  ';')"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
 </xsl:stylesheet>
