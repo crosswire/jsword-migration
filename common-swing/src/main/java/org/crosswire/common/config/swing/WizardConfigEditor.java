@@ -85,7 +85,7 @@ public class WizardConfigEditor extends AbstractConfigEditor
 
         title = new JLabel(Msg.PROPERTIES.toString(), SwingConstants.LEADING);
         title.setIcon(TASK_ICON_LARGE);
-        title.setFont(new Font(getFont().getName(), Font.PLAIN, 16));
+        title.setFont(getFont().deriveFont(Font.PLAIN, 16));
         title.setPreferredSize(new Dimension(30, 30));
         title.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         title.setBackground(Color.gray);

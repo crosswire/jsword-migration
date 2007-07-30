@@ -29,10 +29,10 @@ import java.util.MissingResourceException;
 import javax.xml.transform.TransformerException;
 
 import org.crosswire.bibledesktop.desktop.XSLTProperty;
+import org.crosswire.common.swing.GuiConvert;
 import org.crosswire.common.util.FileUtil;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.ResourceUtil;
-import org.crosswire.common.util.StringUtil;
 import org.crosswire.common.util.URIFilter;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
@@ -110,10 +110,7 @@ public class ConfigurableSwingConverter implements Converter
      */
     public static Font toFont()
     {
-        String[] fontSpec = StringUtil.split(font, ","); //$NON-NLS-1$
-        int fontStyle = Integer.parseInt(fontSpec[1]);
-        int fontSize = Integer.parseInt(fontSpec[2]);
-        return new Font(fontSpec[0], fontStyle, fontSize);
+        return GuiConvert.string2Font(font);
     }
 
     /**
@@ -158,7 +155,7 @@ public class ConfigurableSwingConverter implements Converter
     /**
      * The font to be used in OSIS->HTML generation
      */
-    private static String font = "Serif,0,14"; //$NON-NLS-1$
+    private static String font = "Serif-PLAIN-14"; //$NON-NLS-1$
 
     /**
      * The stylesheet we are transforming using

@@ -110,7 +110,7 @@ public class XSLTProperty implements Serializable
      * What is the base of the current document.
      * Note this needs to be set each time the font changes.
      */
-    public static final XSLTProperty FONT = new XSLTProperty("font", "Serif,0,14"); //$NON-NLS-1$ //$NON-NLS-2$
+    public static final XSLTProperty FONT = new XSLTProperty("font", "Serif-PLAIN-14"); //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * What is the base of the current document.

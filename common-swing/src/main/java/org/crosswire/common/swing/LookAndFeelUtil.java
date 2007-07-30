@@ -33,7 +33,6 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 import org.crosswire.common.swing.plaf.MetalLFCustoms;
 import org.crosswire.common.swing.plaf.OtherLFCustoms;
 import org.crosswire.common.swing.plaf.WindowsLFCustoms;
-import org.crosswire.common.util.StringUtil;
 
 /**
  * LookAndFeelUtil declares the Choices and actions
@@ -109,10 +108,7 @@ public final class LookAndFeelUtil
      */
     public static FontUIResource toFontUIResource()
     {
-        String[] fontSpec = StringUtil.split(LookAndFeelUtil.font, ","); //$NON-NLS-1$
-        int fontStyle = Integer.parseInt(fontSpec[1]);
-        int fontSize = Integer.parseInt(fontSpec[2]);
-        return new FontUIResource(fontSpec[0], fontStyle, fontSize);
+        return new FontUIResource(GuiConvert.string2Font(LookAndFeelUtil.font));
     }
 
     /**
@@ -160,7 +156,7 @@ public final class LookAndFeelUtil
     /**
      * The font to be used for the application
      */
-    private static String font = "Dialog,0,12"; //$NON-NLS-1$
+    private static String font = "Dialog-PLAIN-12"; //$NON-NLS-1$
 
     /**
      * Setup the default PLAF

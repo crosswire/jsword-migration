@@ -471,7 +471,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
      */
     public Key getKey()
     {
-        return bdata.getKey();
+        return bdata == null ? null : bdata.getKey();
     }
 
     /* (non-Javadoc)

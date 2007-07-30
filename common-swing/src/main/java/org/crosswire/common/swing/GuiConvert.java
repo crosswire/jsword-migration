@@ -44,7 +44,10 @@ public final class GuiConvert
     }
 
     /**
-     * Convert a String to a Font
+     * Convert a String to a Font. Accepts one of two inputs:
+     * FamilyName-STYLE-size, where STYLE is either PLAIN, BOLD, ITALIC or BOLDITALIC<br/>
+     * or<br/>
+     * FamilyName,style,size, where STYLE is 0 for PLAIN, 1 for BOLD, 2 for ITALIC or 3 for BOLDITALIC.
      * @param value the thing to convert
      * @return the converted data
      */
@@ -55,18 +58,25 @@ public final class GuiConvert
             return null;
         }
 
+        // new way
+        if (value.indexOf(',') == -1)
+        {
+            return Font.decode(value);
+        }
+
+        // old way
         String[] values = StringUtil.split(value, ","); //$NON-NLS-1$
         if (values.length != 3)
         {
             log.warn("Illegal font name: " + value); //$NON-NLS-1$
             return null;
         }
-
         return new Font(values[0], Integer.parseInt(values[1]), Integer.parseInt(values[2]));
     }
 
     /**
-     * Convert a Font to a String
+     * Convert a Font to a String. Produces a format that can be read with <code>Font.decode(String)</code>.
+     * 
      * @param font the thing to convert
      * @return the converted data
      */
@@ -77,7 +87,19 @@ public final class GuiConvert
             return ""; //$NON-NLS-1$
         }
 
-        return font.getName() + "," + font.getStyle() + "," + font.getSize(); //$NON-NLS-1$ //$NON-NLS-2$
+        String  strStyle = "plain"; //$NON-NLS-1$
+
+        if (font.isBold())
+        {
+            strStyle = font.isItalic() ? "bolditalic" : "bold"; // //$NON-NLS-1$ //$NON-NLS-2$
+        }
+        else if (font.isItalic())
+        {
+            strStyle = "italic"; // //$NON-NLS-1$
+        }
+
+
+        return font.getName() + "-" + strStyle + "-" + font.getSize(); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
