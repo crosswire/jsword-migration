@@ -23,6 +23,8 @@ package org.crosswire.bibledesktop.book.install;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
@@ -48,6 +50,8 @@ import org.crosswire.common.icu.NumberShaper;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.FixedSplitPane;
+import org.crosswire.common.swing.FontChooser;
+import org.crosswire.common.util.Language;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
@@ -242,23 +246,34 @@ public class SitePane extends JPanel
     {
         // return new BooksTreeModel(books);
         BookSet bmds = new BookSet(books.getBooks());
-        TreeNode bookRoot = new BookNode("root", bmds, 0, new Object[] {BookMetaData.KEY_CATEGORY, BookMetaData.KEY_LANGUAGE}); //$NON-NLS-1$
+        TreeNode bookRoot = new BookNode("root", bmds, 0, new Object[] {BookMetaData.KEY_CATEGORY, BookMetaData.KEY_XML_LANG}); //$NON-NLS-1$
         return new DefaultTreeModel(bookRoot);
     }
 
-    // provide for backward compatibility
     private Book getBook(Object anObj)
     {
         Object obj = anObj;
-        // new way
         if (obj instanceof DefaultMutableTreeNode)
         {
             obj = ((DefaultMutableTreeNode) obj).getUserObject();
         }
-        // Old way
         if (obj instanceof Book)
         {
             return (Book) obj;
+        }
+        return null;
+    }
+
+    private Language getLanguage(Object anObj)
+    {
+        Object obj = anObj;
+        if (obj instanceof DefaultMutableTreeNode)
+        {
+            obj = ((DefaultMutableTreeNode) obj).getUserObject();
+        }
+        if (obj instanceof Language)
+        {
+            return (Language) obj;
         }
         return null;
     }
@@ -271,6 +286,7 @@ public class SitePane extends JPanel
         JPanel panel = new JPanel();
         if (installer != null)
         {
+            panel.setLayout(new GridLayout(1, 2, 3, 3));
             panel.add(new JButton(actions.getAction(INSTALL)));
             // LATER(DMS): Put back when this works
             //panel.add(new JButton(actions.getAction(INSTALL_SEARCH)));
@@ -278,9 +294,11 @@ public class SitePane extends JPanel
         }
         else
         {
+            panel.setLayout(new GridLayout(2, 2, 3, 3));
             panel.add(new JButton(actions.getAction(DELETE)));
-            panel.add(new JButton(actions.getAction(UNLOCK)));
             panel.add(new JButton(actions.getAction(UNINDEX)));
+            panel.add(new JButton(actions.getAction(CHOOSE_FONT)));
+            panel.add(new JButton(actions.getAction(UNLOCK)));
         }
         return panel;
     }
@@ -469,38 +487,47 @@ public class SitePane extends JPanel
     }
 
     /**
+     * Get a font for the current selection
+     */
+    public void doChooseFont()
+    {
+        TreePath path = treAvailable.getSelectionPath();
+        if (path == null)
+        {
+            return;
+        }
+
+        Object last = path.getLastPathComponent();
+        //Book book = getBook(last);
+
+        Font picked = FontChooser.showDialog(this, Msg.FONT_CHOOSER.toString(), null);
+        
+    }
+
+    /**
      * Something has been (un)selected in the tree
      */
     protected void selected()
     {
         TreePath path = treAvailable.getSelectionPath();
 
-        boolean bookSelected = false;
         Book book = null;
+        Language lang = null;
         if (path != null)
         {
             Object last = path.getLastPathComponent();
             book = getBook(last);
-            if (book != null)
-            {
-                bookSelected = true;
-            }
+            lang = getLanguage(last);
         }
 
         display.setBook(book);
 
-        if (book == null)
-        {
-            return;
-        }
-
-        boolean canInstall = bookSelected && book.isSupported();
-        IndexManager imanager = IndexManagerFactory.getIndexManager();
-        actions.getAction(DELETE).setEnabled(bookSelected && book.getDriver().isDeletable(book));
-        actions.getAction(UNLOCK).setEnabled(bookSelected && book.isEnciphered());
-        actions.getAction(UNINDEX).setEnabled(bookSelected && imanager.isIndexed(book));
-        actions.getAction(INSTALL).setEnabled(canInstall);
-        actions.getAction(INSTALL_SEARCH).setEnabled(canInstall && book.getBookCategory() == BookCategory.BIBLE);
+        actions.getAction(DELETE).setEnabled(book != null && book.getDriver().isDeletable(book));
+        actions.getAction(UNLOCK).setEnabled(book != null && book.isEnciphered());
+        actions.getAction(UNINDEX).setEnabled(book != null && IndexManagerFactory.getIndexManager().isIndexed(book));
+        actions.getAction(INSTALL).setEnabled(book != null && book.isSupported());
+        actions.getAction(INSTALL_SEARCH).setEnabled(book != null && book.isSupported() && book.getBookCategory() == BookCategory.BIBLE);
+        actions.getAction(CHOOSE_FONT).setEnabled(book != null || lang != null);
     }
 
     public void setTreeModel(BookList books)
@@ -509,7 +536,7 @@ public class SitePane extends JPanel
     }
 
     /**
-     * When new books are added we need to relfect the change in this tree.
+     * When new books are added we need to reflect the change in this tree.
      */
     final class CustomBooksListener implements BooksListener
     {
@@ -555,6 +582,7 @@ public class SitePane extends JPanel
     private static final String INSTALL_SEARCH = "InstallSearch"; //$NON-NLS-1$
     private static final String DELETE = "Delete"; //$NON-NLS-1$
     private static final String UNLOCK = "Unlock"; //$NON-NLS-1$
+    private static final String CHOOSE_FONT = "ChooseFont"; //$NON-NLS-1$
     private static final String UNINDEX = "Unindex"; //$NON-NLS-1$
 
     /**

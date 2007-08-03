@@ -152,7 +152,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
         boolean direction = bmd.isLeftToRight();
         txtView.applyComponentOrientation(direction ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
 
-        String fontName = bmd.getProperty(BookMetaData.KEY_FONT);
+        String fontName = (String) bmd.getProperty(BookMetaData.KEY_FONT);
         // normalize to a consistent way
         String fontSpec = XSLTProperty.FONT.getStringState();
         if (fontName != null)

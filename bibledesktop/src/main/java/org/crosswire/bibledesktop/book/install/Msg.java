@@ -49,6 +49,7 @@ final class Msg extends MsgBase
     static final Msg UNLOCK_BOOK = new Msg("SitePane.UnlockBook"); //$NON-NLS-1$
     static final Msg CONFIRM_UNINSTALL_TITLE = new Msg("SitePane.ConfirmUninstallTitle"); //$NON-NLS-1$
     static final Msg CONFIRM_UNINSTALL_BOOK = new Msg("SitePane.ConfirmUninstallBook"); //$NON-NLS-1$
+    static final Msg FONT_CHOOSER = new Msg("SitePane.FontChooser"); //$NON-NLS-1$
 
     static final Msg EDIT_SITE_TITLE = new Msg("EditSitePane.EditSitesTitle"); //$NON-NLS-1$
     static final Msg MISSING_SITE = new Msg("EditSitePane.MissingSite"); //$NON-NLS-1$

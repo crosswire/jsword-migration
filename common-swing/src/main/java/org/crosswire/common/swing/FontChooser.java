@@ -111,15 +111,11 @@ public class FontChooser extends JPanel
         Component root = SwingUtilities.getRoot(parent);
         final FontChooser fontc = new FontChooser();
 
-        // JDK14: For some reason we can't do this in the version of Swing that we are on
-        // it is only available in the JDK1.2.2 implementation
-        // fontc.dialog = (root instanceof JFrame)
-        //              ? new JDialog((JFrame) root, title, true)
-        //              : new JDialog((JDialog) root, title, true);
-        fontc.dialog = new JDialog((JFrame) root, title, true);
+        fontc.dialog = (root instanceof JFrame)
+                      ? new JDialog((JFrame) root, title, true)
+                      : new JDialog((JDialog) root, title, true);
 
-        // Not sure if this is the right thing to do?
-        fontc.name.setSelectedItem(initial);
+        fontc.name.setSelectedItem(initial != null ? initial : DEFAULT_FONT.getFont());
 
         buttons.setLayout(new FlowLayout());
         buttons.add(ok);
@@ -311,16 +307,17 @@ public class FontChooser extends JPanel
         /* @Override */
         public Component getListCellRendererComponent(JList listbox, Object value, int index, boolean selected, boolean focus)
         {
+            Font defaultFont = DEFAULT_FONT.getFont();
             if (value == null)
             {
                 setText("<null>"); //$NON-NLS-1$
-                setFont(DEFAULT_FONT.getFont());
+                setFont(defaultFont);
             }
             else
             {
                 Font afont = (Font) value;
                 setText(afont.getFamily());
-                setFont(DEFAULT_FONT.getFont()); // afont); // Some fonts cannot display their own name.
+                setFont(defaultFont); // afont); // Some fonts cannot display their own name.
             }
 
             return this;

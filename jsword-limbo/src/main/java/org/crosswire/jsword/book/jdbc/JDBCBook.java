@@ -68,7 +68,7 @@ public class JDBCBook extends AbstractPassageBook
         while (true)
         {
             String property = "JdbcDriver" + driver_attempt; //$NON-NLS-1$
-            String drivername = getProperty(property);
+            String drivername = getProperty(property).toString();
 
             try
             {
@@ -86,26 +86,26 @@ public class JDBCBook extends AbstractPassageBook
         try
         {
             // Actually connect to the database
-            String text_url = getProperty("TextURL"); //$NON-NLS-1$
+            String text_url = getProperty("TextURL").toString(); //$NON-NLS-1$
             textCon = DriverManager.getConnection(text_url);
 
-            String concord_url = getProperty("ConcordURL"); //$NON-NLS-1$
+            String concord_url = getProperty("ConcordURL").toString(); //$NON-NLS-1$
             concCon = DriverManager.getConnection(concord_url);
 
             // SQL statements
-            String doc_query = getProperty("DocQuery"); //$NON-NLS-1$
+            String doc_query = getProperty("DocQuery").toString(); //$NON-NLS-1$
             docStmt = textCon.prepareStatement(doc_query);
 
-            String ref_query = getProperty("RefQuery"); //$NON-NLS-1$
+            String ref_query = getProperty("RefQuery").toString(); //$NON-NLS-1$
             refStmt = concCon.prepareStatement(ref_query);
 
             //String verse_query = getProperty("VerseQuery");
             //verse_stmt = textcnx.prepareStatement(verse_query);
 
-            String start_query = getProperty("StartQuery"); //$NON-NLS-1$
+            String start_query = getProperty("StartQuery").toString(); //$NON-NLS-1$
             startStmt = concCon.prepareStatement(start_query);
 
-            wordsQuery = getProperty("WordsQuery"); //$NON-NLS-1$
+            wordsQuery = getProperty("WordsQuery").toString(); //$NON-NLS-1$
         }
         catch (SQLException ex)
         {

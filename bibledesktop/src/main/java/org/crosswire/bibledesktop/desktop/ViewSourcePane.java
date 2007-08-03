@@ -49,7 +49,6 @@ import org.crosswire.common.swing.GuiConvert;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
-import org.crosswire.common.util.StringUtil;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.FormatType;
 import org.crosswire.common.xml.PrettySerializingContentHandler;
@@ -96,7 +95,7 @@ public class ViewSourcePane extends JPanel
 
             BookMetaData bmd = book.getBookMetaData();
 
-            String fontName = bmd.getProperty(BookMetaData.KEY_FONT);
+            String fontName = (String) bmd.getProperty(BookMetaData.KEY_FONT);
             String fontSpec = XSLTProperty.FONT.getStringState();
             if (fontName != null)
             {

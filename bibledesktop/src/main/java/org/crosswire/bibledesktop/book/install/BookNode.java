@@ -50,7 +50,7 @@ public class BookNode extends DefaultMutableTreeNode
             Iterator iter = group.iterator();
             while (iter.hasNext())
             {
-                String value = (String) iter.next();
+                Object value = iter.next();
                 BookSet subBooks = books.filter(key, value);
                 add(new BookNode(value, subBooks, level + 1, grouping));
             }
