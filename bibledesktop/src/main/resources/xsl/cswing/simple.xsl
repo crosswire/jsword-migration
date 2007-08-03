@@ -107,7 +107,7 @@
   <xsl:variable name="fontspec">
       <xsl:call-template name="generateFontStyle">
         <xsl:with-param name="fontspec" select="$font"/>
-        <xsl:with-param name="style" select="css"/>
+        <xsl:with-param name="style">css</xsl:with-param>
       </xsl:call-template>
   </xsl:variable>
 
@@ -1397,8 +1397,8 @@
         <xsl:otherwise><xsl:value-of select="$fontspec"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:variable name="fontfamily" select='concat("font-family: &apos;", substring-before($aFont, $fontSeparator), "&apos;, Serif;")' />
-    <xsl:variable name="fontsize" select="concat(' font-size: ', substring-after(substring-after($aFont, $fontSeparator), $fontSeparator), 'pt;')" />
+    <xsl:variable name="fontfamily" select="substring-before($aFont, $fontSeparator)" />
+    <xsl:variable name="fontsize" select="substring-after(substring-after($aFont, $fontSeparator), $fontSeparator)" />
     <xsl:variable name="styling" select="substring-before(substring-after($aFont, $fontSeparator), $fontSeparator)" />
     <xsl:variable name="fontweight">
       <xsl:choose>
@@ -1414,16 +1414,16 @@
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="$style = 'css'">
-        <xsl:value-of select="concat('font-family: ', $fontfamily, ', Serif;',
-                                     'font-size:   ', $fontsize,   'pt;',
-                                     'font-weight: ', $fontweight, ';',
-                                     'font-style:  ', $fontstyle,  ';')"/>
+        <xsl:value-of select='concat("font-family: &apos;", $fontfamily, "&apos;, Serif; ",
+                                     "font-size:   ",       $fontsize,   "pt; ",
+                                     "font-weight: ",       $fontweight, "; ",
+                                     "font-style:  ",       $fontstyle,  ";")'/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="concat('font-family=', $fontfamily, ';',
-                                     'font-size=',   $fontsize,   ';',
-                                     'font-weight=', $fontweight, ';',
-                                     'font-style=',  $fontstyle,  ';')"/>
+        <xsl:value-of select='concat("font-family=&apos;",  $fontfamily, "&apos;, Serif; ",
+                                     "font-size=",          $fontsize,   "pt; ",
+                                     "font-weight=",        $fontweight, "; ",
+                                     "font-style=",         $fontstyle,  "; ")'/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
