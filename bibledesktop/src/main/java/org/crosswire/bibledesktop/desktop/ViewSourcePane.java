@@ -100,13 +100,11 @@ public class ViewSourcePane extends JPanel
             String fontSpec = XSLTProperty.FONT.getStringState();
             if (fontName != null)
             {
-                String[] fontParts = StringUtil.split(fontSpec, ","); //$NON-NLS-1$
-                String newFontSpec = fontName + ',' + fontParts[1] + ',' + fontParts[2];
-                Font bookFont = GuiConvert.string2Font(newFontSpec);
+                Font bookFont = GuiConvert.deriveFont(fontSpec, fontName);
                 // Make sure it is installed. Java does substitution. Make sure we got what we wanted.
                 if (bookFont.getFamily().equalsIgnoreCase(fontName))
                 {
-                    fontSpec = newFontSpec;
+                    fontSpec = GuiConvert.font2String(bookFont);
                 }
             }
 

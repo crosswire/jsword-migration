@@ -91,15 +91,32 @@ public final class GuiConvert
 
         if (font.isBold())
         {
-            strStyle = font.isItalic() ? "bolditalic" : "bold"; // //$NON-NLS-1$ //$NON-NLS-2$
+            strStyle = font.isItalic() ? "bolditalic" : "bold"; //$NON-NLS-1$ //$NON-NLS-2$
         }
         else if (font.isItalic())
         {
-            strStyle = "italic"; // //$NON-NLS-1$
+            strStyle = "italic"; //$NON-NLS-1$
         }
 
 
         return font.getName() + "-" + strStyle + "-" + font.getSize(); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+
+    /**
+     * Create a font just like the another with regard to style and size, but differing in font family.
+     * @param fontspec the font to model
+     * @param fontName the font to use
+     * @return the font
+     */
+    public static Font deriveFont(String fontspec, String fontName)
+    {
+        Font font = string2Font(fontspec);
+        Font derived = null;
+        if (font != null && fontName != null)
+        {
+            derived = new Font(fontName, font.getStyle(), font.getSize());
+        }
+        return derived;
     }
 
     /**

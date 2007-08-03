@@ -53,7 +53,6 @@ import org.crosswire.common.swing.GuiConvert;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
-import org.crosswire.common.util.StringUtil;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
 import org.crosswire.common.xml.TransformingSAXEventProvider;
@@ -154,16 +153,15 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
         txtView.applyComponentOrientation(direction ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
 
         String fontName = bmd.getProperty(BookMetaData.KEY_FONT);
+        // normalize to a consistent way
         String fontSpec = XSLTProperty.FONT.getStringState();
         if (fontName != null)
         {
-            String[] fontParts = StringUtil.split(fontSpec, ","); //$NON-NLS-1$
-            String newFontSpec = fontName + ',' + fontParts[1] + ',' + fontParts[2];
-            Font bookFont = GuiConvert.string2Font(newFontSpec);
+            Font bookFont = GuiConvert.deriveFont(fontSpec, fontName);
             // Make sure it is installed. Java does substitution. Make sure we got what we wanted.
             if (bookFont.getFamily().equalsIgnoreCase(fontName))
             {
-                fontSpec = newFontSpec;
+                fontSpec = GuiConvert.font2String(bookFont);
             }
         }
 
