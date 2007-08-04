@@ -1289,6 +1289,9 @@
         <xsl:when test="$cell-direction = 'rtl'">
           <xsl:text>&#8235;</xsl:text><xsl:apply-templates/><xsl:text>&#8236;</xsl:text>
         </xsl:when>
+        <xsl:when test="$cell-direction = 'ltr'">
+          <xsl:text>&#8234;</xsl:text><xsl:apply-templates/><xsl:text>&#8236;</xsl:text>
+        </xsl:when>
         <xsl:otherwise>
           <xsl:apply-templates/>
         </xsl:otherwise>
