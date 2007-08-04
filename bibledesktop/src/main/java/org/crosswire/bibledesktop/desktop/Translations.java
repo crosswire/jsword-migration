@@ -216,6 +216,7 @@ public class Translations
             "en", //$NON-NLS-1$
             "de", //$NON-NLS-1$
             "fa", //$NON-NLS-1$
+            "tr", //$NON-NLS-1$
         };
 
     private static Translations instance = new Translations();
