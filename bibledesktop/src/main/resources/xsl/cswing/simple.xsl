@@ -113,6 +113,8 @@
 
   <!-- Create a global key factory from which OSIS ids will be generated -->
   <xsl:variable name="keyf" select="jsword:org.crosswire.jsword.passage.PassageKeyFactory.instance()"/>
+  <!-- Create a global number shaper that can transform 0-9 into other number systems. -->
+  <xsl:variable name="shaper" select="jsword:org.crosswire.common.icu.NumberShaper.new()"/>
 
   <!--=======================================================================-->
   <xsl:template match="/">
@@ -361,15 +363,15 @@
       <!-- An osisID can be a space separated list of them -->
       <xsl:variable name="firstOsisID" select="substring-before(concat(@osisID, ' '), ' ')"/>
       <xsl:variable name="book" select="substring-before($firstOsisID, '.')"/>
-      <xsl:variable name="chapter" select="substring-before(substring-after($firstOsisID, '.'), '.')"/>
+      <xsl:variable name="chapter" select="jsword:shape($shaper, substring-before(substring-after($firstOsisID, '.'), '.'))"/>
       <!-- If n is present use it for the number -->
       <xsl:variable name="verse">
         <xsl:choose>
           <xsl:when test="@n">
-            <xsl:value-of select="@n"/>
+            <xsl:value-of select="jsword:shape($shaper, string(@n))"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="substring-after(substring-after($firstOsisID, '.'), '.')"/>
+            <xsl:value-of select="jsword:shape($shaper, substring-after(substring-after($firstOsisID, '.'), '.'))"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:variable>
@@ -1252,9 +1254,26 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+    <xsl:variable name="cell-direction">
+      <xsl:if test="@xml:lang">
+        <xsl:call-template name="getDirection">
+         <xsl:with-param name="lang"><xsl:value-of select="@xml:lang"/></xsl:with-param>
+        </xsl:call-template>
+      </xsl:if>
+    </xsl:variable>
     <xsl:element name="{$element-name}">
       <xsl:attribute name="class">cell</xsl:attribute>
       <xsl:attribute name="valign">top</xsl:attribute>
+      <xsl:if test="@xml:lang">
+        <xsl:attribute name="dir">
+          <xsl:value-of select="$cell-direction"/>
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:if test="$cell-direction = 'rtl'">
+        <xsl:attribute name="align">
+          <xsl:value-of select="'right'"/>
+        </xsl:attribute>
+      </xsl:if>
       <xsl:if test="@rows">
         <xsl:attribute name="rowspan">
           <xsl:value-of select="@rows"/>
@@ -1265,7 +1284,15 @@
           <xsl:value-of select="@cols"/>
         </xsl:attribute>
       </xsl:if>
-      <xsl:apply-templates/>
+      <!-- hack alert -->
+      <xsl:choose>
+        <xsl:when test="$cell-direction = 'rtl'">
+          <xsl:text>&#8235;</xsl:text><xsl:apply-templates/><xsl:text>&#8236;</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates/>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:element>
   </xsl:template>
 
@@ -1427,5 +1454,22 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <!--
+    The direction is deduced from the xml:lang attribute and is assumed to be meaningful for those elements.
+    Note: there is a bug that prevents dir=rtl from working.
+    see: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4296022 and 4866977
+  -->
+  <xsl:template name="getDirection">
+    <xsl:param name="lang"/>
+    <xsl:choose>
+      <xsl:when test="$lang = 'he' or $lang = 'ar' or $lang = 'fa' or $lang = 'ur' or $lang = 'syr'">
+        <xsl:value-of select="'rtl'"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="'ltr'"/>
+      </xsl:otherwise>
+    </xsl:choose>
+   </xsl:template>
   
 </xsl:stylesheet>

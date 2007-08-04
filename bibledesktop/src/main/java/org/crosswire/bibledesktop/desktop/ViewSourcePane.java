@@ -76,7 +76,7 @@ import org.xml.sax.SAXException;
  */
 public class ViewSourcePane extends JPanel
 {
-    public ViewSourcePane(Book book, Key key)
+    public ViewSourcePane(Book[] books, Key key)
     {
         try
         {
@@ -85,15 +85,27 @@ public class ViewSourcePane extends JPanel
             Iterator iter = key.iterator();
             while (iter.hasNext())
             {
-                if (buf.length() > 0)
+                Key currentKey = (Key) iter.next();
+                String osisID = currentKey.getOsisID();
+                for (int i = 0; i < books.length; i++)
                 {
-                    buf.append('\n');
+                    Book book = books[i];
+                    if (buf.length() > 0)
+                    {
+                        buf.append('\n');
+                    }
+                    buf.append(book.getInitials());
+                    buf.append(':');
+                    buf.append(osisID);
+                    buf.append(" - "); //$NON-NLS-1$
+                    buf.append(book.getRawText(currentKey));
                 }
-                buf.append(book.getRawText((Key) iter.next()));
             }
 
-            BookData bdata = new BookData(book, key);
+            // TODO(DMS): handle comparison
+            BookData bdata = new BookData(books, key, false);
 
+            Book book = bdata.getFirstBook();
             BookMetaData bmd = book.getBookMetaData();
 
             String fontSpec = GuiConvert.font2String(BookFont.instance().getFont(book));

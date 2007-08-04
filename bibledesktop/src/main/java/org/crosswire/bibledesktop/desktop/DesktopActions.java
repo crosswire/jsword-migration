@@ -45,7 +45,6 @@ import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.OSType;
 import org.crosswire.common.util.ReflectionUtil;
 import org.crosswire.common.util.Reporter;
-import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.util.Project;
@@ -403,9 +402,7 @@ public class DesktopActions implements Actionable
             return;
         }
 
-        Book book = da.getFirstBook();
-
-        ViewSourcePane viewer = new ViewSourcePane(book, key);
+        ViewSourcePane viewer = new ViewSourcePane(da.getBooks(), key);
         viewer.showInFrame(getDesktop());
     }
 
