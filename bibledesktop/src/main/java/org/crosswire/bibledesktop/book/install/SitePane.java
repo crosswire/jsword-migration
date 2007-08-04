@@ -498,10 +498,19 @@ public class SitePane extends JPanel
         }
 
         Object last = path.getLastPathComponent();
-        //Book book = getBook(last);
+        Book book = getBook(last);
+        if (book != null)
+        {
+            Font picked = FontChooser.showDialog(this, Msg.FONT_CHOOSER.toString(), BookFont.instance().getFont(book));
+            BookFont.instance().setFont(book, picked);
+        }
 
-        Font picked = FontChooser.showDialog(this, Msg.FONT_CHOOSER.toString(), null);
-        
+        Language language = getLanguage(last);
+        if (language != null)
+        {
+            Font picked = FontChooser.showDialog(this, Msg.FONT_CHOOSER.toString(), BookFont.instance().getFont(language));
+            BookFont.instance().setFont(language, picked);
+        }
     }
 
     /**

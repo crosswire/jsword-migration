@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Properties;
 
+import org.crosswire.common.util.Language;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
 
@@ -103,13 +104,33 @@ public class FontStore
      * Store a font specification for the resource.
      * 
      * @param resource the resource
-     * @param fontSpec the font specification, understandable by
-     *            <code>Font.decode()</code>
+     * @param font the font
      */
-    public void setFont(String resource, String fontSpec)
+    public void setFont(String resource, Font font)
     {
+        if (resource == null || font == null)
+        {
+            return;
+        }
         load();
-        fontMap.setProperty(resource, fontSpec);
+        fontMap.setProperty(resource, GuiConvert.font2String(font));
+        store();
+    }
+
+    /**
+     * Store a font specification for the resource.
+     * 
+     * @param resource the resource
+     * @param font the font
+     */
+    public void setFont(Language lang, Font font)
+    {
+        if (lang == null || font == null)
+        {
+            return;
+        }
+        load();
+        fontMap.setProperty(new StringBuffer(LANG_KEY_PREFIX).append(lang.getCode()).toString(), GuiConvert.font2String(font));
         store();
     }
 
@@ -122,9 +143,10 @@ public class FontStore
      * 
      * @param resource the name of the resource for whom the font is stored.
      * @param lang the language of the resource
+     * @param fallback the fontspec for the fallback font
      * @return the requested font if possible. A fallback font otherwise.
      */
-    public Font getFont(String resource, String fallback, String lang)
+    public Font getFont(String resource, Language lang, String fallback)
     {
         load();
 
@@ -146,7 +168,7 @@ public class FontStore
 
         if (lang != null)
         {
-            fontSpec = fontMap.getProperty(new StringBuffer(LANG_KEY_PREFIX).append(lang).toString());
+            fontSpec = fontMap.getProperty(new StringBuffer(LANG_KEY_PREFIX).append(lang.getCode()).toString());
         }
 
         if (fontSpec != null)

@@ -42,6 +42,7 @@ import javax.swing.WindowConstants;
 import javax.swing.text.JTextComponent;
 import javax.xml.transform.TransformerException;
 
+import org.crosswire.bibledesktop.book.install.BookFont;
 import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWScrollPane;
@@ -95,17 +96,7 @@ public class ViewSourcePane extends JPanel
 
             BookMetaData bmd = book.getBookMetaData();
 
-            String fontName = (String) bmd.getProperty(BookMetaData.KEY_FONT);
-            String fontSpec = XSLTProperty.FONT.getStringState();
-            if (fontName != null)
-            {
-                Font bookFont = GuiConvert.deriveFont(fontSpec, fontName);
-                // Make sure it is installed. Java does substitution. Make sure we got what we wanted.
-                if (bookFont.getFamily().equalsIgnoreCase(fontName))
-                {
-                    fontSpec = GuiConvert.font2String(bookFont);
-                }
-            }
+            String fontSpec = GuiConvert.font2String(BookFont.instance().getFont(book));
 
             SAXEventProvider osissep = bdata.getSAXEventProvider();
 

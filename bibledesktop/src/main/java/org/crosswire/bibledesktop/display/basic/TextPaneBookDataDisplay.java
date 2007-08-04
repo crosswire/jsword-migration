@@ -23,7 +23,6 @@ package org.crosswire.bibledesktop.display.basic;
 
 import java.awt.Component;
 import java.awt.ComponentOrientation;
-import java.awt.Font;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -43,6 +42,7 @@ import javax.swing.text.StyledDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.xml.transform.TransformerException;
 
+import org.crosswire.bibledesktop.book.install.BookFont;
 import org.crosswire.bibledesktop.desktop.XSLTProperty;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.URIEvent;
@@ -152,19 +152,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
         boolean direction = bmd.isLeftToRight();
         txtView.applyComponentOrientation(direction ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
 
-        String fontName = (String) bmd.getProperty(BookMetaData.KEY_FONT);
-        // normalize to a consistent way
-        String fontSpec = XSLTProperty.FONT.getStringState();
-        if (fontName != null)
-        {
-            Font bookFont = GuiConvert.deriveFont(fontSpec, fontName);
-            // Make sure it is installed. Java does substitution. Make sure we got what we wanted.
-            if (bookFont.getFamily().equalsIgnoreCase(fontName))
-            {
-                fontSpec = GuiConvert.font2String(bookFont);
-            }
-        }
-
+        String fontSpec = GuiConvert.font2String(BookFont.instance().getFont(getFirstBook()));
         try
         {
             SAXEventProvider osissep = bdata.getSAXEventProvider();
