@@ -1,13 +1,14 @@
 # The naming convention for the keys in the file is to match that of the
 # keys of the options in the config.xml file.
 # Since the keys may have spaces these need to be escaped here.
+
 Bibles.name=کتاب مقدس
 Bibles.RetainCurrent.name=از کتاب مقدس اخیر استفاده کنید
 Bibles.RetainCurrent.help=هر شماحل ترژومەی قبلی یا ترژومەیاعدی استفدە میکند
 Bibles.DefaultBible.name=کدامیک از کتاب مقدس های موجود متن اصلی است
 Bibles.DefaultBible.help=کدامیک از کتاب مقدس های موجود متن اصلی است
 Bibles.DefaultDictionary.name=لغت نامه اصلیکتب مقدس ها
-Bibles.DefaultDictionary.help=؟کدامیک از لغت نامه های موجود لغت نامه اصل است
+Bibles.DefaultDictionary.help=؟کدامیک از لغت نامه​های موجود لغت نامه اصل است
 Bibles.DefaultCommentary.name=کتاب تفسیر اصلی
 Bibles.DefaultCommentary.help=کدامیک از کتب تفسیر موجود، کتاب اصلی است.
 Bibles.DefaultDailyDevotional.name=کتاب رازگاهان روزانه اصلی
@@ -29,24 +30,24 @@ Bibles.DefaultHebrewParse.help=کدامیک از راهنماهای مورفول
 BibleDisplay.name=نمایش کتاب مقدس
 BibleDisplay.Reuse.name=پیوندهای مربوط به همین ترجمه را باز کن
 BibleDisplay.Reuse.help=برای پیوندها از همین ترجمه استفاده کن
-BibleDisplay.MaxPickers.name=جند کتاب در شمیل
+BibleDisplay.MaxPickers.name=تعداد کتابها در یک صفحه 
 BibleDisplay.MaxPickers.help=
-BibleDisplay.Commentaries.name=کتابه تفسیری با کتاب مقدسها
+BibleDisplay.Commentaries.name= کتب  تفسیری و کتابها در یک صفعه 
 BibleDisplay.Commentaries.help=کتابها تفسیری در لیست کتاب مقدسهابگسر
-BibleDisplay.Sidebar.name=Show the Passage Sidebar
+BibleDisplay.Sidebar.name=ستون کناری
 BibleDisplay.Sidebar.help=
-BibleDisplay.VersesPerTab.name=جند عیات در صفه؟
+BibleDisplay.VersesPerTab.name=تعداد  عیات در یک  صفحه
 BibleDisplay.VersesPerTab.help=
-BibleDisplay.RankedVerses.name=جند عیات در جواب بازرسی
+BibleDisplay.RankedVerses.name=تعداد عیات نتیجه جستجو
 BibleDisplay.RankedVerses.help=
 BibleDisplay.ConfigurableFont.name=انتخاب فونت نمایش کتاب مقدس
 BibleDisplay.ConfigurableFont.help=فونت  نمایش کتابها
-BibleDisplay.AntiAliasDisplay.name=تمیس کردن فونتها
-BibleDisplay.AntiAliasDisplay.help=تمیس کردن فونت ها کر یواش هست ولی قشنگتر هست در بعسی فینتها
+BibleDisplay.AntiAliasDisplay.name=بهبود فونت
+BibleDisplay.AntiAliasDisplay.help=
 
 # All the above refers to the presentation of the Bibles in the central viewing pane.
 
-SwordBook.name=مدولها کتابها
+SwordBook.name=مدولهای کتابها
 SwordBook.BookSearchPath.name=فهرست کتابها
 SwordBook.BookSearchPath.help=
 SwordBook.DownloadDirectory.name=فهرست
@@ -55,31 +56,30 @@ SwordBook.DownloadDirectory.help=
 Passages.name=قسمتها
 Passages.PersistentNaming.name=حسمها نوزی
 Passages.PersistentNaming.help=
-Passages.FullBookName.name=عسم کتابها کامل
+Passages.FullBookName.name=اسم کتابها کامل
 Passages.FullBookName.help=
-Passages.BlurringRules.name=جقدر در هر صفه
-Passages.BlurringRules.help=بیشتر اس یک باب در هر صفه؟
+Passages.BlurringRules.name=جقدر در هر صفعه
+Passages.BlurringRules.help=بیشتر اس یک باب در هر صفعه؟
 Passages.BlurringRules.alternative.0=هیج
 Passages.BlurringRules.alternative.1=باب
 #Passages.BlurringRules.alternative.2=کتاب
 
 # The BookCase option is relevant only for scripts with upper case. I have therefore taken them out. I also do not know exactly how to translate them anyway...
-
 Passages.BookCase.ignore=true
 
 Application.name=برنامه
 Application.Language.name=زبان
 Application.Language.help=شروع تازه لزم هست
-Application.InitialLayout.name=ترتیب
-Application.InitialLayout.help=نمایش با پنجرهها یا با جدول بند
+Application.InitialLayout.name=طرح بندی
+Application.InitialLayout.help=
 Application.InitialLayout.alternative.0=جدول بند
 Application.InitialLayout.alternative.1=پنجرهها
 Application.MaxHeight.name=بلندی پنجره
 Application.MaxHeight.help=
 Application.MaxWidth.name=پهنا پنجره
 Application.MaxWidth.help=
-Application.UIFont.name=فونت ومومی
-Application.UIFont.help=فونت برنامه. شروع تازه لزم هست
+Application.UIFont.name=فونت عمومی
+Application.UIFont.help=فونت عمومی برنامه
 
 # The following are not for general use and are hidden from view
 #BibleDisplay.CSSOverride.name=CSS Override
