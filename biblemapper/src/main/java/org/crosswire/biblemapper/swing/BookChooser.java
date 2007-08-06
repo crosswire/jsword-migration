@@ -223,7 +223,7 @@ public class BookChooser extends JPanel
     public static final int APPROVE_OPTION = 0;
 
     /**
-     * Return value if an error occured
+     * Return value if an error occurred
      */
     public static final int ERROR_OPTION = -1;
 
