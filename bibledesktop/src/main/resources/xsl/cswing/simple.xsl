@@ -378,29 +378,34 @@
       <xsl:variable name="versenum">
         <xsl:choose>
           <xsl:when test="$BCVNum = 'true'">
-          	<xsl:value-of select="concat($book, '&#160;', $chapter, ':', $verse)"/>
+            <xsl:variable name="passage" select="jsword:getValidKey($keyf, @osisID)"/>
+            <xsl:value-of select="jsword:getName($passage)"/>
           </xsl:when>
           <xsl:when test="$CVNum = 'true'">
-          	<xsl:value-of select="concat($chapter, ':', $verse)"/>
+          	<xsl:value-of select="concat($chapter, ' : ', $verse)"/>
           </xsl:when>
           <xsl:otherwise>
           	<xsl:value-of select="$verse"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:variable>
+      <!--
+        == Surround versenum with something that forces a proper bidi context in Java.
+        == Sup does not.
+        -->
       <xsl:choose>
         <xsl:when test="$TinyVNum = 'true' and $Notes = 'true'">
-      	  <a name="{@osisID}"><sup class="verse"><xsl:value-of select="$versenum"/></sup></a>
+      	  <a name="{@osisID}"><sup class="verse"><font><xsl:value-of select="$versenum"/></font></sup></a>
       	</xsl:when>
         <xsl:when test="$TinyVNum = 'true' and $Notes = 'false'">
-      	  <sup class="verse"><xsl:value-of select="$versenum"/></sup>
+      	  <sup class="verse"><font><xsl:value-of select="$versenum"/></font></sup>
       	</xsl:when>
         <xsl:when test="$TinyVNum = 'false' and $Notes = 'true'">
-      	  <a name="{@osisID}">(<xsl:value-of select="$versenum"/>)</a>
+      	  <a name="{@osisID}">(<font><xsl:value-of select="$versenum"/></font>)</a>
       	  <xsl:text> </xsl:text>
       	</xsl:when>
       	<xsl:otherwise>
-      	  (<xsl:value-of select="$versenum"/>)
+      	  (<font><xsl:value-of select="$versenum"/></font>)
       	  <xsl:text> </xsl:text>
       	</xsl:otherwise>
       </xsl:choose>
