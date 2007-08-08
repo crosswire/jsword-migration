@@ -259,7 +259,9 @@ public class WizardConfigEditor extends AbstractConfigEditor
      */
     public void showDialog(Component parent)
     {
-        dialog = new JDialog((JFrame) SwingUtilities.getRoot(parent));
+        Component root = SwingUtilities.getRoot(parent);
+        dialog = new JDialog((JFrame) root);
+        dialog.setComponentOrientation(root.getComponentOrientation());
         dialog.getRootPane().setDefaultButton(next);
         dialog.getContentPane().add(this);
         dialog.setTitle(config.getTitle());

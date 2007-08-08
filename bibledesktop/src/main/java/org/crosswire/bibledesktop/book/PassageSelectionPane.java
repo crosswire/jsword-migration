@@ -23,6 +23,7 @@ package org.crosswire.bibledesktop.book;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -289,7 +290,10 @@ public class PassageSelectionPane extends JPanel
         treeSelected();
         listSelected();
 
-        dlgMain = new JDialog(JOptionPane.getFrameForComponent(parent));
+        Frame root = JOptionPane.getFrameForComponent(parent);
+        dlgMain = new JDialog(root);
+        dlgMain.setComponentOrientation(root.getComponentOrientation());
+
         JPanel pnlAction = new JPanel();
         KeyStroke esc = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
         bailout = true;

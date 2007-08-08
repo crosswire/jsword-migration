@@ -25,6 +25,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -294,7 +295,10 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     {
         txtSummary.setText(search);
 
-        dlgMain = new JDialog(JOptionPane.getFrameForComponent(parent));
+        Frame root = JOptionPane.getFrameForComponent(parent);
+        dlgMain = new JDialog(root);
+        dlgMain.setComponentOrientation(root.getComponentOrientation());
+ 
         KeyStroke esc = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
         bailout = true;
 

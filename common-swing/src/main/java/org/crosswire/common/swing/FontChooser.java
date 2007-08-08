@@ -96,6 +96,7 @@ public class FontChooser extends JPanel
         add(size);
         add(bold);
         add(italic);
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /**
@@ -114,6 +115,8 @@ public class FontChooser extends JPanel
         fontc.dialog = (root instanceof JFrame)
                       ? new JDialog((JFrame) root, title, true)
                       : new JDialog((JDialog) root, title, true);
+
+        fontc.dialog.setComponentOrientation(root.getComponentOrientation());
 
         fontc.name.setSelectedItem(initial != null ? initial : DEFAULT_FONT.getFont());
 
@@ -146,6 +149,7 @@ public class FontChooser extends JPanel
         fontc.dialog.setSize(800, 500);
         fontc.dialog.pack();
         GuiUtil.centerWindow(fontc.dialog);
+        GuiUtil.applyDefaultOrientation(fontc.dialog);
         fontc.dialog.setVisible(true);
 
         // Why is this only available in Frames?

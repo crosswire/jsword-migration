@@ -27,6 +27,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -179,7 +180,10 @@ public class AboutPane
      */
     public void showInDialog(Component parent)
     {
-        dlgMain = new JDialog(JOptionPane.getFrameForComponent(parent));
+        Frame root = JOptionPane.getFrameForComponent(parent);
+        dlgMain = new JDialog(root);
+        dlgMain.setComponentOrientation(root.getComponentOrientation());
+
         dlgMain.getContentPane().add(pnlMain);
         dlgMain.setTitle(Msg.getAboutInfo());
         dlgMain.setModal(true);

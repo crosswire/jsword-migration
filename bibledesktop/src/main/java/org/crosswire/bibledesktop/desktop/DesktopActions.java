@@ -33,6 +33,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ToolTipManager;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
+import org.crosswire.bibledesktop.book.install.InternetWarning;
 import org.crosswire.bibledesktop.book.install.SitesPane;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.basic.SplitBookDataDisplay;
@@ -48,6 +49,7 @@ import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.util.Project;
+import org.crosswire.jsword.util.WebWarning;
 
 /**
  * DesktopAction is nothing more than a holder of the behavior
@@ -118,7 +120,7 @@ public class DesktopActions implements Actionable
     {
         if (sites == null)
         {
-            sites = new SitesPane();
+                sites = new SitesPane();
         }
         return sites;
     }
@@ -411,7 +413,16 @@ public class DesktopActions implements Actionable
      */
     public void doBooks()
     {
-        getSites().showInDialog(getDesktop());
+        int webAccess = InternetWarning.GRANTED;
+        if (WebWarning.instance().isShown())
+        {
+            webAccess = InternetWarning.showDialog(desktop, "?"); //$NON-NLS-1$
+        }
+
+        if (webAccess == InternetWarning.GRANTED)
+        {
+            getSites().showInDialog(getDesktop());
+        }
     }
 
     /**

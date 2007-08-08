@@ -223,6 +223,10 @@
     <introspect class="org.crosswire.common.swing.LookAndFeelUtil" property="Font"/>
   </option>
 
+  <option key="Application.WebWarning" type="boolean">
+    <introspect class="org.crosswire.jsword.util.WebWarning" property="WarningShown"/>
+  </option>
+
 <!-- This really only useful for developers -->
   <option key="Advanced.SourcePath" type="path">
     <introspect class="org.crosswire.common.swing.ExceptionPane" property="SourcePath"/>

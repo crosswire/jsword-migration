@@ -80,6 +80,8 @@ Application.MaxWidth.name=پهنا پنجره
 Application.MaxWidth.help=
 Application.UIFont.name=فونت عمومی
 Application.UIFont.help=فونت عمومی برنامه
+Application.WebWarning.name=اخطار اینترنت
+Application.WebWarning.help=
 
 # The following are not for general use and are hidden from view
 #BibleDisplay.CSSOverride.name=CSS Override

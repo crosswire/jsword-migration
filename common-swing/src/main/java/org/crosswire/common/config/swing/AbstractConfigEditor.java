@@ -99,7 +99,9 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
 
         if (dialog == null)
         {
-            dialog = new JDialog((JFrame) SwingUtilities.getRoot(parent));
+            Component root =  SwingUtilities.getRoot(parent);
+            dialog = new JDialog((JFrame) root);
+            dialog.setComponentOrientation(root.getComponentOrientation());
 
             dialog.getContentPane().add(this);
 

@@ -25,6 +25,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -144,7 +145,9 @@ public class SitesPane extends JPanel
      */
     public void showInDialog(Component parent)
     {
-        dlgMain = new JDialog(JOptionPane.getFrameForComponent(parent));
+        Frame root = JOptionPane.getFrameForComponent(parent);
+        dlgMain = new JDialog(root);
+        dlgMain.setComponentOrientation(root.getComponentOrientation());
         dlgMain.setSize(new Dimension(750, 500));
         dlgMain.getContentPane().setLayout(new BorderLayout());
         dlgMain.getContentPane().add(this, BorderLayout.CENTER);

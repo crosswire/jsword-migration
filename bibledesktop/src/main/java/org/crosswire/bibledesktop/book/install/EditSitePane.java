@@ -25,6 +25,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -213,7 +214,9 @@ public class EditSitePane extends JPanel
      */
     public void showInDialog(Component parent)
     {
-        dlgMain = new JDialog(JOptionPane.getFrameForComponent(parent));
+        Frame root = JOptionPane.getFrameForComponent(parent);
+        dlgMain = new JDialog(root);
+        dlgMain.setComponentOrientation(root.getComponentOrientation());
 
         ActionListener closer = new ActionListener()
         {
@@ -596,7 +599,7 @@ public class EditSitePane extends JPanel
 
     /*
      * Components for the dialog box including the button bar at the bottom.
-     * These are separaed in this way in case this component is reused in a
+     * These are separated in this way in case this component is reused in a
      * larger context.
      */
     protected JDialog dlgMain;

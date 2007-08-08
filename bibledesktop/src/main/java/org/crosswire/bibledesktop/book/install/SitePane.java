@@ -66,6 +66,7 @@ import org.crosswire.jsword.book.install.InstallException;
 import org.crosswire.jsword.book.install.Installer;
 import org.crosswire.jsword.index.IndexManager;
 import org.crosswire.jsword.index.IndexManagerFactory;
+import org.crosswire.jsword.util.WebWarning;
 
 /**
  * A panel for use within a SitesPane to display one set of Books that are
@@ -108,8 +109,8 @@ public class SitePane extends JPanel
         BookList bl = installer;
         if (bl == null)
         {
-            bl = Books.installed();
-            bl.addBooksListener(new CustomBooksListener());
+                bl = Books.installed();
+                bl.addBooksListener(new CustomBooksListener());
         }
 
         initialize(labelAcronymn, bl);
@@ -410,8 +411,17 @@ public class SitePane extends JPanel
         {
             try
             {
-                installer.reloadBookList();
-                setTreeModel(installer);
+                int webAccess = InternetWarning.GRANTED;
+                if (WebWarning.instance().isShown())
+                {
+                    webAccess = InternetWarning.showDialog(this, "?"); //$NON-NLS-1$
+                }
+
+                if (webAccess == InternetWarning.GRANTED)
+                {
+                    installer.reloadBookList();
+                    setTreeModel(installer);
+                }
             }
             catch (InstallException ex)
             {
@@ -432,6 +442,17 @@ public class SitePane extends JPanel
 
         TreePath path = treAvailable.getSelectionPath();
         if (path == null)
+        {
+            return;
+        }
+
+        int webAccess = InternetWarning.GRANTED;
+        if (WebWarning.instance().isShown())
+        {
+            webAccess = InternetWarning.showDialog(this, "?"); //$NON-NLS-1$
+        }
+
+        if (webAccess != InternetWarning.GRANTED)
         {
             return;
         }
