@@ -45,7 +45,7 @@
 </p>
 <p>
   <strong>NOTE:</strong>BibleDesktop looks best in Java 5 or later and for
-  <em>right-to-left</em> languages it is almost a necessity. For this reason,
+  <em>right-to-left</em> languages it is a necessity. For this reason,
   it is strongly recommended that the builds are done with Java 1.4.2,
   but that running is done with Java 1.5 or better. If you are not changing
   java code, but only working on translations, you only need to install Java 1.5.0 SDK.
@@ -62,7 +62,7 @@
 <h2>Obtain and install Eclipse 3.3</h2>
 <p>
   Any version of Eclipse 3.3 or higher will work well. The screenshots that
-  are provided are from 3.1, Linux, GTK version, running under
+  are provided are from 3.3, Linux, GTK version, running under
   the Gnome desktop.
 </p>
 <p>
@@ -124,15 +124,16 @@
 
 <h3>Connect to JSword's SVN repository</h3>
 <p>
-  Add the SVN Respository Exploring perspective.
-  <a href="images/eclipse/repositoryperspective.png">[Image]</a>
+  Click on the <q>Open Perspective button.</q> <a href="images/eclipse/openperspective.png">[Image]</a>
+  And then pick the <q>Other</q> menu choice. <a href="images/eclipse/otherperspective.png">[Image]</a>
+  This will provide you with a dialog box of various perspectives. Choose the
+  <q>SVN Repository Exploring</q> perspective. <a href="images/eclipse/svnperspective.png">[Image]</a>
 </p>
 <ul>
   <li>This will automatically open the SVN Repository Exploring perspective.</li>
-  <li>Click on the <q>Add SVN Repository</q> button.</li>
-  <li>For the URL use the value: http://www.crosswire.org/svn/jsword/trunk.<br/>
-    This will provide you with read-only access to the repository.
-    To change the code you will submit patches which is explained below.
+  <li>Click on the <q>Add SVN Repository</q> button. <a href="images/eclipse/svnaddrepository.png">[Image]</a></li>
+  <li>For the URL use the value: http://www.crosswire.org/svn/jsword/trunk.
+      <a href="images/eclipse/svnjswordurl.png">[Image]</a>
   </li>
   <li>Open the repository, expanding https://www.crosswire.org/svn/jsword/trunk.</li>
   <li>Select at a minimum the following:
@@ -143,8 +144,8 @@
         <li>jsword</li>
       </ul>
   </li>
-  <li>Right click on one of the selection and choose <q>Checkout...</q>
-      and then click <q>Finish</q>.</li>
+  <li>Right click on one of the selection and choose <q>Checkout...</q> <a href="images/eclipse/svncheckout.png">[Image]</a></li>
+      and then click <q>Finish</q>. <a href="images/eclipse/checkoutasprojects.png">[Image]</a></li>
   <li>Later you may wish to do help maintain the website and then you will
       want bibledesktop-web and jsword-web.</li>
   <li>You don't need this perspective for day to day development,
@@ -163,14 +164,13 @@
 <h3>Letting Eclipse Know Where Java is Installed</h3>
 <p>
   Under Windows -> Preferences (on the Mac it is Eclipse -> Preferences), 
-  expand <q>Java</q> and then select <q>Installed JRE</q>. Here add entries labelled,
-  jdk-1.4.2 and jdk-1.5.0. Under Linux, installed according to the instructions above,
+  expand <q>Java</q> and then select <q>Installed JRE</q>. <a href="images/eclipse/javasetup.png">[Image]</a>
+  Here click on the <q>Add</q> button and add entries labelled,
+  jdk-1.4.2 <a href="images/eclipse/jdk142setup.png">[Image]</a> and jdk-1.5.0 <a href="images/eclipse/jdk150setup.png">[Image]</a>. Under Linux, installed according to the instructions above,
   Java 1.4.2 would have a path something like <code>/usr/lib/jvm/java-1.4.2-sun-1.4.2.12</code>.
   You can use the search button to find them and re-label them afterwards.
-</p>
-<p>
-  During development we want <q>assertions</q> to be turned on. So double click on the entry
-  and add <q>-ea</q> for the <q>Default VM Args</q>.
+  Make sure that you have <q>assertions</q> turned on for development by adding <q>-ea</q> for the <q>Default VM Args</q>.
+  When you are all done it should look like this. <a href="images/eclipse/javafinalsetup.png">[Image]</a>
 </p>
 
 <h3>Working under the Java Perspective</h3>
@@ -179,13 +179,26 @@
   My personal rut is the Java Perspective. This can be added in the same manner
   that the SVN Repository Exploring Perspective was added.
 </p>
+<p>
+  Finding code is relatively easy. All source is under <q>src</q>. Under there you will find
+  <q>main</q>, with all of the main code and <q>test</q> with all of the test code. Under
+  <q>main</q> we currently only have java code, but we have structured this to allow for other
+  kind of code. <a href="images/eclipse/findingcode.png">[Image]</a>
+</q>
 
 <h3>Initial testing</h3>
 <p>
   Initial testing is nothing more than running the application and seeing it work as expected.
-  This has been made easy. If you have named the <q>Installed JREs</q> as instructed above.
-  In the <q>Java Perspective</q>, click on the triangle on the right of the <q>Run</q> button and
-  choose <q>BD-app-jdk15</q> or <q>BD-app-jdk142</q>, depending on your needs, wants and desires.
+  This has been made easy, <i>if</i> you have named the <q>Installed JREs</q> as instructed above.
+  In the <q>Java Perspective</q>, click on the triangle on the right of the <q>Run</q> button.
+  The first time you do this, it will not be a very useful list. From that list, pick <q>Open Run Dialog</q>
+  <a href="images/eclipse/pickrundialog.png">[Image]</a>. In the Run dialog, expand <q>Java Applications</q>
+  and then click on <q>Run</q> <a href="images/eclipse/rundialog.png">[Image]</a>. You can add other
+  launchers in a similar fashion.
+</p>
+<p>
+  Once you have added run BibleDesktop in this fashion it is added to the list.
+  <a href="images/eclipse/runBD.png">[Image]</a>
   During the run, output will go to the <q>Console</q>, and from there you can terminate the
   application if it becomes unresponsive.
 </p>
@@ -195,9 +208,9 @@
   This can be added in the same manner that the
   <q>SVN Repository Exploring Perspective</q> was added.
   To initially connect this perspective to the SVN Repository, click on the
-  <q>Synchronize...</q> button and select <q>SVN</q> if it is not highlighted.
+  <q>Synchronize...</q> button <a href="images/eclipse/svnpicksynchro.png">[Image]</a> and select <q>SVN</q> <a href="images/eclipse/svnsynchro.png">[Image]</a> if it is not highlighted.
   Click on the <q>Next</q> button and then click <q>Select All</q> followed by
-  the <q>Finish</q> button.
+  the <q>Finish</q> button. <a href="images/eclipse/svnsynchrosetup.png">[Image]</a> 
 </p>
 <p>
   When you make changes to any of the projects, this perspective will track the changes.
@@ -210,7 +223,8 @@
   In the <q>Team Synchronization Perspective</q> click on the <q>Synchronize SVN (Workspace)</q>
   button. Click the <q>Incoming</q> button and then select everything that is shown.
   Right clicking will give you all the options that are available to you. Choose <q>Update</q>.
-  If you see <q>Override and Update</q>, stay away from it. It means that one or more of the files
+  <a href="images/eclipse/svnupdate.png">[Image]</a>
+  If you see <q>Override and Update</q> <a href="images/eclipse/svnoverride.png">[Image]</a>, stay away from it. It means that one or more of the files
   being updated have been changed by you and choosing it will throw away your work. Probably
   not what you want.
 </p>
@@ -236,10 +250,12 @@
   few people have permissions elsewhere. To check in, go to the <q>Team Synchronization Perspective</q>
   and click on the <q>Outgoing</q> button. Select what you want to check in. Right clicking
   on something selected will provide you with the opportunity
-  to choose <q>Commit</q>, which will bring up a dialog box. In that dialog box, type a short
+  to choose <q>Commit</q> <a href="images/eclipse/svnpickcommit.png">[Image]</a>, which will bring up a dialog box. In that dialog box, type a short
   explanation describing the change. Below this is a list of everything that has changed and
   a terse label for the change. Review the items in the list and check or uncheck them depending
-  on whether the changes should be checked in. Finally, click on <q>OK</q>.
+  on whether the changes should be checked in. Finally, click on <q>OK</q>. <a href="images/eclipse/svncommitdialog.png">[Image]</a>
+  If the repository is password protected, you will need to supply your password. Saving your password is a good idea,
+  if your machine is secure. <a href="images/eclipse/svnpassword.png">[Image]</a>
 </p>
 </body>
 </html>
