@@ -27,6 +27,8 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import org.crosswire.common.util.OSType;
+
 /**
  * A ScrollPane that give appropriate cross platform behavior.
  * Specifically, on the Mac the vertical and horizontal scrollbars should always appear.
@@ -51,20 +53,20 @@ public class CWScrollPane extends JScrollPane
 
     private static int getXPlatformVerticalScrollBarPolicy()
     {
-//        if (OSType.MAC.equals(OSType.getOSType()))
-//        {
+         if (OSType.MAC.equals(OSType.getOSType()))
+        {
             return ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
-//        }
-//        return ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
+        }
+        return ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
     }
 
     private static int getXPlatformHorizontalScrollBarPolicy()
     {
-//        if (OSType.MAC.equals(OSType.getOSType()))
-//        {
+        if (OSType.MAC.equals(OSType.getOSType()))
+        {
             return ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
-//        }
-//        return ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
+        }
+        return ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
     }
 
     /* (non-Javadoc)
