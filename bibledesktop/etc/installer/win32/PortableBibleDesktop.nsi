@@ -7,12 +7,8 @@
 !define PRODUCT_VERSION "@release.version@"
 !define CLASS "org.crosswire.bibledesktop.desktop.Desktop"
 
-!define JRE_VERSION "1.5.0"
-!define JRE_URL "http://dlc.sun.com/jdk/jre-1_5_0_01-windows-i586-p.exe"
-
 SetCompressor lzma
 
-Var HasJRE
 Var JavaLIB
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
@@ -48,7 +44,8 @@ Section ""
 
   StrCpy $0 '"$R0" -classpath "$R1" ${CLASS}'
   ; Use the following for USB/CD installs
-  StrCpy $0 '"$R0" -classpath "$R1" -Djsword.home="$EXEDIR\JSword" -Dsword.home="$EXEDIR\.." ${CLASS}'
+  ; put JSword on the class path so that resources in it on a CD can be found.
+  StrCpy $0 '"$R0" -classpath "$R1;$EXEDIR\JSword" -Djsword.home="$EXEDIR\JSword" -Dsword.home="$EXEDIR\.." ${CLASS}'
 
   ; The following is for debugging
   ClearErrors
@@ -96,66 +93,7 @@ Function BuildClassPath
 FunctionEnd
 
 Function .onInit
-  Call FindJRE
-  pop $HasJRE
-
-  ${If} $HasJRE == "No"
-    Call GetJRE
-  ${EndIf}
-
   SetSilent silent
-FunctionEnd
-
-Function GetJRE
-  MessageBox MB_OK "${PRODUCT_NAME} uses Java ${JRE_VERSION} or later, it will now be downloaded and installed."
-
-  StrCpy $2 "$TEMP\Java Runtime Environment.exe"
-  InetLoad::load /POPUP "Getting Java for ${PRODUCT_NAME}" ${JRE_URL} $2
-  Pop $R0 ;Get the return value
-  StrCmp $R0 "OK" +5
-  ;NSISdl::download /TIMEOUT=30000 ${JRE_URL} $2
-  ;Pop $R0 ;Get the return value
-  ;StrCmp $R0 "success" +5
-  MessageBox MB_OK "Could not install Java for you. Please install Java from http://www.java.com then re-run ${PRODUCT_NAME}."
-  StrCpy $0 "http://www.java.com"
-  Call openLinkNewWindow
-  Quit
-  ExecWait $2
-  Delete $2
-FunctionEnd
-
-# uses $0
-Function openLinkNewWindow
-  Push $3 
-  Push $2
-  Push $1
-  Push $0
-  ReadRegStr $0 HKCR "http\shell\open\command" ""
-# Get browser path
-    DetailPrint $0
-  StrCpy $2 '"'
-  StrCpy $1 $0 1
-  StrCmp $1 $2 +2 # if path is not enclosed in " look for space as final char
-    StrCpy $2 ' '
-  StrCpy $3 1
-  loop:
-    StrCpy $1 $0 1 $3
-    DetailPrint $1
-    StrCmp $1 $2 found
-    StrCmp $1 "" found
-    IntOp $3 $3 + 1
-    Goto loop
- 
-  found:
-    StrCpy $1 $0 $3
-    StrCmp $2 " " +2
-      StrCpy $1 '$1"'
- 
-  Pop $0
-  Exec '$1 $0'
-  Pop $1
-  Pop $2
-  Pop $3
 FunctionEnd
 
 Function FindJRE
