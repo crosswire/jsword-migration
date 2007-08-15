@@ -4,7 +4,6 @@ Bundle-Name: Rcp Plug-in
 Bundle-SymbolicName: org.crosswire.jsword.test.rcp; singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.crosswire.jsword.test.rcp.RcpPlugin
-Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  com.ice.tar,
@@ -17,4 +16,4 @@ Require-Bundle: org.eclipse.ui,
  org.crosswire.jsword,
  org.crosswire.jsword.test,
  org.jdom
-Eclipse-AutoStart: true
+Eclipse-LazyStart: true

@@ -118,7 +118,7 @@ public class ContentView extends ViewPart
         BookData content;
         try
         {
-            content = currentBook.getData(key);
+            content = new BookData(currentBook, key);
             FormTextContentHandler handler = new FormTextContentHandler();
             content.getSAXEventProvider().provideSAXEvents(handler);
             String title = handler.getTitle();

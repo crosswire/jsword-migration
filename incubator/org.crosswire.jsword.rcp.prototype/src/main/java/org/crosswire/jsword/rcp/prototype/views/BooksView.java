@@ -48,7 +48,7 @@ public class BooksView extends ViewPart
         viewer.setSorter(new BookCategorySorter());
         viewer.setLabelProvider(new BookLabelProvider());
         getSite().setSelectionProvider(viewer);
-        viewer.setInput(Books.installed().getBooks(BookFilters.not(BookFilters.getBibles())));
+        viewer.setInput(Books.installed().getBooks(BookFilters.getNonBibles()));
     }
 
     public void setFocus()

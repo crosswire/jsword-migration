@@ -31,6 +31,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.crosswire.jsword.book.BookData;
+import org.crosswire.jsword.book.BookException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
@@ -101,8 +102,16 @@ abstract class AbstractHtmlPassageEditor extends EditorPart
         Source xslSource = new StreamSource(xsl);
         Transformer transformer = TransformerFactory.newInstance().newTransformer(xslSource);
         StreamResult result = new StreamResult(writer);
-        Source source = new JDOMSource(data.getOsis());
-        transformer.transform(source, result);
+        try
+        {
+            Source source = new JDOMSource(data.getOsis());
+            transformer.transform(source, result);
+        }
+        catch (BookException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 }

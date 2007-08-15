@@ -38,7 +38,7 @@ public class BookLabelProvider extends LabelProvider implements ITableLabelProvi
         if (element instanceof Book)
         {
             Book book = (Book) element;
-            return "[" + book.getInitials() + "] - " + book.getFullName();
+            return "[" + book.getInitials() + "] - " + book.getName();
         }
 
         return super.getText(element);

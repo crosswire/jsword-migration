@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.crosswire.jsword.book.BookData;
+import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.rcp.prototype.workbench.PrototypePlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -61,6 +62,10 @@ public abstract class ReadNotesJob extends Job
             }
         }
         catch (SAXException e)
+        {
+            return new Status(IStatus.ERROR, PrototypePlugin.PLUGIN_ID, 1, "Error", e);
+        }
+        catch (BookException e)
         {
             return new Status(IStatus.ERROR, PrototypePlugin.PLUGIN_ID, 1, "Error", e);
         }

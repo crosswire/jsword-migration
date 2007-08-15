@@ -23,6 +23,7 @@ import java.io.StringWriter;
 
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.rcp.prototype.workbench.PrototypePlugin;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.LocationAdapter;
@@ -30,6 +31,7 @@ import org.eclipse.swt.browser.LocationEvent;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
+import org.osgi.framework.Bundle;
 
 /**
  * @author Phillip [phillip at paristano dot org]
@@ -66,7 +68,8 @@ public class ClassicHtmlPassageEditor extends AbstractHtmlPassageEditor
         StringWriter writer = new StringWriter();
         try
         {
-            transformBookData(data, PrototypePlugin.getDefault().openStream(new Path("xsl/simple.xsl")), writer);
+            Bundle bundle = PrototypePlugin.getDefault().getBundle();
+            transformBookData(data, FileLocator.openStream(bundle, new Path("xsl/simple.xsl"), false), writer);
         }
         catch (Exception e)
         {

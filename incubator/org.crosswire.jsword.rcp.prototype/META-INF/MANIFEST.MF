@@ -5,7 +5,6 @@ Bundle-SymbolicName: org.crosswire.jsword.rcp.prototype; singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.crosswire.jsword.rcp.prototype.workbench.PrototypePlugin
 Bundle-Vendor: crosswire.org
-Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.crosswire.common,
@@ -13,4 +12,4 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.forms,
  org.eclipse.jface.text,
  org.jdom
-Eclipse-AutoStart: true
+Eclipse-LazyStart: true

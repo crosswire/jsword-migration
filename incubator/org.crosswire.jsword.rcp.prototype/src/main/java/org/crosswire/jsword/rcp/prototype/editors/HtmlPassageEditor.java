@@ -24,6 +24,7 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.rcp.prototype.workbench.PrototypePlugin;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.Action;
@@ -37,6 +38,7 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.ActionFactory;
 import org.jdom.transform.JDOMSource;
+import org.osgi.framework.Bundle;
 
 /**
  * @author Phillip [phillip at paristano dot org]
@@ -101,7 +103,8 @@ public class HtmlPassageEditor extends AbstractHtmlPassageEditor
 
             protected Source getXslSource() throws Exception
             {
-                return new StreamSource(PrototypePlugin.getDefault().openStream(new Path("xsl/html_passage.xsl")));
+                Bundle bundle = PrototypePlugin.getDefault().getBundle();
+                return new StreamSource(FileLocator.openStream(bundle, new Path("xsl/simple.xsl"), false));
             }
 
             protected Source getDocumentSource() throws Exception

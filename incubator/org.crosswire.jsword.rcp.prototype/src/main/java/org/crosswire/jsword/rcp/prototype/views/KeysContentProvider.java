@@ -57,7 +57,7 @@ public class KeysContentProvider implements IStructuredContentProvider
         
         Book book = (Book) inputElement;
         Key keys = book.getGlobalKeyList();
-        Object[] elements = new Object[keys.getChildCount()];
+        Object[] elements = new Object[keys.getCardinality()];
         int i = 0;
         for (Iterator it = keys.iterator(); it.hasNext();)
         {

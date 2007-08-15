@@ -21,7 +21,6 @@ package org.crosswire.jsword.rcp.prototype.editors;
 
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
-import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.rcp.prototype.factories.InputElementFactory;
@@ -124,15 +123,7 @@ public class BookDataInput implements IEditorInput
                 return null;
             }
             Key key = book.getValidKey(bookKey);
-            try
-            {
-                return book.getData(key);
-            }
-            catch (BookException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            return new BookData(book, key);
         }
         return null;
     }
