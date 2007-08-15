@@ -20,14 +20,16 @@
  */
 package org.crosswire.jsword.test.internal.osgi;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
 import org.crosswire.common.activate.Lock;
 import org.crosswire.common.util.CommonLogger;
+import org.crosswire.common.util.Language;
 import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
@@ -239,6 +241,16 @@ public class Activator implements BundleActivator {
 			public List toOSIS(Book book, Key key, String plain) throws FilterException {
 				return null;
 			}
+			public Object clone() {
+			    try
+			    {
+					return super.clone();
+				}
+			    catch (CloneNotSupportedException e)
+			    {
+			    	return null;
+				}
+			}
 		};
 		
 		Hashtable properties = new Hashtable();
@@ -296,8 +308,8 @@ public class Activator implements BundleActivator {
 				return new CustomBookDriver();
 			}
 
-			public String getLanguage() {
-				return "en";
+			public Language getLanguage() {
+				return new Language("en");
 			}
 
 			public String getInitials() {
@@ -348,29 +360,29 @@ public class Activator implements BundleActivator {
 				return false;
 			}
 
-			public URL getLibrary() {
+			public URI getLibrary() {
 				return null;
 			}
 
-			public void setLibrary(URL library) {
+			public void setLibrary(URI library) {
 			}
 
-			public URL getLocation() {
+			public URI getLocation() {
 				return null;
 			}
 
-			public void setLocation(URL library) {
+			public void setLocation(URI library) {
 			}
 
 			public Map getProperties() {
 				return null;
 			}
 
-			public String getProperty(String key) {
+			public Object getProperty(String key) {
 				return null;
 			}
 
-			public void putProperty(String key, String value) {
+			public void putProperty(String key, Object value) {
 			}
 
 			public IndexStatus getIndexStatus() {
@@ -421,8 +433,8 @@ public class Activator implements BundleActivator {
 		public BookDriver getDriver() {
 			return new CustomBookDriver();
 		}
-		public String getLanguage() {
-			return "en";
+		public Language getLanguage() {
+			return new Language("en");
 		}
 		public String getInitials() {
 			return "mybook";
@@ -463,10 +475,8 @@ public class Activator implements BundleActivator {
 		public Map getProperties() {
 			return null;
 		}
-		public String getProperty(String key) {
+		public Object getProperty(String key) {
 			return null;
-		}
-		public void putProperty(String key, String value) {
 		}
 		public IndexStatus getIndexStatus() {
 			return null;
@@ -505,10 +515,53 @@ public class Activator implements BundleActivator {
 	    public Document toOSIS() {
 	    	return null;
 	    }
+		/* (non-Javadoc)
+		 * @see org.crosswire.jsword.book.Book#getOsisIterator(org.crosswire.jsword.passage.Key, boolean)
+		 */
+		public Iterator getOsisIterator(Key key, boolean allowEmpty)
+				throws BookException {
+			return null;
+		}
+		/* (non-Javadoc)
+		 * @see org.crosswire.jsword.book.Book#getRawText(org.crosswire.jsword.passage.Key)
+		 */
+		public String getRawText(Key key) throws BookException {
+			return null;
+		}
+		/* (non-Javadoc)
+		 * @see org.crosswire.jsword.book.Book#isWritable()
+		 */
+		public boolean isWritable() {
+			return false;
+		}
+		/* (non-Javadoc)
+		 * @see org.crosswire.jsword.book.Book#match(java.lang.String)
+		 */
+		public boolean match(String name) {
+			return false;
+		}
+		/* (non-Javadoc)
+		 * @see org.crosswire.jsword.book.Book#putProperty(java.lang.String, java.lang.Object)
+		 */
+		public void putProperty(String key, Object value) {
+		}
+		/* (non-Javadoc)
+		 * @see org.crosswire.jsword.book.Book#setAliasKey(org.crosswire.jsword.passage.Key, org.crosswire.jsword.passage.Key)
+		 */
+		public void setAliasKey(Key alias, Key source) throws BookException {
+		}
+		/* (non-Javadoc)
+		 * @see org.crosswire.jsword.book.Book#setRawText(org.crosswire.jsword.passage.Key, java.lang.String)
+		 */
+		public void setRawText(Key key, String rawData) throws BookException {
+		}
 	}
 	
 	private static final class CustomBookDriver implements BookDriver {
 		private static final Book MY_BOOK = new CustomBook();
+		public Book getFirstBook() {
+			return MY_BOOK;
+		}
 		public Book[] getBooks() {
 			return new Book[] {MY_BOOK};
 		}
