@@ -55,7 +55,7 @@
   <xsl:param name="hebrew.morph.protocol" select="'hmorph:'"/>
 
   <!-- The absolute base for relative references. -->
-  <xsl:param name="baseURL" select="'http://application'"/>
+  <xsl:param name="baseURL" select="''"/>
 
   <!-- Whether to show Strongs or not -->
   <xsl:param name="Strongs" select="'false'"/>
@@ -96,40 +96,31 @@
   <!-- The order of display. Hebrew is rtl (right to left) -->
   <xsl:param name="direction" select="'ltr'"/>
 
-  <!--
-  The font that is passed in is of the form: font or font,style,size 
-  where style is a bit mask with 1 being bold and 2 being italic.
-  This needs to be changed into a style="xxx" specification
+  <!-- The font that is passed in is in one of two forms:
+    FamilyName-STYLE-size, where STYLE is either PLAIN, BOLD, ITALIC or BOLDITALIC
+    or
+    FamilyName,style,size, where STYLE is 0 for PLAIN, 1 for BOLD, 2 for ITALIC or 3 for BOLDITALIC.
+    This needs to be changed into a CSS style specification
   -->
   <xsl:param name="font" select="Serif"/>
-  <xsl:variable name="aFont">
-    <xsl:choose>
-      <xsl:when test="substring-before($font, ',') = ''"><xsl:value-of select="$font"/>,0,16</xsl:when>
-      <xsl:otherwise><xsl:value-of select="$font"/></xsl:otherwise>
-    </xsl:choose>
+
+  <xsl:variable name="fontspec">
+      <xsl:call-template name="generateFontStyle">
+        <xsl:with-param name="fontspec" select="$font"/>
+        <xsl:with-param name="style">css</xsl:with-param>
+      </xsl:call-template>
   </xsl:variable>
-  <xsl:variable name="fontfamily" select='concat("font-family: &apos;", substring-before($aFont, ","), "&apos;;")' />
-  <xsl:variable name="fontsize" select="concat(' font-size: ', substring-after(substring-after($aFont, ','), ','), 'pt;')" />
-  <xsl:variable name="styling" select="substring-before(substring-after($aFont, ','), ',')" />
-  <xsl:variable name="fontweight">
-    <xsl:if test="$styling = '1' or $styling = '3'"><xsl:text> font-weight: bold;</xsl:text></xsl:if>
-  </xsl:variable>
-  <xsl:variable name="fontstyle">
-    <xsl:if test="$styling = '2' or $styling = '3'"> font-style: italic;</xsl:if>
-  </xsl:variable>
-  <xsl:variable name="fontspec" select="concat($fontfamily, $fontsize, $fontweight, $fontstyle)"/>
 
   <!-- Create a global key factory from which OSIS ids will be generated -->
   <xsl:variable name="keyf" select="jsword:org.crosswire.jsword.passage.PassageKeyFactory.instance()"/>
+  <!-- Create a global number shaper that can transform 0-9 into other number systems. -->
+  <xsl:variable name="shaper" select="jsword:org.crosswire.common.icu.NumberShaper.new()"/>
 
   <!--=======================================================================-->
-  <xsl:template match="/osis">
+  <xsl:template match="/">
     <html dir="{$direction}">
       <head>
         <!-- <base href="{$baseURL}"/> -->
-        <xsl:if test="$css != ''">
-          <link rel="stylesheet" type="text/css" href="{$css}" title="styling" />
-        </xsl:if>
         <style type="text/css">
           BODY { <xsl:value-of select="$fontspec" /> }
           A { text-decoration: none; }
@@ -147,17 +138,34 @@
           FONT.divineName { font-variant: small-caps; }
           FONT.normal { font-variant: normal; }
           FONT.caps { text-transform: uppercase; }
-          h3 { font-size: 110%; color: #666699; font-weight: bold; }
-          h2 { font-size: 115%; color: #669966; font-weight: bold; }
+          H1.level { text-align: center; font-size: 115%; color: #000000; }
+          H2.level { text-align: center; font-size: 110%; color: #000000; }
+          H3.level { text-align: center; font-size: 100%; }
+          H4.level { text-align: center; font-size: 90%; }
+          H5.level { text-align: center; font-size: 85%; }
+          H6.level { text-align: center; font-size: 80%; }
+          H3.heading { font-size: 110%; color: #666699; font-weight: bold; }
+          H2.heading { font-size: 115%; color: #669966; font-weight: bold; }
           div.margin { font-size:90%; }
           TD.notes { width:20%; background:#f4f4e8; }
           TD.text { width:80%; }
         </style>
+        <!-- Always include the user's stylesheet even if "" -->
+        <link rel="stylesheet" type="text/css" href="{$css}" title="styling" />
       </head>
       <body oncontextmenu="window.status=':menu:'; return false;">
         <xsl:apply-templates/>
       </body>
     </html>
+  </xsl:template>
+
+  <!--=======================================================================-->
+  <!--
+    == A proper OSIS document has osis as it's root.
+    == We dig deeper for it's content.
+    -->
+  <xsl:template match="osis">
+    <xsl:apply-templates/>
   </xsl:template>
 
   <!--=======================================================================-->
@@ -248,7 +256,7 @@
         <xsl:when test="local-name() = 'title'">
           <!-- Always show canonical titles or if headings is turned on -->
           <xsl:if test="@canonical = 'true' or $Headings = 'true'">
-            <h3><xsl:apply-templates /></h3>
+            <h3 class="heading"><xsl:apply-templates /></h3>
           </xsl:if>
         </xsl:when>
         <xsl:otherwise>
@@ -281,7 +289,7 @@
     </xsl:if>
     <xsl:variable name="title" select=".//title"/>
     <xsl:if test="string-length($title) > 0">
-      <h3><xsl:value-of select="$title"/></h3>
+      <h3 class="heading"><xsl:value-of select="$title"/></h3>
     </xsl:if>
     <!-- Handle the KJV paragraph marker. -->
     <xsl:if test="milestone[@type = 'x-p']"><br/><br/></xsl:if>
@@ -316,44 +324,49 @@
       <!-- An osisID can be a space separated list of them -->
       <xsl:variable name="firstOsisID" select="substring-before(concat(@osisID, ' '), ' ')"/>
       <xsl:variable name="book" select="substring-before($firstOsisID, '.')"/>
-      <xsl:variable name="chapter" select="substring-before(substring-after($firstOsisID, '.'), '.')"/>
+      <xsl:variable name="chapter" select="jsword:shape($shaper, substring-before(substring-after($firstOsisID, '.'), '.'))"/>
       <!-- If n is present use it for the number -->
       <xsl:variable name="verse">
         <xsl:choose>
           <xsl:when test="@n">
-            <xsl:value-of select="@n"/>
+            <xsl:value-of select="jsword:shape($shaper, string(@n))"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="substring-after(substring-after($firstOsisID, '.'), '.')"/>
+            <xsl:value-of select="jsword:shape($shaper, substring-after(substring-after($firstOsisID, '.'), '.'))"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:variable>
       <xsl:variable name="versenum">
         <xsl:choose>
           <xsl:when test="$BCVNum = 'true'">
-          	<xsl:value-of select="concat($book, '&#160;', $chapter, ':', $verse)"/>
+            <xsl:variable name="passage" select="jsword:getValidKey($keyf, @osisID)"/>
+            <xsl:value-of select="jsword:getName($passage)"/>
           </xsl:when>
           <xsl:when test="$CVNum = 'true'">
-          	<xsl:value-of select="concat($chapter, ':', $verse)"/>
+          	<xsl:value-of select="concat($chapter, ' : ', $verse)"/>
           </xsl:when>
           <xsl:otherwise>
           	<xsl:value-of select="$verse"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:variable>
+      <!--
+        == Surround versenum with something that forces a proper bidi context in Java.
+        == Sup does not.
+        -->
       <xsl:choose>
         <xsl:when test="$TinyVNum = 'true' and $Notes = 'true'">
-      	  <a name="{@osisID}"><sup class="verse"><xsl:value-of select="$versenum"/></sup></a>
+      	  <a name="{@osisID}"><sup class="verse"><font><xsl:value-of select="$versenum"/></font></sup></a>
       	</xsl:when>
         <xsl:when test="$TinyVNum = 'true' and $Notes = 'false'">
-      	  <sup class="verse"><xsl:value-of select="$versenum"/></sup>
+      	  <sup class="verse"><font><xsl:value-of select="$versenum"/></font></sup>
       	</xsl:when>
         <xsl:when test="$TinyVNum = 'false' and $Notes = 'true'">
-      	  <a name="{@osisID}">(<xsl:value-of select="$versenum"/>)</a>
+      	  <a name="{@osisID}">(<font><xsl:value-of select="$versenum"/></font>)</a>
       	  <xsl:text> </xsl:text>
       	</xsl:when>
       	<xsl:otherwise>
-      	  (<xsl:value-of select="$versenum"/>)
+      	  (<font><xsl:value-of select="$versenum"/></font>)
       	  <xsl:text> </xsl:text>
       	</xsl:otherwise>
       </xsl:choose>
@@ -564,7 +577,7 @@
     <xsl:variable name="orig-morph" select="substring-after($morph, ':')"/>
     <xsl:variable name="protocol">
       <xsl:choose>
-        <xsl:when test="starts-with($orig-work, 'x-Robinson:') or starts-with($orig-work, 'robinson:')">
+        <xsl:when test="starts-with($orig-work, 'x-Robinson') or starts-with($orig-work, 'robinson')">
           <xsl:value-of select="$greek.morph.protocol"/>
         </xsl:when>
         <xsl:otherwise>
@@ -689,7 +702,7 @@
   <!--=======================================================================-->
   <xsl:template match="title[@subType ='x-preverse' or @subtype = 'x-preverse']">
   <!-- Done by a line in [verse]
-    <h3>
+    <h3 class="heading">
       <xsl:apply-templates/>
     </h3>
   -->
@@ -697,24 +710,77 @@
 
   <xsl:template match="title[@subType ='x-preverse' or @subtype = 'x-preverse']" mode="jesus">
   <!-- Done by a line in [verse]
-    <h3>
+    <h3 class="heading">
       <xsl:apply-templates/>
     </h3>
   -->
   </xsl:template>
 
   <!--=======================================================================-->
+  <xsl:template match="title[@level]">
+    <!-- Always show canonical titles or if headings is turned on -->
+    <xsl:if test="@canonical = 'true' or $Headings = 'true'">
+      <xsl:choose>
+        <xsl:when test="@level = '1'">
+          <h1 class="level"><xsl:apply-templates/></h1>
+        </xsl:when>
+        <xsl:when test="@level = '2'">
+          <h2 class="level"><xsl:apply-templates/></h2>
+        </xsl:when>
+        <xsl:when test="@level = '3'">
+          <h3 class="level"><xsl:apply-templates/></h3>
+        </xsl:when>
+        <xsl:when test="@level = '4'">
+          <h4 class="level"><xsl:apply-templates/></h4>
+        </xsl:when>
+        <xsl:when test="@level = '5'">
+          <h5 class="level"><xsl:apply-templates/></h5>
+        </xsl:when>
+        <xsl:otherwise>
+          <h6 class="level"><xsl:apply-templates/></h6>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="title[@level]" mode="jesus">
+    <!-- Always show canonical titles or if headings is turned on -->
+    <xsl:if test="@canonical = 'true' or $Headings = 'true'">
+      <xsl:choose>
+        <xsl:when test="@level = '1'">
+          <h1 class="level"><xsl:apply-templates/></h1>
+        </xsl:when>
+        <xsl:when test="@level = '2'">
+          <h2 class="level"><xsl:apply-templates/></h2>
+        </xsl:when>
+        <xsl:when test="@level = '3'">
+          <h3 class="level"><xsl:apply-templates/></h3>
+        </xsl:when>
+        <xsl:when test="@level = '4'">
+          <h4 class="level"><xsl:apply-templates/></h4>
+        </xsl:when>
+        <xsl:when test="@level = '5'">
+          <h5 class="level"><xsl:apply-templates/></h5>
+        </xsl:when>
+        <xsl:otherwise>
+          <h6 class="level"><xsl:apply-templates/></h6>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </xsl:template>
+
+  <!--=======================================================================-->
   <xsl:template match="title">
     <!-- Always show canonical titles or if headings is turned on -->
     <xsl:if test="@canonical = 'true' or $Headings = 'true'">
-      <h2><xsl:apply-templates/></h2>
+      <h2 class="heading"><xsl:apply-templates/></h2>
     </xsl:if>
   </xsl:template>
 
   <xsl:template match="title" mode="jesus">
     <!-- Always show canonical titles or if headings is turned on -->
     <xsl:if test="@canonical = 'true' or $Headings = 'true'">
-      <h2><xsl:apply-templates/></h2>
+      <h2 class="heading"><xsl:apply-templates/></h2>
     </xsl:if>
   </xsl:template>
 
@@ -1154,9 +1220,26 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+    <xsl:variable name="cell-direction">
+      <xsl:if test="@xml:lang">
+        <xsl:call-template name="getDirection">
+         <xsl:with-param name="lang"><xsl:value-of select="@xml:lang"/></xsl:with-param>
+        </xsl:call-template>
+      </xsl:if>
+    </xsl:variable>
     <xsl:element name="{$element-name}">
       <xsl:attribute name="class">cell</xsl:attribute>
       <xsl:attribute name="valign">top</xsl:attribute>
+      <xsl:if test="@xml:lang">
+        <xsl:attribute name="dir">
+          <xsl:value-of select="$cell-direction"/>
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:if test="$cell-direction = 'rtl'">
+        <xsl:attribute name="align">
+          <xsl:value-of select="'right'"/>
+        </xsl:attribute>
+      </xsl:if>
       <xsl:if test="@rows">
         <xsl:attribute name="rowspan">
           <xsl:value-of select="@rows"/>
@@ -1167,7 +1250,18 @@
           <xsl:value-of select="@cols"/>
         </xsl:attribute>
       </xsl:if>
-      <xsl:apply-templates/>
+      <!-- hack alert -->
+      <xsl:choose>
+        <xsl:when test="$cell-direction = 'rtl'">
+          <xsl:text>&#8235;</xsl:text><xsl:apply-templates/><xsl:text>&#8236;</xsl:text>
+        </xsl:when>
+        <xsl:when test="$cell-direction = 'ltr'">
+          <xsl:text>&#8234;</xsl:text><xsl:apply-templates/><xsl:text>&#8236;</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates/>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:element>
   </xsl:template>
 
@@ -1270,5 +1364,81 @@
   <xsl:template match="text()" mode="small-caps">
   <xsl:value-of select="translate(., 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
   </xsl:template>
+
+  <!--
+    Generate a css or an inline style representation of a font spec.
+    The fontspec that is passed in is in one of two forms:
+    FamilyName-STYLE-size, where STYLE is either PLAIN, BOLD, ITALIC or BOLDITALIC
+    or
+    FamilyName,style,size, where STYLE is 0 for PLAIN, 1 for BOLD, 2 for ITALIC or 3 for BOLDITALIC.
+
+    The style attribute is css for a css style specification or anything else for an inline style one.
+  -->
+  <xsl:template name="generateFontStyle">
+    <xsl:param name="fontspec"/>
+    <xsl:param name="style"/>
+    <xsl:variable name="fontSeparator">
+      <xsl:choose>
+        <xsl:when test="contains($fontspec, ',')">
+          <xsl:value-of select="','"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="'-'"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="aFont">
+      <xsl:choose>
+        <xsl:when test="substring-before($fontspec, $fontSeparator) = ''"><xsl:value-of select="$fontspec"/>,0,16</xsl:when>
+        <xsl:otherwise><xsl:value-of select="$fontspec"/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="fontfamily" select="substring-before($aFont, $fontSeparator)" />
+    <xsl:variable name="fontsize" select="substring-after(substring-after($aFont, $fontSeparator), $fontSeparator)" />
+    <xsl:variable name="styling" select="substring-before(substring-after($aFont, $fontSeparator), $fontSeparator)" />
+    <xsl:variable name="fontweight">
+      <xsl:choose>
+        <xsl:when test="$styling = '1' or $styling = '3' or contains($styling, 'bold')">bold</xsl:when>
+        <xsl:otherwise>normal</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="fontstyle">
+      <xsl:choose>
+        <xsl:when test="$styling = '2' or $styling = '3' or contains($styling, 'italic')">italic</xsl:when>
+        <xsl:otherwise>normal</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$style = 'css'">
+        <xsl:value-of select='concat("font-family: &apos;", $fontfamily, "&apos;, Serif; ",
+                                     "font-size:   ",       $fontsize,   "pt; ",
+                                     "font-weight: ",       $fontweight, "; ",
+                                     "font-style:  ",       $fontstyle,  ";")'/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select='concat("font-family=&apos;",  $fontfamily, "&apos;, Serif; ",
+                                     "font-size=",          $fontsize,   "pt; ",
+                                     "font-weight=",        $fontweight, "; ",
+                                     "font-style=",         $fontstyle,  "; ")'/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <!--
+    The direction is deduced from the xml:lang attribute and is assumed to be meaningful for those elements.
+    Note: there is a bug that prevents dir=rtl from working.
+    see: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4296022 and 4866977
+  -->
+  <xsl:template name="getDirection">
+    <xsl:param name="lang"/>
+    <xsl:choose>
+      <xsl:when test="$lang = 'he' or $lang = 'ar' or $lang = 'fa' or $lang = 'ur' or $lang = 'syr'">
+        <xsl:value-of select="'rtl'"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="'ltr'"/>
+      </xsl:otherwise>
+    </xsl:choose>
+   </xsl:template>
   
 </xsl:stylesheet>
