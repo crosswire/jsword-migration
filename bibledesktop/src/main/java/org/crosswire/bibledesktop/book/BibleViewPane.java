@@ -89,11 +89,11 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
     {
         try
         {
-            chooser = new JFileChooser(Project.instance().getUserSubProjectDir(BOOKMARK_DIR, true).getPath());
+            chooser = new JFileChooser(Project.instance().getWriteableProjectSubdir(BOOKMARK_DIR, true).getPath());
         }
         catch (IOException ex)
         {
-            chooser = new JFileChooser(Project.instance().getUserProjectDir().getPath());
+            chooser = new JFileChooser(Project.instance().getWritableProjectDir().getPath());
         }
 
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
