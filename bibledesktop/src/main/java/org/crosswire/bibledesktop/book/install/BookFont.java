@@ -47,7 +47,7 @@ public class BookFont extends FontStore
      */
     private BookFont()
     {
-        super("BookFonts", Project.instance().getWritablePropertiesURI("BookFonts")); //$NON-NLS-1$ //$NON-NLS-2$
+        super("BookFonts", Project.instance().getWritableProjectDir()); //$NON-NLS-1$
     }
 
     public static BookFont instance()

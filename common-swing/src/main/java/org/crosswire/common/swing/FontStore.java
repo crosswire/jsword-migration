@@ -26,9 +26,11 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Properties;
 
+import org.crosswire.common.util.FileUtil;
 import org.crosswire.common.util.Language;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
+import org.crosswire.common.util.ResourceUtil;
 
 /**
  * Font Store maintains a persistent, hierarchical store of user font preferences. A font
@@ -64,18 +66,19 @@ public class FontStore
     /**
      * Create an new FontStore with the given persistent store.
      * 
-     * @param storeName The name of the store, used as a label inside the
+     * @param storeName The name of the store, used as a file name and as a label inside the
      *            fontStore.
-     * @param fontStore The location of the resource.
+     * @param fontStore The name of the properties file.
+     * @param fontDir The location where the fontStore can be stored.
      */
-    public FontStore(String storeName, URI fontStore)
+    public FontStore(String storeName, URI fontDir)
     {
-        if (fontStore == null)
+        if (fontDir == null)
         {
             throw new IllegalArgumentException("fontStore cannot be null"); //$NON-NLS-1$
         }
         this.storeName = storeName;
-        this.fontStore = fontStore;
+        this.fontStore = NetUtil.lengthenURI(fontDir, this.storeName + FileUtil.EXTENSION_PROPERTIES);
         this.fontMap = new Properties();
     }
 
@@ -205,7 +208,7 @@ public class FontStore
 
         try
         {
-            fontMap = NetUtil.loadProperties(fontStore);
+            fontMap = ResourceUtil.getProperties(storeName);
             loaded = true;
         }
         catch (IOException e)

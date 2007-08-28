@@ -32,6 +32,7 @@ import org.crosswire.common.config.ChoiceFactory;
 import org.crosswire.common.util.Languages;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
+import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.jsword.util.Project;
 
 /**
@@ -50,8 +51,7 @@ public class Translations
     {
         try
         {
-            URI inputURI = Project.instance().getWritablePropertiesURI(getClass().getName());
-            Properties props = NetUtil.loadProperties(inputURI);
+            Properties props = ResourceUtil.getProperties(getClass().getName());
             translation = props.getProperty(TRANSLATION_KEY, DEFAULT_TRANSLATION);
         }
         catch (IOException e)
