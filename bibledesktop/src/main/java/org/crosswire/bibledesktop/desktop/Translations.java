@@ -51,7 +51,7 @@ public class Translations
     {
         try
         {
-            Properties props = ResourceUtil.getProperties(getClass().getName());
+            Properties props = ResourceUtil.getProperties(getClass());
             translation = props.getProperty(TRANSLATION_KEY, DEFAULT_TRANSLATION);
         }
         catch (IOException e)
