@@ -272,6 +272,12 @@
     == Div provides the major containers for a work.
     == Divs are milestoneable.
     -->
+  <xsl:template match="div[@type='x-center']">
+    <div align="center">
+      <xsl:apply-templates/>
+    </div>
+  </xsl:template>
+
   <xsl:template match="div">
     <xsl:apply-templates/>
   </xsl:template>
