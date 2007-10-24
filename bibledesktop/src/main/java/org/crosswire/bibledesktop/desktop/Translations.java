@@ -59,7 +59,7 @@ public class Translations
             translation = DEFAULT_TRANSLATION;
         }
     }
-    
+
     /**
      * All access to Translations is through this single instance.
      * 

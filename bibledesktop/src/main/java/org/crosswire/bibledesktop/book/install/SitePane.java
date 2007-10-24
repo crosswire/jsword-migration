@@ -477,7 +477,7 @@ public class SitePane extends JPanel
                 size /= 1024.0F;
                 msg = Msg.MB_SIZE;
             }
-            
+
             if (JOptionPane.showConfirmDialog(this, msg.toString(new Object[] {name.getName(), new Float(size)}),
                             Msg.CONFIRMATION_TITLE.toString(),
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)

@@ -121,13 +121,13 @@ public class InternetWarning extends JPanel
     public void doYes()
     {
         dialog.setVisible(false);
-        choice = InternetWarning.GRANTED;        
+        choice = InternetWarning.GRANTED;
     }
 
     public void doNo()
     {
         dialog.setVisible(false);
-        choice = InternetWarning.DENIED;        
+        choice = InternetWarning.DENIED;
     }
 
     /**
