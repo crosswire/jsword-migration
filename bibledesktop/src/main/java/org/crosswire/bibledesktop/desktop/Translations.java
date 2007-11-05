@@ -210,6 +210,7 @@ public class Translations
 
     /**
      * List of available languages.
+     * TODO(DM): Externalize this list.
      */
     private String[] translations =
         {
@@ -217,6 +218,7 @@ public class Translations
             "de", //$NON-NLS-1$
             "fa", //$NON-NLS-1$
             "tr", //$NON-NLS-1$
+            "vi", //$NON-NLS-1$
         };
 
     private static Translations instance = new Translations();
