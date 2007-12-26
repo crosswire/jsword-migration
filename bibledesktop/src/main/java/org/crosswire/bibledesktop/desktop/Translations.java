@@ -23,6 +23,7 @@ package org.crosswire.bibledesktop.desktop;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -33,6 +34,7 @@ import org.crosswire.common.util.Languages;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.ResourceUtil;
+import org.crosswire.jsword.book.readings.ReadingsBookDriver;
 import org.crosswire.jsword.util.Project;
 
 /**
@@ -77,6 +79,8 @@ public class Translations
      */
     public Map getSupported()
     {
+        loadSupportedTranslations();
+        // I18N(DMS) Collate these according to the current locale, putting the current locale's languages first.
         Map names = new LinkedHashMap();
 
         for (int i = 0; i < translations.length; i++)
@@ -194,6 +198,25 @@ public class Translations
     }
 
     /**
+     * Get a list of the supported translations
+     */
+    private void loadSupportedTranslations()
+    {
+        if (translations == null)
+        {
+            try
+            {
+                URL index = ResourceUtil.getResource(Translations.class, "translations.txt"); //$NON-NLS-1$
+                translations = NetUtil.listByIndexFile(NetUtil.toURI(index));
+            }
+            catch (IOException ex)
+            {
+                translations =  new String[0];
+            }
+        }
+    }
+
+    /**
      * The key used in config.xml
      */
     private static final String TRANSLATION_KEY = "translation-codes"; //$NON-NLS-1$
@@ -212,14 +235,7 @@ public class Translations
      * List of available languages.
      * TODO(DM): Externalize this list.
      */
-    private String[] translations =
-        {
-            "en", //$NON-NLS-1$
-            "de", //$NON-NLS-1$
-            "fa", //$NON-NLS-1$
-            "tr", //$NON-NLS-1$
-            "vi", //$NON-NLS-1$
-        };
+    private String[] translations;
 
     private static Translations instance = new Translations();
 
