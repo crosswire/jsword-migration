@@ -30,15 +30,16 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.crosswire.common.config.ChoiceFactory;
+import org.crosswire.common.util.Countries;
 import org.crosswire.common.util.Languages;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.ResourceUtil;
-import org.crosswire.jsword.book.readings.ReadingsBookDriver;
+import org.crosswire.common.util.StringUtil;
 import org.crosswire.jsword.util.Project;
 
 /**
- * Translations provides a list of languages that BibleDesktop has been translated into.
+ * Translations provides a list of locales that BibleDesktop has been translated into.
  *
  * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
@@ -80,12 +81,12 @@ public class Translations
     public Map getSupported()
     {
         loadSupportedTranslations();
-        // I18N(DMS) Collate these according to the current locale, putting the current locale's languages first.
+        // I18N(DMS) Collate these according to the current locale, putting the current locale's locale first.
         Map names = new LinkedHashMap();
 
         for (int i = 0; i < translations.length; i++)
         {
-            names.put(translations[i], Languages.getLanguage(translations[i]));
+            names.put(translations[i], toString(translations[i]));
         }
 
         return names;
@@ -107,7 +108,7 @@ public class Translations
      */
     public String getCurrent()
     {
-        return Languages.getLanguage(translation);
+        return toString(translation);
     }
 
     /**
@@ -117,22 +118,23 @@ public class Translations
      */
     public void setCurrent(String newTranslation)
     {
-        String lang = DEFAULT_TRANSLATION;
-        String currentLang = ""; //$NON-NLS-1$
+        String found = DEFAULT_TRANSLATION;
+        String currentTranslation = ""; //$NON-NLS-1$
         for (int i = 0; i < translations.length; i++)
         {
             String trans = translations[i];
-            currentLang = Languages.getLanguage(translation);
-            if (trans.equals(newTranslation) || currentLang.equals(newTranslation))
+            currentTranslation = toString(translation);
+
+            if (trans.equals(newTranslation) || currentTranslation.equals(newTranslation))
             {
-                lang = trans;
+                found = trans;
                 break;
             }
         }
 
         try
         {
-            translation = lang;
+            translation = found;
             Properties props = new Properties();
             props.put(TRANSLATION_KEY, translation);
             URI outputURI = Project.instance().getWritablePropertiesURI(getClass().getName());
@@ -216,6 +218,21 @@ public class Translations
         }
     }
 
+    public String toString(String translationCode)
+    {
+        StringBuffer currentTranslation = new StringBuffer(Languages.getLanguage(translationCode));
+
+        if (translationCode.indexOf('_') != -1)
+        {
+            String[] locale = StringUtil.split(translationCode, '_');
+            currentTranslation.append(" ("); //$NON-NLS-1$
+            currentTranslation.append(Countries.getCountry(locale[1]));
+            currentTranslation.append(')');
+        }
+
+        return currentTranslation.toString();
+    }
+
     /**
      * The key used in config.xml
      */
@@ -227,13 +244,12 @@ public class Translations
     public static final String DEFAULT_TRANSLATION = "en"; //$NON-NLS-1$
 
     /**
-     * The language that BibleDesktop should use.
+     * The translation that BibleDesktop should use.
      */
     private String translation = DEFAULT_TRANSLATION;
 
     /**
-     * List of available languages.
-     * TODO(DM): Externalize this list.
+     * List of available translations.
      */
     private String[] translations;
 
