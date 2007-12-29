@@ -98,6 +98,11 @@ public class Translations
      */
     public Locale getCurrentLocale()
     {
+        if (translation.indexOf('_') != -1)
+        {
+            String[] locale = StringUtil.split(translation, '_');
+            return new Locale(locale[0], locale[1]);
+        }
         return new Locale(translation);
     }
 
