@@ -225,9 +225,8 @@ public class Translations
         if (translationCode.indexOf('_') != -1)
         {
             String[] locale = StringUtil.split(translationCode, '_');
-            currentTranslation.append(" ("); //$NON-NLS-1$
+            currentTranslation.append(", "); //$NON-NLS-1$
             currentTranslation.append(Countries.getCountry(locale[1]));
-            currentTranslation.append(')');
         }
 
         return currentTranslation.toString();
