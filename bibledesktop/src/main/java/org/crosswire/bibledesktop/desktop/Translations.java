@@ -160,10 +160,7 @@ public class Translations
      */
     public void setLocale()
     {
-        if (!translation.equals(Translations.DEFAULT_TRANSLATION))
-        {
-            Locale.setDefault(getCurrentLocale());
-        }
+        Locale.setDefault(getCurrentLocale());
     }
 
     /**
