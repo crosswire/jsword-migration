@@ -80,6 +80,9 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
         pnlSelect.addTitleChangedListener(this);
         pnlPassg.addKeyChangeListener(sidebar);
         init();
+
+        // Display the text initial book/verse selection
+        pnlSelect.doInitialTextDisplay();
     }
 
     /**

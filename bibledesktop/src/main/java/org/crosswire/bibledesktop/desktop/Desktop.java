@@ -153,13 +153,12 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         // The first thing that has to be done is to set the locale.
         Translations.instance().setLocale();
 
-        // Load the configuration.
+        // Load the configuration.  And create the lists of installed books.
         // This has to be done before any gui components are created
         // (Including the splash).
         // This includes code that is invoked by it.
         // This has to be done after setting the locale.
         generateConfig();
-
 
         // Make this be the root frame of optiondialogs
         JOptionPane.setRootFrame(this);
@@ -170,20 +169,22 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         // Splash screen
         URI predictURI = PROJECT.getWritablePropertiesURI(SPLASH_PROPS);
         Progress startJob = JobManager.createJob(Msg.STARTUP_TITLE.toString(), predictURI, true);
-
         //startJob.setProgress(Msg.STARTUP_CONFIG.toString());
 
         // Create the Desktop Actions
         actions = new DesktopActions(this);
 
+        // Create the GUI components
         startJob.setSectionName(Msg.STARTUP_GENERATE.toString());
         createComponents();
 
-        // Configuration
-        startJob.setSectionName(Msg.STARTUP_GENERAL_CONFIG.toString());
-        // GUI setup
+        // If necessary, make changes to the UI to help with debugging 
         debug();
-        init();
+        
+        // Create the GUI layout with panes and panels,
+        // and create a few other GUI things
+        startJob.setSectionName(Msg.STARTUP_GENERAL_CONFIG.toString());
+        createLayout();
 
 //        ReflectionBus.plug(this);
 
@@ -243,7 +244,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     /**
      * Initialize the GUI, and display it.
      */
-    private void init()
+    private void createLayout()
     {
         addWindowListener(new WindowAdapter()
         {
@@ -816,6 +817,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
      */
     public final void generateConfig()
     {
+        // Get the list of books for each book type.
         fillChoiceFactory();
 
         config = new Config(Msg.CONFIG_TITLE.toString());
@@ -1031,6 +1033,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
      */
     /*private*/ final void fillChoiceFactory()
     {
+        // Get the list of books for each book type.
         refreshBooks();
 
         Translations.instance().register();
@@ -1052,6 +1055,8 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
      */
     protected final void refreshBooks()
     {
+        // Instantiating Defaults finds all of the installed books.
+        // Calling refreshBooks() gets the list of books for each book type.
         Defaults.refreshBooks();
 
         // Has the number of reference books changed?

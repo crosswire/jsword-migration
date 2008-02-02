@@ -130,7 +130,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
 
         JComboBox cboBooks = new JComboBox();
         JComboBox cboChaps = new JComboBox();
-        BibleComboBoxModelSet quickSet = new BibleComboBoxModelSet(cboBooks, cboChaps, null);
+        quickSet = new BibleComboBoxModelSet(cboBooks, cboChaps, null);
         quickSet.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent ev)
@@ -213,6 +213,29 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
 
         enableComponents();
         GuiUtil.applyDefaultOrientation(this);
+
+    }
+    
+    /**
+     * During view creation, allow firing off an event to display the initial book/chapter.
+     * This is copied from quickSet.addActionListener().
+     */
+    public void doInitialTextDisplay()
+    {
+        Verse start = quickSet.getVerse();
+        int book = start.getBook();
+        int chapter = start.getChapter();
+        try
+        {
+            VerseRange range = new VerseRange(start, new Verse(book, chapter, BibleInfo.versesInChapter(book, chapter)));
+            txtSearch.setText(""); //$NON-NLS-1$
+            txtKey.setText(range.getName());
+            doGoPassage();
+        }
+        catch (NoSuchVerseException ex)
+        {
+            assert false : ex;
+        }    
     }
 
     /**
@@ -784,6 +807,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     /*
      * GUI Components
      */
+    private BibleComboBoxModelSet quickSet;
     private PassageSelectionPane dlgSelect;
     private ParallelBookPicker biblePicker;
     protected JTextField txtKey;
