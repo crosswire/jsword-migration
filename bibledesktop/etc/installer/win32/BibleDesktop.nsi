@@ -7,17 +7,21 @@
 !define PRODUCT_VERSION "@release.version@"
 !define CLASS "org.crosswire.bibledesktop.desktop.Desktop"
 
-!define JRE_VERSION "1.5.0"
-!define JRE_URL "http://dlc.sun.com/jdk/jre-1_5_0_01-windows-i586-p.exe"
+;!define JRE_VERSION "1.5.0"
+;!define JRE_URL "http://dlc.sun.com/jdk/jre-1_5_0_01-windows-i586-p.exe"
+; For a listing of Java 6 versions see: http://www.nabber.org/projects/appupdater/metalink/?app=Java
+!define JRE_VERSION "1.6"
+; The following is 6.0.3 aka 1.6.0 u3
+!define JRE_URL "http://javadl.sun.com/webapps/download/AutoDL?BundleId=12798"
 
 SetCompressor lzma
 
 Var HasJRE
-Var JavaLIB
+Var JavaLib
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 Caption "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-Icon "BibleDesktop.ico"
+Icon "${PRODUCT_NAME}.ico"
 OutFile "${PRODUCT_NAME}.exe"
 BrandingText " "
 ; Under Windows Vista run this as a user.
@@ -36,29 +40,28 @@ Section ""
     Quit
   ${EndIf}
 
-  StrCpy $JavaLib "$EXEDIR"
+  SetOutPath $EXEDIR
+
+  StrCpy $JavaLib ""
   Call BuildClassPath
   Pop $R1
 
   ${If} $R1 == ""
-    StrCpy $JavaLib "$EXEDIR/lib"
+    StrCpy $JavaLib "lib\"
     Call BuildClassPath
     Pop $R1
   ${EndIF}
 
   StrCpy $0 '"$R0" -classpath "$R1" ${CLASS}'
-  ; Use the following for USB/CD installs
-  ;StrCpy $0 '"$R0" -classpath "$R1" -Djsword.home="$EXEDIR\JSword" -Dsword.home="$EXEDIR\.." ${CLASS}'
 
   ; The following is for debugging
   ClearErrors
-  FileOpen $1 $EXEDIR\java.log w
+  FileOpen $1 "${PRODUCT_NAME}.bat" w
   IfErrors done
   FileWrite $1 $0
   FileClose $1
   done:
 
-  SetOutPath $EXEDIR
   Exec $0
 SectionEnd
 
@@ -76,13 +79,13 @@ Function BuildClassPath
   
   ; Iterate over all the jar files in JAVALIB
   ClearErrors
-  FindFirst $R1 $R2 "$JavaLib\*.jar"
+  FindFirst $R1 $R2 "$JavaLib*.jar"
   ${Unless} ${Errors}
     ${Do}
       ${If} $R0 == ""
-        StrCpy $R0 "$JavaLib\$R2"
+        StrCpy $R0 "$JavaLib$R2"
       ${Else}
-        StrCpy $R0 "$R0;$JavaLib\$R2"
+        StrCpy $R0 "$R0;$JavaLib$R2"
       ${EndIf}
       FindNext $R1 $R2
     ${LoopUntil} ${Errors}
@@ -110,6 +113,8 @@ Function GetJRE
   MessageBox MB_OK "${PRODUCT_NAME} uses Java ${JRE_VERSION} or later, it will now be downloaded and installed."
 
   StrCpy $2 "$TEMP\Java Runtime Environment.exe"
+  ; Obtain from http://nsis.sourceforge.net/InetLoad_plug-in
+  ; and put inetload.dll from zip file in NSIS plugins directory
   InetLoad::load /POPUP "Getting Java for ${PRODUCT_NAME}" ${JRE_URL} $2
   Pop $R0 ;Get the return value
   StrCmp $R0 "OK" +5

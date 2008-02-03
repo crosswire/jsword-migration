@@ -32,12 +32,12 @@ Section ""
     Quit
   ${EndIf}
 
-  StrCpy $JavaLib "$EXEDIR"
+  StrCpy $JavaLib ""
   Call BuildClassPath
   Pop $R1
 
   ${If} $R1 == ""
-    StrCpy $JavaLib "$EXEDIR/lib"
+    StrCpy $JavaLib "lib\"
     Call BuildClassPath
     Pop $R1
   ${EndIF}
@@ -49,13 +49,12 @@ Section ""
 
   ; The following is for debugging
   ClearErrors
-  FileOpen $1 $EXEDIR\java.log w
+  FileOpen $1 "${PRODUCT_NAME}.bat" w
   IfErrors done
   FileWrite $1 $0
   FileClose $1
   done:
 
-  SetOutPath $EXEDIR
   Exec $0
 SectionEnd
 
@@ -73,13 +72,13 @@ Function BuildClassPath
   
   ; Iterate over all the jar files in JAVALIB
   ClearErrors
-  FindFirst $R1 $R2 "$JavaLib\*.jar"
+  FindFirst $R1 $R2 "$JavaLib*.jar"
   ${Unless} ${Errors}
     ${Do}
       ${If} $R0 == ""
-        StrCpy $R0 "$JavaLib\$R2"
+        StrCpy $R0 "$JavaLib$R2"
       ${Else}
-        StrCpy $R0 "$R0;$JavaLib\$R2"
+        StrCpy $R0 "$R0;$JavaLib$R2"
       ${EndIf}
       FindNext $R1 $R2
     ${LoopUntil} ${Errors}
@@ -94,7 +93,7 @@ FunctionEnd
 
 Function .onInit
   SetSilent silent
-FunctionEnd
+SFunctionEnd
 
 Function FindJRE
 ;
