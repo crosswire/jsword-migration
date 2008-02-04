@@ -93,7 +93,7 @@ FunctionEnd
 
 Function .onInit
   SetSilent silent
-SFunctionEnd
+FunctionEnd
 
 Function FindJRE
 ;
