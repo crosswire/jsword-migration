@@ -36,13 +36,13 @@
     <jar href="javatar-2.5.jar"/>
     <jar href="jdom-1.0.jar"/>
     <jar href="commons-codec-1.3.jar"/>
-    <jar href="commons-httpclient-3.0.1.jar"/>
-    <jar href="commons-logging-1.1.jar"/>
+    <jar href="commons-httpclient-3.1.jar"/>
+    <jar href="commons-logging-1.1.1.jar"/>
     <jar href="commons-net-1.4.1.jar"/>
     <jar href="lucene-core-2.3.0.jar"/>
     <jar href="lucene-snowball-2.3.0.jar"/>
     <jar href="lucene-analyzers-2.3.0.jar"/>
-    <jar href="icu4j_3_6_1.jar"/>
+    <jar href="icu4j_3_8_1.jar"/>
     <jar href="jlfgr-1_0.jar"/>
     <property name="apple.laf.useScreenMenuBar" value="true"/>
     <property name="com.apple.mrj.application.apple.menu.about.name" value="Bible Desktop"/>
