@@ -594,10 +594,12 @@
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="$separator = ''">
-        <sub class="strongs"><a href="{$protocol}{$orig-lemma}">S<xsl:number level="any" from="/osis//verse" format="1"/><xsl:number value="$sub" format="a"/></a></sub>
+        <!-- <sub class="strongs"><a href="{$protocol}{$orig-lemma}">S<xsl:number level="any" from="/osis//verse" format="1"/><xsl:number value="$sub" format="a"/></a></sub> -->
+        <sub class="strongs"><a href="{$protocol}{$orig-lemma}"><xsl:value-of select="format-number(substring($orig-lemma,2),'#')"/></a></sub>
       </xsl:when>
       <xsl:otherwise>
-        <sub class="strongs"><a href="{$protocol}{substring-before($orig-lemma, $separator)}">S<xsl:number level="single" from="/osis//verse" format="1"/><xsl:number value="$sub" format="a"/></a>, </sub>
+        <!-- <sub class="strongs"><a href="{$protocol}{substring-before($orig-lemma, $separator)}">S<xsl:number level="single" from="/osis//verse" format="1"/><xsl:number value="$sub" format="a"/></a>, </sub> -->
+        <sub class="strongs"><a href="{$protocol}{substring-before($orig-lemma, $separator)}"><xsl:value-of select="format-number(substring(substring-before($orig-lemma, $separator),2),'#')"/></a>, </sub>
         <xsl:call-template name="lemma">
           <xsl:with-param name="lemma" select="substring-after($lemma, $separator)"/>
           <xsl:with-param name="part">
@@ -652,10 +654,12 @@
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="$separator = ''">
-        <sub class="morph"><a href="{$protocol}{$orig-morph}">M<xsl:number level="any" from="/osis//verse" format="1"/><xsl:number value="$sub" format="a"/></a></sub>
+        <!-- <sub class="morph"><a href="{$protocol}{$orig-morph}">M<xsl:number level="any" from="/osis//verse" format="1"/><xsl:number value="$sub" format="a"/></a></sub> -->
+        <sub class="morph"><a href="{$protocol}{$orig-morph}"><xsl:value-of select="$orig-morph"/></a></sub>
       </xsl:when>
       <xsl:otherwise>
-        <sub class="morph"><a href="{$protocol}{substring-before($orig-morph, $separator)}">M<xsl:number level="single" from="/osis//verse" format="1"/><xsl:number value="$sub" format="a"/></a>, </sub>
+        <!-- <sub class="morph"><a href="{$protocol}{substring-before($orig-morph, $separator)}">M<xsl:number level="single" from="/osis//verse" format="1"/><xsl:number value="$sub" format="a"/></a>, </sub> -->
+        <sub class="morph"><a href="{$protocol}{substring-before($orig-morph, $separator)}"><xsl:value-of select="substring-before($orig-morph, $separator)"/></a>, </sub>
         <xsl:call-template name="morph">
           <xsl:with-param name="morph" select="substring-after($morph, $separator)"/>
           <xsl:with-param name="part">
