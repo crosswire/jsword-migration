@@ -1246,7 +1246,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     /**
      * The application icon
      */
-    private static final ImageIcon ICON_APP = GuiUtil.getIcon("images/icon16.png"); //$NON-NLS-1$
+    private static final ImageIcon ICON_APP = GuiUtil.getIcon("images/BibleDesktop16.png"); //$NON-NLS-1$
 
     private transient ViewManager views;
     private JPanel corePanel;
