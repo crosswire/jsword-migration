@@ -26,6 +26,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <link rel="stylesheet" type="text/css" href="sword.css"/>
+    <!-- Specified as required by Microsoft -->
+    <link rel="shortcut icon" href="images/BibleDesktop.ico"/>
     <xsl:copy-of select="html:head/*"/>
     <script type="text/javascript">
       <![CDATA[
