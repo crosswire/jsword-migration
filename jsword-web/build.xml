@@ -191,7 +191,12 @@
     <tar tarfile="${directory}/jsword-${version}-bin.tar.gz" compression="gzip">
       <tarfileset prefix="jsword-${version}" dir="${target.installed}" excludes="BibleDesktop.app.zip,BibleDesktopSetup.exe"/>
     </tar>
-  	<!-- documentation packages -->
+    <symlink link="${directory}/jsword-latest-bin.tar.gz"
+             resource="${directory}/jsword-${version}-bin.tar.gz"
+             overwrite="true"
+             failonerror="false"
+    />
+    <!-- documentation packages -->
     <zip zipfile="${directory}/jsword-${version}-doc.zip">
       <zipfileset prefix="jsword-${version}" dir="${target.web}/api"/>
     </zip>
