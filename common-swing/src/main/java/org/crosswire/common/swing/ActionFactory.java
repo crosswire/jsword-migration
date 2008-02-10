@@ -97,7 +97,7 @@ public class ActionFactory implements ActionListener, Actionable
         assert action.length() != 0;
 
         // Instead of cascading if/then/else
-        // use reflecton to do a direct lookup and call
+        // use reflection to do a direct lookup and call
         String methodName = METHOD_PREFIX + action;
         Exception ex = null;
         try
@@ -208,7 +208,18 @@ public class ActionFactory implements ActionListener, Actionable
     {
         try
         {
-            ResourceBundle resources = ResourceBundle.getBundle(basis.getName(), Locale.getDefault(), CWClassLoader.instance(basis));
+            StringBuffer basisName = new StringBuffer(basis.getName());
+            ResourceBundle resources = ResourceBundle.getBundle(basisName.toString(), Locale.getDefault(), CWClassLoader.instance(basis));
+            ResourceBundle controls = null;
+            try
+            {
+                basisName.append("_control"); //$NON-NLS-1$
+                controls = ResourceBundle.getBundle(basisName.toString(), Locale.getDefault(), CWClassLoader.instance(basis));
+            }
+            catch (MissingResourceException ex)
+            {
+                // It is OK for this to not exist. This just means that the defaults are used
+            }
 
             Enumeration en = resources.getKeys();
             while (en.hasMoreElements())
@@ -231,13 +242,14 @@ public class ActionFactory implements ActionListener, Actionable
                         longDesc = shortDesc;
                     }
 
-                    Icon smallIcon = getIcon(resources, actionName, Action.SMALL_ICON);
-                    Icon largeIcon = getIcon(resources, actionName, CWAction.LARGE_ICON);
                     Integer mnemonic = getMnemonic(resources, actionName);
                     KeyStroke accelerator = getAccelerator(resources, actionName);
 
-                    String enabledStr = getOptionalActionString(resources, actionName, "Enabled"); //$NON-NLS-1$
+                    Icon smallIcon = getIcon(controls, actionName, Action.SMALL_ICON);
+                    Icon largeIcon = getIcon(controls, actionName, CWAction.LARGE_ICON);
+                    String enabledStr = getOptionalActionString(controls, actionName, "Enabled"); //$NON-NLS-1$
                     boolean enabled = enabledStr == null ? true : Boolean.valueOf(enabledStr).booleanValue();
+
                     createAction(actionName, name, shortDesc, longDesc, mnemonic, accelerator, smallIcon, largeIcon, enabled);
                 }
             }
@@ -271,6 +283,12 @@ public class ActionFactory implements ActionListener, Actionable
      */
     private String getOptionalActionString(ResourceBundle resources, String actionName, String field)
     {
+        // The control resource file does not have to exist.
+        if (resources == null)
+        {
+            return null;
+        }
+
         try
         {
             return resources.getString(actionName + '.' + field);
