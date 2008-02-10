@@ -35,7 +35,7 @@
 
     <table width="100%">
       <tr align="center">
-        <td class="navbutton" align="center"><a href="/">Crosswire</a></td>
+        <td class="navbutton" align="center"><a href="/">CrossWire</a></td>
         <td class="navbutton" align="center"><a href="index.html">JSword</a></td>
         <td class="navbutton" align="center"><a href="/bibledesktop">BibleDesktop</a></td>
         <td class="navbutton" align="center"><a href="/sword/">Sword</a></td>
@@ -120,7 +120,7 @@
           </ul>
           <p>Other Projects</p>
           <ul>
-            <li><a href="/">Crosswire</a></li>
+            <li><a href="/">CrossWire</a></li>
             <li><a href="/sword">Sword</a></li>
             <li><a href="http://www.sourceforge.net/projects/projectb/">Project-B</a></li>
           </ul>

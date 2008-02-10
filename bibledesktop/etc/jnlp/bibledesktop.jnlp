@@ -3,7 +3,7 @@
 
   <information>
     <title>Bible Desktop</title>
-    <vendor>Crosswire Bible Society</vendor>
+    <vendor>CrossWire Bible Society</vendor>
     <homepage href="@jnlp.homepage@"/>
     <description>Bible Desktop v@release.version@ - Bible Study Software based on the Sword project</description>
     <description kind="short">Bible Desktop is a Bible study package available over the internet</description>
