@@ -180,7 +180,7 @@ public class StatusBar extends JComponent implements MouseListener, URIEventList
 
             if (action != null)
             {
-                Object value = action.getValue(Action.LONG_DESCRIPTION);
+                Object value = action.getValue(Action.SHORT_DESCRIPTION);
 
                 if (value != null)
                 {

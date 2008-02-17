@@ -70,6 +70,16 @@ public class ActionFactory implements ActionListener, Actionable
      */
     public ActionFactory(Class type, Object bean)
     {
+        try
+        {
+            Class basis = this.getClass();
+            aliases = ResourceBundle.getBundle(ALIASES, Locale.getDefault(), CWClassLoader.instance(basis));
+        }
+        catch (MissingResourceException ex)
+        {
+            log.error("Tell me it isn't so. The Aliases.properties does exist!", ex); //$NON-NLS-1$
+        }
+
         actions = new HashMap();
 
         buildActionMap(type);
@@ -156,7 +166,6 @@ public class ActionFactory implements ActionListener, Actionable
 
         getOutOfJailFreeAction.putValue(Action.NAME, key);
         getOutOfJailFreeAction.putValue(Action.SHORT_DESCRIPTION, MISSING_RESOURCE);
-        getOutOfJailFreeAction.putValue(Action.LONG_DESCRIPTION, MISSING_RESOURCE);
         getOutOfJailFreeAction.setEnabled(true);
         getOutOfJailFreeAction.addActionListener(this);
 
@@ -176,9 +185,8 @@ public class ActionFactory implements ActionListener, Actionable
         JLabel label = new JLabel();
         label.setText(action.getValue(Action.NAME).toString());
 
-        // Mac's don't have mnemonics
         Integer mnemonic = (Integer) action.getValue(Action.MNEMONIC_KEY);
-        if (mnemonic != null && !OSType.MAC.equals(OSType.getOSType()))
+        if (mnemonic != null)
         {
             label.setDisplayedMnemonic(mnemonic.intValue());
         }
@@ -230,27 +238,67 @@ public class ActionFactory implements ActionListener, Actionable
                     String actionName = key.substring(0, key.length() - TEST.length());
 
                     String name = getActionString(resources, actionName, Action.NAME);
-
-                    String shortDesc = getOptionalActionString(resources, actionName, Action.SHORT_DESCRIPTION);
-                    String longDesc = getOptionalActionString(resources, actionName, Action.LONG_DESCRIPTION);
-                    if (shortDesc == null && longDesc != null)
+                    ResourceBundle nickname = null;
+                    if (name.startsWith(ActionFactory.ALIAS))
                     {
-                        shortDesc = longDesc;
-                    }
-                    if (longDesc == null && shortDesc != null)
-                    {
-                        longDesc = shortDesc;
+                        String newActionName = name.substring(ActionFactory.ALIAS.length());
+                        String newName = getActionString(aliases, newActionName, Action.NAME);
+                        if (newName != null)
+                        {
+                            name = newName;
+                            nickname = aliases;
+                        }
                     }
 
-                    Integer mnemonic = getMnemonic(resources, actionName);
-                    KeyStroke accelerator = getAccelerator(resources, actionName);
+                    String tooltip = getOptionalActionString(nickname, resources, actionName, CWAction.TOOL_TIP);
+                    if (tooltip == null)
+                    {
+                        tooltip = name;
+                    }
+
+                    Integer mnemonic = getMnemonic(nickname, resources, actionName);
+                    KeyStroke accelerator = getAccelerator(nickname, resources, actionName);
 
                     Icon smallIcon = getIcon(controls, actionName, Action.SMALL_ICON);
                     Icon largeIcon = getIcon(controls, actionName, CWAction.LARGE_ICON);
                     String enabledStr = getOptionalActionString(controls, actionName, "Enabled"); //$NON-NLS-1$
                     boolean enabled = enabledStr == null ? true : Boolean.valueOf(enabledStr).booleanValue();
 
-                    createAction(actionName, name, shortDesc, longDesc, mnemonic, accelerator, smallIcon, largeIcon, enabled);
+                    CWAction cwAction = new CWAction();
+
+                    if (actionName == null || actionName.length() == 0)
+                    {
+                        log.warn("Acronymn is missing for CWAction"); //$NON-NLS-1$
+                    }
+                    else
+                    {
+                        cwAction.putValue(Action.ACTION_COMMAND_KEY, actionName);
+                    }
+
+                    if (name == null || name.length() == 0)
+                    {
+                        log.warn("Name is missing for CWAction"); //$NON-NLS-1$
+                        cwAction.putValue(Action.NAME, "?"); //$NON-NLS-1$
+                    }
+                    else
+                    {
+                        cwAction.putValue(Action.NAME, name);
+                    }
+
+                    cwAction.putValue(CWAction.LARGE_ICON, largeIcon);
+                    cwAction.putValue(Action.SMALL_ICON, smallIcon);
+                    cwAction.putValue(Action.SHORT_DESCRIPTION, tooltip);
+                    // Mac's don't have mnemonics
+                    if (!OSType.MAC.equals(OSType.getOSType()))
+                    {
+                        cwAction.putValue(Action.MNEMONIC_KEY, mnemonic);
+                    }
+                    cwAction.putValue(Action.ACCELERATOR_KEY, accelerator);
+                    cwAction.setEnabled(enabled);
+
+                    cwAction.addActionListener(this);
+
+                    actions.put(actionName, cwAction);
                 }
             }
         }
@@ -279,24 +327,47 @@ public class ActionFactory implements ActionListener, Actionable
     }
 
     /**
-     * Lookup an action/field combination, returning null for missing resoruces.
+     * Lookup an action/field combination, returning null for missing resources.
      */
     private String getOptionalActionString(ResourceBundle resources, String actionName, String field)
     {
-        // The control resource file does not have to exist.
-        if (resources == null)
+        return getOptionalActionString(null, resources, actionName, field);
+    }
+
+    /**
+     * Lookup an action/field combination, returning null for missing resources.
+     * If aliases are present use them, with values in resources over-riding.
+     */
+    private String getOptionalActionString(ResourceBundle nicknames, ResourceBundle resources, String actionName, String field)
+    {
+        String result = null;
+        try
         {
-            return null;
+            // Look for aliases first
+            if (nicknames != null)
+            {
+                result = nicknames.getString(actionName + '.' + field);
+            }
+        }
+        catch (MissingResourceException ex)
+        {
+            // do nothing
         }
 
         try
         {
-            return resources.getString(actionName + '.' + field);
+            // The control resource file does not have to exist.
+            if (resources != null)
+            {
+                result = resources.getString(actionName + '.' + field);
+            }
         }
         catch (MissingResourceException ex)
         {
-            return null;
+            // do nothing
         }
+
+        return result;
     }
 
     /**
@@ -316,10 +387,10 @@ public class ActionFactory implements ActionListener, Actionable
     /**
      * Convert the string to a mnemonic
      */
-    private Integer getMnemonic(ResourceBundle resources, String actionName)
+    private Integer getMnemonic(ResourceBundle nicknames, ResourceBundle resources, String actionName)
     {
         Integer mnemonic = null;
-        String mnemonicStr = getOptionalActionString(resources, actionName, Action.MNEMONIC_KEY);
+        String mnemonicStr = getOptionalActionString(nicknames, resources, actionName, Action.MNEMONIC_KEY);
         if (mnemonicStr != null && mnemonicStr.length() > 0)
         {
             try
@@ -337,11 +408,11 @@ public class ActionFactory implements ActionListener, Actionable
     /**
      * Convert the string to a valid Accelerator (ie a KeyStroke)
      */
-    private KeyStroke getAccelerator(ResourceBundle resources, String actionName)
+    private KeyStroke getAccelerator(ResourceBundle nicknames, ResourceBundle resources, String actionName)
     {
         // Create the KeyStroke for the action's shortcut/accelerator
         KeyStroke accelerator = null;
-        String acceleratorStr = getOptionalActionString(resources, actionName, Action.ACCELERATOR_KEY);
+        String acceleratorStr = getOptionalActionString(nicknames, resources, actionName, Action.ACCELERATOR_KEY);
         if (acceleratorStr != null && acceleratorStr.length() > 0)
         {
             String[] modifiers = StringUtil.split(getActionString(resources, actionName, Action.ACCELERATOR_KEY + ".Modifiers"), ','); //$NON-NLS-1$
@@ -416,63 +487,6 @@ public class ActionFactory implements ActionListener, Actionable
     }
 
     /**
-     * Create a new CWAction
-     * @param acronymn The internal name for this action. Must not be null.
-     * @param name The label for buttons, menu items, ...
-     * @param small_icon The icon used in labelling
-     * @param large_icon The icon to use if large icons are needed
-     * @param short_desc Tooltip text
-     * @param long_desc Context sensitive help
-     * @param mnemonic The java.awt.event.EventKey value for the mnemonic
-     * @param accel The accelerator key
-     * @param enabled Whether the CWAction is enabled initially
-     * @return CWAction
-     */
-    private CWAction createAction(String acronymn, String name, String short_desc,
-                    String long_desc, Integer mnemonic, KeyStroke accel,
-                    Icon small_icon, Icon large_icon, boolean enabled)
-    {
-        CWAction cwAction = new CWAction();
-
-        if (acronymn == null || acronymn.length() == 0)
-        {
-            log.warn("Acronymn is missing for CWAction"); //$NON-NLS-1$
-        }
-        else
-        {
-            cwAction.putValue(Action.ACTION_COMMAND_KEY, acronymn);
-        }
-
-        if (name == null || name.length() == 0)
-        {
-            log.warn("Name is missing for CWAction"); //$NON-NLS-1$
-            cwAction.putValue(Action.NAME, "?"); //$NON-NLS-1$
-        }
-        else
-        {
-            cwAction.putValue(Action.NAME, name);
-        }
-
-        cwAction.putValue(CWAction.LARGE_ICON, large_icon);
-        cwAction.putValue(Action.SMALL_ICON, small_icon);
-        cwAction.putValue(Action.SHORT_DESCRIPTION, short_desc);
-        cwAction.putValue(Action.LONG_DESCRIPTION, long_desc);
-        // Mac's don't have mnemonics
-        if (!OSType.MAC.equals(OSType.getOSType()))
-        {
-            cwAction.putValue(Action.MNEMONIC_KEY, mnemonic);
-        }
-        cwAction.putValue(Action.ACCELERATOR_KEY, accel);
-        cwAction.setEnabled(enabled);
-
-        cwAction.addActionListener(this);
-
-        actions.put(acronymn, cwAction);
-
-        return cwAction;
-    }
-
-    /**
      * The tooltip for actions that we generate to paper around missing resources
      * Normally we would assert, but in live we might want to limp on.
      */
@@ -498,7 +512,16 @@ public class ActionFactory implements ActionListener, Actionable
      */
     private Object bean;
 
+    private static final String ALIASES = "Aliases"; //$NON-NLS-1$
+
+    private static final String ALIAS = "Alias" + SEPARATOR; //$NON-NLS-1$
+
     /**
+     * The aliases known by this system.
+     */
+    private static ResourceBundle aliases;
+
+   /**
      * The log stream
      */
     private static final Logger log = Logger.getLogger(ActionFactory.class);

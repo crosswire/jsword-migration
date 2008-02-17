@@ -47,6 +47,11 @@ public class CWAction extends AbstractAction
     public static final String LARGE_ICON = "LargeIcon"; //$NON-NLS-1$
 
     /**
+     * The tooltip to display. This is an alias for SHORT_DESCRIPTION.
+     */
+    public static final String TOOL_TIP = "ToolTip"; //$NON-NLS-1$
+
+    /**
      * Forwards the ActionEvent to the registered listener.
      * @param evt ActionEvent
      */

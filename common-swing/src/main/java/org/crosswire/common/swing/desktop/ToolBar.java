@@ -119,7 +119,7 @@ public class ToolBar extends JToolBar
                 if (show)
                 {
                     Action action = button.getAction();
-                    button.setText((String) action.getValue(Action.SHORT_DESCRIPTION));
+                    button.setText((String) action.getValue(Action.NAME));
                 }
                 else
                 {
