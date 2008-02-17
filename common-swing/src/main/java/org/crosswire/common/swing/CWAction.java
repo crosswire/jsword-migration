@@ -48,6 +48,7 @@ public class CWAction extends AbstractAction
 
     /**
      * The tooltip to display. This is an alias for SHORT_DESCRIPTION.
+     * The creator and user of a CWAction is to store and retrieve SHORT_DESCRIPTION.
      */
     public static final String TOOL_TIP = "ToolTip"; //$NON-NLS-1$
 

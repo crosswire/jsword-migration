@@ -49,11 +49,69 @@ import org.crosswire.common.util.StringUtil;
 /**
  * The ActionFactory is responsible for creating CWActions
  * and making them available to the program. Each Action is
- * constructed from resources of the form: simplename.field=value
- * where simplename is the ACTION_COMMAND_KEY value and
+ * constructed from resources of the form: ActionName.field=value
+ * where ActionName is the ACTION_COMMAND_KEY value and
  * field is one of the CWAction constants, e.g. LargeIcon.
- *
- * The values for the icons are a path which can be found as a resource.
+ * <br/>
+ * Field is one of:
+ * <ul>
+ * <li>Name - This is required. The value is used for the text of the Action.</li>
+ * <li>Mnemonic - An upper case letter or other character in the value of the Name field.
+ *     If found, using a case insensitive search, the mnemonic will cause the corresponding
+ *     character to be underlined. In a platform dependent way it provides a keyboard
+ *     mechanism to fire the action. For example, on Windows, alt + mnemonic will cause
+ *     a visible, active element with that mnemonic to fire. For this reason, it is important to
+ *     ensure that two visible, active elements do not have the same mnemonic.<br/>
+ *     Note: Mnemonics are suppressed on MacOSX.</li>
+ * <li>ToolTip - A tip to show when the mouse is over an element. If not present, Name is used.
+ *     This is likely to change. It is redundant to show a tooltip that is identical to the shown text.</li>
+ * <li>SmallIcon - A 16x16 pixel image to be shown for the item. The value for this is a path which
+ *     can be found as a resource.<br/>
+ *     Note: the small icon will be used when actions are tied to menu items and buttons.</li>
+ * <li>LargeIcon - A 24x24 pixel image to be shown for the item when large items are shown.
+ *     Currently, these are only used for the ToolBar, when a large toolbar is requested.
+ *     The value is a resource path to the image.</li>
+ * <li>AcceleratorKey - A key on the keyboard, which may be specified with 0x25 kind of notation.<br/><br/>
+ *     Accelerators are global key combinations that work within an application to fire the action.
+ *     When the action is shown as a menu item the accelerator will be listed with the name.
+ *     Note: The accelerator key and it's modifiers are converted into a <code>KeyStroke</code>
+ *     with <code>KeyStroke.getKeyStroke(key, modifierMask);</code></li>
+ * <li>AcceleratorKey.Modifier - A comma separated list of ctrl, alt, and shift, indicating what
+ *     modifiers are necessary for the accelerator.<br/>
+ *     Note: ctrl will use a platform's command key. On MacOSX this is the Apple/Command key.
+ *     Other platforms use Ctrl.</li>
+ * <li>Enabled - Defaults to true when not present. It is disabled when the value does not match
+ *     "true" regardless of case. This is used to initialize widgets tied to actions to disabled.
+ *     Once the action is created, it's state can be changed and the tied widgets will behave
+ *     appropriately.</li>
+ * </ul>
+ * 
+ * <p>
+ * In order to facilitate easier translation, Enabled, SmallIcon and LargeIcon can be specified in
+ * a parallel resource, whose name is suffixed with "_control" as in Desktop_control. This is meant
+ * to extrapolate the constant behavior of an action into a file that probably does not need to be
+ * internationalized. If it does, for example, to suppress the display of icons, then one would
+ * create a resource further suffixed with the language and perhaps country, as in Desktop_control_fa.
+ * </p>
+ * 
+ * <p>
+ * To add another twist, several actions may have the same name and mnemonic, differing perhaps by
+ * tooltip. To facilitate the sharing of these definitions, an Aliases resource is defined to contain
+ * common values. If the value of a ActionName.Name is prefixed with "Alias.", as in Go.Name=Alias.Go,
+ * then Go will be used as the ActionName to look up values in the Aliases resource.
+ * </p>
+ * 
+ * <p>
+ * Aliases defines defaults that can be overridden by the referring resource file. The only value that
+ * cannot be overridden is Name. 
+ * </p>
+ * 
+ * <p>
+ * When an action is fired, this class, as a listener, reflects the action on the class providing the
+ * resource. For example, DesktopActions creates an ActionFactory from the Desktop ResourceBundle.
+ * When the Exit action is fired, ActionFactory calls DesktopActions.doExit(ActionEvent event) or
+ * DesktopActions.doExit(), if the first did not exist.
+ * </p>
  *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
