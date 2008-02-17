@@ -289,12 +289,6 @@
   <!--=======================================================================-->
   <!-- Handle verses as containers and as a start verse.                     -->
   <xsl:template match="verse[not(@eID)]">
-    <!-- If the verse doesn't start on its own line and -->
-    <!-- the verse is not the first verse of a set of siblings, -->
-    <!-- output an extra space. -->
-    <xsl:if test="$VLine = 'false' and preceding-sibling::*[local-name() = 'verse']">
-      <xsl:text>&#160;</xsl:text>
-    </xsl:if>
     <!-- output each preverse element in turn -->
     <xsl:for-each select=".//*[@subType = 'x-preverse' or @subtype = 'x-preverse']">
       <xsl:choose>
@@ -311,6 +305,12 @@
     </xsl:for-each>
     <!-- Handle the KJV paragraph marker. -->
     <xsl:if test="milestone[@type = 'x-p']"><br/><br/></xsl:if>
+    <!-- If the verse doesn't start on its own line and -->
+    <!-- the verse is not the first verse of a set of siblings, -->
+    <!-- output an extra space. -->
+    <xsl:if test="$VLine = 'false' and preceding-sibling::*[local-name() = 'verse']">
+      <xsl:text>&#160;</xsl:text>
+    </xsl:if>
     <!-- Always output the verse -->
     <xsl:choose>
  	  <xsl:when test="$VLine = 'true'">
