@@ -26,8 +26,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -149,7 +147,7 @@ public class JobsViewPane extends JPanel implements WorkListener
         {
             cancel.setEnabled(false);
         }
-        cancel.addActionListener(new CancelListener(job));
+        cancel.addActionListener(new JobCancelListener(job));
 
         jobsPanel.add(label, new GridBagConstraints(0, i, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 0, 0));
         jobsPanel.add(progress, new GridBagConstraints(1, i, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
@@ -325,29 +323,6 @@ public class JobsViewPane extends JPanel implements WorkListener
         private WorkEvent event;
     }
 
-    /**
-     * Listen for cancel events and do the cancel.
-     */
-    private static final class CancelListener implements ActionListener
-    {
-        /**
-         * @param theJob
-         */
-        public CancelListener(Progress theJob)
-        {
-            job = theJob;
-        }
-
-        /* (non-Javadoc)
-         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-         */
-        public void actionPerformed(ActionEvent ev)
-        {
-            job.cancel();
-        }
-
-        private Progress job;
-    }
     /**
      * A simple struct to group information about a Job
      */
