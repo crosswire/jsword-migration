@@ -25,8 +25,8 @@ import java.util.Map;
 
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.config.MultipleChoice;
-import org.crosswire.common.util.ClassUtil;
 import org.crosswire.common.util.Logger;
+import org.crosswire.common.util.PluginUtil;
 import org.crosswire.common.util.Reporter;
 
 /**
@@ -114,7 +114,7 @@ public final class FieldMap
      */
     static
     {
-        map = ClassUtil.getImplementorsMap(Field.class);
+        map = PluginUtil.getImplementorsMap(Field.class);
     }
 
     /**

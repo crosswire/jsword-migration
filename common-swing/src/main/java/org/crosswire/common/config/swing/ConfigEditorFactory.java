@@ -28,8 +28,8 @@ import java.io.IOException;
 import java.net.URI;
 
 import org.crosswire.common.config.Config;
-import org.crosswire.common.util.ClassUtil;
 import org.crosswire.common.util.LucidRuntimeException;
+import org.crosswire.common.util.PluginUtil;
 import org.crosswire.common.util.Reporter;
 
 /**
@@ -61,7 +61,7 @@ public final class ConfigEditorFactory
         Exception ex = null;
         try
         {
-            ConfigEditor base = (ConfigEditor) ClassUtil.getImplementation(ConfigEditor.class);
+            ConfigEditor base = (ConfigEditor) PluginUtil.getImplementation(ConfigEditor.class);
             base.construct(config);
             base.showDialog(parent, al);
         }

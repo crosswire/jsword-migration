@@ -23,7 +23,7 @@ package org.crosswire.bibledesktop.display;
 
 import java.io.IOException;
 
-import org.crosswire.common.util.ClassUtil;
+import org.crosswire.common.util.PluginUtil;
 
 /**
  * Factory for OSIS renderers.
@@ -49,7 +49,7 @@ public final class BookDataDisplayFactory
         Exception ex = null;
         try
         {
-            return (BookDataDisplay) ClassUtil.getImplementation(BookDataDisplay.class);
+            return (BookDataDisplay) PluginUtil.getImplementation(BookDataDisplay.class);
         }
         catch (ClassCastException e)
         {

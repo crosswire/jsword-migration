@@ -21,8 +21,8 @@
  */
 package org.crosswire.jsword.book.search;
 
-import org.crosswire.common.util.ClassUtil;
 import org.crosswire.common.util.Logger;
+import org.crosswire.common.util.PluginUtil;
 
 /**
  * Factory method for creating a new Thesaurus.
@@ -47,10 +47,7 @@ public class ThesaurusFactory
     {
         try
         {
-            Class impl = ClassUtil.getImplementor(Thesaurus.class);
-            Thesaurus thesaurus = (Thesaurus) impl.newInstance();
-
-            return thesaurus;
+            return (Thesaurus) PluginUtil.getImplementation(Thesaurus.class);
         }
         catch (Exception ex)
         {
