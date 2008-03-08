@@ -56,7 +56,7 @@ public abstract class LayoutType implements Serializable
          */
         public String toString()
         {
-            return Msg.TDI.toString();
+            return UserMsg.TDI.toString();
         }
 
         /**
@@ -83,7 +83,7 @@ public abstract class LayoutType implements Serializable
          */
         public String toString()
         {
-            return Msg.MDI.toString();
+            return UserMsg.MDI.toString();
         }
 
         /**

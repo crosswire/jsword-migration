@@ -242,7 +242,7 @@ public abstract class AbstractViewLayout implements Viewable, Iterable
      */
     private String generateTitle()
     {
-        return Msg.UNTITLED.toString(new Integer(base++));
+        return UserMsg.UNTITLED.toString(new Integer(base++));
     }
 
     /**

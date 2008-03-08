@@ -84,6 +84,9 @@ import org.crosswire.common.util.StringUtil;
  *     "true" regardless of case. This is used to initialize widgets tied to actions to disabled.
  *     Once the action is created, it's state can be changed and the tied widgets will behave
  *     appropriately.</li>
+ * <li>Shared - Defaults to true when not present. It is unshared when the value does not match
+ *     "true" regardless of case. When false, each copy of the action is independent of other
+ *     copies.</li>
  * </ul>
  * 
  * <p>
@@ -211,10 +214,25 @@ public class ActionFactory implements ActionListener, Actionable
      */
     public Action getAction(String key)
     {
-        Action action = (CWAction) actions.get(key);
+        return getAction(key, null);
+    }
+
+    /**
+     * Get the Action for the given actionName.
+     * @param key the internal name of the CWAction
+     * @return CWAction null if it does not exist
+     */
+    public Action getAction(String key, ActionListener listener)
+    {
+        CWAction action = (CWAction) actions.get(key);
 
         if (action != null)
         {
+            if (listener != null)
+            {
+                action = (CWAction) action.clone();
+                action.addActionListener(listener);
+            }
             return action;
         }
         log.info("Missing key: '" + key + "'. Known keys are: " + StringUtil.join(actions.keySet().toArray(), ", ")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -257,14 +275,46 @@ public class ActionFactory implements ActionListener, Actionable
      * @param key the action to use
      * @return the button
      */
-    public JButton createJButton(String key)
+    public JButton createActionIcon(String key)
     {
-        JButton button = new JButton(getAction(key));
+        return createActionIcon(key, null);
+    }
+
+    /**
+     * Build a button from an action that consist solely of the icon.
+     * @param key the action to use
+     * @return the button
+     */
+    public JButton createActionIcon(String key, ActionListener listener)
+    {
+        Action action = getAction(key, listener);
+
+        JButton button = new JButton(action);
         button.setBorderPainted(false);
         button.setContentAreaFilled(false);
         button.setText(null);
         button.setMargin(new Insets(0, 0, 0, 0));
         return button;
+    }
+
+    /**
+     * Build a button from an action.
+     * @param key the action to use
+     * @return the button
+     */
+    public JButton createJButton(String key)
+    {
+        return createJButton(key, null);
+    }
+
+    /**
+     * Build a button from an action.
+     * @param key the action to use
+     * @return the button
+     */
+    public JButton createJButton(String key, ActionListener listener)
+    {
+        return new JButton(getAction(key, listener));
     }
 
     /**
@@ -321,7 +371,7 @@ public class ActionFactory implements ActionListener, Actionable
                     Icon largeIcon = getIcon(controls, actionName, CWAction.LARGE_ICON);
                     String enabledStr = getOptionalActionString(controls, actionName, "Enabled"); //$NON-NLS-1$
                     boolean enabled = enabledStr == null ? true : Boolean.valueOf(enabledStr).booleanValue();
-
+     
                     CWAction cwAction = new CWAction();
 
                     if (actionName == null || actionName.length() == 0)

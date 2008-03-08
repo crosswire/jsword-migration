@@ -186,7 +186,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         lblSearch.setLabelFor(txtSearch);
         btnSearch = new JButton(actions.getAction(GO_SEARCH));
 
-        JButton btnHelp = actions.createJButton(HELP);
+        JButton btnHelp = actions.createActionIcon(HELP);
         dlgHelp = new QuickHelpDialog(GuiUtil.getFrame(this), Msg.HELP_TITLE.toString(), Msg.HELP_TEXT.toString());
 
         btnAdvanced = new JButton(actions.getAction(ADVANCED));

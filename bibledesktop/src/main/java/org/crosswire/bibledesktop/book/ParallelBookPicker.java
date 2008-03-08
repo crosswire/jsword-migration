@@ -75,8 +75,8 @@ public class ParallelBookPicker extends JPanel implements BookProvider
         actions = new ActionFactory(ParallelBookPicker.class, this);
 
         JPanel buttonBox = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
-        buttonBox.add(actions.createJButton("RemovePicker")); //$NON-NLS-1$
-        buttonBox.add(actions.createJButton("AddPicker")); //$NON-NLS-1$
+        buttonBox.add(actions.createActionIcon("RemovePicker")); //$NON-NLS-1$
+        buttonBox.add(actions.createActionIcon("AddPicker")); //$NON-NLS-1$
         add(buttonBox);
 
         // Add the first picker

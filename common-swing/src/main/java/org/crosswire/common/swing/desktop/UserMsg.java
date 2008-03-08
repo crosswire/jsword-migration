@@ -19,26 +19,31 @@
  *
  * ID: $Id$
  */
-package org.crosswire.common.progress;
+package org.crosswire.common.swing.desktop;
 
 import org.crosswire.common.util.MsgBase;
 
 /**
  * Compile safe Msg resource settings.
  *
- * @see gnu.lgpl.License for license details.<br>
+ * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
+ * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public final class Msg extends MsgBase
+public final class UserMsg extends MsgBase
 {
-    static final Msg DONE = new Msg("Job.Done"); //$NON-NLS-1$
+    // Strings for AbstractViewLayout
+    static final UserMsg UNTITLED = new UserMsg("AbstractViewLayout.Untitled"); //$NON-NLS-1$
+    static final UserMsg TDI = new UserMsg("LayoutType.TDI"); //$NON-NLS-1$
+    static final UserMsg MDI = new UserMsg("LayoutType.MDI"); //$NON-NLS-1$
 
     /**
      * Passthrough ctor
      */
-    private Msg(String name)
+    private UserMsg(String name)
     {
         super(name);
     }
+
 }

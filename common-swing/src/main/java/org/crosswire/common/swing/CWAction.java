@@ -38,7 +38,7 @@ import javax.swing.event.EventListenerList;
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class CWAction extends AbstractAction
+public class CWAction extends AbstractAction implements Cloneable
 {
     /**
      * The icon to display when a large one is needed.
@@ -119,6 +119,26 @@ public class CWAction extends AbstractAction
         sb.append('\n');
 
         return sb.toString();
+    }
+
+    /**
+     * Create a clone that does not copy the listeners.
+     * These CWActions need to have listeners added to be
+     * meaningful.
+     */
+    public Object clone()
+    {
+        CWAction action = null;
+        try
+        {
+            action = (CWAction) super.clone();
+            action.listeners = null;
+        }
+        catch (CloneNotSupportedException e)
+        {
+            assert false: e;
+        } 
+        return action;
     }
 
     private EventListenerList listeners;

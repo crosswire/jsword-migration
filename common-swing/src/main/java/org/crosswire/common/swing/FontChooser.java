@@ -104,13 +104,9 @@ public class FontChooser extends JPanel
      */
     public static Font showDialog(Component parent, String title, Font initial)
     {
-        JPanel buttons = new JPanel();
-        // I18N: migrate this to an ActionFactory
-        JButton ok = new JButton(Msg.OK.toString());
-        // I18N: migrate this to an ActionFactory
-        JButton cancel = new JButton(Msg.CANCEL.toString());
-        Component root = SwingUtilities.getRoot(parent);
         final FontChooser fontc = new FontChooser();
+
+        Component root = SwingUtilities.getRoot(parent);
 
         fontc.dialog = (root instanceof JFrame)
                       ? new JDialog((JFrame) root, title, true)
@@ -120,18 +116,20 @@ public class FontChooser extends JPanel
 
         fontc.name.setSelectedItem(initial != null ? initial : DEFAULT_FONT.getFont());
 
-        buttons.setLayout(new FlowLayout());
-        buttons.add(ok);
-        buttons.add(cancel);
+        if (actions == null)
+        {
+            actions = new ActionFactory(FontChooser.class, fontc);
+        }
 
-        ok.addActionListener(new ActionListener()
+        JButton ok = actions.createJButton("OK", new ActionListener() //$NON-NLS-1$
         {
             public void actionPerformed(ActionEvent ex)
             {
                 fontc.dialog.setVisible(false);
             }
         });
-        cancel.addActionListener(new ActionListener()
+
+        JButton cancel = actions.createJButton("Cancel", new ActionListener() //$NON-NLS-1$
         {
             public void actionPerformed(ActionEvent ex)
             {
@@ -139,6 +137,11 @@ public class FontChooser extends JPanel
                 fontc.font = null;
             }
         });
+
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new FlowLayout());
+        buttons.add(ok);
+        buttons.add(cancel);
 
         fontc.setBorder(BorderFactory.createTitledBorder(Msg.SELECT_FONT.toString()));
 
@@ -151,9 +154,6 @@ public class FontChooser extends JPanel
         GuiUtil.centerWindow(fontc.dialog);
         GuiUtil.applyDefaultOrientation(fontc.dialog);
         fontc.dialog.setVisible(true);
-
-        // Why is this only available in Frames?
-        // dialog.setIconImage(task_small);
 
         fontc.dialog.dispose();
 
@@ -349,6 +349,11 @@ public class FontChooser extends JPanel
      * The current font
      */
     protected Font font;
+
+    /**
+     * The actions for this dialog.
+     */
+    protected static ActionFactory actions;
 
     /**
      * The minimum size of the font.

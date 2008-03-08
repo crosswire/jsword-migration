@@ -27,9 +27,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -38,7 +35,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -50,6 +46,7 @@ import org.crosswire.common.progress.JobManager;
 import org.crosswire.common.progress.Progress;
 import org.crosswire.common.progress.WorkEvent;
 import org.crosswire.common.progress.WorkListener;
+import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Logger;
 
@@ -59,6 +56,7 @@ import org.crosswire.common.util.Logger;
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
+ * @author DM Smith [dmsmith555 at yahoo dot com]
  */
 public class JobsProgressBar extends JPanel implements WorkListener
 {
@@ -70,6 +68,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
         jobs = new HashMap();
         positions = new ArrayList();
         shaper = new NumberShaper();
+        actions = new ActionFactory(JobsProgressBar.class, this);
 
         if (small)
         {
@@ -89,6 +88,17 @@ public class JobsProgressBar extends JPanel implements WorkListener
         this.setLayout(new GridLayout(1, 0, 2, 0));
 
         GuiUtil.applyDefaultOrientation(this);
+    }
+
+    /**
+     * Create a cancel button that only shows the cancel icon.
+     * When the button is pressed the job is interrupted.
+     * @return a custom cancel button
+     */
+    public synchronized JButton createCancelButton(Progress job)
+    {
+        JButton cancelButton = actions.createActionIcon(STOP, new JobCancelListener(job));
+        return cancelButton;
     }
 
     /* (non-Javadoc)
@@ -152,7 +162,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
         // preferred.width = 50;
         // progress.setPreferredSize(preferred);
 
-        JobData jobdata = new JobData(job, i, progress);
+        JobData jobdata = new JobData(this, job, i, progress);
         jobs.put(job, jobdata);
         if (i >= positions.size())
         {
@@ -246,6 +256,16 @@ public class JobsProgressBar extends JPanel implements WorkListener
     private NumberShaper shaper = new NumberShaper();
 
     /**
+     * The home of the stop action.
+     */
+    private ActionFactory actions;
+
+    /**
+     * The key for the Stop action.
+     */
+    private static final String STOP = "Stop"; //$NON-NLS-1$
+
+    /**
      * The log stream
      */
     private static final Logger log = Logger.getLogger(JobsProgressBar.class);
@@ -256,15 +276,16 @@ public class JobsProgressBar extends JPanel implements WorkListener
     private static final long serialVersionUID = 3257563988660663606L;
 
     /**
-     * A simple struct to group information about a Job
+     * A simple class to group information about a Job
      */
     private static class JobData implements WorkListener
     {
         /**
          * Simple ctor
          */
-        JobData(Progress job, int index, JProgressBar progress)
+        JobData(JobsProgressBar bar, Progress job, int index, JProgressBar progress)
         {
+            this.bar = bar;
             this.job = job;
             this.index = index;
             this.progress = progress;
@@ -312,7 +333,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
         {
             if (cancelButton == null)
             {
-                cancelButton = createCancelButton();
+                cancelButton = bar.createCancelButton(job);
             }
             return cancelButton;
         }
@@ -345,36 +366,6 @@ public class JobsProgressBar extends JPanel implements WorkListener
         }
 
         /**
-         * Create a cancel button that only shows the cancel icon.
-         * When the button is pressed the job is interrupted.
-         * @return a custom cancel button
-         */
-        private JButton createCancelButton()
-        {
-            Icon stop = GuiUtil.getIcon("toolbarButtonGraphics/general/Stop16.gif"); //$NON-NLS-1$
-
-            // Create a cancel button
-            cancelButton = new JButton(stop);
-            // Only paint the icon not the button
-            cancelButton.setContentAreaFilled(false);
-            // Make the button as small as possible
-            cancelButton.setMargin(new Insets(0, 0, 0, 0));
-            // We don't need no stinkin' border
-            cancelButton.setBorderPainted(false);
-            // Under WinXP this does nothing
-            cancelButton.setRolloverEnabled(true);
-            cancelButton.setToolTipText(Msg.CANCEL.toString());
-            cancelButton.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent ev)
-                {
-                    getJob().cancel();
-                }
-            });
-            return cancelButton;
-        }
-
-        /**
          * Decorate the progress bar if the job can be interrupted.
          * We put the cancel button in a 1 row, 2 column grid
          * where the button is in a minimally sized fixed cell
@@ -391,7 +382,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridwidth = 1;
             gbc.fill = GridBagConstraints.NONE;
-            panel.add(createCancelButton(), gbc);
+            panel.add(bar.createCancelButton(job), gbc);
             gbc.weightx = 1.0;
             gbc.gridwidth = GridBagConstraints.REMAINDER;
             gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -400,11 +391,11 @@ public class JobsProgressBar extends JPanel implements WorkListener
             return panel;
         }
 
+        private JobsProgressBar bar;
         private Progress job;
         private int index;
         private JProgressBar progress;
         private Component comp;
         private JButton cancelButton;
     }
-
 }
