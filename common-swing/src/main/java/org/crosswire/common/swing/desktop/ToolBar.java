@@ -48,6 +48,7 @@ import org.crosswire.common.util.OSType;
  * <li>small/large icons</li>
  * <li>showing/hiding toolbar</li>
  * </ul>
+ * It starts with large icons.
  *
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
@@ -72,6 +73,16 @@ public class ToolBar extends JToolBar
             setFloatable(false);
         }
         GuiUtil.applyDefaultOrientation(this);
+    }
+
+    /* (non-Javadoc)
+     * @see javax.swing.JToolBar#add(javax.swing.Action)
+     */
+    public JButton add(Action a)
+    {
+        JButton button = super.add(a);
+        button.setIcon((Icon) a.getValue(CWAction.LARGE_ICON));
+        return button;
     }
 
     /**
@@ -105,7 +116,7 @@ public class ToolBar extends JToolBar
 
     /**
      * Set the tool tip text for the buttons on the tool bar.
-     * @param show indicates whether the buttons should be labelled
+     * @param show indicates whether the buttons should be labeled
      */
     public void showText(boolean show)
     {
@@ -191,7 +202,9 @@ public class ToolBar extends JToolBar
      */
     public JMenuItem getIconSizeToggle()
     {
-        return new JCheckBoxMenuItem(actions.getAction(TOOLBAR_LARGE));
+        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.getAction(TOOLBAR_LARGE));
+        toggle.setSelected(true);
+        return toggle;
     }
 
     /**
