@@ -116,7 +116,7 @@ public class BeanPanel extends JPanel
                     }
                     catch (Exception ex)
                     {
-                        text.setText(Msg.ERROR_READING.toString(ex.getMessage()));
+                        text.setText(LimboMsg.ERROR_READING.toString(ex.getMessage()));
                         log.warn("property read failed", ex); //$NON-NLS-1$
                     }
 

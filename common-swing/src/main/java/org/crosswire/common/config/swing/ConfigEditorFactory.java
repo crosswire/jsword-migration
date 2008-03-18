@@ -132,7 +132,7 @@ public final class ConfigEditorFactory
             }
             catch (IOException ex)
             {
-                throw new LucidRuntimeException(Msg.CONFIG_SAVE_FAILED, ex, new Object[] { uri });
+                throw new LucidRuntimeException(UserMsg.CONFIG_SAVE_FAILED, ex, new Object[] { uri });
             }
         }
 

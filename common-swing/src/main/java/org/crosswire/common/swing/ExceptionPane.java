@@ -27,6 +27,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -89,7 +90,7 @@ public final class ExceptionPane extends JPanel
     private void initialise()
     {
         MessageFormat msgFormat = new MessageFormat("<html><font size=\"-1\">{0}</font> {1}"); //$NON-NLS-1$
-        String exmsg = msgFormat.format(new Object[] { Msg.ERROR_OCCURED.toString(), ExceptionPane.getHTMLDescription(ex) });
+        String exmsg = msgFormat.format(new Object[] { UserMsg.ERROR_OCCURED.toString(), ExceptionPane.getHTMLDescription(ex) });
 
         // The upper pane
         JLabel message = new JLabel();
@@ -106,36 +107,23 @@ public final class ExceptionPane extends JPanel
         Font courier = new Font("Monospaced", Font.PLAIN, 12); //$NON-NLS-1$
         list.setFont(courier);
 
-        // The buttons at the bottom
-        ok = new JButton();
-        ok.setText(Msg.OK.toString());
-        ok.setMnemonic(Msg.OK.toString().charAt(0));
+        JPanel buttons = new JPanel(new BorderLayout());
 
+        okBox = new JPanel(new FlowLayout());
+        buttons.add(okBox, BorderLayout.CENTER);
+        
+        // Add a button if showDetails is true
         detail = new JCheckBox();
         detail.addItemListener(new SelectedItemListener(this));
-        detail.setText(Msg.DETAILS.toString());
-
-        JPanel spacer = new JPanel(new FlowLayout());
-        spacer.add(ok);
-
-        JPanel buttons = new JPanel(new BorderLayout());
-        buttons.add(spacer, BorderLayout.CENTER);
-        buttons.add(detail, BorderLayout.LINE_START);
+        detail.setText(UserMsg.DETAILS.toString());
+        if (detailShown)
+        {
+            buttons.add(detail, BorderLayout.LINE_START);
+        }
 
         upper = new JPanel(new BorderLayout());
         upper.add(banner, BorderLayout.NORTH);
         upper.add(buttons, BorderLayout.CENTER);
-
-        // The lower pane
-        label = new JLabel();
-        label.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
-        label.setFont(courier);
-        label.setText(Msg.NO_FILE.toString());
-        text = new JTextArea();
-        text.setEditable(false);
-        text.setFont(courier);
-        JScrollPane textScroll = new CWScrollPane(text);
-        textScroll.setColumnHeaderView(label);
 
         List causes = new ArrayList();
         Throwable throwable = ex;
@@ -153,19 +141,40 @@ public final class ExceptionPane extends JPanel
         JPanel heading = new JPanel(new BorderLayout());
         heading.add(traces, BorderLayout.CENTER);
 
-        JSplitPane split = new FixedSplitPane();
-        // Make the top 20% of the total
-        split.setResizeWeight(0.2D);
-        split.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        split.setContinuousLayout(true);
-        split.setTopComponent(new CWScrollPane(list));
-        split.setBottomComponent(textScroll);
-        split.setBorder(BorderFactory.createEmptyBorder());
-        split.setPreferredSize(new Dimension(500, 300));
-
         lower = new JPanel(new BorderLayout());
-        lower.add(split, BorderLayout.CENTER);
         lower.add(heading, BorderLayout.NORTH);
+
+        // If we have sources then show an area for the source.
+        // Otherwise just list the exception trace
+        if (sources.length == 0)
+        {
+            lower.add(new CWScrollPane(list), BorderLayout.CENTER);
+        }
+        else
+        {
+            // The lower pane
+            label = new JLabel();
+            label.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+            label.setFont(courier);
+            label.setText(UserMsg.NO_FILE.toString());
+            text = new JTextArea();
+            text.setEditable(false);
+            text.setFont(courier);
+
+            JScrollPane textScroll = new CWScrollPane(text);
+            textScroll.setColumnHeaderView(label);
+
+            JSplitPane split = new FixedSplitPane();
+            // Make the top 20% of the total
+            split.setResizeWeight(0.2D);
+            split.setOrientation(JSplitPane.VERTICAL_SPLIT);
+            split.setContinuousLayout(true);
+            split.setTopComponent(new CWScrollPane(list));
+            split.setBottomComponent(textScroll);
+            split.setBorder(BorderFactory.createEmptyBorder());
+            split.setPreferredSize(new Dimension(500, 300));
+            lower.add(split, BorderLayout.CENTER);
+        }
 
         this.setLayout(new BorderLayout());
         this.add(upper, BorderLayout.NORTH);
@@ -194,7 +203,10 @@ public final class ExceptionPane extends JPanel
     protected void setDisplayedException(Throwable ex)
     {
         StackTrace st = new StackTrace(ex);
-        list.addListSelectionListener(new ExceptionPane.CustomLister(st, text, label));
+        if (sources.length > 0)
+        {
+            list.addListSelectionListener(new ExceptionPane.CustomLister(st, text, label));
+        }
         list.setModel(new StackTraceListModel(st));
     }
 
@@ -208,34 +220,58 @@ public final class ExceptionPane extends JPanel
         final ExceptionPane pane = new ExceptionPane(ex);
 
         // Setting for the whole dialog
-        final JDialog dialog = new JDialog(GuiUtil.getFrame(parent));
-        dialog.getRootPane().setDefaultButton(pane.ok);
+        Frame root = GuiUtil.getFrame(parent);
+
+        // If this dialog is not modal then if we display an exception dialog
+        // where there is a modal dialog displayed then although this dialog
+        // is to the front, we can't interact with it until the modal dialog
+        // has been closed.
+        final JDialog dialog = new JDialog(root, UserMsg.ERROR.toString(), true);
         dialog.getRootPane().setLayout(new BorderLayout());
         dialog.getRootPane().setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, pane.upper.getBackground()));
         dialog.getRootPane().add(pane, BorderLayout.CENTER);
-        dialog.setTitle(Msg.ERROR.toString());
 
-        pane.ok.addActionListener(new ActionListener()
+        dialog.setComponentOrientation(root.getComponentOrientation());
+
+        if (actions == null)
         {
-            public void actionPerformed(ActionEvent ev)
+            actions = new ActionFactory(ExceptionPane.class, pane);
+        }
+
+        JButton ok = actions.createJButton("OK", new ActionListener() //$NON-NLS-1$
+        {
+            public void actionPerformed(ActionEvent e)
             {
                 dialog.dispose();
             }
         });
 
-        // If this dialog is not modal then if we display an exception dialog
-        // where there is a modal dialog displayed then although this dialog
-        // is to the front, we can't interract with it until the modal dialog
-        // has been closed.
-        dialog.setModal(true);
+        pane.okBox.add(ok);
+        dialog.getRootPane().setDefaultButton(ok);
 
         GuiUtil.centerWindow(dialog);
         dialog.pack();
         dialog.setVisible(true);
+    }
 
-        // When it has closed
-        //dialog.dispose();
-        //dialog = null;
+    /**
+     * This is only used by config
+     * @return Whether the "details" check box should be shown.
+     * @see #setDetailShown(boolean)
+     */
+    public static boolean isDetailShown()
+    {
+        return ExceptionPane.detailShown;
+    }
+
+    /**
+     * Set whether the "details" check box should be shown.
+     * @param showDetails indicates the whether details should be available.
+     * @see #isDetailShown()
+     */
+    public static void setDetailShown(boolean detailShown)
+    {
+        ExceptionPane.detailShown = detailShown;
     }
 
     /**
@@ -299,7 +335,7 @@ public final class ExceptionPane extends JPanel
         String msg = ex.getMessage();
         if (msg == null || msg.equals("")) //$NON-NLS-1$
         {
-            msg = Msg.NO_DESC.toString();
+            msg = UserMsg.NO_DESC.toString();
         }
         String orig = XMLUtil.escape(msg);
         msg = orig.replaceAll("\n", "<br>"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -329,7 +365,7 @@ public final class ExceptionPane extends JPanel
         if (nex != null)
         {
             retcode.append("<p><br><font size=\"-1\">"); //$NON-NLS-1$
-            retcode.append(Msg.CAUSED_BY);
+            retcode.append(UserMsg.CAUSED_BY);
             retcode.append("</font>"); //$NON-NLS-1$
             retcode.append(getHTMLDescription(nex));
         }
@@ -443,7 +479,7 @@ public final class ExceptionPane extends JPanel
             int line_num = st.getLineNumber(level);
             String orig = name;
             Integer errorLine = new Integer(line_num);
-            mylabel.setText(Msg.NO_FILE.toString());
+            mylabel.setText(UserMsg.NO_FILE.toString());
 
             // Find a file
             name = File.separator + orig.replace('.', File.separatorChar) + FileUtil.EXTENSION_JAVA;
@@ -463,7 +499,7 @@ public final class ExceptionPane extends JPanel
                     LineNumberReader in = null;
                     try
                     {
-                        String found = Msg.SOURCE_FOUND.toString(new Object[] { errorLine, file.getCanonicalPath() });
+                        String found = UserMsg.SOURCE_FOUND.toString(new Object[] { errorLine, file.getCanonicalPath() });
                         mylabel.setText(found);
                         in = new LineNumberReader(new FileReader(file));
                         while (true)
@@ -516,10 +552,10 @@ public final class ExceptionPane extends JPanel
             }
 
             // If we can't find a matching file
-            StringBuffer error = new StringBuffer(Msg.SOURCE_NOT_FOUND.toString(new Object[] { st.getClassName(level), errorLine }));
+            StringBuffer error = new StringBuffer(UserMsg.SOURCE_NOT_FOUND.toString(new Object[] { st.getClassName(level), errorLine }));
             for (int i = 0; i < srcs.length; i++)
             {
-                error.append(Msg.SOURCE_ATTEMPT.toString(new Object[] { srcs[i].getAbsolutePath() + name }));
+                error.append(UserMsg.SOURCE_ATTEMPT.toString(new Object[] { srcs[i].getAbsolutePath() + name }));
             }
 
             mytext.setText(error.toString());
@@ -640,9 +676,19 @@ public final class ExceptionPane extends JPanel
     private JPanel upper;
     private JLabel label;
     private JTextArea text;
-    private JButton ok;
+    private JPanel okBox;
     private JCheckBox detail;
     private JPanel lower;
+
+    /**
+     * The actions for this dialog.
+     */
+    protected static ActionFactory actions;
+
+    /**
+     * Whether full details should be given.
+     */
+    private static boolean detailShown;
 
     /**
      * The directories searched for source

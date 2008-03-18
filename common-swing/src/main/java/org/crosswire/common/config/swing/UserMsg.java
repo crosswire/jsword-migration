@@ -17,9 +17,9 @@
  * Copyright: 2005
  *     The copyright to this program is held by it's authors.
  *
- * ID: $Id$
+ * ID: $Id: Msg.java 1464 2007-07-02 02:34:40Z dmsmith $
  */
-package org.crosswire.common.swing;
+package org.crosswire.common.config.swing;
 
 import org.crosswire.common.util.MsgBase;
 
@@ -30,16 +30,16 @@ import org.crosswire.common.util.MsgBase;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-final class Msg extends MsgBase
+public final class UserMsg extends MsgBase
 {
-    static final Msg PLAF_CHANGE = new Msg("LookAndFeelUtil.PlafChange"); //$NON-NLS-1$
-    static final Msg KEYS = new Msg("MapTableModel.Keys"); //$NON-NLS-1$
-    static final Msg VALUES = new Msg("MapTableModel.Values"); //$NON-NLS-1$
+    static final UserMsg CONFIG_SAVE_FAILED = new UserMsg("ConfigEditorFactory.ConfigFileFailed"); //$NON-NLS-1$
+    static final UserMsg SELECT_SUBNODE = new UserMsg("TreeConfigEditor.SelectSubnode"); //$NON-NLS-1$
+    static final UserMsg PROPERTIES = new UserMsg("AbstractConfigEditor.Properties"); //$NON-NLS-1$
 
     /**
      * Passthrough ctor
      */
-    private Msg(String name)
+    private UserMsg(String name)
     {
         super(name);
     }

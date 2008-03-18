@@ -69,7 +69,7 @@ public class ColorField extends JPanel implements Field
      */
     public void doEditColor()
     {
-        color = JColorChooser.showDialog(ColorField.this, Msg.EDIT.toString(), color);
+        color = JColorChooser.showDialog(ColorField.this, LimboMsg.EDIT.toString(), color);
     }
 
     /* (non-Javadoc)

@@ -150,8 +150,8 @@ public class TextViewPanel extends JPanel
     {
         frame = new JDialog(parent, "Text Viewer"); //$NON-NLS-1$
 
-        btnClose = new JButton(Msg.CLOSE.toString());
-        btnClose.setMnemonic(Msg.CLOSE.toString().charAt(0));
+        btnClose = new JButton(LimboMsg.CLOSE.toString());
+        btnClose.setMnemonic(LimboMsg.CLOSE.toString().charAt(0));
         btnClose.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent ev)

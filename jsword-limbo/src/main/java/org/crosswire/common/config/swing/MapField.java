@@ -80,7 +80,7 @@ public class MapField extends JPanel implements Field
         buttons.add(new JButton(actions.getAction(REMOVE)));
         buttons.add(new JButton(actions.getAction(UPDATE)));
 
-        Border title = BorderFactory.createTitledBorder(Msg.COMPONENT_EDITOR.toString());
+        Border title = BorderFactory.createTitledBorder(LimboMsg.COMPONENT_EDITOR.toString());
         Border pad = BorderFactory.createEmptyBorder(5, 5, 5, 5);
         setBorder(BorderFactory.createCompoundBorder(title, pad));
 
@@ -139,7 +139,7 @@ public class MapField extends JPanel implements Field
     {
         InputPane input = new InputPane();
 
-        if (JOptionPane.showConfirmDialog(this, input, Msg.NEW_CLASS.toString(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+        if (JOptionPane.showConfirmDialog(this, input, LimboMsg.NEW_CLASS.toString(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
         {
             String newClass = input.classField.getText();
             String newName = input.nameField.getText();
@@ -160,7 +160,7 @@ public class MapField extends JPanel implements Field
         input.nameField.setText(currentKey());
         input.classField.setText(currentValue());
 
-        if (JOptionPane.showConfirmDialog(this, input, Msg.EDIT_CLASS.toString(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+        if (JOptionPane.showConfirmDialog(this, input, LimboMsg.EDIT_CLASS.toString(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
         {
             String newClass = input.classField.getText();
             String newName = input.nameField.getText();
@@ -193,14 +193,14 @@ public class MapField extends JPanel implements Field
 
             if (!superclass.isAssignableFrom(clazz))
             {
-                throw new ClassCastException(Msg.BAD_SUPERCLASS.toString(new Object[] { name, superclass }));
+                throw new ClassCastException(LimboMsg.BAD_SUPERCLASS.toString(new Object[] { name, superclass }));
             }
 
             return true;
         }
         catch (ClassNotFoundException ex)
         {
-            JOptionPane.showMessageDialog(this, Msg.CLASS_NOT_FOUND.toString(name));
+            JOptionPane.showMessageDialog(this, LimboMsg.CLASS_NOT_FOUND.toString(name));
         }
         catch (Exception ex)
         {
@@ -246,7 +246,7 @@ public class MapField extends JPanel implements Field
          */
         public String getColumnName(int col)
         {
-            return (col == 0) ? Msg.NAME.toString() : Msg.CLASS.toString();
+            return (col == 0) ? LimboMsg.NAME.toString() : LimboMsg.CLASS.toString();
         }
 
         /* (non-Javadoc)
@@ -279,9 +279,9 @@ public class MapField extends JPanel implements Field
             nameField = new JTextField();
             classField = new JTextField(20);
 
-            add(new JLabel(Msg.NAME + ":")); //$NON-NLS-1$
+            add(new JLabel(LimboMsg.NAME + ":")); //$NON-NLS-1$
             add(nameField);
-            add(new JLabel(Msg.CLASS + ":")); //$NON-NLS-1$
+            add(new JLabel(LimboMsg.CLASS + ":")); //$NON-NLS-1$
             add(classField);
 
             setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));

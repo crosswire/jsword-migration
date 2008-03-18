@@ -32,20 +32,13 @@ import org.crosswire.common.util.MsgBase;
  */
 public final class Msg extends MsgBase
 {
-    static final Msg EDIT = new Msg("ColorField.Edit"); //$NON-NLS-1$
-    static final Msg CONFIG_SAVE_FAILED = new Msg("ConfigEditorFactory.ConfigFileFailed"); //$NON-NLS-1$
-    static final Msg SELECT_FONT = new Msg("FontField.SelectFont"); //$NON-NLS-1$
     static final Msg NAME = new Msg("StringArrayField.Name"); //$NON-NLS-1$
     static final Msg COMPONENT_EDITOR = new Msg("StringArrayField.ComponentEditor"); //$NON-NLS-1$
     static final Msg EDIT_CLASS = new Msg("StringArrayField.EditClass"); //$NON-NLS-1$
+    static final Msg NEW_CLASS = new Msg("StringArrayField.NewClass"); //$NON-NLS-1$
+
     static final Msg ERROR = new Msg("OptionsField.Error"); //$NON-NLS-1$
     static final Msg NO_OPTIONS = new Msg("OptionsField.NoOptions"); //$NON-NLS-1$
-    static final Msg PATH_EDITOR = new Msg("PathField.PathEditor"); //$NON-NLS-1$
-    static final Msg NEW_CLASS = new Msg("StringArrayField.NewClass"); //$NON-NLS-1$
-    static final Msg BASIC = new Msg("TabbedConfigEditor.Basic"); //$NON-NLS-1$
-    static final Msg SELECT_SUBNODE = new Msg("TreeConfigEditor.SelectSubnode"); //$NON-NLS-1$
-    static final Msg PROPERTIES = new Msg("WizardConfigEditor.Properties"); //$NON-NLS-1$
-    static final Msg PROPERTIES_POSN = new Msg("WizardConfigEditor.PropertiesPosn"); //$NON-NLS-1$
 
     /**
      * Passthrough ctor

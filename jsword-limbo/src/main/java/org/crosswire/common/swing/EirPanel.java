@@ -61,7 +61,7 @@ public class EirPanel extends JPanel
 
         // I18N: migrate this to an ActionFactory
         btnOk = new JButton();
-        btnOk.setText(Msg.CLOSE.toString());
+        btnOk.setText(LimboMsg.CLOSE.toString());
         btnOk.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent ev)

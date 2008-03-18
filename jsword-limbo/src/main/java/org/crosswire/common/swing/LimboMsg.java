@@ -17,7 +17,7 @@
  * Copyright: 2005
  *     The copyright to this program is held by it's authors.
  *
- * ID: $Id$
+ * ID: $Id: Msg.java 1464 2007-07-02 02:34:40Z dmsmith $
  */
 package org.crosswire.common.swing;
 
@@ -30,16 +30,22 @@ import org.crosswire.common.util.MsgBase;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-final class Msg extends MsgBase
+final class LimboMsg extends MsgBase
 {
-    static final Msg PLAF_CHANGE = new Msg("LookAndFeelUtil.PlafChange"); //$NON-NLS-1$
-    static final Msg KEYS = new Msg("MapTableModel.Keys"); //$NON-NLS-1$
-    static final Msg VALUES = new Msg("MapTableModel.Values"); //$NON-NLS-1$
+    static final LimboMsg ERROR_READING = new LimboMsg("BeanPanel.ErrorReading"); //$NON-NLS-1$
+
+    // I18N: migrate this to an ActionFactory
+    static final LimboMsg CLOSE = new LimboMsg("EirPanel.Close"); //$NON-NLS-1$
+
+    static final LimboMsg NO_PROBLEMS = new LimboMsg("ExceptionShelf.NoProblems"); //$NON-NLS-1$
+    static final LimboMsg STATUS = new LimboMsg("ExceptionShelf.Status"); //$NON-NLS-1$
+    // I18N: migrate this to an ActionFactory
+    static final LimboMsg REMOVE = new LimboMsg("ExceptionShelf.Remove"); //$NON-NLS-1$
 
     /**
      * Passthrough ctor
      */
-    private Msg(String name)
+    private LimboMsg(String name)
     {
         super(name);
     }

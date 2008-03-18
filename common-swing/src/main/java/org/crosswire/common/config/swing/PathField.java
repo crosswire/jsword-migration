@@ -37,7 +37,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.Border;
 
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.ActionFactory;
@@ -77,9 +76,8 @@ public class PathField extends JPanel implements Field
         buttons.add(new JButton(actions.getAction(REMOVE)));
         buttons.add(new JButton(actions.getAction(UPDATE)));
 
-        Border title = BorderFactory.createTitledBorder(Msg.PATH_EDITOR.toString());
-        Border pad = BorderFactory.createEmptyBorder(5, 5, 5, 5);
-        setBorder(BorderFactory.createCompoundBorder(title, pad));
+        setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(),
+                                                     BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
         setLayout(new BorderLayout());
         add(scroll, BorderLayout.CENTER);

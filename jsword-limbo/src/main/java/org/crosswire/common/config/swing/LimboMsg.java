@@ -19,27 +19,35 @@
  *
  * ID: $Id$
  */
-package org.crosswire.common.swing;
+package org.crosswire.common.config.swing;
 
 import org.crosswire.common.util.MsgBase;
 
 /**
  * Compile safe Msg resource settings.
- *
+ * 
  * @see gnu.lgpl.License for license details.
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-final class Msg extends MsgBase
+public final class LimboMsg extends MsgBase
 {
-    static final Msg PLAF_CHANGE = new Msg("LookAndFeelUtil.PlafChange"); //$NON-NLS-1$
-    static final Msg KEYS = new Msg("MapTableModel.Keys"); //$NON-NLS-1$
-    static final Msg VALUES = new Msg("MapTableModel.Values"); //$NON-NLS-1$
+    static final LimboMsg CLASS = new LimboMsg("MapField.Class"); //$NON-NLS-1$
+    static final LimboMsg NAME = new LimboMsg("MapField.Name"); //$NON-NLS-1$
+    static final LimboMsg COMPONENT_EDITOR = new LimboMsg("MapField.ComponentEditor"); //$NON-NLS-1$
+    static final LimboMsg EDIT_CLASS = new LimboMsg("MapField.EditClass"); //$NON-NLS-1$
+    static final LimboMsg CLASS_NOT_FOUND = new LimboMsg("MapField.ClassNotFound."); //$NON-NLS-1$
+    static final LimboMsg BAD_SUPERCLASS = new LimboMsg("MapField.BadSuperclass"); //$NON-NLS-1$
+    static final LimboMsg NEW_CLASS = new LimboMsg("MapField.NewClass"); //$NON-NLS-1$
+
+    static final LimboMsg EDIT = new LimboMsg("ColorField.Edit"); //$NON-NLS-1$
+    static final LimboMsg BASIC = new LimboMsg("TabbedConfigEditor.Basic"); //$NON-NLS-1$
+    static final LimboMsg PROPERTIES_POSN = new LimboMsg("WizardConfigEditor.PropertiesPosn"); //$NON-NLS-1$
 
     /**
      * Passthrough ctor
      */
-    private Msg(String name)
+    private LimboMsg(String name)
     {
         super(name);
     }

@@ -154,7 +154,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor
             return;
         }
 
-        title.setText(obj + Msg.PROPERTIES.toString());
+        title.setText(obj + " " + UserMsg.PROPERTIES); //$NON-NLS-1$
 
         // Get the name of the current deck
         Object[] list = tree.getSelectionPath().getPath();

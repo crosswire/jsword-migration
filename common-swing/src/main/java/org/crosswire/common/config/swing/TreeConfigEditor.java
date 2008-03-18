@@ -78,7 +78,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
         deck = new JPanel();
         layout = new CardLayout();
 
-        blank.add(new JLabel(Msg.SELECT_SUBNODE.toString()));
+        blank.add(new JLabel(UserMsg.SELECT_SUBNODE.toString()));
 
         deck.setLayout(layout);
         deck.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
@@ -109,7 +109,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
         title.setBackground(Color.gray);
         title.setForeground(Color.white);
         title.setOpaque(true);
-        title.setText(Msg.PROPERTIES.toString());
+        title.setText(UserMsg.PROPERTIES.toString());
         title.setAlignmentX(SwingConstants.LEADING);
 
         // Use this if you want to have the tree touch the bottom. Then add
@@ -201,7 +201,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
             return;
         }
 
-        title.setText(obj + " " + Msg.PROPERTIES); //$NON-NLS-1$
+        title.setText(obj + " " + UserMsg.PROPERTIES); //$NON-NLS-1$
 
         // Get the name of the current deck
         Object[] list = tree.getSelectionPath().getPath();

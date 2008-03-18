@@ -228,6 +228,11 @@
   </option>
 
 <!-- This really only useful for developers -->
+  <option key="Advanced.DetailShown" type="boolean">
+    <introspect class="org.crosswire.common.swing.ExceptionPane" property="DetailShown"/>
+  </option>
+
+<!-- This really only useful for developers -->
   <option key="Advanced.SourcePath" type="path">
     <introspect class="org.crosswire.common.swing.ExceptionPane" property="SourcePath"/>
   </option>

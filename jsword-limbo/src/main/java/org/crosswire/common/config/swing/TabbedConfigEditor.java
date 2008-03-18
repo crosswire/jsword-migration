@@ -111,7 +111,7 @@ public class TabbedConfigEditor extends AbstractConfigEditor
                             sub.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
                             nest.setComponentAt(index, sub);
                             nest = sub;
-                            nest.addTab(Msg.BASIC.toString(), TAB_ICON, comp);
+                            nest.addTab(LimboMsg.BASIC.toString(), TAB_ICON, comp);
                         }
                     }
                 }
@@ -138,7 +138,7 @@ public class TabbedConfigEditor extends AbstractConfigEditor
                             if (card != null)
                             {
                                 card.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-                                nest.addTab(Msg.BASIC.toString(), TAB_ICON, card);
+                                nest.addTab(LimboMsg.BASIC.toString(), TAB_ICON, card);
                             }
                         }
                         // else log.fine("  Warning skipping comp="+comp.getClass().getName());

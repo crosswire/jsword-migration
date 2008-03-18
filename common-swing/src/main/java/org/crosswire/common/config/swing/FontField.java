@@ -23,7 +23,6 @@ package org.crosswire.common.config.swing;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.border.Border;
 
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.FontChooser;
@@ -43,9 +42,9 @@ public class FontField extends FontChooser implements Field
      */
     public FontField()
     {
-        Border title = BorderFactory.createTitledBorder(Msg.SELECT_FONT.toString());
-        Border pad = BorderFactory.createEmptyBorder(5, 5, 5, 5);
-        setBorder(BorderFactory.createCompoundBorder(title, pad));
+        setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(),
+                                                     BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+
     }
 
     /**

@@ -40,12 +40,6 @@ final class Msg extends MsgBase
     static final Msg SELECT_VERSE = new Msg("BibleViewPane.SelectVerse"); //$NON-NLS-1$
     static final Msg NONE = new Msg("BibleViewPane.None"); //$NON-NLS-1$
 
-    // I18N: migrate this to an ActionFactory
-    static final Msg CHOOSER_CANCEL = new Msg("BookChooser.Cancel"); //$NON-NLS-1$
-    // I18N: migrate this to an ActionFactory
-    static final Msg CHOOSER_OK = new Msg("BookChooser.OK"); //$NON-NLS-1$
-    static final Msg CHOOSER_TITLE = new Msg("BookChooser.Title"); //$NON-NLS-1$
-
     static final Msg BAD_VERSE = new Msg("DisplaySelectPane.BadVerse"); //$NON-NLS-1$
     static final Msg NO_INSTALLED_BIBLE = new Msg("DisplaySelectPane.NoInstalledBible"); //$NON-NLS-1$
     static final Msg SELECT_PASSAGE_TITLE = new Msg("DisplaySelectPane.SelectPassageTitle"); //$NON-NLS-1$

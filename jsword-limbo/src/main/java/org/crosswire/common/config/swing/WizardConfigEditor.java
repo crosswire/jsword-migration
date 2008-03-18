@@ -83,7 +83,7 @@ public class WizardConfigEditor extends AbstractConfigEditor
         layout = new CardLayout();
         deck = new JPanel(layout);
 
-        title = new JLabel(Msg.PROPERTIES.toString(), SwingConstants.LEADING);
+        title = new JLabel(UserMsg.PROPERTIES.toString(), SwingConstants.LEADING);
         title.setIcon(TASK_ICON_LARGE);
         title.setFont(getFont().deriveFont(Font.PLAIN, 16));
         title.setPreferredSize(new Dimension(30, 30));
@@ -150,7 +150,7 @@ public class WizardConfigEditor extends AbstractConfigEditor
             }
         }
 
-        title.setText(names.get(1) + Msg.PROPERTIES_POSN.toString(new Object[] { new Integer(1), new Integer(wcards) }));
+        title.setText(names.get(1) + LimboMsg.PROPERTIES_POSN.toString(new Object[] { new Integer(1), new Integer(wcards) }));
 
         SwingUtilities.updateComponentTreeUI(this);
     }
@@ -237,7 +237,7 @@ public class WizardConfigEditor extends AbstractConfigEditor
             posn++;
         }
 
-        title.setText(names.get(posn) + Msg.PROPERTIES_POSN.toString(new Object[] { new Integer(posn + 1), new Integer(wcards) }));
+        title.setText(names.get(posn) + LimboMsg.PROPERTIES_POSN.toString(new Object[] { new Integer(posn + 1), new Integer(wcards) }));
 
         actions.getAction(BACK).setEnabled(posn != 0);
         actions.getAction(NEXT).setEnabled(posn != (wcards - 1));

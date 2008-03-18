@@ -143,7 +143,7 @@ public class FontChooser extends JPanel
         buttons.add(ok);
         buttons.add(cancel);
 
-        fontc.setBorder(BorderFactory.createTitledBorder(Msg.SELECT_FONT.toString()));
+        fontc.setBorder(BorderFactory.createTitledBorder(UserMsg.SELECT_FONT.toString()));
 
         fontc.dialog.getRootPane().setDefaultButton(ok);
         fontc.dialog.getContentPane().setLayout(new BorderLayout());
@@ -378,12 +378,12 @@ public class FontChooser extends JPanel
     /**
      * Bold font?
      */
-    protected JCheckBox bold = new JCheckBox(Msg.BOLD.toString());
+    protected JCheckBox bold = new JCheckBox(UserMsg.BOLD.toString());
 
     /**
      * Italic font?
      */
-    protected JCheckBox italic = new JCheckBox(Msg.ITALIC.toString());
+    protected JCheckBox italic = new JCheckBox(UserMsg.ITALIC.toString());
 
     /**
      * The font size

@@ -198,7 +198,7 @@ public class ExceptionShelf extends JPanel
     {
         if (total == 0)
         {
-            JOptionPane.showMessageDialog(this, Msg.NO_PROBLEMS, Msg.STATUS.toString(), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, LimboMsg.NO_PROBLEMS, LimboMsg.STATUS.toString(), JOptionPane.INFORMATION_MESSAGE);
         }
         else
         {
@@ -260,7 +260,7 @@ public class ExceptionShelf extends JPanel
     {
         JPanel retcode = new JPanel();
         // I18N: migrate this to an ActionFactory
-        JButton remove = new JButton(Msg.REMOVE.toString());
+        JButton remove = new JButton(LimboMsg.REMOVE.toString());
         JButton report = new JButton();
 
         if (small == null)
@@ -272,7 +272,7 @@ public class ExceptionShelf extends JPanel
         if (ex == null)
         {
             // I18N: migrate this to an ActionFactory
-            report.setText(Msg.NO_PROBLEMS.toString());
+            report.setText(LimboMsg.NO_PROBLEMS.toString());
             report.setIcon(UIManager.getIcon("OptionPane.informationIcon")); //$NON-NLS-1$
             remove.setEnabled(false);
         }
