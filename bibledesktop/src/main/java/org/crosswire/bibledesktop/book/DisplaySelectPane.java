@@ -114,7 +114,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         biblePicker = new ParallelBookPicker(BookFilters.getBibles(), BookComparators.getInitialComparator());
         biblePicker.addBookListener(this);
         selected = biblePicker.getBooks();
-        if (selected.length > 0)
+        if (selected != null && selected.length > 0)
         {
             selected[0].addIndexStatusListener(isl);
             key = selected[0].createEmptyKeyList();
@@ -257,7 +257,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
      */
     public void clear()
     {
-        setKey(selected.length == 0 ? new RocketPassage() : selected[0].createEmptyKeyList());
+        setKey(selected == null || selected.length == 0 ? new RocketPassage() : selected[0].createEmptyKeyList());
         setTitle(CLEAR);
     }
 
@@ -311,7 +311,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
      */
     public void doSearchAction()
     {
-        if (selected == null)
+        if (selected == null || selected.length == 0)
         {
             noBookInstalled();
             return;
@@ -407,7 +407,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
      */
     public void doIndex()
     {
-        if (selected == null)
+        if (selected == null || selected.length == 0)
         {
             noBookInstalled();
             return;
@@ -422,7 +422,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
      */
     private void updateDisplay()
     {
-        if (selected == null)
+        if (selected == null || selected.length == 0)
         {
             noBookInstalled();
             return;
@@ -449,9 +449,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
 
     public void setKey(String newKey)
     {
-        if (selected == null)
+        if (selected == null || selected.length == 0)
         {
-            noBookInstalled();
             return;
         }
 
@@ -640,7 +639,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
 
         enableComponents();
 
-        if (selected == null)
+        if (selected == null || selected.length == 0)
         {
             noBookInstalled();
             return;
