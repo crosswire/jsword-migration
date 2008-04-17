@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!DOCTYPE web-app
-    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
-    "http://java.sun.com/j2ee/dtds/web-app_2.2.dtd">
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2.3.dtd">
 
 <web-app>
 
@@ -22,29 +22,24 @@
     <servlet-name>demo</servlet-name>
     <servlet-class>org.crosswire.jsword.view.web.DemoServlet</servlet-class>
   </servlet>
-  <!--
-  <servlet>
-    <servlet-name>remoter</servlet-name>
-    <servlet-class>org.crosswire.jsword.view.web.RemoterServlet</servlet-class>
-  </servlet>
-  -->
 
   <servlet-mapping>
     <servlet-name>demo</servlet-name>
     <url-pattern>/demo</url-pattern>
   </servlet-mapping>
-  <!--
-  <servlet-mapping>
-    <servlet-name>remoter</servlet-name>
-    <url-pattern>/remoter</url-pattern>
-  </servlet-mapping>
-  -->
 
-  <!--
-  <mime-mapping>
-    <extension>jnlp</extension>
-    <mime-type>application/x-java-jnlp-file</mime-type>
-  </mime-mapping>
-  -->
+  <servlet>
+    <servlet-name>dwr-invoker</servlet-name>
+    <servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
+    <init-param>
+      <param-name>debug</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>dwr-invoker</servlet-name>
+    <url-pattern>/dwr/*</url-pattern>
+  </servlet-mapping>
 
 </web-app>
