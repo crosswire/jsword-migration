@@ -137,7 +137,32 @@
     <!-- needed by the download servlet -->
     <mkdir dir="${nightly.dir}"/>
     <mkdir dir="${release.dir}"/>
+    <!-- build the iBD servlet -->
+    <xslt basedir="${source.web}/iBD" extension=".html" style="${source.web}/template.xsl" destdir="${target.web}">
+      <include name="**/tutorial.html"/>
+      <xmlcatalog>
+        <dtd publicid="-//W3C//DTD XHTML 1.0 Transitional//EN" location="${source.etc}/xhtml1-transitional.dtd"/>
+      </xmlcatalog>
+    </xslt>
+    <copy todir="${target.web}/WEB-INF">
+      <fileset dir="${source.web}/iBD/WEB-INF">
+        <!-- This is what it would be if it were a stand-alone servlet -->
+        <!-- But we have included a different web.xml with this already defined -->
+        <exclude name="web.xml"/>
+      </fileset>
+    </copy>
+    <copy todir="${target.web}/WEB-INF/lib">
+      <fileset dir="${source.web}/iBD/WEB-INF/lib" includes="*.jar"/>
+    </copy>
+    <copy todir="${target.web}">
+      <fileset dir="${source.web}/iBD">
+        <include name="*.js"/>
+        <include name="iBD.*"/>
+        <exclude name="WEB-INF/**"/>
+      </fileset>
+    </copy>
   </target>
+
 
   <!--=======================================================================-->
   <target name="release.nightly" description="Build a nightly release fileset">
