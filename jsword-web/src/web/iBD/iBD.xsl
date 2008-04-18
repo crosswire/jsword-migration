@@ -15,7 +15,7 @@
  *      59 Temple Place - Suite 330
  *      Boston, MA 02111-1307, USA
  *
- * Copyright: 2005
+ * Copyright: 2008
  *     The copyright to this program is held by it's authors.
  *
  * ID: $Id: simple.xsl 1767 2008-02-17 14:25:49Z dmsmith $
@@ -793,7 +793,7 @@
   <xsl:template match="reference">
     <xsl:choose>
       <xsl:when test="$XRef = 'true'">
-        <a href="bible://{@osisRef}"><xsl:apply-templates/></a>
+        <a href="bible://{@osisRef}" onclick="return setPassage('{@osisRef}');"><xsl:apply-templates/></a>
       </xsl:when>
       <xsl:otherwise>
         <xsl:apply-templates/>
@@ -804,7 +804,7 @@
   <xsl:template match="reference" mode="jesus">
     <xsl:choose>
       <xsl:when test="$XRef = 'true'">
-        <a href="bible://{@osisRef}"><xsl:apply-templates mode="jesus"/></a>
+        <a href="bible://{@osisRef}" onclick="return setPassage('{@osisRef}');"><xsl:apply-templates mode="jesus"/></a>
       </xsl:when>
       <xsl:otherwise>
         <xsl:apply-templates mode="jesus"/>

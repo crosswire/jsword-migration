@@ -1,4 +1,32 @@
+/**
+ * Distribution License:
+ * JSword is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License, version 2.1 as published by
+ * the Free Software Foundation. This program is distributed in the hope
+ * that it will be useful, but WITHOUT ANY WARRANTY; without even the
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * The License is available on the internet at:
+ *       http://www.gnu.org/copyleft/lgpl.html
+ * or by writing to:
+ *      Free Software Foundation, Inc.
+ *      59 Temple Place - Suite 330
+ *      Boston, MA 02111-1307, USA
+ *
+ * Copyright: 2008
+ *     The copyright to this program is held by it's authors.
+ *
+ * ID: $Id: simple.xsl 1767 2008-02-17 14:25:49Z dmsmith $
+ * 
+ * @see gnu.lgpl.License for license details.
+ *      The copyright to this program is held by it's authors.
+ * @author DM Smith [dmsmith555 at yahoo dot com]
+ */
+// Define how the OSIS document that is returned from JSword is styled.
 var stylesheet = "iBD.xsl";
+
+// Prevent the server from being hammered.
 var verseLimit = 100;
 
 /**
@@ -6,23 +34,33 @@ var verseLimit = 100;
  */
 function init()
 {
-    DWRUtil.useLoadingMessage();
-    JSword.getInstalledBooks("bookCategory=Bible", loadBooks);
-    window.onresize = ibdResize;
+  // Use a Google styled "Loading" message in the upper right corner
+  dwr.util.useLoadingMessage();
+
+  // Display the current SWORD path as a diagnostic.
+  //JSword.getSwordPath(loadDiagnostic);
+
+  // Populate the books dropdown.
+  // The last argument is an asynchronous callback
+  JSword.getInstalledBooks("bookCategory=Bible", loadBooks);
+
+  // Constrain the display area to be within the boundary of the window.
+  window.onresize = ibdResize;
+  ibdResize();
 }
 
 /*
  * Resize the height of the display area.
- * I tried pixels but it does not work for IE.
  */
 function ibdResize()
 {
-    var top = $("searchBox");
-    var bottom = $("display");
-    var offset = top.offsetTop + top.offsetHeight + 1;
-    var windowHeight = document.body.clientHeight;
-    var newHeight = windowHeight - offset;
-    bottom.style.height = (newHeight/windowHeight)*100 + "%";
+  var top             = $("searchBox");
+  var bottom          = $("display");
+  var offset          = top.offsetTop + top.offsetHeight + 1;
+  var windowHeight    = document.body.clientHeight;
+  var newHeight       = windowHeight - offset;
+  // I tried pixels but it does not work for IE.
+  bottom.style.height = (newHeight / windowHeight) * 100 + "%";
 }
 
 /**
@@ -30,25 +68,35 @@ function ibdResize()
  */
 function loadBooks(data)
 {
-  DWRUtil.removeAllOptions("books");
-  DWRUtil.addOptions("books", data, "0", "1");
+  // Empty the list.
+  dwr.util.removeAllOptions("books");
+  // Then populate it with data, using column "0" as the key and "1" as the display value
+  // Use "0", "0" to only show the books "initials"
+  dwr.util.addOptions("books", data, "0", "1");
 }
 
 /**
- * Called when view data has been fetched
+ * Called when book data has been fetched
  */
 function loadDisplay(data)
 {
+  // Get an XSLT processor that can use xslDoc to do the transform
   var processor = new XSLTProcessor();
 
+  // Load the stylesheet so that we can transform the document
   var xslDoc    = Sarissa.getDomDocument();
+  // Synchronously load the stylesheet do that it is immediately available.
+  // Otherwise, this will fail.
   xslDoc.async  = false;
   xslDoc.load(stylesheet);
 
   processor.importStylesheet(xslDoc);
 
+  // Now take the answer from the locate and parse it into DOM
   var parser    = new DOMParser();
   var dom       = parser.parseFromString(data, "text/xml");
+
+  // Finally, transform and display the results in one fell swoop.
   Sarissa.updateContentFromNode(dom, $("display"), processor);
 }
 
@@ -57,6 +105,8 @@ function loadDisplay(data)
  */
 function pick()
 {
+  // When the book changes, take what ever is in locate and get it.
+  // If that doesn't work then try what ever is in search.
   locate() || search();
 }
 
@@ -69,6 +119,9 @@ function locate()
   var ref  = getPassage();
   if (book && ref)
   {
+    // Get the OSIS representation from the book for the reference
+    // But limit the number of verses
+    // Arrange for asynchronous loading of the display
     JSword.getOSISString(book, ref, verseLimit, loadDisplay);
     return true;
   }
@@ -84,6 +137,8 @@ function search()
   var search = getSearch();
   if (book && search)
   {
+    // Get the reference for the search
+    // and asynchrounously load it in to the locate box
     JSword.search(book, search, setPassage);
     return true;
   }
@@ -95,7 +150,7 @@ function search()
  */
 function getSearch()
 {
-  return DWRUtil.getValue("searchRequest");
+  return dwr.util.getValue("searchRequest");
 }
 
 /**
@@ -103,8 +158,12 @@ function getSearch()
  */
 function setSearch(query)
 {
-  DWRUtil.setValue("searchRequest", query);
+  // Whenever we stuff a value into search request
+  dwr.util.setValue("searchRequest", query);
+  // do the search
   search();
+  // Allow this to be used in an anchor that ignores its href
+  return false;
 }
 
 /**
@@ -112,7 +171,7 @@ function setSearch(query)
  */
 function getPassage()
 {
-  return DWRUtil.getValue("passageRequest");
+  return dwr.util.getValue("passageRequest");
 }
 
 /**
@@ -120,8 +179,13 @@ function getPassage()
  */
 function setPassage(ref)
 {
-  DWRUtil.setValue("passageRequest", ref);
+  // whenever we stuff a value in locate
+  // Note: search merely stuffs a value here.
+  dwr.util.setValue("passageRequest", ref);
+  // go get the content.
   locate();
+  // Allow this to be used in an anchor that ignores its href
+  return false;
 }
 
 /**
@@ -129,7 +193,7 @@ function setPassage(ref)
  */
 function getBook()
 {
-  return DWRUtil.getValue("books");
+  return dwr.util.getValue("books");
 }
 
 /**
@@ -137,6 +201,20 @@ function getBook()
  */
 function setBook(book)
 {
-  DWRUtil.setValue("books", book);
+  // When ever a book is set
+  dwr.util.setValue("books", book);
+  // See if there is something we can locate or search.
   pick();
+  // Allow this to be used in an anchor that ignores its href
+  return false;
+}
+
+function loadDiagnostic(data)
+{
+  var html = "";
+  for (var i = 0; i < data.length; i++)
+  {
+    html += data[i] + ":";
+  }
+  DWRUtil.setValue("diagnostic", html);
 }
