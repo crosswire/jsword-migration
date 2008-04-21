@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC
+    "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+  <head>
+    <title>iBD</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <script type='text/javascript' src='dwr/interface/JSword.js'></script>
+
+    <script type='text/javascript' src='dwr/engine.js'></script>
+    <script type='text/javascript' src='dwr/util.js'></script>
+
+    <script type='text/javascript' src='sarissa.js'></script>
+
+    <script type='text/javascript' src='iBD.js'></script>
+    <link rel="stylesheet" type="text/css" href="iBD.css"/>
+  </head>
+  <body onload="init()">
+
+    <div id="bibleBox">
+      <select id="books" onchange="pick();"></select>
+    </div>
+
+    <div id="locateBox" align="left">
+      <input type="text" id="passageRequest" onkeypress="dwr.util.onReturn(event, locate)"/>
+      <button type="button"  id="passageButton" onclick="locate();">Locate</button>
+    </div>
+
+    <div id="searchBox">
+      <input type="text" id="searchRequest" onclick="dwr.util.onReturn(event, search)"/>
+      <button type="button" id="searchButton" onclick="search();">Search</button>
+    </div>
+    <div id="scroller" align="left">
+      <button type="button"  id="prev" onclick="prev();">Prev</button>
+      <button type="button"  id="next" onclick="next();">Next</button>
+    </div>
+
+    Total:<div id="total"></div>
+    <div id="display"></div>
+
+  </body>
+</html>
+
+
+

@@ -1,0 +1,58 @@
+body, html
+{
+  margin: 0;
+  padding: 0;
+  border: none;
+  height: 100%;
+  width: 100%;
+  background-color: #fafafa;
+  font-family: arial, sans-serif;
+}
+
+div        { padding:   0px; }
+#bibleBox  { margin:    2px; }
+#versions  { width:   200px; }
+#locateBox { margin:    2px; }
+#view      { width:    75%;  }
+#searchBox { margin:    2px; }
+#search    { width:    75%;  }
+
+#display
+{
+    margin: 0;
+    padding: 0;
+    background-color: #EEEEEE;
+    height: 100%;
+    border: 1 solid #FFDDDD;
+    overflow: auto;
+    line-height: 1.5em;
+}
+
+/** derived from BibleDesktop simple.xsl ******/
+A                { text-decoration: none; }
+A.strongs        { color: black; text-decoration: none; }
+SUB.strongs      { font-size: 75%; color: red; }
+SUB.morph        { font-size: 75%; color: blue; }
+SUB.lemma        { font-size: 75%; color: red; }
+SUP.verse        { font-size: 75%; color: gray; }
+SUP.note         { font-size: 75%; color: green; }
+SPAN.jesus       { color: red; }
+SPAN.speech      { color: blue; }
+SPAN.strike      { text-decoration: line-through; }
+SPAN.small-caps  { font-variant: small-caps; }
+SPAN.transChange { font-style: italic }
+SPAN.inscription { font-weight: bold; font-variant: small-caps; }
+SPAN.divineName  { font-variant: small-caps; }
+SPAN.normal      { font-variant: normal; }
+SPAN.caps        { text-transform: uppercase; }
+H1.level         { text-align: center; font-size: 115%; color: #000000; }
+H2.level         { text-align: center; font-size: 110%; color: #000000; }
+H3.level         { text-align: center; font-size: 100%; }
+H4.level         { text-align: center; font-size: 90%; }
+H5.level         { text-align: center; font-size: 85%; }
+H6.level         { text-align: center; font-size: 80%; }
+H3.heading       { font-size: 110%; color: #666699; font-weight: bold; }
+H2.heading       { font-size: 115%; color: #669966; font-weight: bold; }
+div.margin       { font-size:90%; }
+TD.notes         { width:20%; background:#f4f4e8; }
+TD.text          { width:80%; }
