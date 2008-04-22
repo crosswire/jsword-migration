@@ -57,6 +57,14 @@ public class StubBook extends AbstractPassageBook
     }
 
     /* (non-Javadoc)
+     * @see org.crosswire.jsword.book.Book#contains(org.crosswire.jsword.passage.Key)
+     */
+    public boolean contains(Key key)
+    {
+        return false;
+    }
+
+    /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getRawText(org.crosswire.jsword.passage.Key)
      */
     /* @Override */

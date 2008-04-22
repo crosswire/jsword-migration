@@ -281,6 +281,14 @@ public class RawBook extends AbstractPassageBook
     }
 
     /* (non-Javadoc)
+     * @see org.crosswire.jsword.book.Book#contains(org.crosswire.jsword.passage.Key)
+     */
+    public boolean contains(Key key)
+    {
+        return getRawText(key) != null;
+    }
+
+    /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getRawText(org.crosswire.jsword.passage.Key)
      */
     public String getRawText(Key key)

@@ -171,6 +171,21 @@ public class SerBook extends AbstractPassageBook
     }
 
     /* (non-Javadoc)
+     * @see org.crosswire.jsword.book.Book#contains(org.crosswire.jsword.passage.Key)
+     */
+    public boolean contains(Key key)
+    {
+        try
+        {
+            return getRawText(key) != null;
+        }
+        catch (BookException e)
+        {
+            return false;
+        }
+    }
+
+    /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getRawText(org.crosswire.jsword.passage.Key)
      */
     public String getRawText(Key key) throws BookException

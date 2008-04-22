@@ -98,6 +98,14 @@ public class StubDictionary extends AbstractBook
     }
 
     /* (non-Javadoc)
+     * @see org.crosswire.jsword.book.Book#contains(org.crosswire.jsword.passage.Key)
+     */
+    public boolean contains(Key key)
+    {
+        return false;
+    }
+
+    /* (non-Javadoc)
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#setRawText(org.crosswire.jsword.passage.Key, java.lang.String)
      */
     public void setRawText(Key key, String rawData) throws BookException
