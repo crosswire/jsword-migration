@@ -45,6 +45,7 @@ function init()
   // Populate the books dropdown.
   // The last argument is an asynchronous callback
   JSword.getInstalledBooks("bookCategory=Bible", loadBooks);
+  JSword.getInstalledBooks("bookCategory=Dictionary", loadDictionaries);
 
   // Constrain the display area to be within the boundary of the window.
   window.onresize = ibdResize;
@@ -76,6 +77,14 @@ function loadBooks(data)
   // Use "0", "0" to only show the books "initials"
   dwr.util.addOptions("books", data, "0", "0");
 }
+/**
+ * Load the list of known Dictionaries
+ */
+function loadDictionaries(data)
+{
+  dwr.util.removeAllOptions("dictionaries");
+  dwr.util.addOptions("dictionaries", data, "0", "0");
+}
 
 /**
  * Called when book data has been fetched
@@ -102,9 +111,11 @@ function displayTotal(data)
  */
 function pick()
 {
-  // When the book changes, take what ever is in locate and get it.
-  // If that doesn't work then try what ever is in search.
   locate() || search();
+}
+function pick_dictionary()
+{
+  locate_dictionary() || search_dictionary();
 }
 
 /**
@@ -118,6 +129,18 @@ function locate()
   {
     JSword.getOSISString(book, ref, verseStart,verseLimit, loadDisplay);
 	cardinality();
+    return true;
+  }
+  return false;
+}
+function locate_dictionary()
+{
+  var dict= getDictionary();
+  var ref= getSearch();
+ /** var ref  = getPassage();*/
+  if (dict&& ref)
+  {
+    JSword.getOSISString(dict, ref, verseStart,verseLimit, loadDisplay);
     return true;
   }
   return false;
@@ -184,6 +207,19 @@ function search()
   }
   return false;
 }
+function search_dictionary()
+{
+  var book   = getDictionary();
+  var search = getSearch();
+  if (book && search)
+  {
+    // Get the reference for the search
+    // and asynchrounously load it in to the locate box
+    JSword.search(book, search, setPassage);
+    return true;
+  }
+  return false;
+}
 
 /**
  * Get the search request.
@@ -235,6 +271,10 @@ function getBook()
 {
   return dwr.util.getValue("books");
 }
+function getDictionary()
+{
+  return dwr.util.getValue("dictionaries");
+}
 
 /**
  * Set the book to search or locate against
@@ -245,6 +285,15 @@ function setBook(book)
   dwr.util.setValue("books", book);
   // See if there is something we can locate or search.
   pick();
+  // Allow this to be used in an anchor that ignores its href
+  return false;
+}
+function setDictionary(book)
+{
+  // When ever a book is set
+  dwr.util.setValue("dictionaries", book);
+  // See if there is something we can locate or search.
+  pick_dictionary();
   // Allow this to be used in an anchor that ignores its href
   return false;
 }
