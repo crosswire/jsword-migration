@@ -46,6 +46,7 @@ function init()
   // The last argument is an asynchronous callback
   JSword.getInstalledBooks("bookCategory=Bible", loadBooks);
   JSword.getInstalledBooks("bookCategory=Dictionary", loadDictionaries);
+  JSword.getInstalledBooks("bookCategory=Commentary", loadCommentaries);
 
   // Constrain the display area to be within the boundary of the window.
   window.onresize = ibdResize;
@@ -85,6 +86,11 @@ function loadDictionaries(data)
   dwr.util.removeAllOptions("dictionaries");
   dwr.util.addOptions("dictionaries", data, "0", "0");
 }
+function loadCommentaries(data)
+{
+  dwr.util.removeAllOptions("commentaries");
+  dwr.util.addOptions("commentaries", data, "0", "0");
+}
 
 /**
  * Called when book data has been fetched
@@ -117,6 +123,10 @@ function pick_dictionary()
 {
   locate_dictionary() || search_dictionary();
 }
+function pick_commentary()
+{
+  locate_commentary();
+}
 
 /**
  * Locate a passage.
@@ -138,6 +148,17 @@ function locate_dictionary()
   var dict= getDictionary();
   var ref= getSearch();
  /** var ref  = getPassage();*/
+  if (dict&& ref)
+  {
+    JSword.getOSISString(dict, ref, verseStart,verseLimit, loadDisplay);
+    return true;
+  }
+  return false;
+}
+function locate_commentary()
+{
+  var dict= getCommentary();
+  var ref  = getPassage();
   if (dict&& ref)
   {
     JSword.getOSISString(dict, ref, verseStart,verseLimit, loadDisplay);
@@ -274,6 +295,10 @@ function getBook()
 function getDictionary()
 {
   return dwr.util.getValue("dictionaries");
+}
+function getCommentary()
+{
+  return dwr.util.getValue("commentaries");
 }
 
 /**
