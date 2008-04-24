@@ -12,7 +12,9 @@
   <property name="gener.root"        value="${target.root}/gener"/>
 
   <property name="support.tools" value="../jsword-support/tools"/>
+  <!-- Temporarily remove 
   <import file="${support.tools}/nsis/build.xml"/>
+  -->
 
   <!--=======================================================================-->
   <target name="testcompile.extra">
@@ -28,8 +30,9 @@
   </target>
 
   <!--=======================================================================-->
+  <!-- was depends "build, keygen, install.check, nsis" -->
   <target name="install"
-          depends="build, keygen, install.check, nsis"
+          depends="build, keygen, install.check"
           unless="install.uptodate"
           description="Prepares for web based jnlp deploy">
 
@@ -137,6 +140,7 @@
     </fixcrlf>
 
   	<!-- Build the Windows installers from the installed/signed jars -->
+    <!-- Figure out how to make this conditional on the availability of makensis
   	<copy todir="${target.installed}"
           filtering="true"
           preservelastmodified="true">
@@ -160,6 +164,7 @@
     <delete file="${target.installed}/BibleDesktop.nsi"/>
     <delete file="${target.installed}/PortableBibleDesktop.nsi"/>
     <delete file="${target.installed}/BibleDesktopSetup.nsi"/>
+    -->
   </target>
 
   <target name="install.check">
