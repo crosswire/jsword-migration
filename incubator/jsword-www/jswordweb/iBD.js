@@ -27,7 +27,7 @@
 var stylesheet = "iBD.xsl";
 
 // Prevent the server from being hammered.
-var verseLimit = 100;
+var verseLimit = 10;
 var verseStart= 0;
 var total= 0;
 
