@@ -27,7 +27,7 @@
 var stylesheet = "iBD.xsl";
 
 // Prevent the server from being hammered.
-var verseLimit = 10;
+var verseLimit = 5;
 var verseStart= 0;
 var total= 0;
 
@@ -47,7 +47,6 @@ function init()
   JSword.getInstalledBooks("bookCategory=Bible", loadBooks);
   JSword.getInstalledBooks("bookCategory=Dictionary", loadDictionaries);
   JSword.getInstalledBooks("bookCategory=Commentary", loadCommentaries);
-
   // Constrain the display area to be within the boundary of the window.
   window.onresize = ibdResize;
   ibdResize();
@@ -77,6 +76,7 @@ function loadBooks(data)
   // Then populate it with data, using column "0" as the key and "1" as the display value
   // Use "0", "0" to only show the books "initials"
   dwr.util.addOptions("books", data, "0", "0");
+  dwr.util.addOptions("parallels", data, "0", "0");
 }
 /**
  * Load the list of known Dictionaries
@@ -106,6 +106,20 @@ function loadDisplay(data)
   var dom       = parser.parseFromString(data, "text/xml");
   Sarissa.updateContentFromNode(dom, $("display"), processor);
 }
+/**
+ * Called when book data has been fetched
+ */
+function loadDisplay_dict(data)
+{
+  var processor = new XSLTProcessor();
+  var xslDoc    = Sarissa.getDomDocument();
+  xslDoc.async  = false;
+  xslDoc.load(stylesheet);
+  processor.importStylesheet(xslDoc);
+  var parser    = new DOMParser();
+  var dom       = parser.parseFromString(data, "text/xml");
+  Sarissa.updateContentFromNode(dom, $("display_dict"), processor);
+}
 function displayTotal(data)
 {
 	total=data;
@@ -126,6 +140,7 @@ function pick_dictionary()
 function pick_commentary()
 {
   locate_commentary();
+locate();
 }
 
 /**
@@ -133,7 +148,7 @@ function pick_commentary()
  */
 function locate()
 {
-  var book = getBook();
+  var book = getBooks();
   var ref  = getPassage();
   if (book && ref)
   {
@@ -143,14 +158,20 @@ function locate()
   }
   return false;
 }
+function trial(){
+  var ref  = getPassage();
+var books="KJV:ASV:ChiUns";
+	
+    JSword.getOSISString(books, ref, verseStart,verseLimit, loadDisplay);
+}
 function locate_dictionary()
 {
   var dict= getDictionary();
   var ref= getSearch();
- /** var ref  = getPassage();*/
+  //var ref  = getPassage();
   if (dict&& ref)
   {
-    JSword.getOSISString(dict, ref, verseStart,verseLimit, loadDisplay);
+    JSword.getOSISString(dict, ref, verseStart,verseLimit, loadDisplay_dict);
     return true;
   }
   return false;
@@ -161,7 +182,19 @@ function locate_commentary()
   var ref  = getPassage();
   if (dict&& ref)
   {
-    JSword.getOSISString(dict, ref, verseStart,verseLimit, loadDisplay);
+	addBooks(dict);
+    return true;
+  }
+  return false;
+}
+function unpick_commentary()
+{
+  var dict= getCommentary();
+  var ref  = getPassage();
+  if (dict&& ref)
+  {
+	removeBooks(dict);
+locate();
     return true;
   }
   return false;
@@ -173,7 +206,7 @@ function prev()
 	if (verseStart<0){
 		verseStart=0;
 	}
-  var book = getBook();
+  var book = getBooks();
   var ref  = getPassage();
   if (book && ref)
   {
@@ -188,7 +221,7 @@ function next()
 	if (verseStart>total){
 		verseStart=total-verseLimit-1;
 	}
-  var book = getBook();
+  var book = getBooks();
   var ref  = getPassage();
   if (book && ref)
   {
@@ -292,6 +325,31 @@ function getBook()
 {
   return dwr.util.getValue("books");
 }
+var selectedbooks=new Array();
+function addBooks(selected){
+	var index=selectedbooks.indexOf(selected);
+	if (index==-1){
+		selectedbooks.push(selected);
+	}
+}
+function removeBooks(selected){
+	var index=selectedbooks.indexOf(selected);
+	if (index!=-1){
+		selectedbooks.splice(index,1);
+	}
+	
+}
+function pick_parallel(){
+	addBooks(getParallel());	
+locate();
+	}
+function unpick_parallel(){
+	removeBooks(getParallel());	
+locate();
+	}
+function getBooks(){
+  return getBook()+","+selectedbooks.toString();
+}
 function getDictionary()
 {
   return dwr.util.getValue("dictionaries");
@@ -299,6 +357,10 @@ function getDictionary()
 function getCommentary()
 {
   return dwr.util.getValue("commentaries");
+}
+function getParallel()
+{
+  return dwr.util.getValue("parallels");
 }
 
 /**

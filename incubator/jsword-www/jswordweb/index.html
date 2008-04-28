@@ -18,17 +18,25 @@
     <link rel="stylesheet" type="text/css" href="iBD.css"/>
   </head>
   <body onload="init()">
-Bibles:
     <div id="bibleBox">
+Bibles:
       <select id="books" onchange="pick();"></select>
     </div>
-Dictionaries:
     <div id="dictionarybox">
+Dictionaries:
       <select id="dictionaries" onchange="pick_dictionary();"></select>
     </div>
-Commentaries:
     <div id="commentarybox">
-      <select id="commentaries" onchange="pick_commentary();"></select>
+Commentaries:
+      <select id="commentaries"></select>
+      <button type="button"  id="pick_commentary" onclick="pick_commentary();">+</button>
+      <button type="button"  id="unpick_commentary" onclick="unpick_commentary();">-</button>
+    </div>
+    <div id="parallelbox">
+Parallels:
+      <select id="parallels"></select>
+      <button type="button"  id="pick_parallel" onclick="pick_parallel();">+</button>
+      <button type="button"  id="unpick_parallel" onclick="unpick_parallel();">-</button>
     </div>
 
     <div id="locateBox" align="left">
@@ -46,8 +54,8 @@ Commentaries:
     </div>
 
     Total:<div id="total"></div>
-    <div id="display"></div>
-
+    <div id="display" style="width=80%"></div>
+    <div id="display_dict" style="width=20%"></div>
   </body>
 </html>
 
