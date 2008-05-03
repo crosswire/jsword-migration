@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC
+    "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+  <head>
+    <title>CCIM bible studio</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <script type='text/javascript' src='dwr/interface/JSword.js'></script>
+
+    <script type='text/javascript' src='dwr/engine.js'></script>
+    <script type='text/javascript' src='dwr/util.js'></script>
+
+    <script type='text/javascript' src='sarissa.js'></script>
+
+    <script type='text/javascript' src='iBD.js'></script>
+    <link rel="stylesheet" type="text/css" href="iBD.css"/>
+  </head>
+  <body onload="init()">
+<fieldset legend="search area">
+<table id="searchBox">
+<tr>
+<td>
+    Key word:<input type="text" id="searchRequest" onclick="dwr.util.onReturn(event, search)"/>
+</td><td>
+      Verses:<input type="text" id="passageRequest" onkeypress="dwr.util.onReturn(event, locate)"/>
+      <button type="button"  id="passageButton" onclick="locate();">Display</button>
+</td>
+<td>
+Parallel Bibles:
+      <select id="parallels"></select>
+      <button type="button"  id="pick_parallel" onclick="pick_parallel();">+</button>
+      <button type="button"  id="unpick_parallel" onclick="unpick_parallel();">-</button>
+</td></tr>
+<tr><td>
+      <button type="button" id="searchButton" onclick="search();">Search in Bible:</button>
+      <select id="books" onchange="pick();"></select>
+</td><td>
+      <button type="button" id="searchButtondic" onclick="search();">Search in Dictionary:</button>
+      <select id="dictionaries" onchange="pick_dictionary();"></select>
+</td>
+<td>
+Commentaries:
+      <select id="commentaries"></select>
+      <button type="button"  id="pick_commentary" onclick="pick_commentary();">+</button>
+      <button type="button"  id="unpick_commentary" onclick="unpick_commentary();">-</button>
+</td></tr>
+<tr><td>
+    Total:<input type="text" id="total" size=5 readonly/>
+</td><td>
+      <button type="button"  id="prev" onclick="prev();">Prev</button>
+      <button type="button"  id="next" onclick="next();">Next</button>
+</td><td/></tr>
+</table>
+</fieldset>
+<table>
+<tr>
+<td id="display" width="80%" valign="top">
+</td>
+<td id="display_dict" width="20%" valign="top">
+</td>
+</tr>
+</table>
+  </body>
+</html>
+
+
+
