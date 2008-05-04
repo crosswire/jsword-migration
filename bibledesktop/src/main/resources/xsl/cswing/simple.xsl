@@ -149,6 +149,11 @@
           div.margin { font-size:90%; }
           TD.notes { width:20%; background:#f4f4e8; }
           TD.text { width:80%; }
+          <!-- the following are for dictionary entries -->
+          FONT.orth { font-weight: bold; }
+          FONT.pron { font-style: italic; }
+          FONT.def  { font-style: italic; }
+          FONT.usg  { font-style: plain; }
         </style>
         <!-- Always include the user's stylesheet even if "" -->
         <link rel="stylesheet" type="text/css" href="{$css}" title="styling" />
@@ -160,33 +165,33 @@
           <xsl:when test="$Notes = 'true' and //note[not(@type = 'x-strongsMarkup')]">
             <xsl:choose>
               <xsl:when test="$direction != 'rtl'">
-	            <table cols="2" cellpadding="5" cellspacing="5">
-	              <tr>
-	                <!-- The two rows are swapped until the bug is fixed. -->
-	                <td valign="top" class="notes">
-	                  <p>&#160;</p>
-	                  <xsl:apply-templates select="//verse" mode="print-notes"/>
-	                </td>
-	                <td valign="top" class="text">
-	                  <xsl:apply-templates/>
-	                </td>
-	              </tr>
-	            </table>
+                <table cols="2" cellpadding="5" cellspacing="5">
+                  <tr>
+                    <!-- The two rows are swapped until the bug is fixed. -->
+                    <td valign="top" class="notes">
+                      <p>&#160;</p>
+                      <xsl:apply-templates select="//verse" mode="print-notes"/>
+                    </td>
+                    <td valign="top" class="text">
+                      <xsl:apply-templates/>
+                    </td>
+                  </tr>
+                </table>
               </xsl:when>
               <xsl:otherwise>
                 <!-- reverse the table for Right to Left languages -->
-	            <table cols="2" cellpadding="5" cellspacing="5">
-	              <!-- In a right to left, the alignment should be reversed too -->
-	              <tr align="right">
-	                <td valign="top" class="notes">
-	                  <p>&#160;</p>
-	                  <xsl:apply-templates select="//note" mode="print-notes"/>
-	                </td>
-	                <td valign="top" class="text">
-	                  <xsl:apply-templates/>
-	                </td>
-	              </tr>
-	            </table>
+                <table cols="2" cellpadding="5" cellspacing="5">
+                  <!-- In a right to left, the alignment should be reversed too -->
+                  <tr align="right">
+                    <td valign="top" class="notes">
+                      <p>&#160;</p>
+                      <xsl:apply-templates select="//note" mode="print-notes"/>
+                    </td>
+                    <td valign="top" class="text">
+                      <xsl:apply-templates/>
+                    </td>
+                  </tr>
+                </table>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:when>
@@ -313,7 +318,7 @@
     </xsl:if>
     <!-- Always output the verse -->
     <xsl:choose>
- 	  <xsl:when test="$VLine = 'true'">
+      <xsl:when test="$VLine = 'true'">
         <div class="l"><a name="{@osisID}"><xsl:call-template name="versenum"/></a><xsl:apply-templates/></div>
       </xsl:when>
       <xsl:otherwise>
@@ -340,7 +345,7 @@
     <xsl:if test="milestone[@type = 'x-p']"><br/><br/></xsl:if>
     <!-- Always output the verse -->
     <xsl:choose>
- 	  <xsl:when test="$VLine = 'true'">
+      <xsl:when test="$VLine = 'true'">
         <div class="l"><a name="{@osisID}"><xsl:call-template name="versenum"/></a><xsl:apply-templates mode="jesus"/></div>
       </xsl:when>
       <xsl:otherwise>
@@ -388,10 +393,10 @@
             <xsl:value-of select="jsword:getName($passage)"/>
           </xsl:when>
           <xsl:when test="$CVNum = 'true'">
-          	<xsl:value-of select="concat($chapter, ' : ', $verse)"/>
+            <xsl:value-of select="concat($chapter, ' : ', $verse)"/>
           </xsl:when>
           <xsl:otherwise>
-          	<xsl:value-of select="$verse"/>
+            <xsl:value-of select="$verse"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:variable>
@@ -401,19 +406,19 @@
         -->
       <xsl:choose>
         <xsl:when test="$TinyVNum = 'true' and $Notes = 'true'">
-      	  <a name="{@osisID}"><sup class="verse"><font><xsl:value-of select="$versenum"/></font></sup></a>
-      	</xsl:when>
+          <a name="{@osisID}"><sup class="verse"><font><xsl:value-of select="$versenum"/></font></sup></a>
+        </xsl:when>
         <xsl:when test="$TinyVNum = 'true' and $Notes = 'false'">
-      	  <sup class="verse"><font><xsl:value-of select="$versenum"/></font></sup>
-      	</xsl:when>
+          <sup class="verse"><font><xsl:value-of select="$versenum"/></font></sup>
+        </xsl:when>
         <xsl:when test="$TinyVNum = 'false' and $Notes = 'true'">
-      	  <a name="{@osisID}">(<font><xsl:value-of select="$versenum"/></font>)</a>
-      	  <xsl:text> </xsl:text>
-      	</xsl:when>
-      	<xsl:otherwise>
-      	  (<font><xsl:value-of select="$versenum"/></font>)
-      	  <xsl:text> </xsl:text>
-      	</xsl:otherwise>
+          <a name="{@osisID}">(<font><xsl:value-of select="$versenum"/></font>)</a>
+          <xsl:text> </xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          (<font><xsl:value-of select="$versenum"/></font>)
+          <xsl:text> </xsl:text>
+        </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
     <xsl:if test="$VNum = 'false' and $Notes = 'true'">
@@ -484,14 +489,14 @@
     == Note: numbering restarts with each verse.
     -->
   <xsl:template name="generateNoteXref">
-  	<xsl:choose>
-  	  <xsl:when test="@n">
-  	    <xsl:value-of select="@n"/>
-  	  </xsl:when>
-  	  <xsl:otherwise>
-  	    <xsl:number level="any" from="/osis//verse" format="a"/>
-  	  </xsl:otherwise>
-  	</xsl:choose>
+    <xsl:choose>
+      <xsl:when test="@n">
+        <xsl:value-of select="@n"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:number level="any" from="/osis//verse" format="a"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!--=======================================================================-->
@@ -717,26 +722,37 @@
   </xsl:template>
   
   <!--=======================================================================-->
+  <!-- expansion is OSIS, expan is TEI -->
   <xsl:template match="abbr">
-    <abbr class="abbr">
+    <font class="abbr">
       <xsl:if test="@expansion">
         <xsl:attribute name="title">
           <xsl:value-of select="@expansion"/>
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:if test="@expan">
+        <xsl:attribute name="title">
+          <xsl:value-of select="@expan"/>
         </xsl:attribute>
       </xsl:if>
       <xsl:apply-templates/>
-    </abbr>
+    </font>
   </xsl:template>
 
   <xsl:template match="abbr" mode="jesus">
-    <abbr class="abbr">
+    <font class="abbr">
       <xsl:if test="@expansion">
         <xsl:attribute name="title">
           <xsl:value-of select="@expansion"/>
         </xsl:attribute>
       </xsl:if>
+      <xsl:if test="@expan">
+        <xsl:attribute name="title">
+          <xsl:value-of select="@expan"/>
+        </xsl:attribute>
+      </xsl:if>
       <xsl:apply-templates mode="jesus"/>
-    </abbr>
+    </font>
   </xsl:template>
 
   <!--=======================================================================-->
@@ -1321,93 +1337,171 @@
     <em><xsl:apply-templates/></em>
   </xsl:template>
   
-  
+  <!-- @type is OSIS, @rend is TEI -->
   <xsl:template match="hi">
+    <xsl:variable name="style">
       <xsl:choose>
-        <xsl:when test="@type = 'acrostic'">
-          <xsl:apply-templates/>
-        </xsl:when>
-        <xsl:when test="@type = 'bold'">
-          <strong><xsl:apply-templates/></strong>
-        </xsl:when>
-        <xsl:when test="@type = 'emphasis'">
-          <em><xsl:apply-templates/></em>
-        </xsl:when>
-        <xsl:when test="@type = 'illuminated'">
-          <strong><em><xsl:apply-templates/></em></strong>
-        </xsl:when>
-        <xsl:when test="@type = 'italic'">
-          <em><xsl:apply-templates/></em>
-        </xsl:when>
-        <xsl:when test="@type = 'line-through'">
-          <font class="strike"><xsl:apply-templates/></font>
-        </xsl:when>
-        <xsl:when test="@type = 'normal'">
-          <font class="normal"><xsl:apply-templates/></font>
-        </xsl:when>
-        <xsl:when test="@type = 'small-caps'">
-          <font class="small-caps"><xsl:apply-templates/></font>
-        </xsl:when>
-        <xsl:when test="@type = 'sub'">
-          <sub><xsl:apply-templates/></sub>
-        </xsl:when>
-        <xsl:when test="@type = 'super'">
-          <sup><xsl:apply-templates/></sup>
-        </xsl:when>
-        <xsl:when test="@type = 'underline'">
-          <u><xsl:apply-templates/></u>
-        </xsl:when>
-        <xsl:when test="@type = 'x-caps'">
-          <font class="caps"><xsl:apply-templates/></font>
+        <xsl:when test="@type">
+          <xsl:value-of select="@type"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates/>
+          <xsl:value-of select="@rend"/>
         </xsl:otherwise>
       </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$style = 'acrostic'">
+        <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:when test="$style = 'bold'">
+        <strong><xsl:apply-templates/></strong>
+      </xsl:when>
+      <xsl:when test="$style = 'emphasis'">
+        <em><xsl:apply-templates/></em>
+      </xsl:when>
+      <xsl:when test="$style = 'illuminated'">
+        <strong><em><xsl:apply-templates/></em></strong>
+      </xsl:when>
+      <xsl:when test="$style = 'italic'">
+        <em><xsl:apply-templates/></em>
+      </xsl:when>
+      <xsl:when test="$style = 'line-through'">
+        <font class="strike"><xsl:apply-templates/></font>
+      </xsl:when>
+      <xsl:when test="$style = 'normal'">
+        <font class="normal"><xsl:apply-templates/></font>
+      </xsl:when>
+      <xsl:when test="$style = 'small-caps'">
+        <font class="small-caps"><xsl:apply-templates/></font>
+      </xsl:when>
+      <xsl:when test="$style = 'sub'">
+        <sub><xsl:apply-templates/></sub>
+      </xsl:when>
+      <xsl:when test="$style = 'super'">
+        <sup><xsl:apply-templates/></sup>
+      </xsl:when>
+      <xsl:when test="$style = 'underline'">
+        <u><xsl:apply-templates/></u>
+      </xsl:when>
+      <xsl:when test="$style = 'x-caps'">
+        <font class="caps"><xsl:apply-templates/></font>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="hi" mode="jesus">
+    <xsl:variable name="style">
       <xsl:choose>
-        <xsl:when test="@type = 'acrostic'">
-          <xsl:apply-templates mode="jesus"/>
-        </xsl:when>
-        <xsl:when test="@type = 'bold'">
-          <strong><xsl:apply-templates mode="jesus"/></strong>
-        </xsl:when>
-        <xsl:when test="@type = 'emphasis'">
-          <em><xsl:apply-templates mode="jesus"/></em>
-        </xsl:when>
-        <xsl:when test="@type = 'illuminated'">
-          <strong><em><xsl:apply-templates mode="jesus"/></em></strong>
-        </xsl:when>
-        <xsl:when test="@type = 'italic'">
-          <em><xsl:apply-templates mode="jesus"/></em>
-        </xsl:when>
-        <xsl:when test="@type = 'line-through'">
-          <font class="strike"><xsl:apply-templates mode="jesus"/></font>
-        </xsl:when>
-        <xsl:when test="@type = 'normal'">
-          <font class="normal"><xsl:apply-templates mode="jesus"/></font>
-        </xsl:when>
-        <xsl:when test="@type = 'small-caps'">
-          <font class="small-caps"><xsl:apply-templates mode="small-caps"/></font>
-        </xsl:when>
-        <xsl:when test="@type = 'sub'">
-          <sub><xsl:apply-templates mode="jesus"/></sub>
-        </xsl:when>
-        <xsl:when test="@type = 'super'">
-          <sup><xsl:apply-templates mode="jesus"/></sup>
-        </xsl:when>
-        <xsl:when test="@type = 'underline'">
-          <u><xsl:apply-templates mode="jesus"/></u>
-        </xsl:when>
-        <xsl:when test="@type = 'x-caps'">
-          <font class="caps"><xsl:apply-templates mode="jesus"/></font>
+        <xsl:when test="@type">
+          <xsl:value-of select="@type"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates/>
+          <xsl:value-of select="@rend"/>
         </xsl:otherwise>
       </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$style = 'acrostic'">
+        <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:when test="$style = 'bold'">
+        <strong><xsl:apply-templates/></strong>
+      </xsl:when>
+      <xsl:when test="$style = 'emphasis'">
+        <em><xsl:apply-templates/></em>
+      </xsl:when>
+      <xsl:when test="$style = 'illuminated'">
+        <strong><em><xsl:apply-templates/></em></strong>
+      </xsl:when>
+      <xsl:when test="$style = 'italic'">
+        <em><xsl:apply-templates/></em>
+      </xsl:when>
+      <xsl:when test="$style = 'line-through'">
+        <font class="strike"><xsl:apply-templates/></font>
+      </xsl:when>
+      <xsl:when test="$style = 'normal'">
+        <font class="normal"><xsl:apply-templates/></font>
+      </xsl:when>
+      <xsl:when test="$style = 'small-caps'">
+        <font class="small-caps"><xsl:apply-templates/></font>
+      </xsl:when>
+      <xsl:when test="$style = 'sub'">
+        <sub><xsl:apply-templates/></sub>
+      </xsl:when>
+      <xsl:when test="$style = 'super'">
+        <sup><xsl:apply-templates/></sup>
+      </xsl:when>
+      <xsl:when test="$style = 'underline'">
+        <u><xsl:apply-templates/></u>
+      </xsl:when>
+      <xsl:when test="$style = 'x-caps'">
+        <font class="caps"><xsl:apply-templates/></font>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <!--
+    The following elements are actually TEI and there is some expectation
+    that these will make it into OSIS.
+  -->
+  <xsl:template match="superentry">
+    <!-- output each preverse element in turn -->
+    <xsl:for-each select="entry|entryFree">
+      <xsl:apply-templates/><br/><br/>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template match="entry">
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="entryFree">
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="form">
+    <xsl:apply-templates/><br/>
+  </xsl:template>
+
+  <xsl:template match="orth">
+    <font class="orth"><xsl:apply-templates/></font>
+  </xsl:template>
+
+  <xsl:template match="pron">
+    <font class="pron"><xsl:apply-templates/></font>
+  </xsl:template>
+
+  <xsl:template match="etym">
+    <font class="etym"><xsl:apply-templates/></font>
+  </xsl:template>
+
+  <xsl:template match="def">
+    <font class="def"><xsl:apply-templates/></font>
+  </xsl:template>
+
+  <xsl:template match="usg">
+    <font class="usg"><xsl:apply-templates/></font>
+  </xsl:template>
+
+  <xsl:template match="@xml:lang">
+    <xsl:variable name="dir">
+      <xsl:if test="@xml:lang">
+        <xsl:call-template name="getDirection">
+         <xsl:with-param name="lang"><xsl:value-of select="@xml:lang"/></xsl:with-param>
+        </xsl:call-template>
+      </xsl:if>
+    </xsl:variable>
+    <xsl:if test="$dir">
+      <xsl:attribute name="dir">
+        <xsl:value-of select="$dir"/>
+      </xsl:attribute>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="text()" mode="small-caps">
