@@ -161,7 +161,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             XSLTProperty.DIRECTION.setState(bmd.isLeftToRight() ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$
 
             URI loc = bmd.getLocation();
-            XSLTProperty.BASE_URL.setState(loc == null ? "" : NetUtil.getAsFile(loc).getCanonicalPath()); //$NON-NLS-1$
+            XSLTProperty.BASE_URL.setState(loc == null ? "" : NetUtil.getAsFile(loc).toURL().toString()); //$NON-NLS-1$
 
             if (bmd.getBookCategory() == BookCategory.BIBLE)
             {

@@ -42,6 +42,7 @@ import org.crosswire.common.config.swing.ConfigEditorFactory;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.Actionable;
 import org.crosswire.common.swing.desktop.ViewVisitor;
+import org.crosswire.common.util.ClassUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.OSType;
 import org.crosswire.common.util.ReflectionUtil;
@@ -503,7 +504,7 @@ public class DesktopActions implements Actionable
         {
             try
             {
-                Class osxAdapter = Class.forName("org.crosswire.common.aqua.OSXAdapter"); //$NON-NLS-1$
+                Class osxAdapter = ClassUtil.forName("org.crosswire.common.aqua.OSXAdapter"); //$NON-NLS-1$
                 Object[] registerOSXArgs = { actions, DesktopActions.ABOUT, DesktopActions.OPTIONS, DesktopActions.EXIT };
                 ReflectionUtil.invoke(osxAdapter, osxAdapter, "registerMacOSXApplication", registerOSXArgs); //$NON-NLS-1$
 

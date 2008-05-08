@@ -33,6 +33,7 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 import org.crosswire.common.swing.plaf.MetalLFCustoms;
 import org.crosswire.common.swing.plaf.OtherLFCustoms;
 import org.crosswire.common.swing.plaf.WindowsLFCustoms;
+import org.crosswire.common.util.ClassUtil;
 
 /**
  * LookAndFeelUtil declares the Choices and actions
@@ -178,7 +179,7 @@ public final class LookAndFeelUtil
                 // UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel"); //$NON-NLS-1$
                 // UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
                 // UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-                defaultLAF = Class.forName(systemLAF);
+                defaultLAF = ClassUtil.forName(systemLAF);
             }
         }
         catch (ClassNotFoundException e)
