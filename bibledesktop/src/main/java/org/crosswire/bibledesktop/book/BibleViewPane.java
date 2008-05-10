@@ -46,13 +46,13 @@ import org.crosswire.common.swing.desktop.TabbedPanePanel;
 import org.crosswire.common.swing.desktop.Titleable;
 import org.crosswire.common.swing.desktop.event.TitleChangedEvent;
 import org.crosswire.common.swing.desktop.event.TitleChangedListener;
+import org.crosswire.common.util.CWProject;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageKeyFactory;
-import org.crosswire.jsword.util.Project;
 
 /**
  * A BibleViewPane consists of three areas for looking up passages,
@@ -92,11 +92,11 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
     {
         try
         {
-            chooser = new JFileChooser(Project.instance().getWriteableProjectSubdir(BOOKMARK_DIR, true).getPath());
+            chooser = new JFileChooser(CWProject.instance().getWriteableProjectSubdir(BOOKMARK_DIR, true).getPath());
         }
         catch (IOException ex)
         {
-            chooser = new JFileChooser(Project.instance().getWritableProjectDir().getPath());
+            chooser = new JFileChooser(CWProject.instance().getWritableProjectDir().getPath());
         }
 
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);

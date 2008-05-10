@@ -48,6 +48,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import org.crosswire.common.icu.NumberShaper;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWOptionPane;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.swing.FontChooser;
@@ -321,7 +322,7 @@ public class SitePane extends JPanel
         try
         {
             String msg = shaper.shape(Msg.CONFIRM_DELETE_BOOK.toString(new Object[] {book.getName()}));
-            if (JOptionPane.showConfirmDialog(this, msg,
+            if (CWOptionPane.showConfirmDialog(this, msg,
                             Msg.CONFIRM_DELETE_TITLE.toString(),
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
             {
@@ -355,7 +356,7 @@ public class SitePane extends JPanel
         Book book = getBook(last);
 
         String unlockKey =
-            (String) JOptionPane.showInputDialog(this,
+            (String) CWOptionPane.showInputDialog(this,
                                         Msg.UNLOCK_BOOK.toString(new Object[] {book.getName()}),
                                         Msg.UNLOCK_TITLE.toString(),
                                         JOptionPane.QUESTION_MESSAGE,
@@ -388,7 +389,7 @@ public class SitePane extends JPanel
         {
             IndexManager imanager = IndexManagerFactory.getIndexManager();
             if (imanager.isIndexed(book)
-                && JOptionPane.showConfirmDialog(this, Msg.CONFIRM_UNINSTALL_BOOK.toString(new Object[] {book.getName()}),
+                && CWOptionPane.showConfirmDialog(this, Msg.CONFIRM_UNINSTALL_BOOK.toString(new Object[] {book.getName()}),
                                               Msg.CONFIRM_UNINSTALL_TITLE.toString(),
                                               JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
             {
@@ -478,7 +479,7 @@ public class SitePane extends JPanel
                 msg = Msg.MB_SIZE;
             }
 
-            if (JOptionPane.showConfirmDialog(this, msg.toString(new Object[] {name.getName(), new Float(size)}),
+            if (CWOptionPane.showConfirmDialog(this, msg.toString(new Object[] {name.getName(), new Float(size)}),
                             Msg.CONFIRMATION_TITLE.toString(),
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
             {

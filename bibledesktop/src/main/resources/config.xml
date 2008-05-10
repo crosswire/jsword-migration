@@ -201,7 +201,7 @@
   </option>
 
   <option key="Application.Language" type="map-options">
-    <introspect class="org.crosswire.bibledesktop.desktop.Translations" property="CurrentTranslation"/>
+    <introspect class="org.crosswire.common.util.Translations" property="CurrentTranslation"/>
     <map name="translation-codes"/>
   </option>
 

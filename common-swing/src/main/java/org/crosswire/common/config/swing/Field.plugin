@@ -1,5 +1,6 @@
 string=org.crosswire.common.config.swing.TextField
-password=org.crosswire.common.config.swing.PasswordField
+#password is now in jsword-limbo
+#password=org.crosswire.common.config.swing.PasswordField
 boolean=org.crosswire.common.config.swing.BooleanField
 int-options=org.crosswire.common.config.swing.MappedOptionsField
 map-options=org.crosswire.common.config.swing.MappedOptionsField

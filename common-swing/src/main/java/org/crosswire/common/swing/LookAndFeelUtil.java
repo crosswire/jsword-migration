@@ -23,7 +23,6 @@ package org.crosswire.common.swing;
 
 import java.util.Enumeration;
 
-import javax.swing.JOptionPane;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -87,7 +86,7 @@ public final class LookAndFeelUtil
         // newLaFClass is null if the user enters a bogus value
         if (currentLAF != null && !currentLAF.equals(newLaFClass))
         {
-            JOptionPane.showMessageDialog(null, Msg.PLAF_CHANGE);
+            CWOptionPane.showMessageDialog(null, Msg.PLAF_CHANGE);
         }
         else
         {

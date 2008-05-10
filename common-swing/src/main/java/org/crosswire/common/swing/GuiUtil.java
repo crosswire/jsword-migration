@@ -95,16 +95,26 @@ public final class GuiUtil
     {
         Component temp = com;
 
-        while (!(temp instanceof Window))
+        while (!(temp instanceof Frame || temp instanceof Dialog))
         {
             temp = temp.getParent();
             if (temp == null)
             {
-                return null;
+                return getFrame(com);
             }
         }
 
         return (Window) temp;
+    }
+
+    /**
+     * Find the best frame to which to root a dialog, generally the largest visible
+     * frame of the application.
+     * @return the best frame.
+     */
+    public static Frame getRootFrame()
+    {
+        return getFrame(null);
     }
 
     /**

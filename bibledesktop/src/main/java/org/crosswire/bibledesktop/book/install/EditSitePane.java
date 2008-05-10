@@ -55,6 +55,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWOptionPane;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.swing.GuiUtil;
@@ -350,7 +351,7 @@ public class EditSitePane extends JPanel
         String name = (String) lstSite.getSelectedValue();
         if (name == null)
         {
-            JOptionPane.showMessageDialog(this, Msg.NO_SELECTED_SITE.toString(), Msg.NO_SITE.toString(), JOptionPane.INFORMATION_MESSAGE);
+            CWOptionPane.showMessageDialog(this, Msg.NO_SELECTED_SITE.toString(), Msg.NO_SITE.toString(), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
@@ -376,7 +377,7 @@ public class EditSitePane extends JPanel
             return;
         }
 
-        if (JOptionPane.showConfirmDialog(this, Msg.CONFIRM_DELETE_SITE.toString(name), Msg.DELETE_SITE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+        if (CWOptionPane.showConfirmDialog(this, Msg.CONFIRM_DELETE_SITE.toString(name), Msg.DELETE_SITE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
         {
             imanager.removeInstaller(name);
         }

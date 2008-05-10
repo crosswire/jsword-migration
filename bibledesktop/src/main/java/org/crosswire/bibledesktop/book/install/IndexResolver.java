@@ -32,6 +32,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.crosswire.common.swing.CWOptionPane;
 import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookException;
@@ -77,7 +78,7 @@ public final class IndexResolver
         // LATER(DMS): Enable this when we have indexes to download
 //        String title = Msg.HOW_MESSAGE_TITLE.toString();
 //        Msg msg = Msg.HOW_MESSAGE;
-//        int choice = JOptionPane.showOptionDialog(parent, msg, title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+//        int choice = CWOptionPane.showOptionDialog(parent, msg, title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
         int choice = 1;
 
@@ -113,7 +114,7 @@ public final class IndexResolver
 
                     String gtitle = Msg.HOW_GENERATE_TITLE.toString();
                     Msg gmsg = Msg.HOW_GENERATE;
-                    int yn = JOptionPane.showConfirmDialog(parent, gmsg, gtitle, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int yn = CWOptionPane.showConfirmDialog(parent, gmsg, gtitle, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
                     if (yn == JOptionPane.YES_OPTION)
                     {
@@ -160,7 +161,7 @@ public final class IndexResolver
 
             String title = Msg.HOW_SITE_TITLE.toString();
 
-            int yn = JOptionPane.showConfirmDialog(parent, panel, title, JOptionPane.YES_OPTION);
+            int yn = CWOptionPane.showConfirmDialog(parent, panel, title, JOptionPane.YES_OPTION);
             if (yn == JOptionPane.YES_OPTION)
             {
                 installer = (Installer) choice.getSelectedItem();

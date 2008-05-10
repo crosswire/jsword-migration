@@ -29,7 +29,6 @@ import java.util.Iterator;
 
 import javax.swing.Action;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.ToolTipManager;
 
 import org.crosswire.bibledesktop.book.BibleViewPane;
@@ -41,15 +40,16 @@ import org.crosswire.bibledesktop.display.basic.TabbedBookDataDisplay;
 import org.crosswire.common.config.swing.ConfigEditorFactory;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.Actionable;
+import org.crosswire.common.swing.CWOptionPane;
 import org.crosswire.common.swing.desktop.ViewVisitor;
 import org.crosswire.common.util.ClassUtil;
+import org.crosswire.common.util.CWProject;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.OSType;
 import org.crosswire.common.util.ReflectionUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchVerseException;
-import org.crosswire.jsword.util.Project;
 import org.crosswire.jsword.util.WebWarning;
 
 /**
@@ -431,7 +431,7 @@ public class DesktopActions implements Actionable
      */
     public void doOptions()
     {
-        URI configUri = Project.instance().getWritablePropertiesURI("desktop"); //$NON-NLS-1$
+        URI configUri = CWProject.instance().getWritablePropertiesURI("desktop"); //$NON-NLS-1$
         ConfigEditorFactory.showDialog(desktop.getConfig(), desktop, configUri);
     }
 
@@ -440,7 +440,7 @@ public class DesktopActions implements Actionable
      */
     public void doContents()
     {
-        JOptionPane.showMessageDialog(getDesktop(), Msg.NO_HELP);
+        CWOptionPane.showMessageDialog(getDesktop(), Msg.NO_HELP);
     }
 
     /**

@@ -27,6 +27,7 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.crosswire.common.util.CWProject;
 import org.crosswire.common.util.IOUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
@@ -36,7 +37,6 @@ import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.index.Index;
 import org.crosswire.jsword.index.IndexManager;
-import org.crosswire.jsword.util.Project;
 
 /**
  * An implementation of IndexManager that controls Ser indexes.
@@ -161,7 +161,7 @@ public class SerIndexManager implements IndexManager
         assert driverName != null;
         assert bookName != null;
 
-        URI base = Project.instance().getWriteableProjectSubdir(DIR_SER, false);
+        URI base = CWProject.instance().getWriteableProjectSubdir(DIR_SER, false);
         URI driver = NetUtil.lengthenURI(base, driverName);
 
         return NetUtil.lengthenURI(driver, bookName);

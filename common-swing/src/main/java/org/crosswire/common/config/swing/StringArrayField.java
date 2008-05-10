@@ -45,6 +45,7 @@ import javax.swing.border.Border;
 
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWOptionPane;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.util.Convert;
 
@@ -152,7 +153,7 @@ public class StringArrayField extends JPanel implements Field
     {
         InputPane input = new InputPane();
 
-        if (JOptionPane.showConfirmDialog(this, input, Msg.NEW_CLASS.toString(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+        if (CWOptionPane.showConfirmDialog(this, input, Msg.NEW_CLASS.toString(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
         {
             String new_name = input.name_field.getText();
 
@@ -168,7 +169,7 @@ public class StringArrayField extends JPanel implements Field
         InputPane input = new InputPane();
         input.name_field.setText(currentValue());
 
-        if (JOptionPane.showConfirmDialog(this, input, Msg.EDIT_CLASS.toString(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+        if (CWOptionPane.showConfirmDialog(this, input, Msg.EDIT_CLASS.toString(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
         {
             String new_name = input.name_field.getText();
 

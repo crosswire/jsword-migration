@@ -74,6 +74,7 @@ import org.crosswire.common.config.Config;
 import org.crosswire.common.history.History;
 import org.crosswire.common.progress.JobManager;
 import org.crosswire.common.progress.Progress;
+import org.crosswire.common.swing.CWOptionPane;
 import org.crosswire.common.swing.CatchingThreadGroup;
 import org.crosswire.common.swing.ExceptionPane;
 import org.crosswire.common.swing.FixedSplitPane;
@@ -87,10 +88,12 @@ import org.crosswire.common.swing.desktop.ViewManager;
 import org.crosswire.common.swing.desktop.event.ViewEvent;
 import org.crosswire.common.swing.desktop.event.ViewEventListener;
 import org.crosswire.common.util.CWClassLoader;
+import org.crosswire.common.util.CWProject;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.OSType;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.util.ResourceUtil;
+import org.crosswire.common.util.Translations;
 import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
@@ -101,7 +104,6 @@ import org.crosswire.jsword.book.Defaults;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.util.ConverterFactory;
-import org.crosswire.jsword.util.Project;
 import org.jdom.Document;
 import org.jdom.JDOMException;
 
@@ -118,11 +120,14 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
 {
     // This must be the first static in the program.
     // To ensure this we place it at the top of the class!
-    // Calling Project.instance() will set up the PROJECT's home directory
-    //     ~/.jsword
     // This will set it as a place to look for overrides for
     // ResourceBundles, properties and other resources
-    private static final Project PROJECT = Project.instance();
+    private static final CWProject PROJECT = CWProject.instance();
+
+    static
+    {
+        PROJECT.setHome("jsword.home", ".jsword", "JSword"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    }
 
     /**
      * Central start point.
@@ -889,7 +894,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         List bibles = Books.installed().getBooks(BookFilters.getBibles());
         if (bibles.size() == 0)
         {
-            int reply = JOptionPane.showConfirmDialog(this, Msg.NO_BIBLES_MESSAGE, Msg.NO_BIBLES_TITLE.toString(), JOptionPane.OK_CANCEL_OPTION,
+            int reply = CWOptionPane.showConfirmDialog(this, Msg.NO_BIBLES_MESSAGE, Msg.NO_BIBLES_TITLE.toString(), JOptionPane.OK_CANCEL_OPTION,
                             JOptionPane.QUESTION_MESSAGE);
             if (reply == JOptionPane.OK_OPTION)
             {

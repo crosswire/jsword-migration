@@ -46,8 +46,8 @@ import javax.swing.JTextPane;
 import org.crosswire.bibledesktop.book.BibleViewPane;
 import org.crosswire.common.progress.JobManager;
 import org.crosswire.common.progress.Progress;
+import org.crosswire.common.util.CWProject;
 import org.crosswire.common.util.Logger;
-import org.crosswire.jsword.util.Project;
 
 /**
  * Various debug actions, for easy editing to help us hack over time.
@@ -181,7 +181,7 @@ public class DebugPane extends JPanel
      */
     public static void createTestJob(final long millis, final String predictbase, final int steps, final boolean fake)
     {
-        final URI predicturl = Project.instance().getWritablePropertiesURI(predictbase);
+        final URI predicturl = CWProject.instance().getWritablePropertiesURI(predictbase);
         final Thread test = new Thread()
         {
             /* (non-Javadoc)

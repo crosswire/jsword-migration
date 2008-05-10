@@ -27,10 +27,10 @@ import java.awt.Font;
 import org.crosswire.bibledesktop.desktop.XSLTProperty;
 import org.crosswire.common.swing.FontStore;
 import org.crosswire.common.swing.GuiConvert;
+import org.crosswire.common.util.CWProject;
 import org.crosswire.common.util.Language;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookMetaData;
-import org.crosswire.jsword.util.Project;
 
 /**
  *
@@ -47,7 +47,7 @@ public class BookFont extends FontStore
      */
     private BookFont()
     {
-        super("BookFonts", Project.instance().getWritableProjectDir()); //$NON-NLS-1$
+        super("BookFonts", CWProject.instance().getWritableProjectDir()); //$NON-NLS-1$
     }
 
     public static BookFont instance()

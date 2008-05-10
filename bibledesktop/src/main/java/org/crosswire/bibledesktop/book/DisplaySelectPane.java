@@ -46,6 +46,7 @@ import org.crosswire.bibledesktop.book.install.IndexResolver;
 import org.crosswire.bibledesktop.passage.KeyChangeEvent;
 import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWOptionPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.swing.QuickHelpDialog;
 import org.crosswire.common.swing.desktop.event.TitleChangedEvent;
@@ -576,7 +577,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     private void noBookInstalled()
     {
         String noBible = Msg.NO_INSTALLED_BIBLE.toString();
-        JOptionPane.showMessageDialog(this, noBible, noBible, JOptionPane.WARNING_MESSAGE);
+        CWOptionPane.showMessageDialog(this, noBible, noBible, JOptionPane.WARNING_MESSAGE);
     }
 
     /**

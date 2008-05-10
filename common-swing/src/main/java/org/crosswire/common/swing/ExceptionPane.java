@@ -48,7 +48,6 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -655,11 +654,11 @@ public final class ExceptionPane extends JPanel
         {
             if (event.getSource() instanceof Component)
             {
-                JOptionPane.showMessageDialog((Component) event.getSource(), event.getMessage());
+                CWOptionPane.showMessageDialog((Component) event.getSource(), event.getMessage());
             }
             else
             {
-                JOptionPane.showMessageDialog(null, event.getMessage());
+                CWOptionPane.showMessageDialog(null, event.getMessage());
             }
         }
 

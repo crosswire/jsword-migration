@@ -17,9 +17,9 @@
  * Copyright: 2005
  *     The copyright to this program is held by it's authors.
  *
- * ID: $Id$
+ * ID: $Id: Translations.java 1738 2008-01-15 02:56:55Z dmsmith $
  */
-package org.crosswire.bibledesktop.desktop;
+package org.crosswire.common.util;
 
 import java.io.IOException;
 import java.net.URI;
@@ -30,13 +30,6 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.crosswire.common.config.ChoiceFactory;
-import org.crosswire.common.util.Countries;
-import org.crosswire.common.util.Languages;
-import org.crosswire.common.util.Logger;
-import org.crosswire.common.util.NetUtil;
-import org.crosswire.common.util.ResourceUtil;
-import org.crosswire.common.util.StringUtil;
-import org.crosswire.jsword.util.Project;
 
 /**
  * Translations provides a list of locales that BibleDesktop has been translated into.
@@ -142,7 +135,7 @@ public class Translations
             translation = found;
             Properties props = new Properties();
             props.put(TRANSLATION_KEY, translation);
-            URI outputURI = Project.instance().getWritablePropertiesURI(getClass().getName());
+            URI outputURI = CWProject.instance().getWritablePropertiesURI(getClass().getName());
             NetUtil.storeProperties(props, outputURI, "BibleDesktop UI Translation"); //$NON-NLS-1$
         }
         catch (IOException ex)
