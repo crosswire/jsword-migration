@@ -101,8 +101,6 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
         {
             Component root =  SwingUtilities.getRoot(parent);
             dialog = new JDialog((JFrame) root);
-            dialog.setComponentOrientation(root.getComponentOrientation());
-
             dialog.getContentPane().add(this);
 
             // Why is this only available in Frames?

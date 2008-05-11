@@ -292,7 +292,6 @@ public class PassageSelectionPane extends JPanel
 
         Frame root = JOptionPane.getFrameForComponent(parent);
         dlgMain = new JDialog(root);
-        dlgMain.setComponentOrientation(root.getComponentOrientation());
 
         JPanel pnlAction = new JPanel();
         KeyStroke esc = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);

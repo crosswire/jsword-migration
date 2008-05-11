@@ -230,7 +230,6 @@ public final class ExceptionPane extends JPanel
         dialog.getRootPane().setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, pane.upper.getBackground()));
         dialog.getRootPane().add(pane, BorderLayout.CENTER);
 
-        dialog.setComponentOrientation(root.getComponentOrientation());
 
         if (actions == null)
         {
@@ -249,6 +248,7 @@ public final class ExceptionPane extends JPanel
         dialog.getRootPane().setDefaultButton(ok);
 
         GuiUtil.centerWindow(dialog);
+        GuiUtil.applyDefaultOrientation(dialog);
         dialog.pack();
         dialog.setVisible(true);
     }

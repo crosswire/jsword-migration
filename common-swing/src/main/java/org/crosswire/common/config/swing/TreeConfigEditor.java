@@ -218,6 +218,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
         }
 
         String key = path.toString();
+        GuiUtil.applyDefaultOrientation(deck);
         if (decks.containsKey(key))
         {
             layout.show(deck, key);

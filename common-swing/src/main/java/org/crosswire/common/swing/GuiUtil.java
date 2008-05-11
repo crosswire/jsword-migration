@@ -47,6 +47,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JToolTip;
 import javax.swing.text.JTextComponent;
 
+import org.crosswire.common.util.Language;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.ResourceUtil;
 
@@ -547,11 +548,21 @@ public final class GuiUtil
      * Recursively apply default component orientation to the component and all it contains.
      * 
      * @param comp the root of the tree to which orientation needs to be applied
-     * @param o the orientation to be applied
      */
     public static void applyDefaultOrientation(Component comp)
     {
-        applyOrientation(comp, ComponentOrientation.getOrientation(Locale.getDefault()));
+        applyOrientation(comp, new Language(Locale.getDefault().getLanguage()).isLeftToRight());
+    }
+
+    /**
+     * Recursively apply component orientation to the component and all it contains.
+     * 
+     * @param comp the root of the tree to which orientation needs to be applied
+     * @param ltr whether the orientation is left to right or not.
+     */
+    public static void applyOrientation(Component comp, boolean ltr)
+    {
+        applyOrientation(comp, ltr ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
     }
 
     /**

@@ -261,13 +261,13 @@ public class WizardConfigEditor extends AbstractConfigEditor
     {
         Component root = SwingUtilities.getRoot(parent);
         dialog = new JDialog((JFrame) root);
-        dialog.setComponentOrientation(root.getComponentOrientation());
         dialog.getRootPane().setDefaultButton(next);
         dialog.getContentPane().add(this);
         dialog.setTitle(config.getTitle());
         dialog.setSize(800, 500);
         dialog.pack();
         dialog.setModal(true);
+        GuiUtil.applyDefaultOrientation(dialog);
         dialog.setVisible(true);
 
         // Why is this only available in Frames?

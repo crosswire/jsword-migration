@@ -297,7 +297,6 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
 
         Frame root = JOptionPane.getFrameForComponent(parent);
         dlgMain = new JDialog(root);
-        dlgMain.setComponentOrientation(root.getComponentOrientation());
 
         KeyStroke esc = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
         bailout = true;
@@ -321,13 +320,13 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
 
         GuiUtil.restrainedPack(dlgMain, 0.5f, 0.75f);
         GuiUtil.centerWindow(dlgMain);
+        GuiUtil.applyDefaultOrientation(dlgMain);
         dlgMain.setVisible(true);
 
         if (bailout)
         {
             return null;
         }
-        GuiUtil.applyDefaultOrientation(dlgMain);
 
         return txtSummary.getText();
     }

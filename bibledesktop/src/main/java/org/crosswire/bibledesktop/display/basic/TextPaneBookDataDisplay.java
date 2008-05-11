@@ -22,11 +22,9 @@
 package org.crosswire.bibledesktop.display.basic;
 
 import java.awt.Component;
-import java.awt.ComponentOrientation;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.text.MessageFormat;
@@ -50,8 +48,8 @@ import org.crosswire.bibledesktop.display.URIEventListener;
 import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.common.swing.AntiAliasedTextPane;
 import org.crosswire.common.swing.GuiConvert;
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Logger;
-import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
@@ -150,7 +148,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
         }
 
         boolean direction = bmd.isLeftToRight();
-        txtView.applyComponentOrientation(direction ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
+        GuiUtil.applyOrientation(txtView, direction);
 
         String fontSpec = GuiConvert.font2String(BookFont.instance().getFont(getFirstBook()));
         try
@@ -158,10 +156,10 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             SAXEventProvider osissep = bdata.getSAXEventProvider();
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
 
-            XSLTProperty.DIRECTION.setState(bmd.isLeftToRight() ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$
+            XSLTProperty.DIRECTION.setState(direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$
 
             URI loc = bmd.getLocation();
-            XSLTProperty.BASE_URL.setState(loc == null ? "" : NetUtil.getAsFile(loc).toURL().toString()); //$NON-NLS-1$
+            XSLTProperty.BASE_URL.setState(loc == null ? "" : loc.getPath()); //$NON-NLS-1$
 
             if (bmd.getBookCategory() == BookCategory.BIBLE)
             {
@@ -202,10 +200,6 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             Reporter.informUser(this, e);
         }
         catch (TransformerException e)
-        {
-            Reporter.informUser(this, e);
-        }
-        catch (IOException e)
         {
             Reporter.informUser(this, e);
         }

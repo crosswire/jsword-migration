@@ -97,8 +97,6 @@ public class InternetWarning extends JPanel
                       ? new JDialog((JFrame) root, title, true)
                       : new JDialog((JDialog) root, title, true);
 
-        dialog.setComponentOrientation(root.getComponentOrientation());
-
         webWarning.dialog = dialog;
         webWarning.choice = InternetWarning.DENIED;
 

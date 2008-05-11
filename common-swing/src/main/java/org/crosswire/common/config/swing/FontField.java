@@ -27,6 +27,7 @@ import javax.swing.JComponent;
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.FontChooser;
 import org.crosswire.common.swing.GuiConvert;
+import org.crosswire.common.swing.GuiUtil;
 
 /**
  * A swing view of a FontChoice.
@@ -44,6 +45,7 @@ public class FontField extends FontChooser implements Field
     {
         setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(),
                                                      BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        GuiUtil.applyDefaultOrientation(this);
 
     }
 

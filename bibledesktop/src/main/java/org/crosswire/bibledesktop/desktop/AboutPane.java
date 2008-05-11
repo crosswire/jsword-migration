@@ -182,7 +182,6 @@ public class AboutPane
     {
         Frame root = JOptionPane.getFrameForComponent(parent);
         dlgMain = new JDialog(root);
-        dlgMain.setComponentOrientation(root.getComponentOrientation());
 
         dlgMain.getContentPane().add(pnlMain);
         dlgMain.setTitle(Msg.getAboutInfo());

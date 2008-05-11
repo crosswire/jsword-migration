@@ -80,7 +80,7 @@ public class SplitBookDataDisplay extends JPanel implements BookProvider
     }
 
     /**
-     * @return Returns the sidebar.
+     * @return Returns the display area.
      */
     public BookDataDisplay getBookDataDisplay()
     {

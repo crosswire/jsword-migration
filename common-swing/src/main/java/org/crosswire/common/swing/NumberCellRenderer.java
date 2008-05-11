@@ -43,6 +43,7 @@ public class NumberCellRenderer extends DefaultListCellRenderer
     public NumberCellRenderer()
     {
         this.shaper = new NumberShaper();
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /* (non-Javadoc)
@@ -66,6 +67,7 @@ public class NumberCellRenderer extends DefaultListCellRenderer
             setText(shaper.shape(value.toString()));
         }
 
+        GuiUtil.applyDefaultOrientation(comp);
         return comp;
     }
 

@@ -48,7 +48,9 @@ public class MapEntryRenderer extends DefaultListCellRenderer
             displayObject = mapEntry.getValue();
         }
 
-        return super.getListCellRendererComponent(list, displayObject, index, selected, focus);
+        Component comp = super.getListCellRendererComponent(list, displayObject, index, selected, focus);
+        GuiUtil.applyDefaultOrientation(comp);
+        return comp;
     }
 
     /**

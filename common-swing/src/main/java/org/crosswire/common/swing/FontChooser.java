@@ -112,8 +112,6 @@ public class FontChooser extends JPanel
                       ? new JDialog((JFrame) root, title, true)
                       : new JDialog((JDialog) root, title, true);
 
-        fontc.dialog.setComponentOrientation(root.getComponentOrientation());
-
         fontc.name.setSelectedItem(initial != null ? initial : DEFAULT_FONT.getFont());
 
         if (actions == null)
@@ -305,6 +303,11 @@ public class FontChooser extends JPanel
      */
     static class CustomListCellRenderer extends DefaultListCellRenderer
     {
+        public CustomListCellRenderer()
+        {
+            GuiUtil.applyDefaultOrientation(this);
+        }
+
         /* (non-Javadoc)
          * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
          */

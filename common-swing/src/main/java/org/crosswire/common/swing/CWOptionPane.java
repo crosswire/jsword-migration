@@ -728,6 +728,7 @@ public class CWOptionPane extends JOptionPane
             }
         });
 
+        GuiUtil.applyDefaultOrientation(dialog);
         return dialog;
     }
 

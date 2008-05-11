@@ -47,6 +47,7 @@ import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWOptionPane;
 import org.crosswire.common.swing.CWScrollPane;
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Convert;
 
 /**
@@ -88,6 +89,7 @@ public class StringArrayField extends JPanel implements Field
         setLayout(new BorderLayout());
         add(scroll, BorderLayout.CENTER);
         add(buttons, BorderLayout.PAGE_END);
+        GuiUtil.applyDefaultOrientation(this);
     }
 
     /* (non-Javadoc)

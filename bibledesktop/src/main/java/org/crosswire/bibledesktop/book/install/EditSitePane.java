@@ -217,7 +217,6 @@ public class EditSitePane extends JPanel
     {
         Frame root = JOptionPane.getFrameForComponent(parent);
         dlgMain = new JDialog(root);
-        dlgMain.setComponentOrientation(root.getComponentOrientation());
 
         ActionListener closer = new ActionListener()
         {
@@ -244,6 +243,7 @@ public class EditSitePane extends JPanel
 
         GuiUtil.setSize(dlgMain, new Dimension(750, 400));
         GuiUtil.centerWindow(dlgMain);
+        GuiUtil.applyDefaultOrientation(dlgMain);
         dlgMain.setVisible(true);
         dlgMain.toFront();
     }

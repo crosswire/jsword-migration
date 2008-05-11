@@ -147,7 +147,6 @@ public class SitesPane extends JPanel
     {
         Frame root = JOptionPane.getFrameForComponent(parent);
         dlgMain = new JDialog(root);
-        dlgMain.setComponentOrientation(root.getComponentOrientation());
         dlgMain.setSize(new Dimension(750, 500));
         dlgMain.getContentPane().setLayout(new BorderLayout());
         dlgMain.getContentPane().add(this, BorderLayout.CENTER);

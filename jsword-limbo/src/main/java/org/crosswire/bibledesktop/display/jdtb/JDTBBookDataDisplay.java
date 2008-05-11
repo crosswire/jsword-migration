@@ -105,7 +105,7 @@ public class JDTBBookDataDisplay implements BookDataDisplay
             // Make sure Hebrew displays from Right to Left
 //            BookMetaData bmd = book.getBookMetaData();
 //            boolean direction = bmd.isLeftToRight();
-//            txtView.applyComponentOrientation(direction ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
+//            GuiUtil.applyOrientation(txtView, direction);
 
 //            BookData bdata = new BookData(book, key);
 

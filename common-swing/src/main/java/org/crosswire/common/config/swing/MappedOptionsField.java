@@ -30,6 +30,7 @@ import javax.swing.JComponent;
 
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.config.MappedChoice;
+import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.swing.MapComboBoxModel;
 import org.crosswire.common.swing.MapEntryRenderer;
 import org.crosswire.common.util.Logger;
@@ -51,6 +52,7 @@ public class MappedOptionsField implements Field
         combo = new JComboBox(new String[] { Msg.NO_OPTIONS.toString() });
         // Set the preferred width. Note, the actual combo box will resize to the width of it's container
         combo.setPreferredSize(new Dimension(100, combo.getPreferredSize().height));
+        GuiUtil.applyDefaultOrientation(combo);
     }
 
     /**
