@@ -505,9 +505,14 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         sidebarToggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.SIDEBAR_TOGGLE));
         sidebarToggle.setSelected(isSidebarShowing());
         menuView.add(sidebarToggle).addMouseListener(barStatus);
-        menuView.addSeparator();
-        menuView.add(actions.getAction(DesktopActions.VIEW_SOURCE)).addMouseListener(barStatus);
-        menuView.setToolTipText(null);
+
+        if (viewSourceShowing)
+        {
+            menuView.addSeparator();
+            menuView.add(actions.getAction(DesktopActions.VIEW_SOURCE)).addMouseListener(barStatus);
+            menuView.setToolTipText(null);
+        }
+
         return menuView;
     }
 
@@ -920,6 +925,22 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     }
 
     /**
+     * @param show Whether to show the view source in menu at start up.
+     */
+    public static void setViewSourceShowing(boolean show)
+    {
+        viewSourceShowing = show;
+    }
+
+    /**
+     * @return Whether to show the view source in menu at start up.
+     */
+    public static boolean isViewSourceShowing()
+    {
+        return viewSourceShowing;
+    }
+
+    /**
      * @param show Whether to show differences between versions of the Bible
      */
     public void setCompareShowing(boolean show)
@@ -1220,6 +1241,11 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
      * Whether to show the Key Sidebar at startup
      */
     private static boolean sidebarShowing;
+
+    /**
+     * Whether to show the view source in the menu at startup
+     */
+    private static boolean viewSourceShowing;
 
     /**
      * Whether to show differences between versions of the Bible

@@ -122,7 +122,7 @@
     <map name="cswing-styles"/>
   </option>
 
-<!-- This really only useful for developers -->
+<!-- This is really only useful for developers -->
   <option key="BibleDisplay.CSSOverride" type="string">
     <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="CSSOverride"/>
   </option>
@@ -195,7 +195,7 @@
     <!-- Remove Book for now <alternative number="2"/> -->
   </option>
 
-<!-- This really only useful for developers -->
+<!-- This is really only useful for developers -->
   <option key="Application.LookAndFeel" type="class">
     <introspect class="org.crosswire.common.swing.LookAndFeelUtil" property="LookAndFeel"/>
   </option>
@@ -227,17 +227,22 @@
     <introspect class="org.crosswire.jsword.util.WebWarning" property="WarningShown"/>
   </option>
 
-<!-- This really only useful for developers -->
+<!-- This is really only useful for developers -->
+  <option key="Advanced.ViewSource" type="boolean">
+    <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="ViewSourceShowing"/>
+  </option>
+
+<!-- This is really only useful for developers -->
   <option key="Advanced.DetailShown" type="boolean">
     <introspect class="org.crosswire.common.swing.ExceptionPane" property="DetailShown"/>
   </option>
 
-<!-- This really only useful for developers -->
+<!-- This is really only useful for developers -->
   <option key="Advanced.SourcePath" type="path">
     <introspect class="org.crosswire.common.swing.ExceptionPane" property="SourcePath"/>
   </option>
 
-<!-- This really only useful for developers -->
+<!-- This is really only useful for developers -->
   <option key="Advanced.DefaultPassageType" type="int-options">
     <introspect class="org.crosswire.jsword.passage.PassageKeyFactory" property="DefaultPassage"/>
     <alternative number="0"/>
@@ -252,19 +257,19 @@
   </option>
 -->
 
-<!-- Limbo: This really only useful for developers
+<!-- Limbo: This is really only useful for developers
   <option key="Advanced.Reports.ShowErrorsInDialogBox" type="boolean">
     <introspect class="org.crosswire.common.swing.ExceptionPane" property="HelpDeskListener"/>
   </option>
 -->
 
-<!-- Limbo: This really only useful for developers
+<!-- Limbo: This is really only useful for developers
   <option key="Advanced.Reports.LogErrorsInLogWindow" type="boolean">
     <introspect class="org.crosswire.common.swing.ExceptionShelf" property="HelpDeskListener"/>
   </option>
 -->
 
-<!-- This really only useful for developers -->
+<!-- This is really only useful for developers -->
   <option key="Advanced.IncludeAdvancedTabs" type="boolean">
     <introspect class="org.crosswire.bibledesktop.desktop.AboutPane" property="Advanced"/>
   </option>

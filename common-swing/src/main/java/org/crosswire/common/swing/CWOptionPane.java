@@ -193,7 +193,7 @@ public class CWOptionPane extends JOptionPane
      */
     public CWOptionPane(Object message, int messageType, int optionType, Icon icon, Object[] options, Object initialValue)
     {
-        super(message, messageType, optionType, icon, CWOptionPane.fixOptions(options, optionType), initialValue);
+        super(message, messageType, optionType, icon, CWOptionPane.fixOptions(options, optionType, messageType), initialValue);
     }
 
     /**
@@ -366,8 +366,8 @@ public class CWOptionPane extends JOptionPane
      */
     public static void showMessageDialog(Component parentComponent, Object message) throws HeadlessException
     {
-        showMessageDialog(parentComponent, message, "?", INFORMATION_MESSAGE); //$NON-NLS-1$
-    }
+        showOptionDialog(parentComponent, message, "?", DEFAULT_OPTION, INFORMATION_MESSAGE, null, null, null); //$NON-NLS-1$
+   }
 
     /**
      * Brings up a dialog that displays a message using a default
@@ -392,7 +392,7 @@ public class CWOptionPane extends JOptionPane
      */
     public static void showMessageDialog(Component parentComponent, Object message, String title, int messageType) throws HeadlessException
     {
-        showMessageDialog(parentComponent, message, title, messageType, null);
+        showOptionDialog(parentComponent, message, title, DEFAULT_OPTION, messageType, null, null, null);
     }
 
     /**
@@ -442,7 +442,7 @@ public class CWOptionPane extends JOptionPane
      */
     public static int showConfirmDialog(Component parentComponent, Object message) throws HeadlessException
     {
-        return showConfirmDialog(parentComponent, message, "?", YES_NO_CANCEL_OPTION); //$NON-NLS-1$
+        return showOptionDialog(parentComponent, message, "?", YES_NO_CANCEL_OPTION, QUESTION_MESSAGE, null, null, null); //$NON-NLS-1$
     }
 
     /**
@@ -467,7 +467,7 @@ public class CWOptionPane extends JOptionPane
      */
     public static int showConfirmDialog(Component parentComponent, Object message, String title, int optionType) throws HeadlessException
     {
-        return showConfirmDialog(parentComponent, message, title, optionType, QUESTION_MESSAGE);
+        return showOptionDialog(parentComponent, message, title, optionType, QUESTION_MESSAGE, null, null, null);
     }
 
     /**
@@ -503,7 +503,7 @@ public class CWOptionPane extends JOptionPane
      */
     public static int showConfirmDialog(Component parentComponent, Object message, String title, int optionType, int messageType) throws HeadlessException
     {
-        return showConfirmDialog(parentComponent, message, title, optionType, messageType, null);
+        return showOptionDialog(parentComponent, message, title, optionType, messageType, null, null, null);
     }
 
     /**
@@ -760,32 +760,42 @@ public class CWOptionPane extends JOptionPane
         return actions.getAction(key).getValue(Action.NAME).toString();
     }
 
-    private static Object[] fixOptions(Object[] options, int optionType)
+    private static Object[] fixOptions(Object[] options, int optionType, int messageType)
     {
         Object[] opts = options;
         if (options == null)
         {
-            switch (optionType)
+            if (optionType == YES_NO_OPTION)
             {
-                case YES_NO_OPTION:
-                    opts = new Object[]
-                    {
-                                    getActionName("Yes"), //$NON-NLS-1$
-                                    getActionName("No")}; //$NON-NLS-1$
-                    break;
-                case OK_CANCEL_OPTION:
-                    opts = new Object[]
-                    {
-                                    getActionName("OK"), //$NON-NLS-1$
-                                    getActionName("Cancel")}; //$NON-NLS-1$
-                    break;
-                default:
-                    opts = new Object[]
-                    {
-                                    getActionName("Yes"), //$NON-NLS-1$
-                                    getActionName("No"), //$NON-NLS-1$
-                                    getActionName("Cancel")}; //$NON-NLS-1$
-                    break;
+                opts = new Object[]
+                {
+                                getActionName("Yes"), //$NON-NLS-1$
+                                getActionName("No") //$NON-NLS-1$
+                };
+            }
+            else if (optionType == OK_CANCEL_OPTION)
+            {
+                opts = new Object[]
+                {
+                                getActionName("OK"), //$NON-NLS-1$
+                                getActionName("Cancel") //$NON-NLS-1$
+                };
+            }
+            else if (optionType == YES_NO_CANCEL_OPTION && messageType != INFORMATION_MESSAGE)
+            {
+                opts = new Object[]
+                {
+                                getActionName("Yes"), //$NON-NLS-1$
+                                getActionName("No"), //$NON-NLS-1$
+                                getActionName("Cancel") //$NON-NLS-1$
+                };
+            }
+            else
+            {
+                opts = new Object[]
+                {
+                                getActionName("OK"), //$NON-NLS-1$
+                };
             }
         }
         return opts;
