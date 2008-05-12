@@ -96,12 +96,17 @@ public final class GuiUtil
     {
         Component temp = com;
 
+        if (temp == null)
+        {
+            return getRootFrame();
+        }
+
         while (!(temp instanceof Frame || temp instanceof Dialog))
         {
             temp = temp.getParent();
             if (temp == null)
             {
-                return getFrame(com);
+                return getRootFrame();
             }
         }
 
