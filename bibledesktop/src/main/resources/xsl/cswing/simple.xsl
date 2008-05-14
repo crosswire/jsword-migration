@@ -50,6 +50,7 @@
   <!-- gdef and hdef refer to hebrew and greek definitions keyed by strongs -->
   <xsl:param name="greek.def.protocol" select="'gdef:'"/>
   <xsl:param name="hebrew.def.protocol" select="'hdef:'"/>
+  <xsl:param name="lex.def.protocol" select="'lex:'"/>
   <!-- currently these are not used, but they are for morphologic forms -->
   <xsl:param name="greek.morph.protocol" select="'gmorph:'"/>
   <xsl:param name="hebrew.morph.protocol" select="'hmorph:'"/>
@@ -130,6 +131,7 @@
           SUB.lemma { font-size: 75%; color: red; }
           SUP.verse { font-size: 75%; color: gray; }
           SUP.note { font-size: 75%; color: green; }
+          FONT.lex { color: red; }
           FONT.jesus { color: red; }
           FONT.speech { color: blue; }
           FONT.strike { text-decoration: line-through; }
@@ -528,6 +530,11 @@
         <xsl:with-param name="morph" select="@morph"/>
       </xsl:call-template>
     </xsl:if>
+    <xsl:if test="$Strongs = 'true' and starts-with(@lemma, 'lemma.Strong:')">
+      <xsl:call-template name="lemma">
+        <xsl:with-param name="lemma" select="@lemma"/>
+      </xsl:call-template>
+    </xsl:if>
     <!--
         except when followed by a text node or non-printing node.
         This is true whether the href is output or not.
@@ -572,8 +579,11 @@
         <xsl:when test="substring($orig-lemma, 1, 1) = 'H'">
           <xsl:value-of select="$hebrew.def.protocol"/>
         </xsl:when>
-        <xsl:otherwise>
+        <xsl:when test="substring($orig-lemma, 1, 1) = 'G'">
           <xsl:value-of select="$greek.def.protocol"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$lex.def.protocol"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
@@ -598,6 +608,9 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:choose>
+      <xsl:when test="$protocol = $lex.def.protocol">
+        <font class="lex">[<xsl:value-of select="$orig-lemma"/>]</font>
+      </xsl:when>
       <xsl:when test="$separator = ''">
         <!-- <sub class="strongs"><a href="{$protocol}{$orig-lemma}">S<xsl:number level="any" from="/osis//verse" format="1"/><xsl:number value="$sub" format="a"/></a></sub> -->
         <sub class="strongs"><a href="{$protocol}{$orig-lemma}"><xsl:value-of select="format-number(substring($orig-lemma,2),'#')"/></a></sub>
