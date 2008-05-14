@@ -39,9 +39,9 @@
     <jar href="commons-httpclient-3.1.jar"/>
     <jar href="commons-logging-1.1.1.jar"/>
     <jar href="commons-net-1.4.1.jar"/>
-    <jar href="lucene-core-2.3.0.jar"/>
-    <jar href="lucene-snowball-2.3.0.jar"/>
-    <jar href="lucene-analyzers-2.3.0.jar"/>
+    <jar href="lucene-core-2.3.2.jar"/>
+    <jar href="lucene-snowball-2.3.2.jar"/>
+    <jar href="lucene-analyzers-2.3.2.jar"/>
     <jar href="icu4j-3_8_1.jar"/>
     <jar href="jlfgr-1_0.jar"/>
     <property name="apple.laf.useScreenMenuBar" value="true"/>
