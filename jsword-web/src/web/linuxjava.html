@@ -9,9 +9,17 @@
   <body>
     <h1>Obtain and Install Java for Linux</h1>
 <p>
-  Sun's Java is proprietary and not open source. But it is what we use for BibleDesktop and JSword.
-  At this time there is no open source Java that will run our application.
-  For that reason, you will need to get Sun's Java from them and install it. However, Sun's Java RPM
+  The situation regarding Java is changing fast. Sun has opened sourced Java, but not all of it,
+  nor all versions of it (Sun's Java 1.4.2 and 1.5.0 are still proprietary and not open source).
+  Some Linux distributions now have a version of Sun's java that will run BibleDesktop. Please note
+  that the gcj version of Java is not able to run BibleDesktop as it does not implement all of Java 1.4.2.
+  Even this is anticipated to change.
+</p>
+<p>
+  If your distribution does not provide Java then get Sun's Java. If you are just running BibleDesktop,
+  then get the most recent release. If you are going to help develop BibleDesktop or JSword, we target
+  Java 1.4.2. If you are careful not to use features added after 1.4.2 you can use a more
+  recent version. Once you obtain Sun's Java you need to install it. However, Sun's Java RPM
   does not install correctly. To install it correctly you will need to use JPackage's Java Package.
 </p>
 <p>
@@ -80,8 +88,8 @@
       <p class="instruction">rpmbuild --rebuild java-1.5.0-sun-1.5.0.05-1jpp.nosrc.rpm</p>
       <p>There will be lots of output!</p>
   </li>
-  <li>Install the newly created unsigned RPMs. (This will require temporarily changing /etc/yum.conf so that gpgcheck=0. Remember to set it back when you are done!) These will be below ~/rpm/RPMS. If ~/rpm/RPMS/i586 then the command would be:
-      <p class="instruction root">cd ~/rpm/RPMS/i586<br/>su -c "yum localinstall java*.rpm"</p>
+  <li>Install the newly created unsigned RPMs. These will be below ~/rpm/RPMS. If ~/rpm/RPMS/i586 then the command would be:
+      <p class="instruction root">cd ~/rpm/RPMS/i586<br/>su -c "yum localinstall --nogpgcheck java*.rpm"</p>
   </li>
   <li>Make javaws available with: (Do this if /usr/bin/javaws does not exist)
       <p class="instruction">su -c "ln -s /etc/alternatives/javaws /usr/bin/javaws"</p>
