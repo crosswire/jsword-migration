@@ -36,6 +36,7 @@
 <!ATTLIST option
   key CDATA #REQUIRED
   static (true|false) 'true'
+  external (true|false) 'false'
   type (string|boolean|int-options|map-options|string-options|string-array|file|path|directory|number|font|class|custom|password) #REQUIRED
   class CDATA #IMPLIED
   separator CDATA #IMPLIED
@@ -223,7 +224,7 @@
     <introspect class="org.crosswire.common.swing.LookAndFeelUtil" property="Font"/>
   </option>
 
-  <option key="Application.WebWarning" type="boolean">
+  <option key="Application.WebWarning" type="boolean" external="true">
     <introspect class="org.crosswire.jsword.util.WebWarning" property="WarningShown"/>
   </option>
 
