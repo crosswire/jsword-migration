@@ -705,7 +705,7 @@
         <font size="{substring-before(substring-after(@type, 'font-size: '), ';')}"><xsl:apply-templates/></font>
       </xsl:when>
       <xsl:when test="@type = 'x-variant'">
-        <xsl:if test="@subType = 'x-class:1'">
+        <xsl:if test="@subType = 'x-class-1'">
           <xsl:apply-templates/>
         </xsl:if>
       </xsl:when>
