@@ -509,7 +509,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay
     /**
      * How many verses on a tab.
      */
-    private static int pageSize = 50;
+    private static int pageSize = 200; // There are 176 in Ps 119.
 
     /**
      * A list of all the URIEventListeners
