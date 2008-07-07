@@ -32,6 +32,9 @@
       <property name="scope" value="public"/>
     </module>
     -->
+    <!-- The following would need to be configured to be useful.
+    <module name="WriteTag"/>
+    -->
 
     <!-- Checks for Naming Conventions -->
     <module name="AbstractClassName">
@@ -62,13 +65,21 @@
     </module>
     <module name="TypeName"/>
 
+    <!-- Header checks would be good to do, in order to verify that license is present.
+    <module name="Header"/>
+    <module name="RegexpHeader"/>
+    <module name="CrossLanguageRegexpHeader"/>
+    -->
 
     <!-- Checks for imports -->
     <module name="AvoidStarImport"/>
     <module name="IllegalImport"/>
     <module name="RedundantImport"/>
     <module name="UnusedImports"/>
-    <!-- <module name="ImportOrder"/> -->
+    <!-- Would need to be configured to be useful
+    <module name="ImportOrder"/>
+    <module name="ImportControl"/>
+    -->
 
     <!-- Checks for Size Violations -->
     <!--
@@ -111,11 +122,6 @@
       <property name="option" value="space"/>
     </module>
     <module name="MethodParamPad"/>
-    <module name="WhitespaceAfter"/>
-    <module name="WhitespaceAround">
-      <!-- All but: GENERIC_START, GENERIC_END, WILDCARD_TYPE, -->
-      <property name="tokens" value="ASSIGN, BAND, BAND_ASSIGN, BOR, BOR_ASSIGN, BSR, BSR_ASSIGN, BXOR, BXOR_ASSIGN, COLON, DIV, DIV_ASSIGN, EQUAL, GE, GT, LAND, LCURLY, LE, LITERAL_ASSERT, LITERAL_CATCH, LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY, LITERAL_FOR, LITERAL_IF, LITERAL_RETURN, LITERAL_SYNCHRONIZED, LITERAL_TRY, LITERAL_WHILE, LOR, LT, MINUS, MINUS_ASSIGN, MOD, MOD_ASSIGN, NOT_EQUAL, PLUS, PLUS_ASSIGN, QUESTION, RCURLY, SL, SLIST, SL_ASSIGN, SR, SR_ASSIGN, STAR, STAR_ASSIGN, TYPE_EXTENSION_AND"/>
-    </module>
     <module name="NoWhitespaceAfter">
       <property name="tokens" value="BNOT, DEC, DOT, INC, LNOT, UNARY_MINUS, UNARY_PLUS, GENERIC_START, GENERIC_END"/><!-- ARRAY_INIT, -->
       <property name="allowLineBreaks" value="false"/>
@@ -124,7 +130,7 @@
       <property name="tokens" value="SEMI, POST_DEC, POST_INC, GENERIC_START, GENERIC_END"/>
       <property name="allowLineBreaks" value="false"/>
     </module>
-    <module name="OperatorWrap"/> <!-- ? -->
+    <module name="OperatorWrap"/>
     <module name="ParenPad">
       <property name="option" value="nospace"/>
     </module>
@@ -132,6 +138,11 @@
       <property name="option" value="nospace"/>
     </module>
     <module name="TabCharacter"/>
+    <module name="WhitespaceAfter"/>
+    <module name="WhitespaceAround">
+      <!-- All but: GENERIC_START, GENERIC_END, WILDCARD_TYPE, -->
+      <property name="tokens" value="ASSIGN, BAND, BAND_ASSIGN, BOR, BOR_ASSIGN, BSR, BSR_ASSIGN, BXOR, BXOR_ASSIGN, COLON, DIV, DIV_ASSIGN, EQUAL, GE, GT, LAND, LCURLY, LE, LITERAL_ASSERT, LITERAL_CATCH, LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY, LITERAL_FOR, LITERAL_IF, LITERAL_RETURN, LITERAL_SYNCHRONIZED, LITERAL_TRY, LITERAL_WHILE, LOR, LT, MINUS, MINUS_ASSIGN, MOD, MOD_ASSIGN, NOT_EQUAL, PLUS, PLUS_ASSIGN, QUESTION, RCURLY, SL, SLIST, SL_ASSIGN, SR, SR_ASSIGN, STAR, STAR_ASSIGN, TYPE_EXTENSION_AND"/>
+    </module>
     <!-- End of whitespace rules -->
 
     <!-- Modifier Checks -->
@@ -219,6 +230,7 @@
     <!-- We are not ready for this
     <module name="IllegalCatch"/>
     -->
+    <module name="IllegalThrows"/>
     <module name="PackageDeclaration"/>
     <module name="JUnitTestCase"/>
     <!-- We are not ready for this
@@ -305,7 +317,7 @@
 
     <module name="TodoComment"/>
     <module name="UncommentedMain">
-      <property name="excludedClasses" value="\.(Desktop|APIExamples|XalanProcess|XMLProcess|BibleToOsis|DictToOsis)$"/>
+      <property name="excludedClasses" value="\.(Desktop|APIExamples|XalanProcess|XMLProcess|BibleToOsis|DictToOsis|BibleScope|BookExporter|BookInstaller|BookLookup|StrongsAnalysis)$"/>
     </module>
     <module name="UpperEll"/>
     <module name="ArrayTypeStyle"/>

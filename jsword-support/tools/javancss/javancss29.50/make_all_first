@@ -1,0 +1,12 @@
+all_first : src/javancss/JavaParser.java
+
+src/javancss/JavaParser.java : src/javancss/Java1.1.jj classes/JITFix.class
+	cd src/javancss; javacc Java1.1.jj
+	#echo java -classpath $(CLASSPATH) JITFix
+
+classes/JITFix.class : src/JITFix.java
+	#echo javac -d classes -classpath $(CLASSPATH) src/JITFix.java
+
+check : all
+	${JAVA_HOME}/bin/java -classpath $(CLASSPATH) javancss.Main -check
+
