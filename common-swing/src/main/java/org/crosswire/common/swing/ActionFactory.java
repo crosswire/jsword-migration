@@ -371,7 +371,7 @@ public class ActionFactory implements ActionListener, Actionable
                     Icon largeIcon = getIcon(controls, actionName, CWAction.LARGE_ICON);
                     String enabledStr = getOptionalActionString(controls, actionName, "Enabled"); //$NON-NLS-1$
                     boolean enabled = enabledStr == null ? true : Boolean.valueOf(enabledStr).booleanValue();
-     
+
                     CWAction cwAction = new CWAction();
 
                     if (actionName == null || actionName.length() == 0)

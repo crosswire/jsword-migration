@@ -222,7 +222,8 @@ public class CWOptionPane extends JOptionPane
      * @param initialSelectionValue the value used to initialize the input
      *                 field
      */
-    public static String showInputDialog(Object message, Object initialSelectionValue) {
+    public static String showInputDialog(Object message, Object initialSelectionValue)
+    {
         return showInputDialog(null, message, initialSelectionValue);
     }
 
@@ -260,7 +261,7 @@ public class CWOptionPane extends JOptionPane
      */
     public static String showInputDialog(Component parentComponent, Object message, Object initialSelectionValue)
     {
-        return (String)showInputDialog(parentComponent, message, "?", QUESTION_MESSAGE, null, null, initialSelectionValue); //$NON-NLS-1$
+        return (String) showInputDialog(parentComponent, message, "?", QUESTION_MESSAGE, null, null, initialSelectionValue); //$NON-NLS-1$
     }
 
     /**
@@ -286,7 +287,7 @@ public class CWOptionPane extends JOptionPane
      */
     public static String showInputDialog(Component parentComponent, Object message, String title, int messageType) throws HeadlessException
     {
-        return (String)showInputDialog(parentComponent, message, title, messageType, null, null, null);
+        return (String) showInputDialog(parentComponent, message, title, messageType, null, null, null);
     }
 
     /**
@@ -637,7 +638,8 @@ public class CWOptionPane extends JOptionPane
             return CANCEL_OPTION;
         }
 
-        for (int counter = 0, maxCounter = opts.length; counter < maxCounter; counter++ )
+        int maxCounter = opts.length;
+        for (int counter = 0; counter < maxCounter; counter++)
         {
             if (opts[counter].equals(selectedValue))
             {
@@ -683,7 +685,7 @@ public class CWOptionPane extends JOptionPane
         dialog.setLocationRelativeTo(parentComponent);
         dialog.addWindowListener(new WindowAdapter()
         {
-            private boolean gotFocus = false;
+            private boolean gotFocus;
 
             public void windowClosing(WindowEvent we)
             {
@@ -693,7 +695,7 @@ public class CWOptionPane extends JOptionPane
             public void windowGainedFocus(WindowEvent we)
             {
                 // Once window gets focus, set initial focus
-                if ( !gotFocus)
+                if (!gotFocus)
                 {
                     selectInitialValue();
                     gotFocus = true;
@@ -717,11 +719,11 @@ public class CWOptionPane extends JOptionPane
                 // Let the defaultCloseOperation handle the closing
                 // if the user closed the window without selecting a button
                 // (newValue = null in that case).  Otherwise, close the dialog.
-                if (dialog.isVisible() &&
-                    event.getSource() == CWOptionPane.this &&
-                    event.getPropertyName().equals(VALUE_PROPERTY) &&
-                    event.getNewValue() != null &&
-                    event.getNewValue() != JOptionPane.UNINITIALIZED_VALUE)
+                if (dialog.isVisible()
+                    && event.getSource() == CWOptionPane.this
+                    && event.getPropertyName().equals(VALUE_PROPERTY)
+                    && event.getNewValue() != null
+                    && event.getNewValue() != JOptionPane.UNINITIALIZED_VALUE)
                 {
                     dialog.setVisible(false);
                 }
@@ -752,11 +754,6 @@ public class CWOptionPane extends JOptionPane
 
     private static String getActionName(String key)
     {
-        if (actions == null)
-        {
-            actions = new ActionFactory(CWOptionPane.class, null);
-        }
-
         return actions.getAction(key).getValue(Action.NAME).toString();
     }
 
@@ -804,7 +801,7 @@ public class CWOptionPane extends JOptionPane
     /**
      * The actions for this dialog.
      */
-    protected static ActionFactory actions;
+    /* protected */ static ActionFactory actions = new ActionFactory(CWOptionPane.class, null);
 
     /**
      * Serialization ID

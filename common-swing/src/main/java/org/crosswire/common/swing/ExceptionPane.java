@@ -110,7 +110,7 @@ public final class ExceptionPane extends JPanel
 
         okBox = new JPanel(new FlowLayout());
         buttons.add(okBox, BorderLayout.CENTER);
-        
+
         // Add a button if showDetails is true
         detail = new JCheckBox();
         detail.addItemListener(new SelectedItemListener(this));
@@ -182,7 +182,7 @@ public final class ExceptionPane extends JPanel
     /**
      * Is the detail area shown?
      */
-    protected void changeDetail()
+    protected synchronized void changeDetail()
     {
         if (detail.isSelected())
         {
@@ -199,7 +199,7 @@ public final class ExceptionPane extends JPanel
     /**
      * Display a different nested exception
      */
-    protected void setDisplayedException(Throwable ex)
+    protected synchronized void setDisplayedException(Throwable ex)
     {
         StackTrace st = new StackTrace(ex);
         if (sources.length > 0)
@@ -231,10 +231,7 @@ public final class ExceptionPane extends JPanel
         dialog.getRootPane().add(pane, BorderLayout.CENTER);
 
 
-        if (actions == null)
-        {
-            actions = new ActionFactory(ExceptionPane.class, pane);
-        }
+        final ActionFactory actions = new ActionFactory(ExceptionPane.class, pane);
 
         JButton ok = actions.createJButton("OK", new ActionListener() //$NON-NLS-1$
         {
@@ -297,29 +294,16 @@ public final class ExceptionPane extends JPanel
      * close this class you must call it again (with false).
      * @param joined Are we listening to the Log
      */
-    public static void setHelpDeskListener(boolean joined)
+    public static synchronized void setHelpDeskListener(boolean joined)
     {
-        if (joined && li == null)
+        if (joined)
         {
-            li = new ExceptionPaneReporterListener();
             Reporter.addReporterListener(li);
         }
-
-        if (!joined && li != null)
+        else
         {
             Reporter.removeReporterListener(li);
-            li = null;
         }
-    }
-
-    /**
-     * You must call setJoinHelpDesk() in order to start displaying
-     * Exceptions sent to the Log, and in order to properly
-     * close this class you must call it again (with false).
-     */
-    public static boolean isHelpDeskListener()
-    {
-        return li != null;
     }
 
     /**
@@ -370,14 +354,6 @@ public final class ExceptionPane extends JPanel
         }
 
         return retcode.toString();
-    }
-
-    /**
-     * Make the default to be an error listener
-     */
-    static
-    {
-        setHelpDeskListener(true);
     }
 
     /**
@@ -680,11 +656,6 @@ public final class ExceptionPane extends JPanel
     private JPanel lower;
 
     /**
-     * The actions for this dialog.
-     */
-    protected static ActionFactory actions;
-
-    /**
      * Whether full details should be given.
      */
     private static boolean detailShown;
@@ -697,7 +668,7 @@ public final class ExceptionPane extends JPanel
     /**
      * The listener that pops up the ExceptionPanes
      */
-    private static ExceptionPaneReporterListener li;
+    private static ExceptionPaneReporterListener li = new ExceptionPaneReporterListener();
 
     /**
      * Serialization ID

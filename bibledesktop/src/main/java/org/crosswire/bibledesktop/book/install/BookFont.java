@@ -94,5 +94,5 @@ public class BookFont extends FontStore
         return fonts.getFont(null, language, null);
     }
 
-    static BookFont fonts = new BookFont();
+    private static BookFont fonts = new BookFont();
 }

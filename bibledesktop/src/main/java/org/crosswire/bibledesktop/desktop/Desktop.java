@@ -185,7 +185,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
 
         // If necessary, make changes to the UI to help with debugging 
         debug();
-        
+
         // Create the GUI layout with panes and panels,
         // and create a few other GUI things
         startJob.setSectionName(Msg.STARTUP_GENERAL_CONFIG.toString());

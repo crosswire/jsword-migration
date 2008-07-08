@@ -214,7 +214,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         GuiUtil.applyDefaultOrientation(this);
 
     }
-    
+
     /**
      * During view creation, allow firing off an event to display the initial book/chapter.
      * This is copied from quickSet.addActionListener().
@@ -234,7 +234,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         catch (NoSuchVerseException ex)
         {
             assert false : ex;
-        }    
+        }
     }
 
     /**

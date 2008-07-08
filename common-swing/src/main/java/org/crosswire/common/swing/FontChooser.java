@@ -114,10 +114,7 @@ public class FontChooser extends JPanel
 
         fontc.name.setSelectedItem(initial != null ? initial : DEFAULT_FONT.getFont());
 
-        if (actions == null)
-        {
-            actions = new ActionFactory(FontChooser.class, fontc);
-        }
+        final ActionFactory actions = new ActionFactory(FontChooser.class, fontc);
 
         JButton ok = actions.createJButton("OK", new ActionListener() //$NON-NLS-1$
         {
@@ -352,11 +349,6 @@ public class FontChooser extends JPanel
      * The current font
      */
     protected Font font;
-
-    /**
-     * The actions for this dialog.
-     */
-    protected static ActionFactory actions;
 
     /**
      * The minimum size of the font.

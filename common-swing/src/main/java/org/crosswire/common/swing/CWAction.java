@@ -136,8 +136,8 @@ public class CWAction extends AbstractAction implements Cloneable
         }
         catch (CloneNotSupportedException e)
         {
-            assert false: e;
-        } 
+            assert false : e;
+        }
         return action;
     }
 
