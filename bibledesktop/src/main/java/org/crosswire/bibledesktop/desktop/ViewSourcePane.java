@@ -28,6 +28,8 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URI;
 import java.util.Iterator;
 
@@ -263,6 +265,19 @@ public class ViewSourcePane extends JPanel
     {
         frame.setVisible(false);
         frame.dispose();
+    }
+
+    /**
+     * Serialization support.
+     * 
+     * @param is
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        actions = new ActionFactory(ViewSourcePane.class, this);
+        is.defaultReadObject();
     }
 
     /*

@@ -26,6 +26,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -236,6 +238,19 @@ public class JobsProgressBar extends JPanel implements WorkListener
     }
 
     /**
+     * Serialization support.
+     * 
+     * @param is
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        actions = new ActionFactory(JobsProgressBar.class, this);
+        is.defaultReadObject();
+    }
+
+    /**
      * Where we store the currently displayed jobs
      */
     protected Map jobs;
@@ -258,7 +273,7 @@ public class JobsProgressBar extends JPanel implements WorkListener
     /**
      * The home of the stop action.
      */
-    private ActionFactory actions;
+    private transient ActionFactory actions;
 
     /**
      * The key for the Stop action.

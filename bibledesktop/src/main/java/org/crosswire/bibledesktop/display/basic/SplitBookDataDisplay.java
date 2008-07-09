@@ -23,6 +23,8 @@ package org.crosswire.bibledesktop.display.basic;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Arrays;
 
 import javax.swing.JPanel;
@@ -188,6 +190,20 @@ public class SplitBookDataDisplay extends JPanel implements BookProvider
     public synchronized void removeKeyChangeListener(KeyChangeListener listener)
     {
         child.removeKeyChangeListener(listener);
+    }
+
+    /**
+     * Serialization support.
+     * 
+     * @param is
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        // Broken but we don't serialize views
+        child = null;
+        is.defaultReadObject();
     }
 
     /**

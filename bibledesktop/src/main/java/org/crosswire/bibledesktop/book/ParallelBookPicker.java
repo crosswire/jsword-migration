@@ -235,6 +235,8 @@ public class ParallelBookPicker extends JPanel implements BookProvider
      */
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
     {
+        filter = null;
+        comparator = null;
         listeners = new EventListenerList();
         actions = new ActionFactory(ParallelBookPicker.class, this);
 

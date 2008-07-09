@@ -27,6 +27,8 @@ import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -134,6 +136,19 @@ public class InternetWarning extends JPanel
     protected void fireStateChange()
     {
         WebWarning.instance().setShown(showWarning.isSelected());
+    }
+
+    /**
+     * Serialization support.
+     * 
+     * @param is
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        actions = new ActionFactory(InternetWarning.class, this);
+        is.defaultReadObject();
     }
 
     /**

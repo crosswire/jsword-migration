@@ -126,7 +126,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
 
     static
     {
-        PROJECT.setHome("jsword.home", ".jsword", "JSword"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        CWProject.setHome("jsword.home", ".jsword", "JSword"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     /**
@@ -1128,6 +1128,8 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
      */
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
     {
+        config = null;
+        history = null;
         actions = new DesktopActions(this);
         views = new ViewManager(this);
         views.addViewEventListener(this);

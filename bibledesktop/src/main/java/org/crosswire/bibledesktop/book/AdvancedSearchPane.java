@@ -33,6 +33,8 @@ import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -645,6 +647,19 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
             labels.put(label, new JLabel(shaper.shape(label.toString()), SwingConstants.CENTER));
         }
         return labels;
+    }
+
+    /**
+     * Serialization support.
+     * 
+     * @param is
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        actions = new ActionFactory(AdvancedSearchPane.class, this);
+        is.defaultReadObject();
     }
 
     /*

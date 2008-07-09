@@ -21,6 +21,9 @@
  */
 package org.crosswire.bibledesktop.book;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
@@ -241,6 +244,21 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
     protected void fireContentsChanged(Object source, int index0, int index1)
     {
         super.fireContentsChanged(source, index0, index1);
+    }
+
+    /**
+     * Serialization support.
+     * 
+     * @param is
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        // Broken but we don't serialize views
+        set = null;
+        selected = null;
+        is.defaultReadObject();
     }
 
     /**

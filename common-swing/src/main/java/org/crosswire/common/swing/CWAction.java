@@ -38,7 +38,7 @@ import javax.swing.event.EventListenerList;
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class CWAction extends AbstractAction implements Cloneable
+public class CWAction extends AbstractAction
 {
     /**
      * The icon to display when a large one is needed.

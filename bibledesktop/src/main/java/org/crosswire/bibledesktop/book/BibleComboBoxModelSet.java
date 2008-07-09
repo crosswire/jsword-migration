@@ -25,6 +25,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 
 import javax.swing.JComboBox;
 import javax.swing.event.EventListenerList;
@@ -43,7 +46,7 @@ import org.crosswire.jsword.versification.BookName;
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class BibleComboBoxModelSet
+public class BibleComboBoxModelSet implements Serializable
 {
     public BibleComboBoxModelSet(JComboBox books, JComboBox chapters, JComboBox verses)
     {
@@ -212,10 +215,24 @@ public class BibleComboBoxModelSet
     }
 
     /**
+     * Serialization support.
+     * 
+     * @param is
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        cil = new CustomItemListener();
+        is.defaultReadObject();
+    }
+
+    /**
      * For when a selection is made
      */
     final class CustomItemListener implements ItemListener
     {
+
         public void itemStateChanged(ItemEvent ev)
         {
             if (ev.getStateChange() == ItemEvent.SELECTED)
@@ -247,5 +264,10 @@ public class BibleComboBoxModelSet
     protected BibleComboBoxModel mdlVerse;
 
     protected EventListenerList listeners;
-    private ItemListener cil;
+    private transient ItemListener cil;
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 5365220628525297473L;
 }

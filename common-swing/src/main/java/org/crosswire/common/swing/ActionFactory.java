@@ -131,16 +131,6 @@ public class ActionFactory implements ActionListener, Actionable
      */
     public ActionFactory(Class type, Object bean)
     {
-        try
-        {
-            Class basis = this.getClass();
-            aliases = ResourceBundle.getBundle(ALIASES, Locale.getDefault(), CWClassLoader.instance(basis));
-        }
-        catch (MissingResourceException ex)
-        {
-            log.error("Tell me it isn't so. The Aliases.properties does exist!", ex); //$NON-NLS-1$
-        }
-
         actions = new HashMap();
 
         buildActionMap(type);
@@ -625,14 +615,26 @@ public class ActionFactory implements ActionListener, Actionable
     private static final String ALIAS = "Alias" + SEPARATOR; //$NON-NLS-1$
 
     /**
+     * The log stream
+     */
+    private static final Logger log = Logger.getLogger(ActionFactory.class);
+
+    /**
      * The aliases known by this system.
      */
     private static ResourceBundle aliases;
 
-   /**
-     * The log stream
-     */
-    private static final Logger log = Logger.getLogger(ActionFactory.class);
+    static
+    {
+        try
+        {
+            aliases = ResourceBundle.getBundle(ALIASES, Locale.getDefault(), CWClassLoader.instance(ActionFactory.class));
+        }
+        catch (MissingResourceException ex)
+        {
+            log.error("Tell me it isn't so. The Aliases.properties does exist!", ex); //$NON-NLS-1$
+        }
+    }
 
     /**
      * The map of known CWActions

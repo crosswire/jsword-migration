@@ -21,6 +21,8 @@
  */
 package org.crosswire.bibledesktop.book.install;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -124,6 +126,20 @@ public class InstallManagerComboBoxModel extends AbstractListModel implements Co
         {
             fireContentsChanged(ev.getSource(), 0, oldmax);
         }
+    }
+
+    /**
+     * Serialization support.
+     * 
+     * @param is
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        // Broken but we don't serialize views
+        imanager = null;
+        is.defaultReadObject();
     }
 
     /**

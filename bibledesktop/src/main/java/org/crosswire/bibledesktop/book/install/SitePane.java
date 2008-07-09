@@ -588,7 +588,6 @@ public class SitePane extends JPanel
         }
     }
 
-
     /**
      * Serialization support.
      * 

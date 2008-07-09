@@ -23,6 +23,8 @@ package org.crosswire.bibledesktop.passage;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -367,6 +369,21 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
                 li.keyChanged(ev);
             }
         }
+    }
+
+    /**
+     * Serialization support.
+     * 
+     * @param is
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        // Broken but we don't serialize views
+        books = null;
+        keyChangeListeners = null;
+        is.defaultReadObject();
     }
 
     private static final String BLUR1 = "Blur1"; //$NON-NLS-1$

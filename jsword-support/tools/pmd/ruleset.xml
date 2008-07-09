@@ -151,17 +151,18 @@
   <rule ref="rulesets/braces.xml/IfElseStmtsMustUseBraces"/>
   <rule ref="rulesets/braces.xml/ForLoopsMustUseBraces"/>
 
-  <rule ref="rulesets/codesize.xml/NPathComplexity"/>
+  <!-- Better handled by other tools -->
+  <!-- <rule ref="rulesets/codesize.xml/NPathComplexity"/> 1.0.8 -->
   <!-- <rule ref="rulesets/codesize.xml/ExcessiveMethodLength"/> 9 reports. -->
   <!-- <rule ref="rulesets/codesize.xml/ExcessiveParameterList"/> better handled by CheckStyle -->
   <!-- <rule ref="rulesets/codesize.xml/ExcessiveClassLength"/> 5 reports. -->
   <!-- <rule ref="rulesets/codesize.xml/CyclomaticComplexity"/> 67 reports, maybe check comments? -->
   <!-- <rule ref="rulesets/codesize.xml/ExcessivePublicCount"/> better handled by CheckStyle -->
   <!-- <rule ref="rulesets/codesize.xml/TooManyFields"/> better handled by CheckStyle -->
-  <rule ref="rulesets/codesize.xml/NcssMethodCount"/>
-  <rule ref="rulesets/codesize.xml/NcssTypeCount"/>
-  <rule ref="rulesets/codesize.xml/NcssConstructorCount"/>
-  <rule ref="rulesets/codesize.xml/TooManyMethods"/>
+  <!-- <rule ref="rulesets/codesize.xml/NcssMethodCount"/> 1.0.8 -->
+  <!-- <rule ref="rulesets/codesize.xml/NcssTypeCount"/> 1.0.8 -->
+  <!-- <rule ref="rulesets/codesize.xml/NcssConstructorCount"/> 1.0.8 -->
+  <!-- <rule ref="rulesets/codesize.xml/TooManyMethods"/> 1.0.8 better handled by CheckStyle -->
 
   <rule ref="rulesets/j2ee.xml/UseProperClassLoader"/>
   <rule ref="rulesets/j2ee.xml/MDBAndSessionBeanNamingConvention"/>
@@ -254,9 +255,11 @@
   <rule ref="rulesets/migrating.xml/ByteInstantiation"/>
   <rule ref="rulesets/migrating.xml/ShortInstantiation"/>
   <rule ref="rulesets/migrating.xml/LongInstantiation"/>
+  <!-- We don't use JUnit4
   <rule ref="rulesets/migrating.xml/JUnit4TestShouldUseBeforeAnnotation"/>
   <rule ref="rulesets/migrating.xml/JUnit4TestShouldUseAfterAnnotation"/>
   <rule ref="rulesets/migrating.xml/JUnit4TestShouldUseTestAnnotation"/>
   <rule ref="rulesets/migrating.xml/JUnit4SuitesShouldUseSuiteAnnotation"/>
   <rule ref="rulesets/migrating.xml/JUnitUseExpected"/>
+  -->
 </ruleset>

@@ -43,15 +43,17 @@ public class AntiAliasedTextPane extends JTextPane
     /* @Override */
     public void paintComponent(Graphics g)
     {
-        Graphics2D g2 = (Graphics2D) g;
-
-        if (antiAliasing)
+        if (g instanceof Graphics2D)
         {
-            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-            g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            Graphics2D g2 = (Graphics2D) g;
+    
+            if (antiAliasing)
+            {
+                g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            }
         }
-
-        super.paintComponent(g2);
+        super.paintComponent(g);
     }
 
     /**

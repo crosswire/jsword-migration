@@ -32,6 +32,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -527,6 +529,22 @@ public class EditSitePane extends JPanel
         }
 
         GuiUtil.refresh(this);
+    }
+
+    /**
+     * Serialization support.
+     * 
+     * @param is
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
+    {
+        // Broken but we don't serialize views
+        imanager = null;
+        editInstaller = null;
+        actions = new ActionFactory(EditSitePane.class, this);
+        is.defaultReadObject();
     }
 
     private static final String ADD = "Add"; //$NON-NLS-1$
