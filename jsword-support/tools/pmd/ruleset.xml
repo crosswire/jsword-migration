@@ -104,7 +104,7 @@
   <!-- <rule ref="rulesets/design.xml/PreserveStackTrace"/> 7 reports -->
   <rule ref="rulesets/design.xml/UseCollectionIsEmpty"/>
   <rule ref="rulesets/design.xml/ClassWithOnlyPrivateConstructorsShouldBeFinal"/>
-  <rule ref="rulesets/design.xml/EmptyMethodInAbstractClassShouldBeAbstract"/>
+  <!-- <rule ref="rulesets/design.xml/EmptyMethodInAbstractClassShouldBeAbstract"/> 1.0.8 34 reports poorly implemented. -->
   <!-- <rule ref="rulesets/design.xml/SingularField"/> 1.0.8 20 reports -->
   <rule ref="rulesets/design.xml/ReturnEmptyArrayRatherThanNull"/>
   <rule ref="rulesets/design.xml/AbstractClassWithoutAnyMethod"/>
