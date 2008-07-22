@@ -339,7 +339,7 @@ public class CWOptionPane extends JOptionPane
         JDialog dialog = pane.createDialog(parentComponent, title, style);
 
         pane.selectInitialValue();
-        dialog.show();
+        dialog.setVisible(true);
         dialog.dispose();
 
         Object value = pane.getInputValue();
@@ -598,7 +598,7 @@ public class CWOptionPane extends JOptionPane
         JDialog dialog = pane.createDialog(parentComponent, title, style);
 
         pane.selectInitialValue();
-        dialog.show();
+        dialog.setVisible(true);
         dialog.dispose();
 
         Object selectedValue = pane.getValue();
@@ -618,22 +618,22 @@ public class CWOptionPane extends JOptionPane
             return CLOSED_OPTION;
         }
 
-        if (getActionName("Yes").equals(selectedValue)) //$NON-NLS-1$Œ
+        if (getActionName("Yes").equals(selectedValue)) //$NON-NLS-1$ï¿½
         {
             return YES_OPTION;
         }
 
-        if (getActionName("No").equals(selectedValue)) //$NON-NLS-1$Œ
+        if (getActionName("No").equals(selectedValue)) //$NON-NLS-1$ï¿½
         {
             return NO_OPTION;
         }
 
-            if (getActionName("OK").equals(selectedValue)) //$NON-NLS-1$Œ
+            if (getActionName("OK").equals(selectedValue)) //$NON-NLS-1$ï¿½
         {
             return OK_OPTION;
         }
 
-        if (getActionName("CANCEL").equals(selectedValue)) //$NON-NLS-1$Œ
+        if (getActionName("CANCEL").equals(selectedValue)) //$NON-NLS-1$ï¿½
         {
             return CANCEL_OPTION;
         }
