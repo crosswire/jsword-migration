@@ -8,11 +8,11 @@
 !define CLASS "org.crosswire.bibledesktop.desktop.Desktop"
 
 ;!define JRE_VERSION "1.5.0"
-;!define JRE_URL "http://dlc.sun.com/jdk/jre-1_5_0_01-windows-i586-p.exe"
+;!define JRE_URL "http://javadl.sun.com/webapps/download/AutoDL?BundleId=11027"
 ; For a listing of Java 6 versions see: http://www.nabber.org/projects/appupdater/metalink/?app=Java
 !define JRE_VERSION "1.6"
-; The following is 6.0.3 aka 1.6.0 u3
-!define JRE_URL "http://javadl.sun.com/webapps/download/AutoDL?BundleId=12798"
+; The following is 6.0.6 aka 1.6.0 u6
+!define JRE_URL "http://javadl.sun.com/webapps/download/AutoDL?BundleId=20287"
 
 SetCompressor lzma
 

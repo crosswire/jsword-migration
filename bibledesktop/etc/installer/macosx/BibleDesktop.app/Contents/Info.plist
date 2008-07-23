@@ -44,7 +44,6 @@
 			<string>$JAVAROOT/lucene-core-2.3.2.jar</string>
 			<string>$JAVAROOT/lucene-snowball-2.3.2.jar</string>
 			<string>$JAVAROOT/lucene-analyzers-2.3.2.jar</string>
-			<string>$JAVAROOT/icu4j-4_0.jar</string>
 			<string>$JAVAROOT/jdom-1.0.jar</string>
 			<string>$JAVAROOT/commons-codec-1.3.jar</string>
 			<string>$JAVAROOT/commons-httpclient-3.1.jar</string>
