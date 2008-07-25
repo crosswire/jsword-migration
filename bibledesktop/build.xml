@@ -154,9 +154,9 @@
         <include name="gpl.txt"/>
       </fileset>
     </copy>
-  	<nsis verbosity="3" script="${target.installed}/BibleDesktop.nsi"/>
-  	<nsis verbosity="3" script="${target.installed}/PortableBibleDesktop.nsi"/>
-  	<nsis verbosity="3" script="${target.installed}/BibleDesktopSetup.nsi"/>
+  	<nsis verbosity="1" script="${target.installed}/BibleDesktop.nsi"/>
+  	<nsis verbosity="1" script="${target.installed}/PortableBibleDesktop.nsi"/>
+  	<nsis verbosity="1" script="${target.installed}/BibleDesktopSetup.nsi"/>
     <delete file="${target.installed}/BibleDesktop.nsi"/>
     <delete file="${target.installed}/PortableBibleDesktop.nsi"/>
     <delete file="${target.installed}/BibleDesktopSetup.nsi"/>
