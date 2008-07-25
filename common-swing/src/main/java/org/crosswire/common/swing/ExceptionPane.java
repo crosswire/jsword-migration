@@ -262,7 +262,7 @@ public final class ExceptionPane extends JPanel
 
     /**
      * Set whether the "details" check box should be shown.
-     * @param showDetails indicates the whether details should be available.
+     * @param detailShown indicates the whether details should be available.
      * @see #isDetailShown()
      */
     public static void setDetailShown(boolean detailShown)

@@ -202,7 +202,7 @@ public final class GuiUtil
     {
         Component temp = com;
 
-        while ( !(temp instanceof Dialog))
+        while (!(temp instanceof Dialog))
         {
             temp = temp.getParent();
             if (temp == null)
@@ -304,7 +304,7 @@ public final class GuiUtil
     /**
      * Set the window size relative to the current screen size.
      * @param win The window to resize
-     * @percentOfScreen The amount of space that the window should take up
+     * @param percentOfScreen The amount of space that the window should take up
      */
     public static void setSize(Window win, float percentOfScreen)
     {

@@ -68,7 +68,6 @@ public class FontStore
      * 
      * @param storeName The name of the store, used as a file name and as a label inside the
      *            fontStore.
-     * @param fontStore The name of the properties file.
      * @param fontDir The location where the fontStore can be stored.
      */
     public FontStore(String storeName, URI fontDir)
@@ -121,9 +120,9 @@ public class FontStore
     }
 
     /**
-     * Store a font specification for the resource.
+     * Store a font specification for the language.
      * 
-     * @param resource the resource
+     * @param lang the language
      * @param font the font
      */
     public void setFont(Language lang, Font font)
