@@ -147,7 +147,7 @@ public class CompareResultsPane extends JPanel implements Runnable
         frame.getContentPane().add(this, BorderLayout.CENTER);
 
         frame.pack();
-        GuiUtil.centerWindow(frame);
+        GuiUtil.centerOnScreen(frame);
         frame.setVisible(true);
     }
 

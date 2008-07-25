@@ -109,7 +109,7 @@ public class InternetWarning extends JPanel
         content.add(webWarning, BorderLayout.NORTH);
         content.add(buttons, BorderLayout.SOUTH);
         dialog.pack();
-        GuiUtil.centerWindow(dialog);
+        GuiUtil.centerOnScreen(dialog);
         GuiUtil.applyDefaultOrientation(dialog);
         dialog.setVisible(true);
 

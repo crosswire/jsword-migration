@@ -244,7 +244,7 @@ public class EditSitePane extends JPanel
         dlgMain.setModal(true);
 
         GuiUtil.setSize(dlgMain, new Dimension(750, 400));
-        GuiUtil.centerWindow(dlgMain);
+        GuiUtil.centerOnScreen(dlgMain);
         GuiUtil.applyDefaultOrientation(dlgMain);
         dlgMain.setVisible(true);
         dlgMain.toFront();

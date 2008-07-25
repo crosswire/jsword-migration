@@ -321,7 +321,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         dlgMain.setModal(modal);
 
         GuiUtil.restrainedPack(dlgMain, 0.5f, 0.75f);
-        GuiUtil.centerWindow(dlgMain);
+        GuiUtil.centerOnScreen(dlgMain);
         GuiUtil.applyDefaultOrientation(dlgMain);
         dlgMain.setVisible(true);
 

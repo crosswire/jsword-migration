@@ -322,7 +322,7 @@ public class PassageSelectionPane extends JPanel
 
         GuiUtil.applyDefaultOrientation(dlgMain);
         GuiUtil.restrainedPack(dlgMain, 0.5f, 0.75f);
-        GuiUtil.centerWindow(dlgMain);
+        GuiUtil.centerOnScreen(dlgMain);
         dlgMain.setVisible(true);
 
         if (bailout)

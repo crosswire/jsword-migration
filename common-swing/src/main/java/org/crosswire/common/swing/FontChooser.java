@@ -146,7 +146,7 @@ public class FontChooser extends JPanel
         fontc.dialog.getContentPane().add(buttons, BorderLayout.SOUTH);
         fontc.dialog.setSize(800, 500);
         fontc.dialog.pack();
-        GuiUtil.centerWindow(fontc.dialog);
+        GuiUtil.centerOnScreen(fontc.dialog);
         GuiUtil.applyDefaultOrientation(fontc.dialog);
         fontc.dialog.setVisible(true);
 

@@ -243,7 +243,7 @@ public class ViewSourcePane extends JPanel
         frame.getContentPane().add(this, BorderLayout.CENTER);
 
         GuiUtil.setSize(frame, new Dimension(750, 500));
-        GuiUtil.centerWindow(frame);
+        GuiUtil.centerOnScreen(frame);
         frame.setVisible(true);
     }
 

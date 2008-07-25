@@ -101,7 +101,7 @@ public class Mapper extends JFrame
         Mapper mapper = new Mapper(args);
 
         mapper.pack();
-        GuiUtil.centerWindow(mapper);
+        GuiUtil.centerOnScreen(mapper);
         mapper.setVisible(true);
     }
 

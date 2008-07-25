@@ -124,7 +124,7 @@ public class QuickHelpDialog extends JDialog
     {
         if (visible)
         {
-            GuiUtil.centerWindow(this);
+            GuiUtil.centerOnScreen(this);
         }
 
         super.setVisible(visible);

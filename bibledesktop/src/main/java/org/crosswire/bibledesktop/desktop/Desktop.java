@@ -24,7 +24,6 @@ package org.crosswire.bibledesktop.desktop;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -80,6 +79,7 @@ import org.crosswire.common.swing.ExceptionPane;
 import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.swing.LookAndFeelUtil;
+import org.crosswire.common.swing.desktop.LayoutPersistence;
 import org.crosswire.common.swing.desktop.LayoutType;
 import org.crosswire.common.swing.desktop.TDIViewLayout;
 import org.crosswire.common.swing.desktop.ToolBar;
@@ -382,6 +382,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
 
         return toolbar;
     }
+
     /**
      * Create the file menu
      * @return the file menu
@@ -431,6 +432,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         menuGo.add(actions.getAction(DesktopActions.FORWARD)).addMouseListener(barStatus);
         return menuGo;
     }
+
     /**
      * Create the view menu.
      * @return the view menu.
@@ -548,6 +550,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         menuHelp.setToolTipText(null);
         return menuHelp;
     }
+
     /**
      * Get the size of the content panel and make that the preferred size.
      */
@@ -557,7 +560,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         if (contentPane instanceof JComponent)
         {
             ((JComponent) contentPane).setPreferredSize(contentPane.getSize());
-            log.warn("The size of the contentpane is: " + contentPane.getSize()); //$NON-NLS-1$
+            //log.warn("The size of the contentpane is: " + contentPane.getSize()); //$NON-NLS-1$
         }
     }
 
@@ -900,7 +903,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         if (bibles.size() == 0)
         {
             int reply = CWOptionPane.showConfirmDialog(this, Msg.NO_BIBLES_MESSAGE, Msg.NO_BIBLES_TITLE.toString(), JOptionPane.OK_CANCEL_OPTION,
-                            JOptionPane.QUESTION_MESSAGE);
+                                                       JOptionPane.QUESTION_MESSAGE);
             if (reply == JOptionPane.OK_OPTION)
             {
                 actions.doBooks();
@@ -1004,53 +1007,6 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     public static String getCSSOverride()
     {
         return XSLTProperty.CSS.getStringState();
-    }
-
-    /**
-     * @param maxHeight The maxHeight to set.
-     */
-    public static void setMaxHeight(int maxHeight)
-    {
-        defaultSize.height = maxHeight;
-    }
-
-    /**
-     * @return Returns the maxHeight.
-     */
-    public static int getMaxHeight()
-    {
-        return defaultSize.height;
-    }
-
-    /**
-     * @return Returns the maxWidth.
-     */
-    public static int getMaxWidth()
-    {
-        return defaultSize.width;
-    }
-
-    /**
-     * @param maxWidth The maxWidth to set.
-     */
-    public static void setMaxWidth(int maxWidth)
-    {
-        defaultSize.width = maxWidth;
-    }
-    /**
-     * @return Returns the defaultSize.
-     */
-    public static Dimension getDefaultSize()
-    {
-        return defaultSize;
-    }
-
-    /**
-     * @param newDefaultSize The defaultSize to set.
-     */
-    public static void setDefaultSize(Dimension newDefaultSize)
-    {
-        defaultSize = newDefaultSize;
     }
 
     /**
@@ -1168,12 +1124,20 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
             LookAndFeelUtil.initialize();
 
             Splash splash = new Splash();
-
             Desktop desktop = new Desktop();
 
-            // change the size and location before showing the application.
-            GuiUtil.setSize(desktop, getDefaultSize());
-            GuiUtil.centerWindow(desktop);
+            // Restore window size, position, and layout if previously opened,
+            // otherwise use defaults.
+            LayoutPersistence layoutPersistence = LayoutPersistence.instance();
+            if (layoutPersistence.isLayoutPersisted(desktop))
+            {
+                layoutPersistence.restoreLayout(desktop);
+            }
+            else
+            {
+                GuiUtil.defaultDesktopSize(desktop);
+                GuiUtil.centerOnScreen(desktop);
+            }
 
             // Now bring up the app and offer to install books if the user has none.
             SwingUtilities.invokeLater(new DesktopRunner(desktop, splash));
@@ -1208,93 +1172,88 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         }
 
         private Desktop desktop;
-        private Splash splash;
+        private Splash  splash;
     }
 
-    private boolean hasRefBooks;
+    private boolean                    hasRefBooks;
 
     // Strings for the names of property files.
-    private static final String SPLASH_PROPS = "splash"; //$NON-NLS-1$
+    private static final String        SPLASH_PROPS          = "splash";                                    //$NON-NLS-1$
 
     // Strings for URL protocols/URI schemes
-    private static final String BIBLE_PROTOCOL = "bible"; //$NON-NLS-1$
-    private static final String DICTIONARY_PROTOCOL = "dict"; //$NON-NLS-1$
-    private static final String GREEK_DEF_PROTOCOL = "gdef"; //$NON-NLS-1$
-    private static final String HEBREW_DEF_PROTOCOL = "hdef"; //$NON-NLS-1$
-    private static final String GREEK_MORPH_PROTOCOL = "gmorph"; //$NON-NLS-1$
-    private static final String HEBREW_MORPH_PROTOCOL = "hmorph"; //$NON-NLS-1$
-    private static final String COMMENTARY_PROTOCOL = "comment"; //$NON-NLS-1$
+    private static final String        BIBLE_PROTOCOL        = "bible";                                     //$NON-NLS-1$
+    private static final String        DICTIONARY_PROTOCOL   = "dict";                                      //$NON-NLS-1$
+    private static final String        GREEK_DEF_PROTOCOL    = "gdef";                                      //$NON-NLS-1$
+    private static final String        HEBREW_DEF_PROTOCOL   = "hdef";                                      //$NON-NLS-1$
+    private static final String        GREEK_MORPH_PROTOCOL  = "gmorph";                                    //$NON-NLS-1$
+    private static final String        HEBREW_MORPH_PROTOCOL = "hmorph";                                    //$NON-NLS-1$
+    private static final String        COMMENTARY_PROTOCOL   = "comment";                                   //$NON-NLS-1$
 
     // Empty String
-    private static final String EMPTY_STRING = ""; //$NON-NLS-1$
+    private static final String        EMPTY_STRING          = "";                                          //$NON-NLS-1$
 
     // Various other strings used as keys
-    private static final String CONFIG_KEY = "config"; //$NON-NLS-1$
-    private static final String DESKTOP_KEY = "desktop"; //$NON-NLS-1$
-    private static final String CONV_KEY = "converters"; //$NON-NLS-1$
-    private static final String CSWING_KEY = "cswing-styles"; //$NON-NLS-1$
+    private static final String        CONFIG_KEY            = "config";                                    //$NON-NLS-1$
+    private static final String        DESKTOP_KEY           = "desktop";                                   //$NON-NLS-1$
+    private static final String        CONV_KEY              = "converters";                                //$NON-NLS-1$
+    private static final String        CSWING_KEY            = "cswing-styles";                             //$NON-NLS-1$
 
     /**
      * The configuration engine
      */
-    private transient Config config;
+    private transient Config           config;
 
     /**
      * Whether to show the Key Sidebar at startup
      */
-    private static boolean sidebarShowing;
+    private static boolean             sidebarShowing;
 
     /**
      * Whether to show the view source in the menu at startup
      */
-    private static boolean viewSourceShowing;
+    private static boolean             viewSourceShowing;
 
     /**
      * Whether to show differences between versions of the Bible
      */
-    private static boolean compareShowing;
+    private static boolean             compareShowing;
 
     /**
      * Whether to show the web journal at startup
      */
-    private static boolean webJournalShowing = true;
+    private static boolean             webJournalShowing     = true;
 
     /**
      * Whether to current BibleView should be used for links
      */
-    private static boolean reuseBibleView = true;
-
-    /**
-     * The default dimension for this frame
-     */
-    private static Dimension defaultSize = new Dimension(1280, 960);
+    private static boolean             reuseBibleView        = true;
 
     /**
      * The log stream
      */
-    protected static final Logger log = Logger.getLogger(Desktop.class);
+    protected static final Logger      log                   = Logger.getLogger(Desktop.class);
 
     protected transient DesktopActions actions;
 
     /**
      * The application icon
      */
-    private static final ImageIcon ICON_APP = GuiUtil.getIcon("images/BibleDesktop16.png"); //$NON-NLS-1$
+    private static final ImageIcon     ICON_APP              = GuiUtil.getIcon("images/BibleDesktop16.png"); //$NON-NLS-1$
 
-    private transient ViewManager views;
-    private JPanel corePanel;
-//    private BlogClientFrame blogPanel;
-    private JSplitPane sptBlog;
-    private JCheckBoxMenuItem sidebarToggle;
-    private StatusBar barStatus;
-    protected MultiBookPane reference;
-    private JSplitPane sptBooks;
-    private JPanel mainPanel;
-    private transient History history;
-    private PropertyChangeSupport changeSupport;
+    private transient ViewManager      views;
+    private JPanel                     corePanel;
+//    private BlogClientFrame            blogPanel;
+    private JSplitPane                 sptBlog;
+    private JCheckBoxMenuItem          sidebarToggle;
+    private StatusBar                  barStatus;
+    protected MultiBookPane            reference;
+    private JSplitPane                 sptBooks;
+    private JPanel                     mainPanel;
+    private transient History          history;
+    private PropertyChangeSupport      changeSupport;
 
     /**
      * Serialization ID
      */
-    private static final long serialVersionUID = 3977014029116191800L;
+    private static final long          serialVersionUID      = 3977014029116191800L;
 }

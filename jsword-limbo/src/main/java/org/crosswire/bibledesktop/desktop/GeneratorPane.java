@@ -187,7 +187,7 @@ public class GeneratorPane extends EirPanel
         frame.getContentPane().add(this, BorderLayout.CENTER);
 
         frame.pack();
-        GuiUtil.centerWindow(frame);
+        GuiUtil.centerOnScreen(frame);
         frame.setVisible(true);
     }
 

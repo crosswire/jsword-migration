@@ -212,14 +212,6 @@
     <alternative number="1"/>
   </option>
 
-  <option key="Application.MaxWidth" type="number">
-    <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="MaxWidth"/>
-  </option>
-
-  <option key="Application.MaxHeight" type="number">
-    <introspect class="org.crosswire.bibledesktop.desktop.Desktop" property="MaxHeight"/>
-  </option>
-
   <option key="Application.UIFont" type="font">
     <introspect class="org.crosswire.common.swing.LookAndFeelUtil" property="Font"/>
   </option>

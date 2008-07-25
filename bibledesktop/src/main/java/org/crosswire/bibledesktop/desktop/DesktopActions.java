@@ -41,6 +41,7 @@ import org.crosswire.common.config.swing.ConfigEditorFactory;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.Actionable;
 import org.crosswire.common.swing.CWOptionPane;
+import org.crosswire.common.swing.desktop.LayoutPersistence;
 import org.crosswire.common.swing.desktop.ViewVisitor;
 import org.crosswire.common.util.CWProject;
 import org.crosswire.common.util.ClassUtil;
@@ -235,6 +236,7 @@ public class DesktopActions implements Actionable
      */
     public void doExit()
     {
+        LayoutPersistence.instance().saveLayout(desktop);
         System.exit(0);
     }
 

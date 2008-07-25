@@ -244,7 +244,7 @@ public final class ExceptionPane extends JPanel
         pane.okBox.add(ok);
         dialog.getRootPane().setDefaultButton(ok);
 
-        GuiUtil.centerWindow(dialog);
+        GuiUtil.centerOnScreen(dialog);
         GuiUtil.applyDefaultOrientation(dialog);
         dialog.pack();
         dialog.setVisible(true);

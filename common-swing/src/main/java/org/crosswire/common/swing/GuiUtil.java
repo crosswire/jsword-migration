@@ -202,7 +202,7 @@ public final class GuiUtil
     {
         Component temp = com;
 
-        while (!(temp instanceof Dialog))
+        while ( !(temp instanceof Dialog))
         {
             temp = temp.getParent();
             if (temp == null)
@@ -221,34 +221,9 @@ public final class GuiUtil
      *
      * @param win The window to be moved
      */
-    public static void centerWindow(Window win)
+    public static void centerOnScreen(Window win)
     {
-        Toolkit tk = Toolkit.getDefaultToolkit();
-
-        // If the window is maximized then we can't center it
-        if (win instanceof Frame)
-        {
-            Frame frame = (Frame) win;
-            if ((frame.getExtendedState() & Frame.MAXIMIZED_BOTH) != 0)
-            {
-                return;
-            }
-        }
-
-        Dimension screenDim = tk.getScreenSize();
-        Dimension windowDim = win.getSize();
-
-        // If the window is not maximized but is the entire size of the screen
-        // then we can't center it.
-        if (windowDim.equals(screenDim))
-        {
-            return;
-        }
-
-        // Center Frame, Dialogue or Window on screen
-        int x = (screenDim.width - win.getSize().width) / 2;
-        int y = (screenDim.height - win.getSize().height) / 2;
-        win.setLocation(x, y);
+        win.setLocationRelativeTo(null);
     }
 
     /**
@@ -324,6 +299,33 @@ public final class GuiUtil
         log.warn("Window size was: " + requestedDim + " is: " + honoredDim); //$NON-NLS-1$ //$NON-NLS-2$
 
         return honoredState;
+    }
+
+    /**
+     * Set the window size relative to the current screen size.
+     * @param win The window to resize
+     * @percentOfScreen The amount of space that the window should take up
+     */
+    public static void setSize(Window win, float percentOfScreen)
+    {
+        Toolkit tk = win.getToolkit();
+        Dimension screenSize = tk.getScreenSize();
+
+        int width = new Float(screenSize.width * percentOfScreen).intValue();
+        int height = new Float(screenSize.height * percentOfScreen).intValue();
+        Dimension winSize = new Dimension(width, height);
+
+        win.setSize(winSize);
+    }
+
+    /**
+     * Set the size of the main window to a default size.
+     * @param win The window to resize
+     */
+    public static void defaultDesktopSize(Window win)
+    {
+        float defaultPercent = 0.75F;
+        setSize(win, defaultPercent);
     }
 
     /**
@@ -604,4 +606,5 @@ public final class GuiUtil
      * The log stream
      */
     private static final Logger log = Logger.getLogger(GuiUtil.class);
+
 }
