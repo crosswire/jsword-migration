@@ -155,6 +155,9 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
      */
     public Desktop()
     {
+        // Set the name that is used for Layout Persistence
+        setName("Desktop"); //$NON-NLS-1$
+
         // The first thing that has to be done is to set the locale.
         Translations.instance().setLocale();
 

@@ -23,7 +23,6 @@ package org.crosswire.bibledesktop.book.install;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
@@ -43,6 +42,7 @@ import javax.swing.JTabbedPane;
 import org.crosswire.common.progress.swing.JobsProgressBar;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
+import org.crosswire.common.swing.desktop.LayoutPersistence;
 import org.crosswire.jsword.book.install.InstallManager;
 import org.crosswire.jsword.book.install.Installer;
 import org.crosswire.jsword.book.install.InstallerEvent;
@@ -136,6 +136,7 @@ public class SitesPane extends JPanel
     {
         if (dlgMain != null)
         {
+            LayoutPersistence.instance().saveLayout(dlgMain);
             dlgMain.setVisible(false);
         }
     }
@@ -147,13 +148,14 @@ public class SitesPane extends JPanel
     {
         Frame root = JOptionPane.getFrameForComponent(parent);
         dlgMain = new JDialog(root);
-        dlgMain.setSize(new Dimension(750, 500));
         dlgMain.getContentPane().setLayout(new BorderLayout());
         dlgMain.getContentPane().add(this, BorderLayout.CENTER);
         dlgMain.getContentPane().add(createButtons(), BorderLayout.SOUTH);
         dlgMain.setTitle(Msg.AVAILABLE_BOOKS.toString());
         dlgMain.setResizable(true);
         //dlgMain.setModal(true);
+        // Set the name for Persistent Layout
+        dlgMain.setName("Sites"); //$NON-NLS-1$
         dlgMain.addWindowListener(new WindowAdapter()
         {
             /* (non-Javadoc)
@@ -166,6 +168,21 @@ public class SitesPane extends JPanel
             }
         });
         dlgMain.setLocationRelativeTo(parent);
+
+        // Restore window size, position, and layout if previously opened,
+        // otherwise use defaults.
+        LayoutPersistence layoutPersistence = LayoutPersistence.instance();
+        if (layoutPersistence.isLayoutPersisted(dlgMain))
+        {
+            layoutPersistence.restoreLayout(dlgMain);
+        }
+        else
+        {
+            dlgMain.setSize(750, 500);
+            GuiUtil.centerOnScreen(dlgMain);
+        }
+
+
         dlgMain.setVisible(true);
         dlgMain.toFront();
         GuiUtil.applyDefaultOrientation(dlgMain);
