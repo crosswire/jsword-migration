@@ -24,7 +24,6 @@ package org.crosswire.common.config.swing;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -34,6 +33,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTree;
 import javax.swing.SwingConstants;
 import javax.swing.event.EventListenerList;
@@ -48,6 +48,7 @@ import javax.swing.tree.TreePath;
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.config.Config;
 import org.crosswire.common.swing.CWScrollPane;
+import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.swing.FormPane;
 import org.crosswire.common.swing.GuiUtil;
 
@@ -81,7 +82,6 @@ public class TreeConfigEditor extends AbstractConfigEditor
         blank.add(new JLabel(UserMsg.SELECT_SUBNODE.toString()));
 
         deck.setLayout(layout);
-        deck.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
         deck.add(blank, BLANK);
 
         dtcr.setLeafIcon(TASK_ICON_SMALL);
@@ -89,7 +89,6 @@ public class TreeConfigEditor extends AbstractConfigEditor
         // These settings will need to change if we have a true tree.
         tree.setModel(ctm);
         tree.setCellRenderer(dtcr);
-        tree.setPreferredSize(new Dimension(150, 150));
         tree.setShowsRootHandles(false);
         tree.setRootVisible(false);
         tree.putClientProperty("JTree.lineStyle", "None"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -104,7 +103,6 @@ public class TreeConfigEditor extends AbstractConfigEditor
 
         title.setIcon(TASK_ICON_LARGE);
         title.setFont(getFont().deriveFont(Font.PLAIN, 16));
-        title.setPreferredSize(new Dimension(30, 30));
         title.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         title.setBackground(Color.gray);
         title.setForeground(Color.white);
@@ -112,24 +110,22 @@ public class TreeConfigEditor extends AbstractConfigEditor
         title.setText(UserMsg.PROPERTIES.toString());
         title.setAlignmentX(SwingConstants.LEADING);
 
-        // Use this if you want to have the tree touch the bottom. Then add
-        // the button panel to content.South
-        // JPanel content = new JPanel();
-        // content.setLayout(new BorderLayout());
-        // content.add(BorderLayout.CENTER, deck);
-
         panel.setLayout(new BorderLayout());
-        panel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
+        panel.setBorder(BorderFactory.createEtchedBorder());
         panel.add(BorderLayout.NORTH, title);
         panel.add(BorderLayout.CENTER, deck);
 
-        setLayout(new BorderLayout(5, 10));
+        setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        //if (cards > 1)
-        add(BorderLayout.LINE_START, new CWScrollPane(tree));
+        JSplitPane sptMain = new FixedSplitPane();
+        sptMain.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+        sptMain.setDividerLocation(0.25D);
+        sptMain.setResizeWeight(0.25D);
+        sptMain.setLeftComponent(new CWScrollPane(tree));
+        sptMain.setRightComponent(panel);
 
-        add(BorderLayout.CENTER, panel);
+        add(BorderLayout.CENTER, sptMain);
         add(BorderLayout.SOUTH, new ButtonPane(this));
         GuiUtil.applyDefaultOrientation(this);
     }
@@ -168,7 +164,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
         {
             JScrollPane scroll = new CWScrollPane(card);
             scroll.setBorder(BorderFactory.createEmptyBorder());
-            deck.add(path, scroll);
+            deck.add(scroll, path);
         }
     }
 

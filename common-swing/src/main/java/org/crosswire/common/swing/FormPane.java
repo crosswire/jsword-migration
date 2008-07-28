@@ -21,6 +21,7 @@
  */
 package org.crosswire.common.swing;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -45,8 +46,11 @@ public class FormPane extends JPanel
      */
     public FormPane()
     {
-        setLayout(new GridBagLayout());
+        setLayout(new BorderLayout());
+        inner = new JPanel(new GridBagLayout());
+        add(inner, BorderLayout.NORTH);
         setBorder(BorderFactory.createEmptyBorder());
+        inner.setBorder(BorderFactory.createEmptyBorder());
         GuiUtil.applyDefaultOrientation(this);
     }
 
@@ -67,12 +71,12 @@ public class FormPane extends JPanel
         c.gridwidth = GridBagConstraints.RELATIVE; //next-to-last
         c.fill = GridBagConstraints.NONE;      //reset to default
         c.weightx = 0.0;                       //reset to default
-        add(label, c);
+        inner.add(label, c);
 
         c.gridwidth = GridBagConstraints.REMAINDER;     //end row
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1.0;
-        add(comp, c);
+        inner.add(comp, c);
 
         comps.put(prompt + SUFFIX_LABEL, label);
         comps.put(prompt + SUFFIX_COMP, comp);
@@ -87,8 +91,8 @@ public class FormPane extends JPanel
         JLabel label = (JLabel) comps.get(prompt + SUFFIX_LABEL);
         Component comp = (Component) comps.get(prompt + SUFFIX_COMP);
 
-        remove(label);
-        remove(comp);
+        inner.remove(label);
+        inner.remove(comp);
 
         comps.remove(prompt + SUFFIX_LABEL);
         comps.remove(prompt + SUFFIX_COMP);
@@ -143,6 +147,8 @@ public class FormPane extends JPanel
      * Serialization ID
      */
     private static final long serialVersionUID = 3258135738867790641L;
+
+    private JPanel inner;
 
     /**
      * A store of the available components

@@ -112,8 +112,7 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
         dialog.setTitle(config.getTitle());
 
         // size and position
-        dialog.setSize(800, 500);
-        dialog.pack();
+        dialog.setSize(1000, 500);
         GuiUtil.centerOnScreen(dialog);
         dialog.setModal(true);
 
@@ -158,10 +157,6 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
     {
         screenToLocal();
         al.actionPerformed(ev);
-        if (dialog != null)
-        {
-            dialog.pack();
-        }
     }
 
     /**
