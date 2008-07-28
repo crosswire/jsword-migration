@@ -34,13 +34,14 @@ import org.crosswire.common.util.CWProject;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.ResourceUtil;
+import org.crosswire.common.util.StringUtil;
 
 /**
  * Window layout persistence mechanism. Intended to be flexible enough to allow
  * persisting size, position, layout of multiple windows.
- *
- * @see gnu.gpl.License for license details.
- *      The copyright to this program is held by it's authors.
+ * 
+ * @see gnu.gpl.License for license details. The copyright to this program is
+ *      held by it's authors.
  * @author Adam Thomas [adam-thomas at cox dot net]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
@@ -48,8 +49,8 @@ public class LayoutPersistence
 {
 
     /**
-     * Creates the singleton persistence object capable of storing and retrieving layout
-     * information on behalf windows.
+     * Creates the singleton persistence object capable of storing and
+     * retrieving layout information on behalf windows.
      */
     private LayoutPersistence()
     {
@@ -79,13 +80,11 @@ public class LayoutPersistence
      * 
      * @param window the window to persist
      * @return Returns true is layout information for the current window has
-     * been persisted, otherwise returns false
+     *         been persisted, otherwise returns false
      */
     public synchronized boolean isLayoutPersisted(Window window)
     {
-        String winName = window.getName();
-        String stateKey = winName + LayoutPersistence.STATE_KEY_SUFFIX;
-        return settings.containsKey(stateKey);
+        return settings.containsKey(window.getName());
     }
 
     /**
@@ -95,33 +94,22 @@ public class LayoutPersistence
      */
     public synchronized void saveLayout(Window window)
     {
-        String winName = window.getName();
-        String stateKey = winName + LayoutPersistence.STATE_KEY_SUFFIX;
-        String widthKey = winName + LayoutPersistence.WIDTH_KEY_SUFFIX;
-        String heightKey = winName + LayoutPersistence.HEIGHT_KEY_SUFFIX;
-        String locationXKey = winName + LayoutPersistence.LOCATION_X_KEY_SUFFIX;
-        String locationYKey = winName + LayoutPersistence.LOCATION_Y_KEY_SUFFIX;
-
-        Frame frame = null;
         int state = Frame.NORMAL;
         if (window instanceof Frame)
         {
-            frame = (Frame) window;
+            Frame frame = (Frame) window;
             state = frame.getExtendedState();
         }
-        settings.setProperty(stateKey, String.valueOf(state));
 
-        int width = window.getWidth();
-        settings.setProperty(widthKey, String.valueOf(width));
-
-        int height = window.getHeight();
-        settings.setProperty(heightKey, String.valueOf(height));
-
-        int locationX = window.getX();
-        settings.setProperty(locationXKey, String.valueOf(locationX));
-
-        int locationY = window.getY();
-        settings.setProperty(locationYKey, String.valueOf(locationY));
+        settings.setProperty(window.getName(),
+                             StringUtil.join(new String[] {
+                                             Integer.toString(state),
+                                             Integer.toString(window.getWidth()),
+                                             Integer.toString(window.getHeight()),
+                                             Integer.toString(window.getX()),
+                                             Integer.toString(window.getY())
+                             }, "_") //$NON-NLS-1$
+        );
 
         try
         {
@@ -135,107 +123,69 @@ public class LayoutPersistence
     }
 
     /**
-     * Loads and restores the layout to the window that was passed to the constructor.
+     * Loads and restores the layout to the window that was passed to the
+     * constructor.
      * 
      * @param window the window to persist
      */
     public synchronized void restoreLayout(Window window)
     {
-        String winName = window.getName();
-        String stateKey = winName + LayoutPersistence.STATE_KEY_SUFFIX;
-        String widthKey = winName + LayoutPersistence.WIDTH_KEY_SUFFIX;
-        String heightKey = winName + LayoutPersistence.HEIGHT_KEY_SUFFIX;
-        String locationXKey = winName + LayoutPersistence.LOCATION_X_KEY_SUFFIX;
-        String locationYKey = winName + LayoutPersistence.LOCATION_Y_KEY_SUFFIX;
+        String[] parts = StringUtil.split(settings.getProperty(window.getName()), '_');
+
+        // If our window did not have saved settings do nothing.
+        if (parts == null || parts.length == 0)
+        {
+            return;
+        }
 
         if (window instanceof Frame)
         {
             Frame frame = (Frame) window;
-            int state = getState(stateKey);
-            frame.setExtendedState(state);
+            frame.setExtendedState(Integer.parseInt(parts[STATE]));
         }
 
-        Dimension sizeDimension = getSize(widthKey, heightKey);
-        window.setSize(sizeDimension);
-
-        Point locationPoint = getLocation(locationXKey, locationYKey);
-        window.setLocation(locationPoint);
-    }
-
-    /**
-     * Reads persisted window state data
-     * @param stateKey the properties key for state data
-     * @return Window state data
-     */
-    private int getState(String stateKey)
-    {
-        return Integer.parseInt(settings.getProperty(stateKey));
-    }
-
-    /**
-     * Reads persisted window size data
-     * @param widthKey the properties key for width
-     * @param heightKey the properties key for height
-     * @return Window size data
-     */
-    private Dimension getSize(String widthKey, String heightKey)
-    {
-        int width = Integer.parseInt(settings.getProperty(widthKey));
-        int height = Integer.parseInt(settings.getProperty(heightKey));
-        return new Dimension(width, height);
-    }
-
-    /**
-     * Reads persisted window location data
-     * @param locationXKey the properties key for x
-     * @param locationYKey the properties key for y
-     * @return Window location data
-     */
-    private Point getLocation(String locationXKey, String locationYKey)
-    {
-        int x = Integer.parseInt(settings.getProperty(locationXKey));
-        int y = Integer.parseInt(settings.getProperty(locationYKey));
-        return new Point(x, y);
+        window.setSize(new Dimension(Integer.parseInt(parts[WIDTH]), Integer.parseInt(parts[HEIGHT])));
+        window.setLocation(new Point(Integer.parseInt(parts[LOCATION_X]), Integer.parseInt(parts[LOCATION_Y])));
     }
 
     /**
      * Provide class logging capabilities
      */
-    private static final Logger log                   = Logger.getLogger(LayoutPersistence.class);
+    private static final Logger      log        = Logger.getLogger(LayoutPersistence.class);
 
     /**
      * The persistence storage and retrieval object
      */
-    private Properties   settings;
+    private Properties               settings;
 
     /**
      * Suffix for window state key
      */
-    private static final String STATE_KEY_SUFFIX      = ".WindowState";                           //$NON-NLS-1$
+    private static final int         STATE      = 0;
 
     /**
      * Suffix for window width key
      */
-    private static final String WIDTH_KEY_SUFFIX      = ".Width";                                 //$NON-NLS-1$
+    private static final int         WIDTH      = 1;
 
     /**
      * Suffix for window height key
      */
-    private static final String HEIGHT_KEY_SUFFIX     = ".Height";                                //$NON-NLS-1$
+    private static final int         HEIGHT     = 2;
 
     /**
      * Suffix for window location x key
      */
-    private static final String LOCATION_X_KEY_SUFFIX = ".LocationX";                             //$NON-NLS-1$
+    private static final int         LOCATION_X = 3;
 
     /**
      * Suffix for window location y key
      */
-    private static final String LOCATION_Y_KEY_SUFFIX = ".LocationY";                             //$NON-NLS-1$
+    private static final int         LOCATION_Y = 4;
 
     /**
      * The singleton instance of this class.
      */
-    private static LayoutPersistence instance = new LayoutPersistence();
+    private static LayoutPersistence instance   = new LayoutPersistence();
 
 }

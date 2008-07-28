@@ -24,6 +24,8 @@ package org.crosswire.common.config.swing;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -41,6 +43,7 @@ import org.crosswire.common.config.ConfigEvent;
 import org.crosswire.common.config.ConfigListener;
 import org.crosswire.common.swing.FormPane;
 import org.crosswire.common.swing.GuiUtil;
+import org.crosswire.common.swing.desktop.LayoutPersistence;
 import org.crosswire.common.util.Logger;
 
 /**
@@ -103,17 +106,38 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
             dialog = new JDialog((JFrame) root);
             dialog.getContentPane().add(this);
 
-            // Why is this only available in Frames?
-            // dialog.setIconImage(task_small);
+            // set the name for Layout Persistence
+            dialog.setName("Config"); //$NON-NLS-1$
+            dialog.addWindowListener(new WindowAdapter()
+            {
+                /* (non-Javadoc)
+                 * @see java.awt.event.WindowListener#windowClosed(java.awt.event.WindowEvent)
+                 */
+                /* @Override */
+                public void windowClosed(WindowEvent ev)
+                {
+                    hideDialog();
+                }
+            });
         }
 
         // Update from config
         localToScreen();
         dialog.setTitle(config.getTitle());
 
-        // size and position
-        dialog.setSize(1000, 500);
-        GuiUtil.centerOnScreen(dialog);
+        // Restore window size, position, and layout if previously opened,
+        // otherwise use defaults.
+        LayoutPersistence layoutPersistence = LayoutPersistence.instance();
+        if (layoutPersistence.isLayoutPersisted(dialog))
+        {
+            layoutPersistence.restoreLayout(dialog);
+        }
+        else
+        {
+            dialog.setSize(1000, 500);
+            GuiUtil.centerOnScreen(dialog);
+        }
+
         dialog.setModal(true);
 
         GuiUtil.applyDefaultOrientation(dialog);
@@ -229,6 +253,7 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
     {
         if (dialog != null)
         {
+            LayoutPersistence.instance().saveLayout(dialog);
             dialog.setVisible(false);
         }
     }
