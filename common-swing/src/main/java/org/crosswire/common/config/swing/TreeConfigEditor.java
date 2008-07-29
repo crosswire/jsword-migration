@@ -24,6 +24,7 @@ package org.crosswire.common.config.swing;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -72,7 +73,8 @@ public class TreeConfigEditor extends AbstractConfigEditor
         JPanel panel = new JPanel();
         JPanel blank = new JPanel();
         DefaultTreeCellRenderer dtcr = new DefaultTreeCellRenderer();
-
+        // prevent truncation (This is a hack!)
+        dtcr.setPreferredSize(new Dimension(1200, 100));
         ctm = new ConfigureTreeModel();
         tree = new JTree();
         title = new JLabel();
