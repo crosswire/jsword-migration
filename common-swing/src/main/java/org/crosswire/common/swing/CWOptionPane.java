@@ -618,22 +618,22 @@ public class CWOptionPane extends JOptionPane
             return CLOSED_OPTION;
         }
 
-        if (getActionName("Yes").equals(selectedValue)) //$NON-NLS-1$�
+        if (getActionName("Yes").equals(selectedValue)) //$NON-NLS-1$
         {
             return YES_OPTION;
         }
 
-        if (getActionName("No").equals(selectedValue)) //$NON-NLS-1$�
+        if (getActionName("No").equals(selectedValue)) //$NON-NLS-1$
         {
             return NO_OPTION;
         }
 
-            if (getActionName("OK").equals(selectedValue)) //$NON-NLS-1$�
+            if (getActionName("OK").equals(selectedValue)) //$NON-NLS-1$
         {
             return OK_OPTION;
         }
 
-        if (getActionName("CANCEL").equals(selectedValue)) //$NON-NLS-1$�
+        if (getActionName("CANCEL").equals(selectedValue)) //$NON-NLS-1$
         {
             return CANCEL_OPTION;
         }
