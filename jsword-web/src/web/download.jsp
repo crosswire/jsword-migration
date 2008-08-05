@@ -35,28 +35,20 @@
 <h2>Stable Release</h2>
 <p>
   If the Bible Desktop installers do not work for you or you want an earlier release,
-  you can obtain a binary install from here.
+  you can obtain a binary install from here. These files are in tar.gz format. Some require GNU tar.
 </p>
 <p>
   We keep official releases hanging around for a long, long time.
 </p>
-
-<h3>Release Downloads</h3>
 <p>
   Source does not contain third party source. You can obtain these from <jsp:expression>scm</jsp:expression>.
 </p>
-<table width="90%" align="center" border="1" bordercolor="#000000" cellspacing="0" cellpadding="2">
+<table width="50%" align="center" border="1" bordercolor="#000000" cellspacing="0" cellpadding="2">
   <tr>
     <td>-</td>
     <td align="center">Binary</td>
     <td align="center">Source</td>
     <td align="center">Docs</td>
-  </tr>
-  <tr>
-    <td>Compression</td>
-    <td>.tar.gz</td>
-    <td>.tar.gz</td>
-    <td>.tar.gz</td>
   </tr>
   <jsp:scriptlet><![CDATA[
   DownloadSet[] dls = DownloadSet.getDownloadSets(ftpBase + "/release", ftpPrefix + "/release", false);
@@ -77,26 +69,18 @@
 
 <h2>Nightly Builds</h2>
 <p>
-  Nightly builds are made and stored for a short time. You will need to use GNU
-  tar to extract the doc.tar.gz files, although any tar should do for the others.
+  Nightly builds are made and stored for a short time. These files are in tar.gz format. Some require GNU tar.
 </p>
 
-<h3>Tar Based Downloads</h3>
 <p>
   Source does not contain third party source. You can obtain these from <jsp:expression>scm</jsp:expression>.
 </p>
-<table width="90%" align="center" border="1" bordercolor="#000000" cellspacing="0" cellpadding="2">
+<table width="50%" align="center" border="1" bordercolor="#000000" cellspacing="0" cellpadding="2">
   <tr>
     <td>-</td>
     <td align="center">Binary</td>
     <td align="center">Source</td>
     <td align="center">Docs</td>
-  </tr>
-  <tr>
-    <td>Compression</td>
-    <td>.tar.gz</td>
-    <td>.tar.gz</td>
-    <td>.tar.gz</td>
   </tr>
   <jsp:scriptlet><![CDATA[
   dls = DownloadSet.getDownloadSets(ftpBase + "/nightly", ftpPrefix + "/nightly", true);
