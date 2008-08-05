@@ -112,17 +112,16 @@
             <!-- li><a href="junit">Test-Results</a></li -->
             <!-- li><a href="jcoverage">Test-Coverage</a></li -->
             <li><a href="checkstyle">CheckStyle</a></li>
-            <li><a href="pmd">PMD Report</a></li>
-            <li><a href="cpd">CPD Report</a></li>
-            <li><a href="findbugs">FindBugs Report</a></li>
-            <li><a href="jdepend/jdepend-report.html">JDepend Report</a></li>
-            <li><a href="javancss">NCSS Report</a></li>
+            <li><a href="pmd">PMD</a></li>
+            <li><a href="cpd">CPD</a></li>
+            <li><a href="findbugs">FindBugs</a></li>
+            <li><a href="jdepend/jdepend-report.html">JDepend</a></li>
+            <li><a href="javancss">NCSS</a></li>
           </ul>
           <p>Other Projects</p>
           <ul>
             <li><a href="/">CrossWire</a></li>
             <li><a href="/sword">Sword</a></li>
-            <li><a href="http://www.sourceforge.net/projects/projectb/">Project-B</a></li>
           </ul>
         </td>
 
