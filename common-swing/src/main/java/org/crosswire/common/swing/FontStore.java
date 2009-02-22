@@ -55,6 +55,10 @@ import org.crosswire.common.util.ResourceUtil;
  * setting of Language defaults. If the requested language font does not exist a
  * more general one will be provided.
  * </p>
+ * <p>
+ * Note: Some languages are represented as transliterations
+ * and others have more than one script, which may or may not be supported by a single font.
+ * </p>
  * 
  * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
