@@ -55,10 +55,10 @@ import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Defaults;
+import org.crosswire.jsword.book.KeyType;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.Passage;
@@ -414,16 +414,15 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
         // unselects the book
         if (book != null)
         {
-            BookCategory currentCategory = book.getBookCategory();
-            if (currentCategory.equals(BookCategory.DICTIONARY) || currentCategory.equals(BookCategory.GLOSSARY)
-                || currentCategory.equals(BookCategory.DAILY_DEVOTIONS))
+            KeyType currentCategory = book.getBookMetaData().getKeyType();
+            if (KeyType.LIST.equals(currentCategory))
             {
                 // Don't leave the scroller in the middle of the list!
                 dictionaryKeyList.ensureIndexIsVisible(0);
                 // Make sure that the list of keys is empty.
                 dictionaryKeyList.setModel(new KeyListListModel(null));
             }
-            else if (currentCategory.equals(BookCategory.GENERAL_BOOK))
+            else if (KeyType.TREE.equals(currentCategory))
             {
                 // Don't leave the scroller in the middle of the list!
                 genBookKeyTree.scrollRowToVisible(0);
@@ -440,17 +439,15 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
         if (selected != null)
         {
             Book selectedBook = (Book) selected;
-            BookCategory category = selectedBook.getBookCategory();
+            KeyType category = selectedBook.getBookMetaData().getKeyType();
             //divider snaps back to its starting point when a new component is set
             int dividerLocation = sptMain.getDividerLocation();
-            if (category.equals(BookCategory.COMMENTARY))
+            if (KeyType.VERSE.equals(category))
             {
                 updateDisplay();
                 sptMain.setTopComponent(commentaryPicker);
             }
-            else if (category.equals(BookCategory.DICTIONARY)
-                     || category.equals(BookCategory.GLOSSARY)
-                     || category.equals(BookCategory.DAILY_DEVOTIONS))
+            else if (KeyType.LIST.equals(category))
             {
                 book = selectedBook;
                 Key key = book.getGlobalKeyList();
@@ -468,7 +465,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
 
                 sptMain.setTopComponent(dictionaryKeyScroller);
             }
-            else // currentCategory.equals(BookCategory.GENERAL_BOOK)
+            else // KeyType.TREE.equals(category)
             {
                 book = selectedBook;
                 Key key = book.getGlobalKeyList();
