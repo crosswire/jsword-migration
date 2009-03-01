@@ -34,7 +34,6 @@ import javax.swing.table.DefaultTableColumnModel;
  */
 public abstract class RowColumns extends DefaultTableColumnModel
 {
-
     /**
      * Method getHeaders gets the headers for all the columns
      * @return String[] of table headers.
@@ -175,4 +174,8 @@ public abstract class RowColumns extends DefaultTableColumnModel
         return 0;
     }
 
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 4465827492721960946L;
 }

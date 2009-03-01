@@ -360,4 +360,9 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
      * The small task icon
      */
     protected static final ImageIcon TASK_ICON_SMALL = GuiUtil.getIcon("toolbarButtonGraphics/general/Preferences16.gif"); //$NON-NLS-1$
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 6004078142151397638L;
 }

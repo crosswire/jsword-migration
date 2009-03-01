@@ -628,12 +628,12 @@ public class CWOptionPane extends JOptionPane
             return NO_OPTION;
         }
 
-            if (getActionName("OK").equals(selectedValue)) //$NON-NLS-1$
+        if (getActionName("OK").equals(selectedValue)) //$NON-NLS-1$
         {
             return OK_OPTION;
         }
 
-        if (getActionName("CANCEL").equals(selectedValue)) //$NON-NLS-1$
+        if (getActionName("Cancel").equals(selectedValue)) //$NON-NLS-1$
         {
             return CANCEL_OPTION;
         }

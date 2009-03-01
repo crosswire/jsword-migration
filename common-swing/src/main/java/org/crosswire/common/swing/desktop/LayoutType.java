@@ -215,4 +215,9 @@ public abstract class LayoutType implements Serializable
         TDI,
         MDI,
     };
+
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 5443546249176482187L;
 }
