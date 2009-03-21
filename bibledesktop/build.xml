@@ -12,7 +12,7 @@
   <property name="gener.root"        value="${target.root}/gener"/>
 
   <property name="support.tools" value="../jsword-support/tools"/>
-  <import file="${support.tools}/nsis/build.xml"/>
+  <!--<import file="${support.tools}/nsis/build.xml"/>-->
 
   <!--=======================================================================-->
   <target name="testcompile.extra">
@@ -29,7 +29,7 @@
 
   <!--=======================================================================-->
   <target name="install"
-          depends="build, keygen, install.check, nsis"
+          depends="build, keygen, install.check"
           unless="install.uptodate"
           description="Prepares for web based jnlp deploy">
 
@@ -154,12 +154,14 @@
         <include name="gpl.txt"/>
       </fileset>
     </copy>
+    <!--
   	<nsis verbosity="1" script="${target.installed}/BibleDesktop.nsi"/>
   	<nsis verbosity="1" script="${target.installed}/PortableBibleDesktop.nsi"/>
   	<nsis verbosity="1" script="${target.installed}/BibleDesktopSetup.nsi"/>
     <delete file="${target.installed}/BibleDesktop.nsi"/>
     <delete file="${target.installed}/PortableBibleDesktop.nsi"/>
     <delete file="${target.installed}/BibleDesktopSetup.nsi"/>
+    -->
   </target>
 
   <target name="install.check">
