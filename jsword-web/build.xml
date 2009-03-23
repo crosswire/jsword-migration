@@ -78,8 +78,10 @@
     </javadoc>
   </target>
 
-  <!--=======================================================================-->
-  <target name="tools" depends="java2html,checkstyle,javancss,findbugs,pmd,cpd,jdepend"/>
+  <!--=======================================================================
+  Note: java is dumping in native code while executing java2html
+  <target name="tools" depends="java2html,checkstyle,javancss,findbugs,pmd,cpd,jdepend"/> -->
+  <target name="tools" depends="checkstyle,javancss,findbugs,pmd,cpd,jdepend"/>
 
   <!--=======================================================================-->
   <target name="install"
