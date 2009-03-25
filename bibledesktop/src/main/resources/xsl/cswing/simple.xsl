@@ -123,7 +123,7 @@
       <head>
         <base href="{$baseURL}"/>
         <style type="text/css">
-          BODY { <xsl:value-of select="$fontspec" /> }
+          BODY { background:white; <xsl:value-of select="$fontspec" /> }
           A { text-decoration: none; }
           A.strongs { color: black; text-decoration: none; }
           SUB.strongs { font-size: 75%; color: red; }
