@@ -4,6 +4,13 @@
 	  "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
 
 <module name="Checker">
+  <!--
+      If you set the basedir property below, then all reported file
+      names will be relative to the specified directory. See
+      http://checkstyle.sourceforge.net/5.x/config.html#Checker
+
+      <property name="basedir" value="${basedir}"/>
+  -->
 
   <metadata name="com.atlas-sw.eclipse" value="I like Sydney"/>
 
@@ -13,32 +20,42 @@
     <property name="file" value="${checkstyle.suppressions.file}"/>
   </module>
 
-  <module name="PackageHtml"/>
+  <module name="JavadocPackage">
+    <property name="allowLegacy" value="false"/>
+  </module>
 
   <module name="Translation">
     <property name="severity" value="${translation.severity}"/>
   </module>
 
+  <module name="FileTabCharacter">
+    <property name="eachLine" value="false"/>
+  </module>
+
+  <module name="FileLength">
+    <property name="fileExtensions" value="java"/>
+  </module>
+
+  <module name="Header">
+    <property name="headerFile" value="${checkstyle.header.file}"/>
+    <property name="fileExtensions" value="java"/>
+    <property name="id" value="header"/>
+  </module>
+
+  <module name="RegexpSingleline">
+    <property name="format" value="\s+$"/>
+    <property name="minimum" value="0"/>
+    <property name="maximum" value="0"/>
+  </module>
+
   <module name="TreeWalker">
-
     <property name="tabWidth" value="4" />
-
-    <module name="Regexp">
-      <property name="id" value="trailing"/>
-      <property name="format" value="[ \t]+$"/>
-      <property name="illegalPattern" value="true"/>
-      <property name="message" value="trailing whitespace"/>
-    </module>
 
     <module name="AvoidStarImport"/>
     <module name="ConstantName"/>
     <module name="EmptyBlock"/>
     <module name="EmptyForIteratorPad"/>
     <module name="EqualsHashCode"/>
-    <module name="FileLength" />
-    <module name="Header">
-      <property name="headerFile" value="${checkstyle.header.file}"/>
-    </module>
 
     <!-- module name="IllegalCatch"/ -->
     <module name="ImportControl">
@@ -69,6 +86,7 @@
       <property name="option" value="nlow"/>
     </module>
 
+    <module name="OuterTypeNumber"/>
     <module name="LineLength">
       <property name="ignorePattern" value="^ *\* *[^ ]+$"/>
     </module>
@@ -117,13 +135,13 @@
     <module name="StaticVariableName">
       <property name="format" value="^s[A-Z][a-zA-Z0-9]*$"/>
     </module>
-    <module name="TabCharacter"/>
     <module name="TypeName"/>
     <module name="UnusedImports"/>
     <module name="UpperEll"/>
     <module name="VisibilityModifier"/>
     <module name="WhitespaceAfter"/>
     <module name="WhitespaceAround"/>
+    <module name="GenericWhitespace"/>
     <module name="FinalClass"/>
     <module name="MissingSwitchDefault"/>
     <module name="MagicNumber"/>
@@ -133,7 +151,8 @@
       <property name="caseIndent" value="0"/>
     </module>
     <module name="ArrayTrailingComma"/>
-    <!-- module name="FinalLocalVariable"/ -->
+    <module name="FinalLocalVariable"/>
+    <module name="EqualsAvoidNull"/>
 
     <!-- Generates quite a few errors -->
     <module name="CyclomaticComplexity">
@@ -145,5 +164,12 @@
     </module>
     <module name="NestedTryDepth"/>
     <module name="ExplicitInitialization"/>
+    <module name="AnnotationUseStyle"/>
+    <module name="MissingDeprecated"/>
+    <module name="MissingOverride">
+      <property name="javaFiveCompatibility" value="true"/>
+    </module>
+    <module name="PackageAnnotation"/>
+    <module name="SuppressWarnings"/>
   </module>
 </module>

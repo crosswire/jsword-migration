@@ -1,6 +1,6 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
     xmlns:lxslt="http://xml.apache.org/xslt"
-    xmlns:redirect="org.apache.xalan.xslt.extensions.Redirect"
+    xmlns:redirect="http://xml.apache.org/xalan/redirect"
     extension-element-prefixes="redirect">
 
 <!--
@@ -60,14 +60,7 @@
     <xsl:output method="html" indent="yes" encoding="US-ASCII"/>
     <xsl:decimal-format decimal-separator="." grouping-separator="," />
 
-    <xsl:key name="files" match="file" use="@name"/>
-    <xsl:key name="errorfiles" match="file[count(error)>0]" use="@name"/>
-    <xsl:key name="violations" match="file/error" use="@source"/>
-
     <xsl:param name="output.dir" select="'.'"/>
-
-	<xsl:variable name="allFiles" select="/checkstyle/file[@name and generate-id(.) = generate-id(key('files', @name))]"/>
-	<xsl:variable name="allFilesWithError" select="/checkstyle/file[@name and generate-id(.) = generate-id(key('errorfiles', @name))]"/>
 
     <xsl:template match="checkstyle">
         <!-- create the index.html -->
@@ -91,7 +84,7 @@
         </redirect:write>
 
         <!-- process all files -->
-        <xsl:apply-templates select="$allFilesWithError"/>
+        <xsl:apply-templates select="file"/>
     </xsl:template>
 
     <xsl:template name="index.html">
@@ -203,7 +196,7 @@
         <xsl:param name="path"/>
         <xsl:value-of select="translate($path, '\:', '/_')"/>
     </xsl:template>
-
+    
     <!--
     Creates an all-classes.html file that contains a link to all files.
     -->
@@ -218,7 +211,7 @@
                 <p>
                     <table width="100%">
                         <!-- For each file create its part -->
-                        <xsl:apply-templates select="$allFilesWithError" mode="all.classes">
+                        <xsl:apply-templates select="file" mode="all.classes">
                             <xsl:sort select="@name"/>
                         </xsl:apply-templates>
                     </table>
@@ -234,16 +227,21 @@
                 <th>Name</th>
                 <th>Errors</th>
             </tr>
-            <xsl:apply-templates select="$allFilesWithError" mode="filelist">
+            <xsl:apply-templates select="file" mode="filelist">
                 <xsl:sort select="@name"/>
             </xsl:apply-templates>
         </table>
     </xsl:template>
 
     <xsl:template match="file" mode="filelist">
+        <xsl:variable name="first">
+            <xsl:call-template name="isfirst">
+                <xsl:with-param name="name" select="@name"/>
+            </xsl:call-template>
+        </xsl:variable>
         <xsl:variable name="name" select="@name" />
 
-        <!--<xsl:if test="$first = 'true'">-->
+        <xsl:if test="$first = 'true'">
             <xsl:variable name="new-name">
                 <xsl:call-template name="from-dos">
                     <xsl:with-param name="path" select="@name"/>
@@ -261,28 +259,33 @@
                 </td>
                 <td><xsl:value-of select="count(../file[@name = $name]/error)"/></td>
             </tr>
-        <!--</xsl:if>-->
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="file" mode="all.classes">
-
-        <xsl:variable name="new-name">
-            <xsl:call-template name="from-dos">
-                <xsl:with-param name="path" select="@name"/>
+        <xsl:variable name="first">
+            <xsl:call-template name="isfirst">
+                <xsl:with-param name="name" select="@name"/>
             </xsl:call-template>
         </xsl:variable>
-        <tr>
-            <td nowrap="nowrap">
-                <a target="fileFrame">
-                    <xsl:attribute name="href">
-                        <xsl:text>files/</xsl:text>
-                        <xsl:value-of select="$new-name"/>
-                        <xsl:text>.html</xsl:text>
-                    </xsl:attribute>
-                    <xsl:value-of select="@name"/>
-                </a>
-            </td>
-        </tr>
+
+        <xsl:if test="$first = 'true'">
+            <xsl:variable name="new-name">
+                <xsl:call-template name="from-dos">
+                    <xsl:with-param name="path" select="@name"/>
+                </xsl:call-template>
+            </xsl:variable>
+            <tr>
+                <td nowrap="nowrap">
+                    <a target="fileFrame">
+                        <xsl:attribute name="href">
+                            <xsl:text>files/</xsl:text><xsl:value-of select="$new-name"/><xsl:text>.html</xsl:text>
+                        </xsl:attribute>
+                        <xsl:value-of select="@name"/>
+                    </a>
+                </td>
+            </tr>
+        </xsl:if>
     </xsl:template>
 
     <!--
@@ -303,83 +306,62 @@
     </xsl:template>
 
     <xsl:template match="file">
-        <xsl:variable name="name" select="@name"/>
-
-        <xsl:variable name="new-name">
-            <xsl:call-template name="from-dos">
-                <xsl:with-param name="path" select="@name"/>
+        <xsl:variable name="first">
+            <xsl:call-template name="isfirst">
+                <xsl:with-param name="name" select="@name"/>
             </xsl:call-template>
         </xsl:variable>
-        <redirect:write file="{$output.dir}/files/{$new-name}.html">
-            <html>
-                <head>
-                    <link rel="stylesheet" type="text/css">
-                        <xsl:attribute name="href">
-                            <xsl:call-template name="path">
-                                <xsl:with-param name="path" select="$new-name"/>
-                            </xsl:call-template>
-                            <xsl:text>stylesheet.css</xsl:text>
-                        </xsl:attribute>
-                    </link>
-                </head>
-                <body>
-                    <xsl:call-template name="pageHeader"/>
-                    <h3>File <xsl:value-of select="@name"/> </h3>
-                    <table class="log" border="0" cellpadding="5" cellspacing="2" width="100%">
-                        <tr>
-                            <th>Error Description</th>
-                            <th>Line</th>
-                        </tr>
-                        <xsl:for-each select="../file[@name = $name]/error">
+        <xsl:variable name="name" select="@name" />
+
+        <xsl:if test="$first = 'true'">
+            <xsl:variable name="new-name">
+                <xsl:call-template name="from-dos">
+                    <xsl:with-param name="path" select="@name"/>
+                </xsl:call-template>
+            </xsl:variable>
+            <redirect:write file="{$output.dir}/files/{$new-name}.html">
+                <html>
+                    <head>
+                        <link rel="stylesheet" type="text/css">
+                            <xsl:attribute name="href"><xsl:call-template name="path"><xsl:with-param name="path" select="$new-name"/></xsl:call-template><xsl:text>stylesheet.css</xsl:text></xsl:attribute>
+                        </link>
+                    </head>
+                    <body>
+                        <xsl:call-template name="pageHeader"/>
+                        <h3>File <xsl:value-of select="@name"/></h3>
+                        <table class="log" border="0" cellpadding="5" cellspacing="2" width="100%">
                             <tr>
-                                <xsl:call-template name="alternated-row"/>
-                                <td>
-                                    <xsl:value-of select="@message"/>
-                                </td>
-                                <td>
-                                    <xsl:value-of select="@line"/>
-                                </td>
+                                <th>Error Description</th>
+                                <th>Line</th>
                             </tr>
-                        </xsl:for-each>
-                    </table>
-                </body>
-            </html>
-        </redirect:write>
+                            <xsl:for-each select="../file[@name = $name]/error">
+                                <tr>
+                                    <xsl:call-template name="alternated-row"/>
+                                    <td><xsl:value-of select="@message"/></td>
+                                    <td><xsl:value-of select="@line"/></td>
+                                </tr>
+                            </xsl:for-each>
+                        </table>
+                    </body>
+                </html>
+            </redirect:write>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="checkstyle" mode="summary">
         <h3>Summary</h3>
+        <xsl:variable name="fileCount" select="count(file)"/>
+        <xsl:variable name="errorCount" select="count(file/error)"/>
         <table class="log" border="0" cellpadding="5" cellspacing="2" width="100%">
             <tr>
                 <th>Files</th>
-                <th>Files with Errors</th>
                 <th>Errors</th>
             </tr>
             <tr>
                 <xsl:call-template name="alternated-row"/>
-                <td><xsl:value-of select="count($allFiles)"/></td>
-                <td><xsl:value-of select="count($allFilesWithError)"/></td>
-                <td><xsl:value-of select="count(file/error)"/></td>
+                <td><xsl:value-of select="$fileCount"/></td>
+                <td><xsl:value-of select="$errorCount"/></td>
             </tr>
-        </table>
-        <table class="log" border="0" cellpadding="5" cellspacing="2" width="100%">
-            <tr>
-                <th>Check</th>
-                <th>Number of Violations</th>
-            </tr>
-            <xsl:for-each select="file/error[@source and generate-id(.) = generate-id(key('violations', @source))]">
-                <xsl:sort select="@source"/>
-                <xsl:variable name="source" select="@source"/>
-                <tr>
-                    <xsl:call-template name="alternated-row"/>
-                    <td>
-                        <xsl:value-of select="$source"/>
-                    </td>
-                    <td>
-                        <xsl:value-of select="count(/checkstyle/file/error[@source=$source])"/>
-                    </td>
-                </tr>
-            </xsl:for-each>
         </table>
     </xsl:template>
 
@@ -388,6 +370,12 @@
             <xsl:if test="position() mod 2 = 1">a</xsl:if>
             <xsl:if test="position() mod 2 = 0">b</xsl:if>
         </xsl:attribute>
+    </xsl:template>
+
+    <!-- determine if this is the first occurance of the given name in the input -->
+    <xsl:template name="isfirst">
+        <xsl:param name="name"/>
+        <xsl:value-of select="count(preceding-sibling::file[@name=$name]) = 0"/>
     </xsl:template>
 
 </xsl:stylesheet>

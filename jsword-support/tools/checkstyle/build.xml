@@ -1,7 +1,7 @@
 <project name="checkstyle" default="checkstyle">
 
   <property name="support.style" value="${support.tools}/checkstyle"/>
-  <property name="version.style" value="4.4"/>
+  <property name="version.style" value="5.0"/>
 
   <!-- this should be overridden by the parent file -->
   <property name="support.tools" value=".."/>

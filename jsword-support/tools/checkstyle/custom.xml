@@ -8,9 +8,19 @@
   <property name="basedir" value="@source.java@"/>
 
   <!-- Checks for Javadoc Comments -->
-  <module name="PackageHtml"/>
+  <module name="JavadocPackage">
+    <property name="allowLegacy" value="true"/>
+  </module>
   <module name="NewlineAtEndOfFile"/>
   <module name="Translation"/>
+  <module name="FileLength">
+    <property name="max" value="2000"/>
+  </module>
+  <module name="FileTabCharacter"/>
+  <!-- Header checks would be good to do, in order to verify that license is present.
+  <module name="Header"/>
+  <module name="RegexpHeader"/>
+  -->
 
   <module name="TreeWalker">
 
@@ -65,12 +75,6 @@
     </module>
     <module name="TypeName"/>
 
-    <!-- Header checks would be good to do, in order to verify that license is present.
-    <module name="Header"/>
-    <module name="RegexpHeader"/>
-    <module name="CrossLanguageRegexpHeader"/>
-    -->
-
     <!-- Checks for imports -->
     <module name="AvoidStarImport"/>
     <module name="IllegalImport"/>
@@ -88,9 +92,6 @@
       <property name="tokens" value="CTOR_DEF,METHOD_DEF"/>
     </module>
     -->
-    <module name="FileLength">
-      <property name="max" value="2000"/>
-    </module>
     <!--
     <module name="LineLength">
       <property name="max" value="256"/>
@@ -137,7 +138,6 @@
     <module name="TypecastParenPad">
       <property name="option" value="nospace"/>
     </module>
-    <module name="TabCharacter"/>
     <module name="WhitespaceAfter"/>
     <module name="WhitespaceAround">
       <!-- All but: GENERIC_START, GENERIC_END, WILDCARD_TYPE, -->
@@ -306,11 +306,11 @@
     -->
 
     <!-- Miscellaneous Checks -->
-    <module name="GenericIllegalRegexp">
+    <module name="RegexpSinglelineJava">
       <property name="format" value="((public)|(protected))\s+void\s+finalize\(\s*\)"/>
     </module>
     <!-- Check to find trailing whitespace at the end of a line -->
-    <module name="GenericIllegalRegexp">
+    <module name="RegexpSinglelineJava">
       <property name="format" value="\s$"/>
       <property name="ignoreComments" value="true"/>
     </module>

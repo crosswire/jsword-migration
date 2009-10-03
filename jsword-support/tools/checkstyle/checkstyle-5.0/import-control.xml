@@ -6,6 +6,8 @@
 <import-control pkg="com.puppycrawl.tools.checkstyle">
 
   <allow pkg="antlr"/>
+  <allow pkg="com.google.common.base"/>
+  <allow pkg="com.google.common.collect"/>
   <allow pkg="com.puppycrawl.tools.checkstyle.api"/>
   <allow pkg="java.io"/>
   <allow pkg="java.net"/>
@@ -13,12 +15,12 @@
   <allow pkg="javax.xml.parsers"/>
   <allow pkg="org.apache.commons.beanutils"/>
   <allow pkg="org.apache.commons.logging"/>
-  <allow pkg="org.apache.commons.collections"/>
   <allow pkg="org.xml.sax"/>
 
   <!-- The local ones -->
-  <allow pkg="com.puppycrawl.tools.checkstyle.grammars" local-only="true"/>
+  <allow class="java.nio.charset.Charset" local-only="true"/>
   <allow class="java.security.MessageDigest" local-only="true"/>
+  <allow pkg="com.puppycrawl.tools.checkstyle.grammars" local-only="true"/>
   <allow pkg="org.apache.commons.cli" local-only="true"/>
   <allow pkg="org.apache.tools.ant" local-only="true"/>
 
@@ -34,13 +36,15 @@
 
   <subpackage name="checks">
     <allow pkg="com.puppycrawl.tools.checkstyle.checks"/>
+    <allow class="com.puppycrawl.tools.checkstyle.Defn"/>
     <allow pkg="java.math"/>
 
     <subpackage name="indentation">
       <allow pkg="java.lang.reflect"/>
-      <allow pkg="org.apache.commons.collections"/>
     </subpackage>
-
+    <subpackage name="header">
+      <allow class="java.nio.charset.Charset" local-only="true"/>
+    </subpackage>
   </subpackage>
 
   <subpackage name="doclets">

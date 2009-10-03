@@ -8,7 +8,7 @@ Unzip the file into this directory.
 In the new directory, remove the following:
    contrib/bcel
    contrib/examples
-   contrib/j2ee
+   contrib/hooks
    contrib/usage
    docs
    build.xml
