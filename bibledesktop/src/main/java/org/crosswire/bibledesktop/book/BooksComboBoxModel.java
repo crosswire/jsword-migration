@@ -86,7 +86,7 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
     {
         if (book != null)
         {
-            int i = books.indexOf(book);
+            int i = getIndexOf(book);
             if (i != -1)
             {
                 current = book;
