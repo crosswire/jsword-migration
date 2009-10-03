@@ -200,9 +200,73 @@ public class FontStore
     }
 
     /**
+     * @return the storeName
+     */
+    protected String getStoreName()
+    {
+        return storeName;
+    }
+
+    /**
+     * @param storeName the storeName to set
+     */
+    protected void setStoreName(String storeName)
+    {
+        this.storeName = storeName;
+    }
+
+    /**
+     * @return the fontStore
+     */
+    protected URI getFontStore()
+    {
+        return fontStore;
+    }
+
+    /**
+     * @param fontStore the fontStore to set
+     */
+    protected void setFontStore(URI fontStore)
+    {
+        this.fontStore = fontStore;
+    }
+
+    /**
+     * @return the loaded
+     */
+    protected boolean isLoaded()
+    {
+        return loaded;
+    }
+
+    /**
+     * @param loaded the loaded to set
+     */
+    protected void setLoaded(boolean loaded)
+    {
+        this.loaded = loaded;
+    }
+
+    /**
+     * @return the fontMap
+     */
+    protected Properties getFontMap()
+    {
+        return fontMap;
+    }
+
+    /**
+     * @param fontMap the fontMap to set
+     */
+    protected void setFontMap(Properties fontMap)
+    {
+        this.fontMap = fontMap;
+    }
+
+    /**
      * Load the store, if it has not been loaded.
      */
-    private void load()
+    protected void load()
     {
         if (loaded)
         {
@@ -224,7 +288,7 @@ public class FontStore
     /**
      * Store the store, if it exists.
      */
-    private void store()
+    protected void store()
     {
         load();
 
@@ -238,12 +302,11 @@ public class FontStore
         }
     }
 
-    private Font obtainFont(String fontSpec)
+    protected Font obtainFont(String fontSpec)
     {
         if (fontSpec != null)
         {
-            // Creating a font never fails. Java just silently does
-            // substitution.
+            // Creating a font never fails. Java just silently does substitution.
             // Ensure that substitution does not happen.
             Font obtainedFont = GuiConvert.string2Font(fontSpec);
             String obtainedFontSpec = GuiConvert.font2String(obtainedFont);
@@ -255,14 +318,15 @@ public class FontStore
         return null;
     }
 
-    private static final String DEFAULT_FONT    = "Dialog-PLAIN-12";                //$NON-NLS-1$
+    protected static final String DEFAULT_FONT    = "Dialog-PLAIN-12";                //$NON-NLS-1$
+    protected static final String LANG_KEY_PREFIX = "lang.";                          //$NON-NLS-1$
+    protected static final String DEFAULT_KEY     = "default";                        //$NON-NLS-1$
+
     private String              storeName;
     private String              defaultFont;
     private URI                 fontStore;
     private boolean             loaded;
     private Properties          fontMap;
 
-    private static final String LANG_KEY_PREFIX = "lang.";                          //$NON-NLS-1$
-    private static final String DEFAULT_KEY     = "default";                        //$NON-NLS-1$
     private static final Logger log             = Logger.getLogger(FontStore.class);
 }
