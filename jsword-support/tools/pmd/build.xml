@@ -1,7 +1,7 @@
 <project name="pmd" default="pmd">
 
   <property name="pmd" value="${support.tools}/pmd"/>
-  <property name="version.pmd" value="4.2.2"/>
+  <property name="version.pmd" value="4.2.5"/>
 
   <!-- this should be overridden by the parent file -->
   <property name="support.tools" value=".."/>

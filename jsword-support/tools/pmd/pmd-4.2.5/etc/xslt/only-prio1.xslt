@@ -9,7 +9,7 @@
 </xsl:template>
 
 <xsl:template name="priorityDiv">
-<xsl:if test="@priority = 5">p5</xsl:if>
+<xsl:if test="@priority = 1">p1</xsl:if>
 </xsl:template>
 
 <xsl:template name="timestamp">
@@ -61,19 +61,19 @@
       <tr>
         <th>Files</th>
         <th>Total</th>
-        <th>Priority 5</th>
+        <th>Priority 1</th>
       </tr>
       <tr>
         <td><xsl:value-of select="count(//file)"/></td>
         <td><xsl:value-of select="count(//violation)"/></td>
-        <td><div class="p5"><xsl:value-of select="count(//violation[@priority = 5])"/></div></td>
+        <td><div class="p1"><xsl:value-of select="count(//violation[@priority = 1])"/></div></td>
       </tr>
     </table>
     <hr/>
-    <xsl:for-each select="file[violation/@priority=4]">
-        <xsl:sort data-type="number" order="descending" select="count(violation[@priority = 5])"/>
+    <xsl:for-each select="file[violation/@priority=1]">
+        <xsl:sort data-type="number" order="descending" select="count(violation[@priority = 1])"/>
         <xsl:variable name="filename" select="@name"/>
-        <H3><xsl:value-of disable-output-escaping="yes" select="substring-before(translate(@name,'/','.'),'.java')"/></H3>
+        <h3><xsl:value-of disable-output-escaping="yes" select="translate(substring-before(@name,'.java'),'/','.')"/></h3>
         <table border="0" width="100%" class="footcollapse"><xsl:attribute name="id">sortable_id_<xsl:value-of select="position()"/></xsl:attribute>
             <thead>
 				<tr>
@@ -85,11 +85,11 @@
 			</thead>
 	        <tfoot>
 				<tr>
-					<th colspan="3">Total number of violations for this class: <xsl:value-of select="count(violation[@priority = 5])"/> (Click anywhere on this row to see/hide details)</th>
+					<th colspan="3">Total number of violations for this class: <xsl:value-of select="count(violation[@priority = 1])"/> (Click anywhere on this row to see/hide details)</th>
 					<td></td>
 				</tr>
 			</tfoot>
-	    <xsl:for-each select="violation[@priority = '5']">
+	    <xsl:for-each select="violation[@priority = '1']">
 		    <tbody>
 				<tr>
 					<td style="padding: 3px" align="right"><div><xsl:attribute name="class"><xsl:call-template name="priorityDiv"/></xsl:attribute><xsl:value-of disable-output-escaping="yes" select="@priority"/></div></td>

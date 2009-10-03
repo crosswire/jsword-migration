@@ -1,3 +1,57 @@
+February 08, 2009 - 4.2.5:
+
+Enhanced logging in the ClassTypeResolver to provide more detailed messaging.
+Fixed bug 2315623 - @SuppressWarnings("PMD.UseSingleton") has no effect
+Fixed bug 2230809 - False +: ClassWithOnlyPrivateConstructorsShouldBeFinal  
+Fixed bug 2338341 - ArrayIndexOutOfBoundsException in CPD (on Ruby)
+Fixed bug 2315599 - False +: UseSingleton with class containing constructor
+Fixed bug 1955852 - false positives for UnusedPrivateMethod & UnusedLocalVariable
+Fixed bug 2404700 - UseSingleton should not act on enums
+Fixed bug 2225474 - VariableNamingConventions does not work with nonprimitives
+Fixed bug 1609038 - Xslt report generators break if path contains "java"
+Fixed bug - JUnitTestsShouldIncludeAssert now detects Junit 4 Assert.assert...  constructs
+Fixed bug 2142986 - UselessOverridingMethod doesn't consider annotations
+Fixed bug 2027626 - False + : AvoidFinalLocalVariable
+
+New rule:
+	StrictExceptions : AvoidThrowingNewInstanceOfSameException
+New ruleset:
+	android.xml: new rules specific to the Android platform
+
+October 12, 2008 - 4.2.4:
+
+Fixed bug 1481051 - false + UnusedNullCheckInEquals (and other false positives too)
+Fixed bug 1943204 - Ant task: <ruleset> path should be relative to Ant basedir
+Fixed bug 2139720 - Exception in PMD Rule Designer for inline comments in source
+Fixed patch 2075906 - Add toString() to the rule UnnecessaryWrapperObjectCreation
+Fixed ClassCastException on generic method in BeanMembersShouldSerialize
+Fixed ClassCastException in symbol table code
+
+August 31, 2008 - 4.2.3:
+
+JavaCC generated artifacts updated to JavaCC 4.1d1.
+Java grammar enhanced to include AnnotationMethodDeclaration as parent node of method related children of AnnotationTypeMemberDeclaration
+Fixes for exclude-pattern
+Updates to RuleChain to honor RuleSet exclude-pattern
+Upgrading UselessOperationOnImmutable to detect more use cases, especially on String and fix false positives
+Fixed bug 1988829 - Violation reported without source file name (actually a fix to ConsecutiveLiteralAppends)
+Fixed bug 1989814 - false +: ConsecutiveLiteralAppends
+Fixed bug 1977230 - false positive: UselessOverridingMethod
+Fixed bug 1998185 - BeanMembersShouldSerialize vs @SuppressWarnings("serial")
+Fixed bug 2002722 - false + in UseStringBufferForStringAppends
+Fixed bug 2056318 - False positive for AvoidInstantiatingObjectsInLoops
+Fixed bug 1977438 - False positive for UselessStringValueOf
+Fixed bug 2050064 - False + SuspiciousOctalEscape with backslash literal
+Fixed bug 1556594 - Wonky detection of NullAssignment
+Optimizations and false positive fixes in PreserveStackTrace
+@SuppressWarnings("all") disables all warnings
+All comment types are now stored in ASTCompilationUnit, not just formal ones
+Fixed false negative in UselessOverridingMethod
+Fixed handling of escape characters in UseIndexOfChar and AppendCharacterWithChar
+
+New rule:
+	Basic ruleset:	EmptyInitializer
+
 May 20, 2008 - 4.2.2:
 
 Fixed false positive in UnusedImports: javadoc comments are parsed to check @see and other tags
