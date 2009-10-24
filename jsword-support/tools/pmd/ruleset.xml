@@ -40,7 +40,7 @@
   <!-- <rule ref="rulesets/naming.xml/ShortVariable"/> 702 reports -->
   <!-- <rule ref="rulesets/naming.xml/LongVariable"/> 145 reports -->
   <!-- <rule ref="rulesets/naming.xml/ShortMethodName"/> 1 report History.go() -->
-  <rule ref="rulesets/naming.xml/VariableNamingConventions"/>
+  <!-- <rule ref="rulesets/naming.xml/VariableNamingConventions"/> not very good -->
   <rule ref="rulesets/naming.xml/MethodNamingConventions"/>
   <rule ref="rulesets/naming.xml/ClassNamingConventions"/>
   <!-- <rule ref="rulesets/naming.xml/AbstractNaming"/> Reports on JSword enumerations -->

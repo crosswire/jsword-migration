@@ -15,7 +15,7 @@
 <stringAttribute key="org.eclipse.debug.ui.target_run_perspective" value="perspective_default"/>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.ant.ui.AntClasspathProvider"/>
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="true"/>
-<stringAttribute key="org.eclipse.ui.externaltools.ATTR_ANT_TARGETS" value="tools,"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_ANT_TARGETS" value="pmd,"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${workspace_loc:/jsword-web/build.xml}"/>
 <intAttribute key="org.eclipse.ui.externaltoolsATTR_SORT_TARGETS" value="1"/>
 <stringAttribute key="process_factory_id" value="org.eclipse.ant.ui.remoteAntProcessFactory"/>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/bibledesktop/src/main/java/org/crosswire/bibledesktop/desktop/Desktop.java"/>
@@ -13,7 +13,7 @@
 </listAttribute>
 <stringAttribute key="org.eclipse.debug.ui.target_debug_perspective" value="perspective_default"/>
 <stringAttribute key="org.eclipse.debug.ui.target_run_perspective" value="perspective_default"/>
-<stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-1.5.0"/>
+<stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JVM 1.5.0/"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.crosswire.bibledesktop.desktop.Desktop"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="bibledesktop"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx512m -ea"/>

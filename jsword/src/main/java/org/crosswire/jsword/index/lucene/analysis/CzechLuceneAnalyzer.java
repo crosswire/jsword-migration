@@ -21,48 +21,69 @@
  */
 package org.crosswire.jsword.index.lucene.analysis;
 
+import java.io.IOException;
 import java.io.Reader;
 
+import org.apache.lucene.analysis.LowerCaseTokenizer;
+import org.apache.lucene.analysis.StopFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.cz.CzechAnalyzer;
 
 /**
- * Uses org.apache.lucene.analysis.cz.CzechAnalyzer 
- * Analysis: standardTokenizer, StandardFilter, LowerCaseFilter, StopFilter
+ * An Analyzer whose {@link TokenStream} is built from a {@link LowerCaseTokenizer}
+ * filtered with {@link StopFilter} (optional).
  * Stemming not implemented yet
  *
  * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Sijo Cherian [sijocherian at yahoo dot com]
+ * @author DM SMITH [dmsmith555 at yahoo dot com]
  */
 public class CzechLuceneAnalyzer extends AbstractBookAnalyzer
 {
     public CzechLuceneAnalyzer()
     {
-        // Construct Analyzer that do not use stop words        
-        myAnalyzer = new CzechAnalyzer(new String[0]);
-        setNaturalLanguage("Czech"); //$NON-NLS-1$
+        stopSet = StopFilter.makeStopSet(CzechAnalyzer.CZECH_STOP_WORDS);
     }
 
+    /* (non-Javadoc)
+     * @see org.apache.lucene.analysis.Analyzer#tokenStream(java.lang.String, java.io.Reader)
+     */
     public final TokenStream tokenStream(String fieldName, Reader reader)
     {
-        return myAnalyzer.tokenStream(fieldName, reader);
-    }
+        TokenStream result = new LowerCaseTokenizer(reader);
 
-    public void setStopWords(String[] stopWords)
-    {
-        myAnalyzer = new CzechAnalyzer(stopWords);
-    }
-
-    public void setDoStopWords(boolean doIt)
-    {
-        doStopWords = doIt;
-        // Analyzer that uses stop word
-        if (doStopWords)
+        if (doStopWords && stopSet != null)
         {
-            myAnalyzer = new CzechAnalyzer();
+            result = new StopFilter(false, result, stopSet);
         }
+
+        return result;
     }
 
-    private CzechAnalyzer myAnalyzer;
+    /* (non-Javadoc)
+     * @see org.apache.lucene.analysis.Analyzer#reusableTokenStream(java.lang.String, java.io.Reader)
+     */
+    public TokenStream reusableTokenStream(String fieldName, Reader reader) throws IOException
+    {
+        SavedStreams streams = (SavedStreams) getPreviousTokenStream();
+        if (streams == null)
+        {
+            streams = new SavedStreams();
+            streams.source = new LowerCaseTokenizer(reader);
+            streams.result = streams.source;
+            if (doStopWords && stopSet != null)
+            {
+                streams.result = new StopFilter(false, streams.result, stopSet);
+            }
+
+            setPreviousTokenStream(streams);
+        }
+        else
+        {
+            streams.source.reset(reader);
+        }
+        return streams.result;
+    }
+
 }
