@@ -66,7 +66,6 @@ import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.PassageTally;
-import org.crosswire.jsword.passage.RestrictionType;
 import org.crosswire.jsword.passage.RocketPassage;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.passage.VerseRange;
@@ -331,21 +330,24 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
             DefaultSearchModifier modifier = new DefaultSearchModifier();
             modifier.setRanked(rank);
 
+            // If ranking see if the results are being limited.
+            int rankCount = getNumRankedVerses();
+            if (rank && rankCount != 0)
+            {
+                modifier.setMaxResults(rankCount);
+            }
+            
+
             Key results = selected[0].find(new DefaultSearchRequest(param, modifier));
-            int total = results.getCardinality();
-            int partial = total;
+            int partial = results.getCardinality();
+            int total = partial;
 
             // we should get PassageTallys for rank searches
             if (results instanceof PassageTally)
             {
                 PassageTally tally = (PassageTally) results;
+                total = tally.getTotal();
                 tally.setOrdering(PassageTally.ORDER_TALLY);
-                int rankCount = getNumRankedVerses();
-                if (rankCount > 0 && rankCount < total)
-                {
-                    tally.trimRanges(rankCount, RestrictionType.NONE);
-                    partial = rankCount;
-                }
             }
 
             if (total == 0)

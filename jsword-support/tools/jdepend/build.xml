@@ -25,7 +25,9 @@ Otherwise, run the jdepend.antlibs task to copy jars to ANT_HOME/lib</echo>
     <xslt
         in="${target.web}/jdepend/jdepend-report.xml"
         out="${target.web}/jdepend/jdepend-report.html"
-        style="${support.depend}/jdepend.xsl"/>
+        style="${support.depend}/jdepend.xsl">
+      <xmlcatalog refid="commonDTDs"/>
+    </xslt>
   </target>
 
   <!-- This does not need to be done in Eclipse. Add it to Ant preferences instead -->

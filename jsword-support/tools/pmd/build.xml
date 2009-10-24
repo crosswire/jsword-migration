@@ -23,7 +23,9 @@
     </pmd>
     <xslt in="${target.web}/pmd/report_pmd.xml"
           style="${pmd}/pmd-report-per-class.xslt"
-          out="${target.web}/pmd/index.html" />
+          out="${target.web}/pmd/index.html">
+      <xmlcatalog refid="commonDTDs"/>
+    </xslt>
     <copy file="${pmd}/sorttable.js" overwrite="true"
           tofile="${target.web}/pmd/sorttable.js"/>
   </target>
@@ -43,7 +45,9 @@
     </cpd>
   	<xslt in="${target.web}/cpd/report_cpd.xml"
   		  style="${pmd}/cpdhtml.xslt"
-  		  out="${target.web}/cpd/index.html" />
+  		  out="${target.web}/cpd/index.html">
+  	  <xmlcatalog refid="commonDTDs"/>
+  	</xslt>
   </target>
 
 </project>

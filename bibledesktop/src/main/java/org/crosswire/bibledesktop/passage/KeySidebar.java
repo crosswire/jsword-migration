@@ -187,7 +187,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
             }
 
             // If the list is empty then we are done.
-            if (selected.size() == 0)
+            if (selected.isEmpty())
             {
                 break;
             }

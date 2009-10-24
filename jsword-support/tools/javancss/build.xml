@@ -24,7 +24,9 @@
     <xslt
         in="${target.web}/javancss/javancss_metrics.xml"
         out="${target.web}/javancss/index.svg"
-        style="${support.javancss}/javancss-${version.javancss}/xslt/javancss2html.xsl"/>
+        style="${support.javancss}/javancss-${version.javancss}/xslt/javancss2html.xsl">
+      <xmlcatalog refid="commonDTDs"/>
+    </xslt>
   </target>
   
 </project>

@@ -30,7 +30,9 @@ Otherwise, run the checkstyle.antlibs task to copy jars to ANT_HOME/lib</echo>
     <xslt
         in="${target.web}/checkstyle/checkstyle_errors.xml"
         out="${target.web}/checkstyle/index.html"
-        style="${support.style}/checkstyle-${version.style}/contrib/checkstyle-simple.xsl"/>
+        style="${support.style}/checkstyle-${version.style}/contrib/checkstyle-simple.xsl">
+      <xmlcatalog refid="commonDTDs"/>
+    </xslt>
   </target>
 
   <!-- This does not need to be done in Eclipse. Add it to Ant preferences instead -->

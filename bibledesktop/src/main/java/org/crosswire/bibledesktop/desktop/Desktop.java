@@ -903,7 +903,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         // News users probably wont have any Bibles installed so we give them a
         // hand getting to the installation dialog.
         List bibles = Books.installed().getBooks(BookFilters.getBibles());
-        if (bibles.size() == 0)
+        if (bibles.isEmpty())
         {
             int reply = CWOptionPane.showConfirmDialog(this, Msg.NO_BIBLES_MESSAGE, Msg.NO_BIBLES_TITLE.toString(), JOptionPane.OK_CANCEL_OPTION,
                                                        JOptionPane.QUESTION_MESSAGE);

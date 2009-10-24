@@ -20,11 +20,14 @@
     <xslt
         in="${source.res}/config.xml"
         out="${gener.root}/config/ConfigTest.java"
-        style="../common/etc/config-test.xsl"/>
+        style="../common/etc/config-test.xsl">
+      <xmlcatalog refid="commonDTDs"/>
+    </xslt>
     <javac debug="on" includes="**/*.java" destdir="${test.classes}">
       <src path="${gener.root}/config"/>
       <classpath refid="test.jarpath"/>
     </javac>
+    <xmlcatalog refid="commonDTDs"/>
   </target>
 
   <!--=======================================================================-->

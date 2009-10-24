@@ -257,7 +257,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor
             String path = ((Node) parent).getFullName();
             List children = getChildren(path);
 
-            if (children.size() == 0)
+            if (children.isEmpty())
             {
                 return new CompNode(path);
             }

@@ -16,9 +16,7 @@
       <outputproperty name="method" value="html"/>
       <outputproperty name="omit-xml-declaration" value="yes"/>
       <include name="**/*.html"/>
-      <xmlcatalog>
-        <dtd publicid="-//W3C//DTD XHTML 1.0 Transitional//EN" location="${source.etc}/xhtml1-transitional.dtd"/>
-      </xmlcatalog>
+      <xmlcatalog refid="commonDTDs"/>
     </xslt>
     <copy todir="${webapp.bibledesktop}">
       <fileset dir="${source.web}">

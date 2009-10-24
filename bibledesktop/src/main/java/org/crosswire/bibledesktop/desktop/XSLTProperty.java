@@ -37,7 +37,7 @@ import org.crosswire.common.xml.TransformingSAXEventProvider;
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at yahoo dot com]
  */
-public class XSLTProperty implements Serializable
+public final class XSLTProperty implements Serializable
 {
     /**
      * Determines whether Strong's Numbers should show
