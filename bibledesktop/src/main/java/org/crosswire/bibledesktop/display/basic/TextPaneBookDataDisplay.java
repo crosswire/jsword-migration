@@ -29,6 +29,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.Locale;
 
 import javax.swing.JTextPane;
 import javax.swing.event.EventListenerList;
@@ -147,8 +148,13 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             return;
         }
 
+        // The content of the module determines how the display
+        // should behave. It should not be the user's locale.
+        // Set the correct direction
         boolean direction = bmd.isLeftToRight();
         GuiUtil.applyOrientation(txtView, direction);
+        // Set the correct locale
+        txtView.setLocale(new Locale(bmd.getLanguage().getCode()));
 
         String fontSpec = GuiConvert.font2String(BookFont.instance().getFont(getFirstBook()));
         try
