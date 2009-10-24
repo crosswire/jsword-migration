@@ -16,6 +16,8 @@ In the new directory, remove the following:
    docs
    lib
    src (This could be zipped rather than downloading the src zip)
+   All the WARs */**/*.war
+   lucene-demos*.jar
 
 Change the references to the old directory to the new directory in the build path.
 
