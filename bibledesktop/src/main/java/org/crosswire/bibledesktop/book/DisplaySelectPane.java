@@ -336,7 +336,6 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
             {
                 modifier.setMaxResults(rankCount);
             }
-            
 
             Key results = selected[0].find(new DefaultSearchRequest(param, modifier));
             int partial = results.getCardinality();
