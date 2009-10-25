@@ -112,7 +112,11 @@ public class FontChooser extends JPanel
                       ? new JDialog((JFrame) root, title, true)
                       : new JDialog((JDialog) root, title, true);
 
-        fontc.name.setSelectedItem(initial != null ? initial : DEFAULT_FONT.getFont());
+        Font font = (initial != null) ? initial : DEFAULT_FONT.getFont();
+        fontc.name.setSelectedItem(font);
+        fontc.bold.setSelected(font.isBold());
+        fontc.italic.setSelected(font.isItalic());
+        fontc.size.setSelectedItem(new Integer(font.getSize()));
 
         final ActionFactory actions = new ActionFactory(FontChooser.class, fontc);
 
@@ -333,6 +337,35 @@ public class FontChooser extends JPanel
         private static final long serialVersionUID = 3256726195025358905L;
     }
 
+    /**
+     * An extension of JComboBox that selects a font in the combo based on it's
+     * name, not object equivalence.
+     */
+    static class FontNameComboBox extends JComboBox
+    {
+        public void setSelectedItem(Object anObject)
+        {
+            if ((selectedItemReminder == null || !selectedItemReminder.equals(anObject)) && (anObject instanceof Font))
+            {
+                String fontName = ((Font) anObject).getName();
+                for (int i = 0; i < dataModel.getSize(); i++)
+                {
+                    Object element = dataModel.getElementAt(i);
+                    if (element instanceof Font && (((Font) element).getName().equals(fontName)))
+                    {
+                        super.setSelectedItem(element);
+                        return;
+                    }
+                }
+            }
+        }
+
+        /**
+         * Serialization ID
+         */
+        private static final long serialVersionUID = -7394816349446551753L;
+    }
+
     public static final String PROPERTY_STYLE = "style"; // //$NON-NLS-1$
 
     /**
@@ -368,7 +401,7 @@ public class FontChooser extends JPanel
     /**
      * The choice of font name
      */
-    protected JComboBox name = new JComboBox();
+    protected JComboBox name = new FontNameComboBox();
 
     /**
      * Bold font?

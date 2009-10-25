@@ -296,11 +296,12 @@ public class SitePane extends JPanel
         }
         else
         {
-            panel.setLayout(new GridLayout(2, 2, 3, 3));
+            panel.setLayout(new GridLayout(3, 2, 3, 3));
             panel.add(new JButton(actions.getAction(DELETE)));
             panel.add(new JButton(actions.getAction(UNINDEX)));
             panel.add(new JButton(actions.getAction(CHOOSE_FONT)));
             panel.add(new JButton(actions.getAction(UNLOCK)));
+            panel.add(new JButton(actions.getAction(RESET_FONT)));
         }
         return panel;
     }
@@ -533,6 +534,25 @@ public class SitePane extends JPanel
             Font picked = FontChooser.showDialog(this, Msg.FONT_CHOOSER.toString(), BookFont.instance().getFont(language));
             BookFont.instance().setFont(language, picked);
         }
+        actions.getAction(RESET_FONT).setEnabled(BookFont.instance().isSet(book, language));
+    }
+
+    /**
+     * Resets any font specifically set for this Book / Language
+     */
+    public void doResetFont()
+    {
+        TreePath path = treAvailable.getSelectionPath();
+        if (path == null)
+        {
+            return;
+        }
+
+        Object last = path.getLastPathComponent();
+        Book book = getBook(last);
+        Language language = getLanguage(last);
+        BookFont.instance().resetFont(book, language);
+        actions.getAction(RESET_FONT).setEnabled(false);
     }
 
     /**
@@ -559,6 +579,7 @@ public class SitePane extends JPanel
         actions.getAction(INSTALL).setEnabled(book != null && book.isSupported());
         actions.getAction(INSTALL_SEARCH).setEnabled(book != null && book.isSupported() && book.getBookCategory() == BookCategory.BIBLE);
         actions.getAction(CHOOSE_FONT).setEnabled(book != null || lang != null);
+        actions.getAction(RESET_FONT).setEnabled(BookFont.instance().isSet(book, lang));
     }
 
     public void setTreeModel(BookList books)
@@ -614,6 +635,7 @@ public class SitePane extends JPanel
     private static final String UNLOCK = "Unlock"; //$NON-NLS-1$
     private static final String CHOOSE_FONT = "ChooseFont"; //$NON-NLS-1$
     private static final String UNINDEX = "Unindex"; //$NON-NLS-1$
+    private static final String RESET_FONT = "ResetFont"; //$NON-NLS-1$
 
     /**
      * From which we get our list of installable books

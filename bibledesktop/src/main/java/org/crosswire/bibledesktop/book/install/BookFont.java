@@ -94,5 +94,40 @@ public class BookFont extends FontStore
         return fonts.getFont(null, language, null);
     }
 
+    /**
+     * Is a font for this book / language set in the properties file?
+     * 
+     * @param book the book to test
+     * @param lang the language to test
+     * @return <code>true</code> a font property was set, <code>false</code> otherwise
+     */
+    public boolean isSet(Book book, Language lang)
+    {
+        if (book != null)
+        {
+            return getFontMap().getProperty(book.getInitials()) != null;
+        }
+        if (lang != null)
+        {
+            return getFontMap().getProperty(new StringBuffer(LANG_KEY_PREFIX).append(lang.getCode()).toString()) != null;
+        }
+        return false;
+    }
+
+    /**
+     * Remove the entry for this book / language in the properties file and use the default font
+     */
+    public void resetFont(Book book, Language lang)
+    {
+        if (book != null)
+        {
+            resetFont(book.getInitials());
+        }
+        if (lang != null)
+        {
+            resetFont(new StringBuffer(LANG_KEY_PREFIX).append(lang.getCode()).toString());
+        }
+    }
+
     private static BookFont fonts = new BookFont();
 }

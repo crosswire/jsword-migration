@@ -141,6 +141,18 @@ public class FontStore
     }
 
     /**
+     * Remove the font settings for a given key
+     * 
+     * @param key the book initials or language code 
+     */
+    public void resetFont(String key)
+    {
+        load();
+        fontMap.remove(key);
+        store();
+    }
+
+    /**
      * Get a font for the specified resource. If it does not work try the
      * following in order: the specified language's font, the fallback font, and
      * the default font. Of course, if that does not work, use any font that
