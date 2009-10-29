@@ -45,6 +45,7 @@ import org.crosswire.common.swing.desktop.LayoutPersistence;
 import org.crosswire.common.swing.desktop.ViewVisitor;
 import org.crosswire.common.util.CWProject;
 import org.crosswire.common.util.ClassUtil;
+import org.crosswire.common.util.FileUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.OSType;
 import org.crosswire.common.util.ReflectionUtil;
@@ -433,7 +434,7 @@ public class DesktopActions implements Actionable
      */
     public void doOptions()
     {
-        URI configUri = CWProject.instance().getWritablePropertiesURI("desktop"); //$NON-NLS-1$
+        URI configUri = CWProject.instance().getWritableURI("desktop", FileUtil.EXTENSION_PROPERTIES); //$NON-NLS-1$
         ConfigEditorFactory.showDialog(desktop.getConfig(), desktop, configUri);
     }
 

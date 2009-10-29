@@ -89,6 +89,7 @@ import org.crosswire.common.swing.desktop.event.ViewEvent;
 import org.crosswire.common.swing.desktop.event.ViewEventListener;
 import org.crosswire.common.util.CWClassLoader;
 import org.crosswire.common.util.CWProject;
+import org.crosswire.common.util.FileUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.OSType;
 import org.crosswire.common.util.Reporter;
@@ -175,7 +176,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         Reporter.grabAWTExecptions(true);
 
         // Splash screen
-        URI predictURI = PROJECT.getWritablePropertiesURI(SPLASH_PROPS);
+        URI predictURI = PROJECT.getWritableURI(SPLASH_PROPS, FileUtil.EXTENSION_PROPERTIES);
         Progress startJob = JobManager.createJob(Msg.STARTUP_TITLE.toString(), predictURI, true);
         //startJob.setProgress(Msg.STARTUP_CONFIG.toString());
 

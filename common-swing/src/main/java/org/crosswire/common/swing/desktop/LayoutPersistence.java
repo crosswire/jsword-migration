@@ -31,6 +31,7 @@ import java.net.URI;
 import java.util.Properties;
 
 import org.crosswire.common.util.CWProject;
+import org.crosswire.common.util.FileUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.ResourceUtil;
@@ -113,7 +114,7 @@ public class LayoutPersistence
 
         try
         {
-            URI outputURI = CWProject.instance().getWritablePropertiesURI(getClass().getName());
+            URI outputURI = CWProject.instance().getWritableURI(getClass().getName(), FileUtil.EXTENSION_PROPERTIES);
             NetUtil.storeProperties(settings, outputURI, "Persistent Window properties"); //$NON-NLS-1$
         }
         catch (IOException ex)
