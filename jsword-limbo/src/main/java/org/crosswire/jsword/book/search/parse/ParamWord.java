@@ -25,34 +25,36 @@ import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.passage.Key;
 
 /**
- * A ParamWord extends Word to provide more information
- * to a CommandWord. This will either be in the form of a String
- * or in the form of a Passage (from a search)
- * ParamWords are used by CommandWords that alter the final
- * Passage.
- *
- * @see gnu.lgpl.License for license details.
+ * A ParamWord extends Word to provide more information to a CommandWord. This
+ * will either be in the form of a String or in the form of a Passage (from a
+ * search) ParamWords are used by CommandWords that alter the final Passage.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public interface ParamWord extends Word
-{
+public interface ParamWord extends Word {
     /**
      * Get a word for something else to word on.
-     * @param engine The controller that can provide access to the search
-     *               string or a default Bible.
+     * 
+     * @param engine
+     *            The controller that can provide access to the search string or
+     *            a default Bible.
      * @return The requested text
-     * @exception BookException If this action is not appropriate
+     * @exception BookException
+     *                If this action is not appropriate
      */
     String getWord(IndexSearcher engine) throws BookException;
 
     /**
-     * Get a Passage or throw-up if that is not appropriate
-     * for this Word.
-     * @param engine The controller that can provide access to the search
-     *               string or a default Bible.
+     * Get a Passage or throw-up if that is not appropriate for this Word.
+     * 
+     * @param engine
+     *            The controller that can provide access to the search string or
+     *            a default Bible.
      * @return A Passage relevant to this command
-     * @exception BookException If this action is not appropriate
+     * @exception BookException
+     *                If this action is not appropriate
      */
     Key getKeyList(IndexSearcher engine) throws BookException;
 }

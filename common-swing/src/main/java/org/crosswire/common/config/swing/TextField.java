@@ -27,55 +27,52 @@ import javax.swing.JTextField;
 import org.crosswire.common.config.Choice;
 
 /**
- * Text choice swing componenet.
- *
- * @see gnu.lgpl.License for license details.
+ * Text choice swing component.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class TextField extends JTextField implements Field
-{
+public class TextField extends JTextField implements Field {
     /**
-     * Some fields will need some extra info to display properly
-     * like the options in an options field. FieldMap calls this
-     * method with options provided by the choice.
-     * @param param The options provided by the Choice
+     * Some fields will need some extra info to display properly like the
+     * options in an options field. FieldMap calls this method with options
+     * provided by the choice.
+     * 
+     * @param param
+     *            The options provided by the Choice
      */
-    public void setChoice(Choice param)
-    {
+    public void setChoice(Choice param) {
     }
 
     /**
      * Return a string version of the current value
+     * 
      * @return The current value
      */
-    public String getValue()
-    {
+    public String getValue() {
         return getText();
     }
 
     /**
      * Set the current value
-     * @param value The new text
+     * 
+     * @param value
+     *            The new text
      */
-    public void setValue(String value)
-    {
-        if (value == null)
-        {
+    public void setValue(String value) {
+        if (value == null) {
             setText(""); //$NON-NLS-1$
-        }
-        else
-        {
+        } else {
             setText(value);
         }
     }
 
     /**
-     * Get the actual component that we can add to a Panel.
-     * (This can well be this in an implementation).
+     * Get the actual component that we can add to a Panel. (This can well be
+     * this in an implementation).
      */
-    public JComponent getComponent()
-    {
+    public JComponent getComponent() {
         return this;
     }
 

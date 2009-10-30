@@ -48,43 +48,36 @@ import org.crosswire.jsword.passage.Verse;
 /**
  * JDBCBook implements Bible, and gets the text from a JDBC database.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class JDBCBook extends AbstractPassageBook
-{
+public class JDBCBook extends AbstractPassageBook {
     /**
      * Simple ctor
      */
-    public JDBCBook(BookDriver driver, Properties prop) throws BookException
-    {
+    public JDBCBook(BookDriver driver, Properties prop) throws BookException {
         super(null); // set BookMetaData later
 
         setBookMetaData(new DefaultBookMetaData(driver, this, prop));
 
         // Load the specified JDBC name
         int driver_attempt = 1;
-        while (true)
-        {
+        while (true) {
             String property = "JdbcDriver" + driver_attempt; //$NON-NLS-1$
             String drivername = getProperty(property).toString();
 
-            try
-            {
+            try {
                 Class.forName(drivername);
                 break;
-            }
-            catch (Exception ex)
-            {
-                log.debug("Failed to load JDBC name: "+driver+" (System Message: "+ex+")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            } catch (Exception ex) {
+                log.debug("Failed to load JDBC name: " + driver + " (System Message: " + ex + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             }
 
             driver_attempt++;
         }
 
-        try
-        {
+        try {
             // Actually connect to the database
             String text_url = getProperty("TextURL").toString(); //$NON-NLS-1$
             textCon = DriverManager.getConnection(text_url);
@@ -99,21 +92,19 @@ public class JDBCBook extends AbstractPassageBook
             String ref_query = getProperty("RefQuery").toString(); //$NON-NLS-1$
             refStmt = concCon.prepareStatement(ref_query);
 
-            //String verse_query = getProperty("VerseQuery");
-            //verse_stmt = textcnx.prepareStatement(verse_query);
+            // String verse_query = getProperty("VerseQuery");
+            // verse_stmt = textcnx.prepareStatement(verse_query);
 
             String start_query = getProperty("StartQuery").toString(); //$NON-NLS-1$
             startStmt = concCon.prepareStatement(start_query);
 
             wordsQuery = getProperty("WordsQuery").toString(); //$NON-NLS-1$
-        }
-        catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             textCon = null;
             concCon = null;
             docStmt = null;
             refStmt = null;
-            //verse_stmt = null;
+            // verse_stmt = null;
             startStmt = null;
             wordsQuery = null;
 
@@ -121,61 +112,57 @@ public class JDBCBook extends AbstractPassageBook
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getFilter()
      */
-    protected Filter getFilter()
-    {
+    protected Filter getFilter() {
         return FilterFactory.getDefaultFilter();
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.Book#contains(org.crosswire.jsword.passage.Key)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.Book#contains(org.crosswire.jsword.passage.Key)
      */
-    public boolean contains(Key key)
-    {
+    public boolean contains(Key key) {
         return getRawText(key) != null;
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getRawText(org.crosswire.jsword.passage.Key)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.basic.AbstractPassageBook#getRawText(org.crosswire
+     * .jsword.passage.Key)
      */
-    public String getRawText(Key key)
-    {
+    public String getRawText(Key key) {
         String reply = ""; //$NON-NLS-1$
         ResultSet rs = null;
 
         Verse verse = KeyUtil.getVerse(key);
 
-        try
-        {
+        try {
             docStmt.setInt(1, verse.getOrdinal());
             docStmt.setInt(2, verse.getOrdinal());
             rs = docStmt.executeQuery();
 
-            while (rs.next())
-            {
+            while (rs.next()) {
                 String vtext = rs.getString(5);
 
                 // If the verse is empty then we shouldn't add the verse tag
-                if (vtext != null && vtext.length() > 0)
-                {
+                if (vtext != null && vtext.length() > 0) {
                     reply = JDBCBibleUtil.processText(vtext);
                 }
             }
-        }
-        catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             log.fatal("read failed", ex); //$NON-NLS-1$
-        }
-        finally
-        {
-            try
-            {
+        } finally {
+            try {
                 rs.close();
-            }
-            catch (SQLException ex)
-            {
+            } catch (SQLException ex) {
                 log.fatal("close() failed", ex); //$NON-NLS-1$
             }
         }
@@ -183,42 +170,46 @@ public class JDBCBook extends AbstractPassageBook
         return reply;
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.basic.AbstractPassageBook#setRawText(org.crosswire.jsword.passage.Key, java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.basic.AbstractPassageBook#setRawText(org.crosswire
+     * .jsword.passage.Key, java.lang.String)
      */
-    public void setRawText(Key key, String rawData) throws BookException
-    {
+    public void setRawText(Key key, String rawData) throws BookException {
         throw new BookException(Msg.DRIVER_READONLY);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.Book#setAliasKey(org.crosswire.jsword.passage.Key, org.crosswire.jsword.passage.Key)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.Book#setAliasKey(org.crosswire.jsword.passage
+     * .Key, org.crosswire.jsword.passage.Key)
      */
-    public void setAliasKey(Key alias, Key source) throws BookException
-    {
+    public void setAliasKey(Key alias, Key source) throws BookException {
         throw new BookException(Msg.DRIVER_READONLY);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.search.Index#findWord(java.lang.String)
      */
-    public Key findWord(String word) throws BookException
-    {
-        if (word == null)
-        {
+    public Key findWord(String word) throws BookException {
+        if (word == null) {
             return createEmptyKeyList();
         }
 
         word = JDBCBibleUtil.swapChar(word, '-', '?').toLowerCase();
 
-        try
-        {
+        try {
             Key retcode = createEmptyKeyList();
 
             refStmt.setString(1, word);
             ResultSet rs = refStmt.executeQuery();
-            while (rs.next())
-            {
+            while (rs.next()) {
                 Verse temp = new Verse(rs.getInt(1), rs.getInt(2), rs.getInt(3));
                 retcode.addAll(temp);
             }
@@ -226,78 +217,70 @@ public class JDBCBook extends AbstractPassageBook
             rs.close();
 
             return retcode;
-        }
-        catch (NoSuchVerseException ex)
-        {
-            log.error("word="+word); //$NON-NLS-1$
+        } catch (NoSuchVerseException ex) {
+            log.error("word=" + word); //$NON-NLS-1$
             assert false : ex;
             return createEmptyKeyList();
-        }
-        catch (SQLException ex)
-        {
-            log.error("word="+word); //$NON-NLS-1$
+        } catch (SQLException ex) {
+            log.error("word=" + word); //$NON-NLS-1$
             throw new BookException(Msg.BIBLE_DB, ex);
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.Index#getStartsWith(java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.Index#getStartsWith(java.lang.String)
      */
-    public Collection getStartsWith(String word) throws BookException
-    {
-        try
-        {
+    public Collection getStartsWith(String word) throws BookException {
+        try {
             ArrayList output = new ArrayList();
 
             // word = JDBCBibleUtil.swapChar(word, '\'', '?');
-            startStmt.setString(1, word+"%"); //$NON-NLS-1$
+            startStmt.setString(1, word + "%"); //$NON-NLS-1$
             ResultSet rs = startStmt.executeQuery();
-            while (rs.next())
-            {
+            while (rs.next()) {
                 output.add(rs.getString(1));
             }
 
             rs.close();
 
             return output;
-        }
-        catch (SQLException ex)
-        {
-            log.error("word="+word); //$NON-NLS-1$
+        } catch (SQLException ex) {
+            log.error("word=" + word); //$NON-NLS-1$
             throw new BookException(Msg.BIBLE_DB, ex);
         }
     }
 
     /*
-     * Where does this verse come in the Bible. Starting with Gen 1:1 as number 1
-     * counting up one per verse and not resetting at each new chapter.
+     * Where does this verse come in the Bible. Starting with Gen 1:1 as number
+     * 1 counting up one per verse and not resetting at each new chapter.
+     * 
      * @param book The book part of the reference.
+     * 
      * @param chapter The current chapter
+     * 
      * @param verse The current verse
+     * 
      * @return The ordinal number of verses
+     * 
      * @exception NoSuchVerseException If the reference is illegal
-     *
-    private int verseOrdinal(int book, int chapter, int verse) throws NoSuchVerseException, SQLException
-    {
-        int retcode = 0;
-
-        verse_stmt.setInt(1, book);
-        verse_stmt.setInt(2, chapter);
-        verse_stmt.setInt(3, verse);
-        ResultSet rs = verse_stmt.executeQuery();
-
-        if (!rs.next())
-        {
-            throw new NoSuchVerseException(Msg.BIBLE_LOST);
-        }
-
-        retcode = rs.getInt(1);
-
-        rs.close();
-
-        return retcode;
-    }
-    */
+     * 
+     * private int verseOrdinal(int book, int chapter, int verse) throws
+     * NoSuchVerseException, SQLException { int retcode = 0;
+     * 
+     * verse_stmt.setInt(1, book); verse_stmt.setInt(2, chapter);
+     * verse_stmt.setInt(3, verse); ResultSet rs = verse_stmt.executeQuery();
+     * 
+     * if (!rs.next()) { throw new NoSuchVerseException(Msg.BIBLE_LOST); }
+     * 
+     * retcode = rs.getInt(1);
+     * 
+     * rs.close();
+     * 
+     * return retcode; }
+     */
 
     /**
      * Cached statement for getDocument
@@ -311,11 +294,10 @@ public class JDBCBook extends AbstractPassageBook
 
     /**
      * Cached statement for verseOrdinal
-     *
-    private PreparedStatement verse_stmt;
-
-    /**
-     * Cached statement for startsWith
+     * 
+     * private PreparedStatement verse_stmt;
+     * 
+     * /** Cached statement for startsWith
      */
     private PreparedStatement startStmt;
 
@@ -342,48 +324,44 @@ public class JDBCBook extends AbstractPassageBook
     /**
      * Helper class to enumerate through the words in a version
      */
-    static class WordIterator implements Iterator
-    {
+    static class WordIterator implements Iterator {
         /**
          * Create the necessary SQL query
          */
-        protected WordIterator(Statement stmt, ResultSet rs) throws BookException
-        {
+        protected WordIterator(Statement stmt, ResultSet rs) throws BookException {
             this.stmt = stmt;
             this.rs = rs;
 
             moveToNext();
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.util.Iterator#hasNext()
          */
-        public boolean hasNext()
-        {
+        public boolean hasNext() {
             return more;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.util.Iterator#next()
          */
-        public Object next() throws NoSuchElementException
-        {
-            try
-            {
+        public Object next() throws NoSuchElementException {
+            try {
                 String retcode = rs.getString(1);
                 moveToNext();
 
                 // If we got a null then have one more go ...
-                if (retcode == null)
-                {
+                if (retcode == null) {
                     retcode = rs.getString(1);
                     moveToNext();
                 }
 
                 return retcode;
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 log.warn("SQL error in iteration", ex); //$NON-NLS-1$
                 throw new NoSuchElementException(ex.getMessage());
             }
@@ -391,31 +369,27 @@ public class JDBCBook extends AbstractPassageBook
 
         /**
          * Not supported
-         * @throws UnsupportedOperationException Every time ...
+         * 
+         * @throws UnsupportedOperationException
+         *             Every time ...
          */
-        public void remove() throws UnsupportedOperationException
-        {
+        public void remove() throws UnsupportedOperationException {
             throw new UnsupportedOperationException();
         }
 
         /**
-         * Check for more. If there are none, shut up shop to be more
-         * resource friendly
+         * Check for more. If there are none, shut up shop to be more resource
+         * friendly
          */
-        private void moveToNext() throws BookException
-        {
-            try
-            {
+        private void moveToNext() throws BookException {
+            try {
                 more = rs.next();
 
-                if (!more)
-                {
+                if (!more) {
                     rs.close();
                     stmt.close();
                 }
-            }
-            catch (SQLException ex)
-            {
+            } catch (SQLException ex) {
                 throw new BookException(Msg.BIBLE_DB, ex);
             }
         }

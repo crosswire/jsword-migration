@@ -42,18 +42,16 @@ import org.crosswire.jsword.passage.VerseRange;
 
 /**
  * Renders a Passage in a JList.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class PassageListCellRenderer implements ListCellRenderer, Serializable
-{
+public class PassageListCellRenderer implements ListCellRenderer, Serializable {
     /**
      * Constructs a default renderer object for an item in a list.
      */
-    public PassageListCellRenderer(Book bible)
-    {
+    public PassageListCellRenderer(Book bible) {
         this.bible = bible;
 
         border = new EmptyBorder(1, 1, 1, 1);
@@ -65,30 +63,24 @@ public class PassageListCellRenderer implements ListCellRenderer, Serializable
 
     /**
      * Customize something to display the Passage component
+     * 
      * @return The customized component
      */
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean selected, boolean focus)
-    {
-        if (selected)
-        {
+    public Component getListCellRendererComponent(JList list, Object value, int index, boolean selected, boolean focus) {
+        if (selected) {
             label.setBackground(list.getSelectionBackground());
             label.setForeground(list.getSelectionForeground());
-        }
-        else
-        {
+        } else {
             label.setBackground(list.getBackground());
             label.setForeground(list.getForeground());
         }
 
-        if (value instanceof VerseRange)
-        {
-            try
-            {
+        if (value instanceof VerseRange) {
+            try {
                 VerseRange range = (VerseRange) value;
                 String text = (String) hash.get(range);
 
-                if (text == null)
-                {
+                if (text == null) {
                     BookData bdata = new BookData(bible, range);
                     String simple = OSISUtil.getCanonicalText(bdata.getOsisFragment());
                     text = "<html><b>" + range.getName() + "</b> " + simple; //$NON-NLS-1$ //$NON-NLS-2$
@@ -96,15 +88,11 @@ public class PassageListCellRenderer implements ListCellRenderer, Serializable
                 }
 
                 label.setText(text);
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 Reporter.informUser(this, ex);
                 label.setText(Msg.ERROR.toString());
             }
-        }
-        else
-        {
+        } else {
             label.setText((value == null) ? "" : value.toString()); //$NON-NLS-1$
         }
 

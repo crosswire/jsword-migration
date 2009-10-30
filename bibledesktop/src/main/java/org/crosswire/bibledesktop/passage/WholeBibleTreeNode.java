@@ -33,53 +33,42 @@ import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * A PassageTreeNode extends TreeNode to Model a Passage.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public final class WholeBibleTreeNode implements TreeNode
-{
+public final class WholeBibleTreeNode implements TreeNode {
     /**
      * The start point for all WholeBibleTreeNodes.
      */
-    public static WholeBibleTreeNode getRootNode()
-    {
+    public static WholeBibleTreeNode getRootNode() {
         return new WholeBibleTreeNode(null, VerseRange.getWholeBibleVerseRange(), LEVEL_BIBLE);
     }
 
     /**
      * We could do some caching here if needs be.
      */
-    protected static WholeBibleTreeNode getNode(TreeNode parent, int b, int c, int v)
-    {
-        try
-        {
+    protected static WholeBibleTreeNode getNode(TreeNode parent, int b, int c, int v) {
+        try {
             Verse start = null;
             Verse end = null;
             int thislevel = 1;
 
-            if (b == -1)
-            {
+            if (b == -1) {
                 assert false : b;
-            }
-            else if (c == -1)
-            {
+            } else if (c == -1) {
                 thislevel = LEVEL_BOOK;
                 int ec = BibleInfo.chaptersInBook(b);
                 int ev = BibleInfo.versesInChapter(b, ec);
                 start = new Verse(b, 1, 1);
                 end = new Verse(b, ec, ev);
-            }
-            else if (v == -1)
-            {
+            } else if (v == -1) {
                 thislevel = LEVEL_CHAPTER;
                 int ev = BibleInfo.versesInChapter(b, c);
                 start = new Verse(b, c, 1);
                 end = new Verse(b, c, ev);
-            }
-            else
-            {
+            } else {
                 thislevel = LEVEL_VERSE;
                 start = new Verse(b, c, v);
                 end = start;
@@ -87,9 +76,7 @@ public final class WholeBibleTreeNode implements TreeNode
 
             VerseRange rng = new VerseRange(start, end);
             return new WholeBibleTreeNode(parent, rng, thislevel);
-        }
-        catch (NoSuchVerseException ex)
-        {
+        } catch (NoSuchVerseException ex) {
             assert false : ex;
             return null;
         }
@@ -98,14 +85,10 @@ public final class WholeBibleTreeNode implements TreeNode
     /**
      * This constructor is for when we are really a BookTreeNode
      */
-    private WholeBibleTreeNode(TreeNode parent, VerseRange range, int level)
-    {
-        if (parent != null)
-        {
+    private WholeBibleTreeNode(TreeNode parent, VerseRange range, int level) {
+        if (parent != null) {
             this.parent = parent;
-        }
-        else
-        {
+        } else {
             this.parent = this;
         }
 
@@ -117,32 +100,28 @@ public final class WholeBibleTreeNode implements TreeNode
     /**
      * The current Passage number
      */
-    public VerseRange getVerseRange()
-    {
+    public VerseRange getVerseRange() {
         return range;
     }
 
     /**
      * @see javax.swing.tree.TreeNode#getParent()
      */
-    public TreeNode getParent()
-    {
+    public TreeNode getParent() {
         return parent;
     }
 
     /**
      * @see javax.swing.tree.TreeNode#getAllowsChildren()
      */
-    public boolean getAllowsChildren()
-    {
+    public boolean getAllowsChildren() {
         return level != LEVEL_VERSE;
     }
 
     /**
      * @see javax.swing.tree.TreeNode#isLeaf()
      */
-    public boolean isLeaf()
-    {
+    public boolean isLeaf() {
         return level == LEVEL_VERSE;
     }
 
@@ -150,12 +129,9 @@ public final class WholeBibleTreeNode implements TreeNode
      * How we appear in the Tree
      */
     /* @Override */
-    public String toString()
-    {
-        try
-        {
-            switch (level)
-            {
+    public String toString() {
+        try {
+            switch (level) {
             case LEVEL_BIBLE:
                 return Msg.WHOLE.toString();
 
@@ -171,9 +147,7 @@ public final class WholeBibleTreeNode implements TreeNode
             default:
                 return Msg.ERROR.toString();
             }
-        }
-        catch (NoSuchVerseException ex)
-        {
+        } catch (NoSuchVerseException ex) {
             assert false : ex;
             return "!Error!"; //$NON-NLS-1$
         }
@@ -182,10 +156,8 @@ public final class WholeBibleTreeNode implements TreeNode
     /**
      * Returns the child <code>TreeNode</code> at index i
      */
-    public TreeNode getChildAt(int i)
-    {
-        switch (level)
-        {
+    public TreeNode getChildAt(int i) {
+        switch (level) {
         case LEVEL_BIBLE:
             return WholeBibleTreeNode.getNode(this, i + 1, -1, -1);
 
@@ -204,12 +176,9 @@ public final class WholeBibleTreeNode implements TreeNode
      * Returns the number of children <code>TreeNode</code>s the receiver
      * contains.
      */
-    public int getChildCount()
-    {
-        try
-        {
-            switch (level)
-            {
+    public int getChildCount() {
+        try {
+            switch (level) {
             case LEVEL_BIBLE:
                 return BibleInfo.booksInBible();
 
@@ -222,9 +191,7 @@ public final class WholeBibleTreeNode implements TreeNode
             default:
                 return 0;
             }
-        }
-        catch (NoSuchVerseException ex)
-        {
+        } catch (NoSuchVerseException ex) {
             assert false : ex;
             return 0;
         }
@@ -234,17 +201,14 @@ public final class WholeBibleTreeNode implements TreeNode
      * Returns the index of <code>node</code> in the receivers children. If the
      * receiver does not contain <code>node</code>, -1 will be returned.
      */
-    public int getIndex(TreeNode node)
-    {
-        if (!(node instanceof WholeBibleTreeNode))
-        {
+    public int getIndex(TreeNode node) {
+        if (!(node instanceof WholeBibleTreeNode)) {
             return -1;
         }
 
         WholeBibleTreeNode vnode = (WholeBibleTreeNode) node;
 
-        switch (level)
-        {
+        switch (level) {
         case LEVEL_BIBLE:
             return vnode.getVerseRange().getStart().getBook() - 1;
 
@@ -262,23 +226,19 @@ public final class WholeBibleTreeNode implements TreeNode
     /**
      * @see javax.swing.tree.TreeNode#children()
      */
-    public Enumeration children()
-    {
+    public Enumeration children() {
         return new WholeBibleEnumeration();
     }
 
     /**
      * Iterate over the Books
      */
-    public class WholeBibleEnumeration implements Enumeration
-    {
-        public boolean hasMoreElements()
-        {
+    public class WholeBibleEnumeration implements Enumeration {
+        public boolean hasMoreElements() {
             return count < getChildCount();
         }
 
-        public Object nextElement()
-        {
+        public Object nextElement() {
             count++;
             return getChildAt(count);
         }

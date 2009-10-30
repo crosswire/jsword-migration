@@ -38,67 +38,52 @@ import org.crosswire.jsword.book.basic.BookRoot;
 /**
  * This represents all of the JDBCBibles.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class JDBCBookDriver extends AbstractBookDriver
-{
-    /* (non-Javadoc)
+public class JDBCBookDriver extends AbstractBookDriver {
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.BookProvider#getBooks()
      */
-    public Book[] getBooks()
-    {
+    public Book[] getBooks() {
         URI dir = null;
         String[] names = null;
-        try
-        {
+        try {
             dir = BookRoot.findBibleRoot(getDriverName());
 
-            if (!NetUtil.isDirectory(dir))
-            {
+            if (!NetUtil.isDirectory(dir)) {
                 log.debug("Missing jdbc directory: " + dir); //$NON-NLS-1$
                 return new Book[0];
             }
 
-            if (dir == null)
-            {
+            if (dir == null) {
                 names = new String[0];
-            }
-            else
-            {
+            } else {
                 names = NetUtil.list(dir, new NetUtil.IsDirectoryURIFilter(dir));
             }
-        }
-        catch (MalformedURLException e1)
-        {
+        } catch (MalformedURLException e1) {
             names = new String[0];
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             names = new String[0];
         }
 
         List books = new ArrayList();
 
-        for (int i = 0; i < names.length; i++)
-        {
+        for (int i = 0; i < names.length; i++) {
             URI url = NetUtil.lengthenURI(dir, names[i]);
             URI propUri = NetUtil.lengthenURI(url, "bible.properties"); //$NON-NLS-1$
-            try
-            {
+            try {
                 Properties prop = NetUtil.loadProperties(propUri);
 
                 Book book = new JDBCBook(this, prop);
 
                 books.add(book);
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 continue;
-            }
-            catch (BookException e)
-            {
+            } catch (BookException e) {
                 continue;
             }
         }
@@ -106,11 +91,12 @@ public class JDBCBookDriver extends AbstractBookDriver
         return (Book[]) books.toArray(new Book[books.size()]);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.BookDriver#getDriverName()
      */
-    public String getDriverName()
-    {
+    public String getDriverName() {
         return "jdbc"; //$NON-NLS-1$
     }
 

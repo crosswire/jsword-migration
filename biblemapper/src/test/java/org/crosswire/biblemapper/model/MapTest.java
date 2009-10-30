@@ -30,53 +30,54 @@ import junit.framework.TestCase;
 /**
  * JUnit Test.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class MapTest extends TestCase
-{
-    public MapTest(String s)
-    {
+public class MapTest extends TestCase {
+    public MapTest(String s) {
         super(s);
     }
 
-    Position[][] dar = new Position[][]
-    {
-        new Position[]
-        {
-            new Position(new float[] { 1, 1 }),
-            new Position(new float[] { 2, 2 }),
-            new Position(new float[] { 3, 3 }),
-        },
-        new Position[]
-        {
-            new Position(new float[] { 4, 4 }),
-            new Position(new float[] { 5, 5 }),
-            new Position(new float[] { 6, 6 }),
-        },
-        new Position[]
-        {
-            new Position(new float[] { 7, 7 }),
-            new Position(new float[] { 8, 8 }),
-            new Position(new float[] { 9, 9 }),
-        },
+    Position[][] dar = new Position[][] {
+            new Position[] {
+                    new Position(new float[] {
+                            1, 1
+                    }), new Position(new float[] {
+                            2, 2
+                    }), new Position(new float[] {
+                            3, 3
+                    }),
+            }, new Position[] {
+                    new Position(new float[] {
+                            4, 4
+                    }), new Position(new float[] {
+                            5, 5
+                    }), new Position(new float[] {
+                            6, 6
+                    }),
+            }, new Position[] {
+                    new Position(new float[] {
+                            7, 7
+                    }), new Position(new float[] {
+                            8, 8
+                    }), new Position(new float[] {
+                            9, 9
+                    }),
+            },
     };
     Position[] ar = null;
 
     /* @Override */
-    protected void setUp() throws Exception
-    {
+    protected void setUp() throws Exception {
         ar = Map.cat(dar);
     }
 
     /* @Override */
-    protected void tearDown() throws Exception
-    {
+    protected void tearDown() throws Exception {
     }
 
-    public void testCat() throws Exception
-    {
+    public void testCat() throws Exception {
         assertEquals(ar[0].pos[0], 1F, 0F);
         assertEquals(ar[1].pos[0], 2F, 0F);
         assertEquals(ar[2].pos[0], 3F, 0F);
@@ -89,8 +90,7 @@ public class MapTest extends TestCase
         assertEquals(ar.length, 9);
     }
 
-    public void testAverage() throws Exception
-    {
+    public void testAverage() throws Exception {
         Position ave = PositionUtil.average(ar, 2);
         assertEquals(ave.pos[0], 5F, 0F);
         assertEquals(ave.pos[1], 5F, 0F);

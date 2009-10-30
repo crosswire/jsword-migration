@@ -33,55 +33,52 @@ import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookMetaData;
 
 /**
- *
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class BookFont extends FontStore
-{
+public class BookFont extends FontStore {
 
     /**
      * Create a persistent Book Font Store.
      */
-    private BookFont()
-    {
+    private BookFont() {
         super("BookFonts", CWProject.instance().getWritableProjectDir()); //$NON-NLS-1$
     }
 
-    public static BookFont instance()
-    {
+    public static BookFont instance() {
         return fonts;
     }
 
     /**
      * Set the font for the book.
      * 
-     * @param book the book
-     * @param font the font
+     * @param book
+     *            the book
+     * @param font
+     *            the font
      */
-    public void setFont(Book book, Font font)
-    {
+    public void setFont(Book book, Font font) {
         super.setFont(book.getInitials(), font);
     }
 
     /**
      * Get the most appropriate font for the book.
      * 
-     * @param book the book
+     * @param book
+     *            the book
      * @return the font
      */
-    public Font getFont(Book book)
-    {
+    public Font getFont(Book book) {
         String fontName = (String) book.getBookMetaData().getProperty(BookMetaData.KEY_FONT);
         String fontSpec = XSLTProperty.FONT.getStringState();
-        if (fontName != null)
-        {
+        if (fontName != null) {
             Font bookFont = GuiConvert.deriveFont(fontSpec, fontName);
-            // Make sure it is installed. Java does substitution. Make sure we got what we wanted.
-            if (bookFont.getFamily().equalsIgnoreCase(fontName))
-            {
+            // Make sure it is installed. Java does substitution. Make sure we
+            // got what we wanted.
+            if (bookFont.getFamily().equalsIgnoreCase(fontName)) {
                 fontSpec = GuiConvert.font2String(bookFont);
             }
         }
@@ -89,42 +86,39 @@ public class BookFont extends FontStore
         return fonts.getFont(book.getInitials(), book.getLanguage(), fontSpec);
     }
 
-    public Font getFont(Language language)
-    {
+    public Font getFont(Language language) {
         return fonts.getFont(null, language, null);
     }
 
     /**
      * Is a font for this book / language set in the properties file?
      * 
-     * @param book the book to test
-     * @param lang the language to test
-     * @return <code>true</code> a font property was set, <code>false</code> otherwise
+     * @param book
+     *            the book to test
+     * @param lang
+     *            the language to test
+     * @return <code>true</code> a font property was set, <code>false</code>
+     *         otherwise
      */
-    public boolean isSet(Book book, Language lang)
-    {
-        if (book != null)
-        {
+    public boolean isSet(Book book, Language lang) {
+        if (book != null) {
             return getFontMap().getProperty(book.getInitials()) != null;
         }
-        if (lang != null)
-        {
+        if (lang != null) {
             return getFontMap().getProperty(new StringBuffer(LANG_KEY_PREFIX).append(lang.getCode()).toString()) != null;
         }
         return false;
     }
 
     /**
-     * Remove the entry for this book / language in the properties file and use the default font
+     * Remove the entry for this book / language in the properties file and use
+     * the default font
      */
-    public void resetFont(Book book, Language lang)
-    {
-        if (book != null)
-        {
+    public void resetFont(Book book, Language lang) {
+        if (book != null) {
             resetFont(book.getInitials());
         }
-        if (lang != null)
-        {
+        if (lang != null) {
             resetFont(new StringBuffer(LANG_KEY_PREFIX).append(lang.getCode()).toString());
         }
     }

@@ -30,21 +30,18 @@ import org.crosswire.jsword.passage.Passage;
  * The PassageTreeModel class implements TreeModel using various custom
  * TreeNodes, and simply extending DefaultTreeModel.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @see DefaultTreeModel
  * @see PassageTreeNode
  */
-public class PassageTreeModel extends DefaultTreeModel
-{
+public class PassageTreeModel extends DefaultTreeModel {
     /**
-     * Basic constructor.
-     * At some stage when editing this and PassageTreeNode we should be able to
-     * remove the JTree param.
+     * Basic constructor. At some stage when editing this and PassageTreeNode we
+     * should be able to remove the JTree param.
      */
-    public PassageTreeModel(Passage ref, JTree tree)
-    {
+    public PassageTreeModel(Passage ref, JTree tree) {
         super(new PassageTreeNode(ref, tree));
     }
 

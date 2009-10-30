@@ -41,18 +41,16 @@ import org.crosswire.common.swing.GuiConvert;
 
 /**
  * A color selection.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ColorField extends JPanel implements Field
-{
+public class ColorField extends JPanel implements Field {
     /**
      * Create a new FileField
      */
-    public ColorField()
-    {
+    public ColorField() {
         actions = new ActionFactory(ColorField.class, this);
 
         JButton edit = new JButton(actions.getAction(EDIT));
@@ -61,57 +59,61 @@ public class ColorField extends JPanel implements Field
 
         setLayout(new BorderLayout());
         add(edit, BorderLayout.LINE_START);
-        //add(text, BorderLayout.LINE_END);
+        // add(text, BorderLayout.LINE_END);
     }
 
     /**
      * Do the edit action
      */
-    public void doEditColor()
-    {
+    public void doEditColor() {
         color = JColorChooser.showDialog(ColorField.this, LimboMsg.EDIT.toString(), color);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.config.swing.Field#setChoice(org.crosswire.common.config.Choice)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.config.swing.Field#setChoice(org.crosswire.common
+     * .config.Choice)
      */
-    public void setChoice(Choice param)
-    {
+    public void setChoice(Choice param) {
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.config.swing.Field#getValue()
      */
-    public String getValue()
-    {
+    public String getValue() {
         return GuiConvert.color2String(color);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.config.swing.Field#setValue(java.lang.String)
      */
-    public void setValue(String value)
-    {
+    public void setValue(String value) {
         color = GuiConvert.string2Color(value);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.config.swing.Field#getComponent()
      */
-    public JComponent getComponent()
-    {
+    public JComponent getComponent() {
         return this;
     }
 
     /**
      * Serialization support.
-     *
+     * 
      * @param is
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         actions = new ActionFactory(ColorField.class, this);
         is.defaultReadObject();
     }
@@ -141,38 +143,38 @@ public class ColorField extends JPanel implements Field
     /**
      * The CustomIcon that shows the selected color
      */
-    class CustomIcon implements Icon
-    {
-        /* (non-Javadoc)
+    class CustomIcon implements Icon {
+        /*
+         * (non-Javadoc)
+         * 
          * @see javax.swing.Icon#getIconHeight()
          */
-        public int getIconHeight()
-        {
+        public int getIconHeight() {
             return SIZE;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see javax.swing.Icon#getIconWidth()
          */
-        public int getIconWidth()
-        {
+        public int getIconWidth() {
             return SIZE;
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.Icon#paintIcon(java.awt.Component, java.awt.Graphics, int, int)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see javax.swing.Icon#paintIcon(java.awt.Component,
+         * java.awt.Graphics, int, int)
          */
-        public void paintIcon(Component c, Graphics g, int x, int y)
-        {
-            if (color == null)
-            {
+        public void paintIcon(Component c, Graphics g, int x, int y) {
+            if (color == null) {
                 g.setColor(Color.black);
                 g.drawRect(x, y, SIZE, SIZE);
                 g.drawLine(x, y, x + SIZE, y + SIZE);
                 g.drawLine(x + SIZE, y, x, y + SIZE);
-            }
-            else
-            {
+            } else {
                 g.setColor(color);
                 g.fillRect(x, y, SIZE, SIZE);
                 g.setColor(Color.black);

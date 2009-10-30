@@ -31,17 +31,15 @@ import org.crosswire.jsword.versification.BibleInfo;
 /**
  * A Link describes a destination verse and a link strength.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class Link implements Serializable
-{
+public class Link implements Serializable {
     /**
      * Basic constructor
      */
-    public Link(int book, int chapter, int strength)
-    {
+    public Link(int book, int chapter, int strength) {
         this.book = book;
         this.chapter = chapter;
         this.strength = strength;
@@ -49,28 +47,28 @@ public class Link implements Serializable
 
     /**
      * The destination book
+     * 
      * @return the book
      */
-    public int getDestinationBook()
-    {
+    public int getDestinationBook() {
         return book;
     }
 
     /**
      * The destination chapter
+     * 
      * @return the chapter
      */
-    public int getDestinationChapter()
-    {
+    public int getDestinationChapter() {
         return chapter;
     }
 
     /**
      * The strength of the attraction - an integer probably between 1 and 10
+     * 
      * @return The strength of the attraction
      */
-    public int getStrength()
-    {
+    public int getStrength() {
         return strength;
     }
 
@@ -78,14 +76,10 @@ public class Link implements Serializable
      * Simple bit of debug
      */
     /* @Override */
-    public String toString()
-    {
-        try
-        {
-            return ""+new VerseRange(new Verse(book, chapter, 1), new Verse(book, chapter, BibleInfo.versesInChapter(book, chapter)))+"("+strength+")";
-        }
-        catch (NoSuchVerseException ex)
-        {
+    public String toString() {
+        try {
+            return "" + new VerseRange(new Verse(book, chapter, 1), new Verse(book, chapter, BibleInfo.versesInChapter(book, chapter))) + "(" + strength + ")";
+        } catch (NoSuchVerseException ex) {
             assert false : ex;
             return "Link(ERROR)";
         }

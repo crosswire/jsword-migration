@@ -30,13 +30,12 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 
 /**
  * A class that provides a border that matches MetalBorders.ScrollPaneBorder.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Willie Thean [williethean at yahoo dot com]
  */
-public final class MetalPanelBorder extends AbstractBorder implements UIResource
-{
+public final class MetalPanelBorder extends AbstractBorder implements UIResource {
     public static final int TOP = 1;
     public static final int LEFT = 2;
     public static final int BOTTOM = 4;
@@ -45,72 +44,67 @@ public final class MetalPanelBorder extends AbstractBorder implements UIResource
     /**
      * Default constructor.
      */
-    public MetalPanelBorder()
-    {
+    public MetalPanelBorder() {
         insets = new Insets(insetTop, insetLeft, insetBottom, insetRight);
     }
 
     /**
-     * Create a MetalPanelBorder instance where the border visbility
-     * (top, left, bottom and right border) is controlled by the bit mask
+     * Create a MetalPanelBorder instance where the border visbility (top, left,
+     * bottom and right border) is controlled by the bit mask
      * <CODE>borderFlags</CODE>.
-     * @param borderFlags Match flags, a bit mask that may include TOP, LEFT, BOTTOM, and RIGHT
+     * 
+     * @param borderFlags
+     *            Match flags, a bit mask that may include TOP, LEFT, BOTTOM,
+     *            and RIGHT
      */
-    public MetalPanelBorder(int borderFlags)
-    {
+    public MetalPanelBorder(int borderFlags) {
         flags = 0 | borderFlags;
 
-        if ((flags & TOP) != TOP)
-        {
+        if ((flags & TOP) != TOP) {
             insetTop = 0;
         }
 
-        if ((flags & LEFT) != LEFT)
-        {
+        if ((flags & LEFT) != LEFT) {
             insetLeft = 0;
         }
 
-        if ((flags & BOTTOM) != BOTTOM)
-        {
+        if ((flags & BOTTOM) != BOTTOM) {
             insetBottom = 0;
         }
 
-        if ((flags & RIGHT) != RIGHT)
-        {
+        if ((flags & RIGHT) != RIGHT) {
             insetRight = 0;
         }
 
         insets = new Insets(insetTop, insetLeft, insetBottom, insetRight);
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.border.Border#paintBorder(java.awt.Component, java.awt.Graphics, int, int, int, int)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see javax.swing.border.Border#paintBorder(java.awt.Component,
+     * java.awt.Graphics, int, int, int, int)
      */
     /* @Override */
-    public void paintBorder(Component c, Graphics g, int x, int y, int w, int h)
-    {
+    public void paintBorder(Component c, Graphics g, int x, int y, int w, int h) {
         g.translate(x, y);
 
-        if ((flags & TOP) == TOP)
-        {
+        if ((flags & TOP) == TOP) {
             g.setColor(MetalLookAndFeel.getControlDarkShadow());
             g.drawLine(0, 0, w - 2, 0);
         }
 
-        if ((flags & LEFT) == LEFT)
-        {
+        if ((flags & LEFT) == LEFT) {
             g.drawLine(0, 0, 0, h - 2);
         }
 
-        if ((flags & BOTTOM) == BOTTOM)
-        {
+        if ((flags & BOTTOM) == BOTTOM) {
             g.drawLine(0, h - 2, w - 2, h - 2);
             g.setColor(MetalLookAndFeel.getControlHighlight());
             g.drawLine(1, h - 1, w - 1, h - 1);
         }
 
-        if ((flags & RIGHT) == RIGHT)
-        {
+        if ((flags & RIGHT) == RIGHT) {
             g.setColor(MetalLookAndFeel.getControlDarkShadow());
             g.drawLine(w - 2, h - 2, w - 2, 0);
             g.setColor(MetalLookAndFeel.getControlHighlight());
@@ -120,12 +114,13 @@ public final class MetalPanelBorder extends AbstractBorder implements UIResource
         g.translate(-x, -y);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.border.Border#getBorderInsets(java.awt.Component)
      */
     /* @Override */
-    public Insets getBorderInsets(Component c)
-    {
+    public Insets getBorderInsets(Component c) {
         return insets;
     }
 

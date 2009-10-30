@@ -37,34 +37,34 @@ import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.jdom.Element;
 
 /**
- * StubBook is a simple stub implementation of Book that is pretty much
- * always going to work because it has no dependancies on external files.
+ * StubBook is a simple stub implementation of Book that is pretty much always
+ * going to work because it has no dependancies on external files.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class StubDictionary extends AbstractBook
-{
+public class StubDictionary extends AbstractBook {
     /**
      * Basic constructor for a StubBook
      */
-    public StubDictionary(StubBookDriver driver, String name, BookCategory type)
-    {
+    public StubDictionary(StubBookDriver driver, String name, BookCategory type) {
         super(new DefaultBookMetaData(driver, name, type));
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.Book#getOsisIterator(org.crosswire.jsword.passage.Key, boolean)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.Book#getOsisIterator(org.crosswire.jsword.passage
+     * .Key, boolean)
      */
-    public Iterator getOsisIterator(Key key, boolean allowEmpty) throws BookException
-    {
+    public Iterator getOsisIterator(Key key, boolean allowEmpty) throws BookException {
         assert key != null;
 
-        try
-        {
+        try {
             List content = new ArrayList();
-            
+
             Element title = OSISUtil.factory().createTitle();
             title.addContent(key.getName());
             content.add(title);
@@ -73,90 +73,101 @@ public class StubDictionary extends AbstractBook
             content.add(osisContent);
 
             return content.iterator();
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             throw new BookException(Msg.FILTER_FAIL, ex);
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.Book#getRawText(org.crosswire.jsword.passage.Key)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.Book#getRawText(org.crosswire.jsword.passage
+     * .Key)
      */
-    public String getRawText(Key key) throws BookException
-    {
+    public String getRawText(Key key) throws BookException {
         StringBuffer buffer = new StringBuffer();
         return buffer.toString();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.Book#isWritable()
      */
-    public boolean isWritable()
-    {
+    public boolean isWritable() {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.Book#contains(org.crosswire.jsword.passage.Key)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.Book#contains(org.crosswire.jsword.passage.Key)
      */
-    public boolean contains(Key key)
-    {
+    public boolean contains(Key key) {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.basic.AbstractPassageBook#setRawText(org.crosswire.jsword.passage.Key, java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.basic.AbstractPassageBook#setRawText(org.crosswire
+     * .jsword.passage.Key, java.lang.String)
      */
-    public void setRawText(Key key, String rawData) throws BookException
-    {
+    public void setRawText(Key key, String rawData) throws BookException {
         throw new BookException(Msg.DRIVER_READONLY);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.Book#setAliasKey(org.crosswire.jsword.passage.Key, org.crosswire.jsword.passage.Key)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.Book#setAliasKey(org.crosswire.jsword.passage
+     * .Key, org.crosswire.jsword.passage.Key)
      */
-    public void setAliasKey(Key alias, Key source) throws BookException
-    {
+    public void setAliasKey(Key alias, Key source) throws BookException {
         throw new BookException(Msg.DRIVER_READONLY);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.passage.KeyFactory#getGlobalKeyList()
      */
-    public Key getGlobalKeyList()
-    {
+    public Key getGlobalKeyList() {
         return keyf.getGlobalKeyList();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.passage.KeyFactory#isValidKey(java.lang.String)
      */
-    public Key getValidKey(String name)
-    {
-        try
-        {
+    public Key getValidKey(String name) {
+        try {
             return getKey(name);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return createEmptyKeyList();
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.passage.KeyFactory#getKey(java.lang.String)
      */
-    public Key getKey(String name) throws NoSuchKeyException
-    {
+    public Key getKey(String name) throws NoSuchKeyException {
         return keyf.getKey(name);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.passage.KeyFactory#getEmptyKeyList()
      */
-    public Key createEmptyKeyList()
-    {
+    public Key createEmptyKeyList() {
         return keyf.createEmptyKeyList();
     }
 

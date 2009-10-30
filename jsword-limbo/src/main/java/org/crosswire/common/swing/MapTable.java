@@ -30,65 +30,63 @@ import javax.swing.table.TableModel;
 /**
  * A simple table that renders text, potentially multiline.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at yahoo dot com]
  */
-public class MapTable extends JTable
-{
+public class MapTable extends JTable {
     /**
      * Constructor for a MapTable
      */
-    public MapTable()
-    {
+    public MapTable() {
         this(null);
     }
 
     /**
      * Constructor for a MapTable
+     * 
      * @param mtm
      */
-    public MapTable(MapTableModel mtm)
-    {
+    public MapTable(MapTableModel mtm) {
         super(mtm);
         initialized = true;
         setDefaultRenderer();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.JTable#setModel(javax.swing.table.TableModel)
      */
     /* @Override */
-    public void setModel(TableModel dm)
-    {
+    public void setModel(TableModel dm) {
         assert !initialized || dm instanceof MapTableModel;
 
         super.setModel(dm);
         setDefaultRenderer();
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.JTable#setDefaultRenderer(java.lang.Class, javax.swing.table.TableCellRenderer)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see javax.swing.JTable#setDefaultRenderer(java.lang.Class,
+     * javax.swing.table.TableCellRenderer)
      */
     /* @Override */
-    public void setDefaultRenderer(Class columnclass, TableCellRenderer renderer)
-    {
+    public void setDefaultRenderer(Class columnclass, TableCellRenderer renderer) {
         assert renderer instanceof MapCellRenderer;
 
         super.setDefaultRenderer(columnclass, renderer);
     }
 
     /**
-     * Sets the default renderer for all cells to a MapCellRenderer.
-     * The default renderers must be created before setDefaultRenderer is
-     * called. This is done in JTable after setModel is called.
+     * Sets the default renderer for all cells to a MapCellRenderer. The default
+     * renderers must be created before setDefaultRenderer is called. This is
+     * done in JTable after setModel is called.
      */
-    private void setDefaultRenderer()
-    {
-        if (initialized  && (getModel() instanceof MapTableModel))
-        {
-            for (int c = 0; c < getColumnCount(); c++)
-            {
+    private void setDefaultRenderer() {
+        if (initialized && (getModel() instanceof MapTableModel)) {
+            for (int c = 0; c < getColumnCount(); c++) {
                 setDefaultRenderer(getColumnClass(c), TCR);
             }
 
@@ -97,45 +95,40 @@ public class MapTable extends JTable
     }
 
     /**
-     * Set the height of the row to show all of the rendered object.
-     * The height of a row is set to the preferred height
-     * of the tallest cell in that row.
+     * Set the height of the row to show all of the rendered object. The height
+     * of a row is set to the preferred height of the tallest cell in that row.
      */
-    private void adjustRowHeight()
-    {
+    private void adjustRowHeight() {
         // Get the current default height for all rows
         int height = getRowHeight();
         int rowcount = getRowCount();
         int colcount = getColumnCount();
         int margin = getRowMargin();
 
-        for (int row = 0; row < rowcount; row++)
-        {
+        for (int row = 0; row < rowcount; row++) {
             // Determine highest cell in the row
             int highest = height;
-            for (int col = 0; col < colcount; col++)
-            {
+            for (int col = 0; col < colcount; col++) {
                 Component comp = prepareRenderer(TCR, row, col);
                 highest = Math.max(highest, comp.getPreferredSize().height + 2 * margin);
             }
 
             // Now set the row height using the preferred height
-            if (getRowHeight(row) != highest)
-            {
+            if (getRowHeight(row) != highest) {
                 setRowHeight(row, highest);
             }
         }
     }
 
     /**
-     * <code>TCR</code> is a shared renderer that renders potentially
-     * mulitline text.
+     * <code>TCR</code> is a shared renderer that renders potentially mulitline
+     * text.
      */
     private static final TableCellRenderer TCR = new MapCellRenderer();
 
     /**
-     * <code>initialized</code> indicates that a TableCellRenderer
-     * can be set in setModel.
+     * <code>initialized</code> indicates that a TableCellRenderer can be set in
+     * setModel.
      */
     private boolean initialized;
 

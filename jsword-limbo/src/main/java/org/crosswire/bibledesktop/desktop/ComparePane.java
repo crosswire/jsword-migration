@@ -48,33 +48,32 @@ import org.crosswire.jsword.book.basic.Verifier;
 import org.crosswire.jsword.passage.Key;
 
 /**
- * A ComparePane allows you to compare 2 differing version of the Bible
- * verse, by verse.
- * <p>so start one of these call:
+ * A ComparePane allows you to compare 2 differing version of the Bible verse,
+ * by verse.
+ * <p>
+ * so start one of these call:
+ * 
  * <pre>
  * ComparePane comp = new ComparePane();
  * comp.showInDialog(getComponent());
  * </pre>
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ComparePane extends EirPanel
-{
-	/**
+public class ComparePane extends EirPanel {
+    /**
      * Basic Constructor
      */
-    public ComparePane()
-    {
+    public ComparePane() {
         init();
     }
 
     /**
      * Generate the GUI
      */
-    private void init()
-    {
+    private void init() {
         cboBible1.setModel(mdlBibles1);
         cboBible1.setRenderer(new BookListCellRenderer());
         cboBible2.setModel(mdlBibles2);
@@ -82,10 +81,8 @@ public class ComparePane extends EirPanel
         pnlBibles.setLayout(new BoxLayout(pnlBibles, BoxLayout.Y_AXIS));
         pnlBibles.setAlignmentX((float) 0.5);
         pnlBibles.setBorder(new TitledBorder(LimboMsg.COMPARE_TITLE.toString()));
-        btnGo.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        btnGo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 compare();
             }
         });
@@ -128,29 +125,25 @@ public class ComparePane extends EirPanel
     /**
      * Show this Panel in a new dialog
      */
-    public void showInDialog(Component parent)
-    {
+    public void showInDialog(Component parent) {
         showInDialog(parent, LimboMsg.COMPARE_DIALOG.toString(), false);
     }
 
     /**
      * Actually preform the comparison.
      */
-    protected void compare()
-    {
+    protected void compare() {
         Book book1 = mdlBibles1.getSelectedBook();
         Book book2 = mdlBibles2.getSelectedBook();
 
-        if (book1.equals(book2))
-        {
-            if (JOptionPane.showConfirmDialog(this, LimboMsg.COMPARE_IDENT_QUESTION.toString(), LimboMsg.COMPARE_IDENT_TITLE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
-            {
+        if (book1.equals(book2)) {
+            if (JOptionPane.showConfirmDialog(this, LimboMsg.COMPARE_IDENT_QUESTION.toString(), LimboMsg.COMPARE_IDENT_TITLE.toString(),
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
                 return;
             }
         }
 
-        try
-        {
+        try {
             String words = txtWords.getText();
             String refText = txtVerses.getText();
 
@@ -174,22 +167,20 @@ public class ComparePane extends EirPanel
             results.setCheckPassages(key);
             results.showInFrame(GuiUtil.getFrame(this));
             results.startStop();
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Reporter.informUser(this, ex);
         }
     }
 
     /**
-     * The first Bible selection combo.
-     * We cast to Bible in compare() so we need to filter
+     * The first Bible selection combo. We cast to Bible in compare() so we need
+     * to filter
      */
     private BooksComboBoxModel mdlBibles1 = new BooksComboBoxModel(BookFilters.getOnlyBibles());
 
     /**
-     * The second Bible selection combo
-     * We cast to Bible in compare() so we need to filter
+     * The second Bible selection combo We cast to Bible in compare() so we need
+     * to filter
      */
     private BooksComboBoxModel mdlBibles2 = new BooksComboBoxModel(BookFilters.getOnlyBibles());
 

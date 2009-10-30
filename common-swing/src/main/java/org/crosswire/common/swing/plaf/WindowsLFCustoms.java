@@ -30,18 +30,16 @@ import javax.swing.border.LineBorder;
 
 /**
  * Customizations to Windows LF for tabs.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Willie Thean [williethean at yahoo dot com]
  */
-public class WindowsLFCustoms extends AbstractLFCustoms
-{
+public class WindowsLFCustoms extends AbstractLFCustoms {
     /**
      * Default constructor.
      */
-    public WindowsLFCustoms()
-    {
+    public WindowsLFCustoms() {
         super();
     }
 
@@ -49,34 +47,27 @@ public class WindowsLFCustoms extends AbstractLFCustoms
      * Install Windows platform specific UI defaults.
      */
     /* @Override */
-    protected void initPlatformUIDefaults()
-    {
+    protected void initPlatformUIDefaults() {
         Border tabbedPanePanelBorder = null;
         Color standardBorderColor = null;
         Object windowsScrollPaneborder = UIManager.get("ScrollPane.border"); //$NON-NLS-1$
-        if (windowsScrollPaneborder != null)
-        {
-            if (windowsScrollPaneborder instanceof LineBorder)
-            {
+        if (windowsScrollPaneborder != null) {
+            if (windowsScrollPaneborder instanceof LineBorder) {
                 standardBorderColor = ((LineBorder) windowsScrollPaneborder).getLineColor();
                 tabbedPanePanelBorder = new LineBorder(standardBorderColor);
-            }
-            else
-            {
+            } else {
                 tabbedPanePanelBorder = BorderFactory.createEmptyBorder(1, 1, 1, 1);
             }
         }
 
-        Border panelSelectBorder = BorderFactory.createCompoundBorder(
-            BorderFactory.createMatteBorder(1, 1, 0, 1, standardBorderColor),
-            BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        Border panelSelectBorder = BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(1, 1, 0, 1, standardBorderColor), BorderFactory
+                .createEmptyBorder(5, 5, 5, 5));
 
-        Object[] windowsUIDefaults = new Object[]
-        {
-            "BibleViewPane.TabbedPaneUI", WindowsBorderlessTabbedPaneUI.createUI(null), //$NON-NLS-1$
-            "TabbedPanePanel.border", tabbedPanePanelBorder, //$NON-NLS-1$
-            "StandardBorder.color", standardBorderColor, //$NON-NLS-1$
-            "SelectPanel.border", panelSelectBorder //$NON-NLS-1$
+        Object[] windowsUIDefaults = new Object[] {
+                "BibleViewPane.TabbedPaneUI", WindowsBorderlessTabbedPaneUI.createUI(null), //$NON-NLS-1$
+                "TabbedPanePanel.border", tabbedPanePanelBorder, //$NON-NLS-1$
+                "StandardBorder.color", standardBorderColor, //$NON-NLS-1$
+                "SelectPanel.border", panelSelectBorder //$NON-NLS-1$
         };
 
         UIManager.getDefaults().putDefaults(windowsUIDefaults);

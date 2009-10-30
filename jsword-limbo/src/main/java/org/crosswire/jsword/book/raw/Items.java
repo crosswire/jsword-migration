@@ -25,46 +25,52 @@ import java.io.IOException;
 import java.util.Iterator;
 
 /**
- * Items is a list of words, puncuation marks or other bits of data that
- * can be indexed by number. 
+ * Items is a list of words, puncuation marks or other bits of data that can be
+ * indexed by number.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public interface Items
-{
+public interface Items {
     /**
      * Get an Enumeration through the words
+     * 
      * @return An Enumeration
      */
     Iterator iterator();
 
     /**
      * Fetch an item from the dictionary by an id.
-     * @param index The id of the word to fetch
+     * 
+     * @param index
+     *            The id of the word to fetch
      * @exception NoSuchResourceException
      */
     String getItem(int index) throws NoSuchResourceException;
 
     /**
-     * This method is called during the creation of the index to add a
-     * word to the index or to get a current id. If the IndexedResource
-     * was created without create=true then we do not create a new id
-     * we just return -1
-     * @param data The word to find/create an id for
+     * This method is called during the creation of the index to add a word to
+     * the index or to get a current id. If the IndexedResource was created
+     * without create=true then we do not create a new id we just return -1
+     * 
+     * @param data
+     *            The word to find/create an id for
      * @return The (new) id for the item, or -1
      */
     int getIndex(String data);
 
     /**
      * Set a list of word indexes as the test to a Verse
-     * @param data The array of wordd to be indexed
+     * 
+     * @param data
+     *            The array of wordd to be indexed
      */
     int[] getIndex(String[] data);
 
     /**
      * How many items are there in the current dictionary
+     * 
      * @return the Item count
      */
     int size();

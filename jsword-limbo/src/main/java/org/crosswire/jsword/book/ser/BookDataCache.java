@@ -45,40 +45,39 @@ import org.crosswire.jsword.versification.BibleInfo;
 /**
  * A cache of BookData that can be shared amongst Books.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class BookDataCache implements Activatable
-{
+public class BookDataCache implements Activatable {
     /**
      * Constructor for BookDataCache.
      */
-    public BookDataCache(URI uri) throws MalformedURLException
-    {
+    public BookDataCache(URI uri) throws MalformedURLException {
         this.uri = uri;
 
-        if (!uri.getScheme().equals(NetUtil.PROTOCOL_FILE))
-        {
+        if (!uri.getScheme().equals(NetUtil.PROTOCOL_FILE)) {
             throw new MalformedURLException(Msg.NON_FILE_URL.toString(uri));
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.activate.Activatable#activate(org.crosswire.common.activate.Lock)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.activate.Activatable#activate(org.crosswire.common
+     * .activate.Lock)
      */
-    public final void activate(Lock lock)
-    {
+    public final void activate(Lock lock) {
         dataUri = NetUtil.lengthenURI(uri, FILE_DATA);
         indexUri = NetUtil.lengthenURI(uri, FILE_INDEX);
 
         IOUtil.close(dataRaf);
         IOUtil.close(indexIn);
-        try
-        {
+        try {
             // Create blank indexes
             indexArr = new long[BibleInfo.versesInBible()];
-        
+
             // Open the XML RAF
             dataRaf = new RandomAccessFile(NetUtil.getAsFile(dataUri), FileUtil.MODE_READ);
 
@@ -86,54 +85,45 @@ public class BookDataCache implements Activatable
             indexIn = new BufferedReader(new InputStreamReader(NetUtil.getInputStream(indexUri)));
 
             // Load the ascii XML index
-            for (int i = 0; i < BibleInfo.versesInBible(); i++)
-            {
+            for (int i = 0; i < BibleInfo.versesInBible(); i++) {
                 String line = null;
 
-                try
-                {
+                try {
                     line = indexIn.readLine();
-                }
-                catch (IOException ex)
-                {
+                } catch (IOException ex) {
                     log.error("Error reading index", ex); //$NON-NLS-1$
                     break;
                 }
 
-                if (line == null)
-                {
+                if (line == null) {
                     break;
                 }
 
-                try
-                {
+                try {
                     indexArr[i] = Integer.parseInt(line);
-                }
-                catch (NumberFormatException ex)
-                {
+                } catch (NumberFormatException ex) {
                     indexArr[i] = -1;
-                    log.error("Error parsing line: "+line, ex); //$NON-NLS-1$
+                    log.error("Error parsing line: " + line, ex); //$NON-NLS-1$
                 }
             }
 
             active = true;
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             log.warn("failed to open stream", ex); //$NON-NLS-1$
-        }
-        finally
-        {
+        } finally {
             IOUtil.close(dataRaf);
             IOUtil.close(indexIn);
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.activate.Activatable#deactivate(org.crosswire.common.activate.Lock)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.activate.Activatable#deactivate(org.crosswire.common
+     * .activate.Lock)
      */
-    public final void deactivate(Lock lock)
-    {
+    public final void deactivate(Lock lock) {
         IOUtil.close(indexIn);
 
         active = false;
@@ -142,10 +132,8 @@ public class BookDataCache implements Activatable
     /**
      * Helper method so we can quickly activate ourselves on access
      */
-    protected final void checkActive()
-    {
-        if (!active)
-        {
+    protected final void checkActive() {
+        if (!active) {
             Activator.activate(this);
         }
     }
@@ -153,16 +141,13 @@ public class BookDataCache implements Activatable
     /**
      * Read unparsed data for a given verse
      */
-    public String getText(Verse verse) throws BookException
-    {
+    public String getText(Verse verse) throws BookException {
         checkActive();
 
-        try
-        {
+        try {
             // Seek to the correct point
             long location = indexArr[verse.getOrdinal() - 1];
-            if (location == -1)
-            {
+            if (location == -1) {
                 throw new BookException(Msg.READ_ERROR);
             }
 
@@ -171,9 +156,7 @@ public class BookDataCache implements Activatable
             // Read the XML text
             String txt = dataRaf.readUTF();
             return txt;
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             throw new BookException(Msg.READ_ERROR, ex);
         }
     }
@@ -181,27 +164,22 @@ public class BookDataCache implements Activatable
     /**
      * Write unparsed data for a given verse
      */
-    public void setRawText(Key key, String text) throws BookException
-    {
+    public void setRawText(Key key, String text) throws BookException {
         checkActive();
 
         Verse verse = KeyUtil.getVerse(key);
 
-        if (verse == null)
-        {
+        if (verse == null) {
             throw new BookException(Msg.WRITE_ERROR);
         }
 
-        try
-        {
+        try {
             // Remember where we were so we can read it back later
             indexArr[verse.getOrdinal() - 1] = dataRaf.getFilePointer();
-    
+
             // And write the entry
             dataRaf.writeUTF(text);
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             throw new BookException(Msg.READ_ERROR, ex);
         }
     }
@@ -209,26 +187,21 @@ public class BookDataCache implements Activatable
     /**
      * Flush the data written to disk
      */
-    public void flush() throws BookException
-    {
+    public void flush() throws BookException {
         checkActive();
 
-        try
-        {
+        try {
             // re-open the RAF read-write
             dataRaf = new RandomAccessFile(NetUtil.getAsFile(dataUri), FileUtil.MODE_WRITE);
 
             // Save the ascii XML index
             PrintWriter indexOut = new PrintWriter(NetUtil.getOutputStream(indexUri));
-            for (int i = 0; i < indexArr.length; i++)
-            {
+            for (int i = 0; i < indexArr.length; i++) {
                 indexOut.println(indexArr[i]);
             }
 
             indexOut.close();
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             throw new BookException(Msg.WRITE_ERROR, ex);
         }
     }

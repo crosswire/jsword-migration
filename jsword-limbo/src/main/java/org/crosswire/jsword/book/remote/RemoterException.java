@@ -27,33 +27,29 @@ import org.crosswire.common.util.MsgBase;
 /**
  * For use in Remoter calls that fail.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class RemoterException extends LucidException
-{
-	/**
+public class RemoterException extends LucidException {
+    /**
      * Constructor RemoterException.
      */
-    public RemoterException(MsgBase message)
-    {
+    public RemoterException(MsgBase message) {
         super(message);
     }
 
     /**
      * Constructor RemoterException.
      */
-    public RemoterException(MsgBase message, Object[] params)
-    {
+    public RemoterException(MsgBase message, Object[] params) {
         super(message, params);
     }
 
     /**
      * Constructor RemoterException.
      */
-    public RemoterException(MsgBase message, Throwable cause)
-    {
+    public RemoterException(MsgBase message, Throwable cause) {
         super(message);
         this.cause = cause;
     }
@@ -61,8 +57,7 @@ public class RemoterException extends LucidException
     /**
      * Constructor RemoterException.
      */
-    public RemoterException(MsgBase message, Throwable cause, Object[] params)
-    {
+    public RemoterException(MsgBase message, Throwable cause, Object[] params) {
         super(message, cause, params);
         this.cause = cause;
     }
@@ -71,16 +66,14 @@ public class RemoterException extends LucidException
      * Accessor for the cause of this exception
      */
     /* @Override */
-    public Throwable getCause()
-    {
+    public Throwable getCause() {
         return cause;
     }
 
     /**
      * Accessor for the original type
      */
-    public Class getOriginalType()
-    {
+    public Class getOriginalType() {
         return originalType;
     }
 

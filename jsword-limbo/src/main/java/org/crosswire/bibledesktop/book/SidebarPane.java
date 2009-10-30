@@ -31,26 +31,23 @@ import org.crosswire.common.swing.FixedSplitPane;
 
 /**
  * SidebarPane builds a panel containing a set of books in tabbed dialogs.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class SidebarPane extends JPanel
-{
+public class SidebarPane extends JPanel {
     /**
      * Simple ctor
      */
-    public SidebarPane()
-    {
+    public SidebarPane() {
         init();
     }
 
     /**
      * GUI initializer.
      */
-    private void init()
-    {
+    private void init() {
         split.setOrientation(JSplitPane.VERTICAL_SPLIT);
         split.setDividerLocation(0.3D);
         split.setDividerSize(7);
@@ -67,8 +64,7 @@ public class SidebarPane extends JPanel
     /**
      * Add a listener when someone clicks on a browser 'link'
      */
-    public void addURIEventListener(URIEventListener li)
-    {
+    public void addURIEventListener(URIEventListener li) {
         multiBooks.addURIEventListener(li);
         comments.addURIEventListener(li);
     }
@@ -76,8 +72,7 @@ public class SidebarPane extends JPanel
     /**
      * Remove a listener when someone clicks on a browser 'link'
      */
-    public void removeURIEventListener(URIEventListener li)
-    {
+    public void removeURIEventListener(URIEventListener li) {
         multiBooks.removeURIEventListener(li);
         comments.removeURIEventListener(li);
     }
@@ -85,16 +80,14 @@ public class SidebarPane extends JPanel
     /**
      * Accessor for the CommentaryPane
      */
-    public CommentaryPane getCommentaryPane()
-    {
+    public CommentaryPane getCommentaryPane() {
         return comments;
     }
 
     /**
      * Accessor for the MultiBookPane
      */
-    public MultiBookPane getMultiBookPane()
-    {
+    public MultiBookPane getMultiBookPane() {
         return multiBooks;
     }
 

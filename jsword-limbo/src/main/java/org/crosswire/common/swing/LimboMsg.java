@@ -25,13 +25,12 @@ import org.crosswire.common.util.MsgBase;
 
 /**
  * Compile safe Msg resource settings.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-final class LimboMsg extends MsgBase
-{
+final class LimboMsg extends MsgBase {
     static final LimboMsg ERROR_READING = new LimboMsg("BeanPanel.ErrorReading"); //$NON-NLS-1$
 
     // I18N: migrate this to an ActionFactory
@@ -45,8 +44,7 @@ final class LimboMsg extends MsgBase
     /**
      * Passthrough ctor
      */
-    private LimboMsg(String name)
-    {
+    private LimboMsg(String name) {
         super(name);
     }
 }

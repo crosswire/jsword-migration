@@ -38,27 +38,24 @@ import org.crosswire.jsword.book.Books;
 
 /**
  * A ListModel that shows the regestered BookDrivers.
- *
- * <p>DriversListModel can be set to read-only mode where it will display only
- * the BookDrivers that can receive new Book data.</p>
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * <p>
+ * DriversListModel can be set to read-only mode where it will display only the
+ * BookDrivers that can receive new Book data.
+ * </p>
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class DriversListModel extends AbstractListModel
-{
+public class DriversListModel extends AbstractListModel {
     /**
      * Basic constructor
      */
-    public DriversListModel(boolean includeRo)
-    {
-        if (includeRo)
-        {
+    public DriversListModel(boolean includeRo) {
+        if (includeRo) {
             drivers = Books.installed().getDrivers();
-        }
-        else
-        {
+        } else {
             drivers = Books.installed().getWritableDrivers();
         }
     }
@@ -66,26 +63,22 @@ public class DriversListModel extends AbstractListModel
     /**
      * Basic constructor
      */
-    public DriversListModel()
-    {
+    public DriversListModel() {
         this(true);
     }
 
     /**
      * Returns the length of the list.
      */
-    public int getSize()
-    {
+    public int getSize() {
         return drivers.length;
     }
 
     /**
      * Returns the value at the specified index.
      */
-    public Object getElementAt(int index)
-    {
-        if (index >= drivers.length)
-        {
+    public Object getElementAt(int index) {
+        if (index >= drivers.length) {
             return null;
         }
 
@@ -94,11 +87,12 @@ public class DriversListModel extends AbstractListModel
 
     /**
      * Given an item, work out the name of the Bible that it represents
-     * @param test The item from the list
+     * 
+     * @param test
+     *            The item from the list
      * @return A Bible name
      */
-    public String getDriverName(Object test)
-    {
+    public String getDriverName(Object test) {
         String item = test.toString();
         int end = item.indexOf(" ("); //$NON-NLS-1$
         return item.substring(0, end);
@@ -106,25 +100,26 @@ public class DriversListModel extends AbstractListModel
 
     /**
      * Given an item, work out the name of the Driver that it represents
-     * @param test The item from the list
+     * 
+     * @param test
+     *            The item from the list
      * @return A Driver
      */
-    public BookDriver getDriver(Object test)
-    {
+    public BookDriver getDriver(Object test) {
         return drivers[getIndexOf(test)];
     }
 
     /**
      * Returns the index-position of the specified object in the list.
-     * @param test the object to find
-     * @return an int representing the index position, where 0 is the first position
+     * 
+     * @param test
+     *            the object to find
+     * @return an int representing the index position, where 0 is the first
+     *         position
      */
-    public int getIndexOf(Object test)
-    {
-        for (int i = 0; i < drivers.length; i++)
-        {
-            if (test.equals(getElementAt(i)))
-            {
+    public int getIndexOf(Object test) {
+        for (int i = 0; i < drivers.length; i++) {
+            if (test.equals(getElementAt(i))) {
                 return i;
             }
         }
@@ -155,8 +150,7 @@ public class DriversListModel extends AbstractListModel
     /**
      * Create a BookListCellRenderer
      */
-    public static ListCellRenderer getListCellRenderer()
-    {
+    public static ListCellRenderer getListCellRenderer() {
         return new BibleListCellRenderer();
     }
 
@@ -164,35 +158,35 @@ public class DriversListModel extends AbstractListModel
      * A custom list view that paints icons alongside the words. This is a
      * simple modification of DeafultListCellRenderer
      */
-    public static class BibleListCellRenderer extends JLabel implements ListCellRenderer
-    {
+    public static class BibleListCellRenderer extends JLabel implements ListCellRenderer {
         /**
          * Constructs a default renderer object for an item in a list.
          */
-        public BibleListCellRenderer()
-        {
+        public BibleListCellRenderer() {
             setOpaque(true);
             setBorder(NO_FOCUS_BORDER);
         }
 
         /**
-         * This is the only method defined by ListCellRenderer.  We just
+         * This is the only method defined by ListCellRenderer. We just
          * reconfigure the Jlabel each time we're called.
-         * @param list The JLists that we are part of
-         * @param value Value to display
-         * @param index Cell index
-         * @param selected Is the cell selected
-         * @param focus Does the list and the cell have the focus
+         * 
+         * @param list
+         *            The JLists that we are part of
+         * @param value
+         *            Value to display
+         * @param index
+         *            Cell index
+         * @param selected
+         *            Is the cell selected
+         * @param focus
+         *            Does the list and the cell have the focus
          */
-        public Component getListCellRendererComponent(JList list, Object value, int index, boolean selected, boolean focus)
-        {
-            if (selected)
-            {
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean selected, boolean focus) {
+            if (selected) {
                 setBackground(list.getSelectionBackground());
                 setForeground(list.getSelectionForeground());
-            }
-            else
-            {
+            } else {
                 setBackground(list.getBackground());
                 setForeground(list.getForeground());
             }

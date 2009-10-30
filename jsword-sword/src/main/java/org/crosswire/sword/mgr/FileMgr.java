@@ -27,151 +27,139 @@ import java.io.FileInputStream;
 
 public class FileMgr {
 
-	public static FileMgr systemFileMgr = new FileMgr(20);
-	int maxFiles;
-	List files = new LinkedList();
+    public static FileMgr systemFileMgr = new FileMgr(20);
+    int maxFiles;
+    List files = new LinkedList();
 
+    FileMgr(int maxFiles) {
+        this.maxFiles = maxFiles; // must be at least 2
+        files = null;
+    }
 
-	FileMgr(int maxFiles) {
-		this.maxFiles = maxFiles;		// must be at least 2
-		files = null;
-	}
+    InputStream open(String path) {
+        InputStream tmp;
 
+        tmp = new InputStream(this, path);
+        files.add(0, tmp);
 
-	InputStream open(String path) {
-		InputStream tmp;
-	
-	tmp = new InputStream(this, path);
-	files.add(0, tmp);
+        return tmp;
+    }
 
-	return tmp;
-}
+    void close(InputStream file) throws java.io.IOException {
+        if (file.istream != null)
+            file.istream.close();
+        files.remove(file);
+    }
 
+    FileInputStream sysOpen(InputStream file) throws java.io.IOException {
+        int openCount = 1; // because we are presently opening 1 file, and we
+                           // need to be sure to close files to accomodate, if
+                           // necessary
+        ListIterator loop;
+        InputStream is;
 
-void close(InputStream file) throws java.io.IOException {
-	if (file.istream != null)
-		file.istream.close();
-	files.remove(file);
-}
+        loop = files.listIterator();
+        while (loop.hasNext()) {
+            is = (InputStream) loop.next();
+            if (is.istream != null) {
+                if (++openCount > maxFiles) {
+                    is.offset = is.istream.skip(0);
+                    is.istream.close();
+                    is.istream = null;
+                }
+            }
 
+            if (loop == file) {
+                files.remove(file);
+                files.add(0, file);
+                file.istream = new FileInputStream(file.path);
+                file.istream.skip(file.offset);
 
-	FileInputStream sysOpen(InputStream file) throws java.io.IOException {
-		int openCount = 1;		// because we are presently opening 1 file, and we need to be sure to close files to accomodate, if necessary
-		ListIterator loop;
-		InputStream is;
-		
-		loop = files.listIterator();
-		while (loop.hasNext()) {
-			is = (InputStream) loop.next();
-			if (is.istream != null) {
-				if (++openCount > maxFiles) {
-					is.offset = is.istream.skip(0);
-					is.istream.close();
-					is.istream = null;
-				}
-			}
+                return file.istream;
+            }
+        }
+        return null;
+    }
 
-			if (loop == file) {
-				files.remove(file);
-				files.add(0, file);
-				file.istream = new FileInputStream(file.path);
-				file.istream.skip(file.offset);
+    public class InputStream extends java.io.InputStream {
+        FileMgr fileMgr = null;
+        String path = null;
+        long offset;
+        FileInputStream istream;
 
-				return file.istream;
-			}
-		}
-		return null;
-	}
-
-
-	public class InputStream extends java.io.InputStream {
-		FileMgr fileMgr = null;
-		String path = null;
-		long offset;
-		FileInputStream istream;
-
-		public InputStream(FileMgr fileMgr, String path) {
-			this.fileMgr = fileMgr;
-			this.path = path;
-			offset = 0;
-			istream = null;
-		}
-
+        public InputStream(FileMgr fileMgr, String path) {
+            this.fileMgr = fileMgr;
+            this.path = path;
+            offset = 0;
+            istream = null;
+        }
 
         /* @Override */
-		public int available() {
-			int retVal = 0;
-			try {
-				if (istream == null)
-					istream = fileMgr.sysOpen(this);
+        public int available() {
+            int retVal = 0;
+            try {
+                if (istream == null)
+                    istream = fileMgr.sysOpen(this);
 
-				retVal = istream.available();
-			}
-			catch (Exception e) {
-				e.printStackTrace(System.err);
-			}
-			return retVal;
-		}
-
+                retVal = istream.available();
+            } catch (Exception e) {
+                e.printStackTrace(System.err);
+            }
+            return retVal;
+        }
 
         /* @Override */
-		public void close() throws java.io.IOException {
-			fileMgr.close(this);
-		}
-
-
-        /* @Override */
-		public synchronized void mark(int i) {
-		}
-
+        public void close() throws java.io.IOException {
+            fileMgr.close(this);
+        }
 
         /* @Override */
-		public boolean markSupported() {
-			return false;
-		}
+        public synchronized void mark(int i) {
+        }
 
+        /* @Override */
+        public boolean markSupported() {
+            return false;
+        }
 
-	    /* @Override */
+        /* @Override */
         public int read() throws java.io.IOException {
-			if (istream == null)
-				istream = fileMgr.sysOpen(this);
+            if (istream == null)
+                istream = fileMgr.sysOpen(this);
 
-			return istream.read();
-		}
+            return istream.read();
+        }
 
-
-		/* @Override */
+        /* @Override */
         public int read(byte[] bytes) throws java.io.IOException {
-			if (istream == null)
-				istream = fileMgr.sysOpen(this);
+            if (istream == null)
+                istream = fileMgr.sysOpen(this);
 
-			return istream.read(bytes);
-		}
-
-
-        /* @Override */
-		public int read(byte[] bytes, int off, int len) throws java.io.IOException {
-			if (istream == null)
-				istream = fileMgr.sysOpen(this);
-
-			return istream.read(bytes, off, len);
-		}
-
+            return istream.read(bytes);
+        }
 
         /* @Override */
-		public synchronized void reset() throws java.io.IOException {
-			if (istream == null)
-				istream = fileMgr.sysOpen(this);
+        public int read(byte[] bytes, int off, int len) throws java.io.IOException {
+            if (istream == null)
+                istream = fileMgr.sysOpen(this);
 
-			istream.reset();
-		}
-		
+            return istream.read(bytes, off, len);
+        }
+
         /* @Override */
-	    public long skip(long jump) throws java.io.IOException {
-			if (istream == null)
-				istream = fileMgr.sysOpen(this);
+        public synchronized void reset() throws java.io.IOException {
+            if (istream == null)
+                istream = fileMgr.sysOpen(this);
 
-			return istream.skip(jump);
-		}
-	}
+            istream.reset();
+        }
+
+        /* @Override */
+        public long skip(long jump) throws java.io.IOException {
+            if (istream == null)
+                istream = fileMgr.sysOpen(this);
+
+            return istream.skip(jump);
+        }
+    }
 }

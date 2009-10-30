@@ -27,10 +27,11 @@ import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.versification.BibleInfo;
 
 /**
- * VBAExport takes a Map and exports the data to a Word VBA file.
- * This was developed from a VB macro that looked something like this:
+ * VBAExport takes a Map and exports the data to a Word VBA file. This was
+ * developed from a VB macro that looked something like this:
+ * 
  * <pre>
- * Attribute VB_Name = "NumberLine"
+ * Attribute VB_Name = &quot;NumberLine&quot;
  * 
  * Option Explicit
  * 
@@ -44,14 +45,14 @@ import org.crosswire.jsword.versification.BibleInfo;
  * 
  * Public Sub RouteMain()
  * 
- *   RouteStart 100#, 100#, "1"
+ *   RouteStart 100#, 100#, &quot;1&quot;
  * 
- *   RouteContinue 110#, 110#, "2"
- *   RouteContinue 120#, 120#, "3"
- *   RouteContinue 130#, 120#, "4"
- *   RouteContinue 130#, 130#, "5"
- *   RouteContinue 100#, 130#, "6"
- *   RouteContinue 90#, 100#, "7"
+ *   RouteContinue 110#, 110#, &quot;2&quot;
+ *   RouteContinue 120#, 120#, &quot;3&quot;
+ *   RouteContinue 130#, 120#, &quot;4&quot;
+ *   RouteContinue 130#, 130#, &quot;5&quot;
+ *   RouteContinue 100#, 130#, &quot;6&quot;
+ *   RouteContinue 90#, 100#, &quot;7&quot;
  * 
  *   RouteEnd
  * 
@@ -178,41 +179,44 @@ import org.crosswire.jsword.versification.BibleInfo;
  * '-------------------------------------------------------------------------------
  * </pre>
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class VBAExport
-{
+public class VBAExport {
     /**
-     * How much do we magnify the original coords (0.0 - 1.0) by to get
-     * the desired output range. The default is 500 which will fit on an
-     * A4 sheet of paper
-     * @param x_mag The new x magnification factor
+     * How much do we magnify the original coords (0.0 - 1.0) by to get the
+     * desired output range. The default is 500 which will fit on an A4 sheet of
+     * paper
+     * 
+     * @param x_mag
+     *            The new x magnification factor
      */
-    public void setXMagnification(int x_mag)
-    {
+    public void setXMagnification(int x_mag) {
         this.x_mag = x_mag;
     }
 
     /**
-     * How much do we magnify the original coords (0.0 - 1.0) by to get
-     * the desired output range. The default is 500 which will fit on an
-     * A4 sheet of paper
-     * @param y_mag The new x magnification factor
+     * How much do we magnify the original coords (0.0 - 1.0) by to get the
+     * desired output range. The default is 500 which will fit on an A4 sheet of
+     * paper
+     * 
+     * @param y_mag
+     *            The new x magnification factor
      */
-    public void setYMagnification(int y_mag)
-    {
+    public void setYMagnification(int y_mag) {
         this.y_mag = y_mag;
     }
 
     /**
      * Export the given Map file to the given stream
-     * @param map The data to export
-     * @param out The place to write the VBA file
+     * 
+     * @param map
+     *            The data to export
+     * @param out
+     *            The place to write the VBA file
      */
-    public void export(Map map, PrintWriter out)
-    {
+    public void export(Map map, PrintWriter out) {
         exportPreamble(out);
 
         out.println("");
@@ -221,31 +225,26 @@ public class VBAExport
         int x;
         int y;
 
-        try
-        {
+        try {
             int bie = BibleInfo.booksInBible();
-            for (int b=1; b<=bie; b++)
-            {
+            for (int b = 1; b <= bie; b++) {
                 x = (int) (map.getPositionDimension(b, 1, 0) * x_mag);
                 y = (int) (map.getPositionDimension(b, 1, 1) * y_mag);
 
-                out.println("  RouteStart "+x+"#, "+y+"#, \""+BibleInfo.getPreferredBookName(b)+"\"");
+                out.println("  RouteStart " + x + "#, " + y + "#, \"" + BibleInfo.getPreferredBookName(b) + "\"");
 
                 int cib = BibleInfo.chaptersInBook(b);
-                for (int c=2; c<=cib; c++)
-                {
+                for (int c = 2; c <= cib; c++) {
                     x = (int) (map.getPositionDimension(b, c, 0) * x_mag);
                     y = (int) (map.getPositionDimension(b, c, 1) * y_mag);
 
-                    out.println("  RouteContinue "+x+"#, "+y+"#, \""+c+"\"");
+                    out.println("  RouteContinue " + x + "#, " + y + "#, \"" + c + "\"");
                 }
 
                 out.println("  RouteEnd");
                 out.println("");
             }
-        }
-        catch (NoSuchVerseException ex)
-        {
+        } catch (NoSuchVerseException ex) {
             assert false : ex;
         }
 
@@ -259,10 +258,11 @@ public class VBAExport
 
     /**
      * The common bits at the start of every file
-     * @param out The place to write the VBA file
+     * 
+     * @param out
+     *            The place to write the VBA file
      */
-    protected static void exportPreamble(PrintWriter out)
-    {
+    protected static void exportPreamble(PrintWriter out) {
         out.println("Attribute VB_Name = \"NumberLine\"");
         out.println("");
         out.println("Option Explicit");
@@ -273,10 +273,11 @@ public class VBAExport
 
     /**
      * The common bits at the start of every file
-     * @param out The place to write the VBA file
+     * 
+     * @param out
+     *            The place to write the VBA file
      */
-    protected static void exportSubRouteStart(PrintWriter out)
-    {
+    protected static void exportSubRouteStart(PrintWriter out) {
         out.println("");
         out.println("Private Sub RouteStart(x As Single, y As Single, display As String)");
         out.println("  Set shape = ActiveDocument.Shapes.BuildFreeform(msoEditingAuto, x, y)");
@@ -286,10 +287,11 @@ public class VBAExport
 
     /**
      * The common bits at the start of every file
-     * @param out The place to write the VBA file
+     * 
+     * @param out
+     *            The place to write the VBA file
      */
-    protected static void exportSubRouteContinue(PrintWriter out)
-    {
+    protected static void exportSubRouteContinue(PrintWriter out) {
         out.println("");
         out.println("Private Sub RouteContinue(x As Single, y As Single, display As String)");
         out.println("  shape.AddNodes msoSegmentLine, msoEditingAuto, x, y");
@@ -299,10 +301,11 @@ public class VBAExport
 
     /**
      * The common bits at the start of every file
-     * @param out The place to write the VBA file
+     * 
+     * @param out
+     *            The place to write the VBA file
      */
-    protected static void exportSubRouteEnd(PrintWriter out)
-    {
+    protected static void exportSubRouteEnd(PrintWriter out) {
         out.println("");
         out.println("Private Sub RouteEnd()");
         out.println("  Dim route As ShapeRange");
@@ -331,10 +334,11 @@ public class VBAExport
 
     /**
      * The common bits at the start of every file
-     * @param out The place to write the VBA file
+     * 
+     * @param out
+     *            The place to write the VBA file
      */
-    protected static void exportSubRouteAddText(PrintWriter out)
-    {
+    protected static void exportSubRouteAddText(PrintWriter out) {
         out.println("");
         out.println("Private Sub RouteAddText(x As Single, y As Single, display As String)");
         out.println("  Dim box As shape");

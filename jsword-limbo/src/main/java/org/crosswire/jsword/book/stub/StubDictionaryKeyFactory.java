@@ -32,48 +32,43 @@ import org.crosswire.jsword.passage.NoSuchKeyException;
 /**
  * A KeyFactory that handles a pretend set of keys.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class StubDictionaryKeyFactory implements KeyFactory
-{
+public class StubDictionaryKeyFactory implements KeyFactory {
     /**
      * Simple ctor
      */
-    public StubDictionaryKeyFactory()
-    {
+    public StubDictionaryKeyFactory() {
         set.addAll(KEY_STUB);
         set.addAll(KEY_IMPL);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.passage.KeyFactory#isValidKey(java.lang.String)
      */
-    public Key getValidKey(String name)
-    {
-        try
-        {
+    public Key getValidKey(String name) {
+        try {
             return getKey(name);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return createEmptyKeyList();
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.passage.KeyFactory#getKey(java.lang.String)
      */
-    public Key getKey(String name) throws NoSuchKeyException
-    {
+    public Key getKey(String name) throws NoSuchKeyException {
         DefaultKeyList reply = new DefaultKeyList();
 
-        for (Iterator it = set.iterator(); it.hasNext();)
-        {
+        for (Iterator it = set.iterator(); it.hasNext();) {
             Key key = (Key) it.next();
-            if (key.getName().equals(name))
-            {
+            if (key.getName().equals(name)) {
                 reply.addAll(key);
                 return reply;
             }
@@ -82,19 +77,21 @@ public class StubDictionaryKeyFactory implements KeyFactory
         throw new NoSuchKeyException(Msg.NO_KEY);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.passage.KeyFactory#getGlobalKeyList()
      */
-    public Key getGlobalKeyList()
-    {
+    public Key getGlobalKeyList() {
         return set;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.passage.KeyFactory#getEmptyKeyList()
      */
-    public Key createEmptyKeyList()
-    {
+    public Key createEmptyKeyList() {
         return new DefaultKeyList();
     }
 

@@ -38,46 +38,40 @@ import org.crosswire.common.util.Logger;
 /**
  * RuleSlider allows the user to edit the scale for a given rule.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class RuleSlider extends JPanel
-{
-	/**
+public class RuleSlider extends JPanel {
+    /**
      * Basic constructor
      */
-    public RuleSlider(Rule rule)
-    {
+    public RuleSlider(Rule rule) {
         this.rule = rule;
 
         init();
 
         String fullname = rule.getClass().getName();
         int last_dot = fullname.lastIndexOf('.');
-        if (last_dot == -1)
-        {
+        if (last_dot == -1) {
             last_dot = 0;
         }
 
-        title = fullname.substring(last_dot+1);
+        title = fullname.substring(last_dot + 1);
         bdrRule.setTitle(title);
 
         sdrRule.setValue(rule.getScale());
-        txtRule.setText(""+rule.getScale());
+        txtRule.setText("" + rule.getScale());
     }
 
     /**
      * Create the GUI
      */
-    private void init()
-    {
+    private void init() {
         bdrRule = BorderFactory.createTitledBorder("Rule");
 
-        sdrRule.addChangeListener(new ChangeListener()
-        {
-            public void stateChanged(ChangeEvent ev)
-            {
+        sdrRule.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent ev) {
                 changed();
             }
         });
@@ -101,19 +95,17 @@ public class RuleSlider extends JPanel
     /**
      * When someone slides the slider
      */
-    protected void changed()
-    {
+    protected void changed() {
         rule.setScale(sdrRule.getValue());
 
         int check = rule.getScale();
-        if (check != sdrRule.getValue())
-        {
+        if (check != sdrRule.getValue()) {
             sdrRule.setValue(check);
         }
 
-        txtRule.setText(""+check);
+        txtRule.setText("" + check);
 
-        log.info(title+": "+check);
+        log.info(title + ": " + check);
     }
 
     /**

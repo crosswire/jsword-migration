@@ -28,34 +28,31 @@ import org.crosswire.jsword.passage.Key;
 /**
  * A simple implementation of ListModel that is backed by a SortedSet.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class KeyListListModel extends AbstractListModel
-{
+public class KeyListListModel extends AbstractListModel {
     /**
      * Constructor for ListListModel.
      */
-    public KeyListListModel(Key keys)
-    {
+    public KeyListListModel(Key keys) {
         this.keys = keys;
     }
 
     /* (non-Javadoc)
      * @see javax.swing.ListModel#getSize()
      */
-    public int getSize()
-    {
+    public int getSize() {
         return keys != null ? keys.getCardinality() : 0;
     }
 
     /**
      * There must be a faster way of doing this?
+     * 
      * @see javax.swing.ListModel#getElementAt(int)
      */
-    public Object getElementAt(int index)
-    {
+    public Object getElementAt(int index) {
         return keys != null ? keys.get(index) : null;
     }
 

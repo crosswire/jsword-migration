@@ -25,28 +25,33 @@ import java.awt.event.ActionEvent;
 
 /**
  * A listener for button presses in a ButtonPane.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public interface ButtonPaneListener
-{
+public interface ButtonPaneListener {
     /**
      * Someone has pressed OK
-     * @param ev The button press event
+     * 
+     * @param ev
+     *            The button press event
      */
     void okPressed(ActionEvent ev);
 
     /**
      * Someone has pressed cancel
-     * @param ev The button press event
+     * 
+     * @param ev
+     *            The button press event
      */
     void cancelPressed(ActionEvent ev);
 
     /**
      * Someone has pressed apply
-     * @param ev The button press event
+     * 
+     * @param ev
+     *            The button press event
      */
     void applyPressed(ActionEvent ev);
 }

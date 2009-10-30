@@ -26,18 +26,16 @@ import java.util.EventObject;
 
 /**
  * An event that describes that something happened to a view.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public final class ViewEvent extends EventObject
-{
+public final class ViewEvent extends EventObject {
     /**
      * Default ctor to set the event source
      */
-    public ViewEvent(Component view)
-    {
+    public ViewEvent(Component view) {
         super(view);
     }
 

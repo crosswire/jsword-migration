@@ -38,18 +38,16 @@ import org.crosswire.jsword.book.BooksListener;
 /**
  * The root node in the ReferencePane Tree model.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ReferenceRootTreeNode implements TreeNode
-{
+public class ReferenceRootTreeNode implements TreeNode {
     /**
      * Simple ctor
      */
-    public ReferenceRootTreeNode(ReferenceTreeModel model)
-    {
-        this.model = model;        
+    public ReferenceRootTreeNode(ReferenceTreeModel model) {
+        this.model = model;
         Books.installed().addBooksListener(new CustomBooksListener());
 
         this.filter = null;
@@ -59,8 +57,7 @@ public class ReferenceRootTreeNode implements TreeNode
     /**
      * Simple ctor
      */
-    public ReferenceRootTreeNode(ReferenceTreeModel model, BookFilter filter)
-    {
+    public ReferenceRootTreeNode(ReferenceTreeModel model, BookFilter filter) {
         this.model = model;
         Books.installed().addBooksListener(new CustomBooksListener());
 
@@ -68,79 +65,88 @@ public class ReferenceRootTreeNode implements TreeNode
         books = Books.installed().getBooks(filter);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
-    public String toString()
-    {
+    public String toString() {
         return "Reference Works"; //$NON-NLS-1$
     }
 
     /**
      * Set the filter for this TreeNode
      */
-    public void setFilter(BookFilter filter)
-    {
+    public void setFilter(BookFilter filter) {
         this.filter = filter;
         books = Books.installed().getBooks(filter);
 
-        model.fireTreeStructureChanged(filter, new Object[] { this }, new int[0], null);
+        model.fireTreeStructureChanged(filter, new Object[] {
+            this
+        }, new int[0], null);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#getChildCount()
      */
-    public int getChildCount()
-    {
+    public int getChildCount() {
         return books.size();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#getAllowsChildren()
      */
-    public boolean getAllowsChildren()
-    {
+    public boolean getAllowsChildren() {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#isLeaf()
      */
-    public boolean isLeaf()
-    {
+    public boolean isLeaf() {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#children()
      */
-    public Enumeration children()
-    {
+    public Enumeration children() {
         return new IteratorEnumeration(books.iterator());
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#getParent()
      */
-    public TreeNode getParent()
-    {
+    public TreeNode getParent() {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#getChildAt(int)
      */
-    public TreeNode getChildAt(int childIndex)
-    {
+    public TreeNode getChildAt(int childIndex) {
         Book book = (Book) books.get(childIndex);
         return new ReferenceBookTreeNode(model, this, book);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#getIndex(javax.swing.tree.TreeNode)
      */
-    public int getIndex(TreeNode node)
-    {
+    public int getIndex(TreeNode node) {
         ReferenceBookTreeNode refnode = (ReferenceBookTreeNode) node;
         Book book = refnode.getBook();
         return books.indexOf(book);
@@ -169,37 +175,38 @@ public class ReferenceRootTreeNode implements TreeNode
     /**
      * So we can keep track of how many books there are
      */
-    final class CustomBooksListener implements BooksListener
-    {
-        /* (non-Javadoc)
-         * @see org.crosswire.jsword.book.BooksListener#bookAdded(org.crosswire.jsword.book.BooksEvent)
+    final class CustomBooksListener implements BooksListener {
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * org.crosswire.jsword.book.BooksListener#bookAdded(org.crosswire.jsword
+         * .book.BooksEvent)
          */
-        public void bookAdded(BooksEvent ev)
-        {
+        public void bookAdded(BooksEvent ev) {
             Book book = ev.getBook();
 
-            if (filter.test(book))
-            {
+            if (filter.test(book)) {
                 boolean changed = books.add(book);
-                if (!changed)
-                {
+                if (!changed) {
                     log.error("added a book from an event but our filtered book list did not change"); //$NON-NLS-1$
                 }
             }
         }
 
-        /* (non-Javadoc)
-         * @see org.crosswire.jsword.book.BooksListener#bookRemoved(org.crosswire.jsword.book.BooksEvent)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * org.crosswire.jsword.book.BooksListener#bookRemoved(org.crosswire
+         * .jsword.book.BooksEvent)
          */
-        public void bookRemoved(BooksEvent ev)
-        {
+        public void bookRemoved(BooksEvent ev) {
             Book book = ev.getBook();
 
-            if (filter.test(book))
-            {
+            if (filter.test(book)) {
                 boolean changed = books.remove(book);
-                if (!changed)
-                {
+                if (!changed) {
                     log.error("removed a book from an event but our filtered book list did not change"); //$NON-NLS-1$
                 }
             }

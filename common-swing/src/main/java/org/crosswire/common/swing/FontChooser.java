@@ -49,22 +49,18 @@ import javax.swing.SwingUtilities;
 /**
  * FontChooserBean allows the user to select a font in a similar way to a
  * FileSelectionDialog.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class FontChooser extends JPanel
-{
+public class FontChooser extends JPanel {
     /**
      * Create a FontChooser.
      */
-    public FontChooser()
-    {
-        ItemListener changer = new ItemListener()
-        {
-            public void itemStateChanged(ItemEvent ev)
-            {
+    public FontChooser() {
+        ItemListener changer = new ItemListener() {
+            public void itemStateChanged(ItemEvent ev) {
                 fireStateChange();
             }
         };
@@ -76,8 +72,7 @@ public class FontChooser extends JPanel
         name.addItemListener(changer);
 
         size.setRenderer(new NumberCellRenderer());
-        for (int i = MIN_FONT_SIZE; i <= MAX_FONT_SIZE; i++)
-        {
+        for (int i = MIN_FONT_SIZE; i <= MAX_FONT_SIZE; i++) {
             size.addItem(new Integer(i));
         }
 
@@ -102,15 +97,12 @@ public class FontChooser extends JPanel
     /**
      * Display a FontChooser in a dialog
      */
-    public static Font showDialog(Component parent, String title, Font initial)
-    {
+    public static Font showDialog(Component parent, String title, Font initial) {
         final FontChooser fontc = new FontChooser();
 
         Component root = SwingUtilities.getRoot(parent);
 
-        fontc.dialog = (root instanceof JFrame)
-                      ? new JDialog((JFrame) root, title, true)
-                      : new JDialog((JDialog) root, title, true);
+        fontc.dialog = (root instanceof JFrame) ? new JDialog((JFrame) root, title, true) : new JDialog((JDialog) root, title, true);
 
         Font font = (initial != null) ? initial : DEFAULT_FONT.getFont();
         fontc.name.setSelectedItem(font);
@@ -121,21 +113,19 @@ public class FontChooser extends JPanel
         final ActionFactory actions = new ActionFactory(FontChooser.class, fontc);
 
         JButton ok = actions.createJButton("OK", new ActionListener() //$NON-NLS-1$
-        {
-            public void actionPerformed(ActionEvent ex)
-            {
-                fontc.dialog.setVisible(false);
-            }
-        });
+                {
+                    public void actionPerformed(ActionEvent ex) {
+                        fontc.dialog.setVisible(false);
+                    }
+                });
 
         JButton cancel = actions.createJButton("Cancel", new ActionListener() //$NON-NLS-1$
-        {
-            public void actionPerformed(ActionEvent ex)
-            {
-                fontc.dialog.setVisible(false);
-                fontc.font = null;
-            }
-        });
+                {
+                    public void actionPerformed(ActionEvent ex) {
+                        fontc.dialog.setVisible(false);
+                        fontc.font = null;
+                    }
+                });
 
         JPanel buttons = new JPanel();
         buttons.setLayout(new FlowLayout());
@@ -161,14 +151,14 @@ public class FontChooser extends JPanel
 
     /**
      * Set the Font displayed
-     * @param newFont The current Font
+     * 
+     * @param newFont
+     *            The current Font
      */
-    public void setStyle(Font newFont)
-    {
+    public void setStyle(Font newFont) {
         suppressEvents = true;
 
-        if (newFont == null)
-        {
+        if (newFont == null) {
             return;
         }
 
@@ -186,12 +176,10 @@ public class FontChooser extends JPanel
     /**
      * @return The currently selected font
      */
-    public Font getStyle()
-    {
+    public Font getStyle() {
         Font selected = (Font) name.getSelectedItem();
 
-        if (selected == null)
-        {
+        if (selected == null) {
             return DEFAULT_FONT.getFont();
         }
 
@@ -204,13 +192,11 @@ public class FontChooser extends JPanel
     /**
      * When something changes we must inform out listeners.
      */
-    protected void fireStateChange()
-    {
+    protected void fireStateChange() {
         Font old = font;
         font = getStyle();
 
-        if (!suppressEvents)
-        {
+        if (!suppressEvents) {
             firePropertyChange(PROPERTY_STYLE, old, font);
         }
     }
@@ -218,19 +204,16 @@ public class FontChooser extends JPanel
     /**
      * Model for the font style drop down
      */
-    static class CustomComboBoxModel extends AbstractListModel implements ComboBoxModel
-    {
+    static class CustomComboBoxModel extends AbstractListModel implements ComboBoxModel {
         /**
          * Create a custom data model for a JComboBox
          */
-        protected CustomComboBoxModel()
-        {
+        protected CustomComboBoxModel() {
             String[] names = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 
             fonts = new Font[names.length];
 
-            for (int i = 0; i < fonts.length; i++)
-            {
+            for (int i = 0; i < fonts.length; i++) {
                 // We need to exclude certain fonts that cause the JVM to crash.
                 // BUG_PARADE(DMS): 6376296
                 // It will be fixed in Java 1.6 (Mustang)
@@ -244,46 +227,52 @@ public class FontChooser extends JPanel
             }
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see javax.swing.ComboBoxModel#setSelectedItem(java.lang.Object)
          */
-        public void setSelectedItem(Object selection)
-        {
+        public void setSelectedItem(Object selection) {
             this.selection = selection;
             fireContentsChanged(this, -1, -1);
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see javax.swing.ComboBoxModel#getSelectedItem()
          */
-        public Object getSelectedItem()
-        {
+        public Object getSelectedItem() {
             return selection;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see javax.swing.ListModel#getSize()
          */
-        public int getSize()
-        {
+        public int getSize() {
             return fontCount;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see javax.swing.ListModel#getElementAt(int)
          */
-        public Object getElementAt(int index)
-        {
+        public Object getElementAt(int index) {
             return fonts[index];
         }
 
         /**
-         * The total number of fonts. Note, this may be less than or equal to fonts.length.
+         * The total number of fonts. Note, this may be less than or equal to
+         * fonts.length.
          */
         private int fontCount;
 
         /**
-         * An array of the fonts themselves. Note the array is as big as the total number of fonts in the system.
+         * An array of the fonts themselves. Note the array is as big as the
+         * total number of fonts in the system.
          */
         private Font[] fonts;
 
@@ -299,33 +288,32 @@ public class FontChooser extends JPanel
     }
 
     /**
-     * An extension of JLabel that resets it's font so that
-     * it can be used to render the items in a JComboBox
+     * An extension of JLabel that resets it's font so that it can be used to
+     * render the items in a JComboBox
      */
-    static class CustomListCellRenderer extends DefaultListCellRenderer
-    {
-        public CustomListCellRenderer()
-        {
+    static class CustomListCellRenderer extends DefaultListCellRenderer {
+        public CustomListCellRenderer() {
             GuiUtil.applyDefaultOrientation(this);
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing
+         * .JList, java.lang.Object, int, boolean, boolean)
          */
         /* @Override */
-        public Component getListCellRendererComponent(JList listbox, Object value, int index, boolean selected, boolean focus)
-        {
+        public Component getListCellRendererComponent(JList listbox, Object value, int index, boolean selected, boolean focus) {
             Font defaultFont = DEFAULT_FONT.getFont();
-            if (value == null)
-            {
+            if (value == null) {
                 setText("<null>"); //$NON-NLS-1$
                 setFont(defaultFont);
-            }
-            else
-            {
+            } else {
                 Font afont = (Font) value;
                 setText(afont.getFamily());
-                setFont(defaultFont); // afont); // Some fonts cannot display their own name.
+                setFont(defaultFont); // afont); // Some fonts cannot display
+                // their own name.
             }
 
             return this;
@@ -341,18 +329,13 @@ public class FontChooser extends JPanel
      * An extension of JComboBox that selects a font in the combo based on it's
      * name, not object equivalence.
      */
-    static class FontNameComboBox extends JComboBox
-    {
-        public void setSelectedItem(Object anObject)
-        {
-            if ((selectedItemReminder == null || !selectedItemReminder.equals(anObject)) && (anObject instanceof Font))
-            {
+    static class FontNameComboBox extends JComboBox {
+        public void setSelectedItem(Object anObject) {
+            if ((selectedItemReminder == null || !selectedItemReminder.equals(anObject)) && (anObject instanceof Font)) {
                 String fontName = ((Font) anObject).getName();
-                for (int i = 0; i < dataModel.getSize(); i++)
-                {
+                for (int i = 0; i < dataModel.getSize(); i++) {
                     Object element = dataModel.getElementAt(i);
-                    if (element instanceof Font && (((Font) element).getName().equals(fontName)))
-                    {
+                    if (element instanceof Font && (((Font) element).getName().equals(fontName))) {
                         super.setSelectedItem(element);
                         return;
                     }

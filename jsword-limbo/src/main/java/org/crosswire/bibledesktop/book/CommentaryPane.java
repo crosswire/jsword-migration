@@ -46,32 +46,27 @@ import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.Verse;
 
 /**
- * Builds a set of tabs from the list of Books returned by a filtered list
- * of Books.
- *  
- * @see gnu.gpl.License for license details.
+ * Builds a set of tabs from the list of Books returned by a filtered list of
+ * Books.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class CommentaryPane extends JPanel implements BookDataDisplay
-{
+public class CommentaryPane extends JPanel implements BookDataDisplay {
     /**
      * Simple constructor that uses all the Books
      */
-    public CommentaryPane()
-    {
+    public CommentaryPane() {
         init();
     }
 
     /**
      * Initialise the GUI
      */
-    private void init()
-    {
-        set.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+    private void init() {
+        set.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 updateDisplay();
             }
         });
@@ -92,10 +87,8 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
         cboComments.setModel(mdlcomments);
         cboComments.setRenderer(new BookListCellRenderer());
         cboComments.setPrototypeDisplayValue(BookListCellRenderer.PROTOTYPE_BOOK_NAME);
-        cboComments.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        cboComments.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 updateDisplay();
             }
         });
@@ -110,84 +103,91 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
         this.add(display.getComponent(), BorderLayout.CENTER);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getComponent()
      */
-    public Component getComponent()
-    {
+    public Component getComponent() {
         return this;
     }
 
     /**
      * 
      */
-    protected void updateDisplay()
-    {
+    protected void updateDisplay() {
         Book book = (Book) cboComments.getSelectedItem();
-        if (book == null)
-        {
+        if (book == null) {
             return;
         }
 
-        try
-        {
+        try {
             Verse verse = set.getVerse();
-            display.setBookData(new Book[] {book}, verse);
-        }
-        catch (Exception ex)
-        {
+            display.setBookData(new Book[] {
+                book
+            }, verse);
+        } catch (Exception ex) {
             Reporter.informUser(this, ex);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#copy()
      */
-    public void copy()
-    {
+    public void copy() {
         display.copy();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getKey()
      */
-    public Key getKey()
-    {
+    public Key getKey() {
         return key;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBooks()
      */
-    public Book[] getBooks()
-    {
-        return new Book[] {(Book) cboComments.getSelectedItem()};
+    public Book[] getBooks() {
+        return new Book[] {
+            (Book) cboComments.getSelectedItem()
+        };
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getFirstBook()
      */
-    public Book getFirstBook()
-    {
+    public Book getFirstBook() {
         return (Book) cboComments.getSelectedItem();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#clearBookData()
      */
-    public void clearBookData()
-    {
-        setBookData(null, null);        
+    public void clearBookData() {
+        setBookData(null, null);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book[], org.crosswire.jsword.passage.Key)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire
+     * .jsword.book.Book[], org.crosswire.jsword.passage.Key)
      */
-    public void setBookData(Book[] books, Key key)
-    {
+    public void setBookData(Book[] books, Key key) {
         Book book = null;
-        if (books != null && books.length > 0)
-        {
+        if (books != null && books.length > 0) {
             book = books[0];
         }
 
@@ -196,34 +196,35 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
         setKey(key);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setCompareBooks(boolean)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.bibledesktop.display.BookDataDisplay#setCompareBooks(boolean
+     * )
      */
-    public void setCompareBooks(boolean compare)
-    {
+    public void setCompareBooks(boolean compare) {
         throw new UnsupportedOperationException();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#refresh()
      */
-    public void refresh()
-    {
+    public void refresh() {
         display.refresh();
     }
 
     /**
      * Accessor for the current passage
      */
-    public void setKey(Key key)
-    {
+    public void setKey(Key key) {
         this.key = key;
 
-        if (key != null && key instanceof Passage)
-        {
+        if (key != null && key instanceof Passage) {
             Passage ref = (Passage) key;
-            if (ref.countVerses() > 0)
-            {
+            if (ref.countVerses() > 0) {
                 set.setVerse(ref.getVerseAt(0));
             }
         }
@@ -231,43 +232,57 @@ public class CommentaryPane extends JPanel implements BookDataDisplay
         updateDisplay();
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.bibledesktop.display.BookDataDisplay#addKeyChangeListener
+     * (org.crosswire.bibledesktop.passage.KeyChangeListener)
      */
-    public void addKeyChangeListener(KeyChangeListener listener)
-    {
+    public void addKeyChangeListener(KeyChangeListener listener) {
         display.addKeyChangeListener(listener);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.bibledesktop.display.BookDataDisplay#removeKeyChangeListener
+     * (org.crosswire.bibledesktop.passage.KeyChangeListener)
      */
-    public void removeKeyChangeListener(KeyChangeListener listener)
-    {
+    public void removeKeyChangeListener(KeyChangeListener listener) {
         display.removeKeyChangeListener(listener);
     }
 
-    /* (non-Javadoc)
-     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @seejava.beans.PropertyChangeListener#propertyChange(java.beans.
+     * PropertyChangeEvent)
      */
-    public void propertyChange(PropertyChangeEvent evt)
-    {
+    public void propertyChange(PropertyChangeEvent evt) {
         display.propertyChange(evt);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.bibledesktop.display.BookDataDisplay#addURIEventListener
+     * (org.crosswire.bibledesktop.display.URIEventListener)
      */
-    public void addURIEventListener(URIEventListener listener)
-    {
+    public void addURIEventListener(URIEventListener listener) {
         display.addURIEventListener(listener);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.bibledesktop.display.BookDataDisplay#removeURIEventListener
+     * (org.crosswire.bibledesktop.display.URIEventListener)
      */
-    public void removeURIEventListener(URIEventListener listener)
-    {
+    public void removeURIEventListener(URIEventListener listener) {
         display.removeURIEventListener(listener);
     }
 

@@ -31,35 +31,34 @@ import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.RestrictionType;
 
 /**
- * The RangeListModel class gives access to a Passage as a list of ranges
- * via a ListModel.
- *
- * @see gnu.gpl.License for license details.
+ * The RangeListModel class gives access to a Passage as a list of ranges via a
+ * ListModel.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class RangeListModel extends AbstractListModel
-{
+public class RangeListModel extends AbstractListModel {
     /**
-     * Create a RangeListModel specifying whether
-     * to list the ranges bounded by Chapter or not at all.
-     * @param theRestriction Do we chop at chapter boundries
+     * Create a RangeListModel specifying whether to list the ranges bounded by
+     * Chapter or not at all.
+     * 
+     * @param theRestriction
+     *            Do we chop at chapter boundaries
      */
-    public RangeListModel(RestrictionType theRestriction)
-    {
+    public RangeListModel(RestrictionType theRestriction) {
         restrict = theRestriction;
         ranges = new ArrayList();
     }
 
     /**
-     * Change the restrictions we are using.
-     * Must be one of:
-     * <code>RestrictType.NONE</code>, or
-     * <code>RestrictType.CHAPTER</code>
-     * @param restrict The new restrictions
+     * Change the restrictions we are using. Must be one of:
+     * <code>RestrictType.NONE</code>, or <code>RestrictType.CHAPTER</code>
+     * 
+     * @param restrict
+     *            The new restrictions
      */
-    public void setRestriction(RestrictionType restrict)
-    {
+    public void setRestriction(RestrictionType restrict) {
         this.restrict = restrict;
 
         refresh();
@@ -68,41 +67,39 @@ public class RangeListModel extends AbstractListModel
     /**
      * Return the current Range Restriction
      */
-    public RestrictionType getRestriction()
-    {
+    public RestrictionType getRestriction() {
         return restrict;
     }
 
     /**
      * Returns the length of the list.
+     * 
      * @return The number of verses/ranges in the list
      */
-    public int getSize()
-    {
+    public int getSize() {
         return ranges.size();
     }
 
     /**
      * Returns the value at the specified index.
-     * @param index The index (based at 0) of the element to fetch
+     * 
+     * @param index
+     *            The index (based at 0) of the element to fetch
      * @return The required verse/range
      */
-    public Object getElementAt(int index)
-    {
+    public Object getElementAt(int index) {
         return ranges.get(index);
     }
 
     /**
      * Accessor for the current passage
      */
-    public final void setPassage(Passage newRef)
-    {
+    public final void setPassage(Passage newRef) {
         fireIntervalRemoved(this, 0, getSize());
 
         ref = newRef;
 
-        if (ref != null)
-        {
+        if (ref != null) {
             ref.optimizeReads();
         }
 
@@ -114,26 +111,22 @@ public class RangeListModel extends AbstractListModel
     /**
      * Accessor for the current passage
      */
-    public Passage getPassage()
-    {
+    public Passage getPassage() {
         return ref;
     }
 
-    private void refresh()
-    {
+    private void refresh() {
         ranges.clear();
-        if (ref != null)
-        {
+        if (ref != null) {
             Iterator iter = ref.rangeIterator(restrict);
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 ranges.add(iter.next());
             }
         }
     }
 
     /**
-     * The Passage that we are modelling
+     * The Passage that we are modeling
      */
     private Passage ref;
 
@@ -143,7 +136,7 @@ public class RangeListModel extends AbstractListModel
     private List ranges;
 
     /**
-     * If we are modelling in groups, do we break at chapter/book boundries
+     * If we are modeling in groups, do we break at chapter/book boundaries
      */
     private RestrictionType restrict;
 

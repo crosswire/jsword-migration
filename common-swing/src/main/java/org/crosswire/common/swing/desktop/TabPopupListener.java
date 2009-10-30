@@ -31,65 +31,69 @@ import javax.swing.SwingUtilities;
 
 /**
  * A mouse listener for a tabbed pane that can display a popup menu.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at yahoo dot com]
  */
-public class TabPopupListener extends MouseAdapter
-{
+public class TabPopupListener extends MouseAdapter {
 
     /**
-     * Create a listener to mouse events on a JTabbedPane
-     * and show a popup if requested.
-     * @param tabbedPane The tab pane on which to listen for popup events
-     * @param popupMenu the popup to display
+     * Create a listener to mouse events on a JTabbedPane and show a popup if
+     * requested.
+     * 
+     * @param tabbedPane
+     *            The tab pane on which to listen for popup events
+     * @param popupMenu
+     *            the popup to display
      */
-    public TabPopupListener(JTabbedPane tabbedPane, JPopupMenu popupMenu)
-    {
+    public TabPopupListener(JTabbedPane tabbedPane, JPopupMenu popupMenu) {
         popup = popupMenu;
         tabs = tabbedPane;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
      */
     /* @Override */
-    public void mouseClicked(MouseEvent e)
-    {
+    public void mouseClicked(MouseEvent e) {
         doPopup(e);
     }
 
-    /* (non-Javadoc)
-     * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
      */
     /* @Override */
-    public void mouseReleased(MouseEvent e)
-    {
+    public void mouseReleased(MouseEvent e) {
         doPopup(e);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
      */
     /* @Override */
-    public void mousePressed(MouseEvent e)
-    {
+    public void mousePressed(MouseEvent e) {
         doPopup(e);
     }
 
     /**
      * Popup if the mouse event indicates it should be shown
+     * 
      * @param e
      */
-    private void doPopup(MouseEvent e)
-    {
-        if (popup != null && e.isPopupTrigger())
-        {
-            // We only want the popup when we are over the tab an not the content of the tab.
+    private void doPopup(MouseEvent e) {
+        if (popup != null && e.isPopupTrigger()) {
+            // We only want the popup when we are over the tab an not the
+            // content of the tab.
             Component underMouse = SwingUtilities.getDeepestComponentAt((Component) e.getSource(), e.getX(), e.getY());
-            if (underMouse == tabs)
-            {
+            if (underMouse == tabs) {
                 // show the popup at the cursor
                 popup.show(tabs, e.getX(), e.getY());
             }

@@ -29,40 +29,41 @@ import java.util.NoSuchElementException;
 /**
  * This is a version of LinkedList that is not fail-fast.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class RobustList extends AbstractList implements List
-{
+public class RobustList extends AbstractList implements List {
     /**
      * Does this list contains the specified element?
-     * @param o element whose presence in this list is to be tested.
+     * 
+     * @param o
+     *            element whose presence in this list is to be tested.
      * @return true if this list contains the specified element.
      */
     /* @Override */
-    public boolean contains(Object o)
-    {
+    public boolean contains(Object o) {
         return indexOf(o) != -1;
     }
 
     /**
      * Returns the number of elements in this list.
+     * 
      * @return the number of elements in this list.
      */
     /* @Override */
-    public int size()
-    {
+    public int size() {
         return size;
     }
 
     /**
      * Appends the specified element to the end of this list.
-     * @param o element to be appended to this list.
+     * 
+     * @param o
+     *            element to be appended to this list.
      */
     /* @Override */
-    public boolean add(Object o)
-    {
+    public boolean add(Object o) {
         // debug("pre-add "+o);
         new Entry(o);
         // debug("post-add "+o);
@@ -70,40 +71,39 @@ public class RobustList extends AbstractList implements List
     }
 
     /**
-     * Removes the element at the specified position in this list.  Shifts any
+     * Removes the element at the specified position in this list. Shifts any
      * subsequent elements to the left (subtracts one from their indices).
      * Returns the element that was removed from the list.
-     * @param index the index of the element to removed.
+     * 
+     * @param index
+     *            the index of the element to removed.
      * @return the element previously at the specified position.
      */
     /* @Override */
-    public Object remove(int index)
-    {
-        //debug("pre-remove "+index);
+    public Object remove(int index) {
+        // debug("pre-remove "+index);
         Entry e = findEntry(index);
         e.remove();
-        //debug("post-remove "+index);
+        // debug("post-remove "+index);
 
         return e.object;
     }
 
     /**
-     * Removes the first occurrence of the specified element in this list.  If
+     * Removes the first occurrence of the specified element in this list. If
      * the list does not contain the element, it is unchanged.
-     * @param o element to be removed from this list, if present.
+     * 
+     * @param o
+     *            element to be removed from this list, if present.
      * @return true if the list contained the specified element.
      */
     /* @Override */
-    public boolean remove(Object o)
-    {
+    public boolean remove(Object o) {
         // debug("pre-remove "+o);
-        if (o == null)
-        {
+        if (o == null) {
             Entry e = head;
-            while (e != null)
-            {
-                if (e.object == null)
-                {
+            while (e != null) {
+                if (e.object == null) {
                     e.remove();
                     // debug("post-remove "+o);
                     return true;
@@ -111,14 +111,10 @@ public class RobustList extends AbstractList implements List
 
                 e = e.next;
             }
-        }
-        else
-        {
+        } else {
             Entry e = head;
-            while (e != null)
-            {
-                if (o.equals(e.object))
-                {
+            while (e != null) {
+                if (o.equals(e.object)) {
                     e.remove();
                     // debug("post-remove "+o);
                     return true;
@@ -136,8 +132,7 @@ public class RobustList extends AbstractList implements List
      * Removes all of the elements from this list.
      */
     /* @Override */
-    public void clear()
-    {
+    public void clear() {
         debug("pre-clear"); //$NON-NLS-1$
         head = null;
         foot = null;
@@ -147,39 +142,33 @@ public class RobustList extends AbstractList implements List
 
     /**
      * Returns the element at the specified position in this list.
-     * @param index index of element to return.
+     * 
+     * @param index
+     *            index of element to return.
      * @return the element at the specified position in this list.
      */
     /* @Override */
-    public Object get(int index)
-    {
+    public Object get(int index) {
         return findEntry(index).object;
     }
 
     /**
      * Return the indexed entry.
      */
-    private Entry findEntry(int index)
-    {
-        if (index < 0 || index >= size)
-        {
+    private Entry findEntry(int index) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         Entry e;
-        if (index < size / 2)
-        {
+        if (index < size / 2) {
             e = head;
-            for (int i = 0; i != index; i++)
-            {
+            for (int i = 0; i != index; i++) {
                 e = e.next;
             }
-        }
-        else
-        {
+        } else {
             e = foot;
-            for (int i = size - 1; i != index; i--)
-            {
+            for (int i = size - 1; i != index; i--) {
                 e = e.prev;
             }
         }
@@ -188,36 +177,30 @@ public class RobustList extends AbstractList implements List
     }
 
     /**
-     * Returns the index in this list of the first occurrence of the
-     * specified element, or -1 if the List does not contain this element.
-     * @param o element to search for.
+     * Returns the index in this list of the first occurrence of the specified
+     * element, or -1 if the List does not contain this element.
+     * 
+     * @param o
+     *            element to search for.
      * @return the index of the first occurrence or -1
      */
     /* @Override */
-    public int indexOf(Object o)
-    {
+    public int indexOf(Object o) {
         int index = 0;
-        if (o == null)
-        {
+        if (o == null) {
             Entry e = head;
-            while (e != null)
-            {
-                if (e.object == null)
-                {
+            while (e != null) {
+                if (e.object == null) {
                     return index;
                 }
 
                 e = e.next;
                 index++;
             }
-        }
-        else
-        {
+        } else {
             Entry e = head;
-            while (e != null)
-            {
-                if (o.equals(e.object))
-                {
+            while (e != null) {
+                if (o.equals(e.object)) {
                     return index;
                 }
 
@@ -231,10 +214,10 @@ public class RobustList extends AbstractList implements List
 
     /**
      * Returns a list-iterator of the elements in this list
+     * 
      * @return a ListIterator of the elements in this list
      */
-    public Enumeration elements()
-    {
+    public Enumeration elements() {
         // debug("pre-enumerate");
         return new RobustListEnumeration(head);
     }
@@ -242,31 +225,30 @@ public class RobustList extends AbstractList implements List
     /**
      * 
      */
-    private static class RobustListEnumeration implements Enumeration
-    {
+    private static class RobustListEnumeration implements Enumeration {
         /**
          * Simple ctor
          */
-        RobustListEnumeration(Entry head)
-        {
+        RobustListEnumeration(Entry head) {
             next = head;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.util.Enumeration#hasMoreElements()
          */
-        public boolean hasMoreElements()
-        {
+        public boolean hasMoreElements() {
             return next != null;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.util.Enumeration#nextElement()
          */
-        public Object nextElement() throws NoSuchElementException
-        {
-            if (next == null)
-            {
+        public Object nextElement() throws NoSuchElementException {
+            if (next == null) {
                 throw new NoSuchElementException();
             }
 
@@ -283,24 +265,20 @@ public class RobustList extends AbstractList implements List
     /**
      * 
      */
-    private class Entry
-    {
+    private class Entry {
         /**
          * @param object
          */
-        protected Entry(Object object)
-        {
+        protected Entry(Object object) {
             this.object = object;
             this.next = null;
             this.prev = foot;
 
-            if (head == null)
-            {
+            if (head == null) {
                 head = this;
             }
 
-            if (foot != null)
-            {
+            if (foot != null) {
                 foot.next = this;
             }
 
@@ -312,35 +290,28 @@ public class RobustList extends AbstractList implements List
         /**
          * 
          */
-        protected void remove()
-        {
-            if (this == foot)
-            {
-                if (prev != null)
-                {
+        protected void remove() {
+            if (this == foot) {
+                if (prev != null) {
                     prev.next = null;
                 }
 
                 foot = prev;
             }
 
-            if (this == head)
-            {
-                if (next != null)
-                {
+            if (this == head) {
+                if (next != null) {
                     next.prev = null;
                 }
 
                 head = next;
             }
 
-            if (prev != null)
-            {
+            if (prev != null) {
                 prev.next = next;
             }
 
-            if (next != null)
-            {
+            if (next != null) {
                 next.prev = prev;
             }
 
@@ -350,8 +321,7 @@ public class RobustList extends AbstractList implements List
         /**
          * 
          */
-        protected void debug()
-        {
+        protected void debug() {
             log.debug("  prev=" + prev); //$NON-NLS-1$
             log.debug("  this=" + this); //$NON-NLS-1$
             log.debug("  next=" + next); //$NON-NLS-1$
@@ -366,16 +336,14 @@ public class RobustList extends AbstractList implements List
     /**
      * Debug this implementation
      */
-    protected void debug(String title)
-    {
+    protected void debug(String title) {
         log.debug(title);
         log.debug(" head =" + head); //$NON-NLS-1$
         log.debug(" foot =" + foot); //$NON-NLS-1$
 
         int i = 0;
         Entry e = head;
-        while (e != null)
-        {
+        while (e != null) {
             log.debug(" index=" + i); //$NON-NLS-1$
             e.debug();
             e = e.next;

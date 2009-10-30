@@ -29,53 +29,58 @@ import java.io.OutputStream;
 import java.util.Hashtable;
 
 /**
- * PuncItemsMem is almost identical to WordItemsMem, but the Dictionary is
- * much smaller, there are almost certainly less than 256 different
- * intra-word punctuation sets, so we will only need 1 byte per word
- * instead of 2.
+ * PuncItemsMem is almost identical to WordItemsMem, but the Dictionary is much
+ * smaller, there are almost certainly less than 256 different intra-word
+ * punctuation sets, so we will only need 1 byte per word instead of 2.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class PuncItemsMem extends ItemsMem
-{
+public class PuncItemsMem extends ItemsMem {
     /**
      * Create a PuncItemsMem from a File that contains the dictionary.
-     * @param raw Reference to the RawBook that is using us
-     * @param create Should we start all over again
+     * 
+     * @param raw
+     *            Reference to the RawBook that is using us
+     * @param create
+     *            Should we start all over again
      */
-    public PuncItemsMem(RawBook raw, boolean create) throws Exception
-    {
+    public PuncItemsMem(RawBook raw, boolean create) throws Exception {
         super(raw, RawConstants.FILE_PUNC_ITEM, create);
     }
 
     /**
      * Create a PuncItemsMem from a File that contains the dictionary.
-     * @param raw Reference to the RawBook that is using us
-     * @param create Should we start all over again
-     * @param messages We append stuff here if something went wrong
+     * 
+     * @param raw
+     *            Reference to the RawBook that is using us
+     * @param create
+     *            Should we start all over again
+     * @param messages
+     *            We append stuff here if something went wrong
      */
-    public PuncItemsMem(RawBook raw, boolean create, StringBuffer messages)
-    {
+    public PuncItemsMem(RawBook raw, boolean create, StringBuffer messages) {
         super(raw, RawConstants.FILE_PUNC_ITEM, create, messages);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.ItemsMem#getMaxItems()
      */
     /* @Override */
-    public int getMaxItems()
-    {
+    public int getMaxItems() {
         return 1000;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Mem#load(java.io.InputStream)
      */
     /* @Override */
-    public void load(InputStream in) throws IOException
-    {
+    public void load(InputStream in) throws IOException {
         DataInputStream din = new DataInputStream(in);
 
         byte[] asig = new byte[6];
@@ -88,8 +93,7 @@ public class PuncItemsMem extends ItemsMem
         hash = new Hashtable(count);
         array = new String[count];
 
-        for (int i=0; i<count; i++)
-        {
+        for (int i = 0; i < count; i++) {
             byte wordlen = din.readByte();
             byte[] aword = new byte[wordlen];
             din.readFully(aword);
@@ -102,19 +106,19 @@ public class PuncItemsMem extends ItemsMem
         din.close();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Mem#save(java.io.OutputStream)
      */
     /* @Override */
-    public void save(OutputStream out) throws IOException
-    {
+    public void save(OutputStream out) throws IOException {
         DataOutputStream dout = new DataOutputStream(out);
 
         dout.writeBytes(RawConstants.SIG_PUNC_ITEM);
         dout.writeInt(hash.size());
 
-        for (int i=0; i<hash.size(); i++)
-        {
+        for (int i = 0; i < hash.size(); i++) {
             dout.writeByte(array[i].length());
             dout.writeBytes(array[i]);
         }

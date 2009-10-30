@@ -8,22 +8,20 @@ import java.util.Map;
 
 /**
  * A Little performance tool
+ * 
  * @author Joe Walker
  */
-public class Stopwatch
-{
+public class Stopwatch {
     /**
      * Ensure we cant be instantiated
      */
-    private Stopwatch()
-    {
+    private Stopwatch() {
     }
 
     /**
      * Start the current thread on a timing run
      */
-    public static void start() throws IllegalStateException
-    {
+    public static void start() throws IllegalStateException {
         if (local.get() != null)
             throw new IllegalStateException("Already started"); //$NON-NLS-1$
 
@@ -37,29 +35,27 @@ public class Stopwatch
     /**
      * Marks a waypoint in the current timing run
      */
-    public static void lap(String name)
-    {
+    public static void lap(String name) {
         Map times = (Map) local.get();
         long start = ((Long) origin.get()).longValue();
 
         if (times == null)
             throw new IllegalStateException("Not started"); //$NON-NLS-1$
 
-        times.put(name, new Long(System.currentTimeMillis()-start));
+        times.put(name, new Long(System.currentTimeMillis() - start));
     }
 
     /**
      * Ends the timing run on the current thread
      */
-    public static void stop()
-    {
+    public static void stop() {
         Map times = (Map) local.get();
         long start = ((Long) origin.get()).longValue();
 
         if (times == null)
             throw new IllegalStateException("Not started"); //$NON-NLS-1$
 
-        times.put("STOP", new Long(System.currentTimeMillis()-start)); //$NON-NLS-1$
+        times.put("STOP", new Long(System.currentTimeMillis() - start)); //$NON-NLS-1$
 
         local.set(null);
         origin.set(null);
@@ -72,16 +68,13 @@ public class Stopwatch
     /**
      * Report on the state of the completed timings so far
      */
-    public static void report(boolean reset)
-    {
-        for (int i=0; i<accumulated.size(); i++)
-        {
+    public static void report(boolean reset) {
+        for (int i = 0; i < accumulated.size(); i++) {
             Map times = (Map) accumulated.get(i);
-            report(""+i, times); //$NON-NLS-1$
+            report("" + i, times); //$NON-NLS-1$
         }
 
-        if (reset)
-        {
+        if (reset) {
             accumulated.clear();
         }
     }
@@ -89,43 +82,49 @@ public class Stopwatch
     /**
      * Produce a single report
      */
-    private static void report(String id, Map times)
-    {
+    private static void report(String id, Map times) {
         Iterator it = times.keySet().iterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             String name = (String) it.next();
             Long time = (Long) times.get(name);
-            System.out.println(id+","+name+","+time); //$NON-NLS-1$ //$NON-NLS-2$
+            System.out.println(id + "," + name + "," + time); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 
     /**
      * Quick test
      */
-    public static void main(String[] args)
-    {
-        for (int i=0; i<20; i++)
-        {
-            new Thread(new Runnable()
-            {
-                public void run()
-                {
+    public static void main(String[] args) {
+        for (int i = 0; i < 20; i++) {
+            new Thread(new Runnable() {
+                public void run() {
                     Stopwatch.start();
 
-                    while (true) { if (Math.random() > 0.9999) break; }
+                    while (true) {
+                        if (Math.random() > 0.9999)
+                            break;
+                    }
 
                     Stopwatch.lap("first"); //$NON-NLS-1$
 
-                    while (true) { if (Math.random() > 0.99999) break; }
+                    while (true) {
+                        if (Math.random() > 0.99999)
+                            break;
+                    }
 
                     Stopwatch.lap("second"); //$NON-NLS-1$
 
-                    while (true) { if (Math.random() > 0.9999) break; }
+                    while (true) {
+                        if (Math.random() > 0.9999)
+                            break;
+                    }
 
                     Stopwatch.lap("third"); //$NON-NLS-1$
 
-                    while (true) { if (Math.random() > 0.9999) break; }
+                    while (true) {
+                        if (Math.random() > 0.9999)
+                            break;
+                    }
 
                     Stopwatch.stop();
                 }

@@ -37,14 +37,12 @@ import org.crosswire.jsword.book.install.sword.AbstractSwordInstaller;
 /**
  * A representation of a Sword SiteEditor.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class SwordSiteEditor extends JPanel implements SiteEditor
-{
-    public void initialize()
-    {
+public class SwordSiteEditor extends JPanel implements SiteEditor {
+    public void initialize() {
         host = new JTextField();
         JLabel hostLabel = getLabelForText(Msg.HOST, host);
 
@@ -78,10 +76,8 @@ public class SwordSiteEditor extends JPanel implements SiteEditor
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.install.SiteEditor#save()
      */
-    public void save()
-    {
-        if (installer == null)
-        {
+    public void save() {
+        if (installer == null) {
             return;
         }
 
@@ -90,12 +86,9 @@ public class SwordSiteEditor extends JPanel implements SiteEditor
         installer.setPackageDirectory(packageDir.getText());
         installer.setProxyHost(proxyHost.getText());
         Integer pport = null;
-        try
-        {
+        try {
             pport = new Integer(proxyPort.getText());
-        }
-        catch (NumberFormatException e)
-        {
+        } catch (NumberFormatException e) {
             pport = null; // or -1
         }
         installer.setProxyPort(pport);
@@ -104,10 +97,8 @@ public class SwordSiteEditor extends JPanel implements SiteEditor
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.install.SiteEditor#reset()
      */
-    public void reset()
-    {
-        if (installer == null)
-        {
+    public void reset() {
+        if (installer == null) {
             return;
         }
 
@@ -122,30 +113,24 @@ public class SwordSiteEditor extends JPanel implements SiteEditor
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.install.SiteEditor#setEditable(boolean)
      */
-    public void setEditable(boolean editable)
-    {
-        if (host != null)
-        {
+    public void setEditable(boolean editable) {
+        if (host != null) {
             host.setEditable(editable);
         }
 
-        if (catalogDir != null)
-        {
+        if (catalogDir != null) {
             catalogDir.setEditable(editable);
         }
 
-        if (packageDir != null)
-        {
+        if (packageDir != null) {
             packageDir.setEditable(editable);
         }
 
-        if (proxyHost != null)
-        {
+        if (proxyHost != null) {
             proxyHost.setEditable(editable);
         }
 
-        if (proxyPort != null)
-        {
+        if (proxyPort != null) {
             proxyPort.setEditable(editable);
         }
     }
@@ -153,32 +138,26 @@ public class SwordSiteEditor extends JPanel implements SiteEditor
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.install.SiteEditor#getInstaller()
      */
-    public Installer getInstaller()
-    {
+    public Installer getInstaller() {
         return installer;
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.install.SiteEditor#setInstaller()
      */
-    public void setInstaller(Installer newInstaller)
-    {
+    public void setInstaller(Installer newInstaller) {
         assert newInstaller == null || newInstaller instanceof AbstractSwordInstaller;
         Installer old = installer;
         installer = (AbstractSwordInstaller) newInstaller;
-        if (newInstaller == null)
-        {
+        if (newInstaller == null) {
             removeAll();
-        }
-        else if (!newInstaller.equals(old))
-        {
+        } else if (!newInstaller.equals(old)) {
             removeAll();
             initialize();
         }
     }
 
-    private JLabel getLabelForText(Msg title, JTextField field)
-    {
+    private JLabel getLabelForText(Msg title, JTextField field) {
         JLabel label = new JLabel();
         label.setText(title.toString());
         label.setLabelFor(field);
@@ -192,8 +171,7 @@ public class SwordSiteEditor extends JPanel implements SiteEditor
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         installer = null;
         is.defaultReadObject();
     }

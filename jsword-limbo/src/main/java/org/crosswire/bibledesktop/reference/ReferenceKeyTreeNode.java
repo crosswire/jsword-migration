@@ -31,17 +31,15 @@ import org.crosswire.jsword.passage.Key;
 /**
  * A TreeNode that wraps a Key.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ReferenceKeyTreeNode implements TreeNode
-{
+public class ReferenceKeyTreeNode implements TreeNode {
     /**
      * Simple ctor
      */
-    public ReferenceKeyTreeNode(ReferenceTreeModel model, Book book, TreeNode parent, Key key)
-    {
+    public ReferenceKeyTreeNode(ReferenceTreeModel model, Book book, TreeNode parent, Key key) {
         this.model = model;
         this.book = book;
         this.parent = parent;
@@ -52,76 +50,83 @@ public class ReferenceKeyTreeNode implements TreeNode
         this.model.hashCode();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     /* @Override */
-    public String toString()
-    {
+    public String toString() {
         return key.getName();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#getChildCount()
      */
-    public int getChildCount()
-    {
+    public int getChildCount() {
         return 0;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#getAllowsChildren()
      */
-    public boolean getAllowsChildren()
-    {
+    public boolean getAllowsChildren() {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#isLeaf()
      */
-    public boolean isLeaf()
-    {
+    public boolean isLeaf() {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#children()
      */
-    public Enumeration children()
-    {
+    public Enumeration children() {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#getParent()
      */
-    public TreeNode getParent()
-    {
+    public TreeNode getParent() {
         return parent;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#getChildAt(int)
      */
-    public TreeNode getChildAt(int childIndex)
-    {
+    public TreeNode getChildAt(int childIndex) {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#getIndex(javax.swing.tree.TreeNode)
      */
-    public int getIndex(TreeNode node)
-    {
+    public int getIndex(TreeNode node) {
         return 0;
     }
 
     /**
      * The key that we are representing
      */
-    public Key getKey()
-    {
+    public Key getKey() {
         return key;
     }
 

@@ -26,19 +26,17 @@ import org.crosswire.common.util.MsgBase;
 /**
  * Compile safe Msg resource settings.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class Msg extends MsgBase
-{
+public class Msg extends MsgBase {
     static final Msg NO_PARENT = new Msg("ReferenceTreeModel.NoParent"); //$NON-NLS-1$
 
     /**
      * Passthrough ctor
      */
-    private Msg(String name)
-    {
+    private Msg(String name) {
         super(name);
     }
 }

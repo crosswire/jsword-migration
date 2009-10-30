@@ -26,33 +26,39 @@ import java.io.IOException;
 import org.crosswire.jsword.passage.Verse;
 
 /**
- * Insts is an interface that contains lists of numbers, generally
- * referring to members of an instance of an Items object.
+ * Insts is an interface that contains lists of numbers, generally referring to
+ * members of an instance of an Items object.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public interface Insts
-{
+public interface Insts {
     /**
      * Retrieve an ordered list of the words in a Verse
-     * @param verse The Verse to retrieve words for
+     * 
+     * @param verse
+     *            The Verse to retrieve words for
      * @return An array of word indexes
      */
     int[] getIndexes(Verse verse);
 
     /**
      * Retrieve an ordered list of the words in a Verse
-     * @param ordinal The Verse to retrieve words for
+     * 
+     * @param ordinal
+     *            The Verse to retrieve words for
      * @return An array of word indexes
      */
     int[] getIndexes(int ordinal);
 
     /**
      * Set a list of word indexes as the test to a Verse
-     * @param verse The Verse to set the words for
-     * @param indexes The array of word indexes
+     * 
+     * @param verse
+     *            The Verse to set the words for
+     * @param indexes
+     *            The array of word indexes
      */
     void setIndexes(int[] indexes, Verse verse);
 

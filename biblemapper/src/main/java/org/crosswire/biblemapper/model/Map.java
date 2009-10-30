@@ -43,113 +43,103 @@ import org.jdom.output.XMLOutputter;
 
 /**
  * A map is an array of Nodes (verses with position).
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class Map implements Serializable
-{
+public class Map implements Serializable {
     /**
      * Basic constructor
      */
-    public Map(int dimensions)
-    {
+    public Map(int dimensions) {
         this.dimensions = dimensions;
 
         // Create the array of Nodes
         int bie = BibleInfo.booksInBible();
-        this.nodes = new Position[bie+1][];
-        try
-        {
-            for (int b=1; b<=bie; b++)
-            {
+        this.nodes = new Position[bie + 1][];
+        try {
+            for (int b = 1; b <= bie; b++) {
                 int cib = BibleInfo.chaptersInBook(b);
-                nodes[b] = new Position[cib+1];
-                for (int c=1; c<=cib; c++)
-                {
+                nodes[b] = new Position[cib + 1];
+                for (int c = 1; c <= cib; c++) {
                     float[] pos = new float[dimensions];
 
-                    for (int d=0; d<dimensions; d++)
-                    {
+                    for (int d = 0; d < dimensions; d++) {
                         pos[d] = 0.0f;
                     }
 
                     nodes[b][c] = new Position(pos);
                 }
             }
-        }
-        catch (NoSuchVerseException ex)
-        {
+        } catch (NoSuchVerseException ex) {
             assert false : ex;
         }
     }
 
     /**
      * Get the number of dimensions in the nodes in this map
+     * 
      * @return The number of dimensions
      */
-    public int getDimensions()
-    {
+    public int getDimensions() {
         return dimensions;
     }
 
     /**
-     * Get the position (as a float array) of a node by the ordinal number
-     * of the verse that it contains
+     * Get the position (as a float array) of a node by the ordinal number of
+     * the verse that it contains
+     * 
      * @return The requested node position
      */
-    public float[] getPositionArrayCopy(int book, int chapter)
-    {
-        try
-        {
+    public float[] getPositionArrayCopy(int book, int chapter) {
+        try {
             return (float[]) nodes[book][chapter].pos.clone();
-        }
-        catch (ArrayIndexOutOfBoundsException ex)
-        {
-            log.error("getPosition() book="+book+" chapter="+chapter, ex);
-            return new float[] { 0.0f, 0.0f };
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            log.error("getPosition() book=" + book + " chapter=" + chapter, ex);
+            return new float[] {
+                    0.0f, 0.0f
+            };
         }
     }
 
     /**
-     * Get the position (as a float array) of a node by the ordinal number
-     * of the verse that it contains
-     * @param idx The index into the position array for the given verse
+     * Get the position (as a float array) of a node by the ordinal number of
+     * the verse that it contains
+     * 
+     * @param idx
+     *            The index into the position array for the given verse
      * @return The requested node position
      */
-    public float getPositionDimension(int book, int chapter, int idx)
-    {
-        try
-        {
+    public float getPositionDimension(int book, int chapter, int idx) {
+        try {
             return nodes[book][chapter].pos[idx];
-        }
-        catch (ArrayIndexOutOfBoundsException ex)
-        {
-            log.error("getPositionDimension() book="+book+" chapter="+chapter+" dim="+idx, ex);
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            log.error("getPositionDimension() book=" + book + " chapter=" + chapter + " dim=" + idx, ex);
             return 0.0f;
         }
     }
 
     /**
-     * Get the position of a node by the ordinal number of the verse that
-     * it contains
+     * Get the position of a node by the ordinal number of the verse that it
+     * contains
      */
-    public void setPosition(int book, int chapter, float[] pos)
-    {
+    public void setPosition(int book, int chapter, float[] pos) {
         nodes[book][chapter].pos = pos;
 
         fireMapChanged(book, chapter);
     }
 
     /**
-     * Get the position of a node by the ordinal number of the verse that
-     * it contains
-     * @param idx The index into the position array for the given verse
-     * @param f The new position
+     * Get the position of a node by the ordinal number of the verse that it
+     * contains
+     * 
+     * @param idx
+     *            The index into the position array for the given verse
+     * @param f
+     *            The new position
      */
-    public void setPositionDimension(int book, int chapter, int idx, float f)
-    {
+    public void setPositionDimension(int book, int chapter, int idx, float f) {
         nodes[book][chapter].pos[idx] = f;
 
         fireMapChanged(book, chapter);
@@ -158,20 +148,16 @@ public class Map implements Serializable
     /**
      * Fix the layout to a fairly random one
      */
-    public void setLayoutRandom()
-    {
-        try
-        {
-            for (int b=1; b<=BibleInfo.booksInBible(); b++)
-            {
-                for (int c=1; c<=BibleInfo.chaptersInBook(b); c++)
-                {
-                    nodes[b][c] = new Position(new float[] { (float) Math.random(), (float) Math.random() });
+    public void setLayoutRandom() {
+        try {
+            for (int b = 1; b <= BibleInfo.booksInBible(); b++) {
+                for (int c = 1; c <= BibleInfo.chaptersInBook(b); c++) {
+                    nodes[b][c] = new Position(new float[] {
+                            (float) Math.random(), (float) Math.random()
+                    });
                 }
             }
-        }
-        catch (NoSuchVerseException ex)
-        {
+        } catch (NoSuchVerseException ex) {
             assert false : ex;
         }
     }
@@ -179,12 +165,9 @@ public class Map implements Serializable
     /**
      * Fix the layout to a simple book/chapter line default
      */
-    public void setLayoutSimple()
-    {
-        if (dimensions != 2)
-        {
-            throw new IllegalArgumentException("Can't set simple layout for maps with "
-                    + dimensions + " dimensions.");
+    public void setLayoutSimple() {
+        if (dimensions != 2) {
+            throw new IllegalArgumentException("Can't set simple layout for maps with " + dimensions + " dimensions.");
         }
 
         float start = 0.05F;
@@ -192,76 +175,67 @@ public class Map implements Serializable
         float mid = (end - start) / 2;
         float scale = end - start;
 
-        try
-        {
+        try {
             int bie = BibleInfo.booksInBible();
-            for (int b=1; b<=bie; b++)
-            {
+            for (int b = 1; b <= bie; b++) {
                 float y = (((float) (b - 1)) / (bie - 1)) * scale + start;
 
                 int cib = BibleInfo.chaptersInBook(b);
-                if (cib == 1)
-                {
-                    nodes[b][1] = new Position(new float[] { mid + start, y });
-                }
-                else
-                {
-                    for (int c=1; c<=cib; c++)
-                    {
+                if (cib == 1) {
+                    nodes[b][1] = new Position(new float[] {
+                            mid + start, y
+                    });
+                } else {
+                    for (int c = 1; c <= cib; c++) {
                         float x = (((float) (c - 1)) / (cib - 1)) * scale + start;
 
-                        nodes[b][c] = new Position(new float[] { x, y });
+                        nodes[b][c] = new Position(new float[] {
+                                x, y
+                        });
                     }
                 }
             }
 
             fireMapRewritten();
-        }
-        catch (NoSuchVerseException ex)
-        {
+        } catch (NoSuchVerseException ex) {
             assert false : ex;
         }
     }
 
     /**
      * Apply the rules to the map.
-     * @param rules The rules to apply
+     * 
+     * @param rules
+     *            The rules to apply
      */
-    public void applyRules(Rule[] rules)
-    {
-        try
-        {
+    public void applyRules(Rule[] rules) {
+        try {
             // For each verse
-            for (int b=1; b<=BibleInfo.booksInBible(); b++)
-            {
-                for (int c=1; c<=BibleInfo.chaptersInBook(b); c++)
-                {
+            for (int b = 1; b <= BibleInfo.booksInBible(); b++) {
+                for (int c = 1; c <= BibleInfo.chaptersInBook(b); c++) {
                     Position[][] dar = new Position[rules.length][];
-                    for (int j=0; j<rules.length; j++)
-                    {
+                    for (int j = 0; j < rules.length; j++) {
                         dar[j] = rules[j].getScaledPosition(this, b, c);
 
-                        /*if (log.isDebugEnabled())
-                        {
-                            log.debug("Rule: "+j+" ("+rules[j].getClass().getName()+") scale="+rules[j].getScale());
-                            StringBuffer out = new StringBuffer(" ");
-                            for (int i=0; i<dar[j].length; i++)
-                            {
-                                out.append(" ("+i+"="+dar[j][i].pos[0]+","+dar[j][i].pos[1]+")");
-                            }
-                            log.debug(out);
-                        }*/
+                        /*
+                         * if (log.isDebugEnabled()) {
+                         * log.debug("Rule: "+j+" ("+
+                         * rules[j].getClass().getName(
+                         * )+") scale="+rules[j].getScale()); StringBuffer out =
+                         * new StringBuffer(" "); for (int i=0; i<dar[j].length;
+                         * i++) {
+                         * out.append(" ("+i+"="+dar[j][i].pos[0]+","+dar[
+                         * j][i].pos[1]+")"); } log.debug(out); }
+                         */
                     }
 
                     Position[] total = cat(dar);
                     nodes[b][c] = PositionUtil.average(total, dimensions);
-                    //log.debug("Total:");
-                    //log.debug("  (t="+nodes[b][c].pos[0]+","+nodes[b][c].pos[1]+")");
+                    // log.debug("Total:");
+                    // log.debug("  (t="+nodes[b][c].pos[0]+","+nodes[b][c].pos[1]+")");
                 }
             }
-        }
-        catch (NoSuchVerseException ex)
-        {
+        } catch (NoSuchVerseException ex) {
             assert false : ex;
         }
 
@@ -271,74 +245,63 @@ public class Map implements Serializable
     /**
      * Fix the layout to a fairly random one
      */
-    public void debug(PrintWriter out)
-    {
-        try
-        {
-            for (int b=1; b<=BibleInfo.booksInBible(); b++)
-            {
-                log.debug("Book "+b);
-                for (int c=1; c<=BibleInfo.chaptersInBook(b); c++)
-                {
-                    log.debug("  Chapter "+c+": Position=("+nodes[b][c].pos[0]+","+nodes[b][c].pos[1]+")");
+    public void debug(PrintWriter out) {
+        try {
+            for (int b = 1; b <= BibleInfo.booksInBible(); b++) {
+                log.debug("Book " + b);
+                for (int c = 1; c <= BibleInfo.chaptersInBook(b); c++) {
+                    log.debug("  Chapter " + c + ": Position=(" + nodes[b][c].pos[0] + "," + nodes[b][c].pos[1] + ")");
                 }
             }
-        }
-        catch (NoSuchVerseException ex)
-        {
+        } catch (NoSuchVerseException ex) {
             ex.printStackTrace(out);
         }
     }
 
     /**
-     * Add a map listener to the list of things wanting
-     * to know whenever we make some changes to the map
+     * Add a map listener to the list of things wanting to know whenever we make
+     * some changes to the map
      */
-    public void addMapListener(MapListener li)
-    {
+    public void addMapListener(MapListener li) {
         listeners.add(MapListener.class, li);
     }
 
     /**
-     * Remove a progress listener from the list of things wanting
-     * to know whenever we make some progress
+     * Remove a progress listener from the list of things wanting to know
+     * whenever we make some progress
      */
-    public void removeMapListener(MapListener li)
-    {
+    public void removeMapListener(MapListener li) {
         listeners.remove(MapListener.class, li);
     }
 
     /**
-     * Before we save/load something to/from disk we want to ensure that
-     * we don't loose the list of things that have registered to recieve
-     * map change events.
+     * Before we save/load something to/from disk we want to ensure that we
+     * don't loose the list of things that have registered to recieve map change
+     * events.
      */
-    public EventListenerList getEventListenerList()
-    {
+    public EventListenerList getEventListenerList() {
         return listeners;
     }
 
     /**
-     * Before we save/load something to/from disk we want to ensure that
-     * we don't loose the list of things that have registered to recieve
-     * map change events.
+     * Before we save/load something to/from disk we want to ensure that we
+     * don't loose the list of things that have registered to recieve map change
+     * events.
      */
-    public void setEventListenerList(EventListenerList listeners)
-    {
+    public void setEventListenerList(EventListenerList listeners) {
         this.listeners = listeners;
     }
 
     /**
      * What is the average position of all the nodes in this map
+     * 
      * @return The center of gravity
      */
-    public Position getCenterOfGravity()
-    {
+    public Position getCenterOfGravity() {
         // to cheat ...
         // return new Position(new float[] { 0.5F, 0.5F });
 
-        if (cog == null || replies > MAX_REPLIES)
-        {
+        if (cog == null || replies > MAX_REPLIES) {
             cog = PositionUtil.average(nodes, dimensions);
             replies = 0;
         }
@@ -348,76 +311,67 @@ public class Map implements Serializable
     }
 
     /**
-     * Called to fire a MapEvent to all the Listeners, when a single node
-     * has changed position.
+     * Called to fire a MapEvent to all the Listeners, when a single node has
+     * changed position.
      */
-    protected void fireMapChanged(int book, int chapter)
-    {
+    protected void fireMapChanged(int book, int chapter) {
         // Guaranteed to return a non-null array
         Object[] contents = listeners.getListenerList();
 
         // Process the listeners last to first, notifying
         // those that are interested in this event
         MapEvent ev = null;
-        for (int i=contents.length-2; i>=0; i-=2)
-        {
-            if (contents[i] == MapListener.class)
-            {
-                if (ev == null)
-                {
+        for (int i = contents.length - 2; i >= 0; i -= 2) {
+            if (contents[i] == MapListener.class) {
+                if (ev == null) {
                     ev = new MapEvent(this, book, chapter);
                 }
 
-                ((MapListener) contents[i+1]).mapChanged(ev);
+                ((MapListener) contents[i + 1]).mapChanged(ev);
             }
         }
     }
 
     /**
-     * Called to fire a MapEvent to all the Listeners, when a single node
-     * has changed position.
+     * Called to fire a MapEvent to all the Listeners, when a single node has
+     * changed position.
      */
-    protected void fireMapRewritten()
-    {
+    protected void fireMapRewritten() {
         // Guaranteed to return a non-null array
         Object[] contents = listeners.getListenerList();
 
         // Process the listeners last to first, notifying
         // those that are interested in this event
         MapEvent ev = null;
-        for (int i=contents.length-2; i>=0; i-=2)
-        {
-            if (contents[i] == MapListener.class)
-            {
-                if (ev == null)
-                {
+        for (int i = contents.length - 2; i >= 0; i -= 2) {
+            if (contents[i] == MapListener.class) {
+                if (ev == null) {
                     ev = new MapEvent(this);
                 }
 
-                ((MapListener) contents[i+1]).mapRewritten(ev);
+                ((MapListener) contents[i + 1]).mapRewritten(ev);
             }
         }
     }
 
     /**
-     * Take an array of Position arrays can cat them all together to make
-     * a single array containing all of them.
-     * @param dar The array of Position arrays
+     * Take an array of Position arrays can cat them all together to make a
+     * single array containing all of them.
+     * 
+     * @param dar
+     *            The array of Position arrays
      * @return The single big array
      */
-    public static Position[] cat(Position[][] dar)
-    {
+    public static Position[] cat(Position[][] dar) {
         int size = 0;
-        for (int i=0; i<dar.length; i++)
-        {
+        for (int i = 0; i < dar.length; i++) {
             size += dar[i].length;
         }
 
         Position[] total = new Position[size];
 
         int offset = 0;
-        for (int i=0; i<dar.length; i++)
-        {
+        for (int i = 0; i < dar.length; i++) {
             System.arraycopy(dar[i], 0, total, offset, dar[i].length);
             offset += dar[i].length;
         }
@@ -428,17 +382,13 @@ public class Map implements Serializable
     /**
      * Save link data to XML as a stream.
      */
-    public void load(Reader out) throws IOException
-    {
-        try
-        {
+    public void load(Reader out) throws IOException {
+        try {
             SAXBuilder builder = new SAXBuilder();
             Document doc = builder.build(out);
             Element root = doc.getRootElement();
             fromXML(root);
-        }
-        catch (JDOMException ex)
-        {
+        } catch (JDOMException ex) {
             throw new IOException(ex.getMessage());
         }
     }
@@ -446,8 +396,7 @@ public class Map implements Serializable
     /**
      * Save link data to XML as a stream.
      */
-    public void save(Writer out) throws IOException
-    {
+    public void save(Writer out) throws IOException {
         Element root = toXML();
         Document doc = new Document(root);
         XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
@@ -456,12 +405,12 @@ public class Map implements Serializable
 
     /**
      * Generate links from an XML representation.
-     * @param epos The root 'links' element
+     * 
+     * @param epos
+     *            The root 'links' element
      */
-    public void fromXML(Element epos) throws JDOMException
-    {
-        if (!epos.getName().equals("positions"))
-        {
+    public void fromXML(Element epos) throws JDOMException {
+        if (!epos.getName().equals("positions")) {
             throw new JDOMException("root element is not called 'links'");
         }
 
@@ -469,22 +418,19 @@ public class Map implements Serializable
 
         List ebs = epos.getChildren("book");
         Iterator bit = ebs.iterator();
-        while (bit.hasNext())
-        {
+        while (bit.hasNext()) {
             Element eb = (Element) bit.next();
             int b = Integer.parseInt(eb.getAttributeValue("num"));
 
             List ecs = eb.getChildren("chapter");
             Iterator cit = ecs.iterator();
-            while (cit.hasNext())
-            {
+            while (cit.hasNext()) {
                 Element ec = (Element) cit.next();
                 int c = Integer.parseInt(ec.getAttributeValue("num"));
 
                 float[] fa = new float[dimensions];
-                for (int d=0; d<dimensions; d++)
-                {
-                    fa[d] = Float.parseFloat(ec.getAttributeValue("dim"+d));
+                for (int d = 0; d < dimensions; d++) {
+                    fa[d] = Float.parseFloat(ec.getAttributeValue("dim" + d));
                 }
 
                 nodes[b][c] = new Position(fa);
@@ -495,36 +441,29 @@ public class Map implements Serializable
     /**
      * Save link data to XML as a JDOM tree.
      */
-    public Element toXML()
-    {
+    public Element toXML() {
         Element epos = new Element("positions");
-        epos.setAttribute("dimensions", ""+dimensions);
+        epos.setAttribute("dimensions", "" + dimensions);
 
-        try
-        {
-            for (int b=1; b<=BibleInfo.booksInBible(); b++)
-            {
+        try {
+            for (int b = 1; b <= BibleInfo.booksInBible(); b++) {
                 Element eb = new Element("book");
-                eb.setAttribute("num", ""+b);
+                eb.setAttribute("num", "" + b);
                 eb.setAttribute("name", BibleInfo.getPreferredBookName(b));
                 epos.addContent(eb);
 
-                for (int c=1; c<=BibleInfo.chaptersInBook(b); c++)
-                {
+                for (int c = 1; c <= BibleInfo.chaptersInBook(b); c++) {
                     Position node = nodes[b][c];
                     Element ec = new Element("chapter");
-                    ec.setAttribute("num", ""+c);
+                    ec.setAttribute("num", "" + c);
 
-                    for (int d=0; d<dimensions; d++)
-                    {
-                        ec.setAttribute("dim"+d, ""+node.pos[d]);
+                    for (int d = 0; d < dimensions; d++) {
+                        ec.setAttribute("dim" + d, "" + node.pos[d]);
                     }
                     eb.addContent(ec);
                 }
             }
-        }
-        catch (NoSuchVerseException ex)
-        {
+        } catch (NoSuchVerseException ex) {
             assert false : ex;
         }
 
@@ -533,10 +472,11 @@ public class Map implements Serializable
 
     /**
      * Initialize the transient fields
-     * @param in The stream to read our state from
+     * 
+     * @param in
+     *            The stream to read our state from
      */
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         listeners = new EventListenerList();
     }
@@ -586,4 +526,3 @@ public class Map implements Serializable
      */
     static final long serialVersionUID = -193572391252539071L;
 }
-

@@ -68,7 +68,7 @@ import org.crosswire.jsword.passage.Verse;
 /**
  * Builds a panel on which all the non-Bible books and their entries are visible.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
@@ -87,7 +87,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
     }
 
     /**
-     * GUI initialiser
+     * GUI initializer
      */
     private void init()
     {
@@ -432,7 +432,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
                 genBookKeyTree.setModel(model);
             }
         }
-        // Make sure that the display is emtpy.
+        // Make sure that the display is empty.
         display.clearBookData();
 
         Object selected = bookList.getSelectedValue();

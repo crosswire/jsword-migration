@@ -29,25 +29,25 @@ import org.crosswire.common.progress.Progress;
 /**
  * Listen for cancel events and do the cancel.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-final class JobCancelListener implements ActionListener
-{
+final class JobCancelListener implements ActionListener {
     /**
      * @param theJob
      */
-    public JobCancelListener(Progress theJob)
-    {
+    public JobCancelListener(Progress theJob) {
         job = theJob;
     }
 
-    /* (non-Javadoc)
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
-    public void actionPerformed(ActionEvent ev)
-    {
+    public void actionPerformed(ActionEvent ev) {
         job.cancel();
     }
 

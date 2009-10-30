@@ -27,72 +27,72 @@ import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.versification.BibleInfo;
 
 /**
- * BookVerseColor gives a color to a selected books, leaving the
- * others grey. 
+ * BookVerseColor gives a color to a selected books, leaving the others grey.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class BookVerseColor implements VerseColor
-{
+public class BookVerseColor implements VerseColor {
     /**
      * Basic constructor
      */
-    public BookVerseColor(int book)
-    {
+    public BookVerseColor(int book) {
         this.book = book;
     }
 
     /**
      * Accessor for the currently highlighted book
-     * @param book The new highlighted book
+     * 
+     * @param book
+     *            The new highlighted book
      */
-    public void setBook(int book)
-    {
+    public void setBook(int book) {
         this.book = book;
     }
 
     /**
      * Accessor for the currently highlighted book
+     * 
      * @return The current highlighted book
      */
-    public int getBook()
-    {
+    public int getBook() {
         return book;
     }
 
     /**
      * What Color should we use to represent this verse
-     * @param booknum The book number (Gen=1, Rev=66)
-     * @param chapternum The chapter number
-     * @param versenum The verse number
+     * 
+     * @param booknum
+     *            The book number (Gen=1, Rev=66)
+     * @param chapternum
+     *            The chapter number
+     * @param versenum
+     *            The verse number
      * @return The Color for this verse
      */
-    public Color getColor(int booknum, int chapternum, int versenum)
-    {
-        if (booknum != this.book)
-        {
+    public Color getColor(int booknum, int chapternum, int versenum) {
+        if (booknum != this.book) {
             return Color.gray;
         }
-		return Color.red;
+        return Color.red;
     }
 
     /**
      * What Color would set off the Verses painted on it
+     * 
      * @return An appropriate background color
      */
-    public Color getBackground()
-    {
+    public Color getBackground() {
         return Color.black;
     }
 
     /**
      * What Color should text be painted in
+     * 
      * @return An appropriate font color
      */
-    public Color getForeground()
-    {
+    public Color getForeground() {
         return Color.white;
     }
 
@@ -100,14 +100,10 @@ public class BookVerseColor implements VerseColor
      * The name for display in a combo box
      */
     /* @Override */
-    public String toString()
-    {
-        try
-        {
-            return "Book - "+BibleInfo.getPreferredBookName(book);
-        }
-        catch (NoSuchVerseException ex)
-        {
+    public String toString() {
+        try {
+            return "Book - " + BibleInfo.getPreferredBookName(book);
+        } catch (NoSuchVerseException ex) {
             return "Book - Error";
         }
     }

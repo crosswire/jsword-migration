@@ -51,21 +51,19 @@ import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Convert;
 
 /**
- * A StringArrayField allows editing of an array of Strings in a JList.
- * It allows the user to specify additional classes that extend the
- * functionality of the program.
- *
- * @see gnu.lgpl.License for license details.
+ * A StringArrayField allows editing of an array of Strings in a JList. It
+ * allows the user to specify additional classes that extend the functionality
+ * of the program.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class StringArrayField extends JPanel implements Field
-{
+public class StringArrayField extends JPanel implements Field {
     /**
      * Create a PropertyHashtableField for editing String arrays.
      */
-    public StringArrayField()
-    {
+    public StringArrayField() {
         actions = new ActionFactory(StringArrayField.class, this);
 
         list_model = new DefaultComboBoxModel();
@@ -92,71 +90,75 @@ public class StringArrayField extends JPanel implements Field
         GuiUtil.applyDefaultOrientation(this);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.config.swing.Field#setChoice(org.crosswire.common.config.Choice)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.config.swing.Field#setChoice(org.crosswire.common
+     * .config.Choice)
      */
-    public void setChoice(Choice param)
-    {
+    public void setChoice(Choice param) {
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.config.swing.Field#getValue()
      */
-    public String getValue()
-    {
+    public String getValue() {
         return Convert.stringArray2String(getArray(), SEPARATOR);
     }
 
     /**
      * Return the actual Hashtable being edited
+     * 
      * @return The current value
      */
-    public String[] getArray()
-    {
+    public String[] getArray() {
         String[] retcode = new String[list_model.getSize()];
-        for (int i = 0; i < retcode.length; i++)
-        {
+        for (int i = 0; i < retcode.length; i++) {
             retcode[i] = (String) list_model.getElementAt(i);
         }
 
         return retcode;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.config.swing.Field#setValue(java.lang.String)
      */
-    public void setValue(String value)
-    {
+    public void setValue(String value) {
         setArray(Convert.string2StringArray(value, SEPARATOR));
     }
 
     /**
      * Set the current value using a hashtable
-     * @param value The new text
+     * 
+     * @param value
+     *            The new text
      */
-    public void setArray(String[] value)
-    {
+    public void setArray(String[] value) {
         list_model = new DefaultComboBoxModel((String[]) value.clone());
         list.setModel(list_model);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.config.swing.Field#getComponent()
      */
-    public JComponent getComponent()
-    {
+    public JComponent getComponent() {
         return this;
     }
 
     /**
      * Pop up a dialog to allow editing of a new value
      */
-    public void doAddEntry()
-    {
+    public void doAddEntry() {
         InputPane input = new InputPane();
 
-        if (CWOptionPane.showConfirmDialog(this, input, Msg.NEW_CLASS.toString(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
-        {
+        if (CWOptionPane.showConfirmDialog(this, input, Msg.NEW_CLASS.toString(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
             String new_name = input.name_field.getText();
 
             list_model.addElement(new_name);
@@ -166,13 +168,11 @@ public class StringArrayField extends JPanel implements Field
     /**
      * Pop up a dialog to allow editing of a current value
      */
-    public void doUpdateEntry()
-    {
+    public void doUpdateEntry() {
         InputPane input = new InputPane();
         input.name_field.setText(currentValue());
 
-        if (CWOptionPane.showConfirmDialog(this, input, Msg.EDIT_CLASS.toString(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
-        {
+        if (CWOptionPane.showConfirmDialog(this, input, Msg.EDIT_CLASS.toString(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
             String new_name = input.name_field.getText();
 
             list_model.removeElement(currentValue());
@@ -183,56 +183,51 @@ public class StringArrayField extends JPanel implements Field
     /**
      * Delete the current value in the hashtable
      */
-    public void doRemoveEntry()
-    {
+    public void doRemoveEntry() {
         list_model.removeElement(currentValue());
     }
 
     /**
      * What is the currently selected value?
+     * 
      * @return The currently selected value
      */
-    private String currentValue()
-    {
+    private String currentValue() {
         return (String) list_model.getElementAt(list.getSelectedIndex());
     }
 
     /**
      * Serialization support.
-     *
+     * 
      * @param is
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         actions = new ActionFactory(StringArrayField.class, this);
         is.defaultReadObject();
     }
 
     /**
-     * The panel for a JOptionPane that allows editing a name/class
-     * combination.
+     * The panel for a JOptionPane that allows editing a name/class combination.
      */
-    public static class InputPane extends JPanel
-    {
+    public static class InputPane extends JPanel {
         /**
          * Simple ctor
          */
-        public InputPane()
-        {
+        public InputPane() {
             super(new GridBagLayout());
 
             GridBagConstraints c = new GridBagConstraints();
             c.anchor = GridBagConstraints.LINE_END;
             c.insets = new Insets(0, 5, 0, 5);
 
-            c.gridwidth = GridBagConstraints.RELATIVE; //next-to-last
-            c.fill = GridBagConstraints.NONE;      //reset to default
-            c.weightx = 0.0;                       //reset to default
+            c.gridwidth = GridBagConstraints.RELATIVE; // next-to-last
+            c.fill = GridBagConstraints.NONE; // reset to default
+            c.weightx = 0.0; // reset to default
             add(new JLabel(Msg.NAME.toString() + ':'), c);
 
-            c.gridwidth = GridBagConstraints.REMAINDER;     //end row
+            c.gridwidth = GridBagConstraints.REMAINDER; // end row
             c.fill = GridBagConstraints.HORIZONTAL;
             c.weightx = 1.0;
             add(name_field, c);

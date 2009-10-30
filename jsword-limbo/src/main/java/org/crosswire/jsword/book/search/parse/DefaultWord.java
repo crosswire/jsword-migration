@@ -28,63 +28,71 @@ import org.crosswire.jsword.passage.Key;
  * The Search Word for a Word to search for. This is the default if no other
  * Words match.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class DefaultWord implements ParamWord, CommandWord
-{
+public class DefaultWord implements ParamWord, CommandWord {
     /**
-     * Create a the default rule with the (presumably) Bible
-     * word that formed part of the original search string
-     * @param text The word to search (or otherwise) for
+     * Create a the default rule with the (presumably) Bible word that formed
+     * part of the original search string
+     * 
+     * @param text
+     *            The word to search (or otherwise) for
      */
-    public DefaultWord(String text)
-    {
+    public DefaultWord(String text) {
         this.text = text;
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.parse.ParamWord#getWord(org.crosswire.jsword.book.search.parse.IndexSearcher)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.parse.ParamWord#getWord(org.crosswire
+     * .jsword.book.search.parse.IndexSearcher)
      */
-    public String getWord(IndexSearcher engine)
-    {
+    public String getWord(IndexSearcher engine) {
         return text;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     /* @Override */
-    public String toString()
-    {
+    public String toString() {
         return text;
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.parse.ParamWord#getPassage(org.crosswire.jsword.book.search.parse.IndexSearcher)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.parse.ParamWord#getPassage(org.crosswire
+     * .jsword.book.search.parse.IndexSearcher)
      */
-    public Key getKeyList(IndexSearcher engine) throws BookException
-    {
+    public Key getKeyList(IndexSearcher engine) throws BookException {
         return engine.wordSearch(text);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.parse.CommandWord#updatePassage(org.crosswire.jsword.book.search.parse.Searcher, org.crosswire.jsword.passage.Passage)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.parse.CommandWord#updatePassage(org.
+     * crosswire.jsword.book.search.parse.Searcher,
+     * org.crosswire.jsword.passage.Passage)
      */
-    public void updatePassage(IndexSearcher engine, Key key) throws BookException
-    {
+    public void updatePassage(IndexSearcher engine, Key key) throws BookException {
         // We need to have DefaultWord pretend to be a CommandWord so that
         // seearches like "moses aaron" work. DefaultWord(moses) has to be a
         // command for DefaultWord(aaron)
         // So if the stack is empty we need to pretend that the search had been
         // done using us as a word.
-        if (engine.iterator().hasNext())
-        {
+        if (engine.iterator().hasNext()) {
             key.retainAll(engine.iteratePassage());
-        }
-        else
-        {
+        } else {
             key.retainAll(engine.wordSearch(text));
         }
     }

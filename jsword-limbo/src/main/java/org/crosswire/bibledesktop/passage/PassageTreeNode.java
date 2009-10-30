@@ -37,17 +37,15 @@ import org.crosswire.jsword.passage.RestrictionType;
 /**
  * A PassageTreeNode extends TreeNode to Model a Passage.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class PassageTreeNode implements TreeNode, PassageListener
-{
+public class PassageTreeNode implements TreeNode, PassageListener {
     /**
      * Simple ctor
      */
-    public PassageTreeNode(Passage ref, JTree tree)
-    {
+    public PassageTreeNode(Passage ref, JTree tree) {
         this.ref = ref;
         this.tree = tree;
         ref.addPassageListener(this);
@@ -56,8 +54,7 @@ public class PassageTreeNode implements TreeNode, PassageListener
     /**
      * Returns the child <code>TreeNode</code> at index i
      */
-    public TreeNode getChildAt(int index)
-    {
+    public TreeNode getChildAt(int index) {
         return new VerseRangeTreeNode(ref.getRangeAt(index, RestrictionType.CHAPTER));
     }
 
@@ -65,33 +62,27 @@ public class PassageTreeNode implements TreeNode, PassageListener
      * Returns the number of children <code>TreeNode</code>s the receiver
      * contains.
      */
-    public int getChildCount()
-    {
+    public int getChildCount() {
         return ref.countRanges(RestrictionType.CHAPTER);
     }
 
     /**
      * Returns the parent <code>TreeNode</code> of the receiver.
      */
-    public TreeNode getParent()
-    {
+    public TreeNode getParent() {
         return this;
     }
 
     /**
-     * Returns the index of <code>node</code> in the receivers children.
-     * If the receiver does not contain <code>node</code>, -1 will be
-     * returned.
+     * Returns the index of <code>node</code> in the receivers children. If the
+     * receiver does not contain <code>node</code>, -1 will be returned.
      */
-    public int getIndex(TreeNode node)
-    {
+    public int getIndex(TreeNode node) {
         int count = 0;
         Iterator it = ref.rangeIterator(RestrictionType.NONE);
 
-        while (it.hasNext())
-        {
-            if (it.next() == node)
-            {
+        while (it.hasNext()) {
+            if (it.next() == node) {
                 return count;
             }
 
@@ -104,44 +95,45 @@ public class PassageTreeNode implements TreeNode, PassageListener
     /**
      * Returns true if the receiver allows children.
      */
-    public boolean getAllowsChildren()
-    {
+    public boolean getAllowsChildren() {
         return true;
     }
 
     /**
      * Returns true if the receiver is a leaf.
      */
-    public boolean isLeaf()
-    {
+    public boolean isLeaf() {
         return false;
     }
 
     /**
-     * Sent after stuff has been added to the Passage.
-     * More info about what and where can be had from the Event
-     * @param ev a PassageEvent encapuslating the event information
+     * Sent after stuff has been added to the Passage. More info about what and
+     * where can be had from the Event
+     * 
+     * @param ev
+     *            a PassageEvent encapuslating the event information
      */
-    public void versesAdded(PassageEvent ev)
-    {
+    public void versesAdded(PassageEvent ev) {
     }
 
     /**
-     * Sent after stuff has been removed from the Passage.
-     * More info about what and where can be had from the Event
-     * @param ev a PassageEvent encapuslating the event information
+     * Sent after stuff has been removed from the Passage. More info about what
+     * and where can be had from the Event
+     * 
+     * @param ev
+     *            a PassageEvent encapuslating the event information
      */
-    public void versesRemoved(PassageEvent ev)
-    {
+    public void versesRemoved(PassageEvent ev) {
     }
 
     /**
-     * Sent after verses have been symultaneously added and removed from the Passage.
-     * More info about what and where can be had from the Event
-     * @param ev a PassageEvent encapuslating the event information
+     * Sent after verses have been symultaneously added and removed from the
+     * Passage. More info about what and where can be had from the Event
+     * 
+     * @param ev
+     *            a PassageEvent encapuslating the event information
      */
-    public void versesChanged(PassageEvent ev)
-    {
+    public void versesChanged(PassageEvent ev) {
         DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
         model.nodeStructureChanged(this);
     }
@@ -149,8 +141,7 @@ public class PassageTreeNode implements TreeNode, PassageListener
     /**
      * Returns the children of the reciever as an Enumeration.
      */
-    public Enumeration children()
-    {
+    public Enumeration children() {
         return new IteratorEnumeration(ref.rangeIterator(RestrictionType.NONE));
     }
 
@@ -158,8 +149,7 @@ public class PassageTreeNode implements TreeNode, PassageListener
      * Returns the children of the reciever as an Enumeration.
      */
     /* @Override */
-    public String toString()
-    {
+    public String toString() {
         return ref.getOverview();
     }
 

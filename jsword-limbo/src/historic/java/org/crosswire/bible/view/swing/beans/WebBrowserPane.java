@@ -19,7 +19,7 @@ import org.crosswire.common.util.Reporter;
 /**
  * Display a simple test web browser in a pane
  *
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker
  */

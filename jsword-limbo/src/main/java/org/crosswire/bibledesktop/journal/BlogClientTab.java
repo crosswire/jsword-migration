@@ -19,10 +19,10 @@ import com.manning.blogapps.chapter08.blogclient.Blog;
 
 /**
  * Blog site aware tab.
+ * 
  * @author Dave Johnson
  */
-public interface BlogClientTab
-{
+public interface BlogClientTab {
     void onSelected();
 
     void setBlog(Blog blog);

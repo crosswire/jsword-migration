@@ -30,60 +30,55 @@ import javax.swing.ScrollPaneConstants;
 import org.crosswire.common.util.OSType;
 
 /**
- * A ScrollPane that give appropriate cross platform behavior.
- * Specifically, on the Mac the vertical and horizontal scrollbars should always appear.
- * Further, scroll bars should show proper RTL or LTR component orientation.
- *
- * @see gnu.lgpl.License for license details.
+ * A ScrollPane that give appropriate cross platform behavior. Specifically, on
+ * the Mac the vertical and horizontal scrollbars should always appear. Further,
+ * scroll bars should show proper RTL or LTR component orientation.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class CWScrollPane extends JScrollPane
-{
-    public CWScrollPane()
-    {
+public class CWScrollPane extends JScrollPane {
+    public CWScrollPane() {
         this(null);
     }
 
-    public CWScrollPane(Component view)
-    {
+    public CWScrollPane(Component view) {
         super(view, verticalPolicy, horizontalPolicy);
         GuiUtil.applyDefaultOrientation(this);
     }
 
-    private static int getXPlatformVerticalScrollBarPolicy()
-    {
-         if (OSType.MAC.equals(OSType.getOSType()))
-        {
+    private static int getXPlatformVerticalScrollBarPolicy() {
+        if (OSType.MAC.equals(OSType.getOSType())) {
             return ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
         }
         return ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
     }
 
-    private static int getXPlatformHorizontalScrollBarPolicy()
-    {
-        if (OSType.MAC.equals(OSType.getOSType()))
-        {
+    private static int getXPlatformHorizontalScrollBarPolicy() {
+        if (OSType.MAC.equals(OSType.getOSType())) {
             return ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
         }
         return ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.JScrollPane#createHorizontalScrollBar()
      */
-    public JScrollBar createHorizontalScrollBar()
-    {
+    public JScrollBar createHorizontalScrollBar() {
         JScrollBar scroller = super.createHorizontalScrollBar();
         GuiUtil.applyDefaultOrientation(this);
         return scroller;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.JScrollPane#createVerticalScrollBar()
      */
-    public JScrollBar createVerticalScrollBar()
-    {
+    public JScrollBar createVerticalScrollBar() {
         JScrollBar scroller = super.createVerticalScrollBar();
         GuiUtil.applyDefaultOrientation(this);
         return scroller;

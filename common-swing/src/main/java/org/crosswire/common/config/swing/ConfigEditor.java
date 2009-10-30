@@ -28,24 +28,27 @@ import org.crosswire.common.config.Config;
 
 /**
  * An abstraction of a Configuration Editor.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public interface ConfigEditor
-{
+public interface ConfigEditor {
     /**
      * The equivalent of a constructor, create a Config base with the set of
      * Fields that it will display.
-     * @param config The configurable settings
+     * 
+     * @param config
+     *            The configurable settings
      */
     void construct(Config config);
 
     /**
-     * Create a dialog to house a TreeConfig component
-     * using the default set of Fields
-     * @param parent A component to use to find a frame to use as a dialog parent
+     * Create a dialog to house a TreeConfig component using the default set of
+     * Fields
+     * 
+     * @param parent
+     *            A component to use to find a frame to use as a dialog parent
      */
     void showDialog(Component parent, ActionListener al);
 }

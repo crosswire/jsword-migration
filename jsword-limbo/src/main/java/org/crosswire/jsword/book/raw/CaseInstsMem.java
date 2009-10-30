@@ -30,48 +30,54 @@ import java.io.OutputStream;
 import org.crosswire.jsword.versification.BibleInfo;
 
 /**
- * A CaseInstsMem provides access to the list of case ids that
- * make up a Passage. The central interface is an array of cases
- * of words in the given verse.
- * <p>This is different from WordInsts and PuncInsts
- * in that there is no CaseInsts. This is because there are only
- * 4 cases worthy of note, and they are all well defined in
- * PassageUtil.
- * <p>Storing these 4 cases takes 2 bits per word, 4 words per byte.
+ * A CaseInstsMem provides access to the list of case ids that make up a
+ * Passage. The central interface is an array of cases of words in the given
+ * verse.
+ * <p>
+ * This is different from WordInsts and PuncInsts in that there is no CaseInsts.
+ * This is because there are only 4 cases worthy of note, and they are all well
+ * defined in PassageUtil.
+ * <p>
+ * Storing these 4 cases takes 2 bits per word, 4 words per byte.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class CaseInstsMem extends InstsMem
-{
+public class CaseInstsMem extends InstsMem {
     /**
      * Basic constructor
-     * @param raw Reference to the RawBook that is using us
-     * @param create Should we start all over again
+     * 
+     * @param raw
+     *            Reference to the RawBook that is using us
+     * @param create
+     *            Should we start all over again
      */
-    public CaseInstsMem(RawBook raw, boolean create) throws Exception
-    {
+    public CaseInstsMem(RawBook raw, boolean create) throws Exception {
         super(raw, RawConstants.FILE_CASE_INST, create);
     }
 
     /**
      * Basic constructor
-     * @param raw Reference to the RawBook that is using us
-     * @param create Should we start all over again
-     * @param messages We append stuff here if something went wrong
+     * 
+     * @param raw
+     *            Reference to the RawBook that is using us
+     * @param create
+     *            Should we start all over again
+     * @param messages
+     *            We append stuff here if something went wrong
      */
-    public CaseInstsMem(RawBook raw, boolean create, StringBuffer messages)
-    {
+    public CaseInstsMem(RawBook raw, boolean create, StringBuffer messages) {
         super(raw, RawConstants.FILE_CASE_INST, create, messages);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Mem#load(java.io.InputStream)
      */
     /* @Override */
-    public void load(InputStream in) throws IOException
-    {
+    public void load(InputStream in) throws IOException {
         DataInputStream din = new DataInputStream(in);
 
         byte[] asig = new byte[6];
@@ -80,19 +86,15 @@ public class CaseInstsMem extends InstsMem
 
         assert ssig.equals(RawConstants.SIG_CASE_INST);
 
-        for (int i=0; i<BibleInfo.versesInBible(); i++)
-        {
+        for (int i = 0; i < BibleInfo.versesInBible(); i++) {
             int insts = din.readByte();
             array[i] = new int[insts];
-            for (int j=0; j<insts; j+=4)
-            {
+            for (int j = 0; j < insts; j += 4) {
                 byte b = din.readByte();
 
-                for (int k=0; k<4; k++)
-                {
-                    if (j+k < array[i].length)
-                    {
-                        array[i][j+k] = (b >> (6-(2*k))) & 3;
+                for (int k = 0; k < 4; k++) {
+                    if (j + k < array[i].length) {
+                        array[i][j + k] = (b >> (6 - (2 * k))) & 3;
                     }
                 }
             }
@@ -101,34 +103,28 @@ public class CaseInstsMem extends InstsMem
         din.close();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Mem#save(java.io.OutputStream)
      */
     /* @Override */
-    public void save(OutputStream out) throws IOException
-    {
+    public void save(OutputStream out) throws IOException {
         DataOutputStream dout = new DataOutputStream(out);
 
         dout.writeBytes(RawConstants.SIG_CASE_INST);
 
-        for (int i=0; i<BibleInfo.versesInBible(); i++)
-        {
-            if (array[i] == null)
-            {
+        for (int i = 0; i < BibleInfo.versesInBible(); i++) {
+            if (array[i] == null) {
                 dout.writeByte(0);
-            }
-            else
-            {
+            } else {
                 dout.writeByte(array[i].length);
-                for (int j=0; j<array[i].length; j+=4)
-                {
+                for (int j = 0; j < array[i].length; j += 4) {
                     byte b = 0;
 
-                    for (int k=0; k<4; k++)
-                    {
-                        if (j+k < array[i].length)
-                        {
-                            b += array[i][j+k] << (6-(2*k));
+                    for (int k = 0; k < 4; k++) {
+                        if (j + k < array[i].length) {
+                            b += array[i][j + k] << (6 - (2 * k));
                         }
                     }
 
@@ -140,4 +136,3 @@ public class CaseInstsMem extends InstsMem
         dout.close();
     }
 }
-

@@ -25,29 +25,27 @@ package org.crosswire.jsword.book.remote;
  * A fullfilment of RemoteBibleDriver that uses a Local commection for test
  * purposes.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class LocalRemoteBookDriver extends RemoteBookDriver
-{
+public class LocalRemoteBookDriver extends RemoteBookDriver {
     /**
      * Pass on the exception because RemoteBibleDriver.ctor() could fail due to
      * its ping start-up operation.
      */
-    public LocalRemoteBookDriver() throws RemoterException
-    {
+    public LocalRemoteBookDriver() throws RemoterException {
         ping();
     }
 
     /**
      * Accessor for the current remoter.
+     * 
      * @return The remoter or null if none is available.
      * @see org.crosswire.jsword.book.remote.RemoteBookDriver#getRemoter()
      */
     /* @Override */
-    protected Remoter getRemoter()
-    {
+    protected Remoter getRemoter() {
         return remoter;
     }
 

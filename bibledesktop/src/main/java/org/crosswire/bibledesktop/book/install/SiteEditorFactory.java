@@ -32,50 +32,36 @@ import org.crosswire.jsword.book.install.Installer;
 /**
  * Factory for SiteEditors.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public final class SiteEditorFactory
-{
+public final class SiteEditorFactory {
     /**
      * Prevent Use
      */
-    private SiteEditorFactory()
-    {
+    private SiteEditorFactory() {
     }
 
     /**
      * Create a new SiteEditor
      */
-    public static SiteEditor createSiteEditor(Installer installer)
-    {
-        try
-        {
+    public static SiteEditor createSiteEditor(Installer installer) {
+        try {
             Properties properties = ResourceUtil.getProperties(SiteEditorFactory.class);
             String className = properties.getProperty(installer.getType());
             SiteEditor editor = (SiteEditor) ReflectionUtil.construct(className);
             editor.setInstaller(installer);
             return editor;
-        }
-        catch (MissingResourceException e)
-        {
+        } catch (MissingResourceException e) {
             assert false : e;
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             assert false : e;
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             assert false : e;
-        }
-        catch (InstantiationException e)
-        {
+        } catch (InstantiationException e) {
             assert false : e;
-        }
-        catch (IllegalAccessException e)
-        {
+        } catch (IllegalAccessException e) {
             assert false : e;
         }
         return null;

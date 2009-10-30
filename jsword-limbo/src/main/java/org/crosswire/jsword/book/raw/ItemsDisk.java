@@ -22,13 +22,12 @@
 package org.crosswire.jsword.book.raw;
 
 /**
- * ItemsDisk is a Base implementation of the Items interface using the in
- * on disk model (Disk). 
+ * ItemsDisk is a Base implementation of the Items interface using the in on
+ * disk model (Disk).
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public abstract class ItemsDisk extends Disk implements Items
-{
+public abstract class ItemsDisk extends Disk implements Items {
 }

@@ -23,13 +23,12 @@ package org.crosswire.common.swing.desktop;
 
 /**
  * A Clearable object can be cleared and can be queried to see if it is cleared.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at yahoo dot com]
  */
-public interface Clearable
-{
+public interface Clearable {
     /**
      * Clear this object, resetting it back to its initial state.
      */
@@ -37,6 +36,7 @@ public interface Clearable
 
     /**
      * Determine whether this object is in its initial state.
+     * 
      * @return whether this object is clear.
      */
     boolean isClear();

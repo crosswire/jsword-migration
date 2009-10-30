@@ -34,25 +34,23 @@ import org.jdom.Document;
 /**
  * JUnit tests.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class LocalRemoterTest extends TestCase
-{
+public class LocalRemoterTest extends TestCase {
     /**
      * Constructor for LocalRemoterTest.
+     * 
      * @param arg0
      */
-    public LocalRemoterTest(String arg0)
-    {
+    public LocalRemoterTest(String arg0) {
         super(arg0);
     }
 
     private Remoter remote = new LocalRemoter();
 
-    public void testGetBibles() throws Exception
-    {
+    public void testGetBibles() throws Exception {
         BookFilter filter = BookFilters.getOnlyBibles();
         List lbooks = Books.installed().getBooks(filter);
         Book[] names1 = (Book[]) lbooks.toArray(new Book[lbooks.size()]);
@@ -63,17 +61,14 @@ public class LocalRemoterTest extends TestCase
         Book[] names2 = Converter.convertDocumentToBooks(rbd, doc, new FixtureRemoter());
 
         assertEquals(names1.length, names2.length);
-        for (int i=0; i<names1.length; i++)
-        {
+        for (int i = 0; i < names1.length; i++) {
             assertEquals(names1[i].getName(), names2[i].getName());
         }
     }
 
-    public void assertEquals(Object[] o1, Object[] o2)
-    {
+    public void assertEquals(Object[] o1, Object[] o2) {
         assertEquals(o1.length, o2.length);
-        for (int i=0; i<o1.length; i++)
-        {
+        for (int i = 0; i < o1.length; i++) {
             assertEquals(o1[i], o2[i]);
         }
     }

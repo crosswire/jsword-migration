@@ -34,18 +34,16 @@ import org.crosswire.common.util.Convert;
 
 /**
  * Allow the user to choose from True/False.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class BooleanField extends JPanel implements Field
-{
+public class BooleanField extends JPanel implements Field {
     /**
      * Give the values list (true/false) to the ComboBox
      */
-    public BooleanField()
-    {
+    public BooleanField() {
         ActionFactory actions = new ActionFactory(BooleanField.class, this);
 
         on = new JRadioButton(actions.getAction(YES));
@@ -61,50 +59,49 @@ public class BooleanField extends JPanel implements Field
     }
 
     /**
-     * Some fields will need some extra info to display properly
-     * like the options in an options field. FieldMap calls this
-     * method with options provided by the choice.
-     * @param param The options provided by the Choice
+     * Some fields will need some extra info to display properly like the
+     * options in an options field. FieldMap calls this method with options
+     * provided by the choice.
+     * 
+     * @param param
+     *            The options provided by the Choice
      */
-    public void setChoice(Choice param)
-    {
+    public void setChoice(Choice param) {
     }
 
     /**
      * Return a string for use in the properties file
+     * 
      * @return The current value
      */
-    public String getValue()
-    {
+    public String getValue() {
         return Convert.boolean2String(on.isSelected());
     }
 
     /**
      * Set the current value
-     * @param value The new text
+     * 
+     * @param value
+     *            The new text
      */
-    public void setValue(String value)
-    {
+    public void setValue(String value) {
         on.setSelected(Convert.string2Boolean(value));
         off.setSelected(!Convert.string2Boolean(value));
     }
 
-    public void doYes()
-    {
+    public void doYes() {
         on.setSelected(true);
     }
 
-    public void doNo()
-    {
+    public void doNo() {
         off.setSelected(true);
     }
 
     /**
-     * Get the actual component that we can add to a Panel.
-     * (This can well be this in an implementation).
+     * Get the actual component that we can add to a Panel. (This can well be
+     * this in an implementation).
      */
-    public JComponent getComponent()
-    {
+    public JComponent getComponent() {
         return this;
     }
 

@@ -25,13 +25,12 @@ import org.crosswire.common.util.MsgBase;
 
 /**
  * Compile safe Msg resource settings.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public final class UserMsg extends MsgBase
-{
+public final class UserMsg extends MsgBase {
     static final UserMsg CONFIG_SAVE_FAILED = new UserMsg("ConfigEditorFactory.ConfigFileFailed"); //$NON-NLS-1$
     static final UserMsg SELECT_SUBNODE = new UserMsg("TreeConfigEditor.SelectSubnode"); //$NON-NLS-1$
     static final UserMsg PROPERTIES = new UserMsg("AbstractConfigEditor.Properties"); //$NON-NLS-1$
@@ -39,8 +38,7 @@ public final class UserMsg extends MsgBase
     /**
      * Passthrough ctor
      */
-    private UserMsg(String name)
-    {
+    private UserMsg(String name) {
         super(name);
     }
 }

@@ -40,20 +40,19 @@ import javax.swing.table.TableColumnModel;
 /**
  * Presents a table of items to a user in a table.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class RowTable extends JTable
-{
+public class RowTable extends JTable {
     /**
      * Constructor for RowTable
+     * 
      * @param aList
      * @param columns
      */
-    public RowTable(List aList, RowColumns columns)
-    {
+    public RowTable(List aList, RowColumns columns) {
         super(new RowTableModel(aList, columns));
         setSortRenderer();
 
@@ -62,11 +61,9 @@ public class RowTable extends JTable
 
         setColumnWidths(columns.getCharacterWidths(), columns.getFixedWidths());
 
-        getTableHeader().addMouseListener(new MouseAdapter()
-        {
+        getTableHeader().addMouseListener(new MouseAdapter() {
             /* @Override */
-            public void mouseClicked(MouseEvent e)
-            {
+            public void mouseClicked(MouseEvent e) {
                 sort(getColumnModel().getColumnIndexAtX(e.getX()));
             }
         });
@@ -74,22 +71,19 @@ public class RowTable extends JTable
 
     /**
      * Save the selection so it can be restored after sorting.
+     * 
      * @param aTable
      * @return List
      */
-    private List saveSelection(JTable aTable)
-    {
+    private List saveSelection(JTable aTable) {
         final ListSelectionModel lsm = aTable.getSelectionModel();
         final RowTableModel tm = (RowTableModel) aTable.getModel();
         final int first = lsm.getMinSelectionIndex();
         final int last = lsm.getMaxSelectionIndex();
         final List objs = new ArrayList();
-        if (first != -1)
-        {
-            for (int i = first; i <= last; i++)
-            {
-                if (lsm.isSelectedIndex(i))
-                {
+        if (first != -1) {
+            for (int i = first; i <= last; i++) {
+                if (lsm.isSelectedIndex(i)) {
                     objs.add(tm.getRow(i));
                 }
             }
@@ -99,21 +93,21 @@ public class RowTable extends JTable
 
     /**
      * load the selections
-     * @param aTable JTable
-     * @param objs List
+     * 
+     * @param aTable
+     *            JTable
+     * @param objs
+     *            List
      */
-    private void loadSelection(JTable aTable, List objs)
-    {
+    private void loadSelection(JTable aTable, List objs) {
         final ListSelectionModel lsm = aTable.getSelectionModel();
         final RowTableModel tm = (RowTableModel) aTable.getModel();
         // reset the selection
 
-        for (int i = 0; i < objs.size(); i++)
-        {
+        for (int i = 0; i < objs.size(); i++) {
             Object obj = objs.get(i);
             int where = tm.getRow(obj);
-            if (where != -1)
-            {
+            if (where != -1) {
                 lsm.addSelectionInterval(where, where);
             }
         }
@@ -122,18 +116,17 @@ public class RowTable extends JTable
 
     /**
      * Method scrollToVisible
-     * @param aTable JTable
+     * 
+     * @param aTable
+     *            JTable
      */
-    private void scrollToVisible(JTable aTable)
-    {
+    private void scrollToVisible(JTable aTable) {
         final ListSelectionModel lsm = aTable.getSelectionModel();
         final int first = lsm.getMinSelectionIndex();
         final int last = lsm.getMaxSelectionIndex();
-        if (first != -1)
-        {
+        if (first != -1) {
             final Rectangle bounds = getRowBounds(aTable, first, last);
-            if (!isVerticallyVisible(aTable, bounds))
-            {
+            if (!isVerticallyVisible(aTable, bounds)) {
                 // Is SwingUtilities.invokeLater needed ???
                 aTable.scrollRectToVisible(bounds);
             }
@@ -142,10 +135,11 @@ public class RowTable extends JTable
 
     /**
      * Method selectRow
-     * @param row int
+     * 
+     * @param row
+     *            int
      */
-    public void selectRow(int row)
-    {
+    public void selectRow(int row) {
         final ListSelectionModel lsm = getSelectionModel();
         lsm.clearSelection();
         lsm.setSelectionInterval(row, row);
@@ -154,13 +148,16 @@ public class RowTable extends JTable
 
     /**
      * Method getRowBounds
-     * @param table JTable
-     * @param first int
-     * @param last int
+     * 
+     * @param table
+     *            JTable
+     * @param first
+     *            int
+     * @param last
+     *            int
      * @return Rectangle
      */
-    private Rectangle getRowBounds(JTable table, int first, int last)
-    {
+    private Rectangle getRowBounds(JTable table, int first, int last) {
         Rectangle result = table.getCellRect(first, -1, true);
         result = result.union(table.getCellRect(last, -1, true));
         final Insets insets = table.getInsets();
@@ -171,42 +168,42 @@ public class RowTable extends JTable
 
     /**
      * Method isVerticallyVisible
-     * @param aTable JTable
-     * @param r Rectangle
+     * 
+     * @param aTable
+     *            JTable
+     * @param r
+     *            Rectangle
      * @return boolean
      */
-    private boolean isVerticallyVisible(JTable aTable, Rectangle r)
-    {
+    private boolean isVerticallyVisible(JTable aTable, Rectangle r) {
         final Rectangle visible = aTable.getVisibleRect();
         return visible.y <= r.y && visible.y + visible.height >= r.y + r.height;
     }
 
     /**
      * Method setColumnWidths
-     * @param widths int[]
-     * @param fixed boolean[]
+     * 
+     * @param widths
+     *            int[]
+     * @param fixed
+     *            boolean[]
      */
-    private void setColumnWidths(int[] widths, boolean[] fixed)
-    {
+    private void setColumnWidths(int[] widths, boolean[] fixed) {
         final int mWidth = getStandardCharacterWidth();
         final TableColumnModel tcm = getColumnModel();
         // The << 1 accounts for two margins
         // The + PADDING accounts for an extra pixel on either side
         // and an extra pixel for between the columns
-        //  that the text needs to not display ...
+        // that the text needs to not display ...
         final int margins = (tcm.getColumnMargin() << 1) + PADDING;
 
-        for (int i = 0; i < widths.length; i++)
-        {
+        for (int i = 0; i < widths.length; i++) {
             TableColumn tc = tcm.getColumn(i);
             int width = widths[i] * mWidth + margins;
-            if (fixed[i])
-            {
+            if (fixed[i]) {
                 tc.setMinWidth(width);
                 tc.setMaxWidth(width);
-            }
-            else
-            {
+            } else {
                 tc.setPreferredWidth(width);
             }
         }
@@ -215,30 +212,26 @@ public class RowTable extends JTable
     /**
      * Method setSortRenderer
      */
-    private void setSortRenderer()
-    {
+    private void setSortRenderer() {
         final TableCellRenderer sortRenderer = new SortRenderer((RowTableModel) getModel());
         // TableCellRenderer rowRenderer = new RowRenderer();
         final TableColumnModel model = getColumnModel();
         final int colCount = model.getColumnCount();
 
-        for (int i = 0; i < colCount; i++)
-        {
+        for (int i = 0; i < colCount; i++) {
             TableColumn tc = model.getColumn(i);
             tc.setHeaderRenderer(sortRenderer);
         }
     }
 
     /**
-     * Size each column to something reasonable
-     * We do this by getting the width of the letter 'M"
-     * from the default Table Header Renderer
-     * and set the preferred width of the column
-     * as the width of some number of 'M's.
+     * Size each column to something reasonable We do this by getting the width
+     * of the letter 'M" from the default Table Header Renderer and set the
+     * preferred width of the column as the width of some number of 'M's.
+     * 
      * @return int
      */
-    private int getStandardCharacterWidth()
-    {
+    private int getStandardCharacterWidth() {
         // The preferredSize of the component is more than just the character
         // So we remove the extra determining the delta
         // between one and two chars
@@ -253,20 +246,22 @@ public class RowTable extends JTable
 
     /**
      * Method addListSelectionListener
-     * @param listener ListSelectionListener
+     * 
+     * @param listener
+     *            ListSelectionListener
      */
-    public void addListSelectionListener(ListSelectionListener listener)
-    {
+    public void addListSelectionListener(ListSelectionListener listener) {
         getSelectionModel().addListSelectionListener(listener);
     }
 
     /**
      * Method getPreferredHeight
-     * @param numRows int
+     * 
+     * @param numRows
+     *            int
      * @return int
      */
-    public int getPreferredHeight(int numRows)
-    {
+    public int getPreferredHeight(int numRows) {
         int newHeight = getRowHeight() * numRows;
         // The following may be needed for Java 1.4
         // newHeight += table.getIntercellSpacing().height * (numRows + 1);
@@ -278,15 +273,15 @@ public class RowTable extends JTable
 
     /**
      * Method sort
-     * @param col int
+     * 
+     * @param col
+     *            int
      */
     /**
      * @param col
      */
-    public void sort(int col)
-    {
-        if (col != -1)
-        {
+    public void sort(int col) {
+        if (col != -1) {
             final TableColumnModel tcm = getColumnModel();
             final TableColumn tc = tcm.getColumn(col);
             final SortRenderer renderer = (SortRenderer) tc.getHeaderRenderer();
@@ -302,8 +297,7 @@ public class RowTable extends JTable
     /**
      * 
      */
-    public void reset()
-    {
+    public void reset() {
         final RowTableModel stm = (RowTableModel) getModel();
         final ListSelectionModel lsm = getSelectionModel();
         getSelectionModel().clearSelection();

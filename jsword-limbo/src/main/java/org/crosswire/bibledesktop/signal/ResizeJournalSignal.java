@@ -24,13 +24,11 @@ package org.crosswire.bibledesktop.signal;
 /**
  * Asks for a resizing of the journal
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Don Brown [mrdon at twdata dot org]
  */
-public class ResizeJournalSignal
-{
-    public ResizeJournalSignal()
-    {
+public class ResizeJournalSignal {
+    public ResizeJournalSignal() {
     }
 }

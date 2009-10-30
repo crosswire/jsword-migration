@@ -43,34 +43,32 @@ import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.OSType;
 
 /**
- * The status bar provides useful info to the user as to the current
- * state of the program.
- * <p>We need to think about the stuff to put in here:<ul>
- * <li>A status message. This changes with what the user is pointing at,
- *     so is very similar to tool-tips. Although they are commonly more
- *     instructional.
+ * The status bar provides useful info to the user as to the current state of
+ * the program.
+ * <p>
+ * We need to think about the stuff to put in here:
+ * <ul>
+ * <li>A status message. This changes with what the user is pointing at, so is
+ * very similar to tool-tips. Although they are commonly more instructional.
  * <li>A set of panels that tell you the time/if CAPS is presses and so on
  * </ul>
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class StatusBar extends JComponent implements MouseListener, URIEventListener
-{
+public class StatusBar extends JComponent implements MouseListener, URIEventListener {
     /**
      * Create a new StatusBar
      */
-    public StatusBar()
-    {
+    public StatusBar() {
         initialize();
     }
 
     /**
      * Init the GUI
      */
-    private void initialize()
-    {
+    private void initialize() {
         labelMessage.setText(Msg.STATUS_DEFAULT.toString());
 
         Font font = panelProgress.getFont();
@@ -85,44 +83,41 @@ public class StatusBar extends JComponent implements MouseListener, URIEventList
         this.setBorder(BorderFactory.createEtchedBorder());
         this.setLayout(new GridBagLayout());
 
-        JSeparator separator  = new JSeparator(SwingConstants.VERTICAL);
+        JSeparator separator = new JSeparator(SwingConstants.VERTICAL);
 
         // Right pad the last entry so that it stays away from the corner.
         // On the Mac, the "grow" handle is in the corner of the app.
         int finalPadX = 0;
         int finalPadY = 0;
-        if (OSType.MAC.equals(OSType.getOSType()))
-        {
+        if (OSType.MAC.equals(OSType.getOSType())) {
             finalPadX = 20;
             finalPadY = 5;
         }
-        this.add(labelMessage,  new GridBagConstraints(0, 0, 1, 1, 0.3, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(separator,     new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(panelProgress, new GridBagConstraints(2, 0, 1, 1, 0.7, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), finalPadX, finalPadY));
+        this.add(labelMessage, new GridBagConstraints(0, 0, 1, 1, 0.3, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL,
+                new Insets(0, 0, 0, 0), 0, 0));
+        this.add(separator,
+                new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(panelProgress, new GridBagConstraints(2, 0, 1, 1, 0.7, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0),
+                finalPadX, finalPadY));
         GuiUtil.applyDefaultOrientation(this);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.URIEventListener#activateURI(org.crosswire.bibledesktop.display.URIEvent)
      */
-    public void activateURI(URIEvent ev)
-    {
+    public void activateURI(URIEvent ev) {
         // We don't care about activate events
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.URIEventListener#enterURI(org.crosswire.bibledesktop.display.URIEvent)
      */
-    public void enterURI(URIEvent ev)
-    {
+    public void enterURI(URIEvent ev) {
         String protocol = ev.getScheme();
         String uri = ev.getURI();
-        if (protocol.length() == 0)
-        {
+        if (protocol.length() == 0) {
             labelMessage.setText(uri);
-        }
-        else
-        {
+        } else {
             labelMessage.setText(protocol + "://" + uri); //$NON-NLS-1$
         }
     }
@@ -130,60 +125,55 @@ public class StatusBar extends JComponent implements MouseListener, URIEventList
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.URIEventListener#leaveURI(org.crosswire.bibledesktop.display.URIEvent)
      */
-    public void leaveURI(URIEvent ev)
-    {
+    public void leaveURI(URIEvent ev) {
         labelMessage.setText(Msg.STATUS_DEFAULT.toString());
     }
 
     /**
      * Sets the text to display
-     * @param txt The text
+     * 
+     * @param txt
+     *            The text
      */
-    public void setText(String txt)
-    {
-        if (txt == null)
-        {
+    public void setText(String txt) {
+        if (txt == null) {
             labelMessage.setText(Msg.STATUS_DEFAULT.toString());
-        }
-        else
-        {
+        } else {
             labelMessage.setText(txt);
         }
     }
 
     /**
      * Catches status signals and displays new text
-     * @param signal The signal with the status text
+     * 
+     * @param signal
+     *            The signal with the status text
      */
-//    public void channel(final StatusSignal signal)
-//    {
-//        SwingUtilities.invokeLater(new Runnable()
-//        {
-//            public void run()
-//            {
-//                labelMessage.setText(signal.getMessage());
-//            }
-//        });
-//    }
-
+    // public void channel(final StatusSignal signal)
+    // {
+    // SwingUtilities.invokeLater(new Runnable()
+    // {
+    // public void run()
+    // {
+    // labelMessage.setText(signal.getMessage());
+    // }
+    // });
+    // }
     /**
-     * When the mouse points at something that has registered with us
-     * to be shown on the statusbar
+     * When the mouse points at something that has registered with us to be
+     * shown on the statusbar
+     * 
      * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
      */
-    public void mouseEntered(MouseEvent ev)
-    {
-        if (ev.getSource() instanceof AbstractButton)
-        {
+    public void mouseEntered(MouseEvent ev) {
+        if (ev.getSource() instanceof AbstractButton) {
             AbstractButton button = (AbstractButton) ev.getSource();
             Action action = button.getAction();
 
-            if (action != null)
-            {
+            if (action != null) {
                 Object value = action.getValue(Action.SHORT_DESCRIPTION);
 
-                if (value != null)
-                {
+                if (value != null) {
                     labelMessage.setText(value.toString());
                 }
             }
@@ -192,38 +182,35 @@ public class StatusBar extends JComponent implements MouseListener, URIEventList
 
     /**
      * When the mouse no longer points at something that has registered with us
+     * 
      * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
      */
-    public void mouseExited(MouseEvent ev)
-    {
+    public void mouseExited(MouseEvent ev) {
         labelMessage.setText(Msg.STATUS_DEFAULT.toString());
     }
 
     /**
-     * Invoked when the mouse has been clicked on a component.
-     * Ignored
+     * Invoked when the mouse has been clicked on a component. Ignored
+     * 
      * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
      */
-    public void mouseClicked(MouseEvent ev)
-    {
+    public void mouseClicked(MouseEvent ev) {
     }
 
     /**
-     * Invoked when a mouse button has been pressed on a component.
-     * Ignored
+     * Invoked when a mouse button has been pressed on a component. Ignored
+     * 
      * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
      */
-    public void mousePressed(MouseEvent ev)
-    {
+    public void mousePressed(MouseEvent ev) {
     }
 
     /**
-     * Invoked when a mouse button has been released on a component.
-     * Ignored
+     * Invoked when a mouse button has been released on a component. Ignored
+     * 
      * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
      */
-    public void mouseReleased(MouseEvent ev)
-    {
+    public void mouseReleased(MouseEvent ev) {
     }
 
     /**

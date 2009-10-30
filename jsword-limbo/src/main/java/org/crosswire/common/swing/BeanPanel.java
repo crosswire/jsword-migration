@@ -45,51 +45,45 @@ import org.crosswire.common.util.StringUtil;
 /**
  * A (supposedly) generic panel to display and allow editing of bean properties.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class BeanPanel extends JPanel
-{
+public class BeanPanel extends JPanel {
     /**
      * Simple ctor
      */
-    public BeanPanel()
-    {
+    public BeanPanel() {
         initialize();
     }
 
     /**
      * GUI init
      */
-    private void initialize()
-    {
+    private void initialize() {
         this.setLayout(new GridBagLayout());
     }
 
     /**
-     * @param abean The new bean to introspect and edit
+     * @param abean
+     *            The new bean to introspect and edit
      */
-    public void setBean(Object abean) throws IntrospectionException
-    {
+    public void setBean(Object abean) throws IntrospectionException {
         this.bean = abean;
 
         removeAll();
         editors.clear();
 
         int y = 0;
-        if (bean != null)
-        {
+        if (bean != null) {
             BeanInfo info = Introspector.getBeanInfo(bean.getClass());
             PropertyDescriptor[] properties = info.getPropertyDescriptors();
 
-            for (int i = 0; i < properties.length; i++)
-            {
+            for (int i = 0; i < properties.length; i++) {
                 PropertyDescriptor property = properties[i];
 
-                if (!property.isHidden() && property.getWriteMethod() != null)
-                {
+                if (!property.isHidden() && property.getWriteMethod() != null) {
                     JLabel label = new JLabel();
                     JTextField text = new JTextField();
 
@@ -101,29 +95,25 @@ public class BeanPanel extends JPanel
                     Method writer = property.getWriteMethod();
                     text.getDocument().addDocumentListener(new CustomDocumentListener(text, writer));
 
-                    try
-                    {
+                    try {
                         Method reader = property.getReadMethod();
                         Object reply = reader.invoke(bean, null);
-                        if (reply == null)
-                        {
+                        if (reply == null) {
                             text.setText(""); //$NON-NLS-1$
-                        }
-                        else
-                        {
+                        } else {
                             text.setText(reply.toString());
                         }
-                    }
-                    catch (Exception ex)
-                    {
+                    } catch (Exception ex) {
                         text.setText(LimboMsg.ERROR_READING.toString(ex.getMessage()));
                         log.warn("property read failed", ex); //$NON-NLS-1$
                     }
 
                     editors.add(text);
 
-                    this.add(label, new GridBagConstraints(0, y, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
-                    this.add(text,  new GridBagConstraints(1, y, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
+                    this.add(label, new GridBagConstraints(0, y, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(2, 10, 2, 2),
+                            0, 0));
+                    this.add(text, new GridBagConstraints(1, y, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2,
+                            10), 0, 0));
                     y++;
                 }
             }
@@ -135,18 +125,15 @@ public class BeanPanel extends JPanel
     /**
      * Accessor for the current bean
      */
-    public Object getBean()
-    {
+    public Object getBean() {
         return bean;
     }
 
     /**
      * Should we allow our fields to be edited?
      */
-    public void setEditable(boolean editable)
-    {
-        for (Iterator it = editors.iterator(); it.hasNext(); )
-        {
+    public void setEditable(boolean editable) {
+        for (Iterator it = editors.iterator(); it.hasNext();) {
             JTextField text = (JTextField) it.next();
             text.setEditable(editable);
         }
@@ -175,66 +162,67 @@ public class BeanPanel extends JPanel
     /**
      * Document Listener that updates the original bean
      */
-    private final class CustomDocumentListener implements DocumentListener
-    {
+    private final class CustomDocumentListener implements DocumentListener {
         /**
          * Simple ctor
          */
-        protected CustomDocumentListener(JTextField text, Method writer)
-        {
+        protected CustomDocumentListener(JTextField text, Method writer) {
             this.text = text;
             this.writer = writer;
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * javax.swing.event.DocumentListener#changedUpdate(javax.swing.event
+         * .DocumentEvent)
          */
-        public void changedUpdate(DocumentEvent ev)
-        {
-            try
-            {
+        public void changedUpdate(DocumentEvent ev) {
+            try {
                 String data = text.getText();
                 Class argType = writer.getParameterTypes()[0];
-                if (argType == Integer.class)
-                {
+                if (argType == Integer.class) {
                     Integer i = null;
-                    if (data != null && data.length() > 0)
-                    {
-                        try
-                        {
+                    if (data != null && data.length() > 0) {
+                        try {
                             i = new Integer(data);
-                        }
-                        catch (NumberFormatException e)
-                        {
+                        } catch (NumberFormatException e) {
                             i = null;
                         }
                     }
-                    writer.invoke(bean, new Object[] { i });
+                    writer.invoke(bean, new Object[] {
+                        i
+                    });
+                } else {
+                    writer.invoke(bean, new Object[] {
+                        data
+                    });
                 }
-                else
-                {
-                    writer.invoke(bean, new Object[] { data });
-                }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 log.error("Introspected set failed", ex); //$NON-NLS-1$
             }
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * javax.swing.event.DocumentListener#insertUpdate(javax.swing.event
+         * .DocumentEvent)
          */
-        public void insertUpdate(DocumentEvent ev)
-        {
+        public void insertUpdate(DocumentEvent ev) {
             changedUpdate(ev);
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * javax.swing.event.DocumentListener#removeUpdate(javax.swing.event
+         * .DocumentEvent)
          */
-        public void removeUpdate(DocumentEvent ev)
-        {
+        public void removeUpdate(DocumentEvent ev) {
             changedUpdate(ev);
         }
 

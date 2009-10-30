@@ -34,72 +34,59 @@ import org.crosswire.common.util.ResourceUtil;
 /**
  * A simple method of finding a directory in which Books are stored.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class BookRoot
-{
+public class BookRoot {
     /**
      * Search for versions directories
      */
-    public static URI findBibleRoot(String subdir) throws MalformedURLException
-    {
+    public static URI findBibleRoot(String subdir) throws MalformedURLException {
         URI root = null;
 
         // First see if there is a System property that can help us out
         String sysprop = System.getProperty(PROP_HOMEDIR);
         log.debug("Testing system property " + PROP_HOMEDIR + "=" + sysprop); //$NON-NLS-1$ //$NON-NLS-2$
 
-        if (sysprop != null)
-        {
-            try
-            {
+        if (sysprop != null) {
+            try {
                 URI found = NetUtil.lengthenURI(new URI(NetUtil.PROTOCOL_FILE, null, sysprop, null), DIR_VERSIONS);
                 URI test = NetUtil.lengthenURI(found, FILE_LOCATOR);
 
-                if (NetUtil.isFile(test))
-                {
+                if (NetUtil.isFile(test)) {
                     log.debug("Found BibleRoot using system property " + PROP_HOMEDIR + " at " + test); //$NON-NLS-1$ //$NON-NLS-2$
                     root = found;
-                }
-                else
-                {
+                } else {
                     log.warn("Missing " + PROP_HOMEDIR + " under: " + test); //$NON-NLS-1$ //$NON-NLS-2$
                 }
-            }
-            catch (URISyntaxException e)
-            {
+            } catch (URISyntaxException e) {
                 root = null;
             }
 
         }
 
         // If not then try a wild guess
-        if (root == null)
-        {
+        if (root == null) {
             URL found = ResourceUtil.getResource(DIR_VERSIONS + File.separator + FILE_LOCATOR);
             URI test = NetUtil.shortenURI(NetUtil.toURI(found), FILE_LOCATOR);
-            if (NetUtil.isFile(test))
-            {
+            if (NetUtil.isFile(test)) {
                 log.debug("Found BibleRoot from current directory: " + test); //$NON-NLS-1$
                 root = test;
-            }
-            else
-            {
+            } else {
                 log.warn("Missing BibleRoot from current directory: " + test); //$NON-NLS-1$
             }
         }
 
-        if (root == null)
-        {
+        if (root == null) {
             return null;
         }
         return NetUtil.lengthenURI(root, subdir);
     }
 
     /**
-     * System property to let people re-direct where the project directory is stored
+     * System property to let people re-direct where the project directory is
+     * stored
      */
     private static final String PROP_HOMEDIR = "jsword.bible.dir"; //$NON-NLS-1$
 

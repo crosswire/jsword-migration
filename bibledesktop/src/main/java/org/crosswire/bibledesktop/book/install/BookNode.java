@@ -30,36 +30,29 @@ import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookSet;
 
 /**
- * A Node for a book in a tree. It may be a property of a BookMetaData
- * or the BookMetaData itself.
+ * A Node for a book in a tree. It may be a property of a BookMetaData or the
+ * BookMetaData itself.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class BookNode extends DefaultMutableTreeNode
-{
+public class BookNode extends DefaultMutableTreeNode {
 
-    public BookNode(Object node, BookSet books, int level, Object[] grouping)
-    {
+    public BookNode(Object node, BookSet books, int level, Object[] grouping) {
         setUserObject(node);
-        if (level < grouping.length)
-        {
+        if (level < grouping.length) {
             String key = (String) grouping[level];
             Set group = books.getGroup(key);
             Iterator iter = group.iterator();
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 Object value = iter.next();
                 BookSet subBooks = books.filter(key, value);
                 add(new BookNode(value, subBooks, level + 1, grouping));
             }
-        }
-        else if (books != null)
-        {
+        } else if (books != null) {
             Iterator iter = books.iterator();
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 Book book = (Book) iter.next();
                 add(new BookNode(book, null, level + 1, grouping));
             }

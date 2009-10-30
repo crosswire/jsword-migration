@@ -32,14 +32,14 @@ import org.crosswire.jsword.passage.Key;
 /**
  * An interface for all components that can display BookData.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public interface BookDataDisplay extends BookProvider, PropertyChangeListener
-{
+public interface BookDataDisplay extends BookProvider, PropertyChangeListener {
     /**
-     * Used by property change listeners to listen for when books should be compared.
+     * Used by property change listeners to listen for when books should be
+     * compared.
      */
     String COMPARE_BOOKS = "ComparingBooks"; //$NON-NLS-1$
 
@@ -50,13 +50,15 @@ public interface BookDataDisplay extends BookProvider, PropertyChangeListener
     void clearBookData();
 
     /**
-     * Set the BookData to be displayed.
-     * The data to be displayed is specified as a books and key rather than the
-     * more obvious BookData (the result of reading books using a key)
-     * since some displays may wish so split up the display and only look up
-     * smaller sections at a time.
-     * @param books The Books to read data from
-     * @param key The key to read from the given book
+     * Set the BookData to be displayed. The data to be displayed is specified
+     * as a books and key rather than the more obvious BookData (the result of
+     * reading books using a key) since some displays may wish so split up the
+     * display and only look up smaller sections at a time.
+     * 
+     * @param books
+     *            The Books to read data from
+     * @param key
+     *            The key to read from the given book
      */
     void setBookData(Book[] books, Key key);
 
@@ -70,6 +72,7 @@ public interface BookDataDisplay extends BookProvider, PropertyChangeListener
     /**
      * The Book Key that we are displaying, or null if we are not displaying
      * anything
+     * 
      * @return The current key
      */
     Key getKey();
@@ -100,16 +103,19 @@ public interface BookDataDisplay extends BookProvider, PropertyChangeListener
 
     /**
      * Add a listener for when someone clicks on a browser 'link'
-     * @param listener The listener to add
+     * 
+     * @param listener
+     *            The listener to add
      */
     void addURIEventListener(URIEventListener listener);
 
     /**
      * Remove a listener for when someone clicks on a browser 'link'
-     * @param listener The listener to remove
+     * 
+     * @param listener
+     *            The listener to remove
      */
     void removeURIEventListener(URIEventListener listener);
-
 
     /**
      * Accessor for the Swing component

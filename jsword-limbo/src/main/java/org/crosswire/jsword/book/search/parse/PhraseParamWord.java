@@ -33,42 +33,44 @@ import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.PassageTally;
 
 /**
- * The Search Word for a Word to search for. The default
- * if no other SearchWords match.
+ * The Search Word for a Word to search for. The default if no other SearchWords
+ * match.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class PhraseParamWord implements ParamWord
-{
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.parse.ParamWord#getWord(org.crosswire.jsword.book.search.parse.Searcher)
+public class PhraseParamWord implements ParamWord {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.parse.ParamWord#getWord(org.crosswire
+     * .jsword.book.search.parse.Searcher)
      */
-    public String getWord(IndexSearcher engine) throws BookException
-    {
+    public String getWord(IndexSearcher engine) throws BookException {
         throw new BookException(Msg.SINGLE_PARAM);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.parse.ParamWord#Key(org.crosswire.jsword.book.search.parse.Searcher)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.parse.ParamWord#Key(org.crosswire.jsword
+     * .book.search.parse.Searcher)
      */
-    public Key getKeyList(IndexSearcher engine) throws BookException
-    {
+    public Key getKeyList(IndexSearcher engine) throws BookException {
         Iterator it = engine.iterator();
         StringBuffer buff = new StringBuffer();
 
-        while (true)
-        {
-            if (!it.hasNext())
-            {
+        while (true) {
+            if (!it.hasNext()) {
                 throw new BookException(Msg.LEFT_BRACKETS);
             }
 
             Word word = (Word) it.next();
 
-            if (word instanceof PhraseParamWord)
-            {
+            if (word instanceof PhraseParamWord) {
                 break;
             }
 
@@ -79,19 +81,17 @@ public class PhraseParamWord implements ParamWord
         return bestMatch(engine, buff.toString());
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.Matcher#bestMatch(java.lang.String, org.crosswire.jsword.passage.Key)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.crosswire.jsword.book.search.Matcher#bestMatch(java.lang.String,
+     * org.crosswire.jsword.passage.Key)
      */
-    public Key bestMatch(IndexSearcher engine, String sought) throws BookException
-    {
-        if (thesaurus == null)
-        {
-            try
-            {
+    public Key bestMatch(IndexSearcher engine, String sought) throws BookException {
+        if (thesaurus == null) {
+            try {
                 thesaurus = ThesaurusFactory.createThesaurus();
-            }
-            catch (InstantiationException ex)
-            {
+            } catch (InstantiationException ex) {
                 throw new BookException(Msg.NO_THESAURUS, ex);
             }
         }
@@ -102,16 +102,14 @@ public class PhraseParamWord implements ParamWord
 
         PassageTally tally = new PassageTally();
 
-        for (int i = 0; i < words.length; i++)
-        {
+        for (int i = 0; i < words.length; i++) {
             tally.addAll(engine.getIndex().find(words[i]));
         }
 
         // This uses flatten() so that words like God
         // that have many startsWith() matches, and hence many verse
         // matches, do not end up with wrongly high scores.
-        for (int i = 0; i < words.length; i++)
-        {
+        for (int i = 0; i < words.length; i++) {
             // log.fine("  root="+root);
             Collection col = thesaurus.getSynonyms(words[i]);
             String[] grWords = (String[]) col.toArray(new String[col.size()]);
@@ -119,8 +117,7 @@ public class PhraseParamWord implements ParamWord
             // log.fine("  gr_words="+StringUtil.toString(gr_words));
             PassageTally temp = new PassageTally();
 
-            for (int j = 0; j < grWords.length; j++)
-            {
+            for (int j = 0; j < grWords.length; j++) {
                 temp.addAll(engine.getIndex().find(grWords[j]));
             }
 

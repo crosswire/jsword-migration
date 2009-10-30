@@ -34,18 +34,16 @@ import org.crosswire.common.swing.ActionFactory;
 
 /**
  * A Filename selection.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class FileField extends JPanel implements Field
-{
+public class FileField extends JPanel implements Field {
     /**
      * Create a new FileField
      */
-    public FileField()
-    {
+    public FileField() {
         ActionFactory actions = new ActionFactory(FileField.class, this);
 
         text = new JTextField();
@@ -58,44 +56,48 @@ public class FileField extends JPanel implements Field
     /**
      * Open a browse dialog
      */
-    public void doBrowse()
-    {
+    public void doBrowse() {
         JFileChooser chooser = new JFileChooser(text.getText());
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        if (chooser.showOpenDialog(FileField.this) == JFileChooser.APPROVE_OPTION)
-        {
+        if (chooser.showOpenDialog(FileField.this) == JFileChooser.APPROVE_OPTION) {
             text.setText(chooser.getSelectedFile().getPath());
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.config.swing.Field#setChoice(org.crosswire.common.config.Choice)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.config.swing.Field#setChoice(org.crosswire.common
+     * .config.Choice)
      */
-    public void setChoice(Choice param)
-    {
+    public void setChoice(Choice param) {
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.config.swing.Field#getValue()
      */
-    public String getValue()
-    {
+    public String getValue() {
         return text.getText();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.config.swing.Field#setValue(java.lang.String)
      */
-    public void setValue(String value)
-    {
+    public void setValue(String value) {
         text.setText(value);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.config.swing.Field#getComponent()
      */
-    public JComponent getComponent()
-    {
+    public JComponent getComponent() {
         return this;
     }
 

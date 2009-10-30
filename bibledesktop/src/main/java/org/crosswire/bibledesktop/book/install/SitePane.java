@@ -72,35 +72,31 @@ import org.crosswire.jsword.util.WebWarning;
 /**
  * A panel for use within a SitesPane to display one set of Books that are
  * installed or could be installed.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class SitePane extends JPanel
-{
+public class SitePane extends JPanel {
     /**
      * For local installations
      */
-    public SitePane()
-    {
+    public SitePane() {
         this(null, INSTALLED_BOOKS_LABEL);
     }
 
     /**
      * For remote installations
      */
-    public SitePane(Installer bookListInstaller)
-    {
+    public SitePane(Installer bookListInstaller) {
         this(bookListInstaller, AVAILABLE_BOOKS_LABEL);
     }
 
     /**
      * Internal ctor
      */
-    private SitePane(Installer bookListInstaller, String labelAcronymn)
-    {
+    private SitePane(Installer bookListInstaller, String labelAcronymn) {
         installer = bookListInstaller;
 
         actions = new ActionFactory(SitePane.class, this);
@@ -108,10 +104,9 @@ public class SitePane extends JPanel
         shaper = new NumberShaper();
 
         BookList bl = installer;
-        if (bl == null)
-        {
-                bl = Books.installed();
-                bl.addBooksListener(new CustomBooksListener());
+        if (bl == null) {
+            bl = Books.installed();
+            bl.addBooksListener(new CustomBooksListener());
         }
 
         initialize(labelAcronymn, bl);
@@ -120,8 +115,7 @@ public class SitePane extends JPanel
     /**
      * Build the GUI components
      */
-    private void initialize(String labelAcronymn, BookList books)
-    {
+    private void initialize(String labelAcronymn, BookList books) {
         lblDesc = new JLabel();
         lblDesc.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 0));
 
@@ -137,25 +131,22 @@ public class SitePane extends JPanel
     /**
      *
      */
-    private void updateDescription()
-    {
+    private void updateDescription() {
         String desc = "#ERROR#"; //$NON-NLS-1$
 
-        if (installer == null)
-        {
+        if (installer == null) {
             int bookCount = Books.installed().getBooks().size();
-            desc = Msg.INSTALLED_DESC.toString(new Object[] { new Integer(bookCount) });
-        }
-        else
-        {
+            desc = Msg.INSTALLED_DESC.toString(new Object[] {
+                new Integer(bookCount)
+            });
+        } else {
             int bookCount = installer.getBooks().size();
-            if (bookCount == 0)
-            {
+            if (bookCount == 0) {
                 desc = Msg.NONE_AVAILABLE_DESC.toString();
-            }
-            else
-            {
-                desc = Msg.AVAILABLE_DESC.toString(new Object[] { new Integer(bookCount) });
+            } else {
+                desc = Msg.AVAILABLE_DESC.toString(new Object[] {
+                    new Integer(bookCount)
+                });
             }
         }
 
@@ -165,8 +156,7 @@ public class SitePane extends JPanel
     /**
      *
      */
-    private Component createSplitPane(Component left, Component right)
-    {
+    private Component createSplitPane(Component left, Component right) {
         JSplitPane split = new FixedSplitPane();
         split.setDividerLocation(0.3D);
         split.setResizeWeight(0.3D);
@@ -181,8 +171,7 @@ public class SitePane extends JPanel
     /**
      *
      */
-    private Component createAvailablePanel(String labelAcronymn, BookList books)
-    {
+    private Component createAvailablePanel(String labelAcronymn, BookList books) {
         JLabel lblAvailable = actions.createJLabel(labelAcronymn);
 
         JPanel panel = new JPanel();
@@ -200,8 +189,7 @@ public class SitePane extends JPanel
     /**
      *
      */
-    private Component createSelectedPanel()
-    {
+    private Component createSelectedPanel() {
 
         JLabel lblSelected = actions.createJLabel(SELECTED_BOOK_LABEL);
         display = new TextPaneBookMetaDataDisplay();
@@ -219,8 +207,7 @@ public class SitePane extends JPanel
     /**
      *
      */
-    private Component createScrolledTree(BookList books)
-    {
+    private Component createScrolledTree(BookList books) {
         treAvailable = new JTree();
         // Turn on tooltips so that they will show
         ToolTipManager.sharedInstance().registerComponent(treAvailable);
@@ -233,10 +220,8 @@ public class SitePane extends JPanel
         treAvailable.setCellEditor(null);
         treAvailable.setRootVisible(false);
         treAvailable.setShowsRootHandles(true);
-        treAvailable.addTreeSelectionListener(new TreeSelectionListener()
-        {
-            public void valueChanged(TreeSelectionEvent ev)
-            {
+        treAvailable.addTreeSelectionListener(new TreeSelectionListener() {
+            public void valueChanged(TreeSelectionEvent ev) {
                 selected();
             }
         });
@@ -244,37 +229,30 @@ public class SitePane extends JPanel
         return new CWScrollPane(treAvailable);
     }
 
-    private TreeModel createTreeModel(BookList books)
-    {
+    private TreeModel createTreeModel(BookList books) {
         // return new BooksTreeModel(books);
         BookSet bmds = new BookSet(books.getBooks());
-        TreeNode bookRoot = new BookNode("root", bmds, 0, new Object[] {BookMetaData.KEY_CATEGORY, BookMetaData.KEY_XML_LANG}); //$NON-NLS-1$
+        TreeNode bookRoot = new BookNode("root", bmds, 0, new Object[] { BookMetaData.KEY_CATEGORY, BookMetaData.KEY_XML_LANG}); //$NON-NLS-1$
         return new DefaultTreeModel(bookRoot);
     }
 
-    private Book getBook(Object anObj)
-    {
+    private Book getBook(Object anObj) {
         Object obj = anObj;
-        if (obj instanceof DefaultMutableTreeNode)
-        {
+        if (obj instanceof DefaultMutableTreeNode) {
             obj = ((DefaultMutableTreeNode) obj).getUserObject();
         }
-        if (obj instanceof Book)
-        {
+        if (obj instanceof Book) {
             return (Book) obj;
         }
         return null;
     }
 
-    private Language getLanguage(Object anObj)
-    {
+    private Language getLanguage(Object anObj) {
         Object obj = anObj;
-        if (obj instanceof DefaultMutableTreeNode)
-        {
+        if (obj instanceof DefaultMutableTreeNode) {
             obj = ((DefaultMutableTreeNode) obj).getUserObject();
         }
-        if (obj instanceof Language)
-        {
+        if (obj instanceof Language) {
             return (Language) obj;
         }
         return null;
@@ -283,19 +261,15 @@ public class SitePane extends JPanel
     /**
      *
      */
-    private Component createPanelActions()
-    {
+    private Component createPanelActions() {
         JPanel panel = new JPanel();
-        if (installer != null)
-        {
+        if (installer != null) {
             panel.setLayout(new GridLayout(1, 2, 3, 3));
             panel.add(new JButton(actions.getAction(INSTALL)));
             // LATER(DMS): Put back when this works
-            //panel.add(new JButton(actions.getAction(INSTALL_SEARCH)));
+            // panel.add(new JButton(actions.getAction(INSTALL_SEARCH)));
             panel.add(new JButton(actions.getAction(REFRESH)));
-        }
-        else
-        {
+        } else {
             panel.setLayout(new GridLayout(3, 2, 3, 3));
             panel.add(new JButton(actions.getAction(DELETE)));
             panel.add(new JButton(actions.getAction(UNINDEX)));
@@ -309,35 +283,28 @@ public class SitePane extends JPanel
     /**
      * Delete the current book
      */
-    public void doDelete()
-    {
+    public void doDelete() {
         TreePath path = treAvailable.getSelectionPath();
-        if (path == null)
-        {
+        if (path == null) {
             return;
         }
 
         Object last = path.getLastPathComponent();
         Book book = getBook(last);
 
-        try
-        {
-            String msg = shaper.shape(Msg.CONFIRM_DELETE_BOOK.toString(new Object[] {book.getName()}));
-            if (CWOptionPane.showConfirmDialog(this, msg,
-                            Msg.CONFIRM_DELETE_TITLE.toString(),
-                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
-            {
+        try {
+            String msg = shaper.shape(Msg.CONFIRM_DELETE_BOOK.toString(new Object[] {
+                book.getName()
+            }));
+            if (CWOptionPane.showConfirmDialog(this, msg, Msg.CONFIRM_DELETE_TITLE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 book.getDriver().delete(book);
 
                 IndexManager imanager = IndexManagerFactory.getIndexManager();
-                if (imanager.isIndexed(book))
-                {
+                if (imanager.isIndexed(book)) {
                     imanager.deleteIndex(book);
                 }
             }
-        }
-        catch (BookException e)
-        {
+        } catch (BookException e) {
             Reporter.informUser(this, e);
         }
     }
@@ -345,28 +312,20 @@ public class SitePane extends JPanel
     /**
      * Unlock the current book
      */
-    public void doUnlock()
-    {
+    public void doUnlock() {
         TreePath path = treAvailable.getSelectionPath();
-        if (path == null)
-        {
+        if (path == null) {
             return;
         }
 
         Object last = path.getLastPathComponent();
         Book book = getBook(last);
 
-        String unlockKey =
-            (String) CWOptionPane.showInputDialog(this,
-                                        Msg.UNLOCK_BOOK.toString(new Object[] {book.getName()}),
-                                        Msg.UNLOCK_TITLE.toString(),
-                                        JOptionPane.QUESTION_MESSAGE,
-                                        null,
-                                        null,
-                                        book.getUnlockKey());
+        String unlockKey = (String) CWOptionPane.showInputDialog(this, Msg.UNLOCK_BOOK.toString(new Object[] {
+            book.getName()
+        }), Msg.UNLOCK_TITLE.toString(), JOptionPane.QUESTION_MESSAGE, null, null, book.getUnlockKey());
 
-        if (unlockKey != null && unlockKey.length() > 0)
-        {
+        if (unlockKey != null && unlockKey.length() > 0) {
             book.unlock(unlockKey);
             Books.installed().addBook(book);
         }
@@ -375,31 +334,24 @@ public class SitePane extends JPanel
     /**
      * Delete the current book
      */
-    public void doUnindex()
-    {
+    public void doUnindex() {
         TreePath path = treAvailable.getSelectionPath();
-        if (path == null)
-        {
+        if (path == null) {
             return;
         }
 
         Object last = path.getLastPathComponent();
         Book book = getBook(last);
 
-        try
-        {
+        try {
             IndexManager imanager = IndexManagerFactory.getIndexManager();
-            if (imanager.isIndexed(book)
-                && CWOptionPane.showConfirmDialog(this, Msg.CONFIRM_UNINSTALL_BOOK.toString(new Object[] {book.getName()}),
-                                              Msg.CONFIRM_UNINSTALL_TITLE.toString(),
-                                              JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
-            {
+            if (imanager.isIndexed(book) && CWOptionPane.showConfirmDialog(this, Msg.CONFIRM_UNINSTALL_BOOK.toString(new Object[] {
+                book.getName()
+            }), Msg.CONFIRM_UNINSTALL_TITLE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 imanager.deleteIndex(book);
             }
             actions.getAction(UNINDEX).setEnabled(imanager.isIndexed(book));
-        }
-        catch (BookException e)
-        {
+        } catch (BookException e) {
             Reporter.informUser(this, e);
         }
     }
@@ -407,26 +359,19 @@ public class SitePane extends JPanel
     /**
      * Reload and redisplay the list of books
      */
-    public void doRefresh()
-    {
-        if (installer != null)
-        {
-            try
-            {
+    public void doRefresh() {
+        if (installer != null) {
+            try {
                 int webAccess = InternetWarning.GRANTED;
-                if (WebWarning.instance().isShown())
-                {
+                if (WebWarning.instance().isShown()) {
                     webAccess = InternetWarning.showDialog(this, "?"); //$NON-NLS-1$
                 }
 
-                if (webAccess == InternetWarning.GRANTED)
-                {
+                if (webAccess == InternetWarning.GRANTED) {
                     installer.reloadBookList();
                     setTreeModel(installer);
                 }
-            }
-            catch (InstallException ex)
-            {
+            } catch (InstallException ex) {
                 Reporter.informUser(this, ex);
             }
         }
@@ -435,60 +380,49 @@ public class SitePane extends JPanel
     /**
      * Kick off the installer
      */
-    public void doInstall()
-    {
-        if (installer == null)
-        {
+    public void doInstall() {
+        if (installer == null) {
             return;
         }
 
         TreePath path = treAvailable.getSelectionPath();
-        if (path == null)
-        {
+        if (path == null) {
             return;
         }
 
         int webAccess = InternetWarning.GRANTED;
-        if (WebWarning.instance().isShown())
-        {
+        if (WebWarning.instance().isShown()) {
             webAccess = InternetWarning.showDialog(this, "?"); //$NON-NLS-1$
         }
 
-        if (webAccess != InternetWarning.GRANTED)
-        {
+        if (webAccess != InternetWarning.GRANTED) {
             return;
         }
 
         Object last = path.getLastPathComponent();
         Book name = getBook(last);
 
-        try
-        {
+        try {
             // Is the book already installed? Then nothing to do.
             Book book = Books.installed().getBook(name.getName());
-            if (book != null && !installer.isNewer(name))
-            {
+            if (book != null && !installer.isNewer(name)) {
                 Reporter.informUser(this, Msg.INSTALLED, name.getName());
                 return;
             }
 
             float size = installer.getSize(name) / 1024.0F;
             Msg msg = Msg.KB_SIZE;
-            if (size > 1024.0F)
-            {
+            if (size > 1024.0F) {
                 size /= 1024.0F;
                 msg = Msg.MB_SIZE;
             }
 
-            if (CWOptionPane.showConfirmDialog(this, msg.toString(new Object[] {name.getName(), new Float(size)}),
-                            Msg.CONFIRMATION_TITLE.toString(),
-                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
-            {
+            if (CWOptionPane.showConfirmDialog(this, msg.toString(new Object[] {
+                    name.getName(), new Float(size)
+            }), Msg.CONFIRMATION_TITLE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 installer.install(name);
             }
-        }
-        catch (InstallException ex)
-        {
+        } catch (InstallException ex) {
             Reporter.informUser(this, ex);
         }
     }
@@ -496,13 +430,11 @@ public class SitePane extends JPanel
     /**
      * Kick off the installer
      */
-    public void doInstallSearch()
-    {
+    public void doInstallSearch() {
         doInstall();
 
         TreePath path = treAvailable.getSelectionPath();
-        if (path != null)
-        {
+        if (path != null) {
             Object last = path.getLastPathComponent();
             Book book = getBook(last);
             IndexResolver.scheduleIndex(book, this);
@@ -512,25 +444,21 @@ public class SitePane extends JPanel
     /**
      * Get a font for the current selection
      */
-    public void doChooseFont()
-    {
+    public void doChooseFont() {
         TreePath path = treAvailable.getSelectionPath();
-        if (path == null)
-        {
+        if (path == null) {
             return;
         }
 
         Object last = path.getLastPathComponent();
         Book book = getBook(last);
-        if (book != null)
-        {
+        if (book != null) {
             Font picked = FontChooser.showDialog(this, Msg.FONT_CHOOSER.toString(), BookFont.instance().getFont(book));
             BookFont.instance().setFont(book, picked);
         }
 
         Language language = getLanguage(last);
-        if (language != null)
-        {
+        if (language != null) {
             Font picked = FontChooser.showDialog(this, Msg.FONT_CHOOSER.toString(), BookFont.instance().getFont(language));
             BookFont.instance().setFont(language, picked);
         }
@@ -540,11 +468,9 @@ public class SitePane extends JPanel
     /**
      * Resets any font specifically set for this Book / Language
      */
-    public void doResetFont()
-    {
+    public void doResetFont() {
         TreePath path = treAvailable.getSelectionPath();
-        if (path == null)
-        {
+        if (path == null) {
             return;
         }
 
@@ -558,14 +484,12 @@ public class SitePane extends JPanel
     /**
      * Something has been (un)selected in the tree
      */
-    protected void selected()
-    {
+    protected void selected() {
         TreePath path = treAvailable.getSelectionPath();
 
         Book book = null;
         Language lang = null;
-        if (path != null)
-        {
+        if (path != null) {
             Object last = path.getLastPathComponent();
             book = getBook(last);
             lang = getLanguage(last);
@@ -582,29 +506,25 @@ public class SitePane extends JPanel
         actions.getAction(RESET_FONT).setEnabled(BookFont.instance().isSet(book, lang));
     }
 
-    public void setTreeModel(BookList books)
-    {
+    public void setTreeModel(BookList books) {
         treAvailable.setModel(createTreeModel(books));
     }
 
     /**
      * When new books are added we need to reflect the change in this tree.
      */
-    final class CustomBooksListener implements BooksListener
-    {
+    final class CustomBooksListener implements BooksListener {
         /* (non-Javadoc)
          * @see org.crosswire.jsword.book.BooksListener#bookAdded(org.crosswire.jsword.book.BooksEvent)
          */
-        public void bookAdded(BooksEvent ev)
-        {
+        public void bookAdded(BooksEvent ev) {
             setTreeModel((BookList) ev.getSource());
         }
 
         /* (non-Javadoc)
          * @see org.crosswire.jsword.book.BooksListener#bookRemoved(org.crosswire.jsword.book.BooksEvent)
          */
-        public void bookRemoved(BooksEvent ev)
-        {
+        public void bookRemoved(BooksEvent ev) {
             setTreeModel((BookList) ev.getSource());
         }
     }
@@ -616,8 +536,7 @@ public class SitePane extends JPanel
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         // Broken but we don't serialize views
         installer = null;
         display = null;

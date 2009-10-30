@@ -44,21 +44,19 @@ import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.util.Convert;
 
 /**
- * A StringArrayField allows editing of an array of Strings in a JList.
- * It allows the user to specify additional classes that extend the
- * functionality of the program.
- *
- * @see gnu.lgpl.License for license details.
+ * A StringArrayField allows editing of an array of Strings in a JList. It
+ * allows the user to specify additional classes that extend the functionality
+ * of the program.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class PathField extends JPanel implements Field
-{
+public class PathField extends JPanel implements Field {
     /**
      * Create a PropertyHashtableField for editing String arrays.
      */
-    public PathField()
-    {
+    public PathField() {
         model = new DefaultComboBoxModel();
         list = new JList(model);
 
@@ -76,79 +74,82 @@ public class PathField extends JPanel implements Field
         buttons.add(new JButton(actions.getAction(REMOVE)));
         buttons.add(new JButton(actions.getAction(UPDATE)));
 
-        setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(),
-                                                     BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
         setLayout(new BorderLayout());
         add(scroll, BorderLayout.CENTER);
         add(buttons, BorderLayout.PAGE_END);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.config.swing.Field#setChoice(org.crosswire.common.config.Choice)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.config.swing.Field#setChoice(org.crosswire.common
+     * .config.Choice)
      */
-    public void setChoice(Choice param)
-    {
+    public void setChoice(Choice param) {
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.config.swing.Field#getValue()
      */
-    public String getValue()
-    {
+    public String getValue() {
         return Convert.stringArray2String(getArray(), File.pathSeparator);
     }
 
     /**
      * Return the actual Hashtable being edited
+     * 
      * @return The current value
      */
-    public String[] getArray()
-    {
+    public String[] getArray() {
         String[] retcode = new String[model.getSize()];
-        for (int i = 0; i < retcode.length; i++)
-        {
+        for (int i = 0; i < retcode.length; i++) {
             retcode[i] = (String) model.getElementAt(i);
         }
 
         return retcode;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.config.swing.Field#setValue(java.lang.String)
      */
-    public void setValue(String value)
-    {
+    public void setValue(String value) {
         setArray(Convert.string2StringArray(value, File.pathSeparator));
     }
 
     /**
      * Set the current value using a String array
-     * @param value The new text
+     * 
+     * @param value
+     *            The new text
      */
-    public void setArray(String[] value)
-    {
+    public void setArray(String[] value) {
         model = new DefaultComboBoxModel((String[]) value.clone());
         list.setModel(model);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.config.swing.Field#getComponent()
      */
-    public JComponent getComponent()
-    {
+    public JComponent getComponent() {
         return this;
     }
 
     /**
      * Pop up a dialog to allow editing of a new value
      */
-    public void doAddPathEntry()
-    {
+    public void doAddPathEntry() {
         JFileChooser chooser = new JFileChooser();
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
-        {
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             String path = chooser.getSelectedFile().getPath();
             model.addElement(path);
         }
@@ -157,12 +158,10 @@ public class PathField extends JPanel implements Field
     /**
      * Pop up a dialog to allow editing of a current value
      */
-    public void doUpdatePathEntry()
-    {
+    public void doUpdatePathEntry() {
         JFileChooser chooser = new JFileChooser(currentValue());
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
-        {
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             String path = chooser.getSelectedFile().getPath();
 
             model.removeElement(currentValue());
@@ -173,29 +172,27 @@ public class PathField extends JPanel implements Field
     /**
      * Delete the current value in the hashtable
      */
-    public void doRemovePathEntry()
-    {
+    public void doRemovePathEntry() {
         model.removeElement(currentValue());
     }
 
     /**
      * What is the currently selected value?
+     * 
      * @return The currently selected value
      */
-    private String currentValue()
-    {
+    private String currentValue() {
         return (String) model.getElementAt(list.getSelectedIndex());
     }
 
     /**
      * Serialization support.
-     *
+     * 
      * @param is
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         actions = new ActionFactory(PathField.class, this);
         is.defaultReadObject();
     }

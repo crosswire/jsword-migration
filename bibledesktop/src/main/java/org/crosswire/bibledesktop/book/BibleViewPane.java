@@ -55,20 +55,18 @@ import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageKeyFactory;
 
 /**
- * A BibleViewPane consists of three areas for looking up passages,
- * for navigating and manipulating parts of passage and for viewing a passage.
- *
- * @see gnu.gpl.License for license details.
+ * A BibleViewPane consists of three areas for looking up passages, for
+ * navigating and manipulating parts of passage and for viewing a passage.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearable, TitleChangedListener
-{
+public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearable, TitleChangedListener {
     /**
      * Simple ctor
      */
-    public BibleViewPane(boolean showSidebar)
-    {
+    public BibleViewPane(boolean showSidebar) {
         listeners = new EventListenerList();
         pnlSelect = new DisplaySelectPane();
         KeySidebar sidebar = new KeySidebar(pnlSelect.getBooks());
@@ -88,14 +86,10 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
     /**
      * Setup the GUI
      */
-    private void init()
-    {
-        try
-        {
+    private void init() {
+        try {
             chooser = new JFileChooser(CWProject.instance().getWriteableProjectSubdir(BOOKMARK_DIR, true).getPath());
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             chooser = new JFileChooser(CWProject.instance().getWritableProjectDir().getPath());
         }
 
@@ -103,21 +97,18 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
         chooser.addChoosableFileFilter(new CustomFileFilter());
         chooser.setMultiSelectionEnabled(false);
 
-        pnlSelect.addCommandListener(new DisplaySelectListener()
-        {
+        pnlSelect.addCommandListener(new DisplaySelectListener() {
             /* (non-Javadoc)
              * @see org.crosswire.bibledesktop.book.DisplaySelectListener#passageSelected(org.crosswire.bibledesktop.book.DisplaySelectEvent)
              */
-            public void passageSelected(DisplaySelectEvent ev)
-            {
+            public void passageSelected(DisplaySelectEvent ev) {
                 pnlPassg.setBookData(ev.getBookProvider().getBooks(), ev.getKey());
             }
 
             /* (non-Javadoc)
              * @see org.crosswire.bibledesktop.book.DisplaySelectListener#bookChosen(org.crosswire.bibledesktop.book.DisplaySelectEvent)
              */
-            public void bookChosen(DisplaySelectEvent ev)
-            {
+            public void bookChosen(DisplaySelectEvent ev) {
                 pnlPassg.setBookData(ev.getBookProvider().getBooks(), ev.getKey());
             }
         });
@@ -134,11 +125,9 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
     /**
      * Make it as though no-one is using this view
      */
-    public void clear()
-    {
+    public void clear() {
         saved = null;
-        if (!pnlSelect.isClear())
-        {
+        if (!pnlSelect.isClear()) {
             pnlSelect.clear();
         }
     }
@@ -146,8 +135,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
     /**
      * Has anyone started using this view
      */
-    public boolean isClear()
-    {
+    public boolean isClear() {
         saved = null;
         return pnlSelect.isClear();
     }
@@ -155,10 +143,8 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
     /**
      * How has this view been saved
      */
-    public String getTitle()
-    {
-        if (saved == null)
-        {
+    public String getTitle() {
+        if (saved == null) {
             return pnlSelect.getTitle();
         }
 
@@ -168,17 +154,14 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
     /**
      * Save the view to disk.
      */
-    public void save() throws IOException
-    {
+    public void save() throws IOException {
         Key key = getKey();
-        if (key == null)
-        {
+        if (key == null) {
             return;
         }
 
         // We need a name to save against
-        if (saved == null && !querySaveFile())
-        {
+        if (saved == null && !querySaveFile()) {
             return;
         }
 
@@ -187,13 +170,12 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
 
     /**
      * Save the view to disk, but ask the user where to save it first.
+     * 
      * @throws IOException
      */
-    public void saveAs() throws IOException
-    {
+    public void saveAs() throws IOException {
         Key key = getKey();
-        if (key == null)
-        {
+        if (key == null) {
             return;
         }
 
@@ -204,13 +186,16 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
 
     /**
      * Do the real work of saving to a file
-     * @param key The key to save
-     * @throws IOException If a write error happens
+     * 
+     * @param key
+     *            The key to save
+     * @throws IOException
+     *             If a write error happens
      */
-    private void saveKey(Key key) throws IOException
-    {
-        //TODO(DMS): change this to save:
-        // The version of the save file, incremented everytime this method changes.
+    private void saveKey(Key key) throws IOException {
+        // TODO(DMS): change this to save:
+        // The version of the save file, incremented everytime this method
+        // changes.
         // the search request,
         // the set of bibles,
         // and any advanced search options.
@@ -218,24 +203,17 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
         assert saved != null;
 
         Writer out = null;
-        try
-        {
+        try {
             out = new FileWriter(saved);
-            if (key instanceof Passage)
-            {
+            if (key instanceof Passage) {
                 Passage ref = (Passage) key;
                 ref.writeDescription(out);
-            }
-            else
-            {
+            } else {
                 out.write(key.getName());
                 out.write("\n"); //$NON-NLS-1$
             }
-        }
-        finally
-        {
-            if (out != null)
-            {
+        } finally {
+            if (out != null) {
                 out.close();
             }
         }
@@ -244,40 +222,33 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
     /**
      * Returns true if there is something to save.
      */
-    public boolean maySave()
-    {
+    public boolean maySave() {
         return getKey() != null;
     }
 
     /**
      * Open a saved verse list form disk
-     * @throws IOException 
+     * 
+     * @throws IOException
      * @throws NoSuchVerseException
      */
-    public void open() throws NoSuchVerseException, IOException
-    {
+    public void open() throws NoSuchVerseException, IOException {
         // TODO(DMS): make this sensitive to a version marker in the file!
         int reply = chooser.showOpenDialog(getRootPane());
-        if (reply == JFileChooser.APPROVE_OPTION)
-        {
+        if (reply == JFileChooser.APPROVE_OPTION) {
             saved = chooser.getSelectedFile();
-            if (saved.length() == 0)
-            {
+            if (saved.length() == 0) {
                 Reporter.informUser(getRootPane(), Msg.EMPTY_FILE, saved.getName());
                 return;
             }
 
             Reader in = null;
-            try
-            {
+            try {
                 in = new FileReader(saved);
                 Passage ref = PassageKeyFactory.readPassage(in);
                 setKey(ref);
-            }
-            finally
-            {
-                if (in != null)
-                {
+            } finally {
+                if (in != null) {
                     in.close();
                 }
             }
@@ -287,21 +258,16 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
     /**
      * Ask the user where to store the data
      */
-    private boolean querySaveFile()
-    {
-        if (saved == null)
-        {
+    private boolean querySaveFile() {
+        if (saved == null) {
             File guess = new File(getTitle() + EXTENSION);
             chooser.setSelectedFile(guess);
-        }
-        else
-        {
+        } else {
             chooser.setSelectedFile(saved);
         }
 
         int reply = chooser.showSaveDialog(getRootPane());
-        if (reply == JFileChooser.APPROVE_OPTION)
-        {
+        if (reply == JFileChooser.APPROVE_OPTION) {
             saved = chooser.getSelectedFile();
             return true;
         }
@@ -311,68 +277,61 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
     /**
      * Accessor for the current passage
      */
-    public Key getKey()
-    {
-        // Get it from the pnlPassg because the user may be in the middle of an edit
-        // and pnlSelect may be inconsistent.
+    public Key getKey() {
+        // Get it from the pnlPassg because the user may be in the middle of an
+        // edit and pnlSelect may be inconsistent.
         return pnlPassg.getKey();
     }
 
     /**
      * Accessor for the current passage
      */
-    public final void setKey(Key key)
-    {
+    public final void setKey(Key key) {
         pnlSelect.setKey(key);
     }
 
     /**
      * Accessor for the SplitBookDataDisplay
      */
-    public SplitBookDataDisplay getPassagePane()
-    {
+    public SplitBookDataDisplay getPassagePane() {
         return pnlPassg;
     }
 
     /**
      * Accessor for the DisplaySelectPane
      */
-    public DisplaySelectPane getSelectPane()
-    {
+    public DisplaySelectPane getSelectPane() {
         return pnlSelect;
     }
 
     /**
      * Add a TitleChangedEvent listener
      */
-    public synchronized void addTitleChangedListener(TitleChangedListener li)
-    {
+    public synchronized void addTitleChangedListener(TitleChangedListener li) {
         listeners.add(TitleChangedListener.class, li);
     }
 
     /**
      * Remove a TitleChangedEvent listener
      */
-    public synchronized void removeTitleChangedListener(TitleChangedListener li)
-    {
+    public synchronized void removeTitleChangedListener(TitleChangedListener li) {
         listeners.remove(TitleChangedListener.class, li);
     }
 
     /**
      * Listen for changes to the title
-     * @param ev the event to throw
+     * 
+     * @param ev
+     *            the event to throw
      */
-    protected void fireTitleChanged(TitleChangedEvent ev)
-    {
+    protected void fireTitleChanged(TitleChangedEvent ev) {
         // Guaranteed to return a non-null array
         Object[] contents = listeners.getListenerList();
 
         // Process the listeners last to first, notifying
         // those that are interested in this event
-        for (int i = contents.length - 2; i >= 0; i -= 2)
-        {
-            if (contents[i] == TitleChangedListener.class)
-            {
+        for (int i = contents.length - 2; i >= 0; i -= 2) {
+            if (contents[i] == TitleChangedListener.class) {
                 ((TitleChangedListener) contents[i + 1]).titleChanged(ev);
             }
         }
@@ -381,10 +340,8 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
     /* (non-Javadoc)
      * @see org.crosswire.common.swing.desktop.event.TitleChangedListener#titleChanged(org.crosswire.common.swing.desktop.event.TitleChangedEvent)
      */
-    public void titleChanged(TitleChangedEvent ev)
-    {
-        if (saved == null)
-        {
+    public void titleChanged(TitleChangedEvent ev) {
+        if (saved == null) {
             fireTitleChanged(new TitleChangedEvent(BibleViewPane.this, getTitle()));
         }
     }
@@ -396,8 +353,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         listeners = new EventListenerList();
         is.defaultReadObject();
     }
@@ -423,14 +379,12 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
     /**
      * Filter out verse lists
      */
-    static final class CustomFileFilter extends FileFilter
-    {
+    static final class CustomFileFilter extends FileFilter {
         /* (non-Javadoc)
          * @see javax.swing.filechooser.FileFilter#accept(java.io.File)
          */
         /* @Override */
-        public boolean accept(File file)
-        {
+        public boolean accept(File file) {
             return file.getName().endsWith(EXTENSION);
         }
 
@@ -438,8 +392,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
          * @see javax.swing.filechooser.FileFilter#getDescription()
          */
         /* @Override */
-        public String getDescription()
-        {
+        public String getDescription() {
             return Msg.VERSE_LIST_DESC.toString(EXTENSION);
         }
     }

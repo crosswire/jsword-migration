@@ -33,22 +33,22 @@ import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.jdom.Element;
 
 /**
- * StudyTool is-an extension to Bible that knows about the original
- * Greek/Hebrew in the form of Strong's numbers.
+ * StudyTool is-an extension to Bible that knows about the original Greek/Hebrew
+ * in the form of Strong's numbers.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class StudyTool
-{
+public class StudyTool {
     /**
      * StudyTool: For a given word find a list words it is translated from
-     * @param word The text to search for
+     * 
+     * @param word
+     *            The text to search for
      * @return The source numbers of that word
      */
-    public Collection getTranslations(Book bible, String word) throws BookException
-    {
+    public Collection getTranslations(Book bible, String word) throws BookException {
         Key key = bible.find(new DefaultSearchRequest(word, null));
         BookData data = new BookData(bible, key);
 
@@ -59,28 +59,23 @@ public class StudyTool
 
         // Get all the w elements in this div
         Iterator dit = OSISUtil.getDeepContent(div, OSISUtil.OSIS_ELEMENT_W).iterator();
-        while (dit.hasNext())
-        {
-            // LATER(joe): This only looks at L1 content, we need a deep scan for 'W's.
+        while (dit.hasNext()) {
+            // LATER(joe): This only looks at L1 content, we need a deep scan
+            // for 'W's.
             Object ele = dit.next();
             Element w = (Element) ele;
             String content = OSISUtil.getPlainText(w);
 
             // There will be many words in the passage in question,
             // but not all of them will be translations of our word
-            if (content.indexOf(word) != -1)
-            {
+            if (content.indexOf(word) != -1) {
                 Strongs strongs = new Strongs(w);
 
                 Translation trans = (Translation) reply.get(strongs);
-                if (trans == null)
-                {
-                    try
-                    {
+                if (trans == null) {
+                    try {
                         trans = new Translation(word, strongs, bible.getKey(null));
-                    }
-                    catch (NoSuchKeyException ex)
-                    {
+                    } catch (NoSuchKeyException ex) {
                         log.warn("Failed to create key", ex); //$NON-NLS-1$
                     }
 
@@ -96,11 +91,12 @@ public class StudyTool
 
     /**
      * StudyTool: For a given number find a list of ways it is translated
-     * @param number The strongs number to search for
+     * 
+     * @param number
+     *            The strongs number to search for
      * @return The words that the number is translated to
      */
-    public Collection getTranslations(Book bible, Strongs number) throws BookException
-    {
+    public Collection getTranslations(Book bible, Strongs number) throws BookException {
         Key key = bible.find(new DefaultSearchRequest(number.getOLBName(), null));
         BookData data = new BookData(bible, key);
 
@@ -111,8 +107,7 @@ public class StudyTool
 
         // Get all the w elements in this div
         Iterator dit = OSISUtil.getDeepContent(div, OSISUtil.OSIS_ELEMENT_W).iterator();
-        while (dit.hasNext())
-        {
+        while (dit.hasNext()) {
             // see note above on deep scanning for W
             Object ele = dit.next();
             Element w = (Element) ele;
@@ -121,19 +116,14 @@ public class StudyTool
             // There will be many strongs number in the passage in
             // question, but not all of them will be translations of our
             // strongs number
-            if (strongs.equals(number))
-            {
+            if (strongs.equals(number)) {
                 String translated = OSISUtil.getPlainText(w);
 
                 Translation trans = (Translation) reply.get(translated);
-                if (trans == null)
-                {
-                    try
-                    {
+                if (trans == null) {
+                    try {
                         trans = new Translation(translated, number, bible.getKey(null));
-                    }
-                    catch (NoSuchKeyException ex)
-                    {
+                    } catch (NoSuchKeyException ex) {
                         log.warn("Failed to create key", ex); //$NON-NLS-1$
                     }
 

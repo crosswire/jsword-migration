@@ -54,20 +54,17 @@ import org.crosswire.jsword.book.basic.Verifier;
 import org.crosswire.jsword.passage.Key;
 
 /**
- * This displays the results of a comparision that occurs in a separate
- * thread.
- *
- * @see gnu.gpl.License for license details.
+ * This displays the results of a comparision that occurs in a separate thread.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class CompareResultsPane extends JPanel implements Runnable
-{
-	/**
+public class CompareResultsPane extends JPanel implements Runnable {
+    /**
      * Basic Constructor
      */
-    public CompareResultsPane(Verifier ver)
-    {
+    public CompareResultsPane(Verifier ver) {
         this.ver = ver;
         init();
     }
@@ -75,8 +72,7 @@ public class CompareResultsPane extends JPanel implements Runnable
     /**
      * Create the GUI
      */
-    private void init()
-    {
+    private void init() {
         setTitles();
         boxBibles = Box.createVerticalBox();
         boxBibles.add(lblBible1, null);
@@ -94,10 +90,8 @@ public class CompareResultsPane extends JPanel implements Runnable
 
         // I18N: migrate this to an ActionFactory
         btnStop.setText(LimboMsg.RESULTS_START.toString());
-        btnStop.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        btnStop.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 startStop();
             }
         });
@@ -110,19 +104,16 @@ public class CompareResultsPane extends JPanel implements Runnable
     }
 
     /**
-     * This allows up to easily display this component in a window and
-     * have the 2 work together on close actions and so on.
+     * This allows up to easily display this component in a window and have the
+     * 2 work together on close actions and so on.
      */
-    public void showInFrame(Frame parent)
-    {
+    public void showInFrame(Frame parent) {
         final JDialog frame = new JDialog(parent, LimboMsg.RESULTS_DIALOG.toString());
 
         // I18N: migrate this to an ActionFactory
         btnClose = new JButton(LimboMsg.RESULTS_CLOSE.toString());
-        btnClose.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        btnClose.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 if (work != null)
                     startStop();
                 frame.setVisible(false);
@@ -133,11 +124,9 @@ public class CompareResultsPane extends JPanel implements Runnable
 
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
 
-        frame.addWindowListener(new WindowAdapter()
-        {
+        frame.addWindowListener(new WindowAdapter() {
             /* @Override */
-            public void windowClosed(WindowEvent ev)
-            {
+            public void windowClosed(WindowEvent ev) {
                 if (work != null)
                     startStop();
             }
@@ -154,28 +143,23 @@ public class CompareResultsPane extends JPanel implements Runnable
     /**
      * Start running the tests
      */
-    public void startStop()
-    {
-        if (work == null)
-        {
+    public void startStop() {
+        if (work == null) {
             // New thread to do the real work
             work = new Thread(this);
             work.start();
             work.setPriority(Thread.MIN_PRIORITY);
-        }
-        else
-        {
+        } else {
             work.interrupt();
             work = null;
         }
     }
 
     /**
-     * The text that we will check, null for no check, we apply startsWith
-     * to the given word before we run the check.
+     * The text that we will check, null for no check, we apply startsWith to
+     * the given word before we run the check.
      */
-    public void setCheckText(String checkText)
-    {
+    public void setCheckText(String checkText) {
         this.checkText = checkText;
         setTitles();
     }
@@ -183,8 +167,7 @@ public class CompareResultsPane extends JPanel implements Runnable
     /**
      * The Passage that we will check, null for no check.
      */
-    public void setCheckPassages(Key checkRef)
-    {
+    public void setCheckPassages(Key checkRef) {
         this.checkRef = checkRef;
         setTitles();
     }
@@ -192,20 +175,17 @@ public class CompareResultsPane extends JPanel implements Runnable
     /**
      * Set the title of the pane to what we are doing
      */
-    private void setTitles()
-    {
+    private void setTitles() {
         lblBible1.setText("<html><b>" + LimboMsg.RESULTS_BOOKS + "</b> " //$NON-NLS-1$ //$NON-NLS-2$
-                           + ver.getBible1().getName() + " / " //$NON-NLS-1$
-                           + ver.getBible2().getName());
+                + ver.getBible1().getName() + " / " //$NON-NLS-1$
+                + ver.getBible2().getName());
 
         String compare = "<html><b>" + LimboMsg.RESULTS_COMPARING + "</b> "; //$NON-NLS-1$ //$NON-NLS-2$
-        if (checkRef != null)
-        {
+        if (checkRef != null) {
             compare += LimboMsg.RESULTS_PASSAGE + "=" + checkRef + ' '; //$NON-NLS-1$
         }
 
-        if (checkText != null)
-        {
+        if (checkText != null) {
             compare += LimboMsg.RESULTS_WORDS + "=" + (checkText.equals("") ? "*" : checkText); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         }
 
@@ -216,13 +196,10 @@ public class CompareResultsPane extends JPanel implements Runnable
      * A class to be run in a Thread to do the real work of comparing the
      * selected Books
      */
-    public void run()
-    {
+    public void run() {
         // While we are working stop anyone editing the values
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
                 // I18N: migrate this to an ActionFactory
                 btnStop.setText(LimboMsg.RESULTS_STOP.toString());
             }
@@ -233,35 +210,25 @@ public class CompareResultsPane extends JPanel implements Runnable
         PrintWriter out = new PrintWriter(dout);
         alive = true;
 
-        try
-        {
+        try {
             JobManager.addWorkListener(cpl);
 
-            if (checkRef != null && checkRef.isEmpty() && alive)
-            {
+            if (checkRef != null && checkRef.isEmpty() && alive) {
                 ver.checkText(checkRef, out);
             }
-        }
-        catch (final Exception ex)
-        {
-            SwingUtilities.invokeLater(new Runnable()
-            {
-                public void run()
-                {
+        } catch (final Exception ex) {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
                     ExceptionPane.showExceptionDialog(CompareResultsPane.this, ex);
                 }
             });
-        }
-        finally
-        {
+        } finally {
             JobManager.removeWorkListener(cpl);
         }
 
         // Re-enable the values
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
                 // I18N: migrate this to an ActionFactory
                 btnStop.setText(LimboMsg.RESULTS_START.toString());
             }
@@ -323,17 +290,17 @@ public class CompareResultsPane extends JPanel implements Runnable
     /**
      * Report progress changes to the screen
      */
-    class CustomProgressListener implements WorkListener
-    {
-        /* (non-Javadoc)
-         * @see org.crosswire.common.progress.WorkListener#progressMade(org.crosswire.common.progress.WorkEvent)
+    class CustomProgressListener implements WorkListener {
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * org.crosswire.common.progress.WorkListener#progressMade(org.crosswire
+         * .common.progress.WorkEvent)
          */
-        public void workProgressed(final WorkEvent ev)
-        {
-            SwingUtilities.invokeLater(new Runnable()
-            {
-                public void run()
-                {
+        public void workProgressed(final WorkEvent ev) {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
                     Progress job = ev.getJob();
                     int percent = job.getWork();
                     barProgress.setString(job.getSectionName() + ": (" + percent + "%)"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -342,11 +309,14 @@ public class CompareResultsPane extends JPanel implements Runnable
             });
         }
 
-        /* (non-Javadoc)
-         * @see org.crosswire.common.progress.WorkListener#workStateChanged(org.crosswire.common.progress.WorkEvent)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * org.crosswire.common.progress.WorkListener#workStateChanged(org.crosswire
+         * .common.progress.WorkEvent)
          */
-        public void workStateChanged(WorkEvent ev)
-        {
+        public void workStateChanged(WorkEvent ev) {
         }
     }
 }

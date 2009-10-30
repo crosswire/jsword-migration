@@ -67,19 +67,17 @@ import org.crosswire.jsword.book.install.InstallerFactory;
 
 /**
  * An editor for the list of available update sites.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class EditSitePane extends JPanel
-{
+public class EditSitePane extends JPanel {
     /**
      * This is the default constructor
      */
-    public EditSitePane(InstallManager imanager)
-    {
+    public EditSitePane(InstallManager imanager) {
         this.imanager = imanager;
         userInitiated = true;
 
@@ -91,20 +89,16 @@ public class EditSitePane extends JPanel
     /**
      * GUI init
      */
-    private void init()
-    {
+    private void init() {
         actions = new ActionFactory(EditSitePane.class, this);
 
         lstSite = new JList(new InstallManagerComboBoxModel(imanager));
         JScrollPane scrSite = new CWScrollPane(lstSite);
 
         lstSite.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        lstSite.addListSelectionListener(new ListSelectionListener()
-        {
-            public void valueChanged(ListSelectionEvent ev)
-            {
-                if (ev.getValueIsAdjusting())
-                {
+        lstSite.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent ev) {
+                if (ev.getValueIsAdjusting()) {
                     return;
                 }
 
@@ -128,20 +122,16 @@ public class EditSitePane extends JPanel
 
         txtName = new JTextField();
         txtName.setColumns(10);
-        txtName.getDocument().addDocumentListener(new DocumentListener()
-        {
-            public void changedUpdate(DocumentEvent ev)
-            {
+        txtName.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent ev) {
                 siteUpdate();
             }
 
-            public void insertUpdate(DocumentEvent ev)
-            {
+            public void insertUpdate(DocumentEvent ev) {
                 siteUpdate();
             }
 
-            public void removeUpdate(DocumentEvent ev)
-            {
+            public void removeUpdate(DocumentEvent ev) {
                 siteUpdate();
             }
         });
@@ -152,10 +142,8 @@ public class EditSitePane extends JPanel
         cboType = new JComboBox(new InstallerFactoryComboBoxModel(imanager));
         cboType.setEditable(false);
         cboType.setSelectedIndex(0);
-        cboType.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        cboType.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 newType();
             }
         });
@@ -179,17 +167,22 @@ public class EditSitePane extends JPanel
         JPanel pnlMain = new JPanel();
         pnlMain.setPreferredSize(new Dimension(300, 300));
         pnlMain.setLayout(new GridBagLayout());
-        pnlMain.add(lblMesg, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
+        pnlMain.add(lblMesg, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10,
+                10), 0, 0));
         pnlMain.add(lblName, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
-        pnlMain.add(txtName, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
+        pnlMain.add(txtName, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0,
+                0));
         // If there is only one type, then don't give the user a choice
-        if (imanager.getInstallerFactoryNames().size() > 1)
-        {
-            pnlMain.add(lblType, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
-            pnlMain.add(cboType, new GridBagConstraints(1, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
+        if (imanager.getInstallerFactoryNames().size() > 1) {
+            pnlMain.add(lblType, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0,
+                    0));
+            pnlMain.add(cboType, new GridBagConstraints(1, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+                    new Insets(2, 2, 2, 10), 0, 0));
         }
-        pnlMain.add(new JSeparator(), new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
-        pnlMain.add(siteEditorPane, new GridBagConstraints(0, 4, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+        pnlMain.add(new JSeparator(), new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL, new Insets(10,
+                10, 10, 10), 0, 0));
+        pnlMain.add(siteEditorPane, new GridBagConstraints(0, 4, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0,
+                0));
         pnlMain.add(pnlBtn2, new GridBagConstraints(0, 5, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         JSplitPane sptMain = new FixedSplitPane();
@@ -213,17 +206,16 @@ public class EditSitePane extends JPanel
 
     /**
      * Open us in a new modal dialog window
-     * @param parent The component to which to attach the new dialog
+     * 
+     * @param parent
+     *            The component to which to attach the new dialog
      */
-    public void showInDialog(Component parent)
-    {
+    public void showInDialog(Component parent) {
         Frame root = JOptionPane.getFrameForComponent(parent);
         dlgMain = new JDialog(root);
 
-        ActionListener closer = new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        ActionListener closer = new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 doClose();
             }
         };
@@ -253,8 +245,7 @@ public class EditSitePane extends JPanel
     /**
      * Close the window, and save the install manager state
      */
-    public void doClose()
-    {
+    public void doClose() {
         imanager.save();
         dlgMain.dispose();
     }
@@ -262,20 +253,16 @@ public class EditSitePane extends JPanel
     /**
      * The name field has been updated, so we need to check the entry is valid
      */
-    public final void siteUpdate()
-    {
-        if (txtName.isEditable())
-        {
+    public final void siteUpdate() {
+        if (txtName.isEditable()) {
             String name = txtName.getText().trim();
 
-            if (name.length() == 0)
-            {
+            if (name.length() == 0) {
                 setState(STATE_EDIT_ERROR, Msg.MISSING_SITE.toString());
                 return;
             }
 
-            if (imanager.getInstaller(name) != null)
-            {
+            if (imanager.getInstaller(name) != null) {
                 setState(STATE_EDIT_ERROR, Msg.DUPLICATE_SITE.toString());
                 return;
             }
@@ -287,10 +274,8 @@ public class EditSitePane extends JPanel
     /**
      * The installer type combo box has been changed
      */
-    /*private*/ final void newType()
-    {
-        if (userInitiated)
-        {
+    /*private*/final void newType() {
+        if (userInitiated) {
             String type = (String) cboType.getSelectedItem();
             InstallerFactory ifactory = imanager.getInstallerFactory(type);
             Installer installer = ifactory.createInstaller();
@@ -302,16 +287,12 @@ public class EditSitePane extends JPanel
     /**
      * Someone has picked a new installer
      */
-    protected final void select()
-    {
+    protected final void select() {
         String name = (String) lstSite.getSelectedValue();
-        if (name == null)
-        {
+        if (name == null) {
             actions.getAction(EDIT).setEnabled(false);
             clear();
-        }
-        else
-        {
+        } else {
             actions.getAction(EDIT).setEnabled(true);
 
             Installer installer = imanager.getInstaller(name);
@@ -321,8 +302,7 @@ public class EditSitePane extends JPanel
         // Since setting the display undoes any work done to set the edit state
         // of the bean panel we need to redo it here. Since we are always in
         // display mode at this point, this is fairly easy.
-        if (siteEditor != null)
-        {
+        if (siteEditor != null) {
             siteEditor.setEditable(false);
         }
     }
@@ -330,8 +310,7 @@ public class EditSitePane extends JPanel
     /**
      * Add a new installer to the list
      */
-    public void doAdd()
-    {
+    public void doAdd() {
         newType();
 
         editName = null;
@@ -348,11 +327,9 @@ public class EditSitePane extends JPanel
     /**
      * Move the selected installer to the installer edit panel
      */
-    public void doEdit()
-    {
+    public void doEdit() {
         String name = (String) lstSite.getSelectedValue();
-        if (name == null)
-        {
+        if (name == null) {
             CWOptionPane.showMessageDialog(this, Msg.NO_SELECTED_SITE.toString(), Msg.NO_SITE.toString(), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -371,16 +348,13 @@ public class EditSitePane extends JPanel
     /**
      * Delete the selected installer from the list (on the left hand side)
      */
-    public void doDelete()
-    {
+    public void doDelete() {
         String name = (String) lstSite.getSelectedValue();
-        if (name == null)
-        {
+        if (name == null) {
             return;
         }
 
-        if (CWOptionPane.showConfirmDialog(this, Msg.CONFIRM_DELETE_SITE.toString(name), Msg.DELETE_SITE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
-        {
+        if (CWOptionPane.showConfirmDialog(this, Msg.CONFIRM_DELETE_SITE.toString(name), Msg.DELETE_SITE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             imanager.removeInstaller(name);
         }
 
@@ -391,10 +365,8 @@ public class EditSitePane extends JPanel
     /**
      * End editing the current installer
      */
-    public void doReset()
-    {
-        if (editName != null)
-        {
+    public void doReset() {
+        if (editName != null) {
             imanager.addInstaller(editName, editInstaller);
         }
 
@@ -409,8 +381,7 @@ public class EditSitePane extends JPanel
     /**
      * Save the current installer to the list of installers
      */
-    public void doSave()
-    {
+    public void doSave() {
         String name = txtName.getText();
         siteEditor.save();
         Installer installer = siteEditor.getInstaller();
@@ -427,10 +398,8 @@ public class EditSitePane extends JPanel
     /**
      * Set the various gui elements depending on the current edit mode
      */
-    private void setState(int state, String message)
-    {
-        switch (state)
-        {
+    private void setState(int state, String message) {
+        switch (state) {
         case STATE_DISPLAY:
             actions.getAction(ADD).setEnabled(true);
             actions.getAction(DELETE).setEnabled(true);
@@ -445,8 +414,7 @@ public class EditSitePane extends JPanel
             txtName.setEditable(false);
             cboType.setEnabled(false);
 
-            if (siteEditor != null)
-            {
+            if (siteEditor != null) {
                 siteEditor.setEditable(false);
             }
 
@@ -467,8 +435,7 @@ public class EditSitePane extends JPanel
             txtName.setEditable(true);
             cboType.setEnabled(true);
 
-            if (siteEditor != null)
-            {
+            if (siteEditor != null) {
                 siteEditor.setEditable(true);
             }
 
@@ -478,12 +445,9 @@ public class EditSitePane extends JPanel
             assert false : state;
         }
 
-        if (message == null || message.trim().length() == 0)
-        {
+        if (message == null || message.trim().length() == 0) {
             lblMesg.setText(BLANK_STRING);
-        }
-        else
-        {
+        } else {
             lblMesg.setText(message);
         }
     }
@@ -491,8 +455,7 @@ public class EditSitePane extends JPanel
     /**
      * Set the display in the RHS to the given installer
      */
-    private void display(String name, Installer installer)
-    {
+    private void display(String name, Installer installer) {
         txtName.setText(name);
 
         String type = imanager.getFactoryNameForInstaller(installer);
@@ -506,8 +469,7 @@ public class EditSitePane extends JPanel
     /**
      * Clear the display in the RHS of any installers
      */
-    private void clear()
-    {
+    private void clear() {
         txtName.setText(EMPTY_STRING);
         setInstaller(null);
     }
@@ -515,16 +477,17 @@ public class EditSitePane extends JPanel
     /**
      * Convenience method to allow us to change the type of the current
      * installer.
-     * @param installer The new installer to introspect
+     * 
+     * @param installer
+     *            The new installer to introspect
      */
-    private void setInstaller(Installer installer)
-    {
+    private void setInstaller(Installer installer) {
         siteEditorPane.removeAll();
         siteEditor = null;
-        if (installer != null)
-        {
+        if (installer != null) {
             siteEditor = SiteEditorFactory.createSiteEditor(installer);
-            siteEditorPane.add((Component) siteEditor, new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+            siteEditorPane.add((Component) siteEditor, new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 0, 0, 0), 0, 0));
             GuiUtil.applyDefaultOrientation(siteEditorPane);
         }
 
@@ -538,8 +501,7 @@ public class EditSitePane extends JPanel
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         // Broken but we don't serialize views
         imanager = null;
         editInstaller = null;
@@ -579,20 +541,20 @@ public class EditSitePane extends JPanel
     private transient InstallManager imanager;
 
     /**
-     * If we are editing an installer, we need to know it's original name
-     * in case someone clicks cancel.
+     * If we are editing an installer, we need to know it's original name in
+     * case someone clicks cancel.
      */
     private String editName;
 
     /**
-     * If we are editing an installer, we need to know it's original value
-     * in case someone clicks cancel.
+     * If we are editing an installer, we need to know it's original value in
+     * case someone clicks cancel.
      */
     private transient Installer editInstaller;
 
     /**
-     * Edits to the type combo box mean different things depending on
-     * whether it was triggered by the user or the application.
+     * Edits to the type combo box mean different things depending on whether it
+     * was triggered by the user or the application.
      */
     private boolean userInitiated;
 

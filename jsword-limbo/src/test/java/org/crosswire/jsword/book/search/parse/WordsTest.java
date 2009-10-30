@@ -28,22 +28,19 @@ import junit.framework.TestCase;
 /**
  * JUnit Test.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class WordsTest extends TestCase
-{
-    public WordsTest(String s)
-    {
+public class WordsTest extends TestCase {
+    public WordsTest(String s) {
         super(s);
     }
 
     private IndexSearcher engine = null;
 
     /* @Override */
-    protected void setUp() throws Exception
-    {
+    protected void setUp() throws Exception {
         Map commands = IndexSearcher.getWordMap();
 
         commands.put("t1", new FixtureParamWord("Rut 2")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -53,18 +50,17 @@ public class WordsTest extends TestCase
         // We shouldn't need a SearchableBible here because all of these should
         // complete without any searching being done.
         engine = new IndexSearcher();
-        // FIXME: These fail because the the engine is not initialized with a valid index.
+        // FIXME: These fail because the the engine is not initialized with a
+        // valid index.
         engine.init(null);
-        engine.setSearchMap(commands);        
+        engine.setSearchMap(commands);
     }
 
     /* @Override */
-    protected void tearDown() throws Exception
-    {
+    protected void tearDown() throws Exception {
     }
 
-    public void testAddCommandWord() throws Exception
-    {
+    public void testAddCommandWord() throws Exception {
         assertEquals(engine.search("t1").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(engine.search("t2").getName(), "Deu 28:1-1Sa 1:1"); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(engine.search("/t1").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -73,8 +69,7 @@ public class WordsTest extends TestCase
         assertEquals(engine.search("|t2").getName(), "Deu 28:1-1Sa 1:1"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    public void testRetainCommandWord() throws Exception
-    {
+    public void testRetainCommandWord() throws Exception {
         assertEquals(engine.search("t2&t1").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(engine.search("t1&t2").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(engine.search("t2+t1").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -83,14 +78,12 @@ public class WordsTest extends TestCase
         assertEquals(engine.search("t1,t2").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    public void testRemoveCommandWord() throws Exception
-    {
+    public void testRemoveCommandWord() throws Exception {
         assertEquals(engine.search("t2-t1").getName(), "Deu 28-Rut 1, Rut 3:1-1Sa 1:1"); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(engine.search("t1-t2").getName(), ""); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    public void testBlurCommandWord() throws Exception
-    {
+    public void testBlurCommandWord() throws Exception {
         assertEquals(engine.search("t3 ~1").getName(), "Mar 2:2-4"); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(engine.search("t3 ~2").getName(), "Mar 2:1-5"); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(engine.search("t3 ~3").getName(), "Mar 2:1-6"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -98,14 +91,13 @@ public class WordsTest extends TestCase
         assertEquals(engine.search("t3 ~5").getName(), "Mar 2:1-8"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    public void testStartsParamWord() throws Exception
-    {
-        //assertEquals(engine.search("startswith joshu"), engine.search("joshua"));
-        //assertEquals(engine.search("sw joshu"), engine.search("joshua"));
+    public void testStartsParamWord() throws Exception {
+        // assertEquals(engine.search("startswith joshu"),
+        // engine.search("joshua"));
+        // assertEquals(engine.search("sw joshu"), engine.search("joshua"));
     }
 
-    public void testSubXParamWord() throws Exception
-    {
+    public void testSubXParamWord() throws Exception {
         assertEquals(engine.search("t3 / ( t2 )").getName(), "Deu 28:1-1Sa 1:1, Mar 2:3"); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(engine.search("t3/(t2)").getName(), "Deu 28:1-1Sa 1:1, Mar 2:3"); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(engine.search("t1 & t2 | t3").getName(), "Rut 2, Mar 2:3"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -117,24 +109,21 @@ public class WordsTest extends TestCase
         assertEquals(engine.search("t1&(t2|(t3))&(t3|t2)").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    public void testGetAlternatives() throws Exception
-    {
+    public void testGetAlternatives() throws Exception {
         /*
-        GrammarParamWord grammar = new GrammarParamWord();
-        String[] temp = grammar.getAlternatives("joseph");
-        assertEquals(temp[0], "joseph");
-        assertEquals(temp[1], "joseph's");
-        assertEquals(temp.length, 2);
-        temp = grammar.getAlternatives("joseph's");
-        assertEquals(temp[0], "joseph");
-        assertEquals(temp[1], "joseph's");
-        assertEquals(temp.length, 2);
-        */
+         * GrammarParamWord grammar = new GrammarParamWord(); String[] temp =
+         * grammar.getAlternatives("joseph"); assertEquals(temp[0], "joseph");
+         * assertEquals(temp[1], "joseph's"); assertEquals(temp.length, 2); temp
+         * = grammar.getAlternatives("joseph's"); assertEquals(temp[0],
+         * "joseph"); assertEquals(temp[1], "joseph's");
+         * assertEquals(temp.length, 2);
+         */
     }
 
-    public void testUpdatePassage() throws Exception
-    {
-        //assertEquals(engine.search("grammar joseph"), engine.search("joseph / joseph's"));
-        //assertEquals(engine.search("gr joseph"), engine.search("joseph / joseph's"));
+    public void testUpdatePassage() throws Exception {
+        // assertEquals(engine.search("grammar joseph"),
+        // engine.search("joseph / joseph's"));
+        // assertEquals(engine.search("gr joseph"),
+        // engine.search("joseph / joseph's"));
     }
 }

@@ -28,18 +28,18 @@ import org.crosswire.jsword.book.BookException;
 /**
  * A source of synonym data for a given word.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public interface Thesaurus
-{
+public interface Thesaurus {
     /**
      * Return an array of words that are used by this Bible that start with the
-     * given string. For example calling:
-     * <code>getStartsWith("love")</code> will return something like:
-     * { "love", "loves", "lover", "lovely", ... }
-     * @param word The word to base your word array on
+     * given string. For example calling: <code>getStartsWith("love")</code>
+     * will return something like: { "love", "loves", "lover", "lovely", ... }
+     * 
+     * @param word
+     *            The word to base your word array on
      * @return An array of words starting with the base
      */
     Collection getSynonyms(String word) throws BookException;

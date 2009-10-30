@@ -27,24 +27,22 @@ import junit.framework.TestCase;
 
 /**
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class AntiGravityRuleTest extends TestCase
-{
+public class AntiGravityRuleTest extends TestCase {
 
     /**
      * Constructor for AntiGravityRuleTest.
+     * 
      * @param arg0
      */
-    public AntiGravityRuleTest(String arg0)
-    {
+    public AntiGravityRuleTest(String arg0) {
         super(arg0);
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         junit.textui.TestRunner.run(AntiGravityRuleTest.class);
     }
 
@@ -52,8 +50,7 @@ public class AntiGravityRuleTest extends TestCase
      * @see TestCase#setUp()
      */
     /* @Override */
-    protected void setUp() throws Exception
-    {
+    protected void setUp() throws Exception {
         super.setUp();
     }
 
@@ -61,19 +58,26 @@ public class AntiGravityRuleTest extends TestCase
      * @see TestCase#tearDown()
      */
     /* @Override */
-    protected void tearDown() throws Exception
-    {
+    protected void tearDown() throws Exception {
         super.tearDown();
     }
 
     public void testAddDistanceToTotals() {
-        float[] totals = new float[] { 0.0F, 0.0F };
+        float[] totals = new float[] {
+                0.0F, 0.0F
+        };
         float[] that = null;
         float[] us = null;
 
-        that = new float[] { 0.1F, 0.1F };
-        us = new float[] { 0.2F, 0.2F };
-        totals = new float[] { 0.0F, 0.0F };
+        that = new float[] {
+                0.1F, 0.1F
+        };
+        us = new float[] {
+                0.2F, 0.2F
+        };
+        totals = new float[] {
+                0.0F, 0.0F
+        };
         AntiGravityRule.addDistanceToTotals(that, us, totals);
         assertEquals(totals[0], -0.067666754F, 0.000001F);
         assertEquals(totals[1], -0.067666754F, 0.000001F);
@@ -82,33 +86,50 @@ public class AntiGravityRuleTest extends TestCase
         assertEquals(totals[0], -0.135333508F, 0.00001F);
         assertEquals(totals[1], -0.135333508F, 0.00001F);
 
-        that = new float[] { 0.3F, 0.3F };
-        us = new float[] { 0.2F, 0.2F };
-        totals = new float[] { 0.0F, 0.0F };
+        that = new float[] {
+                0.3F, 0.3F
+        };
+        us = new float[] {
+                0.2F, 0.2F
+        };
+        totals = new float[] {
+                0.0F, 0.0F
+        };
         AntiGravityRule.addDistanceToTotals(that, us, totals);
         assertEquals(totals[0], 0.067666754F, 0.000001F);
         assertEquals(totals[1], 0.067666754F, 0.000001F);
 
-        that = new float[] { 0.1F, 0.3F };
-        us = new float[] { 0.2F, 0.2F };
-        totals = new float[] { 0.0F, 0.0F };
+        that = new float[] {
+                0.1F, 0.3F
+        };
+        us = new float[] {
+                0.2F, 0.2F
+        };
+        totals = new float[] {
+                0.0F, 0.0F
+        };
         AntiGravityRule.addDistanceToTotals(that, us, totals);
         assertEquals(totals[0], -0.067666754F, 0.0001F);
         assertEquals(totals[1], 0.067666754F, 0.0001F);
 
-        that = new float[] { 0.1F, 0.1F };
-        us = new float[] { 0.3F, 0.3F };
-        totals = new float[] { 0.0F, 0.0F };
+        that = new float[] {
+                0.1F, 0.1F
+        };
+        us = new float[] {
+                0.3F, 0.3F
+        };
+        totals = new float[] {
+                0.0F, 0.0F
+        };
         AntiGravityRule.addDistanceToTotals(that, us, totals);
         assertEquals(totals[0], -0.007497886F, 0.005F);
         assertEquals(totals[1], -0.007497886F, 0.005F);
     }
 
     public void testGetNewDist() {
-        //*
-        for (float i=-1f; i<1f; i=i+0.01f)
-        {
-            System.out.println("f("+i+")="+AntiGravityRule.getNewDistance(i));
+        // *
+        for (float i = -1f; i < 1f; i = i + 0.01f) {
+            System.out.println("f(" + i + ")=" + AntiGravityRule.getNewDistance(i));
         }
         // */
 

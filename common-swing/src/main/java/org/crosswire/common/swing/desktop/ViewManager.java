@@ -41,23 +41,21 @@ import org.crosswire.common.swing.desktop.event.ViewEventListener;
 import org.crosswire.common.util.CallContext;
 
 /**
- *
- * A ViewManager is an abstraction of a desktop that displays views
- * as tabs or sub-windows. All the views are of the same type.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * A ViewManager is an abstraction of a desktop that displays views as tabs or
+ * sub-windows. All the views are of the same type.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author Mark Goodwin [mark at thorubio dot org]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class ViewManager implements Viewable, TitleChangedListener, ViewEventListener
-{
+public class ViewManager implements Viewable, TitleChangedListener, ViewEventListener {
     /**
      * Construct a ViewManager.
      */
-    public ViewManager(ViewGenerator generator)
-    {
+    public ViewManager(ViewGenerator generator) {
         this.generator = generator;
         panel = new JPanel(new GridBagLayout());
 
@@ -78,12 +76,9 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
         grpViews.add(mdiView);
         grpViews.add(tdiView);
 
-        if (getViewLayoutType().equals(LayoutType.MDI))
-        {
+        if (getViewLayoutType().equals(LayoutType.MDI)) {
             mdiView.setSelected(true);
-        }
-        else
-        {
+        } else {
             tdiView.setSelected(true);
         }
         addViewEventListener(this);
@@ -94,93 +89,102 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
     /**
      * @return the desktop
      */
-    public JPanel getDesktop()
-    {
+    public JPanel getDesktop() {
         return panel;
     }
 
     /**
      * @return Returns the mdiView.
      */
-    public JRadioButtonMenuItem getMdiView()
-    {
+    public JRadioButtonMenuItem getMdiView() {
         return mdiView;
     }
 
     /**
      * @return Returns the tdiView.
      */
-    public JRadioButtonMenuItem getTdiView()
-    {
+    public JRadioButtonMenuItem getTdiView() {
         return tdiView;
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.swing.desktop.Viewable#addView(java.awt.Component)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.swing.desktop.Viewable#addView(java.awt.Component)
      */
-    public final void addView(Component component)
-    {
+    public final void addView(Component component) {
         getViewLayout().addView(component);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.swing.desktop.Viewable#closeAll()
      */
-    public void closeAll()
-    {
+    public void closeAll() {
         getViewLayout().closeAll();
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.swing.desktop.Viewable#closeOthers(java.awt.Component)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.swing.desktop.Viewable#closeOthers(java.awt.Component
+     * )
      */
-    public void closeOthers(Component component)
-    {
+    public void closeOthers(Component component) {
         getViewLayout().closeOthers(component);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.swing.desktop.Viewable#getView(int)
      */
-    public Component getView(int i)
-    {
+    public Component getView(int i) {
         return getViewLayout().getView(i);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.swing.desktop.Viewable#getViews()
      */
-    public Collection getViews()
-    {
+    public Collection getViews() {
         return getViewLayout().getViews();
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.swing.desktop.Viewable#moveTo(org.crosswire.common.swing.desktop.AbstractViewLayout)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.swing.desktop.Viewable#moveTo(org.crosswire.common
+     * .swing.desktop.AbstractViewLayout)
      */
-    public void moveTo(AbstractViewLayout other)
-    {
+    public void moveTo(AbstractViewLayout other) {
         getViewLayout().moveTo(other);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.swing.desktop.Viewable#updateTitle(java.awt.Component)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.swing.desktop.Viewable#updateTitle(java.awt.Component
+     * )
      */
-    public void updateTitle(Component component)
-    {
+    public void updateTitle(Component component) {
         getViewLayout().updateTitle(component);
     }
 
     /**
      * Adds a view to the list in this Desktop.
      */
-    public final Component addView()
-    {
+    public final Component addView() {
 
         Component view = generator.createView();
 
-        if (view instanceof Titleable)
-        {
+        if (view instanceof Titleable) {
             ((Titleable) view).addTitleChangedListener(this);
         }
 
@@ -189,16 +193,17 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
         return view;
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.swing.desktop.Viewable#removeView(java.awt.Component)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.swing.desktop.Viewable#removeView(java.awt.Component
+     * )
      */
-    public void removeView(Component view)
-    {
+    public void removeView(Component view) {
         // If it were the last one then clear it.
-        if (getViewLayout().getViewCount() == 1)
-        {
-            if (view instanceof Clearable)
-            {
+        if (getViewLayout().getViewCount() == 1) {
+            if (view instanceof Clearable) {
                 ((Clearable) view).clear();
             }
             return;
@@ -211,63 +216,69 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
     /**
      * Reset a view so that it can be reused. If the Component does not
      * implement Clearable, then nothing is done.
-     * @param view the view to be cleared
+     * 
+     * @param view
+     *            the view to be cleared
      */
-    public void clear(Component view)
-    {
-        if (view instanceof Clearable)
-        {
+    public void clear(Component view) {
+        if (view instanceof Clearable) {
             ((Clearable) view).clear();
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.swing.desktop.Viewable#iterator()
      */
-    public Iterator iterator()
-    {
+    public Iterator iterator() {
         return getViewLayout().iterator();
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.swing.desktop.Viewable#visit(org.crosswire.common.swing.desktop.ViewVisitor)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.swing.desktop.Viewable#visit(org.crosswire.common
+     * .swing.desktop.ViewVisitor)
      */
-    public void visit(ViewVisitor visitor)
-    {
+    public void visit(ViewVisitor visitor) {
         getViewLayout().visit(visitor);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.swing.desktop.Viewable#getViewCount()
      */
-    public int getViewCount()
-    {
+    public int getViewCount() {
         return getViewLayout().getViewCount();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.swing.desktop.Viewable#getSelected()
      */
-    public Component getSelected()
-    {
+    public Component getSelected() {
         return getViewLayout().getSelected();
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.swing.desktop.Viewable#select(java.awt.Component)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.swing.desktop.Viewable#select(java.awt.Component)
      */
-    public void select(Component component)
-    {
+    public void select(Component component) {
         getViewLayout().select(component);
     }
 
     /**
      * Get the initial layout type. This is to be used by "config"
      */
-    private static LayoutType getInitialViewLayoutType()
-    {
-        if (initial == null)
-        {
+    private static LayoutType getInitialViewLayoutType() {
+        if (initial == null) {
             initial = LayoutType.TDI;
         }
         return initial;
@@ -276,10 +287,8 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
     /**
      * What is the current layout type?
      */
-    private LayoutType getViewLayoutType()
-    {
-        if (current == null)
-        {
+    private LayoutType getViewLayoutType() {
+        if (current == null) {
             current = getInitialViewLayoutType();
         }
         return current;
@@ -288,27 +297,23 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
     /**
      * Set the current layout type
      */
-    private void setViewLayoutType(LayoutType newLayoutType)
-    {
+    private void setViewLayoutType(LayoutType newLayoutType) {
         current = newLayoutType;
     }
 
     /**
      * What is the current layout?
      */
-    public final AbstractViewLayout getViewLayout()
-    {
+    public final AbstractViewLayout getViewLayout() {
         return getViewLayoutType().getLayout();
     }
 
     /**
      * Setup the current view
      */
-    public void setLayoutType(LayoutType next)
-    {
+    public void setLayoutType(LayoutType next) {
         // Check if this is a change
-        if (getViewLayoutType().equals(next))
-        {
+        if (getViewLayoutType().equals(next)) {
             return;
         }
 
@@ -324,23 +329,23 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
     /**
      * What is the initial layout state?
      */
-    public static int getInitialLayoutType()
-    {
-        if (initial == null)
-        {
+    public static int getInitialLayoutType() {
+        if (initial == null) {
             initial = LayoutType.TDI;
         }
         return initial.toInteger();
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.swing.desktop.ViewEventListener#viewRemoved(org.crosswire.common.swing.desktop.ViewEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.swing.desktop.ViewEventListener#viewRemoved(org.
+     * crosswire.common.swing.desktop.ViewEvent)
      */
-    public void viewRemoved(ViewEvent event)
-    {
+    public void viewRemoved(ViewEvent event) {
         Object view = event.getSource();
-        if (view instanceof Titleable)
-        {
+        if (view instanceof Titleable) {
             ((Titleable) view).removeTitleChangedListener(this);
         }
     }
@@ -348,106 +353,106 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
     /**
      * What should the initial layout state be?
      */
-    public static void setInitialLayoutType(int initialLayout)
-    {
+    public static void setInitialLayoutType(int initialLayout) {
         ViewManager.initial = LayoutType.fromInteger(initialLayout);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.book.TitleChangedListener#titleChanged(org.crosswire.bibledesktop.book.TitleChangedEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.bibledesktop.book.TitleChangedListener#titleChanged(org
+     * .crosswire.bibledesktop.book.TitleChangedEvent )
      */
-    public void titleChanged(TitleChangedEvent ev)
-    {
+    public void titleChanged(TitleChangedEvent ev) {
         Component view = (Component) ev.getSource();
         getViewLayout().updateTitle(view);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.swing.desktop.Viewable#addViewEventListener(org.crosswire.common.swing.desktop.event.ViewEventListener)
+    /*
+     * (non-Javadoc)
+     * 
+     * @seeorg.crosswire.common.swing.desktop.Viewable#addViewEventListener(org.
+     * crosswire.common.swing.desktop.event. ViewEventListener)
      */
-    public final void addViewEventListener(ViewEventListener listener)
-    {
+    public final void addViewEventListener(ViewEventListener listener) {
         LayoutType.MDI.getLayout().addViewEventListener(listener);
         LayoutType.TDI.getLayout().addViewEventListener(listener);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.swing.desktop.Viewable#removeViewEventListener(org.crosswire.common.swing.desktop.event.ViewEventListener)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.swing.desktop.Viewable#removeViewEventListener(org
+     * .crosswire.common.swing.desktop.event. ViewEventListener)
      */
-    public void removeViewEventListener(ViewEventListener listener)
-    {
+    public void removeViewEventListener(ViewEventListener listener) {
         LayoutType.MDI.getLayout().removeViewEventListener(listener);
         LayoutType.TDI.getLayout().removeViewEventListener(listener);
     }
 
     /**
      * Get a particular action by internal name
-     * @param key the internal name for the action
+     * 
+     * @param key
+     *            the internal name for the action
      * @return the action requested or null if it does not exist
      */
-    public Action getContextAction(String key)
-    {
+    public Action getContextAction(String key) {
         return contextActions.getAction(key);
     }
 
-    /*private*/ final Object getConstraint()
-    {
+    /* private */final Object getConstraint() {
         return gbc;
     }
 
     /**
      * View the Tabbed Document Interface (TDI) interface.
      */
-    public void doTabMode()
-    {
+    public void doTabMode() {
         setLayoutType(LayoutType.TDI);
     }
 
     /**
      * View the Multiple Document/Window Interface (MDI) interface.
      */
-    public void doWindowMode()
-    {
+    public void doWindowMode() {
         setLayoutType(LayoutType.MDI);
     }
 
     /**
      * For creating a new window.
      */
-    public void doNewTab()
-    {
+    public void doNewTab() {
         addView();
     }
 
     /**
      * Close the current passage window.
      */
-    public void doCloseView()
-    {
+    public void doCloseView() {
         removeView(getSelected());
     }
 
     /**
      * Close the current passage window.
      */
-    public void doClearView()
-    {
+    public void doClearView() {
         clear(getSelected());
     }
 
     /**
      * Close all the passage windows.
      */
-    public void doCloseAllViews()
-    {
+    public void doCloseAllViews() {
         closeAll();
     }
 
     /**
      * Close all other passage windows.
      */
-    public void doCloseOtherViews()
-    {
+    public void doCloseOtherViews() {
         closeOthers(getSelected());
     }
 
@@ -485,8 +490,8 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
     private JRadioButtonMenuItem mdiView;
 
     /**
-     * A shared, reusable constraint that makes its contents
-     * grow to fill the area.
+     * A shared, reusable constraint that makes its contents grow to fill the
+     * area.
      */
     private GridBagConstraints gbc;
 }

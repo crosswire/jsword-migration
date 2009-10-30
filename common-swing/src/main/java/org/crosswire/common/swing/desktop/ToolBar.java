@@ -43,24 +43,23 @@ import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.OSType;
 
 /**
- * This toolbar allows for manipulating how it looks. That is it allows for:<ul>
+ * This toolbar allows for manipulating how it looks. That is it allows for:
+ * <ul>
  * <li>showing/hiding labels</li>
  * <li>small/large icons</li>
  * <li>showing/hiding toolbar</li>
  * </ul>
  * It starts with large icons.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at yahoo dot com]
  */
-public class ToolBar extends JToolBar
-{
+public class ToolBar extends JToolBar {
     /**
      * ToolBar constructor.
      */
-    public ToolBar(JFrame frame)
-    {
+    public ToolBar(JFrame frame) {
         this.frame = frame;
         actions = new ActionFactory(ToolBar.class, this);
 
@@ -68,18 +67,18 @@ public class ToolBar extends JToolBar
 
         // Floating is not appropriate on a Mac
         // It is the default on all others
-        if (OSType.MAC.equals(OSType.getOSType()))
-        {
+        if (OSType.MAC.equals(OSType.getOSType())) {
             setFloatable(false);
         }
         GuiUtil.applyDefaultOrientation(this);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.JToolBar#add(javax.swing.Action)
      */
-    public JButton add(Action a)
-    {
+    public JButton add(Action a) {
         JButton button = super.add(a);
         button.setIcon((Icon) a.getValue(CWAction.LARGE_ICON));
         return button;
@@ -87,53 +86,43 @@ public class ToolBar extends JToolBar
 
     /**
      * Show or hide the tool bar.
-     * @param show indicates whether the toolbar is visible
+     * 
+     * @param show
+     *            indicates whether the toolbar is visible
      */
-    public void showToolBar(boolean show)
-    {
+    public void showToolBar(boolean show) {
         Container contentPane = frame.getContentPane();
 
-        if (show)
-        {
+        if (show) {
             // Honor the previous orientation
             // Don't know how to honor the last location
-            if (getOrientation() == SwingConstants.HORIZONTAL)
-            {
+            if (getOrientation() == SwingConstants.HORIZONTAL) {
                 contentPane.add(this, BorderLayout.NORTH);
-            }
-            else
-            {
+            } else {
                 contentPane.add(this, BorderLayout.LINE_START);
             }
-        }
-        else
-        {
+        } else {
             contentPane.remove(this);
         }
         frame.validate();
     }
 
-
     /**
      * Set the tool tip text for the buttons on the tool bar.
-     * @param show indicates whether the buttons should be labeled
+     * 
+     * @param show
+     *            indicates whether the buttons should be labeled
      */
-    public void showText(boolean show)
-    {
+    public void showText(boolean show) {
         int i = 0;
         Component c = getComponentAtIndex(0);
-        while (c != null)
-        {
-            if (c instanceof JButton)
-            {
+        while (c != null) {
+            if (c instanceof JButton) {
                 JButton button = (JButton) c;
-                if (show)
-                {
+                if (show) {
                     Action action = button.getAction();
                     button.setText((String) action.getValue(Action.NAME));
-                }
-                else
-                {
+                } else {
                     button.setText(null);
                 }
             }
@@ -144,29 +133,24 @@ public class ToolBar extends JToolBar
 
     /**
      * Sets the size of the tool bar button images.
-     * @param large indicates whether large buttons should be used
+     * 
+     * @param large
+     *            indicates whether large buttons should be used
      */
-    public void showLargeIcons(boolean large)
-    {
+    public void showLargeIcons(boolean large) {
         int i = 0;
         Component c = getComponentAtIndex(0);
-        while (c != null)
-        {
-            if (c instanceof JButton)
-            {
+        while (c != null) {
+            if (c instanceof JButton) {
                 JButton button = (JButton) c;
                 Action action = button.getAction();
-                if (action instanceof CWAction)
-                {
+                if (action instanceof CWAction) {
                     // Clear the button's computed disabled icon
                     // so the button can get it again.
                     button.setDisabledIcon(null);
-                    if (large)
-                    {
+                    if (large) {
                         button.setIcon((Icon) action.getValue(CWAction.LARGE_ICON));
-                    }
-                    else
-                    {
+                    } else {
                         button.setIcon((Icon) action.getValue(Action.SMALL_ICON));
                     }
                 }
@@ -177,11 +161,13 @@ public class ToolBar extends JToolBar
     }
 
     /**
-     * Build a menu item that an end user can use to toggle visibility of the toolbar
-     * @return a check box that can be used to toggle the visibility of the toolbar
+     * Build a menu item that an end user can use to toggle visibility of the
+     * toolbar
+     * 
+     * @return a check box that can be used to toggle the visibility of the
+     *         toolbar
      */
-    public JMenuItem getShowToggle()
-    {
+    public JMenuItem getShowToggle() {
         JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.getAction(TOOLBAR_TOGGLE));
         toggle.setSelected(true);
         return toggle;
@@ -189,19 +175,20 @@ public class ToolBar extends JToolBar
 
     /**
      * Build a menu item that an end user can use to toggle the text
+     * 
      * @return a check box that can be used to toggle the text
      */
-    public JMenuItem getTextToggle()
-    {
+    public JMenuItem getTextToggle() {
         return new JCheckBoxMenuItem(actions.getAction(TOOLBAR_TEXT));
     }
 
     /**
-     * Build a menu item that an end user can use to toggle the size of the icons
+     * Build a menu item that an end user can use to toggle the size of the
+     * icons
+     * 
      * @return a check box that can be used to toggle the size of the icons
      */
-    public JMenuItem getIconSizeToggle()
-    {
+    public JMenuItem getIconSizeToggle() {
         JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.getAction(TOOLBAR_LARGE));
         toggle.setSelected(true);
         return toggle;
@@ -210,8 +197,7 @@ public class ToolBar extends JToolBar
     /**
      * Show or hide the tool bar.
      */
-    public void doToolBarToggle(ActionEvent ev)
-    {
+    public void doToolBarToggle(ActionEvent ev) {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         showToolBar(toggle.isSelected());
     }
@@ -219,8 +205,7 @@ public class ToolBar extends JToolBar
     /**
      * Show or hide the tool bar text.
      */
-    public void doToolBarText(ActionEvent ev)
-    {
+    public void doToolBarText(ActionEvent ev) {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         showText(toggle.isSelected());
     }
@@ -228,21 +213,19 @@ public class ToolBar extends JToolBar
     /**
      * Show large or small tool bar icons.
      */
-    public void doToolBarLarge(ActionEvent ev)
-    {
+    public void doToolBarLarge(ActionEvent ev) {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         showLargeIcons(toggle.isSelected());
     }
 
     /**
      * Serialization support.
-     *
+     * 
      * @param is
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         actions = new ActionFactory(ToolBar.class, this);
         is.defaultReadObject();
     }
@@ -252,8 +235,8 @@ public class ToolBar extends JToolBar
     private static final String TOOLBAR_LARGE = "ToolBarLarge"; //$NON-NLS-1$
 
     /**
-     * The frame in which the toolbar is shown.
-     * It must be border layout with the only other component being centered.
+     * The frame in which the toolbar is shown. It must be border layout with
+     * the only other component being centered.
      */
     private JFrame frame;
     private transient ActionFactory actions;

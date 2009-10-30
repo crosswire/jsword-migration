@@ -27,19 +27,20 @@ import org.jdom.Document;
  * For the creation of RemoteBibles it is useful to have an abstract way of
  * Remoting calls to the Book/Bible classes.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public interface Remoter
-{
+public interface Remoter {
     /**
      * Call a remote method
-     * @param method What to execute
+     * 
+     * @param method
+     *            What to execute
      * @return Document The results of the execution.
      */
     Document execute(RemoteMethod method) throws RemoterException;
-    
+
     /**
      * The name of this remoter to help the metadata
      */

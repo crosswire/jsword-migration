@@ -26,12 +26,11 @@ import org.crosswire.common.util.MsgBase;
 /**
  * Compile safe Msg resource settings.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public final class LimboMsg extends MsgBase
-{
+public final class LimboMsg extends MsgBase {
     static final LimboMsg CLASS = new LimboMsg("MapField.Class"); //$NON-NLS-1$
     static final LimboMsg NAME = new LimboMsg("MapField.Name"); //$NON-NLS-1$
     static final LimboMsg COMPONENT_EDITOR = new LimboMsg("MapField.ComponentEditor"); //$NON-NLS-1$
@@ -47,8 +46,7 @@ public final class LimboMsg extends MsgBase
     /**
      * Passthrough ctor
      */
-    private LimboMsg(String name)
-    {
+    private LimboMsg(String name) {
         super(name);
     }
 }

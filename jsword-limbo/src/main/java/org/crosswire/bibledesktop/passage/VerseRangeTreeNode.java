@@ -30,25 +30,22 @@ import org.crosswire.jsword.passage.VerseRange;
 /**
  * BibleTreeNode.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class VerseRangeTreeNode implements TreeNode
-{
+public class VerseRangeTreeNode implements TreeNode {
     /**
      *
      */
-    public VerseRangeTreeNode(VerseRange range)
-    {
+    public VerseRangeTreeNode(VerseRange range) {
         this.range = range;
     }
 
     /**
      * Returns the child <code>TreeNode</code> at index i
      */
-    public TreeNode getChildAt(int index)
-    {
+    public TreeNode getChildAt(int index) {
         return null;
     }
 
@@ -56,50 +53,43 @@ public class VerseRangeTreeNode implements TreeNode
      * Returns the number of children <code>TreeNode</code>s the receiver
      * contains.
      */
-    public int getChildCount()
-    {
+    public int getChildCount() {
         return 0;
     }
 
     /**
      * Returns the parent <code>TreeNode</code> of the receiver.
      */
-    public TreeNode getParent()
-    {
+    public TreeNode getParent() {
         return this;
     }
 
     /**
-     * Returns the index of <code>node</code> in the receivers children.
-     * If the receiver does not contain <code>node</code>, -1 will be
-     * returned.
+     * Returns the index of <code>node</code> in the receivers children. If the
+     * receiver does not contain <code>node</code>, -1 will be returned.
      */
-    public int getIndex(TreeNode node)
-    {
+    public int getIndex(TreeNode node) {
         return -1;
     }
 
     /**
      * Returns true if the receiver allows children.
      */
-    public boolean getAllowsChildren()
-    {
+    public boolean getAllowsChildren() {
         return false;
     }
 
     /**
      * Returns true if the receiver is a leaf.
      */
-    public boolean isLeaf()
-    {
+    public boolean isLeaf() {
         return true;
     }
 
     /**
      * Returns the children of the reciever as an Enumeration.
      */
-    public Enumeration children()
-    {
+    public Enumeration children() {
         return null;
     }
 
@@ -107,12 +97,10 @@ public class VerseRangeTreeNode implements TreeNode
      * Returns the children of the reciever as an Enumeration.
      */
     /* @Override */
-    public String toString()
-    {
+    public String toString() {
         return range.getName();
     }
 
     /** The range that we are displaying */
     private VerseRange range;
 }
-

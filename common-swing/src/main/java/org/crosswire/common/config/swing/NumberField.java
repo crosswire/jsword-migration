@@ -32,20 +32,17 @@ import org.crosswire.common.icu.NumberShaper;
 import org.crosswire.common.swing.NumericDocument;
 
 /**
- * A PropertyNumberField is a PropertyTextField that only
- * stores numbers.
- *
- * @see gnu.lgpl.License for license details.
+ * A PropertyNumberField is a PropertyTextField that only stores numbers.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class NumberField extends JPanel implements Field
-{
+public class NumberField extends JPanel implements Field {
     /**
      * Create a new FileField
      */
-    public NumberField()
-    {
+    public NumberField() {
         shaper = new NumberShaper();
         text = new JTextField();
         text.setDocument(new NumericDocument());
@@ -56,39 +53,40 @@ public class NumberField extends JPanel implements Field
     }
 
     /**
-     * Some fields will need some extra info to display properly
-     * like the options in an options field. FieldMap calls this
-     * method with options provided by the choice.
-     * @param param The options provided by the Choice
+     * Some fields will need some extra info to display properly like the
+     * options in an options field. FieldMap calls this method with options
+     * provided by the choice.
+     * 
+     * @param param
+     *            The options provided by the Choice
      */
-    public void setChoice(Choice param)
-    {
+    public void setChoice(Choice param) {
     }
 
     /**
      * Return a string version of the current value
+     * 
      * @return The current value
      */
-    public String getValue()
-    {
+    public String getValue() {
         return shaper.unshape(text.getText());
     }
 
     /**
      * Set the current value
-     * @param value The new text
+     * 
+     * @param value
+     *            The new text
      */
-    public void setValue(String value)
-    {
+    public void setValue(String value) {
         text.setText(shaper.shape(value));
     }
 
     /**
-     * Get the actual component that we can add to a Panel.
-     * (This can well be this in an implementation).
+     * Get the actual component that we can add to a Panel. (This can well be
+     * this in an implementation).
      */
-    public JComponent getComponent()
-    {
+    public JComponent getComponent() {
         return this;
     }
 

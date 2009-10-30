@@ -25,18 +25,16 @@ import java.util.EventObject;
 
 /**
  * 'thrown' to indicate that a View has a new title.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class TitleChangedEvent extends EventObject
-{
+public class TitleChangedEvent extends EventObject {
     /**
      *
      */
-    public TitleChangedEvent(Object source, String title)
-    {
+    public TitleChangedEvent(Object source, String title) {
         super(source);
         this.title = title;
     }
@@ -44,8 +42,7 @@ public class TitleChangedEvent extends EventObject
     /**
      * Accessor for the title
      */
-    public String getTitle()
-    {
+    public String getTitle() {
         return title;
     }
 

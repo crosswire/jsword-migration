@@ -26,12 +26,11 @@ import org.crosswire.common.util.MsgBase;
 /**
  * Compile safe Msg resource settings.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-final class Msg extends MsgBase
-{
+final class Msg extends MsgBase {
     static final Msg AVAILABLE_BOOKS = new Msg("SitesPane.AvailableBooks"); //$NON-NLS-1$
     static final Msg LOCAL_BOOKS = new Msg("SitesPane.Local"); //$NON-NLS-1$
 
@@ -82,8 +81,7 @@ final class Msg extends MsgBase
     /**
      * Passthrough ctor
      */
-    private Msg(String name)
-    {
+    private Msg(String name) {
         super(name);
     }
 }

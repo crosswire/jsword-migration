@@ -22,39 +22,43 @@
 package org.crosswire.common.swing;
 
 /**
- * Another way to get ahold of missing exceptions.
- *
- * @see gnu.lgpl.License for license details.
+ * Another way to get a hold of missing exceptions.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class CatchingThreadGroup extends ThreadGroup
-{
+public class CatchingThreadGroup extends ThreadGroup {
     /**
      * Simple ctor that names the threadgroup
-     * @param name The name for this group
+     * 
+     * @param name
+     *            The name for this group
      */
-    public CatchingThreadGroup(String name)
-    {
+    public CatchingThreadGroup(String name) {
         super(name);
     }
 
     /**
      * Simple ctor that names the threadgroup, and provides a parent group
-     * @param group The parent ThreadGroup
-     * @param name The name for this group
+     * 
+     * @param group
+     *            The parent ThreadGroup
+     * @param name
+     *            The name for this group
      */
-    public CatchingThreadGroup(ThreadGroup group, String name)
-    {
+    public CatchingThreadGroup(ThreadGroup group, String name) {
         super(group, name);
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.ThreadGroup#uncaughtException(java.lang.Thread, java.lang.Throwable)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.ThreadGroup#uncaughtException(java.lang.Thread,
+     * java.lang.Throwable)
      */
     /* @Override */
-    public void uncaughtException(Thread t, Throwable ex)
-    {
+    public void uncaughtException(Thread t, Throwable ex) {
         ex.printStackTrace(System.err);
         ExceptionPane.showExceptionDialog(null, ex);
     }

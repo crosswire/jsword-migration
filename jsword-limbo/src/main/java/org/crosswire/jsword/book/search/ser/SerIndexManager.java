@@ -41,70 +41,64 @@ import org.crosswire.jsword.index.IndexManager;
 /**
  * An implementation of IndexManager that controls Ser indexes.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class SerIndexManager implements IndexManager
-{
-    /* (non-Javadoc)
+public class SerIndexManager implements IndexManager {
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.search.AbstractIndex#isIndexed()
      */
-    public boolean isIndexed(Book book)
-    {
-        try
-        {
+    public boolean isIndexed(Book book) {
+        try {
             URI storage = getStorageArea(book);
             URI longer = NetUtil.lengthenURI(storage, SerIndex.FILE_INDEX);
             return NetUtil.isFile(longer);
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             log.error("Failed to find lucene index storage area.", ex); //$NON-NLS-1$
             return false;
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.IndexManager#getIndex(org.crosswire.jsword.book.Book)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.IndexManager#getIndex(org.crosswire.
+     * jsword.book.Book)
      */
-    public Index getIndex(Book book) throws BookException
-    {
-        try
-        {
+    public Index getIndex(Book book) throws BookException {
+        try {
             Index reply = (Index) indexes.get(book);
-            if (reply == null)
-            {
+            if (reply == null) {
                 URI storage = getStorageArea(book);
                 reply = new SerIndex(book, storage);
                 indexes.put(book, reply);
             }
 
             return reply;
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             throw new BookException(Msg.SER_INIT, ex);
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.AbstractIndex#generateSearchIndex(org.crosswire.common.progress.Job)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.AbstractIndex#generateSearchIndex(org
+     * .crosswire.common.progress.Job)
      */
-    public void scheduleIndexCreation(final Book book)
-    {
-        Thread work = new Thread(new Runnable()
-        {
-            public void run()
-            {
-                try
-                {
+    public void scheduleIndexCreation(final Book book) {
+        Thread work = new Thread(new Runnable() {
+            public void run() {
+                try {
                     URI storage = getStorageArea(book);
                     Index index = new SerIndex(book, storage, true);
                     indexes.put(book, index);
-                }
-                catch (Exception ex)
-                {
+                } catch (Exception ex) {
                     Reporter.informUser(SerIndexManager.this, ex);
                 }
             }
@@ -112,48 +106,50 @@ public class SerIndexManager implements IndexManager
         work.start();
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.IndexManager#installDownloadedIndex(org.crosswire.jsword.book.Book, java.net.URL)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.IndexManager#installDownloadedIndex(
+     * org.crosswire.jsword.book.Book, java.net.URL)
      */
-    public void installDownloadedIndex(Book book, URI tempDest) throws BookException
-    {
-        try
-        {
+    public void installDownloadedIndex(Book book, URI tempDest) throws BookException {
+        try {
             URI storage = getStorageArea(book);
             File zip = NetUtil.getAsFile(tempDest);
             IOUtil.unpackZip(zip, NetUtil.getAsFile(storage));
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             throw new BookException(Msg.INSTALL_FAIL, ex);
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.IndexManager#deleteIndex(org.crosswire.jsword.book.Book)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.IndexManager#deleteIndex(org.crosswire
+     * .jsword.book.Book)
      */
-    public void deleteIndex(Book book) throws BookException
-    {
-        try
-        {
+    public void deleteIndex(Book book) throws BookException {
+        try {
             // TODO(joe): This needs some checks that it isn't being used
             URI storage = getStorageArea(book);
             NetUtil.delete(storage);
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             throw new BookException(Msg.DELETE_FAILED, ex);
         }
     }
 
     /**
      * Determine where an index should be stored
-     * @param book The book to be indexed
+     * 
+     * @param book
+     *            The book to be indexed
      * @return A URL to store stuff in
-     * @throws IOException If there is a problem in finding where to store stuff
+     * @throws IOException
+     *             If there is a problem in finding where to store stuff
      */
-    protected URI getStorageArea(Book book) throws IOException
-    {
+    protected URI getStorageArea(Book book) throws IOException {
         BookMetaData bmd = book.getBookMetaData();
         String driverName = bmd.getDriverName();
         String bookName = bmd.getInitials();

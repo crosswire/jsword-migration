@@ -28,102 +28,101 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * Maintains a sorted list of unique objects. It is expected
- * that the objects implement Comparable. Methods that take an index
- * to indicate an insertion point are ignored.
+ * Maintains a sorted list of unique objects. It is expected that the objects
+ * implement Comparable. Methods that take an index to indicate an insertion
+ * point are ignored.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class SortedListSet extends ArrayList implements Set
-{
+public class SortedListSet extends ArrayList implements Set {
     /**
      * Create an empty SortedListSet of default size.
      */
-    public SortedListSet()
-    {
+    public SortedListSet() {
         super();
     }
 
     /**
      * Create an empty SortedListSet of the stated capacity
+     * 
      * @param initialCapacity
      */
-    public SortedListSet(int initialCapacity)
-    {
+    public SortedListSet(int initialCapacity) {
         super(initialCapacity);
     }
 
     /**
      * @param c
      */
-    public SortedListSet(Collection c)
-    {
+    public SortedListSet(Collection c) {
         this(c.size());
         // Might be better to add all then sort.
         addAll(c);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.util.List#add(int, java.lang.Object)
      */
-    public void add(int index, Object element)
-    {
+    public void add(int index, Object element) {
         // ignore the requested index
         add(element);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.util.Collection#add(java.lang.Object)
      */
-    public boolean add(Object o)
-    {
+    public boolean add(Object o) {
         // Add the item only if it is not in the list.
         // Add it into the list so that it is in sorted order.
         int pos = Collections.binarySearch(this, o);
-        if (pos < 0)
-        {
+        if (pos < 0) {
             super.add(-pos - 1, o);
             return true;
         }
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.util.Collection#addAll(java.util.Collection)
      */
-    public boolean addAll(Collection c)
-    {
+    public boolean addAll(Collection c) {
         // Might be better to add the list to the end
         // and then sort the list.
         // This can be revisited if the list performs badly.
         boolean added = false;
         Iterator bmdIter = c.iterator();
-        while (bmdIter.hasNext())
-        {
-            if (add(bmdIter.next()))
-            {
+        while (bmdIter.hasNext()) {
+            if (add(bmdIter.next())) {
                 added = true;
             }
         }
         return added;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.util.List#addAll(int, java.util.Collection)
      */
-    public boolean addAll(int index, Collection c)
-    {
+    public boolean addAll(int index, Collection c) {
         // Ignore the index
         return addAll(c);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.util.List#set(int, java.lang.Object)
      */
-    public Object set(int index, Object element)
-    {
+    public Object set(int index, Object element) {
         // remove the item at the index (keep it to return it),
         // then insert the item into the sorted list.
         Object item = remove(index);
@@ -133,20 +132,19 @@ public class SortedListSet extends ArrayList implements Set
 
     /**
      * Get a filtered list set.
-     * @param filter The criteria by which to filter.
+     * 
+     * @param filter
+     *            The criteria by which to filter.
      * @return a filtered SortedListSet.
      */
-    public SortedListSet filter(Filter filter)
-    {
+    public SortedListSet filter(Filter filter) {
         // create a copy of the list and
         // remove everything that fails the test.
         SortedListSet listSet = (SortedListSet) clone();
         Iterator iter = listSet.iterator();
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             Object obj = iter.next();
-            if (!filter.test(obj))
-            {
+            if (!filter.test(obj)) {
                 iter.remove();
             }
         }

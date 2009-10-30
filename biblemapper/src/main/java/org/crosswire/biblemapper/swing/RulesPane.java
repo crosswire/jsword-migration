@@ -28,47 +28,43 @@ import org.crosswire.biblemapper.model.Rule;
 import org.crosswire.common.swing.GuiUtil;
 
 /**
- * RulesPane displays an array of Rules and allows the user to select the
- * scale used for each of them. I wanted to make this a JScrollPAne, but it
- * doesn't like being of any size so I swapped back to JPanel for the time being.
+ * RulesPane displays an array of Rules and allows the user to select the scale
+ * used for each of them. I wanted to make this a JScrollPAne, but it doesn't
+ * like being of any size so I swapped back to JPanel for the time being.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class RulesPane extends JPanel
-{
-	/**
+public class RulesPane extends JPanel {
+    /**
      * Basic Constructor
      */
-    public RulesPane(Rule[] rules)
-    {
+    public RulesPane(Rule[] rules) {
         add(pnlMain);
 
         pnlMain.setLayout(new BoxLayout(pnlMain, BoxLayout.Y_AXIS));
 
-        for (int i=0; i<rules.length; i++)
-        {
+        for (int i = 0; i < rules.length; i++) {
             pnlMain.add(new RuleSlider(rules[i]));
         }
     }
 
     /**
      * Method setRules.
+     * 
      * @param rules
      */
-    public void setRules(Rule[] rules)
-    {
+    public void setRules(Rule[] rules) {
         pnlMain.removeAll();
 
-        for (int i=0; i<rules.length; i++)
-        {
+        for (int i = 0; i < rules.length; i++) {
             pnlMain.add(new RuleSlider(rules[i]));
         }
 
         GuiUtil.restrainedRePack(GuiUtil.getWindow(this));
     }
-    
+
     private JPanel pnlMain = new JPanel();
 
     /**

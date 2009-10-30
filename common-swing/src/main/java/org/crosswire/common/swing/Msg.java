@@ -25,13 +25,12 @@ import org.crosswire.common.util.MsgBase;
 
 /**
  * Compile safe Msg resource settings.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-final class Msg extends MsgBase
-{
+final class Msg extends MsgBase {
     static final Msg PLAF_CHANGE = new Msg("LookAndFeelUtil.PlafChange"); //$NON-NLS-1$
     static final Msg KEYS = new Msg("MapTableModel.Keys"); //$NON-NLS-1$
     static final Msg VALUES = new Msg("MapTableModel.Values"); //$NON-NLS-1$
@@ -39,8 +38,7 @@ final class Msg extends MsgBase
     /**
      * Passthrough ctor
      */
-    private Msg(String name)
-    {
+    private Msg(String name) {
         super(name);
     }
 }

@@ -26,12 +26,11 @@ import org.crosswire.common.util.MsgBase;
 /**
  * Compile safe Msg resource settings.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-class FTPMsg extends MsgBase
-{
+class FTPMsg extends MsgBase {
     static final MsgBase AUTH_REFUSED = new FTPMsg("SwordInstaller.AuthRefused"); //$NON-NLS-1$
     static final MsgBase CONNECT_REFUSED = new FTPMsg("SwordInstaller.ConnectRefused"); //$NON-NLS-1$
     static final MsgBase CWD_REFUSED = new FTPMsg("SwordInstaller.CWDRefused"); //$NON-NLS-1$
@@ -42,8 +41,7 @@ class FTPMsg extends MsgBase
     /**
      * Passthrough ctor
      */
-    private FTPMsg(String name)
-    {
+    private FTPMsg(String name) {
         super(name);
     }
 }

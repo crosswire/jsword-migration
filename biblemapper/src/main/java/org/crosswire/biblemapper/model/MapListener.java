@@ -24,25 +24,27 @@ package org.crosswire.biblemapper.model;
 import java.util.EventListener;
 
 /**
- * Implement MapListener and call Map.addMapListener()
- * to recieve MapEvents whenever the map changes.
+ * Implement MapListener and call Map.addMapListener() to recieve MapEvents
+ * whenever the map changes.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public interface MapListener extends EventListener
-{
+public interface MapListener extends EventListener {
     /**
-    * This method is called to indicate that a node on the map has
-    * moved.
-    * @param ev Describes the change
-    */
+     * This method is called to indicate that a node on the map has moved.
+     * 
+     * @param ev
+     *            Describes the change
+     */
     void mapChanged(MapEvent ev);
 
     /**
-    * This method is called to indicate that the whole map has changed
-    * @param ev Describes the change
-    */
+     * This method is called to indicate that the whole map has changed
+     * 
+     * @param ev
+     *            Describes the change
+     */
     void mapRewritten(MapEvent ev);
 }

@@ -35,61 +35,58 @@ import org.jdom.Document;
  * 
  * LATER(joe): consider caching the data fetched.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public abstract class RemoteBookDriver extends AbstractBookDriver
-{
+public abstract class RemoteBookDriver extends AbstractBookDriver {
     /**
      * Test the connection
-     * @throws RemoterException if the ping fails
+     * 
+     * @throws RemoterException
+     *             if the ping fails
      */
-    protected void ping() throws RemoterException
-    {
+    protected void ping() throws RemoterException {
         Remoter remoter = getRemoter();
 
         RemoteMethod method = new RemoteMethod(MethodName.GETBIBLES);
         remoter.execute(method);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.BookDriver#getDriverName()
      */
-    public String getDriverName()
-    {
+    public String getDriverName() {
         return getRemoter().getRemoterName();
     }
 
     /**
      * Accessor for the current remoter.
+     * 
      * @return The remoter or null if none is available.
      */
     protected abstract Remoter getRemoter();
 
     /**
-     * Get a list of the Books available from the name.
-     * We cache the reply, for speed but we probably ought to have some way to
-     * flush the cache because the list of Bibles on the server could change.
+     * Get a list of the Books available from the name. We cache the reply, for
+     * speed but we probably ought to have some way to flush the cache because
+     * the list of Bibles on the server could change.
+     * 
      * @return an array of book names
      */
-    public Book[] getBooks()
-    {
-        synchronized (this)
-        {
-            if (rbmd == null)
-            {
-                try
-                {
+    public Book[] getBooks() {
+        synchronized (this) {
+            if (rbmd == null) {
+                try {
                     Remoter remoter = getRemoter();
 
                     RemoteMethod method = new RemoteMethod(MethodName.GETBIBLES);
                     Document doc = remoter.execute(method);
 
                     rbmd = Converter.convertDocumentToBooks(this, doc, remoter);
-                }
-                catch (Exception ex)
-                {
+                } catch (Exception ex) {
                     log.warn("failed to remote getBibleNames", ex); //$NON-NLS-1$
                     rbmd = new Book[0];
                 }
@@ -105,8 +102,8 @@ public abstract class RemoteBookDriver extends AbstractBookDriver
     private static final Logger log = Logger.getLogger(RemoteBookDriver.class);
 
     /**
-     * The cache of Bible names.
-     * At some stage it would be good to work out a way to clear the cache.
+     * The cache of Bible names. At some stage it would be good to work out a
+     * way to clear the cache.
      */
     private Book[] rbmd;
 
@@ -118,16 +115,14 @@ public abstract class RemoteBookDriver extends AbstractBookDriver
     /**
      * 
      */
-    public void registerID(String id, BookMetaData bmd)
-    {
+    public void registerID(String id, BookMetaData bmd) {
         ids.put(bmd, id);
     }
 
     /**
      * 
      */
-    public String getID(BookMetaData bmd)
-    {
+    public String getID(BookMetaData bmd) {
         return (String) ids.get(bmd);
     }
 }

@@ -22,19 +22,17 @@
 package org.crosswire.biblemapper.model;
 
 /**
- * FrictionRule simply tries to make the nodes stay where they are. 
+ * FrictionRule simply tries to make the nodes stay where they are.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class FrictionRule extends AbstractRule
-{
+public class FrictionRule extends AbstractRule {
     /**
      * We default to a scale of 1
      */
-    public FrictionRule()
-    {
+    public FrictionRule() {
         setScale(1);
     }
 
@@ -42,25 +40,22 @@ public class FrictionRule extends AbstractRule
      * @see org.crosswire.biblemapper.model.AbstractRule#setScale(int)
      */
     /* @Override */
-	public void setScale(int scale)
-    {
-        if (scale == 0)
-        {
+    public void setScale(int scale) {
+        if (scale == 0) {
             super.setScale(1);
-        }
-        else
-        {
+        } else {
             super.setScale(scale);
         }
     }
 
     /**
      * Specify where it would like a node to be positioned in space.
-     * @param map The Map to select a node from
+     * 
+     * @param map
+     *            The Map to select a node from
      * @return An array of desired positions.
      */
-    public Position getDesiredPosition(Map map, int book, int chapter)
-    {
+    public Position getDesiredPosition(Map map, int book, int chapter) {
         float[] arr = map.getPositionArrayCopy(book, chapter);
         return new Position(arr);
     }

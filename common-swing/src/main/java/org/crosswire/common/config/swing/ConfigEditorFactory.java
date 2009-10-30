@@ -33,61 +33,50 @@ import org.crosswire.common.util.PluginUtil;
 import org.crosswire.common.util.Reporter;
 
 /**
- * Allow a swing program to display a Dialog box displaying a set of
- * config options.
- *
- * @see gnu.lgpl.License for license details.
+ * Allow a swing program to display a Dialog box displaying a set of config
+ * options.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public final class ConfigEditorFactory
-{
+public final class ConfigEditorFactory {
     /**
      * Prevent instantiation
      */
-    private ConfigEditorFactory()
-    {
+    private ConfigEditorFactory() {
     }
 
     /**
-     * Create a dialog to house a TreeConfig component
-     * using the default set of Fields
-     * @param config The set of Choices to display
-     * @param parent A component to use to find a frame to use as a dialog parent
-     * @param al The action when the user clicks on ok or apply
+     * Create a dialog to house a TreeConfig component using the default set of
+     * Fields
+     * 
+     * @param config
+     *            The set of Choices to display
+     * @param parent
+     *            A component to use to find a frame to use as a dialog parent
+     * @param al
+     *            The action when the user clicks on ok or apply
      */
-    public static void showDialog(Config config, Component parent, ActionListener al)
-    {
+    public static void showDialog(Config config, Component parent, ActionListener al) {
         Exception ex = null;
-        try
-        {
+        try {
             ConfigEditor base = (ConfigEditor) PluginUtil.getImplementation(ConfigEditor.class);
             base.construct(config);
             base.showDialog(parent, al);
-        }
-        catch (ClassCastException e)
-        {
+        } catch (ClassCastException e) {
             ex = e;
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             ex = e;
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             ex = e;
-        }
-        catch (InstantiationException e)
-        {
+        } catch (InstantiationException e) {
             ex = e;
-        }
-        catch (IllegalAccessException e)
-        {
+        } catch (IllegalAccessException e) {
             ex = e;
         }
 
-        if (ex != null)
-        {
+        if (ex != null) {
             Reporter.informUser(parent, ex);
         }
     }
@@ -96,26 +85,24 @@ public final class ConfigEditorFactory
      * Create a dialog to house a TreeConfig component using the default set of
      * Fields, with the default accept action of config.localToApplication and
      * config,localToPermanent
-     *
-     * @param config The set of Choices to display
-     * @param parent A component to use to find a frame to use as a dialog
-     *            parent
+     * 
+     * @param config
+     *            The set of Choices to display
+     * @param parent
+     *            A component to use to find a frame to use as a dialog parent
      */
-    public static void showDialog(Config config, Component parent, URI uri)
-    {
+    public static void showDialog(Config config, Component parent, URI uri) {
         showDialog(config, parent, new URIActionListener(config, uri));
     }
 
     /**
      * A quick class to save a config to a uri
      */
-    static class URIActionListener implements ActionListener
-    {
+    static class URIActionListener implements ActionListener {
         /**
          * To save to a URI
          */
-        public URIActionListener(Config config, URI uri)
-        {
+        public URIActionListener(Config config, URI uri) {
             this.config = config;
             this.uri = uri;
         }
@@ -123,16 +110,14 @@ public final class ConfigEditorFactory
         /**
          * The save action
          */
-        public void actionPerformed(ActionEvent ev)
-        {
-            try
-            {
+        public void actionPerformed(ActionEvent ev) {
+            try {
                 config.localToApplication();
                 config.localToPermanent(uri);
-            }
-            catch (IOException ex)
-            {
-                throw new LucidRuntimeException(UserMsg.CONFIG_SAVE_FAILED, ex, new Object[] { uri });
+            } catch (IOException ex) {
+                throw new LucidRuntimeException(UserMsg.CONFIG_SAVE_FAILED, ex, new Object[] {
+                    uri
+                });
             }
         }
 

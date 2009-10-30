@@ -34,59 +34,66 @@ import java.util.Map;
 import org.crosswire.common.util.Logger;
 
 /**
- * ItemsMem is a Base implementation of the Items interface using the in
- * memory model (Mem).
+ * ItemsMem is a Base implementation of the Items interface using the in memory
+ * model (Mem).
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public abstract class ItemsMem extends Mem implements Items
-{
+public abstract class ItemsMem extends Mem implements Items {
     /**
      * Create a WordResource from a File that contains the dictionary.
-     * @param raw Reference to the RawBook that is using us
-     * @param create Should we start all over again
+     * 
+     * @param raw
+     *            Reference to the RawBook that is using us
+     * @param create
+     *            Should we start all over again
      */
-    public ItemsMem(RawBook raw, String leafname, boolean create) throws IOException
-    {
+    public ItemsMem(RawBook raw, String leafname, boolean create) throws IOException {
         super(raw, leafname, create);
     }
 
     /**
      * Create a WordResource from a File that contains the dictionary.
-     * @param raw Reference to the RawBook that is using us
-     * @param create Should we start all over again
-     * @param messages We append stuff here if something went wrong
+     * 
+     * @param raw
+     *            Reference to the RawBook that is using us
+     * @param create
+     *            Should we start all over again
+     * @param messages
+     *            We append stuff here if something went wrong
      */
-    public ItemsMem(RawBook raw, String leafname, boolean create, StringBuffer messages)
-    {
+    public ItemsMem(RawBook raw, String leafname, boolean create, StringBuffer messages) {
         super(raw, leafname, create, messages);
     }
 
     /**
      * How many items are there in this index?
+     * 
      * @return The number of items that we must remember
      */
     public abstract int getMaxItems();
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Mem#init()
      */
     /* @Override */
-    public void init()
-    {
+    public void init() {
         hash = new HashMap(getMaxItems());
         array = new String[getMaxItems()];
     }
 
     /**
-     * Load the Resource from a stream. This has been renamed from the
-     * default load() to ensure that the custom versions are called.
-     * @param in The stream to read from
+     * Load the Resource from a stream. This has been renamed from the default
+     * load() to ensure that the custom versions are called.
+     * 
+     * @param in
+     *            The stream to read from
      */
-    protected void defaultLoad(InputStream in) throws IOException, ClassNotFoundException
-    {
+    protected void defaultLoad(InputStream in) throws IOException, ClassNotFoundException {
         ObjectInputStream objIn = new ObjectInputStream(in);
 
         hash = (Hashtable) objIn.readObject();
@@ -96,13 +103,14 @@ public abstract class ItemsMem extends Mem implements Items
     }
 
     /**
-     * Ensure that all changes to the index of words are written to a
-     * stream. This has been renamed from the default save() to ensure
-     * that the custom versions are called.
-     * @param out The stream to write to
+     * Ensure that all changes to the index of words are written to a stream.
+     * This has been renamed from the default save() to ensure that the custom
+     * versions are called.
+     * 
+     * @param out
+     *            The stream to write to
      */
-    protected void defaultSave(OutputStream out) throws IOException
-    {
+    protected void defaultSave(OutputStream out) throws IOException {
         ObjectOutputStream objOut = new ObjectOutputStream(out);
 
         objOut.writeObject(hash);
@@ -111,43 +119,41 @@ public abstract class ItemsMem extends Mem implements Items
         objOut.close();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Items#iterator()
      */
-    public Iterator iterator()
-    {
+    public Iterator iterator() {
         return hash.keySet().iterator();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Items#getItem(int)
      */
-    public String getItem(int index)
-    {
-        try
-        {
+    public String getItem(int index) {
+        try {
             return array[index];
-        }
-        catch (ArrayIndexOutOfBoundsException ex)
-        {
-            log.error("illegal index: "+index); //$NON-NLS-1$
-            return "#"+index+"#"; //$NON-NLS-1$ //$NON-NLS-2$
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            log.error("illegal index: " + index); //$NON-NLS-1$
+            return "#" + index + "#"; //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Items#getIndex(java.lang.String)
      */
-    public int getIndex(String data)
-    {
+    public int getIndex(String data) {
         Object obj = hash.get(data);
-        if (obj != null)
-        {
+        if (obj != null) {
             return ((Integer) obj).intValue();
         }
 
-        if (create)
-        {
+        if (create) {
             // So we have to add the word in
             array[count] = data;
             hash.put(data, new Integer(count));
@@ -157,27 +163,28 @@ public abstract class ItemsMem extends Mem implements Items
         return -1;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Items#getIndex(java.lang.String[])
      */
-    public int[] getIndex(String[] data)
-    {
+    public int[] getIndex(String[] data) {
         int len = data.length;
         int[] indexes = new int[len];
 
-        for (int i=0; i<len; i++)
-        {
+        for (int i = 0; i < len; i++) {
             indexes[i] = getIndex(data[i]);
         }
 
         return indexes;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Items#size()
      */
-    public int size()
-    {
+    public int size() {
         return hash.size();
     }
 
@@ -187,7 +194,8 @@ public abstract class ItemsMem extends Mem implements Items
     protected Map hash;
 
     /**
-     * Converting indexes to Words - this is about the number of words in the Bible
+     * Converting indexes to Words - this is about the number of words in the
+     * Bible
      */
     protected String[] array;
 

@@ -28,27 +28,25 @@ import java.awt.RenderingHints;
 import javax.swing.JTextPane;
 
 /**
- * An extension of JTextPane that does Anti-Aliasing.
- * JDK15(joe): we will need to take a bit of care not clashing with J2SE5 AA
- *
- * @see gnu.lgpl.License for license details.
+ * An extension of JTextPane that does Anti-Aliasing. JDK15(joe): we will need
+ * to take a bit of care not clashing with J2SE5 AA
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class AntiAliasedTextPane extends JTextPane
-{
-    /* (non-Javadoc)
+public class AntiAliasedTextPane extends JTextPane {
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
      */
     /* @Override */
-    public void paintComponent(Graphics g)
-    {
-        if (g instanceof Graphics2D)
-        {
+    public void paintComponent(Graphics g) {
+        if (g instanceof Graphics2D) {
             Graphics2D g2 = (Graphics2D) g;
 
-            if (antiAliasing)
-            {
+            if (antiAliasing) {
                 g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
                 g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
             }
@@ -59,16 +57,15 @@ public class AntiAliasedTextPane extends JTextPane
     /**
      * @return Returns the anti aliasing status.
      */
-    public static boolean isAntiAliasing()
-    {
+    public static boolean isAntiAliasing() {
         return antiAliasing;
     }
 
     /**
-     * @param antiAliasing The new anti aliasing status.
+     * @param antiAliasing
+     *            The new anti aliasing status.
      */
-    public static void setAntiAliasing(boolean antiAliasing)
-    {
+    public static void setAntiAliasing(boolean antiAliasing) {
         AntiAliasedTextPane.antiAliasing = antiAliasing;
         // Set it system wide for the next run
         System.setProperty("swing.aatext", Boolean.toString(antiAliasing)); //$NON-NLS-1$

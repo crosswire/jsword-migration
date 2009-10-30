@@ -25,13 +25,12 @@ import org.crosswire.common.util.MsgBase;
 
 /**
  * Compile safe Msg resource settings.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public final class LimboMsg extends MsgBase
-{
+public final class LimboMsg extends MsgBase {
     // Strings for ComparePane
     static final LimboMsg COMPARE_DIALOG = new LimboMsg("ComparePane.Dialog"); //$NON-NLS-1$
     static final LimboMsg COMPARE_IDENT_QUESTION = new LimboMsg("ComparePane.IdentQuestion"); //$NON-NLS-1$
@@ -68,8 +67,7 @@ public final class LimboMsg extends MsgBase
     /**
      * Passthrough ctor
      */
-    private LimboMsg(String name)
-    {
+    private LimboMsg(String name) {
         super(name);
     }
 

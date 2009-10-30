@@ -24,30 +24,35 @@ package org.crosswire.bibledesktop.display;
 import java.util.EventListener;
 
 /**
- * Implement URIEventListener to recieve URIEvents whenever someone
- * activates an URI.
+ * Implement URIEventListener to recieve URIEvents whenever someone activates an
+ * URI.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public interface URIEventListener extends EventListener
-{
+public interface URIEventListener extends EventListener {
     /**
      * This method is called to indicate that an URI can be processed.
-     * @param ev Describes the URI
+     * 
+     * @param ev
+     *            Describes the URI
      */
     void activateURI(URIEvent ev);
 
     /**
      * This method is called to indicate that the mouse has entered the URI.
-     * @param ev Describes the URI
+     * 
+     * @param ev
+     *            Describes the URI
      */
     void enterURI(URIEvent ev);
 
     /**
      * This method is called to indicate that the mouse has left the URI.
-     * @param ev Describes the URI
+     * 
+     * @param ev
+     *            Describes the URI
      */
     void leaveURI(URIEvent ev);
 }

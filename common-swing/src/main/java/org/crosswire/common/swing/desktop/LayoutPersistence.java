@@ -41,26 +41,21 @@ import org.crosswire.common.util.StringUtil;
  * Window layout persistence mechanism. Intended to be flexible enough to allow
  * persisting size, position, layout of multiple windows.
  * 
- * @see gnu.gpl.License for license details. The copyright to this program is
- *      held by it's authors.
+ * @see gnu.gpl.License for license details.<br>
+ *      The copyright to this program is held by it's authors.
  * @author Adam Thomas [adam-thomas at cox dot net]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class LayoutPersistence
-{
+public class LayoutPersistence {
 
     /**
      * Creates the singleton persistence object capable of storing and
      * retrieving layout information on behalf windows.
      */
-    private LayoutPersistence()
-    {
-        try
-        {
+    private LayoutPersistence() {
+        try {
             settings = ResourceUtil.getProperties(getClass());
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             settings = new Properties();
         }
     }
@@ -70,8 +65,7 @@ public class LayoutPersistence
      * 
      * @return the singleton instance
      */
-    public static LayoutPersistence instance()
-    {
+    public static LayoutPersistence instance() {
         return instance;
     }
 
@@ -79,46 +73,38 @@ public class LayoutPersistence
      * Indicates whether the window passed to the constructor has had layout
      * information persisted.
      * 
-     * @param window the window to persist
+     * @param window
+     *            the window to persist
      * @return Returns true is layout information for the current window has
      *         been persisted, otherwise returns false
      */
-    public synchronized boolean isLayoutPersisted(Window window)
-    {
+    public synchronized boolean isLayoutPersisted(Window window) {
         return settings.containsKey(window.getName());
     }
 
     /**
      * Stores the current window's layout information.
      * 
-     * @param window the window to persist
+     * @param window
+     *            the window to persist
      */
-    public synchronized void saveLayout(Window window)
-    {
+    public synchronized void saveLayout(Window window) {
         int state = Frame.NORMAL;
-        if (window instanceof Frame)
-        {
+        if (window instanceof Frame) {
             Frame frame = (Frame) window;
             state = frame.getExtendedState();
         }
 
-        settings.setProperty(window.getName(),
-                             StringUtil.join(new String[] {
-                                             Integer.toString(state),
-                                             Integer.toString(window.getWidth()),
-                                             Integer.toString(window.getHeight()),
-                                             Integer.toString(window.getX()),
-                                             Integer.toString(window.getY())
-                             }, "_") //$NON-NLS-1$
-        );
+        settings.setProperty(window.getName(), StringUtil.join(new String[] {
+                Integer.toString(state), Integer.toString(window.getWidth()), Integer.toString(window.getHeight()), Integer.toString(window.getX()),
+                Integer.toString(window.getY())
+        }, "_") //$NON-NLS-1$
+                );
 
-        try
-        {
+        try {
             URI outputURI = CWProject.instance().getWritableURI(getClass().getName(), FileUtil.EXTENSION_PROPERTIES);
             NetUtil.storeProperties(settings, outputURI, "Persistent Window properties"); //$NON-NLS-1$
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             log.error(ex.getLocalizedMessage(), ex);
         }
     }
@@ -127,20 +113,18 @@ public class LayoutPersistence
      * Loads and restores the layout to the window that was passed to the
      * constructor.
      * 
-     * @param window the window to persist
+     * @param window
+     *            the window to persist
      */
-    public synchronized void restoreLayout(Window window)
-    {
+    public synchronized void restoreLayout(Window window) {
         String[] parts = StringUtil.split(settings.getProperty(window.getName()), '_');
 
         // If our window did not have saved settings do nothing.
-        if (parts == null || parts.length == 0)
-        {
+        if (parts == null || parts.length == 0) {
             return;
         }
 
-        if (window instanceof Frame)
-        {
+        if (window instanceof Frame) {
             Frame frame = (Frame) window;
             frame.setExtendedState(Integer.parseInt(parts[STATE]));
         }
@@ -152,41 +136,41 @@ public class LayoutPersistence
     /**
      * Provide class logging capabilities
      */
-    private static final Logger      log        = Logger.getLogger(LayoutPersistence.class);
+    private static final Logger log = Logger.getLogger(LayoutPersistence.class);
 
     /**
      * The persistence storage and retrieval object
      */
-    private Properties               settings;
+    private Properties settings;
 
     /**
      * Suffix for window state key
      */
-    private static final int         STATE      = 0;
+    private static final int STATE = 0;
 
     /**
      * Suffix for window width key
      */
-    private static final int         WIDTH      = 1;
+    private static final int WIDTH = 1;
 
     /**
      * Suffix for window height key
      */
-    private static final int         HEIGHT     = 2;
+    private static final int HEIGHT = 2;
 
     /**
      * Suffix for window location x key
      */
-    private static final int         LOCATION_X = 3;
+    private static final int LOCATION_X = 3;
 
     /**
      * Suffix for window location y key
      */
-    private static final int         LOCATION_Y = 4;
+    private static final int LOCATION_Y = 4;
 
     /**
      * The singleton instance of this class.
      */
-    private static LayoutPersistence instance   = new LayoutPersistence();
+    private static LayoutPersistence instance = new LayoutPersistence();
 
 }

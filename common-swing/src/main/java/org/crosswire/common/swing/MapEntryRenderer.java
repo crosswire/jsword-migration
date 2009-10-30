@@ -29,21 +29,22 @@ import javax.swing.JList;
 
 /**
  * Render a Map Entry as it's value.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class MapEntryRenderer extends DefaultListCellRenderer
-{
-    /* (non-Javadoc)
-     * @see javax.swing.DefaultListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
+public class MapEntryRenderer extends DefaultListCellRenderer {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * javax.swing.DefaultListCellRenderer#getListCellRendererComponent(javax
+     * .swing.JList, java.lang.Object, int, boolean, boolean)
      */
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean selected, boolean focus)
-    {
+    public Component getListCellRendererComponent(JList list, Object value, int index, boolean selected, boolean focus) {
         Object displayObject = value;
-        if (value instanceof Map.Entry)
-        {
+        if (value instanceof Map.Entry) {
             Map.Entry mapEntry = (Map.Entry) value;
             displayObject = mapEntry.getValue();
         }

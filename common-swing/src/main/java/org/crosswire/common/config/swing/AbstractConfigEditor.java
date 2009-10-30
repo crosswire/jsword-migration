@@ -48,31 +48,31 @@ import org.crosswire.common.util.Logger;
 
 /**
  * An abstract base of a Configuration Editor.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public abstract class AbstractConfigEditor extends JPanel implements ConfigEditor, ButtonPaneListener
-{
-    /* (non-Javadoc)
-     * @see org.crosswire.common.config.swing.ConfigEditor#init(org.crosswire.common.config.Config)
+public abstract class AbstractConfigEditor extends JPanel implements ConfigEditor, ButtonPaneListener {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.config.swing.ConfigEditor#init(org.crosswire.common
+     * .config.Config)
      */
-    public void construct(Config aConfig)
-    {
+    public void construct(Config aConfig) {
         this.config = aConfig;
 
         initializeGUI();
 
-        config.addConfigListener(new ConfigListener()
-        {
-            public void choiceAdded(ConfigEvent ev)
-            {
+        config.addConfigListener(new ConfigListener() {
+            public void choiceAdded(ConfigEvent ev) {
                 addChoice(ev.getChoice());
                 updateTree();
             }
-            public void choiceRemoved(ConfigEvent ev)
-            {
+
+            public void choiceRemoved(ConfigEvent ev) {
                 removeChoice(ev.getChoice());
                 updateTree();
             }
@@ -80,8 +80,7 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
 
         // For each of the Fields put it in a FieldPanel
         Iterator it = config.iterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             Choice model = (Choice) it.next();
 
             addChoice(model);
@@ -93,29 +92,33 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
         SwingUtilities.updateComponentTreeUI(this);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.config.swing.ConfigEditor#showDialog(java.awt.Component, java.awt.event.ActionListener)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.config.swing.ConfigEditor#showDialog(java.awt.Component
+     * , java.awt.event.ActionListener)
      */
-    public void showDialog(Component parent, ActionListener newal)
-    {
+    public void showDialog(Component parent, ActionListener newal) {
         this.al = newal;
 
-        if (dialog == null)
-        {
-            Component root =  SwingUtilities.getRoot(parent);
+        if (dialog == null) {
+            Component root = SwingUtilities.getRoot(parent);
             dialog = new JDialog((JFrame) root);
             dialog.getContentPane().add(this);
 
             // set the name for Layout Persistence
             dialog.setName("Config"); //$NON-NLS-1$
-            dialog.addWindowListener(new WindowAdapter()
-            {
-                /* (non-Javadoc)
-                 * @see java.awt.event.WindowListener#windowClosed(java.awt.event.WindowEvent)
+            dialog.addWindowListener(new WindowAdapter() {
+                /*
+                 * (non-Javadoc)
+                 * 
+                 * @see
+                 * java.awt.event.WindowListener#windowClosed(java.awt.event
+                 * .WindowEvent)
                  */
                 /* @Override */
-                public void windowClosed(WindowEvent ev)
-                {
+                public void windowClosed(WindowEvent ev) {
                     hideDialog();
                 }
             });
@@ -128,12 +131,9 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
         // Restore window size, position, and layout if previously opened,
         // otherwise use defaults.
         LayoutPersistence layoutPersistence = LayoutPersistence.instance();
-        if (layoutPersistence.isLayoutPersisted(dialog))
-        {
+        if (layoutPersistence.isLayoutPersisted(dialog)) {
             layoutPersistence.restoreLayout(dialog);
-        }
-        else
-        {
+        } else {
             dialog.setSize(1000, 500);
             GuiUtil.centerOnScreen(dialog);
         }
@@ -156,29 +156,38 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
      */
     protected abstract void updateTree();
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.config.swing.ButtonPaneListener#ok(java.awt.event.ActionEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.config.swing.ButtonPaneListener#ok(java.awt.event
+     * .ActionEvent)
      */
-    public void okPressed(ActionEvent ev)
-    {
+    public void okPressed(ActionEvent ev) {
         screenToLocal();
         al.actionPerformed(ev);
         hideDialog();
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.config.swing.ButtonPaneListener#cancel(java.awt.event.ActionEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.config.swing.ButtonPaneListener#cancel(java.awt.
+     * event.ActionEvent)
      */
-    public void cancelPressed(ActionEvent ev)
-    {
+    public void cancelPressed(ActionEvent ev) {
         hideDialog();
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.config.swing.ButtonPaneListener#apply(java.awt.event.ActionEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.config.swing.ButtonPaneListener#apply(java.awt.event
+     * .ActionEvent)
      */
-    public void applyPressed(ActionEvent ev)
-    {
+    public void applyPressed(ActionEvent ev) {
         screenToLocal();
         al.actionPerformed(ev);
     }
@@ -186,10 +195,8 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
     /**
      * Add a Choice to our set of panels
      */
-    protected void addChoice(Choice model)
-    {
-        if (model.isHidden())
-        {
+    protected void addChoice(Choice model) {
+        if (model.isHidden()) {
             return;
         }
 
@@ -203,8 +210,7 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
         // Get or create a FieldPanel
         FormPane card = (FormPane) decks.get(path);
 
-        if (card == null)
-        {
+        if (card == null) {
             card = new FormPane();
             decks.put(path, card);
             cards++;
@@ -224,14 +230,12 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
     /**
      * Add a Choice to our set of panels
      */
-    protected void removeChoice(Choice model)
-    {
+    protected void removeChoice(Choice model) {
         String key = model.getKey();
         String path = Config.getPath(model.getFullPath());
 
         Field field = (Field) fields.get(key);
-        if (field != null)
-        {
+        if (field != null) {
             fields.remove(field);
             FormPane card = (FormPane) decks.get(path);
 
@@ -239,8 +243,7 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
             String name = Config.getLeaf(model.getFullPath()) + ':';
             card.removeEntry(name);
 
-            if (card.isEmpty())
-            {
+            if (card.isEmpty()) {
                 decks.remove(card);
             }
         }
@@ -249,27 +252,21 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
     /**
      * Close any open dialogs
      */
-    protected void hideDialog()
-    {
-        if (dialog != null)
-        {
+    protected void hideDialog() {
+        if (dialog != null) {
             LayoutPersistence.instance().saveLayout(dialog);
             dialog.setVisible(false);
         }
     }
 
     /**
-     * Take the data displayed on screen an copy it to the local
-     * storage area.
+     * Take the data displayed on screen an copy it to the local storage area.
      */
-    protected void screenToLocal()
-    {
+    protected void screenToLocal() {
         Iterator it = config.iterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             Choice choice = (Choice) it.next();
-            if (choice.isHidden())
-            {
+            if (choice.isHidden()) {
                 continue;
             }
 
@@ -277,8 +274,7 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
             Field field = (Field) fields.get(key);
             String value = field.getValue();
 
-            if (value == null)
-            {
+            if (value == null) {
                 log.error("null value from key=" + key); //$NON-NLS-1$
             }
 
@@ -289,14 +285,11 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
     /**
      * Take the data in the local storage area and copy it on screen.
      */
-    protected void localToScreen()
-    {
+    protected void localToScreen() {
         Iterator it = config.iterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             Choice choice = (Choice) it.next();
-            if (choice.isHidden())
-            {
+            if (choice.isHidden()) {
                 continue;
             }
 
@@ -305,12 +298,9 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
             Field field = (Field) fields.get(key);
             String value = config.getLocal(key);
 
-            if (field == null)
-            {
+            if (field == null) {
                 log.error("Null field from key=" + key + ", skipping setting value=" + value); //$NON-NLS-1$ //$NON-NLS-2$
-            }
-            else
-            {
+            } else {
                 field.setValue(value);
             }
         }
@@ -322,7 +312,8 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
     private static final Logger log = Logger.getLogger(AbstractConfigEditor.class);
 
     /**
-     * How many cards have we created - we only need a tree if there are 2 or more cards
+     * How many cards have we created - we only need a tree if there are 2 or
+     * more cards
      */
     protected int cards;
 

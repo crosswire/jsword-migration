@@ -27,15 +27,16 @@ import java.util.EventListener;
  * Implement KeyChangeListener to recieve KeyChangeEvents whenever someone
  * changes a Key.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public interface KeyChangeListener extends EventListener
-{
+public interface KeyChangeListener extends EventListener {
     /**
      * This method is called to indicate that a key has been changed.
-     * @param ev Describes the change
+     * 
+     * @param ev
+     *            Describes the change
      */
     void keyChanged(KeyChangeEvent ev);
 

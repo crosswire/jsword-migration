@@ -32,68 +32,71 @@ import org.crosswire.common.util.NetUtil;
 /**
  * Mem is the root of all the data sources that load their data fully into
  * memory at init time. This is fairly fast but very memory hungry.
- * <p>There is code here to implememt compressed data files, however this
- * makes load time very very slow, instead of just slow, so it is all
- * commented out.</p>
+ * <p>
+ * There is code here to implememt compressed data files, however this makes
+ * load time very very slow, instead of just slow, so it is all commented out.
+ * </p>
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public abstract class Mem
-{
+public abstract class Mem {
     /**
      * Create a WordResource from a File that contains the dictionary.
-     * @param raw Reference to the RawBook that is using us
-     * @param leafname The leaf name to read/write
-     * @param create Should we start all over again
+     * 
+     * @param raw
+     *            Reference to the RawBook that is using us
+     * @param leafname
+     *            The leaf name to read/write
+     * @param create
+     *            Should we start all over again
      */
-    public Mem(RawBook raw, String leafname, boolean create) throws IOException
-    {
+    public Mem(RawBook raw, String leafname, boolean create) throws IOException {
         ctor(raw, leafname, create);
     }
 
     /**
      * Create a WordResource from a File that contains the dictionary.
-     * @param raw Reference to the RawBook that is using us
-     * @param leafname The leaf name to read/write
-     * @param create Should we start all over again
-     * @param messages We append stuff here if something went wrong
+     * 
+     * @param raw
+     *            Reference to the RawBook that is using us
+     * @param leafname
+     *            The leaf name to read/write
+     * @param create
+     *            Should we start all over again
+     * @param messages
+     *            We append stuff here if something went wrong
      */
-    public Mem(RawBook raw, String leafname, boolean create, StringBuffer messages)
-    {
-        try
-        {
+    public Mem(RawBook raw, String leafname, boolean create, StringBuffer messages) {
+        try {
             ctor(raw, leafname, create);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             messages.append(ex.toString());
         }
     }
 
     /**
-     * This really should be a constructor, however the StringBuffer ctor
-     * wants to trap and muffle exceptions.
-     * I can't do this:
+     * This really should be a constructor, however the StringBuffer ctor wants
+     * to trap and muffle exceptions. I can't do this:
      * <code>try { this(...) } ...</code>
-     * @param newraw Reference to the RawBook that is using us
-     * @param newleafname The leaf name to read/write
-     * @param newcreate Should we start all over again
+     * 
+     * @param newraw
+     *            Reference to the RawBook that is using us
+     * @param newleafname
+     *            The leaf name to read/write
+     * @param newcreate
+     *            Should we start all over again
      */
-    private void ctor(RawBook newraw, String newleafname, boolean newcreate) throws IOException
-    {
+    private void ctor(RawBook newraw, String newleafname, boolean newcreate) throws IOException {
         this.raw = newraw;
         this.leafname = newleafname;
         this.create = newcreate;
 
         init();
-        if (newcreate)
-        {
+        if (newcreate) {
             save();
-        }
-        else
-        {
+        } else {
             load();
         }
     }
@@ -105,81 +108,84 @@ public abstract class Mem
 
     /**
      * Load the Resource from a stream
-     * @param in The stream to read from
+     * 
+     * @param in
+     *            The stream to read from
      */
     public abstract void load(InputStream in) throws IOException;
 
     /**
      * Load the Resource from a named file
-     * @throws IOException 
+     * 
+     * @throws IOException
      */
-    public void load() throws IOException
-    {
+    public void load() throws IOException {
         URI uri = NetUtil.lengthenURI(raw.getURI(), leafname);
 
         // For the pkzip version
-        //String filename = raw.getDir()+leafname+".zip";
+        // String filename = raw.getDir()+leafname+".zip";
 
         // For the gzip version
-        //String filename = raw.getDir()+leafname+".gz";
+        // String filename = raw.getDir()+leafname+".gz";
 
         InputStream in = null;
-        try
-        {
+        try {
             in = NetUtil.getInputStream(uri);
 
             // For the pkzip version
-            //ZipInputStream in = new ZipInputStream(new FileInputStream(filename));
-            //ZipEntry entry = in.getNextEntry();
-            //if (entry == null) throw new IOException("Empty ZIP file");
+            // ZipInputStream in = new ZipInputStream(new
+            // FileInputStream(filename));
+            // ZipEntry entry = in.getNextEntry();
+            // if (entry == null) throw new IOException("Empty ZIP file");
 
             // For the gzip version
-            //GZIPInputStream in = new GZIPInputStream(new FileInputStream(filename));
+            // GZIPInputStream in = new GZIPInputStream(new
+            // FileInputStream(filename));
 
             load(in);
-        }
-        finally
-        {
+        } finally {
             IOUtil.close(in);
         }
     }
 
     /**
-     * Ensure that all changes to the index of words are written to a
-     * stream
-     * @param out The stream to write to
+     * Ensure that all changes to the index of words are written to a stream
+     * 
+     * @param out
+     *            The stream to write to
      */
     public abstract void save(OutputStream out) throws IOException;
 
     /**
      * Ensure that all changes to the index of words are written to disk
      */
-    public void save() throws IOException
-    {
+    public void save() throws IOException {
         URI uri = NetUtil.lengthenURI(raw.getURI(), leafname);
 
         // For the pkzip version
-        //String filename = raw.getDir()+leafname+".zip";
+        // String filename = raw.getDir()+leafname+".zip";
 
         // For the gzip version
-        //String filename = raw.getDir()+leafname+".gz";
+        // String filename = raw.getDir()+leafname+".gz";
 
         OutputStream out = NetUtil.getOutputStream(uri);
 
         // For the pkzip version
-        //ZipOutputStream out = new ZipOutputStream(new FileOutputStream(filename));
-        //out.putNextEntry(new ZipEntry(leafname));
+        // ZipOutputStream out = new ZipOutputStream(new
+        // FileOutputStream(filename));
+        // out.putNextEntry(new ZipEntry(leafname));
 
         // For the gzip version
-        //GZIPOutputStream out = new GZIPOutputStream(new FileOutputStream(filename));
+        // GZIPOutputStream out = new GZIPOutputStream(new
+        // FileOutputStream(filename));
 
         save(out);
 
         // For both zip versions
-        //out.finish();
+        // out.finish();
 
         // For the pkzip version
-        //out.closeEntry();
+        // out.closeEntry();
 
         out.close();
     }

@@ -35,29 +35,24 @@ import org.crosswire.jsword.book.raw.RawBook;
 /**
  * JUnit Test.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class LinkArrayTest extends TestCase
-{
-    public LinkArrayTest(String s)
-    {
+public class LinkArrayTest extends TestCase {
+    public LinkArrayTest(String s) {
         super(s);
     }
 
     /* @Override */
-    protected void setUp() throws Exception
-    {
+    protected void setUp() throws Exception {
     }
 
     /* @Override */
-    protected void tearDown() throws Exception
-    {
+    protected void tearDown() throws Exception {
     }
 
-    public void testLinkArray() throws Exception
-    {
+    public void testLinkArray() throws Exception {
         RawBook.setDefaultCacheData(true);
 
         List dicts = Books.installed().getBooks(BookFilters.getOnlyBibles());

@@ -26,39 +26,33 @@ import junit.framework.TestCase;
 /**
  * JUnit Test.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ThreadUtilTest extends TestCase
-{
-    public ThreadUtilTest(String s)
-    {
+public class ThreadUtilTest extends TestCase {
+    public ThreadUtilTest(String s) {
         super(s);
     }
 
     String NEWLINE = System.getProperty("line.separator", "\r\n"); //$NON-NLS-1$ //$NON-NLS-2$
 
     /* @Override */
-    protected void setUp() throws Exception
-    {
+    protected void setUp() throws Exception {
     }
 
     /* @Override */
-    protected void tearDown() throws Exception
-    {
+    protected void tearDown() throws Exception {
     }
 
-    public void testFindRoot() throws Exception
-    {
+    public void testFindRoot() throws Exception {
         assertTrue(ThreadUtil.findRoot() != null);
     }
 
-    public void testGetListing() throws Exception
-    {
+    public void testGetListing() throws Exception {
         /*
-        String[] result = ThreadUtil.getListing();
-        String result2 = StringUtil.cat(result, NEWLINE);
-        */
+         * String[] result = ThreadUtil.getListing(); String result2 =
+         * StringUtil.cat(result, NEWLINE);
+         */
     }
 }

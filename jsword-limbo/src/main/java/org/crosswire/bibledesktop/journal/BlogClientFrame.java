@@ -56,13 +56,12 @@ import com.manning.blogapps.chapter08.blogclient.BlogConnectionFactory;
 
 /**
  * Simple Swing-based blog client with tabbed UI.
+ * 
  * @author David M Johnson
  */
-public class BlogClientFrame extends JPanel
-{
+public class BlogClientFrame extends JPanel {
 
-    protected BlogClientFrame()
-    {
+    protected BlogClientFrame() {
         setLayout(new BorderLayout());
         initComponents();
         curPanel = disconnectedPanel;
@@ -71,8 +70,7 @@ public class BlogClientFrame extends JPanel
         setBorder(new TitledBorder(new EtchedBorder(), Msg.BLOG_TITLE.toString()));
     }
 
-    private void initComponents()
-    {
+    private void initComponents() {
         disconnectedPanel = new GriddedPanel();
         disconnectedPanel.setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
 
@@ -88,16 +86,13 @@ public class BlogClientFrame extends JPanel
         disconnectedPanel.addComponent(userNameField, 2, 2);
 
         final JPasswordField passwordField = new JPasswordField();
-        passwordField.addFocusListener(new FocusListener()
-        {
-            public void focusGained(FocusEvent e)
-            {
+        passwordField.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {
                 passwordField.setSelectionStart(0);
                 passwordField.setSelectionEnd(passwordField.getPassword().length);
             }
 
-            public void focusLost(FocusEvent e)
-            {
+            public void focusLost(FocusEvent e) {
             }
         });
         passwordField.setColumns(20);
@@ -107,10 +102,8 @@ public class BlogClientFrame extends JPanel
         disconnectedPanel.addComponent(passwordField, 3, 2);
 
         JButton submit = new JButton(Msg.SUBMIT.toString());
-        submit.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent evt)
-            {
+        submit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 signin(userNameField.getText(), passwordField.getPassword());
                 Properties props = new Properties();
                 props.put(USER_NAME, userNameField.getText());
@@ -122,64 +115,53 @@ public class BlogClientFrame extends JPanel
         disconnectedPanel.addComponent(submit, 4, 1);
     }
 
-    public static BlogClientFrame getInstance()
-    {
+    public static BlogClientFrame getInstance() {
         return SELF;
     }
 
-    public static void setUrl(String value)
-    {
+    public static void setUrl(String value) {
         BlogClientFrame.url = value;
         getInstance().resetBlogClientLib();
     }
 
-    public static void setPassword(String value)
-    {
+    public static void setPassword(String value) {
         BlogClientFrame.password = value;
         getInstance().resetBlogClientLib();
     }
 
-    public static void setUserName(String value)
-    {
+    public static void setUserName(String value) {
         BlogClientFrame.userName = value;
         getInstance().resetBlogClientLib();
     }
 
-    public static void setType(int value)
-    {
+    public static void setType(int value) {
         BlogClientFrame.type = BlogType.fromInteger(value);
         getInstance().resetBlogClientLib();
     }
 
-    public static String getUrl()
-    {
+    public static String getUrl() {
         return url;
     }
 
-    public static String getPassword()
-    {
+    public static String getPassword() {
         return password;
     }
 
-    public static String getUserName()
-    {
+    public static String getUserName() {
         return userName;
     }
 
-    public static int getType()
-    {
+    public static int getType() {
         return type.toInteger();
     }
 
-    public void signin(String name, char[] pswd)
-    {
+    public void signin(String name, char[] pswd) {
         BlogClientFrame.userName = name;
         BlogClientFrame.password = new String(pswd);
         getInstance().resetBlogClientLib();
     }
 
-    private JTabbedPane initBlogClientUI(Blog blog) throws Exception
-    {
+    private JTabbedPane initBlogClientUI(Blog blog) throws Exception {
 
         final BlogClientPanel clientPanel = new BlogClientPanel();
         final BlogEntriesPanel entriesPanel = new BlogEntriesPanel();
@@ -193,18 +175,14 @@ public class BlogClientFrame extends JPanel
         entriesPanel.setBlog(blog);
 
         // FIXME: this should be unplugged on reload
-        ReflectionBus.plug(new Object()
-        {
-            public void channel(LoadEntrySignal signal)
-            {
+        ReflectionBus.plug(new Object() {
+            public void channel(LoadEntrySignal signal) {
                 tabs.setSelectedComponent(clientPanel);
             }
         });
 
-        tabs.addChangeListener(new ChangeListener()
-        {
-            public void stateChanged(ChangeEvent evt)
-            {
+        tabs.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
                 JTabbedPane pane = (JTabbedPane) evt.getSource();
                 BlogClientTab tab = (BlogClientTab) pane.getSelectedComponent();
                 tab.onSelected();
@@ -213,46 +191,38 @@ public class BlogClientFrame extends JPanel
         return tabs;
     }
 
-    private void setStatus(Msg msg)
-    {
+    private void setStatus(Msg msg) {
         ReflectionBus.broadcast(new StatusSignal(msg.toString()));
     }
 
-    private void setStatus(Msg msg, Object[] objs)
-    {
+    private void setStatus(Msg msg, Object[] objs) {
         ReflectionBus.broadcast(new StatusSignal(msg.toString(objs)));
     }
 
-    private void resetBlogClientLib()
-    {
-        if (url != null && userName != null && password != null && type != null)
-        {
-            try
-            {
-                setStatus(Msg.CONNECTING, new Object[] { url, userName });
+    private void resetBlogClientLib() {
+        if (url != null && userName != null && password != null && type != null) {
+            try {
+                setStatus(Msg.CONNECTING, new Object[] {
+                        url, userName
+                });
                 BlogConnection blogConn = newBlogConnection(url, userName, password, type);
                 setStatus(Msg.CONNECTED);
                 List blogs = blogConn.getBlogs();
-                if (blogs.size() == 1)
-                {
+                if (blogs.size() == 1) {
                     JTabbedPane tab = initBlogClientUI((Blog) blogs.get(0));
                     remove(curPanel);
                     curPanel = tab;
                     add(tab, BorderLayout.CENTER);
                     setStatus(Msg.JOURNAL_RECEIVED);
-                }
-                else if (blogs.size() > 1)
-                {
+                } else if (blogs.size() > 1) {
                     JTabbedPane blogTabs = new JTabbedPane(SwingConstants.LEFT);
                     Blog blog;
                     Iterator i = blogs.iterator();
-                    while (i.hasNext())
-                    {
+                    while (i.hasNext()) {
                         blog = (Blog) i.next();
                         JTabbedPane tab = initBlogClientUI(blog);
                         String name = blog.getName();
-                        if (name.length() > 10)
-                        {
+                        if (name.length() > 10) {
                             name = name.substring(0, 10) + Msg.MORE;
                         }
                         blogTabs.addTab(name, tab);
@@ -261,18 +231,13 @@ public class BlogClientFrame extends JPanel
                     curPanel = blogTabs;
                     add(blogTabs, java.awt.BorderLayout.CENTER);
                     setStatus(Msg.ALL_DONE);
-                }
-                else
-                {
+                } else {
                     setStatus(Msg.NO_JOURNALS);
                 }
 
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 setStatus(Msg.CANNOT_CONNECT);
-                if (curPanel != disconnectedPanel)
-                {
+                if (curPanel != disconnectedPanel) {
                     remove(curPanel);
                     curPanel = disconnectedPanel;
                     add(disconnectedPanel, java.awt.BorderLayout.CENTER);
@@ -281,48 +246,37 @@ public class BlogClientFrame extends JPanel
             }
 
             ReflectionBus.broadcast(new ResizeJournalSignal());
-            /*invalidate();
-             if (getRootPane() != null) {
-             getRootPane().validate();
-             getRootPane().repaint();
-             }
+            /*
+             * invalidate(); if (getRootPane() != null) {
+             * getRootPane().validate(); getRootPane().repaint(); }
              */
-            //revalidate();
-            //repaint();
+            // revalidate();
+            // repaint();
         }
     }
 
-    protected BlogConnection newBlogConnection(String theUrl, String theUserName, String thePassword, BlogType theType) throws MalformedURLException, Exception
-    {
+    protected BlogConnection newBlogConnection(String theUrl, String theUserName, String thePassword, BlogType theType) throws MalformedURLException, Exception {
         return BlogConnectionFactory.getBlogConnection(theType.toString().toLowerCase(), theUrl, theUserName, thePassword);
     }
 
-    public void setEnabled(final Container cont, final boolean enabled)
-    {
-        if (!SwingUtilities.isEventDispatchThread())
-        {
-            Runnable t = new Runnable()
-            {
-                public void run()
-                {
+    public void setEnabled(final Container cont, final boolean enabled) {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            Runnable t = new Runnable() {
+                public void run() {
                     setEnabledRecursive(cont, enabled);
                 }
             };
             SwingUtilities.invokeLater(t);
 
-        }
-        else
-        {
+        } else {
             setEnabledRecursive(cont, enabled);
         }
     }
 
-    void setEnabledRecursive(final Container cont, final boolean enabled)
-    {
+    void setEnabledRecursive(final Container cont, final boolean enabled) {
         cont.setEnabled(enabled);
 
-        for (int i = 0; i < cont.getComponentCount(); i++)
-        {
+        for (int i = 0; i < cont.getComponentCount(); i++) {
             cont.getComponent(i).setEnabled(enabled);
 
             if (cont.getComponent(i) instanceof Container)

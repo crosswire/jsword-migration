@@ -71,18 +71,16 @@ import org.crosswire.jsword.passage.VerseRange;
 
 /**
  * A JPanel (or dialog) that presents a interactive GUI way to select passages.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class PassageSelectionPane extends JPanel
-{
+public class PassageSelectionPane extends JPanel {
     /**
      * Constructor for PassageSelectionPane.
      */
-    public PassageSelectionPane()
-    {
+    public PassageSelectionPane() {
         icoGood = GuiUtil.getIcon(GOOD_ICON);
         icoBad = GuiUtil.getIcon(BAD_ICON);
 
@@ -92,8 +90,7 @@ public class PassageSelectionPane extends JPanel
     /**
      * GUI init
      */
-    private void init()
-    {
+    private void init() {
         actions = new ActionFactory(PassageSelectionPane.class, this);
 
         JLabel lblAll = actions.createJLabel(BIBLE_TREE);
@@ -117,17 +114,14 @@ public class PassageSelectionPane extends JPanel
     /**
      *
      */
-    private Component createScrolledTree(JLabel label)
-    {
+    private Component createScrolledTree(JLabel label) {
         treAll = new JTree();
         treAll.setModel(new WholeBibleTreeModel());
         treAll.setShowsRootHandles(true);
         treAll.setRootVisible(false);
-        treAll.putClientProperty("JTree.lineStyle", "Angled");  //$NON-NLS-1$//$NON-NLS-2$
-        treAll.addTreeSelectionListener(new TreeSelectionListener()
-        {
-            public void valueChanged(TreeSelectionEvent ev)
-            {
+        treAll.putClientProperty("JTree.lineStyle", "Angled"); //$NON-NLS-1$//$NON-NLS-2$
+        treAll.addTreeSelectionListener(new TreeSelectionListener() {
+            public void valueChanged(TreeSelectionEvent ev) {
                 treeSelected();
             }
         });
@@ -140,14 +134,11 @@ public class PassageSelectionPane extends JPanel
     /**
      *
      */
-    private Component createScrolledList(JLabel label)
-    {
+    private Component createScrolledList(JLabel label) {
         model = new RangeListModel(RestrictionType.CHAPTER);
         lstSel = new JList(model);
-        lstSel.addListSelectionListener(new ListSelectionListener()
-        {
-            public void valueChanged(ListSelectionEvent ev)
-            {
+        lstSel.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent ev) {
                 listSelected();
             }
         });
@@ -160,8 +151,7 @@ public class PassageSelectionPane extends JPanel
     /**
      *
      */
-    private Component createDisplayPanel()
-    {
+    private Component createDisplayPanel() {
         txtDisplay = new JTextField();
         txtDisplay.getDocument().addDocumentListener(new CustomDocumentEvent());
 
@@ -178,8 +168,7 @@ public class PassageSelectionPane extends JPanel
     /**
      *
      */
-    private Component createMessageLabel()
-    {
+    private Component createMessageLabel() {
         lblMessage = new JLabel();
 
         return lblMessage;
@@ -188,10 +177,8 @@ public class PassageSelectionPane extends JPanel
     /**
      * Called whenever the passage changes to update the text box.
      */
-    protected void copyListToText()
-    {
-        if (changing)
-        {
+    protected void copyListToText() {
+        if (changing) {
             return;
         }
 
@@ -204,18 +191,15 @@ public class PassageSelectionPane extends JPanel
     /**
      * Called whenever the text box changes to update the list
      */
-    protected void copyTextToList()
-    {
-        if (changing)
-        {
+    protected void copyTextToList() {
+        if (changing) {
             return;
         }
 
         changing = true;
         String refstr = txtDisplay.getText();
 
-        try
-        {
+        try {
             Passage temp = (Passage) keyf.getKey(refstr);
             ref.clear();
             ref.addAll(temp);
@@ -223,9 +207,7 @@ public class PassageSelectionPane extends JPanel
 
             setValidPassage(true);
             updateMessageSummary();
-        }
-        catch (NoSuchKeyException ex)
-        {
+        } catch (NoSuchKeyException ex) {
             setValidPassage(false);
             updateMessage(ex);
         }
@@ -234,10 +216,10 @@ public class PassageSelectionPane extends JPanel
 
     /**
      * Update the UI when the validity of the passage changes
+     * 
      * @param valid
      */
-    private void setValidPassage(boolean valid)
-    {
+    private void setValidPassage(boolean valid) {
         lstSel.setEnabled(valid);
         treAll.setEnabled(valid);
         actions.getAction(ADD).setEnabled(valid);
@@ -246,10 +228,10 @@ public class PassageSelectionPane extends JPanel
 
     /**
      * Write out an error message to the message label
+     * 
      * @param ex
      */
-    private void updateMessage(NoSuchKeyException ex)
-    {
+    private void updateMessage(NoSuchKeyException ex) {
         lblMessage.setText(Msg.ERROR.toString(ex.getMessage()));
         lblMessage.setIcon(icoBad);
     }
@@ -257,31 +239,29 @@ public class PassageSelectionPane extends JPanel
     /**
      * Write out an summary message to the message label
      */
-    private void updateMessageSummary()
-    {
+    private void updateMessageSummary() {
         lblMessage.setText(Msg.SUMMARY.toString(ref.getOverview()));
         lblMessage.setIcon(icoGood);
     }
 
     /**
      * Open us in a new (optionally modal) dialog window
-     * @param parent The component to which to attach the new dialog
-     * @param title The title for the new dialog
+     * 
+     * @param parent
+     *            The component to which to attach the new dialog
+     * @param title
+     *            The title for the new dialog
      * @param modal
      */
-    public String showInDialog(Component parent, String title, boolean modal, String refstr)
-    {
-        try
-        {
+    public String showInDialog(Component parent, String title, boolean modal, String refstr) {
+        try {
             ref = (Passage) keyf.getKey(refstr);
 
             txtDisplay.setText(refstr);
 
             ref.addPassageListener(new CustomPassageListener());
             updateMessageSummary();
-        }
-        catch (NoSuchKeyException ex)
-        {
+        } catch (NoSuchKeyException ex) {
             setValidPassage(false);
             updateMessage(ex);
         }
@@ -303,10 +283,8 @@ public class PassageSelectionPane extends JPanel
         pnlAction.setBorder(BorderFactory.createEmptyBorder(5, 5, 15, 20));
         pnlAction.add(btnGo, BorderLayout.LINE_END);
 
-        ActionListener closer = new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        ActionListener closer = new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 dlgMain.dispose();
             }
         };
@@ -325,8 +303,7 @@ public class PassageSelectionPane extends JPanel
         GuiUtil.centerOnScreen(dlgMain);
         dlgMain.setVisible(true);
 
-        if (bailout)
-        {
+        if (bailout) {
             return null;
         }
         return txtDisplay.getText();
@@ -335,13 +312,10 @@ public class PassageSelectionPane extends JPanel
     /**
      * Add from the tree to the list
      */
-    public void doAddVerse()
-    {
+    public void doAddVerse() {
         TreePath[] selected = treAll.getSelectionPaths();
-        if (selected != null)
-        {
-            for (int i = 0; i < selected.length; i++)
-            {
+        if (selected != null) {
+            for (int i = 0; i < selected.length; i++) {
                 WholeBibleTreeNode node = (WholeBibleTreeNode) selected[i].getLastPathComponent();
                 VerseRange range = node.getVerseRange();
                 ref.add(range);
@@ -353,13 +327,10 @@ public class PassageSelectionPane extends JPanel
     /**
      * Remove the selected items from the list
      */
-    public void doDeleteVerse()
-    {
+    public void doDeleteVerse() {
         Object[] selected = lstSel.getSelectedValues();
-        if (selected != null)
-        {
-            for (int i = 0; i < selected.length; i++)
-            {
+        if (selected != null) {
+            for (int i = 0; i < selected.length; i++) {
                 VerseRange range = (VerseRange) selected[i];
                 ref.remove(range);
             }
@@ -370,8 +341,7 @@ public class PassageSelectionPane extends JPanel
     /**
      * Someone clicked on OK
      */
-    public void doDone()
-    {
+    public void doDone() {
         bailout = false;
         dlgMain.dispose();
     }
@@ -379,8 +349,7 @@ public class PassageSelectionPane extends JPanel
     /**
      * The tree selection has changed
      */
-    /*private*/ final void treeSelected()
-    {
+    /*private*/final void treeSelected() {
         TreePath[] selected = treAll.getSelectionPaths();
         actions.getAction(ADD).setEnabled(selected != null && selected.length > 0);
     }
@@ -388,8 +357,7 @@ public class PassageSelectionPane extends JPanel
     /**
      * List selection has changed
      */
-    /*private*/ final void listSelected()
-    {
+    /*private*/final void listSelected() {
         Object[] selected = lstSel.getSelectedValues();
         actions.getAction(DELETE).setEnabled(selected != null && selected.length > 0);
     }
@@ -401,8 +369,7 @@ public class PassageSelectionPane extends JPanel
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         // We don't serialize views
         icoGood = GuiUtil.getIcon(GOOD_ICON);
         icoBad = GuiUtil.getIcon(BAD_ICON);
@@ -465,29 +432,25 @@ public class PassageSelectionPane extends JPanel
     /**
      * Update the list whenever the textbox changes
      */
-    class CustomDocumentEvent implements DocumentListener
-    {
+    class CustomDocumentEvent implements DocumentListener {
         /* (non-Javadoc)
          * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
          */
-        public void insertUpdate(DocumentEvent ev)
-        {
+        public void insertUpdate(DocumentEvent ev) {
             copyTextToList();
         }
 
         /* (non-Javadoc)
          * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
          */
-        public void removeUpdate(DocumentEvent ev)
-        {
+        public void removeUpdate(DocumentEvent ev) {
             copyTextToList();
         }
 
         /* (non-Javadoc)
          * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
          */
-        public void changedUpdate(DocumentEvent ev)
-        {
+        public void changedUpdate(DocumentEvent ev) {
             copyTextToList();
         }
     }
@@ -495,29 +458,25 @@ public class PassageSelectionPane extends JPanel
     /**
      * To update the textbox when the passage changes
      */
-    class CustomPassageListener implements PassageListener
-    {
+    class CustomPassageListener implements PassageListener {
         /* (non-Javadoc)
          * @see org.crosswire.jsword.passage.PassageListener#versesAdded(org.crosswire.jsword.passage.PassageEvent)
          */
-        public void versesAdded(PassageEvent ev)
-        {
+        public void versesAdded(PassageEvent ev) {
             copyListToText();
         }
 
         /* (non-Javadoc)
          * @see org.crosswire.jsword.passage.PassageListener#versesRemoved(org.crosswire.jsword.passage.PassageEvent)
          */
-        public void versesRemoved(PassageEvent ev)
-        {
+        public void versesRemoved(PassageEvent ev) {
             copyListToText();
         }
 
         /* (non-Javadoc)
          * @see org.crosswire.jsword.passage.PassageListener#versesChanged(org.crosswire.jsword.passage.PassageEvent)
          */
-        public void versesChanged(PassageEvent ev)
-        {
+        public void versesChanged(PassageEvent ev) {
             copyListToText();
         }
     }

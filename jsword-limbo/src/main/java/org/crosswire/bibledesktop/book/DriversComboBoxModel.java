@@ -28,49 +28,48 @@ import org.crosswire.jsword.book.BookDriver;
 /**
  * The DriverModels class implements ComboBoxModel by extending the
  * DriverListModel.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class DriversComboBoxModel extends DriversListModel implements ComboBoxModel
-{
+public class DriversComboBoxModel extends DriversListModel implements ComboBoxModel {
     /**
      * Basic Constructor
      */
-    public DriversComboBoxModel(boolean includeRo)
-    {
+    public DriversComboBoxModel(boolean includeRo) {
         super(includeRo);
 
-        if (drivers.length > 0)
-        {
+        if (drivers.length > 0) {
             current = drivers[0];
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.ComboBoxModel#setSelectedItem(java.lang.Object)
      */
-    public void setSelectedItem(Object current)
-    {
+    public void setSelectedItem(Object current) {
         this.current = current;
         fireContentsChanged(this, -1, -1);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.ComboBoxModel#getSelectedItem()
      */
-    public Object getSelectedItem()
-    {
+    public Object getSelectedItem() {
         return current;
     }
 
     /**
      * Given an item, work out the name of the Driver that it represents
+     * 
      * @return A Driver
      */
-    public BookDriver getSelectedDriver()
-    {
+    public BookDriver getSelectedDriver() {
         return drivers[getIndexOf(current)];
     }
 

@@ -28,22 +28,19 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-
 /**
- * A nudge button set based on this dialog -
- * even down to passing on edited source.
- *
- * @see gnu.lgpl.License for license details.
+ * A nudge button set based on this dialog - even down to passing on edited
+ * source.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class NudgeButton extends JPanel
-{
+public class NudgeButton extends JPanel {
     /**
      *
      */
-    public NudgeButton()
-    {
+    public NudgeButton() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         add(up);
@@ -53,64 +50,56 @@ public class NudgeButton extends JPanel
     /**
      *
      */
-    public void setUpEnabled(boolean active)
-    {
+    public void setUpEnabled(boolean active) {
         up.setEnabled(active);
     }
 
     /**
      *
      */
-    public void setDownEnabled(boolean active)
-    {
+    public void setDownEnabled(boolean active) {
         down.setEnabled(active);
     }
 
     /**
      *
      */
-    public boolean getUpEnabled()
-    {
+    public boolean getUpEnabled() {
         return up.isEnabled();
     }
 
     /**
      *
      */
-    public boolean getDownEnabled()
-    {
+    public boolean getDownEnabled() {
         return down.isEnabled();
     }
 
     /**
      *
      */
-    public void addUpActionListener(ActionListener al)
-    {
+    public void addUpActionListener(ActionListener al) {
         up.addActionListener(al);
     }
 
     /**
      *
      */
-    public void removeUpActionListener(ActionListener al)
-    {
+    public void removeUpActionListener(ActionListener al) {
         up.removeActionListener(al);
     }
 
     /**
      *
      */
-    public void addDownActionListener(ActionListener al)
-    {
+    public void addDownActionListener(ActionListener al) {
         down.addActionListener(al);
     }
 
     /**
      *
      */
-    public void removeDownActionListener(ActionListener al)
-    {
+    public void removeDownActionListener(ActionListener al) {
         down.removeActionListener(al);
     }
 

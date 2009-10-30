@@ -26,12 +26,11 @@ import java.io.Serializable;
 /**
  * Types of Blogs.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public final class BlogType implements Serializable
-{
+public final class BlogType implements Serializable {
     public static final BlogType ATOM = new BlogType("Atom"); //$NON-NLS-1$
 
     public static final BlogType META_WEBLOG = new BlogType("MetaWeblog"); //$NON-NLS-1$
@@ -39,20 +38,16 @@ public final class BlogType implements Serializable
     /**
      * Simple ctor
      */
-    public BlogType(String name)
-    {
+    public BlogType(String name) {
         this.name = name;
     }
 
     /**
      * Get an integer representation for this BlogType
      */
-    public int toInteger()
-    {
-        for (int i = 0; i < VALUES.length; i++)
-        {
-            if (equals(VALUES[i]))
-            {
+    public int toInteger() {
+        for (int i = 0; i < VALUES.length; i++) {
+            if (equals(VALUES[i])) {
                 return i;
             }
         }
@@ -64,13 +59,10 @@ public final class BlogType implements Serializable
     /**
      * Lookup method to convert from a String
      */
-    public static BlogType fromString(String name)
-    {
-        for (int i = 0; i < VALUES.length; i++)
-        {
+    public static BlogType fromString(String name) {
+        for (int i = 0; i < VALUES.length; i++) {
             BlogType o = VALUES[i];
-            if (o.name.equalsIgnoreCase(name))
-            {
+            if (o.name.equalsIgnoreCase(name)) {
                 return o;
             }
         }
@@ -82,34 +74,36 @@ public final class BlogType implements Serializable
     /**
      * Lookup method to convert from an integer
      */
-    public static BlogType fromInteger(int i)
-    {
+    public static BlogType fromInteger(int i) {
         return VALUES[i];
     }
 
     /**
-     * Prevent subclasses from overriding canonical identity based Object methods
+     * Prevent subclasses from overriding canonical identity based Object
+     * methods
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public final boolean equals(Object o)
-    {
+    public final boolean equals(Object o) {
         return super.equals(o);
     }
 
     /**
-     * Prevent subclasses from overriding canonical identity based Object methods
+     * Prevent subclasses from overriding canonical identity based Object
+     * methods
+     * 
      * @see java.lang.Object#hashCode()
      */
-    public final int hashCode()
-    {
+    public final int hashCode() {
         return super.hashCode();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
-    public String toString()
-    {
+    public String toString() {
         return name;
     }
 
@@ -122,15 +116,12 @@ public final class BlogType implements Serializable
     private static int nextObj;
     private final int obj = nextObj++;
 
-    Object readResolve()
-    {
+    Object readResolve() {
         return VALUES[obj];
     }
 
-    private static final BlogType[] VALUES =
-    {
-        ATOM,
-        META_WEBLOG
+    private static final BlogType[] VALUES = {
+            ATOM, META_WEBLOG
     };
 
     /**

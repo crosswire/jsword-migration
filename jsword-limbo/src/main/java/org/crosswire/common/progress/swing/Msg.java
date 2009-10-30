@@ -17,7 +17,7 @@
  * Copyright: 2005
  *     The copyright to this program is held by it's authors.
  *
- * ID: $Id$
+ * ID: $Id:Msg.java 1776 2008-03-08 22:17:31Z dmsmith $
  */
 package org.crosswire.common.progress.swing;
 
@@ -25,21 +25,19 @@ import org.crosswire.common.util.MsgBase;
 
 /**
  * Compile safe Msg resource settings.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public final class Msg extends MsgBase
-{
+public final class Msg extends MsgBase {
     static final Msg NO_JOBS = new Msg("JobsViewPane.NoJob"); //$NON-NLS-1$
     static final Msg CANCEL = new Msg("JobsProgressBar.Cancel"); //$NON-NLS-1$
 
     /**
      * Passthrough ctor
      */
-    private Msg(String name)
-    {
+    private Msg(String name) {
         super(name);
     }
 }

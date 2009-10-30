@@ -27,19 +27,19 @@ import java.net.URLStreamHandlerFactory;
 /**
  * .
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class JDTBURLStreamHandlerFactory implements URLStreamHandlerFactory
-{
-    /* (non-Javadoc)
-     * @see java.net.URLStreamHandlerFactory#createURLStreamHandler(java.lang.String)
+public class JDTBURLStreamHandlerFactory implements URLStreamHandlerFactory {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * java.net.URLStreamHandlerFactory#createURLStreamHandler(java.lang.String)
      */
-    public URLStreamHandler createURLStreamHandler(String protocol)
-    {
-        if (protocol.equals(JDTBURLConnection.PROTOCOL_NAME))
-        {
+    public URLStreamHandler createURLStreamHandler(String protocol) {
+        if (protocol.equals(JDTBURLConnection.PROTOCOL_NAME)) {
             return new JDTBURLStreamHandler();
         }
         return null;

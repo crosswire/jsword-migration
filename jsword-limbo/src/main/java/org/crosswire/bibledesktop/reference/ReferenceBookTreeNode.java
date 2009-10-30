@@ -32,17 +32,15 @@ import org.crosswire.jsword.passage.Key;
 /**
  * A Book in the (possibly filtered) list of books in the reference tree.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ReferenceBookTreeNode implements TreeNode
-{
+public class ReferenceBookTreeNode implements TreeNode {
     /**
      * Simple ctor
      */
-    public ReferenceBookTreeNode(ReferenceTreeModel model, TreeNode parent, Book book)
-    {
+    public ReferenceBookTreeNode(ReferenceTreeModel model, TreeNode parent, Book book) {
         this.model = model;
         this.parent = parent;
         this.book = book;
@@ -52,77 +50,84 @@ public class ReferenceBookTreeNode implements TreeNode
     /**
      * Simple ctor
      */
-    public ReferenceBookTreeNode(ReferenceTreeModel model, TreeNode parent, Book book, Key keys)
-    {
+    public ReferenceBookTreeNode(ReferenceTreeModel model, TreeNode parent, Book book, Key keys) {
         this.model = model;
         this.parent = parent;
         this.book = book;
         this.keys = keys;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     /* @Override */
-    public String toString()
-    {
+    public String toString() {
         return book.getName();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#getChildCount()
      */
-    public int getChildCount()
-    {
+    public int getChildCount() {
         return keys.getCardinality();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#getAllowsChildren()
      */
-    public boolean getAllowsChildren()
-    {
+    public boolean getAllowsChildren() {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#isLeaf()
      */
-    public boolean isLeaf()
-    {
+    public boolean isLeaf() {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#children()
      */
-    public Enumeration children()
-    {
+    public Enumeration children() {
         return new IteratorEnumeration(keys.iterator());
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#getParent()
      */
-    public TreeNode getParent()
-    {
+    public TreeNode getParent() {
         return parent;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#getChildAt(int)
      */
-    public TreeNode getChildAt(int childIndex)
-    {
+    public TreeNode getChildAt(int childIndex) {
         Key key = keys.get(childIndex);
         return new ReferenceKeyTreeNode(model, book, this, key);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.tree.TreeNode#getIndex(javax.swing.tree.TreeNode)
      */
-    public int getIndex(TreeNode node)
-    {
+    public int getIndex(TreeNode node) {
         ReferenceKeyTreeNode keynode = (ReferenceKeyTreeNode) node;
         Key key = keynode.getKey();
         return keys.indexOf(key);
@@ -131,26 +136,25 @@ public class ReferenceBookTreeNode implements TreeNode
     /**
      * The Book object that we are wrapping
      */
-    public Book getBook()
-    {
+    public Book getBook() {
         return book;
     }
 
     /**
      * The full list of keys or a shortened list if we are filtering
      */
-    public Key getKeyList()
-    {
+    public Key getKeyList() {
         return keys;
     }
 
     /**
      * Set a shortened list of keys to filter by
      */
-    public void setKeyList(Key keys)
-    {
+    public void setKeyList(Key keys) {
         this.keys = keys;
-        model.fireTreeNodesChanged(this, new Object[] { parent, this, }, new int[0], null);
+        model.fireTreeNodesChanged(this, new Object[] {
+                parent, this,
+        }, new int[0], null);
     }
 
     /**
@@ -167,7 +171,7 @@ public class ReferenceBookTreeNode implements TreeNode
      * The tree model to which we report changes
      */
     private ReferenceTreeModel model;
-    
+
     /**
      * The book that we are representing
      */

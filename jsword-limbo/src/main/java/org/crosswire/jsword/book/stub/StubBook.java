@@ -30,62 +30,72 @@ import org.crosswire.jsword.book.filter.FilterFactory;
 import org.crosswire.jsword.passage.Key;
 
 /**
- * StubBook is a simple stub implementation of Book that is pretty much
- * always going to work because it has no dependancies on external files.
+ * StubBook is a simple stub implementation of Book that is pretty much always
+ * going to work because it has no dependancies on external files.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class StubBook extends AbstractPassageBook
-{
+public class StubBook extends AbstractPassageBook {
     /**
      * Basic constructor for a StubBook
      */
-    public StubBook(StubBookDriver driver, String name, BookCategory type)
-    {
+    public StubBook(StubBookDriver driver, String name, BookCategory type) {
         super(new DefaultBookMetaData(driver, name, type));
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getFilter()
      */
     /* @Override */
-    protected Filter getFilter()
-    {
+    protected Filter getFilter() {
         return FilterFactory.getDefaultFilter();
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.Book#contains(org.crosswire.jsword.passage.Key)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.Book#contains(org.crosswire.jsword.passage.Key)
      */
-    public boolean contains(Key key)
-    {
+    public boolean contains(Key key) {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getRawText(org.crosswire.jsword.passage.Key)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.basic.AbstractPassageBook#getRawText(org.crosswire
+     * .jsword.passage.Key)
      */
     /* @Override */
-    public String getRawText(Key key)
-    {
+    public String getRawText(Key key) {
         return "stub implementation"; //$NON-NLS-1$
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.basic.AbstractPassageBook#setRawText(org.crosswire.jsword.passage.Key, java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.basic.AbstractPassageBook#setRawText(org.crosswire
+     * .jsword.passage.Key, java.lang.String)
      */
-    public void setRawText(Key key, String rawData) throws BookException
-    {
+    public void setRawText(Key key, String rawData) throws BookException {
         throw new BookException(Msg.DRIVER_READONLY);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.Book#setAliasKey(org.crosswire.jsword.passage.Key, org.crosswire.jsword.passage.Key)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.Book#setAliasKey(org.crosswire.jsword.passage
+     * .Key, org.crosswire.jsword.passage.Key)
      */
-    public void setAliasKey(Key alias, Key source) throws BookException
-    {
+    public void setAliasKey(Key alias, Key source) throws BookException {
         throw new BookException(Msg.DRIVER_READONLY);
     }
 }

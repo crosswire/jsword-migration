@@ -7,22 +7,24 @@ import java.util.Vector;
 import org.crosswire.common.util.Logger;
 
 /**
- * TeeOutputStream allows you to have one stream act as a proxy
- * to a number of other streams, so that output to one goes to all
- * of the streams.
+ * TeeOutputStream allows you to have one stream act as a proxy to a number of
+ * other streams, so that output to one goes to all of the streams.
+ * 
  * @author Joe Walker
  */
-public class TeeOutputStream extends OutputStream
-{
+public class TeeOutputStream extends OutputStream {
     /**
      * Add the specified OutputStream to the list of streams.
+     * 
      * @param out
-     * @return "this". So we can do <pre>tee.add(a).add(b).add(c);</pre>
+     * @return "this". So we can do
+     * 
+     *         <pre>
+     * tee.add(a).add(b).add(c);
+     * </pre>
      */
-    public TeeOutputStream add(OutputStream out)
-    {
-        if (!list.contains(out))
-        {
+    public TeeOutputStream add(OutputStream out) {
+        if (!list.contains(out)) {
             list.addElement(out);
         }
 
@@ -30,47 +32,43 @@ public class TeeOutputStream extends OutputStream
     }
 
     /**
-     * Remove the specified OutputStream from the list of streams
-     * used in all outputs.
-     * @param out The Stream to be removed
+     * Remove the specified OutputStream from the list of streams used in all
+     * outputs.
+     * 
+     * @param out
+     *            The Stream to be removed
      */
-    public boolean remove(OutputStream out)
-    {
+    public boolean remove(OutputStream out) {
         return list.removeElement(out);
     }
 
     /**
      * Override to write to ass the listed Streams.
-     * @param b The byte to be written, as normal.
+     * 
+     * @param b
+     *            The byte to be written, as normal.
      */
-    public void write(int b) throws IOException
-    {
-        for (int i=0; i<list.size(); i++)
-        {
+    public void write(int b) throws IOException {
+        for (int i = 0; i < list.size(); i++) {
             OutputStream out = (OutputStream) list.elementAt(i);
             out.write(b);
         }
     }
 
     /**
-     * If someone closes the TeeOutputStream then we go round
-     * and close all the Streams on the stack.
+     * If someone closes the TeeOutputStream then we go round and close all the
+     * Streams on the stack.
      */
-    public void close() throws IOException
-    {
+    public void close() throws IOException {
         // Close each OutputStream catching and noting IOExceptions
         // Then rethrow at end if any failed.
         boolean failed = false;
 
-        for (int i=0; i<list.size(); i++)
-        {
-            try
-            {
+        for (int i = 0; i < list.size(); i++) {
+            try {
                 OutputStream out = (OutputStream) list.elementAt(i);
                 out.close();
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 log.warn("Error in closing loop", ex); //$NON-NLS-1$
                 failed = true;
             }
@@ -78,30 +76,29 @@ public class TeeOutputStream extends OutputStream
 
         list.removeAllElements();
 
-        if (failed) throw new IOException();
+        if (failed)
+            throw new IOException();
     }
 
     /**
      * @return The number of items on the stack
      */
-    public int size()
-    {
+    public int size() {
         return list.size();
     }
 
     /**
      * Primarily for debugging. Reports on th state of the Stream.
+     * 
      * @return A String containing the report.
      */
-    public String toString()
-    {
+    public String toString() {
         String retcode = ""; //$NON-NLS-1$
         String NEWLINE = System.getProperty("line.separator", "\r\n"); //$NON-NLS-1$ //$NON-NLS-2$
 
         retcode += "There are " + list.size() + " output(s)" + NEWLINE; //$NON-NLS-1$ //$NON-NLS-2$
 
-        for (int i=list.size()-1; i>=0; i--)
-        {
+        for (int i = list.size() - 1; i >= 0; i--) {
             OutputStream out = (OutputStream) list.elementAt(i);
             retcode += "Stream" + i + ": " + out.toString() + NEWLINE; //$NON-NLS-1$ //$NON-NLS-2$
         }

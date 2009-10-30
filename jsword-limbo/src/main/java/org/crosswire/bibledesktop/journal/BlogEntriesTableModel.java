@@ -11,44 +11,36 @@ import com.manning.blogapps.chapter08.blogclient.BlogEntry;
 
 /**
  * Simple table model of recent blog entries
+ * 
  * @author Don Brown [mrdon at twdata dot org]
  */
-public class BlogEntriesTableModel extends DefaultTableModel
-{
-    public BlogEntriesTableModel(Blog blogSite)
-    {
-        try
-        {
+public class BlogEntriesTableModel extends DefaultTableModel {
+    public BlogEntriesTableModel(Blog blogSite) {
+        try {
             int count = 0;
             Iterator entryIter = blogSite.getEntries();
-            while (entryIter.hasNext() && count++ < 50)
-            {
+            while (entryIter.hasNext() && count++ < 50) {
                 BlogEntry entry = (BlogEntry) entryIter.next();
                 entries.add(entry);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace(System.err);
         }
     }
 
     /* @Override */
-    public Object getValueAt(int row, int col)
-    {
-        if (entries != null)
-        {
+    public Object getValueAt(int row, int col) {
+        if (entries != null) {
             BlogEntry entry = (BlogEntry) entries.get(row);
-            switch (col)
-            {
-                case BlogEntriesPanel.TITLE_COLUMN:
-                    return entry.getTitle();
-                case BlogEntriesPanel.DATE_COLUMN:
-                    return entry.getModificationDate();
-                case BlogEntriesPanel.ID_COLUMN:
-                    return entry.getToken();
-                default:
-                    assert false;
+            switch (col) {
+            case BlogEntriesPanel.TITLE_COLUMN:
+                return entry.getTitle();
+            case BlogEntriesPanel.DATE_COLUMN:
+                return entry.getModificationDate();
+            case BlogEntriesPanel.ID_COLUMN:
+                return entry.getToken();
+            default:
+                assert false;
             }
         }
         assert false;
@@ -56,38 +48,33 @@ public class BlogEntriesTableModel extends DefaultTableModel
     }
 
     /* @Override */
-    public int getColumnCount()
-    {
+    public int getColumnCount() {
         return BlogEntriesPanel.COLUMN_COUNT;
     }
 
     /* @Override */
-    public int getRowCount()
-    {
+    public int getRowCount() {
         return (entries != null) ? entries.size() : 0;
     }
 
     /* @Override */
-    public String getColumnName(int column)
-    {
-        switch (column)
-        {
-            case BlogEntriesPanel.TITLE_COLUMN:
-                return Msg.TITLE_COLUMN.toString();
-            case BlogEntriesPanel.ID_COLUMN:
-                return Msg.ID_COLUMN.toString();
-            case BlogEntriesPanel.DATE_COLUMN:
-                return Msg.DATE_COLUMN.toString();
-            default:
-                assert false;
+    public String getColumnName(int column) {
+        switch (column) {
+        case BlogEntriesPanel.TITLE_COLUMN:
+            return Msg.TITLE_COLUMN.toString();
+        case BlogEntriesPanel.ID_COLUMN:
+            return Msg.ID_COLUMN.toString();
+        case BlogEntriesPanel.DATE_COLUMN:
+            return Msg.DATE_COLUMN.toString();
+        default:
+            assert false;
         }
         assert false;
         return "ERROR: Invalid column index"; //$NON-NLS-1$
     }
 
     /* @Override */
-    public boolean isCellEditable(int row, int col)
-    {
+    public boolean isCellEditable(int row, int col) {
         return false;
     }
 

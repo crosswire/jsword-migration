@@ -39,47 +39,42 @@ import org.crosswire.jsword.book.BooksEvent;
 import org.crosswire.jsword.book.BooksListener;
 
 /**
- * BooksListModel creates a Swing ListModel from the available Bibles.
- * I would normally implement BooksListener in an inner class however
- * doing that would stop me calling fireInterval*() in AbstractListModel
- * because that is a protected method and the inner class is neither
- * in the same package or a sub class.
- *
- * @see gnu.gpl.License for license details.
+ * BooksListModel creates a Swing ListModel from the available Bibles. I would
+ * normally implement BooksListener in an inner class however doing that would
+ * stop me calling fireInterval*() in AbstractListModel because that is a
+ * protected method and the inner class is neither in the same package or a sub
+ * class.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class BooksListModel extends AbstractListModel
-{
+public class BooksListModel extends AbstractListModel {
     /**
      * Basic constructor
      */
-    public BooksListModel()
-    {
+    public BooksListModel() {
         this(null, null);
     }
 
     /**
      * Basic constructor
      */
-    public BooksListModel(BookFilter filter)
-    {
+    public BooksListModel(BookFilter filter) {
         this(filter, Books.installed(), null);
     }
 
     /**
      * Basic constructor, redefining ordering.
      */
-    public BooksListModel(BookFilter filter, Comparator comp)
-    {
+    public BooksListModel(BookFilter filter, Comparator comp) {
         this(filter, Books.installed(), comp);
     }
 
     /**
      * Basic constructor for a filtered list of books, ordered as requested.
      */
-    public BooksListModel(BookFilter filter, BookList bookList, Comparator comparator)
-    {
+    public BooksListModel(BookFilter filter, BookList bookList, Comparator comparator) {
         this.filter = filter;
         this.bookList = bookList;
         this.comparator = comparator;
@@ -90,19 +85,16 @@ public class BooksListModel extends AbstractListModel
     /* (non-Javadoc)
      * @see javax.swing.ListModel#getSize()
      */
-    public synchronized int getSize()
-    {
+    public synchronized int getSize() {
         return books.size();
     }
 
     /* (non-Javadoc)
      * @see javax.swing.ListModel#getElementAt(int)
      */
-    public synchronized Object getElementAt(int index)
-    {
+    public synchronized Object getElementAt(int index) {
         // PARANOIA(joe): this check shouldn't be needed
-        if (index > books.size())
-        {
+        if (index > books.size()) {
             log.error("trying to get book at " + index + " when there are only " + books.size() + " known books."); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             return null;
         }
@@ -112,21 +104,21 @@ public class BooksListModel extends AbstractListModel
 
     /**
      * Returns the index-position of the specified object in the list.
-     * @param test the object to find
-     * @return an int representing the index position, where 0 is the first position
+     * 
+     * @param test
+     *            the object to find
+     * @return an int representing the index position, where 0 is the first
+     *         position
      */
-    public synchronized int getIndexOf(Object test)
-    {
+    public synchronized int getIndexOf(Object test) {
         return books.indexOf(test);
     }
 
     /**
      * @param filter
      */
-    public void setFilter(BookFilter filter)
-    {
-        synchronized (this)
-        {
+    public void setFilter(BookFilter filter) {
+        synchronized (this) {
             this.filter = filter;
         }
         cacheData();
@@ -138,10 +130,8 @@ public class BooksListModel extends AbstractListModel
      * @see javax.swing.ListModel#addListDataListener(javax.swing.event.ListDataListener)
      */
     /* @Override */
-    public void addListDataListener(ListDataListener li)
-    {
-        if (listenerList.getListenerCount() == 0)
-        {
+    public void addListDataListener(ListDataListener li) {
+        if (listenerList.getListenerCount() == 0) {
             bookList.addBooksListener(listener);
         }
 
@@ -152,12 +142,10 @@ public class BooksListModel extends AbstractListModel
      * @see javax.swing.ListModel#removeListDataListener(javax.swing.event.ListDataListener)
      */
     /* @Override */
-    public void removeListDataListener(ListDataListener li)
-    {
+    public void removeListDataListener(ListDataListener li) {
         super.removeListDataListener(li);
 
-        if (listenerList.getListenerCount() == 0)
-        {
+        if (listenerList.getListenerCount() == 0) {
             bookList.removeBooksListener(listener);
         }
     }
@@ -165,8 +153,7 @@ public class BooksListModel extends AbstractListModel
     /**
      * Setup the data-stores of the current Bibles and drivers
      */
-    protected final synchronized void cacheData()
-    {
+    protected final synchronized void cacheData() {
         books = new ArrayList();
         books.addAll(bookList.getBooks(filter));
         Collections.sort(books, comparator);
@@ -175,13 +162,11 @@ public class BooksListModel extends AbstractListModel
     /**
      * So we can get a handle on what Bibles there are
      */
-    class CustomListDataListener implements BooksListener
-    {
+    class CustomListDataListener implements BooksListener {
         /* (non-Javadoc)
          * @see org.crosswire.jsword.book.BooksListener#bookAdded(org.crosswire.jsword.book.BooksEvent)
          */
-        public void bookAdded(BooksEvent ev)
-        {
+        public void bookAdded(BooksEvent ev) {
             int oldsize = getSize();
             cacheData();
             fireContentsChanged(ev.getSource(), 0, oldsize);
@@ -190,8 +175,7 @@ public class BooksListModel extends AbstractListModel
         /* (non-Javadoc)
          * @see org.crosswire.jsword.book.BooksListener#bookRemoved(org.crosswire.jsword.book.BooksEvent)
          */
-        public void bookRemoved(BooksEvent ev)
-        {
+        public void bookRemoved(BooksEvent ev) {
             int oldsize = getSize();
             cacheData();
             fireContentsChanged(ev.getSource(), 0, oldsize);
@@ -202,8 +186,7 @@ public class BooksListModel extends AbstractListModel
      * @see javax.swing.AbstractListModel#fireContentsChanged(java.lang.Object, int, int)
      */
     /* @Override */
-    protected void fireContentsChanged(Object source, int index0, int index1)
-    {
+    protected void fireContentsChanged(Object source, int index0, int index1) {
         super.fireContentsChanged(source, index0, index1);
     }
 
@@ -214,11 +197,11 @@ public class BooksListModel extends AbstractListModel
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         listener = new CustomListDataListener();
         filter = null;
-        // This is not quite right. Probably should write out the Book initials and read them in here.
+        // This is not quite right. Probably should write out the Book initials
+        // and read them in here.
         // But at this time we don't serialize views.
         bookList = Books.installed();
 
@@ -241,10 +224,9 @@ public class BooksListModel extends AbstractListModel
     private transient CustomListDataListener listener = new CustomListDataListener();
 
     /**
-     * The array of versions.
-     * All methods that access this variable have been marked synchronized to
-     * ensure that one thread can't update the list of books while another is
-     * trying to create a JList based on this class.
+     * The array of versions. All methods that access this variable have been
+     * marked synchronized to ensure that one thread can't update the list of
+     * books while another is trying to create a JList based on this class.
      */
     protected List books;
 

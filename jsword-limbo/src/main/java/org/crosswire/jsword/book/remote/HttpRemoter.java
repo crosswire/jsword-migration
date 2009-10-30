@@ -34,19 +34,16 @@ import org.jdom.input.SAXBuilder;
 /**
  * Implement a Remoter using HTTP.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class HttpRemoter implements Remoter
-{
+public class HttpRemoter implements Remoter {
     /**
      * Create an HttpRemoter with a baseurl to call.
      */
-    public HttpRemoter(String baseurl)
-    {
-        if (baseurl == null)
-        {
+    public HttpRemoter(String baseurl) {
+        if (baseurl == null) {
             throw new NullPointerException();
         }
 
@@ -56,57 +53,48 @@ public class HttpRemoter implements Remoter
     /**
      * A simple name
      */
-    public String getRemoterName()
-    {
+    public String getRemoterName() {
         return "Remote (HTTP)"; //$NON-NLS-1$
     }
 
     /**
      * @see Remoter#execute(RemoteMethod)
      */
-    public Document execute(RemoteMethod method) throws RemoterException
-    {
-        try
-        {
-            String query = baseurl+methodToParam(method);
-            log.debug("Executing query: "+query); //$NON-NLS-1$
+    public Document execute(RemoteMethod method) throws RemoterException {
+        try {
+            String query = baseurl + methodToParam(method);
+            log.debug("Executing query: " + query); //$NON-NLS-1$
 
             URL url = new URL(query);
             InputStream in = url.openStream();
             SAXBuilder builder = new SAXBuilder();
 
             Document doc = builder.build(in);
-            log.debug("Counting children of root element: "+doc.getRootElement().getChildren().size()); //$NON-NLS-1$
+            log.debug("Counting children of root element: " + doc.getRootElement().getChildren().size()); //$NON-NLS-1$
 
             return doc;
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             throw new RemoterException(Msg.REMOTE_FAIL, ex);
         }
     }
 
     /**
-     * Convert a RemoteMethod to a String which we can append to a base url
-     * to get a complete URL which will get us the required XML document.
+     * Convert a RemoteMethod to a String which we can append to a base url to
+     * get a complete URL which will get us the required XML document.
      */
-    public static String methodToParam(RemoteMethod method)
-    {
+    public static String methodToParam(RemoteMethod method) {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append("?method="); //$NON-NLS-1$
         buffer.append(method.getMethodName());
-        
+
         Iterator it = method.getParameterKeys();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             // JDK: at 1.3 - need to remove try block and change encoder to say:
-            try
-            {
+            try {
                 String key = (String) it.next();
                 ParamName param = ParamName.fromString(key);
-                if (param != null)
-                {
+                if (param != null) {
                     String val = method.getParameter(param);
                     String b64 = URLEncoder.encode(val, "UTF-8"); //$NON-NLS-1$
 
@@ -115,9 +103,7 @@ public class HttpRemoter implements Remoter
                     buffer.append('=');
                     buffer.append(b64);
                 }
-            }
-            catch (UnsupportedEncodingException ex)
-            {
+            } catch (UnsupportedEncodingException ex) {
                 assert false : ex;
             }
         }

@@ -33,31 +33,30 @@ import org.crosswire.jsword.book.BookException;
  * up to the job. The specific problem is that there is sometimes no separator
  * between parts of the command, and since this is specialized we also leave the
  * results in a Vector of SearchWords.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class CustomTokenizer
-{
+public class CustomTokenizer {
     /**
      * Prevent instantiation
      */
-    private CustomTokenizer()
-    {
+    private CustomTokenizer() {
     }
 
     /**
      * Convenience method to generate a Vector of SearchWords
-     * @param sought The text to parse
-     * @param commands The Hashtable of SearchWords to select from
+     * 
+     * @param sought
+     *            The text to parse
+     * @param commands
+     *            The Hashtable of SearchWords to select from
      * @return A List of selected SearchWords
      */
-    public static List tokenize(String sought, Map commands) throws BookException
-    {
+    public static List tokenize(String sought, Map commands) throws BookException {
         List output = new ArrayList();
-        if (sought == null || sought.length()  == 0)
-        {
+        if (sought == null || sought.length() == 0) {
             return output;
         }
 
@@ -67,24 +66,20 @@ public class CustomTokenizer
         int currentType = charType(firstChar, commandChars);
         int startIndex = 0;
 
-        // If the first character is a [  or : then we have a problem because
+        // If the first character is a [ or : then we have a problem because
         // the loop starts with the second character because it needs
         // something to compare with - so if we do start with a [ or : then
         // we make sure that we prepend with a " "
-        if (sought.length() > 0 && (firstChar == '[' || firstChar == ':'))
-        {
+        if (sought.length() > 0 && (firstChar == '[' || firstChar == ':')) {
             sought = ' ' + sought;
         }
 
         // Loop, comparing each character with the previous one
-        for (int i = 1; i <= sought.length(); i++)
-        {
+        for (int i = 1; i <= sought.length(); i++) {
             // An escaped section
-            if (i != sought.length() && sought.charAt(i) == '[')
-            {
+            if (i != sought.length() && sought.charAt(i) == '[') {
                 int end = sought.indexOf(']', i);
-                if (end == -1)
-                {
+                if (end == -1) {
                     throw new BookException(Msg.UNMATCHED_ESCAPE);
                 }
 
@@ -102,13 +97,10 @@ public class CustomTokenizer
             if (i != sought.length() && sought.indexOf("::", i) == i) //$NON-NLS-1$
             {
                 int end = sought.indexOf("::", i + 2); //$NON-NLS-1$
-                if (end == -1)
-                {
+                if (end == -1) {
                     addWord(output, commands, sought.substring(i + 2));
                     i = sought.length();
-                }
-                else
-                {
+                } else {
                     addWord(output, commands, sought.substring(i + 2, end));
                     i = end + 2;
                 }
@@ -118,22 +110,16 @@ public class CustomTokenizer
             // If this is the last word then so long as this letter is not
             // a space (in which case it has been added already) then add all
             // the word in
-            if (i == sought.length())
-            {
-                if (currentType != CHAR_SPACE)
-                {
+            if (i == sought.length()) {
+                if (currentType != CHAR_SPACE) {
                     addWord(output, commands, sought.substring(startIndex));
                 }
-            }
-            else
-            {
+            } else {
                 // If this is the start of a new section of the command
                 // then add the word in
                 int new_type = charType(sought.charAt(i), commandChars);
-                if (currentType != new_type || new_type == CHAR_COMMAND)
-                {
-                    if (currentType != CHAR_SPACE)
-                    {
+                if (currentType != new_type || new_type == CHAR_COMMAND) {
+                    if (currentType != CHAR_SPACE) {
                         addWord(output, commands, sought.substring(startIndex, i));
                     }
 
@@ -148,18 +134,17 @@ public class CustomTokenizer
 
     /**
      * What class of character is this?
-     * @param sought The string to be searched for
+     * 
+     * @param sought
+     *            The string to be searched for
      * @return The chatacter class
      */
-    private static final int charType(char sought, String commands)
-    {
-        if (Character.isWhitespace(sought))
-        {
+    private static final int charType(char sought, String commands) {
+        if (Character.isWhitespace(sought)) {
             return CHAR_SPACE;
         }
 
-        if (commands.indexOf(sought) != -1)
-        {
+        if (commands.indexOf(sought) != -1) {
             return CHAR_COMMAND;
         }
 
@@ -168,15 +153,17 @@ public class CustomTokenizer
 
     /**
      * Convenience function to add a Word to the Vector being created.
-     * @param output The Vector to alter
-     * @param commands The Word source
-     * @param word The trigger to look for
+     * 
+     * @param output
+     *            The Vector to alter
+     * @param commands
+     *            The Word source
+     * @param word
+     *            The trigger to look for
      */
-    private static void addWord(List output, Map commands, String word)
-    {
+    private static void addWord(List output, Map commands, String word) {
         Object wordObj = commands.get(word);
-        if (wordObj == null)
-        {
+        if (wordObj == null) {
             wordObj = new DefaultWord(word);
         }
 
@@ -185,18 +172,17 @@ public class CustomTokenizer
 
     /**
      * Convenience function to add a Word to the Vector being created.
-     * @param commands The Word source
+     * 
+     * @param commands
+     *            The Word source
      */
-    private static String getSingleCharWords(Map commands)
-    {
+    private static String getSingleCharWords(Map commands) {
         Iterator it = commands.keySet().iterator();
         StringBuffer buf = new StringBuffer();
 
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             String cmd = (String) it.next();
-            if (cmd.length() == 1)
-            {
+            if (cmd.length() == 1) {
                 buf.append(cmd);
             }
         }

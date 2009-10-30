@@ -33,43 +33,36 @@ import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * BibleTreeNode.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class BibleTreeNode implements TreeNode
-{
+public class BibleTreeNode implements TreeNode {
     /**
      *
      */
-    public BibleTreeNode()
-    {
+    public BibleTreeNode() {
         kids = new BookTreeNode[BibleInfo.booksInBible()];
     }
 
     /**
      *
      */
-    public void setPassage(Passage ref, boolean filter)
-    {
+    public void setPassage(Passage ref, boolean filter) {
         this.ref = ref;
 
-        try
-        {
-            if (filter)
-            {
+        try {
+            if (filter) {
                 kids = new BookTreeNode[ref.booksInPassage()];
 
                 int currentBook = 0;
                 int bookCount = 0;
 
                 Iterator it = ref.iterator();
-                while (it.hasNext())
-                {
+                while (it.hasNext()) {
                     Verse verse = (Verse) it.next();
-                    if (currentBook != verse.getBook())
-                    {
+                    if (currentBook != verse.getBook()) {
                         currentBook = verse.getBook();
                         BookTreeNode node = new BookTreeNode(this, currentBook);
                         node.setPassage(ref, true);
@@ -77,9 +70,7 @@ public class BibleTreeNode implements TreeNode
                     }
                 }
             }
-        }
-        catch (NoSuchVerseException ex)
-        {
+        } catch (NoSuchVerseException ex) {
             assert false : ex;
         }
     }
@@ -87,12 +78,9 @@ public class BibleTreeNode implements TreeNode
     /**
      * Returns the child <code>TreeNode</code> at index i
      */
-    public TreeNode getChildAt(int i)
-    {
-        try
-        {
-            if (kids[i] != null)
-            {
+    public TreeNode getChildAt(int i) {
+        try {
+            if (kids[i] != null) {
                 return kids[i];
             }
 
@@ -101,9 +89,7 @@ public class BibleTreeNode implements TreeNode
             kids[i] = node;
 
             return kids[i];
-        }
-        catch (NoSuchVerseException ex)
-        {
+        } catch (NoSuchVerseException ex) {
             assert false : ex;
             return null;
         }
@@ -113,28 +99,23 @@ public class BibleTreeNode implements TreeNode
      * Returns the number of children <code>TreeNode</code>s the receiver
      * contains.
      */
-    public int getChildCount()
-    {
+    public int getChildCount() {
         return kids.length;
     }
 
     /**
      * Returns the parent <code>TreeNode</code> of the receiver.
      */
-    public TreeNode getParent()
-    {
+    public TreeNode getParent() {
         return this;
     }
 
     /**
-     * Returns the index of <code>node</code> in the receivers children.
-     * If the receiver does not contain <code>node</code>, -1 will be
-     * returned.
+     * Returns the index of <code>node</code> in the receivers children. If the
+     * receiver does not contain <code>node</code>, -1 will be returned.
      */
-    public int getIndex(TreeNode node)
-    {
-        if (!(node instanceof BookTreeNode))
-        {
+    public int getIndex(TreeNode node) {
+        if (!(node instanceof BookTreeNode)) {
             return -1;
         }
 
@@ -145,34 +126,29 @@ public class BibleTreeNode implements TreeNode
     /**
      * Returns true if the receiver allows children.
      */
-    public boolean getAllowsChildren()
-    {
+    public boolean getAllowsChildren() {
         return true;
     }
 
     /**
      * Returns true if the receiver is a leaf.
      */
-    public boolean isLeaf()
-    {
+    public boolean isLeaf() {
         return false;
     }
 
     /**
      * Returns the children of the reciever as an Enumeration.
      */
-    public Enumeration children()
-    {
+    public Enumeration children() {
         return new NodeEnumeration();
     }
 
     /**
      * Returns the children of the reciever as an Enumeration.
      */
-    public String toString()
-    {
-        if (ref == null)
-        {
+    public String toString() {
+        if (ref == null) {
             return Msg.WHOLE_BIBLE.toString();
         }
 
@@ -182,15 +158,12 @@ public class BibleTreeNode implements TreeNode
     /**
      * The Enumerate over an array
      */
-    public class NodeEnumeration implements Enumeration
-    {
-        public boolean hasMoreElements()
-        {
+    public class NodeEnumeration implements Enumeration {
+        public boolean hasMoreElements() {
             return index < kids.length;
         }
 
-        public Object nextElement()
-        {
+        public Object nextElement() {
             return kids[index++];
         }
 

@@ -25,14 +25,13 @@ import org.crosswire.common.util.MsgBase;
 
 /**
  * Compile safe Msg resource settings.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public final class UserMsg extends MsgBase
-{
+public final class UserMsg extends MsgBase {
     // Strings for AbstractViewLayout
     static final UserMsg UNTITLED = new UserMsg("AbstractViewLayout.Untitled"); //$NON-NLS-1$
     static final UserMsg TDI = new UserMsg("LayoutType.TDI"); //$NON-NLS-1$
@@ -41,8 +40,7 @@ public final class UserMsg extends MsgBase
     /**
      * Passthrough ctor
      */
-    private UserMsg(String name)
-    {
+    private UserMsg(String name) {
         super(name);
     }
 

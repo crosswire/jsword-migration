@@ -25,12 +25,11 @@ import java.util.EventListener;
 
 /**
  * An interface that defines a listener of ViewEvents.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at yahoo dot com]
  */
-public interface ViewEventListener extends EventListener
-{
+public interface ViewEventListener extends EventListener {
     void viewRemoved(ViewEvent event);
 }

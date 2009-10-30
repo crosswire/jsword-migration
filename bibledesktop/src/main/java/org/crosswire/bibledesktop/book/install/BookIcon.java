@@ -31,60 +31,42 @@ import org.crosswire.jsword.book.BookCategory;
 
 /**
  * Generates the appropriate icon for a book.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class BookIcon
-{
+public class BookIcon {
     /**
      * Static class
      */
-    private BookIcon()
-    {
+    private BookIcon() {
     }
 
-    public static Icon getIcon(Book book)
-    {
+    public static Icon getIcon(Book book) {
         Icon icon = ICON_OTHER;
         BookCategory type = book.getBookCategory();
-        if (type.equals(BookCategory.BIBLE))
-        {
+        if (type.equals(BookCategory.BIBLE)) {
             icon = ICON_BIBLE;
-        }
-        else if (type.equals(BookCategory.COMMENTARY))
-        {
+        } else if (type.equals(BookCategory.COMMENTARY)) {
             icon = ICON_COMNT;
-        }
-        else if (type.equals(BookCategory.DICTIONARY))
-        {
+        } else if (type.equals(BookCategory.DICTIONARY)) {
             icon = ICON_DICT;
-        }
-        else if (type.equals(BookCategory.GLOSSARY))
-        {
+        } else if (type.equals(BookCategory.GLOSSARY)) {
             icon = ICON_GLOSS;
-        }
-        else if (type.equals(BookCategory.DAILY_DEVOTIONS))
-        {
+        } else if (type.equals(BookCategory.DAILY_DEVOTIONS)) {
             icon = ICON_READ;
-        }
-        else
-        {
+        } else {
             icon = ICON_OTHER;
         }
 
-        if (book.isQuestionable())
-        {
+        if (book.isQuestionable()) {
             icon = new CompositeIcon(icon, ICON_QUESTIONABLE, SwingConstants.CENTER);
         }
 
-        if (!book.isSupported())
-        {
+        if (!book.isSupported()) {
             icon = new CompositeIcon(icon, ICON_UNSUPPORTED, SwingConstants.CENTER);
-        }
-        else if (book.isLocked())
-        {
+        } else if (book.isLocked()) {
             icon = new CompositeIcon(icon, ICON_LOCKED, SwingConstants.CENTER);
         }
 

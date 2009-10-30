@@ -52,28 +52,22 @@ import org.crosswire.common.util.Logger;
 
 /**
  * Various debug actions, for easy editing to help us hack over time.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class DebugPane extends JPanel
-{
+public class DebugPane extends JPanel {
     /**
      * Simple ctor
      */
-    public DebugPane(Desktop desktop)
-    {
+    public DebugPane(Desktop desktop) {
         this.desktop = desktop;
 
         Method[] methods = getClass().getMethods();
-        for (int i = 0; i < methods.length; i++)
-        {
+        for (int i = 0; i < methods.length; i++) {
             Method method = methods[i];
-            if (method.getParameterTypes().length == 0
-                && method.getDeclaringClass() == getClass()
-                && Modifier.isPublic(method.getModifiers()))
-            {
+            if (method.getParameterTypes().length == 0 && method.getDeclaringClass() == getClass() && Modifier.isPublic(method.getModifiers())) {
                 mdlMethods.addElement(method);
             }
         }
@@ -84,8 +78,7 @@ public class DebugPane extends JPanel
     /**
      * Setup the GUI
      */
-    private void init()
-    {
+    private void init() {
         lblMethod.setLabelFor(cboMethod);
         lblMethod.setText(LimboMsg.DEBUG_METHOD.toString());
 
@@ -95,10 +88,8 @@ public class DebugPane extends JPanel
         // I18N: migrate this to an ActionFactory
         btnMethod.setText(LimboMsg.DEBUG_GO.toString());
         btnMethod.setMnemonic(LimboMsg.DEBUG_GO.toString().charAt(0));
-        btnMethod.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        btnMethod.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 action();
             }
         });
@@ -119,23 +110,16 @@ public class DebugPane extends JPanel
     /**
      * Call the chosen method
      */
-    protected void action()
-    {
-        try
-        {
+    protected void action() {
+        try {
             Method method = (Method) cboMethod.getSelectedItem();
             Object reply = method.invoke(this, new Object[0]);
-            if (reply == null)
-            {
+            if (reply == null) {
                 txtResults.setText(""); //$NON-NLS-1$
-            }
-            else
-            {
+            } else {
                 txtResults.setText(reply.toString());
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             StringWriter sout = new StringWriter();
             PrintWriter out = new PrintWriter(sout);
             ex.printStackTrace(out);
@@ -146,16 +130,14 @@ public class DebugPane extends JPanel
     /**
      * Some debug action that we can configure
      */
-    public String showViews()
-    {
+    public String showViews() {
         StringBuffer reply = new StringBuffer();
 
         reply.append('\n');
         reply.append(LimboMsg.DEBUG_VIEWS.toString());
         int i = 0;
         Iterator it = desktop.getViews().iterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             BibleViewPane view = (BibleViewPane) it.next();
             reply.append(i++);
             reply.append(": "); //$NON-NLS-1$
@@ -170,8 +152,7 @@ public class DebugPane extends JPanel
     /**
      * Create some test jobs
      */
-    public void createTestJobs()
-    {
+    public void createTestJobs() {
         createTestJob(30000, "test1", 20, false); //$NON-NLS-1$
         createTestJob(30000, "test2", 3, false); //$NON-NLS-1$
         createTestJob(30000, "test3", 3, true); //$NON-NLS-1$
@@ -180,35 +161,34 @@ public class DebugPane extends JPanel
     /**
      * Create a test job
      */
-    public static void createTestJob(final long millis, final String predictbase, final int steps, final boolean fake)
-    {
+    public static void createTestJob(final long millis, final String predictbase, final int steps, final boolean fake) {
         final URI predicturl = CWProject.instance().getWritableURI(predictbase, FileUtil.EXTENSION_PROPERTIES);
-        final Thread test = new Thread()
-        {
-            /* (non-Javadoc)
+        final Thread test = new Thread() {
+            /*
+             * (non-Javadoc)
+             * 
              * @see java.lang.Thread#run()
              */
             /* @Override */
-            public synchronized void run()
-            {
+            public synchronized void run() {
                 Progress job = JobManager.createJob(predictbase, predicturl, Thread.currentThread(), fake);
 
-                job.setSectionName(LimboMsg.DEBUG_STEPS.toString(new Object[] { new Integer(0), new Integer(steps) }));
+                job.setSectionName(LimboMsg.DEBUG_STEPS.toString(new Object[] {
+                        new Integer(0), new Integer(steps)
+                }));
                 log.debug("starting test job:"); //$NON-NLS-1$
 
-                for (int i = 1; i <= steps && !Thread.interrupted(); i++)
-                {
-                    try
-                    {
+                for (int i = 1; i <= steps && !Thread.interrupted(); i++) {
+                    try {
                         wait(millis / steps);
-                    }
-                    catch (InterruptedException ex)
-                    {
+                    } catch (InterruptedException ex) {
                         log.warn("Exception while waiting", ex); //$NON-NLS-1$
                     }
 
                     job.setWork((i * 100) / steps);
-                    job.setSectionName(LimboMsg.DEBUG_STEPS.toString(new Object[] { new Integer(i), new Integer(steps) }));
+                    job.setSectionName(LimboMsg.DEBUG_STEPS.toString(new Object[] {
+                            new Integer(i), new Integer(steps)
+                    }));
                 }
 
                 job.done();
@@ -221,10 +201,8 @@ public class DebugPane extends JPanel
     /**
      *
      */
-    public void openSplash()
-    {
-        if (splash == null)
-        {
+    public void openSplash() {
+        if (splash == null) {
             splash = new Splash();
             splash.pack();
         }
@@ -233,10 +211,8 @@ public class DebugPane extends JPanel
     /**
      *
      */
-    public void closeSplash()
-    {
-        if (splash != null)
-        {
+    public void closeSplash() {
+        if (splash != null) {
             splash.close();
             splash = null;
         }
@@ -273,17 +249,18 @@ public class DebugPane extends JPanel
     /**
      * Simpler method name display
      */
-    static final class CustomListCellRenderer extends DefaultListCellRenderer
-    {
-        /* (non-Javadoc)
-         * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
+    static final class CustomListCellRenderer extends DefaultListCellRenderer {
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing
+         * .JList, java.lang.Object, int, boolean, boolean)
          */
         /* @Override */
-        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
-        {
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-            if (value instanceof Method)
-            {
+            if (value instanceof Method) {
                 setText(((Method) value).getName() + "()"); //$NON-NLS-1$
             }
             return this;

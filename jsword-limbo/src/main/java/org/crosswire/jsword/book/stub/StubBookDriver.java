@@ -26,43 +26,41 @@ import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.book.basic.AbstractBookDriver;
 
 /**
- * StubBookDriver is a simple stub implementation of BibleDriver that is
- * pretty much always going to work because it has no dependancies on external
- * files.
+ * StubBookDriver is a simple stub implementation of BibleDriver that is pretty
+ * much always going to work because it has no dependancies on external files.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class StubBookDriver extends AbstractBookDriver
-{
+public class StubBookDriver extends AbstractBookDriver {
     /**
      * Setup the array of BookMetaDatas
      */
-    public StubBookDriver()
-    {
-        books = new Book[]
-        {
-            new StubBook(this, "Stub Version", BookCategory.BIBLE), //$NON-NLS-1$
-            new StubBook(this, "New Stub Version", BookCategory.BIBLE), //$NON-NLS-1$
-            new StubBook(this, "Stub Comments", BookCategory.COMMENTARY), //$NON-NLS-1$
-            new StubDictionary(this, "Stub Dict", BookCategory.DICTIONARY), //$NON-NLS-1$
+    public StubBookDriver() {
+        books = new Book[] {
+                new StubBook(this, "Stub Version", BookCategory.BIBLE), //$NON-NLS-1$
+                new StubBook(this, "New Stub Version", BookCategory.BIBLE), //$NON-NLS-1$
+                new StubBook(this, "Stub Comments", BookCategory.COMMENTARY), //$NON-NLS-1$
+                new StubDictionary(this, "Stub Dict", BookCategory.DICTIONARY), //$NON-NLS-1$
         };
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.BookDriver#getBooks()
      */
-    public Book[] getBooks()
-    {
+    public Book[] getBooks() {
         return books;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.BookDriver#getDriverName()
      */
-    public String getDriverName()
-    {
+    public String getDriverName() {
         return "Stub"; //$NON-NLS-1$
     }
 

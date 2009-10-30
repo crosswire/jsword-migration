@@ -25,40 +25,40 @@ import org.jdom.output.XMLOutputter;
 /**
  * A quick demo of how easy it is to write new front-ends to JSword.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class RemoterServlet extends HttpServlet
-{
-	/* (non-Javadoc)
+public class RemoterServlet extends HttpServlet {
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.servlet.Servlet#init(javax.servlet.ServletConfig)
      */
     /* @Override */
-    public void init(ServletConfig config) throws ServletException
-    {
+    public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
         remoter = new LocalRemoter();
     }
 
-    /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest
+     * , javax.servlet.http.HttpServletResponse)
      */
     /* @Override */
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException
-    {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         XMLOutputter output = new XMLOutputter();
 
-        try
-        {
+        try {
             RemoteMethod method = requestToMethod(request);
             Document doc = remoter.execute(method);
 
             output.output(doc, response.getOutputStream());
-        }
-        catch (RemoterException ex)
-        {
+        } catch (RemoterException ex) {
             Reporter.informUser(this, ex);
 
             Document doc = Converter.convertExceptionToDocument(ex);
@@ -67,19 +67,17 @@ public class RemoterServlet extends HttpServlet
     }
 
     /**
-     * Convert an HttpServletRequest into a RemoteMethod call.
-     * This is the inverse of
+     * Convert an HttpServletRequest into a RemoteMethod call. This is the
+     * inverse of
      * {@link org.crosswire.jsword.book.remote.HttpRemoter#execute(RemoteMethod)}
      */
-    public static RemoteMethod requestToMethod(HttpServletRequest request)
-    {
+    public static RemoteMethod requestToMethod(HttpServletRequest request) {
         Map params = request.getParameterMap();
         String methodname = request.getParameter(HttpRemoter.METHOD_KEY);
         RemoteMethod method = new RemoteMethod(MethodName.fromString(methodname));
 
         Iterator it = params.keySet().iterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             String key = (String) it.next();
             String[] val = (String[]) params.get(key);
             ParamName param = ParamName.fromString(key);
@@ -88,8 +86,7 @@ public class RemoterServlet extends HttpServlet
             // GET and POST allow multiple values for each key, however since we
             // get to define the interface i.e. what the allowed keys are, I
             // don't see this as a big problem.
-            if (val.length > 0 && param != null)
-            {
+            if (val.length > 0 && param != null) {
                 method.addParam(param, val[0]);
             }
         }

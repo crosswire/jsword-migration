@@ -45,21 +45,22 @@ import org.crosswire.jsword.book.BookProvider;
 
 /**
  * A picker of more than one book at a time.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class ParallelBookPicker extends JPanel implements BookProvider
-{
+public class ParallelBookPicker extends JPanel implements BookProvider {
 
     /**
      * General constructor
-     * @param filter the kinds of books to pick.
-     * @param comparator the order to put the books in
+     * 
+     * @param filter
+     *            the kinds of books to pick.
+     * @param comparator
+     *            the order to put the books in
      */
-    public ParallelBookPicker(BookFilter filter, Comparator comparator)
-    {
+    public ParallelBookPicker(BookFilter filter, Comparator comparator) {
         this.filter = filter;
         this.comparator = comparator;
         initialize();
@@ -68,8 +69,7 @@ public class ParallelBookPicker extends JPanel implements BookProvider
     /**
      * Initialize the GUI
      */
-    private void initialize()
-    {
+    private void initialize() {
         setLayout(new FlowLayout(FlowLayout.LEADING, 1, 1));
         listeners = new EventListenerList();
         actions = new ActionFactory(ParallelBookPicker.class, this);
@@ -86,8 +86,7 @@ public class ParallelBookPicker extends JPanel implements BookProvider
     /**
      * Add an new picker.
      */
-    public void doAddPicker()
-    {
+    public void doAddPicker() {
         BooksComboBoxModel mdlBook = new BooksComboBoxModel(filter, comparator);
         JComboBox cboBook = new JComboBox(mdlBook);
         cboBook.setPrototypeDisplayValue(BookListCellRenderer.PROTOTYPE_BOOK_NAME);
@@ -97,8 +96,7 @@ public class ParallelBookPicker extends JPanel implements BookProvider
         add(cboBook);
 
         Book book = mdlBook.getSelectedBook();
-        if (book != null)
-        {
+        if (book != null) {
             cboBook.setToolTipText(book.getName());
         }
 
@@ -111,13 +109,11 @@ public class ParallelBookPicker extends JPanel implements BookProvider
     /**
      * Remove the last picker provided that there will be one that remains.
      */
-    public void doRemovePicker()
-    {
+    public void doRemovePicker() {
         // There should always be 2 components present:
         // the first picker and the panel holding the add/remove buttons
         int size = getComponentCount();
-        if (size > 2)
-        {
+        if (size > 2) {
             remove(size - 1);
             enableButtons();
             GuiUtil.refresh(this);
@@ -129,19 +125,15 @@ public class ParallelBookPicker extends JPanel implements BookProvider
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.BookProvider#getBooks()
      */
-    public Book[] getBooks()
-    {
+    public Book[] getBooks() {
         List books = new ArrayList();
         int count = getComponentCount();
-        for (int i = 1; i < count; i++)
-        {
+        for (int i = 1; i < count; i++) {
             Component comp = getComponent(i);
-            if (comp instanceof JComboBox)
-            {
+            if (comp instanceof JComboBox) {
                 JComboBox combo = (JComboBox) comp;
                 Object book = combo.getSelectedItem();
-                if (book != null)
-                {
+                if (book != null) {
                     books.add(book);
                 }
             }
@@ -152,14 +144,11 @@ public class ParallelBookPicker extends JPanel implements BookProvider
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.BookProvider#getFirstBook()
      */
-    public Book getFirstBook()
-    {
+    public Book getFirstBook() {
         int count = getComponentCount();
-        for (int i = 1; i < count; i++)
-        {
+        for (int i = 1; i < count; i++) {
             Component comp = getComponent(i);
-            if (comp instanceof JComboBox)
-            {
+            if (comp instanceof JComboBox) {
                 JComboBox combo = (JComboBox) comp;
                 return (Book) combo.getSelectedItem();
             }
@@ -170,56 +159,49 @@ public class ParallelBookPicker extends JPanel implements BookProvider
     /**
      * @return the maxPickers
      */
-    public static int getMaxPickers()
-    {
+    public static int getMaxPickers() {
         return maxPickers;
     }
 
     /**
-     * @param maxPickers the maxPickers to set
+     * @param maxPickers
+     *            the maxPickers to set
      */
-    public static void setMaxPickers(int maxPickers)
-    {
+    public static void setMaxPickers(int maxPickers) {
         ParallelBookPicker.maxPickers = maxPickers;
     }
 
     /**
      * Add a BookSelectListener listener
      */
-    public synchronized void addBookListener(BookSelectListener li)
-    {
+    public synchronized void addBookListener(BookSelectListener li) {
         listeners.add(BookSelectListener.class, li);
     }
 
     /**
      * Remove a BookSelectListener listener
      */
-    public synchronized void removeBookListener(BookSelectListener li)
-    {
+    public synchronized void removeBookListener(BookSelectListener li) {
         listeners.remove(BookSelectListener.class, li);
     }
 
     /**
      * Inform the version listeners
      */
-    protected void fireBooksChosen(BookSelectEvent ev)
-    {
+    protected void fireBooksChosen(BookSelectEvent ev) {
         // Guaranteed to return a non-null array
         Object[] contents = listeners.getListenerList();
 
         // Process the listeners last to first, notifying
         // those that are interested in this event
-        for (int i = contents.length - 2; i >= 0; i -= 2)
-        {
-            if (contents[i] == BookSelectListener.class)
-            {
+        for (int i = contents.length - 2; i >= 0; i -= 2) {
+            if (contents[i] == BookSelectListener.class) {
                 ((BookSelectListener) contents[i + 1]).booksChosen(ev);
             }
         }
     }
 
-    public void enableButtons()
-    {
+    public void enableButtons() {
         int count = getComponentCount() - 1;
         actions.getAction("RemovePicker").setEnabled(count > 1); //$NON-NLS-1$
         actions.getAction("AddPicker").setEnabled(count < maxPickers); //$NON-NLS-1$
@@ -233,8 +215,7 @@ public class ParallelBookPicker extends JPanel implements BookProvider
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         filter = null;
         comparator = null;
         listeners = new EventListenerList();
@@ -244,22 +225,19 @@ public class ParallelBookPicker extends JPanel implements BookProvider
     }
 
     /**
-     * An ItemListener for a particular combo box that tracks it's selected item.
+     * An ItemListener for a particular combo box that tracks it's selected
+     * item.
      */
-    final class SelectedItemListener implements ItemListener, BookProvider
-    {
-        SelectedItemListener(ParallelBookPicker picker)
-        {
+    final class SelectedItemListener implements ItemListener, BookProvider {
+        SelectedItemListener(ParallelBookPicker picker) {
             this.picker = picker;
         }
 
         /* (non-Javadoc)
          * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
          */
-        public void itemStateChanged(ItemEvent ev)
-        {
-            if (ev.getStateChange() == ItemEvent.SELECTED)
-            {
+        public void itemStateChanged(ItemEvent ev) {
+            if (ev.getStateChange() == ItemEvent.SELECTED) {
                 JComboBox combo = (JComboBox) ev.getSource();
 
                 Book selected = (Book) combo.getSelectedItem();
@@ -272,16 +250,14 @@ public class ParallelBookPicker extends JPanel implements BookProvider
         /* (non-Javadoc)
          * @see org.crosswire.jsword.book.BookProvider#getBooks()
          */
-        public Book[] getBooks()
-        {
+        public Book[] getBooks() {
             return picker.getBooks();
         }
 
         /* (non-Javadoc)
          * @see org.crosswire.jsword.book.BookProvider#getFirstBook()
          */
-        public Book getFirstBook()
-        {
+        public Book getFirstBook() {
             return picker.getFirstBook();
         }
 
@@ -291,16 +267,13 @@ public class ParallelBookPicker extends JPanel implements BookProvider
     /**
      * Ensures that something is always selected.
      */
-    static final class SelectedActionListener implements ActionListener
-    {
+    static final class SelectedActionListener implements ActionListener {
         /* (non-Javadoc)
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
-        public void actionPerformed(ActionEvent e)
-        {
+        public void actionPerformed(ActionEvent e) {
             JComboBox cbo = (JComboBox) e.getSource();
-            if (cbo.getSelectedIndex() == -1 && cbo.getItemCount() > 0)
-            {
+            if (cbo.getSelectedIndex() == -1 && cbo.getItemCount() > 0) {
                 cbo.setSelectedIndex(0);
             }
         }

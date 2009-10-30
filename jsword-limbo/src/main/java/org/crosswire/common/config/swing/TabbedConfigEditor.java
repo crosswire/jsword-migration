@@ -36,21 +36,20 @@ import org.crosswire.common.swing.FormPane;
 
 /**
  * A Configuration Editor that lays its pages in tabs.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class TabbedConfigEditor extends AbstractConfigEditor
-{
+public class TabbedConfigEditor extends AbstractConfigEditor {
     /**
-     * <br />Danger - this method is not called by the TreeConfigEditor
-     * constructor, it is called by the AbstractConfigEditor constructor so
-     * any field initializers will be called AFTER THIS METHOD EXECUTES
-     * so don't use field initializers.
+     * <br />
+     * Danger - this method is not called by the TreeConfigEditor constructor,
+     * it is called by the AbstractConfigEditor constructor so any field
+     * initializers will be called AFTER THIS METHOD EXECUTES so don't use field
+     * initializers.
      */
-    protected void initializeGUI()
-    {
+    protected void initializeGUI() {
         JComponent bar = new ButtonPane(this);
 
         setLayout(new BorderLayout(10, 10));
@@ -62,50 +61,39 @@ public class TabbedConfigEditor extends AbstractConfigEditor
     /**
      * Update the tree structure
      */
-    protected void updateTree()
-    {
-        if (tab != null)
-        {
+    protected void updateTree() {
+        if (tab != null) {
             remove(tab);
         }
         tab = new JTabbedPane();
 
         Iterator it = config.iterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             Choice choice = (Choice) it.next();
             String path = choice.getFullPath();
             // log.fine("TAB: path="+path);
 
             JTabbedPane nest = tab;
             StringTokenizer st = new StringTokenizer(path, "."); //$NON-NLS-1$
-            while (st.hasMoreTokens())
-            {
+            while (st.hasMoreTokens()) {
                 String name = st.nextToken();
                 int index = nest.indexOfTab(name);
                 // log.fine("  name="+name+" index="+index+" hasMoreTokens="+st.hasMoreTokens());
 
                 // We don't want to create a tab for the last branch
-                if (st.hasMoreTokens())
-                {
-                    if (index == -1)
-                    {
+                if (st.hasMoreTokens()) {
+                    if (index == -1) {
                         JTabbedPane sub = new JTabbedPane();
                         sub.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
                         nest.addTab(name, TAB_ICON, sub);
                         // log.fine("  Added named tab");
                         nest = sub;
-                    }
-                    else
-                    {
+                    } else {
                         Component comp = nest.getComponentAt(index);
-                        if (comp instanceof JTabbedPane)
-                        {
+                        if (comp instanceof JTabbedPane) {
                             nest = (JTabbedPane) comp;
                             // log.fine("  Drilling to tab");
-                        }
-                        else
-                        {
+                        } else {
                             // log.fine("  Downgrading and adding tab");
                             JTabbedPane sub = new JTabbedPane();
                             sub.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -114,34 +102,27 @@ public class TabbedConfigEditor extends AbstractConfigEditor
                             nest.addTab(LimboMsg.BASIC.toString(), TAB_ICON, comp);
                         }
                     }
-                }
-                else
-                {
-                    if (index == -1)
-                    {
+                } else {
+                    if (index == -1) {
                         // log.fine("  Adding named panel");
                         FormPane card = (FormPane) decks.get(path);
-                        if (card != null)
-                        {
+                        if (card != null) {
                             card.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
                             nest.addTab(name, TAB_ICON, card);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         // log.fine("  Adding Basic panel");
                         Component comp = nest.getComponentAt(index);
-                        if (comp instanceof JTabbedPane)
-                        {
+                        if (comp instanceof JTabbedPane) {
                             nest = (JTabbedPane) comp;
                             FormPane card = (FormPane) decks.get(path);
-                            if (card != null)
-                            {
+                            if (card != null) {
                                 card.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
                                 nest.addTab(LimboMsg.BASIC.toString(), TAB_ICON, card);
                             }
                         }
-                        // else log.fine("  Warning skipping comp="+comp.getClass().getName());
+                        // else
+                        // log.fine("  Warning skipping comp="+comp.getClass().getName());
                     }
                 }
             }

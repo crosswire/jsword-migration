@@ -23,25 +23,22 @@ package org.crosswire.common.swing.plaf;
 
 /**
  * Contains base UI defaults for all platforms.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Willie Thean [williethean at yahoo dot com]
  */
-public abstract class AbstractLFCustoms
-{
+public abstract class AbstractLFCustoms {
     /**
      * Constructor.
      */
-    public AbstractLFCustoms()
-    {
+    public AbstractLFCustoms() {
     }
 
     /**
      * Calling this method installs base and platform specfic UI defaults.
      */
-    public void initUIDefaults()
-    {
+    public void initUIDefaults() {
         initBaseUIDefaults();
         initPlatformUIDefaults();
     }
@@ -49,14 +46,13 @@ public abstract class AbstractLFCustoms
     /**
      * Init UI Defaults value applicable to all platforms.
      */
-    private void initBaseUIDefaults()
-    {
+    private void initBaseUIDefaults() {
         // Specify defaults applicable to all platforms here
     }
 
     /**
-     * This method does nothing. Subclass should override this to install platform
-     * specific UI defaults.
+     * This method does nothing. Subclass should override this to install
+     * platform specific UI defaults.
      */
     protected abstract void initPlatformUIDefaults();
 }

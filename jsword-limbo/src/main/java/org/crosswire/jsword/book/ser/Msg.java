@@ -26,12 +26,11 @@ import org.crosswire.common.util.MsgBase;
 /**
  * Compile safe Msg resource settings.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-class Msg extends MsgBase
-{
+class Msg extends MsgBase {
     static final Msg READ_ERROR = new Msg("BookDataCache.ReadError"); //$NON-NLS-1$
     static final Msg WRITE_ERROR = new Msg("BookDataCache.WriteError"); //$NON-NLS-1$
     static final Msg SER_INIT = new Msg("SerBook.SerInit"); //$NON-NLS-1$
@@ -40,8 +39,7 @@ class Msg extends MsgBase
     /**
      * Passthrough ctor
      */
-    private Msg(String name)
-    {
+    private Msg(String name) {
         super(name);
     }
 }

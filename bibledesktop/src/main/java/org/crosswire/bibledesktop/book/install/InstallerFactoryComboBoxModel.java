@@ -33,18 +33,16 @@ import org.crosswire.jsword.book.install.InstallManager;
 
 /**
  * A ComboBoxModel that displays all the known InstallerFactory names.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class InstallerFactoryComboBoxModel extends AbstractListModel implements ComboBoxModel
-{
+public class InstallerFactoryComboBoxModel extends AbstractListModel implements ComboBoxModel {
     /**
      * Simple ctor
      */
-    public InstallerFactoryComboBoxModel(InstallManager imanager)
-    {
+    public InstallerFactoryComboBoxModel(InstallManager imanager) {
         Set nameset = imanager.getInstallerFactoryNames();
         names = new ArrayList();
         names.addAll(nameset);
@@ -54,32 +52,28 @@ public class InstallerFactoryComboBoxModel extends AbstractListModel implements 
     /* (non-Javadoc)
      * @see javax.swing.ComboBoxModel#getSelectedItem()
      */
-    public Object getSelectedItem()
-    {
+    public Object getSelectedItem() {
         return selection;
     }
 
     /* (non-Javadoc)
      * @see javax.swing.ComboBoxModel#setSelectedItem(java.lang.Object)
      */
-    public void setSelectedItem(Object selection)
-    {
+    public void setSelectedItem(Object selection) {
         this.selection = selection;
     }
 
     /* (non-Javadoc)
      * @see javax.swing.ListModel#getSize()
      */
-    public int getSize()
-    {
+    public int getSize() {
         return names.size();
     }
 
     /* (non-Javadoc)
      * @see javax.swing.ListModel#getElementAt(int)
      */
-    public Object getElementAt(int index)
-    {
+    public Object getElementAt(int index) {
         return names.get(index);
     }
 

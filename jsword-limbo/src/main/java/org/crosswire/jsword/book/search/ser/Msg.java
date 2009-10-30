@@ -26,12 +26,11 @@ import org.crosswire.common.util.MsgBase;
 /**
  * Compile safe Msg resource settings.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-class Msg extends MsgBase
-{
+class Msg extends MsgBase {
     static final Msg INDEX_START = new Msg("SerIndex.Indexing"); //$NON-NLS-1$
     static final Msg SER_INIT = new Msg("SerIndex.Init"); //$NON-NLS-1$
     static final Msg DELETE_FAILED = new Msg("SerIndex.DeleteFailed"); //$NON-NLS-1$
@@ -42,10 +41,9 @@ class Msg extends MsgBase
     static final Msg INSTALL_FAIL = new Msg("SerIndex.InstallFailed"); //$NON-NLS-1$
 
     /**
-     * Passthrough ctor 
+     * Passthrough ctor
      */
-    private Msg(String name)
-    {
+    private Msg(String name) {
         super(name);
     }
 }

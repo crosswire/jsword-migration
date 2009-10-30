@@ -47,28 +47,25 @@ import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
 
 /**
- * BookChooser is like JFileChooser except that it allows the user to
- * select one of the available Bibles.
+ * BookChooser is like JFileChooser except that it allows the user to select one
+ * of the available Bibles.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class BookChooser extends JPanel
-{
-	/**
+public class BookChooser extends JPanel {
+    /**
      * Basic constructor
      */
-    public BookChooser()
-    {
+    public BookChooser() {
         this(null);
     }
 
     /**
      * Basic constructor
      */
-    public BookChooser(BookFilter filter)
-    {
+    public BookChooser(BookFilter filter) {
         bmod = new BooksListModel(filter);
         init();
     }
@@ -76,8 +73,7 @@ public class BookChooser extends JPanel
     /**
      * Initialize all the GUI components
      */
-    private void init()
-    {
+    private void init() {
         pnlBibles.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         pnlBibles.setLayout(new BorderLayout());
         pnlBibles.add(scrBibles, BorderLayout.CENTER);
@@ -85,12 +81,9 @@ public class BookChooser extends JPanel
         lstBibles.setModel(bmod);
         lstBibles.setCellRenderer(new BookListCellRenderer());
         lstBibles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        lstBibles.addListSelectionListener(new ListSelectionListener()
-        {
-            public void valueChanged(ListSelectionEvent ev)
-            {
-                if (ev.getValueIsAdjusting())
-                {
+        lstBibles.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent ev) {
+                if (ev.getValueIsAdjusting()) {
                     return;
                 }
 
@@ -101,10 +94,8 @@ public class BookChooser extends JPanel
         // I18N: migrate this to an ActionFactory
         btnOk.setText(Msg.CHOOSER_OK.toString());
         btnOk.setMnemonic(Msg.CHOOSER_OK.toString().charAt(0));
-        btnOk.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        btnOk.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 okPressed();
             }
         });
@@ -113,10 +104,8 @@ public class BookChooser extends JPanel
 
         // I18N: migrate this to an ActionFactory
         btnCancel.setText(Msg.CHOOSER_CANCEL.toString());
-        btnCancel.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        btnCancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 cancelPressed();
             }
         });
@@ -133,8 +122,7 @@ public class BookChooser extends JPanel
     /**
      * Display the BookChooser in a modal dialog
      */
-    public int showDialog(Component parent)
-    {
+    public int showDialog(Component parent) {
         Frame frame = GuiUtil.getFrame(parent);
 
         dialog = new JDialog(frame, title, true);
@@ -143,11 +131,9 @@ public class BookChooser extends JPanel
         dialog.getContentPane().add(this, BorderLayout.CENTER);
         dialog.pack();
         dialog.setLocationRelativeTo(parent);
-        dialog.addWindowListener(new WindowAdapter()
-        {
+        dialog.addWindowListener(new WindowAdapter() {
             /* @Override */
-            public void windowClosed(WindowEvent ev)
-            {
+            public void windowClosed(WindowEvent ev) {
                 cancelPressed();
             }
         });
@@ -159,36 +145,35 @@ public class BookChooser extends JPanel
 
     /**
      * Sets the string that goes in the FileChooser window's title bar.
+     * 
      * @see #getDialogTitle()
      */
-    public void setDialogTitle(String title)
-    {
+    public void setDialogTitle(String title) {
         this.title = title;
     }
 
     /**
      * Gets the string that goes in the FileChooser's titlebar.
+     * 
      * @see #setDialogTitle(String)
      */
-    public String getDialogTitle()
-    {
+    public String getDialogTitle() {
         return title;
     }
 
     /**
      * Returns the selected Book.
+     * 
      * @return the selected Book
      */
-    public Book getSelected()
-    {
+    public Book getSelected() {
         return (Book) lstBibles.getSelectedValue();
     }
 
     /**
      * When the list selection changes
      */
-    public void selection()
-    {
+    public void selection() {
         Book book = (Book) lstBibles.getSelectedValue();
         selected = book.getName();
         btnOk.setEnabled(selected != null);
@@ -197,8 +182,7 @@ public class BookChooser extends JPanel
     /**
      * OK is selected
      */
-    public void okPressed()
-    {
+    public void okPressed() {
         reply = APPROVE_OPTION;
         dialog.setVisible(false);
     }
@@ -206,8 +190,7 @@ public class BookChooser extends JPanel
     /**
      * Cancel is selected
      */
-    public void cancelPressed()
-    {
+    public void cancelPressed() {
         reply = CANCEL_OPTION;
         dialog.setVisible(false);
     }

@@ -20,7 +20,6 @@
  * ID: $Id$
  */
 // package default;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -28,19 +27,16 @@ import junit.framework.TestSuite;
 /**
  * JUnit Test.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class AllTests extends TestCase
-{
-    public AllTests(String s)
-    {
+public class AllTests extends TestCase {
+    public AllTests(String s) {
         super(s);
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite();
 
         suite.addTestSuite(org.crosswire.biblemapper.model.LinkArrayTest.class);

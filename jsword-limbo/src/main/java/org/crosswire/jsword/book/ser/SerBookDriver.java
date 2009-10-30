@@ -37,41 +37,35 @@ import org.crosswire.jsword.book.raw.RawBook;
 /**
  * This represents all of the SerBibles.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class SerBookDriver extends AbstractBookDriver
-{
-    /* (non-Javadoc)
+public class SerBookDriver extends AbstractBookDriver {
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.BookDriver#getBooks()
      */
-    public Book[] getBooks()
-    {
-        try
-        {
+    public Book[] getBooks() {
+        try {
             URI dir = BookRoot.findBibleRoot(getDriverName());
 
-            if (!NetUtil.isDirectory(dir))
-            {
+            if (!NetUtil.isDirectory(dir)) {
                 log.debug("Missing ser directory: " + dir); //$NON-NLS-1$
                 return new Book[0];
             }
 
             String[] names = null;
-            if (dir == null)
-            {
+            if (dir == null) {
                 names = new String[0];
-            }
-            else
-            {
+            } else {
                 names = NetUtil.list(dir, new NetUtil.IsDirectoryURIFilter(dir));
             }
 
             List books = new ArrayList();
 
-            for (int i=0; i<names.length; i++)
-            {
+            for (int i = 0; i < names.length; i++) {
                 URI uri = NetUtil.lengthenURI(dir, names[i]);
                 URI propUri = NetUtil.lengthenURI(uri, "bible.properties"); //$NON-NLS-1$
 
@@ -81,19 +75,18 @@ public class SerBookDriver extends AbstractBookDriver
             }
 
             return (Book[]) books.toArray(new Book[books.size()]);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Reporter.informUser(this, ex);
             return new Book[0];
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.BookDriver#getDriverName()
      */
-    public String getDriverName()
-    {
+    public String getDriverName() {
         return "ser"; //$NON-NLS-1$
     }
 

@@ -32,17 +32,15 @@ import org.crosswire.jsword.passage.Key;
 /**
  * An implementation of TreeNode that reads from Keys and KeyLists.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class KeyTreeNode implements TreeNode
-{
+public class KeyTreeNode implements TreeNode {
     /**
      * Simple ctor
      */
-    public KeyTreeNode(Key key, TreeNode parent)
-    {
+    public KeyTreeNode(Key key, TreeNode parent) {
         this.key = key;
         this.parent = parent;
     }
@@ -50,34 +48,29 @@ public class KeyTreeNode implements TreeNode
     /* (non-Javadoc)
      * @see javax.swing.tree.TreeNode#getChildCount()
      */
-    public int getChildCount()
-    {
+    public int getChildCount() {
         return key == null ? 0 : key.getChildCount();
     }
 
     /* (non-Javadoc)
      * @see javax.swing.tree.TreeNode#getAllowsChildren()
      */
-    public boolean getAllowsChildren()
-    {
+    public boolean getAllowsChildren() {
         return key != null && key.canHaveChildren();
     }
 
     /* (non-Javadoc)
      * @see javax.swing.tree.TreeNode#isLeaf()
      */
-    public boolean isLeaf()
-    {
+    public boolean isLeaf() {
         return key == null || key.isEmpty();
     }
 
     /* (non-Javadoc)
      * @see javax.swing.tree.TreeNode#children()
      */
-    public Enumeration children()
-    {
-        if (key != null)
-        {
+    public Enumeration children() {
+        if (key != null) {
             return new IteratorEnumeration(key.iterator());
         }
         return new IteratorEnumeration(new EmptyIterator());
@@ -86,16 +79,14 @@ public class KeyTreeNode implements TreeNode
     /* (non-Javadoc)
      * @see javax.swing.tree.TreeNode#getParent()
      */
-    public TreeNode getParent()
-    {
+    public TreeNode getParent() {
         return parent;
     }
 
     /* (non-Javadoc)
      * @see javax.swing.tree.TreeNode#getChildAt(int)
      */
-    public TreeNode getChildAt(int index)
-    {
+    public TreeNode getChildAt(int index) {
         Key child = key.get(index);
         return new KeyTreeNode(child, this);
     }
@@ -103,10 +94,8 @@ public class KeyTreeNode implements TreeNode
     /* (non-Javadoc)
      * @see javax.swing.tree.TreeNode#getIndex(javax.swing.tree.TreeNode)
      */
-    public int getIndex(TreeNode node)
-    {
-        if (key != null && node instanceof KeyTreeNode)
-        {
+    public int getIndex(TreeNode node) {
+        if (key != null && node instanceof KeyTreeNode) {
             KeyTreeNode keynode = (KeyTreeNode) node;
             Key that = keynode.getKey();
 
@@ -118,8 +107,7 @@ public class KeyTreeNode implements TreeNode
     /**
      * Accessor for the key
      */
-    public Key getKey()
-    {
+    public Key getKey() {
         return key;
     }
 

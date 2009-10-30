@@ -29,39 +29,31 @@ import org.crosswire.jsword.book.Book;
 /**
  * Provides appropriate icons for books.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class BookTreeCellRenderer extends DefaultTreeCellRenderer
-{
+public class BookTreeCellRenderer extends DefaultTreeCellRenderer {
 
     /* (non-Javadoc)
      * @see javax.swing.tree.DefaultTreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int, boolean)
      */
     /* @Override */
-    public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean focus)
-    {
+    public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean focus) {
         String tooltip = null;
-        if (leaf && value instanceof BookNode)
-        {
+        if (leaf && value instanceof BookNode) {
             Object obj = ((BookNode) value).getUserObject();
-            if (obj instanceof Book)
-            {
+            if (obj instanceof Book) {
                 Book book = (Book) obj;
                 setLeafIcon(BookIcon.getIcon(book));
 
-                if (book.isQuestionable())
-                {
+                if (book.isQuestionable()) {
                     tooltip = Msg.BOOK_QUESTIONABLE.toString();
                 }
 
-                if (!book.isSupported())
-                {
+                if (!book.isSupported()) {
                     tooltip = Msg.BOOK_UNSUPPORTED.toString();
-                }
-                else if (book.isLocked())
-                {
+                } else if (book.isLocked()) {
                     tooltip = Msg.BOOK_LOCKED.toString();
                 }
             }

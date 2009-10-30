@@ -47,40 +47,35 @@ import org.jdom.output.XMLOutputter;
 /**
  * Command line mapping tool.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class CliMapper
-{
+public class CliMapper {
     /**
      * Start point
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         new CliMapper().run();
     }
 
     /**
      * Create a new Map
      */
-    public void run()
-    {
-        try
-        {
+    public void run() {
+        try {
             PrintWriter dbout = new PrintWriter(new FileOutputStream("c:\\database.csv"));
             PrintWriter xlout = new PrintWriter(new FileOutputStream("c:\\sheet.csv"));
 
             List dicts = Books.installed().getBooks(BookFilters.getOnlyBibles());
             Book book = (Book) dicts.get(0);
-            //Matcher engine = new Matcher(bible);
+            // Matcher engine = new Matcher(bible);
 
             Element links = new Element("links");
 
-            for (int b=1; b<=BibleInfo.booksInBible(); b++)
-            {
+            for (int b = 1; b <= BibleInfo.booksInBible(); b++) {
                 Element eb = new Element("book");
-                eb.setAttribute("num", ""+b);
+                eb.setAttribute("num", "" + b);
                 eb.setAttribute("name", BibleInfo.getPreferredBookName(b));
                 links.addContent(eb);
 
@@ -90,17 +85,15 @@ public class CliMapper
                 Verse end = new Verse(b, chff, vsff);
                 VerseRange range = new VerseRange(start, end);
 
-                for (int c=1; c<=BibleInfo.chaptersInBook(b); c++)
-                {
+                for (int c = 1; c <= BibleInfo.chaptersInBook(b); c++) {
                     Element ec = new Element("chapter");
-                    ec.setAttribute("num", ""+c);
+                    ec.setAttribute("num", "" + c);
                     eb.addContent(ec);
 
                     PassageTally total = new PassageTally();
                     total.setOrdering(PassageTally.ORDER_TALLY);
-                    
-                    for (int v=1; v<=BibleInfo.versesInChapter(b, c); v++)
-                    {
+
+                    for (int v = 1; v <= BibleInfo.versesInChapter(b, c); v++) {
                         Verse find = new Verse(b, c, v);
                         BookData bdata = new BookData(book, find);
                         String text = OSISUtil.getPlainText(bdata.getOsisFragment());
@@ -119,26 +112,23 @@ public class CliMapper
                     scrunchTally(total);
 
                     Iterator iter = total.iterator();
-                    while (iter.hasNext())
-                    {
+                    while (iter.hasNext()) {
                         Key key = (Key) iter.next();
                         Verse link = (Verse) key;
-                        VerseRange chap = new VerseRange(link, new Verse(link.getBook(), link.getChapter(), BibleInfo.versesInChapter(link.getBook(), link.getChapter())));
+                        VerseRange chap = new VerseRange(link, new Verse(link.getBook(), link.getChapter(), BibleInfo.versesInChapter(link.getBook(), link
+                                .getChapter())));
                         Element el = new Element("link");
-                        el.setAttribute("book", ""+link.getBook());
-                        el.setAttribute("chapter", ""+link.getChapter());
+                        el.setAttribute("book", "" + link.getBook());
+                        el.setAttribute("chapter", "" + link.getChapter());
                         el.setAttribute("name", chap.getName());
-                        el.setAttribute("rating", ""+total.getIndexOf(link));
+                        el.setAttribute("rating", "" + total.getIndexOf(link));
                         ec.addContent(el);
 
-                        dbout.println(base.getName()+","+base.getStart().getBook()+","+base.getStart().getChapter()+","
-                            +chap.getName()+","+link.getBook()+","+link.getChapter()+","
-                            +total.getIndexOf(link));
+                        dbout.println(base.getName() + "," + base.getStart().getBook() + "," + base.getStart().getChapter() + "," + chap.getName() + ","
+                                + link.getBook() + "," + link.getChapter() + "," + total.getIndexOf(link));
 
-                        for (int tb=1; tb<=BibleInfo.booksInBible(); tb++)
-                        {
-                            for (int tc=0; tc<BibleInfo.chaptersInBook(tb); tc++)
-                            {
+                        for (int tb = 1; tb <= BibleInfo.booksInBible(); tb++) {
+                            for (int tc = 0; tc < BibleInfo.chaptersInBook(tb); tc++) {
                                 Verse t = new Verse(tb, tc, 1);
                                 total.getIndexOf(t);
                             }
@@ -155,64 +145,47 @@ public class CliMapper
             XMLOutputter output = new XMLOutputter(Format.getPrettyFormat());
             output.output(doc, xmlout);
             xmlout.close();
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace(System.err);
         }
     }
 
-    public void scrunchTally(PassageTally tally) throws NoSuchVerseException
-    {
-        for (int b=1; b<=BibleInfo.booksInBible(); b++)
-        {
-            for (int c=1; c<=BibleInfo.chaptersInBook(b); c++)
-            {
+    public void scrunchTally(PassageTally tally) throws NoSuchVerseException {
+        for (int b = 1; b <= BibleInfo.booksInBible(); b++) {
+            for (int c = 1; c <= BibleInfo.chaptersInBook(b); c++) {
                 Verse start = new Verse(b, c, 1);
                 Verse end = new Verse(b, c, BibleInfo.versesInChapter(b, c));
                 VerseRange chapter = new VerseRange(start, end);
-                
+
                 int chaptotal = 0;
 
-                for (int v=1; v<=BibleInfo.versesInChapter(b, c); v++)
-                {
+                for (int v = 1; v <= BibleInfo.versesInChapter(b, c); v++) {
                     chaptotal += tally.getTallyOf(new Verse(b, c, v));
                 }
-                
+
                 tally.remove(chapter);
                 tally.add(start, chaptotal);
 
-                if (chaptotal > PassageTally.MAX_TALLY)
-                {
-                    System.out.println("truncated chaptotal: "+chaptotal);
+                if (chaptotal > PassageTally.MAX_TALLY) {
+                    System.out.println("truncated chaptotal: " + chaptotal);
                 }
             }
-        }        
+        }
     }
 
     public static final int LINKS_PER_CHAPTER = 200;
 
     /*
-    // Remove the original wherever it was
-    tally.remove(verse);
-
-    // Create the links for the tally
-    links[index] = new Link[LINKS_PER_VERSE];
-    for (int i=0; i<LINKS_PER_VERSE; i++)
-    {
-        try
-        {
-            Verse loop = tally.getVerseAt(i);
-            int strength = tally.getTallyOf(loop);
-
-            links[index][i] = new Link(loop.getOrdinal(), strength);
-        }
-        catch (ArrayIndexOutOfBoundsException ex)
-        {
-            links[index][i] = new Link(verse.getOrdinal(), 0);
-        }
-    }
-
-    return links[index];
-    */
+     * // Remove the original wherever it was tally.remove(verse);
+     * 
+     * // Create the links for the tally links[index] = new
+     * Link[LINKS_PER_VERSE]; for (int i=0; i<LINKS_PER_VERSE; i++) { try {
+     * Verse loop = tally.getVerseAt(i); int strength = tally.getTallyOf(loop);
+     * 
+     * links[index][i] = new Link(loop.getOrdinal(), strength); } catch
+     * (ArrayIndexOutOfBoundsException ex) { links[index][i] = new
+     * Link(verse.getOrdinal(), 0); } }
+     * 
+     * return links[index];
+     */
 }

@@ -30,29 +30,24 @@ import junit.framework.TestCase;
 /**
  * JUnit Test.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class CustomTokenizerTest extends TestCase
-{
-    public CustomTokenizerTest(String s)
-    {
+public class CustomTokenizerTest extends TestCase {
+    public CustomTokenizerTest(String s) {
         super(s);
     }
 
     /* @Override */
-    protected void setUp() throws Exception
-    {
+    protected void setUp() throws Exception {
     }
 
     /* @Override */
-    protected void tearDown() throws Exception
-    {
+    protected void tearDown() throws Exception {
     }
 
-    public void testGetStringArray() throws Exception
-    {
+    public void testGetStringArray() throws Exception {
         Map commands = IndexSearcher.getWordMap();
         List output = null;
 
@@ -111,7 +106,8 @@ public class CustomTokenizerTest extends TestCase
         assertEquals(it.next().getClass().getName(), "org.crosswire.jsword.book.search.parse.DefaultWord"); //$NON-NLS-1$
         assertTrue(!it.hasNext());
 
-        // This is not actually a legal search string ... however the parser should get it right
+        // This is not actually a legal search string ... however the parser
+        // should get it right
         output = CustomTokenizer.tokenize("&~5-/", commands); //$NON-NLS-1$
         assertEquals(output.get(0).getClass().getName(), "org.crosswire.jsword.book.search.parse.RetainCommandWord"); //$NON-NLS-1$
         assertEquals(output.get(1).getClass().getName(), "org.crosswire.jsword.book.search.parse.BlurCommandWord"); //$NON-NLS-1$

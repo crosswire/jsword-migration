@@ -22,7 +22,7 @@ import org.crosswire.jsword.util.Project;
  * it can be viewed. Initially it is only needed as a servlet viewer,
  * maybe one day there is scope for an editor/compiler add-in.
  *
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker
  * @version D0.I0.T0

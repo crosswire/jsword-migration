@@ -30,38 +30,35 @@ import javax.swing.border.Border;
 
 /**
  * EdgeBorder.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker
  * @author Claude Duguay Copyright (c) 1998
  */
-public class EdgeBorder implements Border, SwingConstants
-{
+public class EdgeBorder implements Border, SwingConstants {
     /**
-    * Create an EdgeBorder showing a northern border
-    */
-    public EdgeBorder()
-    {
+     * Create an EdgeBorder showing a northern border
+     */
+    public EdgeBorder() {
         this(NORTH);
     }
 
     /**
-    * Create an EdgeBorder with a selected edge
-    * @param edge The edge to display
-    */
-    public EdgeBorder(int edge)
-    {
+     * Create an EdgeBorder with a selected edge
+     * 
+     * @param edge
+     *            The edge to display
+     */
+    public EdgeBorder(int edge) {
         this.edge = edge;
     }
 
     /**
-    * Get the insets for a given component
-    */
-    public Insets getBorderInsets(Component component)
-    {
-        switch (edge)
-        {
+     * Get the insets for a given component
+     */
+    public Insets getBorderInsets(Component component) {
+        switch (edge) {
         case SOUTH:
             return new Insets(0, 0, 2, 0);
         case EAST:
@@ -74,30 +71,25 @@ public class EdgeBorder implements Border, SwingConstants
     }
 
     /**
-    * Is this border opaque
-    * @return true/false if the border if opaque
-    */
-    public boolean isBorderOpaque()
-    {
+     * Is this border opaque
+     * 
+     * @return true/false if the border if opaque
+     */
+    public boolean isBorderOpaque() {
         return true;
     }
 
     /**
-    * Actually go and paint the border
-    */
-    public void paintBorder(Component component, Graphics g, int x, int y, int w, int h)
-    {
-        if (lift == RAISED)
-        {
+     * Actually go and paint the border
+     */
+    public void paintBorder(Component component, Graphics g, int x, int y, int w, int h) {
+        if (lift == RAISED) {
             g.setColor(component.getBackground().brighter());
-        }
-        else
-        {
+        } else {
             g.setColor(component.getBackground().darker());
         }
 
-        switch (edge)
-        {
+        switch (edge) {
         case SOUTH:
             g.drawLine(x, y + h - 2, w, y + h - 2);
             break;
@@ -111,17 +103,13 @@ public class EdgeBorder implements Border, SwingConstants
             g.drawLine(x, y, x + w, y);
         }
 
-        if (lift == RAISED)
-        {
+        if (lift == RAISED) {
             g.setColor(component.getBackground().darker());
-        }
-        else
-        {
+        } else {
             g.setColor(component.getBackground().brighter());
         }
 
-        switch (edge)
-        {
+        switch (edge) {
         case SOUTH:
             g.drawLine(x, y + h - 1, w, y + h - 1);
             break;

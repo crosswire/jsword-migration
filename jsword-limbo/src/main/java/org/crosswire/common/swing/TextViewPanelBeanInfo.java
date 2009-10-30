@@ -1,4 +1,3 @@
-
 package org.crosswire.common.swing;
 
 import java.beans.BeanInfo;
@@ -10,25 +9,22 @@ import java.beans.SimpleBeanInfo;
 import org.crosswire.common.util.Logger;
 
 /**
- * BeanInfo for the TextViewer. This was mostly generate using
- * BeansExpress.
+ * BeanInfo for the TextViewer. This was mostly generate using BeansExpress.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class TextViewPanelBeanInfo extends SimpleBeanInfo
-{
+public class TextViewPanelBeanInfo extends SimpleBeanInfo {
     // DEAD(DM): This class is not used. Find a use for it or delete it.
     /**
-    * Info about the extra properties we provide
-    * @return an array of property descriptors
-    */
+     * Info about the extra properties we provide
+     * 
+     * @return an array of property descriptors
+     */
     /* @Override */
-    public PropertyDescriptor[] getPropertyDescriptors()
-    {
-        try
-        {
+    public PropertyDescriptor[] getPropertyDescriptors() {
+        try {
             // The header property
             PropertyDescriptor header = new PropertyDescriptor("header", TextViewPanel.class, "getHeader", "setHeader"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             header.setDisplayName("Header"); //$NON-NLS-1$
@@ -41,29 +37,27 @@ public class TextViewPanelBeanInfo extends SimpleBeanInfo
             text.setShortDescription("Text"); //$NON-NLS-1$
             text.setBound(true);
 
-            return new PropertyDescriptor[] { header, text, };
-        }
-        catch (IntrospectionException ex)
-        {
+            return new PropertyDescriptor[] {
+                    header, text,
+            };
+        } catch (IntrospectionException ex) {
             log.info("Failure", ex); //$NON-NLS-1$
             return null;
         }
     }
 
     /**
-    * Get additional information from the superclass, in this case JPanel
-    */
+     * Get additional information from the superclass, in this case JPanel
+     */
     /* @Override */
-    public BeanInfo[] getAdditionalBeanInfo()
-    {
+    public BeanInfo[] getAdditionalBeanInfo() {
         Class superclass = TextViewPanel.class.getSuperclass();
-        try
-        {
+        try {
             BeanInfo superBeanInfo = Introspector.getBeanInfo(superclass);
-            return new BeanInfo[] { superBeanInfo };
-        }
-        catch (IntrospectionException ex)
-        {
+            return new BeanInfo[] {
+                superBeanInfo
+            };
+        } catch (IntrospectionException ex) {
             log.info("Failure", ex); //$NON-NLS-1$
             return null;
         }

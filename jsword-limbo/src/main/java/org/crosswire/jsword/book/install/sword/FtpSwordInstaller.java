@@ -39,73 +39,78 @@ import org.crosswire.jsword.book.sword.SwordBookMetaData;
 
 /**
  * An implementation of Installer for reading data from Sword FTP sites.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class FtpSwordInstaller extends AbstractSwordInstaller implements Comparable
-{
-    /* (non-Javadoc)
+public class FtpSwordInstaller extends AbstractSwordInstaller implements Comparable {
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.install.Installer#getType()
      */
-    public String getType()
-    {
+    public String getType() {
         return "sword-ftp"; //$NON-NLS-1$
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.install.Installer#getSize(org.crosswire.jsword.book.Book)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.install.Installer#getSize(org.crosswire.jsword
+     * .book.Book)
      */
-    public int getSize(Book book)
-    {
+    public int getSize(Book book) {
         // not implemented
         return 0;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.install.Installer#getURL()
      */
     /* @Override */
-    public String getInstallerDefinition()
-    {
+    public String getInstallerDefinition() {
         return PROTOCOL_SWORD + "://" + username + ":" + password + "@" + host + packageDirectory; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.install.Installer#toRemoveURI(org.crosswire.jsword.book.BookMetaData)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.install.Installer#toRemoveURI(org.crosswire
+     * .jsword.book.BookMetaData)
      */
-    public URI toRemoteURI(Book book)
-    {
+    public URI toRemoteURI(Book book) {
         BookMetaData bmd = book.getBookMetaData();
-        if (!(bmd instanceof SwordBookMetaData))
-        {
+        if (!(bmd instanceof SwordBookMetaData)) {
             assert false;
             return null;
         }
 
         SwordBookMetaData sbmd = (SwordBookMetaData) bmd;
 
-        try
-        {
+        try {
             return new URI(NetUtil.PROTOCOL_FTP, host, packageDirectory + "/" + sbmd.getInitials() + ZIP_SUFFIX, null); //$NON-NLS-1$ 
-        }
-        catch (URISyntaxException ex)
-        {
+        } catch (URISyntaxException ex) {
             return null;
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.install.sword.AbstractSwordInstaller#download(java.lang.String, java.lang.String, java.net.URI)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.install.sword.AbstractSwordInstaller#download
+     * (java.lang.String, java.lang.String, java.net.URI)
      */
     /* @Override */
-    protected void download(Progress job, String dir, String file, URI dest) throws InstallException
-    {
+    protected void download(Progress job, String dir, String file, URI dest) throws InstallException {
         FTPClient ftp = new FTPClient();
 
-        try
-        {
+        try {
             log.info("Connecting to site=" + host + " dir=" + dir); //$NON-NLS-1$ //$NON-NLS-2$
 
             // First connect
@@ -114,10 +119,11 @@ public class FtpSwordInstaller extends AbstractSwordInstaller implements Compara
 
             log.info(ftp.getReplyString());
             int reply1 = ftp.getReplyCode();
-            if (!FTPReply.isPositiveCompletion(reply1))
-            {
+            if (!FTPReply.isPositiveCompletion(reply1)) {
                 String text1 = ftp.getReplyString();
-                throw new InstallException(FTPMsg.CONNECT_REFUSED, new Object[] { host, new Integer(reply1), text1 });
+                throw new InstallException(FTPMsg.CONNECT_REFUSED, new Object[] {
+                        host, new Integer(reply1), text1
+                });
             }
 
             // Authenticate
@@ -126,10 +132,11 @@ public class FtpSwordInstaller extends AbstractSwordInstaller implements Compara
 
             log.info(ftp.getReplyString());
             reply1 = ftp.getReplyCode();
-            if (!FTPReply.isPositiveCompletion(reply1))
-            {
+            if (!FTPReply.isPositiveCompletion(reply1)) {
                 String text2 = ftp.getReplyString();
-                throw new InstallException(FTPMsg.AUTH_REFUSED, new Object[] { username, new Integer(reply1), text2 });
+                throw new InstallException(FTPMsg.AUTH_REFUSED, new Object[] {
+                        username, new Integer(reply1), text2
+                });
             }
 
             // Change directory
@@ -138,10 +145,11 @@ public class FtpSwordInstaller extends AbstractSwordInstaller implements Compara
 
             log.info(ftp.getReplyString());
             reply1 = ftp.getReplyCode();
-            if (!FTPReply.isPositiveCompletion(reply1))
-            {
+            if (!FTPReply.isPositiveCompletion(reply1)) {
                 String text3 = ftp.getReplyString();
-                throw new InstallException(FTPMsg.CWD_REFUSED, new Object[] { dir, new Integer(reply1), text3 });
+                throw new InstallException(FTPMsg.CWD_REFUSED, new Object[] {
+                        dir, new Integer(reply1), text3
+                });
             }
 
             ftp.setFileType(FTP.BINARY_FILE_TYPE);
@@ -156,27 +164,20 @@ public class FtpSwordInstaller extends AbstractSwordInstaller implements Compara
 
             ftp.retrieveFile(file, out);
             int reply = ftp.getReplyCode();
-            if (!FTPReply.isPositiveCompletion(reply))
-            {
+            if (!FTPReply.isPositiveCompletion(reply)) {
                 String text = ftp.getReplyString();
-                throw new InstallException(FTPMsg.DOWNLOAD_REFUSED, new Object[] { FILE_LIST_GZ, new Integer(reply), text });
+                throw new InstallException(FTPMsg.DOWNLOAD_REFUSED, new Object[] {
+                        FILE_LIST_GZ, new Integer(reply), text
+                });
             }
             out.close();
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             throw new InstallException(Msg.UNKNOWN_ERROR, ex);
-        }
-        finally
-        {
-            if (ftp.isConnected())
-            {
-                try
-                {
+        } finally {
+            if (ftp.isConnected()) {
+                try {
                     ftp.disconnect();
-                }
-                catch (IOException ex2)
-                {
+                } catch (IOException ex2) {
                     log.error("disconnect error", ex2); //$NON-NLS-1$
                 }
             }
@@ -186,82 +187,78 @@ public class FtpSwordInstaller extends AbstractSwordInstaller implements Compara
     /**
      * @return Returns the password.
      */
-    public String getPassword()
-    {
+    public String getPassword() {
         return password;
     }
 
     /**
-     * @param password The password to set.
+     * @param password
+     *            The password to set.
      */
-    public void setPassword(String password)
-    {
+    public void setPassword(String password) {
         this.password = password;
     }
 
     /**
      * @return Returns the username.
      */
-    public String getUsername()
-    {
+    public String getUsername() {
         return username;
     }
 
     /**
-     * @param username The username to set.
+     * @param username
+     *            The username to set.
      */
-    public void setUsername(String username)
-    {
+    public void setUsername(String username) {
         this.username = username;
     }
 
     /**
      * Like getURL() except that we skip the password for display purposes.
+     * 
      * @see FtpSwordInstaller#getInstallerDefinition()
      * @see java.lang.Object#toString()
      */
     /* @Override */
-    public String toString()
-    {
+    public String toString() {
         return getInstallerDefinition();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     /* @Override */
-    public boolean equals(Object object)
-    {
-        if (!(object instanceof FtpSwordInstaller))
-        {
+    public boolean equals(Object object) {
+        if (!(object instanceof FtpSwordInstaller)) {
             return false;
         }
         FtpSwordInstaller that = (FtpSwordInstaller) object;
 
-        if (!super.equals(that))
-        {
+        if (!super.equals(that)) {
             return false;
         }
 
-        if (!equals(this.password, that.password))
-        {
+        if (!equals(this.password, that.password)) {
             return false;
         }
 
-        if (!equals(this.username, that.username))
-        {
+        if (!equals(this.username, that.username)) {
             return false;
         }
 
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#hashCode()
      */
     /* @Override */
-    public int hashCode()
-    {
+    public int hashCode() {
         return super.hashCode() + username.hashCode() + password.hashCode();
     }
 

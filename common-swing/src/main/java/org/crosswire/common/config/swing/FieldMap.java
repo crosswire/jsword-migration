@@ -30,69 +30,55 @@ import org.crosswire.common.util.PluginUtil;
 import org.crosswire.common.util.Reporter;
 
 /**
- * This class provides mapping between Choice types and Fields.
- * There is an argument that this class should be a properties file
- * however the practical advantages of compile time type-checking and
- * make simplicity, outweigh the possible re-use gains of a
- * properties file.
- *
- * @see gnu.lgpl.License for license details.
+ * This class provides mapping between Choice types and Fields. There is an
+ * argument that this class should be a properties file however the practical
+ * advantages of compile time type-checking and make simplicity, outweigh the
+ * possible re-use gains of a properties file.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public final class FieldMap
-{
+public final class FieldMap {
     /**
      * Prevent instantiation
      */
-    private FieldMap()
-    {
+    private FieldMap() {
     }
 
     /**
      * Get a field from a string
-     * @param type the configuration type
+     * 
+     * @param type
+     *            the configuration type
      * @return The best Field that matches
      */
-    public static Field getField(Choice type)
-    {
+    public static Field getField(Choice type) {
         Field field = null;
         Exception ex = null;
-        try
-        {
+        try {
             // We need to treat instances of MultipleChoice differently
             // because they are always OptionsFields whatever their underlying
             // type is.
-            if (type instanceof MultipleChoice)
-            {
+            if (type instanceof MultipleChoice) {
                 field = new OptionsField();
-            }
-            else
-            {
+            } else {
                 Class clazz = (Class) map.get(type.getType());
-                if (clazz != null)
-                {
+                if (clazz != null) {
                     field = (Field) clazz.newInstance();
-                }
-                else
-                {
+                } else {
                     log.warn("field type (" + type + ") unregistered."); //$NON-NLS-1$ //$NON-NLS-2$
                     field = new TextField();
                 }
             }
             field.setChoice(type);
-        }
-        catch (InstantiationException e)
-        {
+        } catch (InstantiationException e) {
             ex = e;
-        }
-        catch (IllegalAccessException e)
-        {
+        } catch (IllegalAccessException e) {
             ex = e;
         }
 
-        if (ex != null)
-        {
+        if (ex != null) {
             log.warn("field type (" + type + ") initialization failed:", ex); //$NON-NLS-1$ //$NON-NLS-2$
             Reporter.informUser(type, ex);
 
@@ -112,8 +98,7 @@ public final class FieldMap
     /**
      * Default map configuration
      */
-    static
-    {
+    static {
         map = PluginUtil.getImplementorsMap(Field.class);
     }
 

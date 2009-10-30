@@ -47,21 +47,18 @@ import org.crosswire.common.swing.MapTableModel;
 import org.crosswire.common.util.Convert;
 
 /**
- * A MapField allows editing of a Map in a JTable.
- * It allows the user to specify additional classes that extend the
- * functionality of the program.
+ * A MapField allows editing of a Map in a JTable. It allows the user to specify
+ * additional classes that extend the functionality of the program.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class MapField extends JPanel implements Field
-{
+public class MapField extends JPanel implements Field {
     /**
      * Create a PropertyHashtableField for editing Hashtables.
      */
-    public MapField()
-    {
+    public MapField() {
         tableModel = new NamedMapTableModel();
         table = new JTable(tableModel);
 
@@ -89,63 +86,67 @@ public class MapField extends JPanel implements Field
         add(buttons, BorderLayout.PAGE_END);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.config.swing.Field#setChoice(org.crosswire.common.config.Choice)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.config.swing.Field#setChoice(org.crosswire.common
+     * .config.Choice)
      */
-    public void setChoice(Choice param)
-    {
-        //superclass = ((MapChoice) param).getSuperClass();
+    public void setChoice(Choice param) {
+        // superclass = ((MapChoice) param).getSuperClass();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.config.swing.Field#getValue()
      */
-    public String getValue()
-    {
+    public String getValue() {
         return tableModel.getValue();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.config.swing.Field#setValue(java.lang.String)
      */
-    public void setValue(String value)
-    {
+    public void setValue(String value) {
         setMap(Convert.string2Hashtable(value, superclass));
     }
 
     /**
      * Set the current value using a Map
-     * @param value The new text
+     * 
+     * @param value
+     *            The new text
      */
-    public void setMap(Map value)
-    {
+    public void setMap(Map value) {
         tableModel.setMap(value);
         table.setModel(tableModel);
         table.getColumnModel().getColumn(0).setWidth(15);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.common.config.swing.Field#getComponent()
      */
-    public JComponent getComponent()
-    {
+    public JComponent getComponent() {
         return this;
     }
 
     /**
      * Pop up a dialog to allow editing of a new value
      */
-    public void doAddEntry()
-    {
+    public void doAddEntry() {
         InputPane input = new InputPane();
 
-        if (JOptionPane.showConfirmDialog(this, input, LimboMsg.NEW_CLASS.toString(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
-        {
+        if (JOptionPane.showConfirmDialog(this, input, LimboMsg.NEW_CLASS.toString(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
             String newClass = input.classField.getText();
             String newName = input.nameField.getText();
 
-            if (isValid(newClass))
-            {
+            if (isValid(newClass)) {
                 tableModel.add(newName, newClass);
             }
         }
@@ -154,19 +155,16 @@ public class MapField extends JPanel implements Field
     /**
      * Pop up a dialog to allow editing of a current value
      */
-    public void doUpdateEntry()
-    {
+    public void doUpdateEntry() {
         InputPane input = new InputPane();
         input.nameField.setText(currentKey());
         input.classField.setText(currentValue());
 
-        if (JOptionPane.showConfirmDialog(this, input, LimboMsg.EDIT_CLASS.toString(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
-        {
+        if (JOptionPane.showConfirmDialog(this, input, LimboMsg.EDIT_CLASS.toString(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
             String newClass = input.classField.getText();
             String newName = input.nameField.getText();
 
-            if (isValid(newClass))
-            {
+            if (isValid(newClass)) {
                 tableModel.update(currentKey(), newName, newClass);
             }
         }
@@ -175,35 +173,31 @@ public class MapField extends JPanel implements Field
     /**
      * Delete the current value in the Map
      */
-    public void doRemoveEntry()
-    {
+    public void doRemoveEntry() {
         tableModel.remove(currentKey());
     }
 
     /**
      * Create an instance of a class for the Map
-     * @param name The name of the class to create
+     * 
+     * @param name
+     *            The name of the class to create
      * @return The instantiated object or null if the name is not valid
      */
-    public boolean isValid(String name)
-    {
-        try
-        {
+    public boolean isValid(String name) {
+        try {
             Class clazz = Class.forName(name);
 
-            if (!superclass.isAssignableFrom(clazz))
-            {
-                throw new ClassCastException(LimboMsg.BAD_SUPERCLASS.toString(new Object[] { name, superclass }));
+            if (!superclass.isAssignableFrom(clazz)) {
+                throw new ClassCastException(LimboMsg.BAD_SUPERCLASS.toString(new Object[] {
+                        name, superclass
+                }));
             }
 
             return true;
-        }
-        catch (ClassNotFoundException ex)
-        {
+        } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(this, LimboMsg.CLASS_NOT_FOUND.toString(name));
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ExceptionPane.showExceptionDialog(this, ex);
         }
 
@@ -212,48 +206,48 @@ public class MapField extends JPanel implements Field
 
     /**
      * What is the currently selected key?
+     * 
      * @return The currently selected key
      */
-    private String currentKey()
-    {
+    private String currentKey() {
         return (String) tableModel.getValueAt(table.getSelectedRow(), 0);
     }
 
     /**
      * What is the currently selected value?
+     * 
      * @return The currently selected value
      */
-    private String currentValue()
-    {
+    private String currentValue() {
         return (String) tableModel.getValueAt(table.getSelectedRow(), 1);
     }
 
     /**
      * A MapTableModel with named columns that is not ediatble
      */
-    static class NamedMapTableModel extends MapTableModel
-    {
+    static class NamedMapTableModel extends MapTableModel {
         /**
          * 
          */
-        protected NamedMapTableModel()
-        {
+        protected NamedMapTableModel() {
             super(new Hashtable());
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see javax.swing.table.TableModel#getColumnName(int)
          */
-        public String getColumnName(int col)
-        {
+        public String getColumnName(int col) {
             return (col == 0) ? LimboMsg.NAME.toString() : LimboMsg.CLASS.toString();
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see javax.swing.table.TableModel#isCellEditable(int, int)
          */
-        public boolean isCellEditable(int row, int col)
-        {
+        public boolean isCellEditable(int row, int col) {
             return false;
         }
 
@@ -264,16 +258,13 @@ public class MapField extends JPanel implements Field
     }
 
     /**
-     * The panel for a JOptionPane that allows editing a name/class
-     * combination.
+     * The panel for a JOptionPane that allows editing a name/class combination.
      */
-    static class InputPane extends JPanel
-    {
+    static class InputPane extends JPanel {
         /**
          * 
          */
-        protected InputPane()
-        {
+        protected InputPane() {
             super(new FieldLayout(10, 10));
 
             nameField = new JTextField();

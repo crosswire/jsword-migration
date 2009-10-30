@@ -12,24 +12,24 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * The DOMDefaultHandler class implements the SAX class HandlerBase and from
- * the SAX events generated from a parse, generates a DOM XML document,
- * embedded into another.
- *
- * @see gnu.gpl.License for license details.
+ * The DOMDefaultHandler class implements the SAX class HandlerBase and from the
+ * SAX events generated from a parse, generates a DOM XML document, embedded
+ * into another.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker
  */
-public class DOMDefaultHandler extends DefaultHandler
-{
+public class DOMDefaultHandler extends DefaultHandler {
     /**
-     * Default constructor. A null base element means we assume that
-     * the document is all ours. In this case we do insert PIs into
-     * the Document. Otherwise we dont.
-     * @param base The Element in the document to start at
+     * Default constructor. A null base element means we assume that the
+     * document is all ours. In this case we do insert PIs into the Document.
+     * Otherwise we dont.
+     * 
+     * @param base
+     *            The Element in the document to start at
      */
-    public DOMDefaultHandler(Node base)
-    {
+    public DOMDefaultHandler(Node base) {
         this.doc = base.getOwnerDocument();
         this.base = base;
 
@@ -43,10 +43,8 @@ public class DOMDefaultHandler extends DefaultHandler
      * Processing instruction
      */
     /* @Override */
-    public void processingInstruction(String target, String data)
-    {
-        if (base == null)
-        {
+    public void processingInstruction(String target, String data) {
+        if (base == null) {
             doc.createProcessingInstruction(target, data);
         }
     }
@@ -55,29 +53,28 @@ public class DOMDefaultHandler extends DefaultHandler
      * Start document.
      */
     /* @Override */
-    public void startDocument()
-    {
+    public void startDocument() {
         // TODO(joe): what should I do here?
-        //out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        // out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
     }
 
-    /* (non-Javadoc)
-     * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String,
+     * java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
     /* @Override */
-    public void startElement(String uri, String name, String qName, Attributes attrs) throws SAXException
-    {
+    public void startElement(String uri, String name, String qName, Attributes attrs) throws SAXException {
         Element ele = doc.createElement(name);
         current.appendChild(ele);
 
         stack.push(current);
         current = ele;
 
-        if (attrs != null)
-        {
+        if (attrs != null) {
             int len = attrs.getLength();
-            for (int i=0; i<len; i++)
-            {
+            for (int i = 0; i < len; i++) {
                 ele.setAttribute(attrs.getLocalName(i), attrs.getValue(i));
             }
         }
@@ -87,8 +84,7 @@ public class DOMDefaultHandler extends DefaultHandler
      * Some text data
      */
     /* @Override */
-    public void characters(char[] ch, int start, int length)
-    {
+    public void characters(char[] ch, int start, int length) {
         current.appendChild(doc.createTextNode(new String(ch, start, length)));
     }
 
@@ -96,17 +92,18 @@ public class DOMDefaultHandler extends DefaultHandler
      * Ignorable whitespace
      */
     /* @Override */
-    public void ignorableWhitespace(char[] ch, int start, int length)
-    {
+    public void ignorableWhitespace(char[] ch, int start, int length) {
         current.appendChild(doc.createTextNode(new String(ch, start, length)));
     }
 
-    /* (non-Javadoc)
-     * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String,
+     * java.lang.String, java.lang.String)
      */
     /* @Override */
-    public void endElement(String uri, String localName, String qName)
-    {
+    public void endElement(String uri, String localName, String qName) {
         current = (Node) stack.pop();
     }
 
@@ -114,16 +111,14 @@ public class DOMDefaultHandler extends DefaultHandler
      * End document
      */
     /* @Override */
-    public void endDocument()
-    {
+    public void endDocument() {
     }
 
     /**
      * Warning
      */
     /* @Override */
-    public void warning(SAXParseException ex)
-    {
+    public void warning(SAXParseException ex) {
         Reporter.informUser(this, ex);
     }
 
@@ -131,8 +126,7 @@ public class DOMDefaultHandler extends DefaultHandler
      * Error
      */
     /* @Override */
-    public void error(SAXParseException ex)
-    {
+    public void error(SAXParseException ex) {
         Reporter.informUser(this, ex);
     }
 
@@ -140,64 +134,36 @@ public class DOMDefaultHandler extends DefaultHandler
      * Fatal error
      */
     /* @Override */
-    public void fatalError(SAXParseException ex) throws SAXException
-    {
+    public void fatalError(SAXParseException ex) throws SAXException {
         Reporter.informUser(this, ex);
         throw ex;
     }
 
     /*
-    * Normalizes the given string
-    *
-    private String normalize(String s)
-    {
-        StringBuffer str = new StringBuffer();
-
-        int len = (s != null) ? s.length() : 0;
-        for (int i = 0; i < len; i++)
-        {
-            char ch = s.charAt(i);
-            switch (ch)
-            {
-            case '<':
-                str.append("&lt;");
-                break;
-
-            case '>':
-                str.append("&gt;");
-                break;
-
-            case '&':
-                str.append("&amp;");
-                break;
-
-            case '"':
-                str.append("&quot;");
-                break;
-
-            case '\r':
-            case '\n':
-                if (canonical)
-                {
-                    str.append("&#");
-                    str.append(Integer.toString(ch));
-                    str.append(';');
-                }
-                else
-                {
-                    str.append(ch);
-                }
-                break;
-
-            default:
-                str.append(ch);
-            }
-        }
-
-        return str.toString();
-    }
-
-    /** The DOM Document to add to */
+     * Normalizes the given string
+     * 
+     * private String normalize(String s) { StringBuffer str = new
+     * StringBuffer();
+     * 
+     * int len = (s != null) ? s.length() : 0; for (int i = 0; i < len; i++) {
+     * char ch = s.charAt(i); switch (ch) { case '<': str.append("&lt;"); break;
+     * 
+     * case '>': str.append("&gt;"); break;
+     * 
+     * case '&': str.append("&amp;"); break;
+     * 
+     * case '"': str.append("&quot;"); break;
+     * 
+     * case '\r': case '\n': if (canonical) { str.append("&#");
+     * str.append(Integer.toString(ch)); str.append(';'); } else {
+     * str.append(ch); } break;
+     * 
+     * default: str.append(ch); } }
+     * 
+     * return str.toString(); }
+     * 
+     * /** The DOM Document to add to
+     */
     private Document doc = null;
 
     /** The Element to start adding at */

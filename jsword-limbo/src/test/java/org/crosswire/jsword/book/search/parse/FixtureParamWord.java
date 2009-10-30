@@ -29,49 +29,49 @@ import org.crosswire.jsword.passage.Key;
 /**
  * A test SearchParamWord
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker
  */
-class FixtureParamWord implements ParamWord
-{
+class FixtureParamWord implements ParamWord {
     /**
      * Setup the Passage to edit
-     * @param ref The Passage to edit
+     * 
+     * @param ref
+     *            The Passage to edit
      */
-    public FixtureParamWord(String ref)
-    {
+    public FixtureParamWord(String ref) {
         this.ref = ref;
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.parse.ParamWord#getWord(org.crosswire.jsword.book.search.parse.Searcher)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.parse.ParamWord#getWord(org.crosswire
+     * .jsword.book.search.parse.Searcher)
      */
-    public String getWord(IndexSearcher engine) throws BookException
-    {
-        throw new BookException(new MsgBase("Can't get a word from a startswith command"){}); //$NON-NLS-1$
+    public String getWord(IndexSearcher engine) throws BookException {
+        throw new BookException(new MsgBase("Can't get a word from a startswith command") {}); //$NON-NLS-1$
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.parse.ParamWord#getPassage(org.crosswire.jsword.book.search.parse.Searcher)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.parse.ParamWord#getPassage(org.crosswire
+     * .jsword.book.search.parse.Searcher)
      */
-    public Key getKeyList(IndexSearcher engine)
-    {
-        try
-        {
+    public Key getKeyList(IndexSearcher engine) {
+        try {
             Index index = engine.getIndex();
 
             return index.getKey(ref);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             assert false : ex;
-            try
-            {
+            try {
                 return engine.getIndex().find(null);
-            }
-            catch (BookException ex2)
-            {
+            } catch (BookException ex2) {
                 assert false : ex2;
                 return null;
             }

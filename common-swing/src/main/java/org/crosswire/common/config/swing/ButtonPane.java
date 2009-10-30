@@ -35,13 +35,12 @@ import org.crosswire.common.swing.EdgeBorder;
 
 /**
  * A pane that contains ok, cancel and apply buttons.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ButtonPane extends JPanel
-{
+public class ButtonPane extends JPanel {
     private static final String OK = "OK"; //$NON-NLS-1$
     private static final String CANCEL = "Cancel"; //$NON-NLS-1$
     private static final String APPLY = "Apply"; //$NON-NLS-1$
@@ -49,8 +48,7 @@ public class ButtonPane extends JPanel
     /**
      * Simple ctor
      */
-    public ButtonPane(ButtonPaneListener li)
-    {
+    public ButtonPane(ButtonPaneListener li) {
         this.li = li;
         init();
     }
@@ -58,14 +56,13 @@ public class ButtonPane extends JPanel
     /**
      * GUI init.
      */
-    private void init()
-    {
+    private void init() {
         actions = new ActionFactory(ButtonPane.class, this);
 
         // PENDING: find some way to do default buttons
-        //dialog.getRootPane().setDefaultButton(ok);
+        // dialog.getRootPane().setDefaultButton(ok);
 
-         // A panel so we can right justify
+        // A panel so we can right justify
         JPanel buttons = new JPanel();
 
         buttons.setLayout(new GridLayout(1, 2, 10, 10));
@@ -81,28 +78,28 @@ public class ButtonPane extends JPanel
 
     /**
      * Do the OK action
+     * 
      * @param ev
      */
-    public void doOK(ActionEvent ev)
-    {
+    public void doOK(ActionEvent ev) {
         li.okPressed(ev);
     }
 
     /**
      * Do the Cancel action
+     * 
      * @param ev
      */
-    public void doCancel(ActionEvent ev)
-    {
+    public void doCancel(ActionEvent ev) {
         li.cancelPressed(ev);
     }
 
     /**
      * Do the Apply action
+     * 
      * @param ev
      */
-    public void doApply(ActionEvent ev)
-    {
+    public void doApply(ActionEvent ev) {
         li.applyPressed(ev);
     }
 

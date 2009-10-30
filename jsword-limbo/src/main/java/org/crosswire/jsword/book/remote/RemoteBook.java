@@ -44,21 +44,20 @@ import org.xml.sax.SAXException;
 
 /**
  * A Biblical source that comes from some form of remoting code.
- * <p>LATER(joe): Currently this will not work for non Passage based Keys.
+ * <p>
+ * LATER(joe): Currently this will not work for non Passage based Keys.
  * 
  * The remoting mechanism is defined by an implementation of RemoteBibleDriver.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class RemoteBook extends AbstractBook
-{
+public class RemoteBook extends AbstractBook {
     /**
      * Basic constructor for a SerBook
      */
-    public RemoteBook(Remoter remoter, RemoteBookDriver driver, String name, BookCategory type)
-    {
+    public RemoteBook(Remoter remoter, RemoteBookDriver driver, String name, BookCategory type) {
         super(new DefaultBookMetaData(driver, name, type));
 
         this.remoter = remoter;
@@ -67,13 +66,15 @@ public class RemoteBook extends AbstractBook
         log.debug("Started RemoteBook"); //$NON-NLS-1$
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.Book#getOsisIterator(org.crosswire.jsword.passage.Key, boolean)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.Book#getOsisIterator(org.crosswire.jsword.passage
+     * .Key, boolean)
      */
-    public Iterator getOsisIterator(Key key, boolean allowEmpty) throws BookException
-    {
-        try
-        {
+    public Iterator getOsisIterator(Key key, boolean allowEmpty) throws BookException {
+        try {
             Passage ref = KeyUtil.getPassage(key);
 
             RemoteMethod method = new RemoteMethod(MethodName.GETDATA);
@@ -88,119 +89,126 @@ public class RemoteBook extends AbstractBook
             List content = new ArrayList();
             content.add(handler.getDocument().getRootElement());
             return content.iterator();
-        }
-        catch (RemoterException ex)
-        {
+        } catch (RemoterException ex) {
             throw new BookException(Msg.REMOTE_FAIL, ex);
-        }
-        catch (SAXException ex)
-        {
+        } catch (SAXException ex) {
             throw new BookException(Msg.REMOTE_FAIL, ex);
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.Book#contains(org.crosswire.jsword.passage.Key)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.Book#contains(org.crosswire.jsword.passage.Key)
      */
-    public boolean contains(Key key)
-    {
+    public boolean contains(Key key) {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.Book#getRawText(org.crosswire.jsword.passage.Key)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.Book#getRawText(org.crosswire.jsword.passage
+     * .Key)
      */
-    public String getRawText(Key key) throws BookException
-    {
+    public String getRawText(Key key) throws BookException {
         StringBuffer buffer = new StringBuffer();
         return buffer.toString();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.Book#isWritable()
      */
-    public boolean isWritable()
-    {
+    public boolean isWritable() {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.basic.AbstractPassageBook#setRawText(org.crosswire.jsword.passage.Key, java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.basic.AbstractPassageBook#setRawText(org.crosswire
+     * .jsword.passage.Key, java.lang.String)
      */
-    public void setRawText(Key key, String rawData) throws BookException
-    {
+    public void setRawText(Key key, String rawData) throws BookException {
         throw new BookException(Msg.DRIVER_READONLY);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.Book#setAliasKey(org.crosswire.jsword.passage.Key, org.crosswire.jsword.passage.Key)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.Book#setAliasKey(org.crosswire.jsword.passage
+     * .Key, org.crosswire.jsword.passage.Key)
      */
-    public void setAliasKey(Key alias, Key source) throws BookException
-    {
+    public void setAliasKey(Key alias, Key source) throws BookException {
         throw new BookException(Msg.DRIVER_READONLY);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.Bible#findPassage(org.crosswire.jsword.book.Search)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.Bible#findPassage(org.crosswire.jsword.book
+     * .Search)
      */
     /* @Override */
-    public Key find(String search) throws BookException
-    {
-        try
-        {
+    public Key find(String search) throws BookException {
+        try {
             RemoteMethod method = new RemoteMethod(MethodName.FINDPASSAGE);
             method.addParam(ParamName.PARAM_BIBLE, driver.getID(getBookMetaData()));
             method.addParam(ParamName.PARAM_FINDSTRING, search);
             Document doc = remoter.execute(method);
 
             return Converter.convertDocumentToKeyList(doc, this);
-        }
-        catch (ConverterException ex)
-        {
+        } catch (ConverterException ex) {
             throw new BookException(Msg.PARSE_FAIL, ex);
-        }
-        catch (RemoterException ex)
-        {
+        } catch (RemoterException ex) {
             throw new BookException(Msg.REMOTE_FAIL, ex);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.passage.KeyFactory#getGlobalKeyList()
      */
-    public final Key getGlobalKeyList()
-    {
+    public final Key getGlobalKeyList() {
         return keyf.getGlobalKeyList();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.passage.KeyFactory#isValidKey(java.lang.String)
      */
-    public Key getValidKey(String name)
-    {
-        try
-        {
+    public Key getValidKey(String name) {
+        try {
             return getKey(name);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return createEmptyKeyList();
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.passage.KeyFactory#getKey(java.lang.String)
      */
-    public final Key getKey(String text) throws NoSuchKeyException
-    {
+    public final Key getKey(String text) throws NoSuchKeyException {
         return keyf.getKey(text);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.passage.KeyFactory#getEmptyKeyList()
      */
-    public Key createEmptyKeyList()
-    {
+    public Key createEmptyKeyList() {
         return keyf.createEmptyKeyList();
     }
 

@@ -41,15 +41,13 @@ import org.crosswire.jsword.versification.BookName;
 /**
  * A set of correctly constructed and linked BibleComboBoxModels.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class BibleComboBoxModelSet implements Serializable
-{
-    public BibleComboBoxModelSet(JComboBox books, JComboBox chapters, JComboBox verses)
-    {
+public class BibleComboBoxModelSet implements Serializable {
+    public BibleComboBoxModelSet(JComboBox books, JComboBox chapters, JComboBox verses) {
         listeners = new EventListenerList();
         cil = new CustomItemListener();
 
@@ -59,8 +57,7 @@ public class BibleComboBoxModelSet implements Serializable
         mdlChapter = new BibleComboBoxModel(this, BibleComboBoxModel.LEVEL_CHAPTER);
         setChapterComboBox(chapters);
 
-        if (verses != null)
-        {
+        if (verses != null) {
             mdlVerse = new BibleComboBoxModel(this, BibleComboBoxModel.LEVEL_VERSE);
             setVerseComboBox(verses);
         }
@@ -69,20 +66,16 @@ public class BibleComboBoxModelSet implements Serializable
     /**
      * The book combo box
      */
-    public final void setBookComboBox(JComboBox cboBook)
-    {
+    public final void setBookComboBox(JComboBox cboBook) {
         this.cboBook = cboBook;
 
         cboBook.setModel(mdlBook);
         cboBook.addItemListener(cil);
         cboBook.setRenderer(new BibleNameCellRenderer(true));
 
-        try
-        {
+        try {
             cboBook.setToolTipText(BibleInfo.getLongBookName(verse.getBook()));
-        }
-        catch (NoSuchVerseException ex)
-        {
+        } catch (NoSuchVerseException ex) {
             assert false : ex;
         }
     }
@@ -90,8 +83,7 @@ public class BibleComboBoxModelSet implements Serializable
     /**
      * The chapter combo box
      */
-    public final void setChapterComboBox(JComboBox cboChapter)
-    {
+    public final void setChapterComboBox(JComboBox cboChapter) {
         this.cboChapter = cboChapter;
 
         cboChapter.setModel(mdlChapter);
@@ -104,8 +96,7 @@ public class BibleComboBoxModelSet implements Serializable
     /**
      * The verse combo box
      */
-    public final void setVerseComboBox(JComboBox cboVerse)
-    {
+    public final void setVerseComboBox(JComboBox cboVerse) {
         this.cboVerse = cboVerse;
 
         cboVerse.setModel(mdlVerse);
@@ -118,94 +109,83 @@ public class BibleComboBoxModelSet implements Serializable
     /**
      * @return Verse
      */
-    public Verse getVerse()
-    {
+    public Verse getVerse() {
         return verse;
     }
 
     /**
      * Set the combo-boxes to a new verse
      */
-    public void setVerse(Verse newverse)
-    {
-        if (verse.equals(newverse))
-        {
+    public void setVerse(Verse newverse) {
+        if (verse.equals(newverse)) {
             return;
         }
 
-        try
-        {
+        try {
             Verse oldverse = verse;
             verse = newverse;
             int bookval = newverse.getBook();
             BookName bookName = BibleInfo.getBookName(bookval);
-            if (oldverse.getBook() != bookval || !cboBook.getSelectedItem().equals(bookName))
-            {
+            if (oldverse.getBook() != bookval || !cboBook.getSelectedItem().equals(bookName)) {
                 cboBook.setSelectedItem(bookName);
                 cboBook.setToolTipText(bookName.getLongName());
             }
 
             int chapterval = newverse.getChapter();
             Integer chapternum = new Integer(chapterval);
-            if (oldverse.getChapter() != chapterval || !cboChapter.getSelectedItem().equals(chapternum))
-            {
+            if (oldverse.getChapter() != chapterval || !cboChapter.getSelectedItem().equals(chapternum)) {
                 cboChapter.setSelectedItem(chapternum);
             }
 
-            if (cboVerse != null)
-            {
+            if (cboVerse != null) {
                 int verseval = newverse.getVerse();
                 Integer versenum = new Integer(verseval);
-                if (oldverse.getVerse() != verseval || !cboVerse.getSelectedItem().equals(versenum))
-                {
+                if (oldverse.getVerse() != verseval || !cboVerse.getSelectedItem().equals(versenum)) {
                     cboVerse.setSelectedItem(versenum);
                 }
             }
 
             fireContentsChanged();
-        }
-        catch (NoSuchVerseException ex)
-        {
+        } catch (NoSuchVerseException ex) {
             assert false : ex;
         }
     }
 
     /**
-     * Add a listener to the list that's notified each time a change
-     * to the data model occurs.
-     * @param li the ListDataListener
+     * Add a listener to the list that's notified each time a change to the data
+     * model occurs.
+     * 
+     * @param li
+     *            the ListDataListener
      */
-    public void addActionListener(ActionListener li)
-    {
+    public void addActionListener(ActionListener li) {
         listeners.add(ActionListener.class, li);
     }
 
     /**
-     * Remove a listener from the list that's notified each time a 
-     * change to the data model occurs.
-     * @param li the ListDataListener
+     * Remove a listener from the list that's notified each time a change to the
+     * data model occurs.
+     * 
+     * @param li
+     *            the ListDataListener
      */
-    public void removeActionListener(ActionListener li)
-    {
+    public void removeActionListener(ActionListener li) {
         listeners.remove(ActionListener.class, li);
     }
 
     /**
      * Called after the verse changes.
+     * 
      * @see EventListenerList
      * @see javax.swing.DefaultListModel
      */
-    protected void fireContentsChanged()
-    {
+    protected void fireContentsChanged() {
         Object[] liarray = listeners.getListenerList();
         ActionEvent ev = null;
 
-        for (int i = liarray.length - 2; i >= 0; i -= 2)
-        {
-            if (liarray[i] == ActionListener.class)
-            {
-                if (ev == null)
-                {
+        for (int i = liarray.length - 2; i >= 0; i -= 2) {
+            if (liarray[i] == ActionListener.class) {
+                if (ev == null) {
                     ev = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, verse.getName());
                 }
 
@@ -221,8 +201,7 @@ public class BibleComboBoxModelSet implements Serializable
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         cil = new CustomItemListener();
         is.defaultReadObject();
     }
@@ -230,23 +209,19 @@ public class BibleComboBoxModelSet implements Serializable
     /**
      * For when a selection is made
      */
-    final class CustomItemListener implements ItemListener
-    {
+    final class CustomItemListener implements ItemListener {
 
-        public void itemStateChanged(ItemEvent ev)
-        {
-            if (ev.getStateChange() == ItemEvent.SELECTED)
-            {
-                // If the book changes we need to change both the chapter and verse list
+        public void itemStateChanged(ItemEvent ev) {
+            if (ev.getStateChange() == ItemEvent.SELECTED) {
+                // If the book changes we need to change both the chapter and
+                // verse list
                 // If the chapter changes we need to change the verse list
                 Object source = ev.getSource();
-                if (source.equals(cboBook))
-                {
+                if (source.equals(cboBook)) {
                     mdlChapter.fireContentsChanged(this, 0, mdlChapter.getSize());
                 }
 
-                if (mdlVerse != null && (source.equals(cboBook) || source.equals(cboChapter)))
-                {
+                if (mdlVerse != null && (source.equals(cboBook) || source.equals(cboChapter))) {
                     mdlVerse.fireContentsChanged(this, 0, mdlVerse.getSize());
                 }
             }

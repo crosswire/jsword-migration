@@ -45,65 +45,56 @@ import org.crosswire.common.util.StringUtil;
 /**
  * Various Menu creation utilities.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class MenuUtil
-{
+public class MenuUtil {
     /**
-     * Create the menubar for the app.  By default this pulls the
-     * definition of the menu from the associated resource file.
+     * Create the menubar for the app. By default this pulls the definition of
+     * the menu from the associated resource file.
      */
-    public static void setResourceBundle(ResourceBundle resource)
-    {
+    public static void setResourceBundle(ResourceBundle resource) {
         MenuUtil.resource = resource;
     }
 
     /**
      *
      */
-    public static void addActions(Action[] actions)
-    {
-        for (int i=0; i<actions.length; i++)
-        {
+    public static void addActions(Action[] actions) {
+        for (int i = 0; i < actions.length; i++) {
             commands.put(actions[i].getValue(Action.NAME), actions[i]);
         }
     }
 
     /**
-     * Create the menubar for the app.  By default this pulls the
-     * definition of the menu from the associated resource file.
+     * Create the menubar for the app. By default this pulls the definition of
+     * the menu from the associated resource file.
      */
-    public static JMenuBar createMenubar()
-    {
+    public static JMenuBar createMenubar() {
         JMenuBar menubar = new JMenuBar();
 
         String[] menu_names = StringUtil.split(getResourceString("menubar")); //$NON-NLS-1$
-        for (int i=0; i<menu_names.length; i++)
-        {
+        for (int i = 0; i < menu_names.length; i++) {
             JMenu menu = createMenu(menu_names[i]);
-            if (menu != null) menubar.add(menu);
+            if (menu != null)
+                menubar.add(menu);
         }
         return menubar;
     }
 
     /**
-     * Create a menu for the app.  By default this pulls the
-     * definition of the menu from the associated resource file.
+     * Create a menu for the app. By default this pulls the definition of the
+     * menu from the associated resource file.
      */
-    public static JMenu createMenu(String name)
-    {
+    public static JMenu createMenu(String name) {
         String[] item_names = StringUtil.split(getResourceString(name));
-        JMenu menu = new JMenu(getResourceString(name+SUFFIX_LABEL));
-        for (int i=0; i<item_names.length; i++)
-        {
+        JMenu menu = new JMenu(getResourceString(name + SUFFIX_LABEL));
+        for (int i = 0; i < item_names.length; i++) {
             if (item_names[i].equals("-")) //$NON-NLS-1$
             {
                 menu.addSeparator();
-            }
-            else
-            {
+            } else {
                 JMenuItem menuitem = createMenuItem(item_names[i]);
                 menu.add(menuitem);
             }
@@ -112,73 +103,63 @@ public class MenuUtil
     }
 
     /**
-     * This is the hook through which all menu items are
-     * created.  It registers the result with the menuitem
-     * hashtable so that it can be fetched with getMenuItem().
+     * This is the hook through which all menu items are created. It registers
+     * the result with the menuitem hashtable so that it can be fetched with
+     * getMenuItem().
      */
-    protected static JMenuItem createMenuItem(String name)
-    {
-        JMenuItem menuitem = new JMenuItem(getResourceString(name+SUFFIX_LABEL));
-        URL url = getResource(name+SUFFIX_IMAGE);
-        if (url != null)
-        {
+    protected static JMenuItem createMenuItem(String name) {
+        JMenuItem menuitem = new JMenuItem(getResourceString(name + SUFFIX_LABEL));
+        URL url = getResource(name + SUFFIX_IMAGE);
+        if (url != null) {
             menuitem.setHorizontalTextPosition(SwingConstants.TRAILING);
             menuitem.setIcon(new ImageIcon(url));
         }
-        String action_name = getResourceString(name+SUFFIX_ACTIOIN);
-        if (action_name == null) action_name = name;
+        String action_name = getResourceString(name + SUFFIX_ACTIOIN);
+        if (action_name == null)
+            action_name = name;
         menuitem.setActionCommand(action_name);
         Action action = getAction(action_name);
-        if (action != null)
-        {
+        if (action != null) {
             menuitem.addActionListener(action);
             action.addPropertyChangeListener(createActionChangeListener(menuitem));
             menuitem.setEnabled(action.isEnabled());
-        }
-        else
-        {
+        } else {
             menuitem.setEnabled(false);
         }
         menuitems.put(name, menuitem);
         return menuitem;
     }
-    
+
     /**
      *
      */
-    protected static Action getAction(String cmd)
-    {
+    protected static Action getAction(String cmd) {
         return (Action) commands.get(cmd);
     }
 
     /**
-     * Fetch the menu item that was created for the given
-     * command.
-     * @param cmd  Name of the action.
-     * @return item created for the given command or null
-     *  if one wasn't created.
+     * Fetch the menu item that was created for the given command.
+     * 
+     * @param cmd
+     *            Name of the action.
+     * @return item created for the given command or null if one wasn't created.
      */
-    protected JMenuItem getMenuItem(String cmd)
-    {
+    protected JMenuItem getMenuItem(String cmd) {
         return (JMenuItem) menuitems.get(cmd);
     }
 
     /**
-     * Create the toolbar.  By default this reads the
-     * resource file for the definition of the toolbar.
+     * Create the toolbar. By default this reads the resource file for the
+     * definition of the toolbar.
      */
-    public static Component createToolbar()
-    {
+    public static Component createToolbar() {
         JToolBar toolbar = new JToolBar();
         String[] toolKeys = StringUtil.split(getResourceString("toolbar")); //$NON-NLS-1$
-        for (int i = 0; i < toolKeys.length; i++)
-        {
+        for (int i = 0; i < toolKeys.length; i++) {
             if (toolKeys[i].equals("-")) //$NON-NLS-1$
             {
                 toolbar.add(Box.createHorizontalStrut(5));
-            }
-            else
-            {
+            } else {
                 toolbar.add(createTool(toolKeys[i]));
             }
         }
@@ -189,73 +170,64 @@ public class MenuUtil
     /**
      * Hook through which every toolbar item is created.
      */
-    protected static Component createTool(String key)
-    {
+    protected static Component createTool(String key) {
         return createToolbarButton(key);
     }
 
     /**
-     * Create a button to go inside of the toolbar.  By default this
-     * will load an image resource.  The image filename is relative to
-     * the classpath (including the '.' directory if its a part of the
-     * classpath), and may either be in a JAR file or a separate file.
-     *
-     * @param key The key in the resource file to serve as the basis
-     *  of lookups.
+     * Create a button to go inside of the toolbar. By default this will load an
+     * image resource. The image filename is relative to the classpath
+     * (including the '.' directory if its a part of the classpath), and may
+     * either be in a JAR file or a separate file.
+     * 
+     * @param key
+     *            The key in the resource file to serve as the basis of lookups.
      */
-    protected static JButton createToolbarButton(String key)
-    {
+    protected static JButton createToolbarButton(String key) {
         URL url = getResource(key + SUFFIX_IMAGE);
-        JButton button = new JButton(new ImageIcon(url)
-        {
-//			public float getAlignmentY()
-//            {
-//                return 0.5f;
-//            }
+        JButton button = new JButton(new ImageIcon(url) {
+            // public float getAlignmentY()
+            // {
+            // return 0.5f;
+            // }
             private static final long serialVersionUID = 3256726182224539701L;
         });
         button.setRequestFocusEnabled(false);
         button.setMargin(new Insets(1, 1, 1, 1));
 
         String astr = getResourceString(key + SUFFIX_ACTIOIN);
-        if (astr == null) astr = key;
+        if (astr == null)
+            astr = key;
         Action a = getAction(astr);
-        if (a != null)
-        {
+        if (a != null) {
             button.setActionCommand(astr);
             button.addActionListener(a);
-        }
-        else
-        {
+        } else {
             button.setEnabled(false);
         }
 
         String tip = getResourceString(key + SUFFIX_TIP);
-        if (tip != null) button.setToolTipText(tip);
+        if (tip != null)
+            button.setToolTipText(tip);
 
         return button;
     }
 
     /**
-     * Yarked from JMenu, ideally this would be public.
-     * see JMenu#createActionChangeListener(javax.swing.JMenuItem)
+     * Yarked from JMenu, ideally this would be public. see
+     * JMenu#createActionChangeListener(javax.swing.JMenuItem)
      */
-    protected static PropertyChangeListener createActionChangeListener(JMenuItem b)
-    {
+    protected static PropertyChangeListener createActionChangeListener(JMenuItem b) {
         return new ActionChangedListener(b);
     }
 
     /**
      * Get a string from a resource bundle
      */
-    protected static String getResourceString(String name)
-    {
-        try
-        {
+    protected static String getResourceString(String name) {
+        try {
             return resource.getString(name);
-        }
-        catch (MissingResourceException ex)
-        {
+        } catch (MissingResourceException ex) {
             return null;
         }
     }
@@ -263,42 +235,41 @@ public class MenuUtil
     /**
      * Get a URL from a resource bundle
      */
-    protected static URL getResource(String key)
-    {
+    protected static URL getResource(String key) {
         String name = getResourceString(key);
-        if (name == null) return null;
+        if (name == null)
+            return null;
 
         return resource.getClass().getResource(name);
     }
 
     /**
      * Yarked from JMenu, ideally this would be public.
+     * 
      * @see JMenu
      */
-    private static class ActionChangedListener implements PropertyChangeListener
-    {
+    private static class ActionChangedListener implements PropertyChangeListener {
         /**
          * Ctor
          */
-        protected ActionChangedListener(JMenuItem mi)
-        {
+        protected ActionChangedListener(JMenuItem mi) {
             super();
             this.menuItem = mi;
         }
 
-        /* (non-Javadoc)
-         * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+        /*
+         * (non-Javadoc)
+         * 
+         * @seejava.beans.PropertyChangeListener#propertyChange(java.beans.
+         * PropertyChangeEvent)
          */
-        public void propertyChange(PropertyChangeEvent ev)
-        {
+        public void propertyChange(PropertyChangeEvent ev) {
             String propertyName = ev.getPropertyName();
 
-            if (ev.getPropertyName().equals(Action.NAME))
-            {
+            if (ev.getPropertyName().equals(Action.NAME)) {
                 String text = (String) ev.getNewValue();
                 menuItem.setText(text);
-            }
-            else if (propertyName.equals("enabled")) //$NON-NLS-1$
+            } else if (propertyName.equals("enabled")) //$NON-NLS-1$
             {
                 Boolean enabled = (Boolean) ev.getNewValue();
                 menuItem.setEnabled(enabled.booleanValue());
@@ -309,26 +280,22 @@ public class MenuUtil
     }
 
     /**
-     * Suffix applied to the key used in resource file
-     * lookups for an image.
+     * Suffix applied to the key used in resource file lookups for an image.
      */
     public static final String SUFFIX_IMAGE = "Image"; //$NON-NLS-1$
 
     /**
-     * Suffix applied to the key used in resource file
-     * lookups for a label.
+     * Suffix applied to the key used in resource file lookups for a label.
      */
     public static final String SUFFIX_LABEL = "Label"; //$NON-NLS-1$
 
     /**
-     * Suffix applied to the key used in resource file
-     * lookups for an action.
+     * Suffix applied to the key used in resource file lookups for an action.
      */
     public static final String SUFFIX_ACTIOIN = "Action"; //$NON-NLS-1$
 
     /**
-     * Suffix applied to the key used in resource file
-     * lookups for tooltip text.
+     * Suffix applied to the key used in resource file lookups for tooltip text.
      */
     public static final String SUFFIX_TIP = "Tooltip"; //$NON-NLS-1$
 

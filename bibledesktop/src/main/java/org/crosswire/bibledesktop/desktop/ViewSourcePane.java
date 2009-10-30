@@ -66,32 +66,26 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
 /**
- * ViewSourcePane allow viewing of some text in its own standalone frame.
- * The text to be viewed can be grabbed from a String, a URI, or a file.
- *
- * @see gnu.gpl.License for license details.
+ * ViewSourcePane allow viewing of some text in its own standalone frame. The
+ * text to be viewed can be grabbed from a String, a URI, or a file.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class ViewSourcePane extends JPanel
-{
-    public ViewSourcePane(Book[] books, Key key)
-    {
-        try
-        {
+public class ViewSourcePane extends JPanel {
+    public ViewSourcePane(Book[] books, Key key) {
+        try {
             StringBuffer buf = new StringBuffer();
 
             Iterator iter = key.iterator();
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 Key currentKey = (Key) iter.next();
                 String osisID = currentKey.getOsisID();
-                for (int i = 0; i < books.length; i++)
-                {
+                for (int i = 0; i < books.length; i++) {
                     Book book = books[i];
-                    if (buf.length() > 0)
-                    {
+                    if (buf.length() > 0) {
                         buf.append('\n');
                     }
                     buf.append(book.getInitials());
@@ -113,7 +107,8 @@ public class ViewSourcePane extends JPanel
             SAXEventProvider osissep = bdata.getSAXEventProvider();
 
             // This really looks nice but its performance was terrible.
-//            ContentHandler osis = new HTMLSerializingContentHandler(FormatType.CLASSIC_INDENT);
+            // ContentHandler osis = new
+            // HTMLSerializingContentHandler(FormatType.CLASSIC_INDENT);
             ContentHandler osis = new PrettySerializingContentHandler(FormatType.CLASSIC_INDENT);
             osissep.provideSAXEvents(osis);
 
@@ -124,12 +119,9 @@ public class ViewSourcePane extends JPanel
             URI loc = bmd.getLocation();
             XSLTProperty.BASE_URL.setState(loc == null ? "" : loc.getPath()); //$NON-NLS-1$
 
-            if (bmd.getBookCategory() == BookCategory.BIBLE)
-            {
+            if (bmd.getBookCategory() == BookCategory.BIBLE) {
                 XSLTProperty.setProperties(htmlsep);
-            }
-            else
-            {
+            } else {
                 XSLTProperty.CSS.setProperty(htmlsep);
                 XSLTProperty.BASE_URL.setProperty(htmlsep);
                 XSLTProperty.DIRECTION.setProperty(htmlsep);
@@ -138,22 +130,17 @@ public class ViewSourcePane extends JPanel
             htmlsep.setParameter(XSLTProperty.FONT.getName(), fontSpec);
 
             // This really looks nice but its performance was terrible.
-//            ContentHandler html = new HTMLSerializingContentHandler(FormatType.CLASSIC_INDENT);
+            // ContentHandler html = new
+            // HTMLSerializingContentHandler(FormatType.CLASSIC_INDENT);
             ContentHandler html = new PrettySerializingContentHandler(FormatType.CLASSIC_INDENT);
             htmlsep.provideSAXEvents(html);
 
             init(buf.toString(), osis.toString(), html.toString());
-        }
-        catch (SAXException e)
-        {
+        } catch (SAXException e) {
             Reporter.informUser(null, e);
-        }
-        catch (TransformerException e)
-        {
+        } catch (TransformerException e) {
             Reporter.informUser(null, e);
-        }
-        catch (BookException e)
-        {
+        } catch (BookException e) {
             Reporter.informUser(null, e);
         }
     }
@@ -161,8 +148,7 @@ public class ViewSourcePane extends JPanel
     /**
      * Actually create the GUI
      */
-    private void init(String orig, String osis, String html)
-    {
+    private void init(String orig, String osis, String html) {
         actions = new ActionFactory(ViewSourcePane.class, this);
 
         Font userRequestedFont = ConfigurableSwingConverter.toFont();
@@ -178,12 +164,12 @@ public class ViewSourcePane extends JPanel
         pnlOrig.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         // This really looks nice but its performance was terrible.
-//        JTextPane txtOsis = new AntiAliasedTextPane();
-//        txtOsis.setFont(userRequestedFont);
-//        txtOsis.setEditable(false);
-//        txtOsis.setEditorKit(new HTMLEditorKit());
-//        txtOsis.setText(osis);
-//        txtOsis.setCaretPosition(0);
+        // JTextPane txtOsis = new AntiAliasedTextPane();
+        // txtOsis.setFont(userRequestedFont);
+        // txtOsis.setEditable(false);
+        // txtOsis.setEditorKit(new HTMLEditorKit());
+        // txtOsis.setText(osis);
+        // txtOsis.setCaretPosition(0);
         JTextArea txtOsis = new JTextArea(osis, 24, 80);
         txtOsis.setFont(userRequestedFont);
         txtOsis.setLineWrap(true);
@@ -195,12 +181,12 @@ public class ViewSourcePane extends JPanel
         pnlOsis.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         // This really looks nice but its performance was terrible.
-//        JTextPane txtHtml = new AntiAliasedTextPane();
-//        txtHtml.setFont(userRequestedFont);
-//        txtHtml.setEditable(false);
-//        txtHtml.setEditorKit(new HTMLEditorKit());
-//        txtHtml.setText(html);
-//        txtHtml.setCaretPosition(0);
+        // JTextPane txtHtml = new AntiAliasedTextPane();
+        // txtHtml.setFont(userRequestedFont);
+        // txtHtml.setEditable(false);
+        // txtHtml.setEditorKit(new HTMLEditorKit());
+        // txtHtml.setText(html);
+        // txtHtml.setCaretPosition(0);
         JTextArea txtHtml = new JTextArea(html, 24, 80);
         txtHtml.setFont(userRequestedFont);
         txtHtml.setLineWrap(true);
@@ -211,7 +197,9 @@ public class ViewSourcePane extends JPanel
         pnlHtml.add(new CWScrollPane(txtHtml), BorderLayout.CENTER);
         pnlHtml.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        textAreas = new JTextComponent[] { txtOrig, txtOsis, txtHtml };
+        textAreas = new JTextComponent[] {
+                txtOrig, txtOsis, txtHtml
+        };
 
         pnlButtons = new JPanel(new FlowLayout(FlowLayout.TRAILING));
         pnlButtons.add(new JButton(actions.getAction("SourceClip")), null); //$NON-NLS-1$
@@ -230,8 +218,7 @@ public class ViewSourcePane extends JPanel
     /**
      * Display this Panel in a new JFrame
      */
-    public void showInFrame(Frame parent)
-    {
+    public void showInFrame(Frame parent) {
         frame = new JDialog(parent, Msg.TEXT_VIEWER.toString());
 
         pnlButtons.add(new JButton(actions.getAction("SourceOK")), null); //$NON-NLS-1$
@@ -250,8 +237,7 @@ public class ViewSourcePane extends JPanel
     /**
      * Copy the current text into the system clipboard
      */
-    public void doSourceClip()
-    {
+    public void doSourceClip() {
         int i = tabMain.getSelectedIndex();
         JTextComponent tc = textAreas[i];
         StringSelection ss = new StringSelection(tc.getText());
@@ -261,8 +247,7 @@ public class ViewSourcePane extends JPanel
     /**
      *
      */
-    public void doSourceOK()
-    {
+    public void doSourceOK() {
         frame.setVisible(false);
         frame.dispose();
     }
@@ -274,8 +259,7 @@ public class ViewSourcePane extends JPanel
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         actions = new ActionFactory(ViewSourcePane.class, this);
         is.defaultReadObject();
     }
@@ -284,7 +268,7 @@ public class ViewSourcePane extends JPanel
      * GUI Components
      */
     private JTabbedPane tabMain;
-    private JTextComponent [] textAreas;
+    private JTextComponent[] textAreas;
     private JPanel pnlButtons;
     private JDialog frame;
     private transient ActionFactory actions;

@@ -23,7 +23,7 @@ import org.crosswire.jsword.util.Project;
  * A Simple pane that contains the Apache Java web server for testing
  * purposes
  *
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker
  */

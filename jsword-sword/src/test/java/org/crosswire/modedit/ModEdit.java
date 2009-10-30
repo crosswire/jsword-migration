@@ -6,18 +6,18 @@ import java.awt.*;
 public class ModEdit {
     boolean packFrame = false;
 
-    /**Construct the application*/
+    /** Construct the application */
     public ModEdit() {
         MainFrame frame = new MainFrame();
-        //Validate frames that have preset sizes
-        //Pack frames that have useful preferred size info, e.g. from their layout
+        // Validate frames that have preset sizes
+        // Pack frames that have useful preferred size info, e.g. from their
+        // layout
         if (packFrame) {
             frame.pack();
-        }
-        else {
+        } else {
             frame.validate();
         }
-        //Center the window
+        // Center the window
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = frame.getSize();
         if (frameSize.height > screenSize.height) {
@@ -29,12 +29,12 @@ public class ModEdit {
         frame.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
         frame.setVisible(true);
     }
-    /**Main method*/
+
+    /** Main method */
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace(System.err);
         }
         new ModEdit();

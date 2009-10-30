@@ -42,20 +42,19 @@ import org.crosswire.jsword.book.BookProvider;
 import org.crosswire.jsword.passage.Key;
 
 /**
- * A SplitBookDataDisplay consists of a KeySidebar and a BookDataDisplay in a SplitPane.
- *
- * @see gnu.gpl.License for license details.
+ * A SplitBookDataDisplay consists of a KeySidebar and a BookDataDisplay in a
+ * SplitPane.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class SplitBookDataDisplay extends JPanel implements BookProvider
-{
+public class SplitBookDataDisplay extends JPanel implements BookProvider {
     /**
      * Initialize the SplitBookDataDisplay
      */
-    public SplitBookDataDisplay(KeySidebar sidebar, BookDataDisplay child)
-    {
+    public SplitBookDataDisplay(KeySidebar sidebar, BookDataDisplay child) {
         this.child = child;
         this.sidebar = sidebar;
         listenerList = new EventListenerList();
@@ -76,61 +75,54 @@ public class SplitBookDataDisplay extends JPanel implements BookProvider
     /**
      * @return Returns the sidebar.
      */
-    public KeySidebar getSidebar()
-    {
+    public KeySidebar getSidebar() {
         return sidebar;
     }
 
     /**
      * @return Returns the display area.
      */
-    public BookDataDisplay getBookDataDisplay()
-    {
+    public BookDataDisplay getBookDataDisplay() {
         return child;
     }
 
     /**
      * Set the books and/or key to display.
+     * 
      * @param books
      * @param key
      */
-    public void setBookData(Book[] books, Key key)
-    {
+    public void setBookData(Book[] books, Key key) {
         boolean keyChanged = child.getKey() == null || !child.getKey().equals(key);
         boolean bookChanged = child.getBooks() == null || !Arrays.equals(child.getBooks(), books);
 
-       // Only set the passage if it has changed
-        if (keyChanged)
-        {
+        // Only set the passage if it has changed
+        if (keyChanged) {
             log.debug("new passage chosen: " + key.getName()); //$NON-NLS-1$
         }
 
-        if (bookChanged)
-        {
+        if (bookChanged) {
             log.debug("new book(s) chosen: " + StringUtil.toString(books)); //$NON-NLS-1$
         }
 
-        if (bookChanged || keyChanged)
-        {
+        if (bookChanged || keyChanged) {
             child.setBookData(books, key);
         }
     }
 
     /**
      * Show or hide the passage sidebar.
-     * @param show boolean
+     * 
+     * @param show
+     *            boolean
      */
-    public void showSidebar(boolean show)
-    {
+    public void showSidebar(boolean show) {
         Component childComponent = child.getComponent();
-        if (show)
-        {
+        if (show) {
             remove(childComponent);
             split.add(childComponent, JSplitPane.RIGHT);
             add(split);
-        }
-        else
-        {
+        } else {
             remove(split);
             split.remove(childComponent);
             add(childComponent);
@@ -143,52 +135,48 @@ public class SplitBookDataDisplay extends JPanel implements BookProvider
     /**
      * @return the key
      */
-    public Key getKey()
-    {
+    public Key getKey() {
         return child.getKey();
     }
 
     /**
      * @return the book
      */
-    public Book[] getBooks()
-    {
+    public Book[] getBooks() {
         return child.getBooks();
     }
 
     /**
      * Get the first book being displayed
      */
-    public Book getFirstBook()
-    {
+    public Book getFirstBook() {
         return child.getFirstBook();
     }
 
     /**
      * copy the child
      */
-    public void copy()
-    {
+    public void copy() {
         child.copy();
     }
 
     /**
      * Add a listener for changes in the Key.
      * 
-     * @param listener the listener to add
+     * @param listener
+     *            the listener to add
      */
-    public synchronized void addKeyChangeListener(KeyChangeListener listener)
-    {
+    public synchronized void addKeyChangeListener(KeyChangeListener listener) {
         child.addKeyChangeListener(listener);
     }
 
     /**
      * Remove a listener for changes in the Key.
      * 
-     * @param listener the listener to remove
+     * @param listener
+     *            the listener to remove
      */
-    public synchronized void removeKeyChangeListener(KeyChangeListener listener)
-    {
+    public synchronized void removeKeyChangeListener(KeyChangeListener listener) {
         child.removeKeyChangeListener(listener);
     }
 
@@ -199,8 +187,7 @@ public class SplitBookDataDisplay extends JPanel implements BookProvider
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         // Broken but we don't serialize views
         child = null;
         is.defaultReadObject();

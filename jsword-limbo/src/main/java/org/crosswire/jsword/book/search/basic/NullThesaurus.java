@@ -29,20 +29,21 @@ import org.crosswire.jsword.book.search.Thesaurus;
 
 /**
  * An implementation of Thesaurus that simply returns the word that the user
- * wanted similies of.
- * Useful if there is no other source of similarity data.
+ * wanted similies of. Useful if there is no other source of similarity data.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class NullThesaurus implements Thesaurus
-{
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.Thesaurus#getStartsWith(java.lang.String)
+public class NullThesaurus implements Thesaurus {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.Thesaurus#getStartsWith(java.lang.String
+     * )
      */
-    public Collection getSynonyms(String word) throws BookException
-    {
+    public Collection getSynonyms(String word) throws BookException {
         Collection reply = new ArrayList();
         reply.add(word);
         return reply;

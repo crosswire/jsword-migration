@@ -24,13 +24,12 @@ package org.crosswire.jsword.book.search.parse;
 /**
  * The search.Searcher uses a Vector of SearchWords to calculate a search.
  * SearchWords itself is an empty interface, that is simply a place holder -
- * extended by CommandWord and Word to provide interfaces that
- * actually do some good.
+ * extended by CommandWord and Word to provide interfaces that actually do some
+ * good.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public interface Word
-{
+public interface Word {
 }

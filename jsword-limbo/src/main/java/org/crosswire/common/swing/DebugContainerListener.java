@@ -37,18 +37,20 @@ import org.crosswire.common.util.Logger;
 
 /**
  * Attempt to find parenting errors.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class DebugContainerListener implements ContainerListener
-{
-    /* (non-Javadoc)
-     * @see java.awt.event.ContainerListener#componentAdded(java.awt.event.ContainerEvent)
+public class DebugContainerListener implements ContainerListener {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * java.awt.event.ContainerListener#componentAdded(java.awt.event.ContainerEvent
+     * )
      */
-    public void componentAdded(ContainerEvent ev)
-    {
+    public void componentAdded(ContainerEvent ev) {
         Component child = ev.getChild();
         Container cont = ev.getContainer();
 
@@ -58,11 +60,9 @@ public class DebugContainerListener implements ContainerListener
     /**
      *
      */
-    private void setAlert(Component comp, Color color)
-    {
+    private void setAlert(Component comp, Color color) {
         comp.setBackground(color.brighter());
-        if (comp instanceof JComponent)
-        {
+        if (comp instanceof JComponent) {
             JComponent jcomp = (JComponent) comp;
             jcomp.setBorder(BorderFactory.createLineBorder(color, 5));
         }
@@ -71,19 +71,16 @@ public class DebugContainerListener implements ContainerListener
     /**
      *
      */
-    private void addChild(Container parent, Component child)
-    {
+    private void addChild(Container parent, Component child) {
         Container statedParent = child.getParent();
-        if (statedParent == null)
-        {
+        if (statedParent == null) {
             log.warn("CL1: child:" + toString(child) + "(pink), claiming getParent()=null", new Exception()); //$NON-NLS-1$ //$NON-NLS-2$
             setAlert(child, Color.PINK);
-        }
-        else
-        {
-            if (statedParent != parent)
-            {
-                log.warn("CL1: child:" + toString(child) + "(cyan), getParent()=" + toString(statedParent) + "(green) added under parent=" + toString(parent) + "(yellow)", new Exception()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        } else {
+            if (statedParent != parent) {
+                log
+                        .warn(
+                                "CL1: child:" + toString(child) + "(cyan), getParent()=" + toString(statedParent) + "(green) added under parent=" + toString(parent) + "(yellow)", new Exception()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                 setAlert(child, Color.CYAN);
                 setAlert(statedParent, Color.GREEN);
                 setAlert(parent, Color.YELLOW);
@@ -91,11 +88,11 @@ public class DebugContainerListener implements ContainerListener
         }
 
         Container lastKnownParent = (Container) map.get(child);
-        if (lastKnownParent != null)
-        {
-            if (lastKnownParent != parent)
-            {
-                log.warn("CL1: child:" + toString(child) + "(blue), altered reparent, old parent=" + toString(lastKnownParent) + "(magenta), new parent=" + toString(parent) + "(orange)", new Exception()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        if (lastKnownParent != null) {
+            if (lastKnownParent != parent) {
+                log
+                        .warn(
+                                "CL1: child:" + toString(child) + "(blue), altered reparent, old parent=" + toString(lastKnownParent) + "(magenta), new parent=" + toString(parent) + "(orange)", new Exception()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                 setAlert(child, Color.BLUE);
                 setAlert(lastKnownParent, Color.MAGENTA);
                 setAlert(parent, Color.ORANGE);
@@ -104,16 +101,14 @@ public class DebugContainerListener implements ContainerListener
 
         map.put(child, parent);
 
-        if (child instanceof Container)
-        {
+        if (child instanceof Container) {
             Container cont = (Container) child;
             cont.addContainerListener(this);
 
             // if we have already added ourselves to this component
             // then we don't need to dig down
             Component[] children = cont.getComponents();
-            for (int i = 0; i < children.length; i++)
-            {
+            for (int i = 0; i < children.length; i++) {
                 addChild(cont, children[i]);
             }
         }
@@ -122,16 +117,17 @@ public class DebugContainerListener implements ContainerListener
     /**
      *
      */
-    private String toString(Component parent)
-    {
+    private String toString(Component parent) {
         return ClassUtil.getShortClassName(parent, "Null") + '(' + parent.hashCode() + ')'; //$NON-NLS-1$
     }
 
-    /* (non-Javadoc)
-     * @see java.awt.event.ContainerListener#componentRemoved(java.awt.event.ContainerEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @seejava.awt.event.ContainerListener#componentRemoved(java.awt.event.
+     * ContainerEvent)
      */
-    public void componentRemoved(ContainerEvent ev)
-    {
+    public void componentRemoved(ContainerEvent ev) {
         Component child = ev.getComponent();
         map.remove(child);
     }

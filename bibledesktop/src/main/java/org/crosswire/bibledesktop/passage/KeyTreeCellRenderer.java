@@ -33,30 +33,25 @@ import org.crosswire.jsword.passage.Key;
  * A specialization of DefaultTreeCellRenderer that knows how to get names from
  * Keys.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class KeyTreeCellRenderer extends DefaultTreeCellRenderer
-{
+public class KeyTreeCellRenderer extends DefaultTreeCellRenderer {
     /* (non-Javadoc)
      * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int, boolean)
      */
     /* @Override */
-    public Component getTreeCellRendererComponent(JTree tree, Object value, boolean isselected, boolean expanded, boolean leaf, int row, boolean focus)
-    {
+    public Component getTreeCellRendererComponent(JTree tree, Object value, boolean isselected, boolean expanded, boolean leaf, int row, boolean focus) {
         super.getTreeCellRendererComponent(tree, value, isselected, expanded, leaf, row, focus);
 
-        if (value instanceof KeyTreeNode)
-        {
+        if (value instanceof KeyTreeNode) {
             KeyTreeNode keytn = (KeyTreeNode) value;
             Key key = keytn.getKey();
-            if (key != null)
-            {
+            if (key != null) {
                 setText(key.getName());
             }
-        }
-        else // if (value != null)
+        } else // if (value != null)
         {
             log.warn("value is not a key: " + value.getClass().getName()); //$NON-NLS-1$
         }

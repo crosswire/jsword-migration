@@ -27,30 +27,24 @@ import org.crosswire.common.util.PluginUtil;
 /**
  * Factory method for creating a new Thesaurus.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ThesaurusFactory
-{
+public class ThesaurusFactory {
     /**
      * Prevent instantiation
      */
-    private ThesaurusFactory()
-    {
+    private ThesaurusFactory() {
     }
 
     /**
      * Create a new Thesaurus.
      */
-    public static Thesaurus createThesaurus() throws InstantiationException
-    {
-        try
-        {
+    public static Thesaurus createThesaurus() throws InstantiationException {
+        try {
             return (Thesaurus) PluginUtil.getImplementation(Thesaurus.class);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             log.error("createThesaurus failed", ex); //$NON-NLS-1$
             throw new InstantiationException();
         }

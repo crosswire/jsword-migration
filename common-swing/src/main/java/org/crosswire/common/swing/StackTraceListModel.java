@@ -27,52 +27,46 @@ import javax.swing.event.ListDataListener;
 import org.crosswire.common.util.StackTrace;
 
 /**
- * To itterate over the full function names.
- *
- * @see gnu.lgpl.License for license details.
+ * To iterate over the full function names.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @see javax.swing.ListModel
  * @see javax.swing.JList
  */
-public class StackTraceListModel implements ListModel
-{
+public class StackTraceListModel implements ListModel {
     /**
      * @param st
      */
-    public StackTraceListModel(StackTrace st)
-    {
+    public StackTraceListModel(StackTrace st) {
         this.st = st;
     }
 
     /**
      * Returns the length of the list
      */
-    public int getSize()
-    {
+    public int getSize() {
         return st.countStackElements();
     }
 
     /**
      * Returns the value at the specified index
      */
-    public Object getElementAt(int index)
-    {
+    public Object getElementAt(int index) {
         return st.getFullFunctionName(index);
     }
 
     /**
      * Ignore this because the trace will not change
      */
-    public void addListDataListener(ListDataListener li)
-    {
+    public void addListDataListener(ListDataListener li) {
     }
 
     /**
      * Ignore this because the trace will not change
      */
-    public void removeListDataListener(ListDataListener li)
-    {
+    public void removeListDataListener(ListDataListener li) {
     }
 
     private final StackTrace st;

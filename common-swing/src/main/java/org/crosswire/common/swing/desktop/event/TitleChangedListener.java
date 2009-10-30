@@ -25,17 +25,16 @@ import java.util.EventListener;
 
 /**
  * A listener for changes to a Views title.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public interface TitleChangedListener extends EventListener
-{
+public interface TitleChangedListener extends EventListener {
     /**
      * A Select pane is telling us that it has changed, and we might want to
-     * update the BibleViewPane and the AbstractViewLayout to reflect any potentially
-     * new titles
+     * update the BibleViewPane and the AbstractViewLayout to reflect any
+     * potentially new titles
      */
     void titleChanged(TitleChangedEvent ev);
 }

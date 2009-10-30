@@ -25,51 +25,46 @@ import org.crosswire.jsword.passage.RestrictionType;
 /**
  * A quick demo of how easy it is to write new front-ends to JSword.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class DemoServlet extends HttpServlet
-{
+public class DemoServlet extends HttpServlet {
     /**
      * @see javax.servlet.Servlet#init(ServletConfig)
      */
     /* @Override */
-    public void init(ServletConfig config) throws ServletException
-    {
+    public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
-        try
-        {
+        try {
             String bookname = config.getInitParameter("book-name"); //$NON-NLS-1$
             book = Books.installed().getBook(bookname);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             throw new ServletException(Msg.INIT_FAILED.toString(), ex);
         }
     }
 
-    /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest
+     * , javax.servlet.http.HttpServletResponse)
      */
     /* @Override */
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
-        try
-        {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
             Key key = null;
 
             String search = request.getParameter(FIELD_SEARCH);
-            if (search != null)
-            {
+            if (search != null) {
                 request.setAttribute(FIELD_SEARCH, search);
                 key = book.find(search);
             }
 
             String match = request.getParameter(FIELD_MATCH);
-            if (match != null)
-            {
+            if (match != null) {
                 request.setAttribute(FIELD_MATCH, match);
                 String quote = IndexSearcher.getPreferredSyntax(PhraseParamWord.class);
                 PassageTally tally = (PassageTally) book.find(quote + match + quote);
@@ -79,23 +74,21 @@ public class DemoServlet extends HttpServlet
             }
 
             String view = request.getParameter(FIELD_VIEW);
-            if (view != null)
-            {
+            if (view != null) {
                 request.setAttribute(FIELD_VIEW, view);
                 key = book.getKey(view);
             }
 
-            if (key instanceof Passage)
-            {
+            if (key instanceof Passage) {
                 Passage ref = (Passage) key;
 
                 // Do we need multiple pages
-                if (ref.countVerses() > pageSize)
-                {
+                if (ref.countVerses() > pageSize) {
                     Passage waiting = ref.trimVerses(pageSize);
 
-                    // JDK: A deprecation error if you don't, won't build or run on java < 1.4 if you do.
-                    //String link = URLEncoder.encode(waiting.getName());
+                    // JDK: A deprecation error if you don't, won't build or run
+                    // on java < 1.4 if you do.
+                    // String link = URLEncoder.encode(waiting.getName());
                     String link = URLEncoder.encode(waiting.getName(), "UTF-8"); //$NON-NLS-1$
 
                     request.setAttribute("next-link", link); //$NON-NLS-1$
@@ -110,9 +103,7 @@ public class DemoServlet extends HttpServlet
 
                 request.setAttribute("reply", text); //$NON-NLS-1$
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             log.error("Failed view", ex); //$NON-NLS-1$
             throw new ServletException("Failed view", ex); //$NON-NLS-1$
         }
@@ -120,12 +111,15 @@ public class DemoServlet extends HttpServlet
         getServletContext().getRequestDispatcher("/demo.jsp").forward(request, response); //$NON-NLS-1$
     }
 
-    /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest
+     * , javax.servlet.http.HttpServletResponse)
      */
     /* @Override */
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request, response);
     }
 

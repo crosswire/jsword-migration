@@ -27,18 +27,16 @@ import javax.swing.border.Border;
 
 /**
  * Customizations for other LF other than Windows and Metal.
- *
- * @see gnu.lgpl.License for license details. The copyright to this program is
- *      held by it's authors.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
+ *      The copyright to this program is held by it's authors.
  * @author Willie Thean [williethean at yahoo dot com]
  */
-public class OtherLFCustoms extends AbstractLFCustoms
-{
+public class OtherLFCustoms extends AbstractLFCustoms {
     /**
      * Default constructor.
      */
-    public OtherLFCustoms()
-    {
+    public OtherLFCustoms() {
         super();
     }
 
@@ -46,15 +44,13 @@ public class OtherLFCustoms extends AbstractLFCustoms
      * Install other platform specific UI defaults that we're not aware of.
      */
     /* @Override */
-    protected void initPlatformUIDefaults()
-    {
+    protected void initPlatformUIDefaults() {
         Border tabbedPanePanelBorder = BorderFactory.createEtchedBorder();
         Border panelSelectBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 
-        Object[] otherUIDefaults = new Object[]
-        {
-            "TabbedPanePanel.border", tabbedPanePanelBorder, //$NON-NLS-1$
-            "SelectPanel.border", panelSelectBorder //$NON-NLS-1$
+        Object[] otherUIDefaults = new Object[] {
+                "TabbedPanePanel.border", tabbedPanePanelBorder, //$NON-NLS-1$
+                "SelectPanel.border", panelSelectBorder //$NON-NLS-1$
         };
 
         UIManager.getDefaults().putDefaults(otherUIDefaults);

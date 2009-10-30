@@ -86,18 +86,18 @@ import org.jdom.Document;
 /**
  * Mapper is GUI wrapper around Map to allow it to be run standalone.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class Mapper extends JFrame
-{
-	/**
-    * Central start point.
-    * @param args The command line arguments
-    */
-    public static void main(String[] args)
-    {
+public class Mapper extends JFrame {
+    /**
+     * Central start point.
+     * 
+     * @param args
+     *            The command line arguments
+     */
+    public static void main(String[] args) {
         Mapper mapper = new Mapper(args);
 
         mapper.pack();
@@ -108,46 +108,36 @@ public class Mapper extends JFrame
     /**
      * Basic constructor
      */
-    public Mapper(String[] args)
-    {
+    public Mapper(String[] args) {
         // The Verse colourizers
         vcols = new VerseColor[76];
         vcols[0] = new RainbowVerseColor();
         vcols[1] = new GroupVerseColor();
-        for (int i = SectionNames.PENTATEUCH; i <= SectionNames.LETTERS; i++)
-        {
+        for (int i = SectionNames.PENTATEUCH; i <= SectionNames.LETTERS; i++) {
             vcols[i + 1] = new SectionVerseColor(i);
         }
-        for (int i = BibleNames.GENESIS; i <= BibleNames.REVELATION; i++)
-        {
+        for (int i = BibleNames.GENESIS; i <= BibleNames.REVELATION; i++) {
             vcols[i + 1 + SectionNames.LETTERS] = new BookVerseColor(i);
         }
 
         init();
 
-        if (args.length != 0)
-        {
-            try
-            {
+        if (args.length != 0) {
+            try {
                 FileReader fin = new FileReader(args[0]);
                 map.load(fin);
                 saved = true;
 
                 fin.close();
                 setFilename(args[0]);
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 ExceptionPane.showExceptionDialog(this, ex);
             }
-        }
-        else
-        {
+        } else {
             setFilename(null);
         }
 
-        try
-        {
+        try {
             Document xmlconfig = XMLUtil.getDocument("config");
             Locale defaultLocale = Locale.getDefault();
             ResourceBundle configResources = ResourceBundle.getBundle("config", defaultLocale, CWClassLoader.instance(Mapper.class));
@@ -155,8 +145,7 @@ public class Mapper extends JFrame
             config.add(xmlconfig, configResources);
 
             Properties prop = ResourceUtil.getProperties("mapper");
-            if (prop != null)
-            {
+            if (prop != null) {
                 config.setProperties(prop);
             }
 
@@ -166,9 +155,7 @@ public class Mapper extends JFrame
             Book book = (Book) dicts.get(0);
 
             la = new LinkArray(book);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ExceptionPane.showExceptionDialog(this, ex);
         }
 
@@ -178,8 +165,7 @@ public class Mapper extends JFrame
     /**
      * Initialize the GUI, and display it.
      */
-    private void init()
-    {
+    private void init() {
         menu_file.setText("File");
         menu_file.setMnemonic('F');
         menu_edit.setText("Edit");
@@ -189,120 +175,96 @@ public class Mapper extends JFrame
 
         item_new.setText("New Map ...");
         item_new.setMnemonic('N');
-        item_new.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_new.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 create();
             }
         });
 
         item_open.setText("Open Map ...");
         item_open.setMnemonic('O');
-        item_open.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_open.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 openPositions();
             }
         });
 
         item_save.setText("Save Map");
         item_save.setMnemonic('S');
-        item_save.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_save.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 savePositions();
             }
         });
 
         item_saveas.setText("Save Map As ...");
         item_saveas.setMnemonic('A');
-        item_saveas.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_saveas.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 savePositionsAs();
             }
         });
 
         item_lopen.setText("Open Links ...");
         item_lopen.setMnemonic('P');
-        item_lopen.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_lopen.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 openLinks();
             }
         });
 
         item_lsave.setText("Save Links");
         item_lsave.setMnemonic('V');
-        item_lsave.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_lsave.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 saveLinks();
             }
         });
 
         item_lsaveas.setText("Save Links As ...");
         item_lsaveas.setMnemonic('K');
-        item_lsaveas.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_lsaveas.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 saveLinksAs();
             }
         });
 
         item_ldeser.setText("Deserialize Links ...");
         item_ldeser.setMnemonic('E');
-        item_ldeser.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_ldeser.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 deserializeLinks();
             }
         });
 
         item_lser.setText("Serialize Links");
         item_lser.setMnemonic('Z');
-        item_lser.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_lser.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 serializeLinks();
             }
         });
 
         item_link.setText("Generate Links ...");
         item_link.setMnemonic('L');
-        item_link.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_link.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 link();
             }
         });
 
         item_word.setText("Export Map to Word ...");
         item_word.setMnemonic('W');
-        item_word.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_word.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 word();
             }
         });
 
         item_print.setText("Print ...");
         item_print.setMnemonic('P');
-        item_print.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_print.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 print();
             }
         });
@@ -310,80 +272,64 @@ public class Mapper extends JFrame
 
         item_exit.setText("Exit");
         item_exit.setMnemonic('X');
-        item_exit.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_exit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 exit();
             }
         });
 
         item_pick.setText("Pick Bible ...");
         item_pick.setMnemonic('B');
-        item_pick.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_pick.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 pickVersion();
             }
         });
 
         item_start.setText("Start Layout");
         item_start.setMnemonic('S');
-        item_start.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_start.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 start();
             }
         });
 
         item_initial.setText("Set Initial Positions");
         item_initial.setMnemonic('I');
-        item_initial.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_initial.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 simple();
             }
         });
 
         item_random.setText("Set Random Positions");
         item_random.setMnemonic('R');
-        item_random.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_random.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 random();
             }
         });
 
         item_dump.setText("Dump Positions");
         item_dump.setMnemonic('U');
-        item_dump.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_dump.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 map.debug(new PrintWriter(System.out));
             }
         });
 
         item_contents.setText("Contents ...");
         item_contents.setMnemonic('C');
-        item_contents.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_contents.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 help();
             }
         });
 
         item_about.setText("About ...");
         item_about.setMnemonic('A');
-        item_about.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        item_about.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 about();
             }
         });
@@ -420,19 +366,15 @@ public class Mapper extends JFrame
 
         cmd_zoom_in.setText("+");
         cmd_zoom_in.setFont(new Font("Dialog", 1, 14));
-        cmd_zoom_in.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
+        cmd_zoom_in.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 zoom(+50);
             }
         });
         cmd_zoom_out.setText("-");
         cmd_zoom_out.setFont(new Font("Dialog", 1, 14));
-        cmd_zoom_out.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
+        cmd_zoom_out.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 zoom(-50);
             }
         });
@@ -461,10 +403,8 @@ public class Mapper extends JFrame
         tab_main.add(pnl_table, "Table");
 
         cbo_color = new JComboBox(vcols);
-        cbo_color.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        cbo_color.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 verseColor();
             }
         });
@@ -477,11 +417,9 @@ public class Mapper extends JFrame
         pnl_tools.add(pnl_rules, BorderLayout.NORTH);
         pnl_tools.add(pnl_color, BorderLayout.SOUTH);
 
-        this.addWindowListener(new WindowAdapter()
-        {
+        this.addWindowListener(new WindowAdapter() {
             /* @Override */
-            public void windowClosed(WindowEvent ev)
-            {
+            public void windowClosed(WindowEvent ev) {
                 exit();
             }
         });
@@ -496,28 +434,27 @@ public class Mapper extends JFrame
 
     /**
      * The name of the file that we are saving under
-     * @param filename The new filename to save to
+     * 
+     * @param filename
+     *            The new filename to save to
      */
-    public void setFilename(String filename)
-    {
+    public void setFilename(String filename) {
         this.posfile = filename;
 
-        if (filename == null)
-        {
+        if (filename == null) {
             this.setTitle("Mapper - [Untitled]");
-        }
-        else
-        {
+        } else {
             this.setTitle("Mapper - [" + filename + "]");
         }
     }
 
     /**
      * Set everything to use the given map
-     * @param map The new map
+     * 
+     * @param map
+     *            The new map
      */
-    public void setMap(Map map)
-    {
+    public void setMap(Map map) {
         this.map = map;
 
         mdl_map.setMap(map);
@@ -526,32 +463,30 @@ public class Mapper extends JFrame
 
     /**
      * Get the currently used Map
+     * 
      * @return The current map
      */
-    public Map getMap()
-    {
+    public Map getMap() {
         return map;
     }
 
     /**
      * Have we made changes or can we abandon them
      */
-    protected boolean okToClose()
-    {
-        if (!saved)
-        {
-            int reply = JOptionPane.showConfirmDialog(null, "Changes have been made to the current map.\nLose changes?", "Lose Changes?", JOptionPane.YES_NO_OPTION);
+    protected boolean okToClose() {
+        if (!saved) {
+            int reply = JOptionPane.showConfirmDialog(null, "Changes have been made to the current map.\nLose changes?", "Lose Changes?",
+                    JOptionPane.YES_NO_OPTION);
 
             return reply == JOptionPane.YES_OPTION;
         }
-		return true;
+        return true;
     }
 
     /**
      * Kill the current file
      */
-    protected void close()
-    {
+    protected void close() {
         setMap(new Map(2));
         saved = true;
     }
@@ -559,10 +494,8 @@ public class Mapper extends JFrame
     /**
      * Select a Bible and create the link info
      */
-    protected void create()
-    {
-        if (!okToClose())
-        {
+    protected void create() {
+        if (!okToClose()) {
             return;
         }
 
@@ -573,20 +506,16 @@ public class Mapper extends JFrame
     /**
      * Open a saved map file
      */
-    protected void openPositions()
-    {
-        try
-        {
+    protected void openPositions() {
+        try {
             JFileChooser chooser = new JFileChooser();
             chooser.setFileFilter(xml_filter);
-            if (posfile != null)
-            {
+            if (posfile != null) {
                 chooser.setSelectedFile(new File(posfile));
             }
 
             int reply = chooser.showOpenDialog(this);
-            if (reply == JFileChooser.APPROVE_OPTION)
-            {
+            if (reply == JFileChooser.APPROVE_OPTION) {
                 File file = chooser.getSelectedFile();
 
                 FileReader fin = new FileReader(file);
@@ -596,9 +525,7 @@ public class Mapper extends JFrame
                 saved = true;
                 setFilename(file.getPath());
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Reporter.informUser(this, ex);
         }
     }
@@ -606,24 +533,19 @@ public class Mapper extends JFrame
     /**
      * Save a map file to disk
      */
-    protected void savePositions()
-    {
-        if (posfile == null)
-        {
+    protected void savePositions() {
+        if (posfile == null) {
             savePositionsAs();
             return;
         }
 
-        try
-        {
+        try {
             FileWriter fout = new FileWriter(posfile);
             map.save(fout);
             fout.close();
 
             saved = true;
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Reporter.informUser(this, ex);
         }
     }
@@ -631,12 +553,9 @@ public class Mapper extends JFrame
     /**
      * Save a map file to disk
      */
-    protected void savePositionsAs()
-    {
-        try
-        {
-            if (posfile == null)
-            {
+    protected void savePositionsAs() {
+        try {
+            if (posfile == null) {
                 posfile = System.getProperty("user.dir") + File.separator + "Untitled.xml";
             }
 
@@ -645,18 +564,14 @@ public class Mapper extends JFrame
             chooser.setSelectedFile(new File(posfile));
 
             int reply = chooser.showSaveDialog(this);
-            if (reply == JFileChooser.APPROVE_OPTION)
-            {
+            if (reply == JFileChooser.APPROVE_OPTION) {
                 File file = chooser.getSelectedFile();
-                if (!file.getName().endsWith(".xml"))
-                {
+                if (!file.getName().endsWith(".xml")) {
                     file = new File(file.getPath() + ".xml");
                 }
 
-                if (file.exists())
-                {
-                    if (JOptionPane.showConfirmDialog(this, "A file called " + file.getPath() + " already exists.\n" + "Do you want to replace this file?") != JOptionPane.OK_OPTION)
-                    {
+                if (file.exists()) {
+                    if (JOptionPane.showConfirmDialog(this, "A file called " + file.getPath() + " already exists.\n" + "Do you want to replace this file?") != JOptionPane.OK_OPTION) {
                         return;
                     }
                 }
@@ -668,9 +583,7 @@ public class Mapper extends JFrame
                 saved = true;
                 setFilename(file.getPath());
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Reporter.informUser(this, ex);
         }
     }
@@ -678,28 +591,22 @@ public class Mapper extends JFrame
     /**
      * Open a saved links file
      */
-    protected void openLinks()
-    {
-        try
-        {
+    protected void openLinks() {
+        try {
             JFileChooser chooser = new JFileChooser();
             chooser.setFileFilter(xml_filter);
-            if (linkfile != null)
-            {
+            if (linkfile != null) {
                 chooser.setSelectedFile(new File(linkfile));
             }
 
             int reply = chooser.showOpenDialog(this);
-            if (reply == JFileChooser.APPROVE_OPTION)
-            {
+            if (reply == JFileChooser.APPROVE_OPTION) {
                 File file = chooser.getSelectedFile();
                 FileReader fin = new FileReader(file);
                 la.load(fin);
                 fin.close();
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Reporter.informUser(this, ex);
         }
     }
@@ -707,22 +614,17 @@ public class Mapper extends JFrame
     /**
      * Save a map file to disk
      */
-    protected void saveLinks()
-    {
-        if (posfile == null)
-        {
+    protected void saveLinks() {
+        if (posfile == null) {
             saveLinksAs();
             return;
         }
 
-        try
-        {
+        try {
             FileWriter fout = new FileWriter(posfile);
             la.save(fout);
             fout.close();
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Reporter.informUser(this, ex);
         }
     }
@@ -730,12 +632,9 @@ public class Mapper extends JFrame
     /**
      * Save a map file to disk
      */
-    protected void saveLinksAs()
-    {
-        try
-        {
-            if (linkfile == null)
-            {
+    protected void saveLinksAs() {
+        try {
+            if (linkfile == null) {
                 linkfile = System.getProperty("user.dir") + File.separator + "Untitled.xml";
             }
 
@@ -744,18 +643,14 @@ public class Mapper extends JFrame
             chooser.setSelectedFile(new File(linkfile));
 
             int reply = chooser.showSaveDialog(this);
-            if (reply == JFileChooser.APPROVE_OPTION)
-            {
+            if (reply == JFileChooser.APPROVE_OPTION) {
                 File file = chooser.getSelectedFile();
-                if (!file.getName().endsWith(".xml"))
-                {
+                if (!file.getName().endsWith(".xml")) {
                     file = new File(file.getPath() + ".xml");
                 }
 
-                if (file.exists())
-                {
-                    if (JOptionPane.showConfirmDialog(this, "A file called " + file.getPath() + " already exists.\n" + "Do you want to replace this file?") != JOptionPane.OK_OPTION)
-                    {
+                if (file.exists()) {
+                    if (JOptionPane.showConfirmDialog(this, "A file called " + file.getPath() + " already exists.\n" + "Do you want to replace this file?") != JOptionPane.OK_OPTION) {
                         return;
                     }
                 }
@@ -764,9 +659,7 @@ public class Mapper extends JFrame
                 la.save(fout);
                 fout.close();
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Reporter.informUser(this, ex);
         }
     }
@@ -774,29 +667,23 @@ public class Mapper extends JFrame
     /**
      * Method deserializeLinks.
      */
-    protected void deserializeLinks()
-    {
-        try
-        {
+    protected void deserializeLinks() {
+        try {
             JFileChooser chooser = new JFileChooser();
             chooser.setFileFilter(lser_filter);
-            if (linkfile != null)
-            {
+            if (linkfile != null) {
                 chooser.setSelectedFile(new File(linkfile));
             }
 
             int reply = chooser.showOpenDialog(this);
-            if (reply == JFileChooser.APPROVE_OPTION)
-            {
+            if (reply == JFileChooser.APPROVE_OPTION) {
                 File file = chooser.getSelectedFile();
 
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
                 lar.setLinkArray((LinkArray) in.readObject());
                 in.close();
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Reporter.informUser(this, ex);
         }
     }
@@ -804,12 +691,9 @@ public class Mapper extends JFrame
     /**
      * Method serializeLinks.
      */
-    protected void serializeLinks()
-    {
-        try
-        {
-            if (linkfile == null)
-            {
+    protected void serializeLinks() {
+        try {
+            if (linkfile == null) {
                 linkfile = System.getProperty("user.dir") + File.separator + "Untitled.lser";
             }
 
@@ -818,18 +702,14 @@ public class Mapper extends JFrame
             chooser.setSelectedFile(new File(linkfile));
 
             int reply = chooser.showSaveDialog(this);
-            if (reply == JFileChooser.APPROVE_OPTION)
-            {
+            if (reply == JFileChooser.APPROVE_OPTION) {
                 File file = chooser.getSelectedFile();
-                if (!file.getName().endsWith(".lser"))
-                {
+                if (!file.getName().endsWith(".lser")) {
                     file = new File(file.getPath() + ".lser");
                 }
 
-                if (file.exists())
-                {
-                    if (JOptionPane.showConfirmDialog(this, "A file called " + file.getPath() + " already exists.\n" + "Do you want to replace this file?") != JOptionPane.OK_OPTION)
-                    {
+                if (file.exists()) {
+                    if (JOptionPane.showConfirmDialog(this, "A file called " + file.getPath() + " already exists.\n" + "Do you want to replace this file?") != JOptionPane.OK_OPTION) {
                         return;
                     }
                 }
@@ -838,9 +718,7 @@ public class Mapper extends JFrame
                 out.writeObject(la);
                 out.close();
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Reporter.informUser(this, ex);
         }
     }
@@ -848,10 +726,8 @@ public class Mapper extends JFrame
     /**
      * Create a Word Macro file
      */
-    protected void word()
-    {
-        try
-        {
+    protected void word() {
+        try {
             String basname = posfile.substring(0, posfile.length() - 4) + ".bas";
 
             JFileChooser chooser = new JFileChooser();
@@ -859,14 +735,11 @@ public class Mapper extends JFrame
             chooser.setSelectedFile(new File(basname));
 
             int reply = chooser.showSaveDialog(this);
-            if (reply == JFileChooser.APPROVE_OPTION)
-            {
+            if (reply == JFileChooser.APPROVE_OPTION) {
                 File file = chooser.getSelectedFile();
 
-                if (file.exists())
-                {
-                    if (JOptionPane.showConfirmDialog(this, "A file called " + file.getPath() + " already exists.\n" + "Do you want to replace this file?") != JOptionPane.OK_OPTION)
-                    {
+                if (file.exists()) {
+                    if (JOptionPane.showConfirmDialog(this, "A file called " + file.getPath() + " already exists.\n" + "Do you want to replace this file?") != JOptionPane.OK_OPTION) {
                         return;
                     }
                 }
@@ -877,9 +750,7 @@ public class Mapper extends JFrame
 
                 out.close();
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Reporter.informUser(this, ex);
         }
     }
@@ -887,17 +758,14 @@ public class Mapper extends JFrame
     /**
      * Print the map
      */
-    protected void print()
-    {
+    protected void print() {
     }
 
     /**
      * Action from clicking on the exit button. Exits the VM.
      */
-    protected void exit()
-    {
-        if (okToClose())
-        {
+    protected void exit() {
+        if (okToClose()) {
             System.exit(0);
         }
     }
@@ -905,22 +773,17 @@ public class Mapper extends JFrame
     /**
      * Method pickVersion.
      */
-    protected void pickVersion()
-    {
-        try
-        {
+    protected void pickVersion() {
+        try {
             BookChooser chooser = new BookChooser(BookFilters.getOnlyBibles());
             int reply = chooser.showDialog(this);
 
-            if (reply == BookChooser.APPROVE_OPTION)
-            {
+            if (reply == BookChooser.APPROVE_OPTION) {
                 Book book = chooser.getSelected();
                 la = new LinkArray(book);
                 lar.setLinkArray(la);
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Reporter.informUser(this, ex);
         }
     }
@@ -928,14 +791,10 @@ public class Mapper extends JFrame
     /**
      * Create the set of links
      */
-    protected void link()
-    {
-        try
-        {
+    protected void link() {
+        try {
             la.cacheAll();
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Reporter.informUser(this, ex);
         }
     }
@@ -943,19 +802,15 @@ public class Mapper extends JFrame
     /**
      * Start an layout thread
      */
-    protected void start()
-    {
-        if (autolayout == null)
-        {
+    protected void start() {
+        if (autolayout == null) {
             item_start.setText("Stop AutoLayout");
 
             alr = new AutoLayoutRunnable();
             autolayout = new Thread(alr);
             autolayout.setPriority(Thread.MIN_PRIORITY);
             autolayout.start();
-        }
-        else
-        {
+        } else {
             item_start.setText("Start AutoLayout");
             alr.die();
 
@@ -966,10 +821,8 @@ public class Mapper extends JFrame
     /**
      * Set the simple layout
      */
-    protected void simple()
-    {
-        if (JOptionPane.showConfirmDialog(this, "Are you sure you want to reset the layout?") == JOptionPane.OK_OPTION)
-        {
+    protected void simple() {
+        if (JOptionPane.showConfirmDialog(this, "Are you sure you want to reset the layout?") == JOptionPane.OK_OPTION) {
             saved = false;
             map.setLayoutSimple();
             pnl_canvas.repaint();
@@ -979,10 +832,8 @@ public class Mapper extends JFrame
     /**
      * Set the random layout
      */
-    protected void random()
-    {
-        if (JOptionPane.showConfirmDialog(this, "Are you sure you want to reset the layout?") == JOptionPane.OK_OPTION)
-        {
+    protected void random() {
+        if (JOptionPane.showConfirmDialog(this, "Are you sure you want to reset the layout?") == JOptionPane.OK_OPTION) {
             saved = false;
             map.setLayoutRandom();
             pnl_canvas.repaint();
@@ -992,8 +843,7 @@ public class Mapper extends JFrame
     /**
      * Set the verse colourizer
      */
-    protected void verseColor()
-    {
+    protected void verseColor() {
         VerseColor vcol = (VerseColor) cbo_color.getSelectedItem();
         pnl_canvas.setVerseColor(vcol);
     }
@@ -1001,22 +851,19 @@ public class Mapper extends JFrame
     /**
      * Not implemented
      */
-    protected void help()
-    {
+    protected void help() {
     }
 
     /**
      * Not implemented
      */
-    protected void about()
-    {
+    protected void about() {
     }
 
     /**
      * Zoom in or out of the map
      */
-    protected void zoom(int change)
-    {
+    protected void zoom(int change) {
         map_size += change;
         pnl_canvas.setSize(new Dimension(map_size, map_size));
     }
@@ -1046,20 +893,26 @@ public class Mapper extends JFrame
     protected boolean saved = true;
 
     /** File filter for link serilaize files */
-    private ExtensionFileFilter lser_filter = new ExtensionFileFilter(new String[] { "lser" }, "Link Serialize Files (*.lser)");
+    private ExtensionFileFilter lser_filter = new ExtensionFileFilter(new String[] {
+        "lser"
+    }, "Link Serialize Files (*.lser)");
 
     /** File filter for xml files */
-    private ExtensionFileFilter xml_filter = new ExtensionFileFilter(new String[] { "xml" }, "XML Files (*.xml)");
+    private ExtensionFileFilter xml_filter = new ExtensionFileFilter(new String[] {
+        "xml"
+    }, "XML Files (*.xml)");
 
     /** File filter for VB files */
-    private ExtensionFileFilter bas_filter = new ExtensionFileFilter(new String[] { "bas" }, "Word VBA Macro (*.bas)");
+    private ExtensionFileFilter bas_filter = new ExtensionFileFilter(new String[] {
+        "bas"
+    }, "Word VBA Macro (*.bas)");
 
     /** The Configuration options */
     private Config config = new Config("Mapper Options");
 
     /** The VBA export routine */
     private VBAExport vba = new VBAExport();
-    
+
     /** The Link Array */
     private LinkArray la = null;
 
@@ -1067,16 +920,9 @@ public class Mapper extends JFrame
     private LinkAttractionRule lar = new LinkAttractionRule();
 
     /** The Rules */
-    protected Rule[] rules = new Rule[]
-    {
-        lar,
-        new AntiGravityRule(),
-        new DefraggingRule(),
-        new BrownianRule(),
-        new RectangularBoundsRule(),
-        new CircularBoundsRule(),
-        new FrictionRule(),
-        new AdjustOriginRule(),
+    protected Rule[] rules = new Rule[] {
+            lar, new AntiGravityRule(), new DefraggingRule(), new BrownianRule(), new RectangularBoundsRule(), new CircularBoundsRule(), new FrictionRule(),
+            new AdjustOriginRule(),
     };
 
     /** The Verse colorizers */
@@ -1133,15 +979,12 @@ public class Mapper extends JFrame
     /**
      * A Layout Thread Runnable
      */
-    class AutoLayoutRunnable implements Runnable
-    {
+    class AutoLayoutRunnable implements Runnable {
         /**
          * Repeatedly do the layout thing
          */
-        public void run()
-        {
-            while (alive)
-            {
+        public void run() {
+            while (alive) {
                 saved = false;
                 map.applyRules(rules);
                 Thread.yield();
@@ -1151,8 +994,7 @@ public class Mapper extends JFrame
         /**
          * Stop laying out
          */
-        public void die()
-        {
+        public void die() {
             alive = false;
         }
 

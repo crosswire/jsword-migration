@@ -31,117 +31,106 @@ import org.crosswire.jsword.passage.Key;
 /**
  * An implementation of BookDataDisplay that simply proxies all requests to an
  * underlying BookDataDisplay.
- * <p>Useful for chaining a few BookDataDisplays together to add functionallity
- * component by component.</p>
- *
- * @see gnu.gpl.License for license details.
+ * <p>
+ * Useful for chaining a few BookDataDisplays together to add functionallity
+ * component by component.
+ * </p>
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ProxyBookDataDisplay implements BookDataDisplay
-{
+public class ProxyBookDataDisplay implements BookDataDisplay {
     /**
      * Setup the proxy
      */
-    public ProxyBookDataDisplay(BookDataDisplay proxy)
-    {
+    public ProxyBookDataDisplay(BookDataDisplay proxy) {
         this.proxy = proxy;
     }
 
     /**
      * Accessor for the proxy
+     * 
      * @return Returns the proxy.
      */
-    protected BookDataDisplay getProxy()
-    {
+    protected BookDataDisplay getProxy() {
         return proxy;
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#addKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
      */
-    public void addKeyChangeListener(KeyChangeListener listener)
-    {
+    public void addKeyChangeListener(KeyChangeListener listener) {
         proxy.addKeyChangeListener(listener);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
      */
-    public void removeKeyChangeListener(KeyChangeListener listener)
-    {
+    public void removeKeyChangeListener(KeyChangeListener listener) {
         proxy.removeKeyChangeListener(listener);
     }
 
     /* (non-Javadoc)
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
-    public void propertyChange(PropertyChangeEvent evt)
-    {
+    public void propertyChange(PropertyChangeEvent evt) {
         proxy.propertyChange(evt);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#addURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
      */
-    public void addURIEventListener(URIEventListener listener)
-    {
+    public void addURIEventListener(URIEventListener listener) {
         proxy.addURIEventListener(listener);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
      */
-    public void removeURIEventListener(URIEventListener listener)
-    {
+    public void removeURIEventListener(URIEventListener listener) {
         proxy.removeURIEventListener(listener);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#copy()
      */
-    public void copy()
-    {
+    public void copy() {
         proxy.copy();
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getComponent()
      */
-    public Component getComponent()
-    {
+    public Component getComponent() {
         return proxy.getComponent();
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#clearBookData()
      */
-    public void clearBookData()
-    {
+    public void clearBookData() {
         setBookData(null, null);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book[], org.crosswire.jsword.passage.Key)
      */
-    public void setBookData(Book[] books, Key key)
-    {
+    public void setBookData(Book[] books, Key key) {
         proxy.setBookData(books, key);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#setCompareBooks(boolean)
      */
-    public void setCompareBooks(boolean compare)
-    {
+    public void setCompareBooks(boolean compare) {
         proxy.setCompareBooks(compare);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#refresh()
      */
-    public void refresh()
-    {
+    public void refresh() {
         proxy.refresh();
     }
 
@@ -149,32 +138,28 @@ public class ProxyBookDataDisplay implements BookDataDisplay
      * @see java.lang.Object#toString()
      */
     /* @Override */
-    public String toString()
-    {
+    public String toString() {
         return proxy.toString();
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getKey()
      */
-    public Key getKey()
-    {
+    public Key getKey() {
         return getProxy().getKey();
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBooks()
      */
-    public Book[] getBooks()
-    {
+    public Book[] getBooks() {
         return getProxy().getBooks();
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getFirstBook()
      */
-    public Book getFirstBook()
-    {
+    public Book getFirstBook() {
         return getProxy().getFirstBook();
     }
 

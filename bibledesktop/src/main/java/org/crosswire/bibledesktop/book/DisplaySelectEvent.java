@@ -29,19 +29,20 @@ import org.crosswire.jsword.passage.Key;
 /**
  * A DisplaySelectEvent happens whenever a user makes a command.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class DisplaySelectEvent extends EventObject
-{
+public class DisplaySelectEvent extends EventObject {
     /**
      * For when a command has been made
-     * @param source The thing that started this off
-     * @param key The selected Key
+     * 
+     * @param source
+     *            The thing that started this off
+     * @param key
+     *            The selected Key
      */
-    public DisplaySelectEvent(BookProvider source, Key key)
-    {
+    public DisplaySelectEvent(BookProvider source, Key key) {
         super(source);
 
         this.key = key;
@@ -49,19 +50,19 @@ public class DisplaySelectEvent extends EventObject
 
     /**
      * Get the type of command
+     * 
      * @return The type of command
      */
-    public Key getKey()
-    {
+    public Key getKey() {
         return key;
     }
 
     /**
      * Get the type of command
+     * 
      * @return The type of command
      */
-    public BookProvider getBookProvider()
-    {
+    public BookProvider getBookProvider() {
         return (BookProvider) getSource();
     }
 

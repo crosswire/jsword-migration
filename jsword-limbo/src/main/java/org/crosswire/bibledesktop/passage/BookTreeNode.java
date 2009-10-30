@@ -32,18 +32,16 @@ import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * PassageTableModel.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class BookTreeNode extends BibleTreeNode
-{
+public class BookTreeNode extends BibleTreeNode {
     /**
      * This constructor is for when we are really a BookTreeNode
      */
-    protected BookTreeNode(TreeNode parent, int book) throws NoSuchVerseException
-    {
+    protected BookTreeNode(TreeNode parent, int book) throws NoSuchVerseException {
         this.parent = parent;
         this.book = book;
 
@@ -53,27 +51,21 @@ public class BookTreeNode extends BibleTreeNode
     /**
      * This constructor is for when we are really a BookTreeNode
      */
-    public void setPassage(Passage ref, boolean filter)
-    {
+    public void setPassage(Passage ref, boolean filter) {
         this.ref = ref;
 
-        if (filter)
-        {
-            try
-            {
+        if (filter) {
+            try {
                 kids = new ChapterTreeNode[ref.chaptersInPassage(book)];
 
                 int currentRef = 0;
                 int count = 0;
 
                 Iterator it = ref.iterator();
-                while (it.hasNext())
-                {
+                while (it.hasNext()) {
                     Verse verse = (Verse) it.next();
 
-                    if ((book == 0 || verse.getBook() == book)
-                        && currentRef != verse.getChapter())
-                    {
+                    if ((book == 0 || verse.getBook() == book) && currentRef != verse.getChapter()) {
                         currentRef = verse.getChapter();
 
                         ChapterTreeNode node = new ChapterTreeNode(this, book, currentRef);
@@ -81,9 +73,7 @@ public class BookTreeNode extends BibleTreeNode
                         kids[count++] = node;
                     }
                 }
-            }
-            catch (NoSuchVerseException ex)
-            {
+            } catch (NoSuchVerseException ex) {
                 assert false : ex;
             }
         }
@@ -92,12 +82,9 @@ public class BookTreeNode extends BibleTreeNode
     /**
      * Returns the child <code>TreeNode</code> at index i
      */
-    public TreeNode getChildAt(int i)
-    {
-        try
-        {
-            if (kids[i] != null)
-            {
+    public TreeNode getChildAt(int i) {
+        try {
+            if (kids[i] != null) {
                 return kids[i];
             }
 
@@ -106,9 +93,7 @@ public class BookTreeNode extends BibleTreeNode
             kids[i] = node;
 
             return kids[i];
-        }
-        catch (NoSuchVerseException ex)
-        {
+        } catch (NoSuchVerseException ex) {
             assert false : ex;
             return null;
         }
@@ -117,20 +102,16 @@ public class BookTreeNode extends BibleTreeNode
     /**
      * Returns the parent <code>TreeNode</code> of the receiver.
      */
-    public TreeNode getParent()
-    {
+    public TreeNode getParent() {
         return parent;
     }
 
     /**
-     * Returns the index of <code>node</code> in the receivers children.
-     * If the receiver does not contain <code>node</code>, -1 will be
-     * returned.
+     * Returns the index of <code>node</code> in the receivers children. If the
+     * receiver does not contain <code>node</code>, -1 will be returned.
      */
-    public int getIndex(TreeNode node)
-    {
-        if (!(node instanceof ChapterTreeNode))
-        {
+    public int getIndex(TreeNode node) {
+        if (!(node instanceof ChapterTreeNode)) {
             return -1;
         }
 
@@ -141,26 +122,20 @@ public class BookTreeNode extends BibleTreeNode
     /**
      * How we appear in the Tree
      */
-    public String toString()
-    {
-        try
-        {
+    public String toString() {
+        try {
             String bookName = BibleInfo.getPreferredBookName(book);
-            if (ref == null)
-            {
+            if (ref == null) {
                 return bookName;
             }
 
             int chapters = ref.chaptersInPassage(book);
-            if (chapters == 0)
-            {
+            if (chapters == 0) {
                 return bookName;
             }
 
-            return bookName + " (" + chapters + ')';  //$NON-NLS-1$ 
-        }
-        catch (NoSuchVerseException ex)
-        {
+            return bookName + " (" + chapters + ')'; //$NON-NLS-1$ 
+        } catch (NoSuchVerseException ex) {
             assert false : ex;
             return "!Error!"; //$NON-NLS-1$
         }
@@ -169,8 +144,7 @@ public class BookTreeNode extends BibleTreeNode
     /**
      * The current book number (Genesis=1)
      */
-    public int getBook()
-    {
+    public int getBook() {
         return book;
     }
 
@@ -182,4 +156,3 @@ public class BookTreeNode extends BibleTreeNode
     /** The base of this tree */
     protected TreeNode parent;
 }
-

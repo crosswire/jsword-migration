@@ -25,29 +25,27 @@ import javax.swing.JComponent;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.metal.MetalTabbedPaneUI;
 
-
 /**
  * Provides customization to MetalLF Tabbed panes.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Willie Thean [williethean at yahoo dot com]
  */
-public class MetalBorderlessTabbedPaneUI extends MetalTabbedPaneUI
-{
-    public static ComponentUI createUI(JComponent x)
-    {
+public class MetalBorderlessTabbedPaneUI extends MetalTabbedPaneUI {
+    public static ComponentUI createUI(JComponent x) {
         return new MetalBorderlessTabbedPaneUI();
     }
 
     /**
      * Return a new Insets(0, 0, 0, 0). <CODE>tabPlacement</CODE>. is ignored.
-     * @param tabPlacement ignored
+     * 
+     * @param tabPlacement
+     *            ignored
      * @return a new Insets(0, 0, 0, 0)
      */
     /* @Override */
-    protected Insets getContentBorderInsets(int tabPlacement)
-    {
+    protected Insets getContentBorderInsets(int tabPlacement) {
         return new Insets(0, 0, 0, 0);
     }
 

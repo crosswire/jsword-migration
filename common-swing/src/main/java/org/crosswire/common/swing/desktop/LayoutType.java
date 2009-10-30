@@ -23,39 +23,39 @@ package org.crosswire.common.swing.desktop;
 
 import java.io.Serializable;
 
-
 /**
  * Types of ViewLayouts. Currently there are two types of desktop layouts:
  * <ul>
  * <li>TDI - tabbed document interface.</li>
  * <li>MDI - multiple document interface (sub-windows)</li>
  * </ul>
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public abstract class LayoutType implements Serializable
-{
+public abstract class LayoutType implements Serializable {
     /**
      * Tabbed View
      */
     public static final LayoutType TDI = new LayoutType("TDI") //$NON-NLS-1$
     {
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see org.crosswire.common.swing.desktop.LayoutType#createLayout()
          */
-        public AbstractViewLayout createLayout()
-        {
+        public AbstractViewLayout createLayout() {
             return new TDIViewLayout();
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see org.crosswire.common.swing.desktop.LayoutType#toString()
          */
-        public String toString()
-        {
+        public String toString() {
             return UserMsg.TDI.toString();
         }
 
@@ -70,19 +70,21 @@ public abstract class LayoutType implements Serializable
      */
     public static final LayoutType MDI = new LayoutType("MDI") //$NON-NLS-1$
     {
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see org.crosswire.common.swing.desktop.LayoutType#createLayout()
          */
-        public AbstractViewLayout createLayout()
-        {
+        public AbstractViewLayout createLayout() {
             return new MDIViewLayout();
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see org.crosswire.common.swing.desktop.LayoutType#toString()
          */
-        public String toString()
-        {
+        public String toString() {
             return UserMsg.MDI.toString();
         }
 
@@ -95,22 +97,20 @@ public abstract class LayoutType implements Serializable
     /**
      * Simple ctor
      */
-    protected LayoutType(String name)
-    {
+    protected LayoutType(String name) {
         this.name = name;
     }
 
     /**
      * Return the layout
-     *
+     * 
      * @return the layout
      */
-    public AbstractViewLayout getLayout()
-    {
-        // In order to get the proper LAF it needs to be created after the LAF is set
+    public AbstractViewLayout getLayout() {
+        // In order to get the proper LAF it needs to be created after the LAF
+        // is set
         // So we delay it until it is actually needed.
-        if (layout == null)
-        {
+        if (layout == null) {
             layout = createLayout();
         }
         return layout;
@@ -118,6 +118,7 @@ public abstract class LayoutType implements Serializable
 
     /**
      * Create the appropriate kind of view layout
+     * 
      * @return the created view layout
      */
     public abstract AbstractViewLayout createLayout();
@@ -125,12 +126,9 @@ public abstract class LayoutType implements Serializable
     /**
      * Get an integer representation for this LayoutType
      */
-    public int toInteger()
-    {
-        for (int i = 0; i < VALUES.length; i++)
-        {
-            if (equals(VALUES[i]))
-            {
+    public int toInteger() {
+        for (int i = 0; i < VALUES.length; i++) {
+            if (equals(VALUES[i])) {
                 return i;
             }
         }
@@ -142,13 +140,10 @@ public abstract class LayoutType implements Serializable
     /**
      * Lookup method to convert from a String
      */
-    public static LayoutType fromString(String name)
-    {
-        for (int i = 0; i < VALUES.length; i++)
-        {
+    public static LayoutType fromString(String name) {
+        for (int i = 0; i < VALUES.length; i++) {
             LayoutType obj = VALUES[i];
-            if (obj.name.equalsIgnoreCase(name))
-            {
+            if (obj.name.equalsIgnoreCase(name)) {
                 return obj;
             }
         }
@@ -160,34 +155,36 @@ public abstract class LayoutType implements Serializable
     /**
      * Lookup method to convert from an integer
      */
-    public static LayoutType fromInteger(int i)
-    {
+    public static LayoutType fromInteger(int i) {
         return VALUES[i];
     }
 
     /**
-     * Prevent subclasses from overriding canonical identity based Object methods
+     * Prevent subclasses from overriding canonical identity based Object
+     * methods
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public final boolean equals(Object o)
-    {
+    public final boolean equals(Object o) {
         return super.equals(o);
     }
 
     /**
-     * Prevent subclasses from overriding canonical identity based Object methods
+     * Prevent subclasses from overriding canonical identity based Object
+     * methods
+     * 
      * @see java.lang.Object#hashCode()
      */
-    public final int hashCode()
-    {
+    public final int hashCode() {
         return super.hashCode();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
-    public String toString()
-    {
+    public String toString() {
         return name;
     }
 
@@ -205,15 +202,12 @@ public abstract class LayoutType implements Serializable
     private static int nextObj;
     private final int obj = nextObj++;
 
-    Object readResolve()
-    {
+    Object readResolve() {
         return VALUES[obj];
     }
 
-    private static final LayoutType[] VALUES =
-    {
-        TDI,
-        MDI,
+    private static final LayoutType[] VALUES = {
+            TDI, MDI,
     };
 
     /**

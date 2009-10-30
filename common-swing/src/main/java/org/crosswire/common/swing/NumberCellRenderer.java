@@ -29,41 +29,39 @@ import javax.swing.JList;
 import org.crosswire.common.icu.NumberShaper;
 
 /**
- * Render a list of Bible Book names with their full name as a tooltip
- *
- * @see gnu.gpl.License for license details.
+ * Render a list of numbers
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class NumberCellRenderer extends DefaultListCellRenderer
-{
+public class NumberCellRenderer extends DefaultListCellRenderer {
     /**
      * Constructs a default renderer for a list of numbers.
      */
-    public NumberCellRenderer()
-    {
+    public NumberCellRenderer() {
         this.shaper = new NumberShaper();
         GuiUtil.applyDefaultOrientation(this);
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.DefaultListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * javax.swing.DefaultListCellRenderer#getListCellRendererComponent(javax
+     * .swing.JList, java.lang.Object, int, boolean, boolean)
      */
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean selected, boolean focus)
-    {
+    public Component getListCellRendererComponent(JList list, Object value, int index, boolean selected, boolean focus) {
         // Do the default rendering
         Component comp = super.getListCellRendererComponent(list, value, index, selected, focus);
 
         // Do our rendering
         setToolTipText(null);
 
-        if (value == null)
-        {
+        if (value == null) {
             setText(""); //$NON-NLS-1$
             setEnabled(false);
-        }
-        else
-        {
+        } else {
             setText(shaper.shape(value.toString()));
         }
 

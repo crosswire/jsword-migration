@@ -25,52 +25,59 @@ import org.crosswire.common.util.MsgBase;
 import org.crosswire.jsword.book.BookException;
 
 /**
- * When something tries to use a word that we don't understand. 
+ * When something tries to use a word that we don't understand.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class NoSuchResourceException extends BookException
-{
-	/**
+public class NoSuchResourceException extends BookException {
+    /**
      * Construct the Exception with a message
-     * @param msg The resource id to read
+     * 
+     * @param msg
+     *            The resource id to read
      */
-    public NoSuchResourceException(MsgBase msg)
-    {
+    public NoSuchResourceException(MsgBase msg) {
         super(msg);
     }
 
     /**
      * Construct the Exception with a message and a nested Exception
-     * @param msg The resource id to read
-     * @param ex The nested Exception
+     * 
+     * @param msg
+     *            The resource id to read
+     * @param ex
+     *            The nested Exception
      */
-    public NoSuchResourceException(MsgBase msg, Throwable ex)
-    {
+    public NoSuchResourceException(MsgBase msg, Throwable ex) {
         super(msg, ex);
     }
 
     /**
      * Construct the Exception with a message and some Msg params
-     * @param msg The resource id to read
-     * @param params An array of parameters
+     * 
+     * @param msg
+     *            The resource id to read
+     * @param params
+     *            An array of parameters
      */
-    public NoSuchResourceException(MsgBase msg, Object[] params)
-    {
+    public NoSuchResourceException(MsgBase msg, Object[] params) {
         super(msg, params);
     }
 
     /**
-     * Construct the Exception with a message, a nested Exception
-     * and some Msg params
-     * @param msg The resource id to read
-     * @param ex The nested Exception
-     * @param params An array of parameters
+     * Construct the Exception with a message, a nested Exception and some Msg
+     * params
+     * 
+     * @param msg
+     *            The resource id to read
+     * @param ex
+     *            The nested Exception
+     * @param params
+     *            An array of parameters
      */
-    public NoSuchResourceException(MsgBase msg, Throwable ex, Object[] params)
-    {
+    public NoSuchResourceException(MsgBase msg, Throwable ex, Object[] params) {
         super(msg, ex, params);
     }
 

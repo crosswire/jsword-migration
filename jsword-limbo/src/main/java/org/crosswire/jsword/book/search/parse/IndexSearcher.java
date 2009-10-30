@@ -41,54 +41,66 @@ import org.crosswire.jsword.passage.Key;
 
 /**
  * The central interface to all searching.
- *
- * Functionality the I invisage includes:<ul>
- * <li>A simple search syntax that goes something like this.<ul>
- * <li>aaron, moses     (verses containing aaron and moses. Can also use & or +)
- * <li>aaron/moses      (verses containing aaron or moses. Can also use |)
- * <li>aaron - moses    (verses containing aaron but not moses)
+ * 
+ * Functionality the I invisage includes:
+ * <ul>
+ * <li>A simple search syntax that goes something like this.
+ * <ul>
+ * <li>aaron, moses (verses containing aaron and moses. Can also use & or +)
+ * <li>aaron/moses (verses containing aaron or moses. Can also use |)
+ * <li>aaron - moses (verses containing aaron but not moses)
  * <li>aaron ~5 , moses (verses with aaron within 5 verses of moses)
- * <li>soundslike aaron (verses with words that sound like aaron. Can also use sl ...)
- * <li>thesaurus happy  (verses with words that mean happy. Can also use th ...)
- * <li>grammar have     (words like has have had and so on. Can also use gr ...)</ul>
- * <li>The ability to add soundslike type extensions.</ul>
- *
- * @see gnu.lgpl.License for license details.
+ * <li>soundslike aaron (verses with words that sound like aaron. Can also use
+ * sl ...)
+ * <li>thesaurus happy (verses with words that mean happy. Can also use th ...)
+ * <li>grammar have (words like has have had and so on. Can also use gr ...)
+ * </ul>
+ * <li>The ability to add soundslike type extensions.
+ * </ul>
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class IndexSearcher implements Searcher
-{
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.Searcher#init(org.crosswire.jsword.book.search.Index)
+public class IndexSearcher implements Searcher {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.Searcher#init(org.crosswire.jsword.book
+     * .search.Index)
      */
-    public void init(Index newindex)
-    {
+    public void init(Index newindex) {
         this.index = newindex;
         this.commands = getWordMap();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.search.Searcher#search(java.lang.String)
      */
-    public Key search(Query request) throws BookException
-    {
+    public Key search(Query request) throws BookException {
         return request.find(index);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.search.Searcher#search(java.lang.String)
      */
-    public Key search(String request) throws BookException
-    {
+    public Key search(String request) throws BookException {
         return search(new DefaultSearchRequest(request));
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.Searcher#search(org.crosswire.jsword.book.search.SearchRequest)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.Searcher#search(org.crosswire.jsword
+     * .book.search.SearchRequest)
      */
-    public Key search(SearchRequest request) throws BookException
-    {
+    public Key search(SearchRequest request) throws BookException {
         index.setSearchModifier(request.getSearchModifier());
         List output = CustomTokenizer.tokenize(request.getRequest(), commands);
         Key results = search(output);
@@ -98,44 +110,42 @@ public class IndexSearcher implements Searcher
 
     /**
      * Take a search string and decipher it into a Passage.
-     * @param sought The string to be searched for
+     * 
+     * @param sought
+     *            The string to be searched for
      * @return The matching verses
      */
-    protected Key wordSearch(String sought) throws BookException
-    {
+    protected Key wordSearch(String sought) throws BookException {
         return index.find(sought);
     }
 
     /**
      * Take a search string and decipher it into a Passage.
+     * 
      * @return The matching verses
      */
-    protected Key search(List matches) throws BookException
-    {
+    protected Key search(List matches) throws BookException {
         Key key = index.find(null);
 
         // Need a CommandWord, but a ParamWord we can deal with using an
         // AddCommandWord chucked on the front
-        if (matches.get(0) instanceof ParamWord)
-        {
+        if (matches.get(0) instanceof ParamWord) {
             // Add a default AddCommandWord to the front it there is
             matches.add(0, new AddCommandWord());
         }
 
         wit = matches.iterator();
-        while (wit.hasNext())
-        {
+        while (wit.hasNext()) {
             Object temp = wit.next();
 
-            try
-            {
+            try {
                 CommandWord command = (CommandWord) temp;
                 command.updatePassage(this, key);
-            }
-            catch (ClassCastException ex)
-            {
+            } catch (ClassCastException ex) {
                 ex.printStackTrace(System.err);
-                throw new BookException(Msg.ENGINE_SYNTAX, new Object[] { temp });
+                throw new BookException(Msg.ENGINE_SYNTAX, new Object[] {
+                    temp
+                });
             }
         }
 
@@ -150,16 +160,17 @@ public class IndexSearcher implements Searcher
     /**
      * A basic version of getPassage(String[]) simply calls getPassage(String)
      * in a loop for each word, adding the Verses to an Passage that is returned
-     * @param words The words to search for
+     * 
+     * @param words
+     *            The words to search for
      * @return The Passage
-     * @throws BookException If anything goes wrong with this method
+     * @throws BookException
+     *             If anything goes wrong with this method
      */
-    protected Key getPassage(String[] words) throws BookException
-    {
+    protected Key getPassage(String[] words) throws BookException {
         Key ref = index.find(null);
 
-        for (int i = 0; i < words.length; i++)
-        {
+        for (int i = 0; i < words.length; i++) {
             ref.addAll(wordSearch(words[i]));
         }
 
@@ -168,31 +179,30 @@ public class IndexSearcher implements Searcher
 
     /**
      * Accessor for the Bible to search.
+     * 
      * @return The current Bible
      */
-    protected Index getIndex()
-    {
+    protected Index getIndex() {
         return index;
     }
 
     /**
-     * Accessor for the available SearchWords. This is probably
-     * the same as from Options.getSearchHashtable() but just in
-     * case anyone has been playing around with it...
+     * Accessor for the available SearchWords. This is probably the same as from
+     * Options.getSearchHashtable() but just in case anyone has been playing
+     * around with it...
+     * 
      * @return The Word Hashtable
      */
-    protected Map getSearchMap()
-    {
+    protected Map getSearchMap() {
         return commands;
     }
 
     /**
-     * Accessor for the available SearchWords. This is probably
-     * the same as from Options.getSearchHashtable() but just in
-     * case anyone has been playing around with it...
+     * Accessor for the available SearchWords. This is probably the same as from
+     * Options.getSearchHashtable() but just in case anyone has been playing
+     * around with it...
      */
-    protected void setSearchMap(Map commands)
-    {
+    protected void setSearchMap(Map commands) {
         this.commands = commands;
     }
 
@@ -200,26 +210,23 @@ public class IndexSearcher implements Searcher
      * Most Words need to access parameters, this method allows them access to
      * the Searcher's own Enumerator. Use with care, and only if you are a Word
      * taking part in the current search.
+     * 
      * @return The current Iterator
      */
-    protected Iterator iterator()
-    {
+    protected Iterator iterator() {
         return wit;
     }
 
     /**
      * @throws BookException
      */
-    public Key iteratePassage() throws BookException
-    {
-        if (!iterator().hasNext())
-        {
+    public Key iteratePassage() throws BookException {
+        if (!iterator().hasNext()) {
             throw new BookException(Msg.RETAIN_BLANK);
         }
 
         Object next = iterator().next();
-        if (!(next instanceof ParamWord))
-        {
+        if (!(next instanceof ParamWord)) {
             log.error("next=" + next); //$NON-NLS-1$
         }
 
@@ -232,16 +239,13 @@ public class IndexSearcher implements Searcher
     /**
      * @throws BookException
      */
-    public String iterateWord() throws BookException
-    {
-        if (!iterator().hasNext())
-        {
+    public String iterateWord() throws BookException {
+        if (!iterator().hasNext()) {
             throw new BookException(Msg.RETAIN_BLANK);
         }
 
         Object next = iterator().next();
-        if (!(next instanceof ParamWord))
-        {
+        if (!(next instanceof ParamWord)) {
             log.error("next=" + next); //$NON-NLS-1$
         }
 
@@ -254,49 +258,34 @@ public class IndexSearcher implements Searcher
     /**
      * Accessor for the cached list of known special lookup words
      */
-    public static Map getWordMap()
-    {
-        if (wordMap == null)
-        {
-            try
-            {
+    public static Map getWordMap() {
+        if (wordMap == null) {
+            try {
                 Properties prop = ResourceUtil.getProperties(Word.class);
 
                 wordMap = new HashMap();
                 preferredMap = new HashMap();
 
-                for (Iterator it = prop.keySet().iterator(); it.hasNext(); )
-                {
+                for (Iterator it = prop.keySet().iterator(); it.hasNext();) {
                     String key = (String) it.next();
                     String value = prop.getProperty(key);
 
-                    if (key.startsWith(PACKAGE_NAME))
-                    {
-                        try
-                        {
+                    if (key.startsWith(PACKAGE_NAME)) {
+                        try {
                             Class clazz = Class.forName(key);
                             preferredMap.put(clazz, value);
-                        }
-                        catch (Exception ex)
-                        {
+                        } catch (Exception ex) {
                             log.error("can't add CommandWord: key=" + key + " Class=" + value, ex); //$NON-NLS-1$ //$NON-NLS-2$
                         }
-                    }
-                    else
-                    {
-                        try
-                        {
+                    } else {
+                        try {
                             wordMap.put(key, ReflectionUtil.construct(value));
-                        }
-                        catch (Exception ex)
-                        {
+                        } catch (Exception ex) {
                             log.error("can't add CommandWord: key=" + key + " Class=" + value, ex); //$NON-NLS-1$ //$NON-NLS-2$
                         }
                     }
                 }
-            }
-            catch (IOException ex)
-            {
+            } catch (IOException ex) {
                 log.fatal("Missing search words", ex); //$NON-NLS-1$
             }
         }
@@ -307,15 +296,15 @@ public class IndexSearcher implements Searcher
     /**
      * Accessor for the cached list of known special lookup words
      */
-    public static String getPreferredSyntax(Class command)
-    {
+    public static String getPreferredSyntax(Class command) {
         // Check the maps have been created
         getWordMap();
         return (String) preferredMap.get(command);
     }
 
     /**
-     * To distinguish command mappings from preferred mappings in Word.properties
+     * To distinguish command mappings from preferred mappings in
+     * Word.properties
      */
     private static final String PACKAGE_NAME = "org.crosswire.jsword.book.search.parse"; //$NON-NLS-1$
 

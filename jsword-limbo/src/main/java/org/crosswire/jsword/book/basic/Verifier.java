@@ -40,111 +40,100 @@ import org.crosswire.jsword.versification.BibleInfo;
 /**
  * The Verifier check 2 versions for identical text.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class Verifier
-{
+public class Verifier {
     /**
      * Constructor that sets up the Bibles as well.
      */
-    public Verifier(Book book1, Book book2)
-    {
+    public Verifier(Book book1, Book book2) {
         setBible1(book1);
         setBible2(book2);
     }
 
     /**
-     * The first Bible that we are checking, this is supposed to be the
-     * more accurate of the 2 Bibles, so we use this as a source of the
-     * words to check.
-     * @param book1 A Bible to check
+     * The first Bible that we are checking, this is supposed to be the more
+     * accurate of the 2 Bibles, so we use this as a source of the words to
+     * check.
+     * 
+     * @param book1
+     *            A Bible to check
      */
-    public final void setBible1(Book book1)
-    {
+    public final void setBible1(Book book1) {
         this.book1 = book1;
     }
 
     /**
      * The first Bible that we are checking
+     * 
      * @return A Bible to check
      */
-    public final Book getBible1()
-    {
+    public final Book getBible1() {
         return book1;
     }
 
     /**
-     * The second Bible that we are checking, this is supposed to be the
-     * less accurate, or more recent of the 2 Bibles, so we use this in
-     * firing ProgressEvents.
-     * @param book2 A Bible to check
+     * The second Bible that we are checking, this is supposed to be the less
+     * accurate, or more recent of the 2 Bibles, so we use this in firing
+     * ProgressEvents.
+     * 
+     * @param book2
+     *            A Bible to check
      */
-    public final void setBible2(Book book2)
-    {
+    public final void setBible2(Book book2) {
         this.book2 = book2;
     }
 
     /**
      * The second Bible that we are checking
+     * 
      * @return A Bible to check
      */
-    public final Book getBible2()
-    {
+    public final Book getBible2() {
         return book2;
     }
 
     /**
      * Read from the given source version to generate ourselves
      */
-    public void checkText(Key key, PrintWriter out)
-    {
+    public void checkText(Key key, PrintWriter out) {
         Progress job = JobManager.createJob(VerifierMsg.VERIFY_START.toString(), Thread.currentThread(), false);
 
-        if (key == null)
-        {
+        if (key == null) {
             key = book1.getGlobalKeyList();
         }
 
         // For every verse in the Bible
         job.setSectionName(VerifierMsg.VERIFY_VERSES.toString());
         int percent = 0;
-        for (Iterator it = key.iterator(); it.hasNext(); )
-        {
+        for (Iterator it = key.iterator(); it.hasNext();) {
             Key subkey = (Key) it.next();
 
-            if (subkey.canHaveChildren())
-            {
+            if (subkey.canHaveChildren()) {
                 checkText(subkey, out);
-            }
-            else
-            {
-                try
-                {
+            } else {
+                try {
                     // Read the document from the first bible
                     BookData text1 = new BookData(book1, subkey);
                     BookData text2 = new BookData(book2, subkey);
 
                     // Check - this needs some work
-                    if (!text1.equals(text2))
-                    {
+                    if (!text1.equals(text2)) {
                         out.println(VerifierMsg.VERIFY_VERSE.toString() + subkey);
                         out.println(book1.getName() + ": " + text1); //$NON-NLS-1$
                         out.println(book2.getName() + ": " + text2); //$NON-NLS-1$
                         out.println();
                     }
-                }
-                catch (Exception ex)
-                {
+                } catch (Exception ex) {
                     out.println(VerifierMsg.VERIFY_VERSE.toString() + subkey);
                     ex.printStackTrace(out);
                     out.println();
                 }
 
                 // Fire a progress event?
-                if (subkey instanceof Passage)
-                {
+                if (subkey instanceof Passage) {
                     Verse verse = KeyUtil.getVerse(key);
                     percent = 100 * verse.getOrdinal() / BibleInfo.versesInBible();
                 }
@@ -153,8 +142,7 @@ public class Verifier
 
                 // This could take a long time ...
                 Thread.yield();
-                if (Thread.currentThread().isInterrupted())
-                {
+                if (Thread.currentThread().isInterrupted()) {
                     break;
                 }
             }
@@ -164,32 +152,28 @@ public class Verifier
     /**
      * Read from the given source version to generate ourselves
      */
-    public void checkPassage(PrintWriter out) throws BookException
-    {
+    public void checkPassage(PrintWriter out) throws BookException {
         Progress job = JobManager.createJob(VerifierMsg.VERIFY_PASSAGES.toString(), Thread.currentThread(), false);
         int count = 0;
         int percent = -1;
 
         // For every word in the word list
-        //Iterator it = bible1.listWords();
+        // Iterator it = bible1.listWords();
         Iterator it = new ArrayList().iterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             String word = (String) it.next();
             checkSinglePassage(word, out);
 
             // Fire a progress event?
             int newpercent = 100 * count++ / GUESS_WORDS;
-            if (percent != newpercent)
-            {
+            if (percent != newpercent) {
                 percent = newpercent;
                 job.setWork(percent);
             }
 
             // This could take a long time ...
             Thread.yield();
-            if (Thread.currentThread().isInterrupted())
-            {
+            if (Thread.currentThread().isInterrupted()) {
                 break;
             }
         }
@@ -200,14 +184,12 @@ public class Verifier
     /**
      * Read from the given source version to generate ourselves
      */
-    private void checkSinglePassage(String word, PrintWriter out) throws BookException
-    {
+    private void checkSinglePassage(String word, PrintWriter out) throws BookException {
         Key ref1 = book1.find(new DefaultSearchRequest(word, null));
         Key ref2 = book2.find(new DefaultSearchRequest(word, null));
 
         // Check
-        if (!ref1.equals(ref2))
-        {
+        if (!ref1.equals(ref2)) {
             out.println(VerifierMsg.VERIFY_WORD.toString() + word);
             out.println(book1.getName() + ": " + ref1); //$NON-NLS-1$
             out.println(book2.getName() + ": " + ref2); //$NON-NLS-1$
@@ -216,7 +198,8 @@ public class Verifier
     }
 
     /**
-     * We have no way of knowing exactly how many words there are in a Version ...
+     * We have no way of knowing exactly how many words there are in a Version
+     * ...
      */
     public static final int GUESS_WORDS = 18500;
 

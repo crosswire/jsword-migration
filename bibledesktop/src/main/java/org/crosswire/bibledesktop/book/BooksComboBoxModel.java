@@ -32,41 +32,37 @@ import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.Defaults;
 
 /**
- * The BibleModels class implements a number of swing DataModels
- * and gives access to the list of current Bibles.
- *
- * @see gnu.gpl.License for license details.
+ * The BibleModels class implements a number of swing DataModels and gives
+ * access to the list of current Bibles.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
-{
+public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel {
     /**
      * Basic Constructor
      */
-    public BooksComboBoxModel()
-    {
+    public BooksComboBoxModel() {
         this(null, null);
     }
 
     /**
      * Basic Constructor
      */
-    public BooksComboBoxModel(BookFilter filter)
-    {
+    public BooksComboBoxModel(BookFilter filter) {
         this(filter, null);
     }
+
     /**
      * Basic Constructor
      */
-    public BooksComboBoxModel(BookFilter filter, Comparator comparator)
-    {
+    public BooksComboBoxModel(BookFilter filter, Comparator comparator) {
         super(filter, comparator);
 
         postCacheData();
 
-        if (getSize() > 0)
-        {
+        if (getSize() > 0) {
             // The default is to have the first selected
             current = (Book) getElementAt(0);
 
@@ -82,13 +78,10 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
     /**
      * @param book
      */
-    private void tryInitialSelection(Book book)
-    {
-        if (book != null)
-        {
+    private void tryInitialSelection(Book book) {
+        if (book != null) {
             int i = getIndexOf(book);
-            if (i != -1)
-            {
+            if (i != -1) {
                 current = book;
             }
         }
@@ -97,8 +90,7 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
     /* (non-Javadoc)
      * @see javax.swing.ComboBoxModel#setSelectedItem(java.lang.Object)
      */
-    public void setSelectedItem(Object selected)
-    {
+    public void setSelectedItem(Object selected) {
         this.current = (Book) selected;
         Defaults.setCurrentBook(current);
         fireContentsChanged(this, -1, -1);
@@ -107,46 +99,38 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
     /* (non-Javadoc)
      * @see javax.swing.ComboBoxModel#getSelectedItem()
      */
-    public Object getSelectedItem()
-    {
+    public Object getSelectedItem() {
         return current;
     }
 
     /**
      * Get the selected Bible
+     * 
      * @return A Bible
      */
-    public Book getSelectedBook()
-    {
+    public Book getSelectedBook() {
         return current;
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.BooksListModel#cacheData()
      */
-    protected final synchronized void postCacheData()
-    {
+    protected final synchronized void postCacheData() {
         // Find the previously selected item
         boolean found = false;
         int size = getSize();
-        for (int i = 0; i < size; i++)
-        {
-            if (getElementAt(i) == current)
-            {
+        for (int i = 0; i < size; i++) {
+            if (getElementAt(i) == current) {
                 found = true;
                 break;
             }
         }
 
         // If it was not found then either set to first element or null
-        if (!found)
-        {
-            if (getSize() > 0)
-            {
+        if (!found) {
+            if (getSize() > 0) {
                 current = (Book) getElementAt(0);
-            }
-            else
-            {
+            } else {
                 current = null;
             }
         }
@@ -159,8 +143,7 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         current = null;
         is.defaultReadObject();
     }

@@ -34,28 +34,27 @@ import org.crosswire.jsword.book.Books;
  * A fullfilment of RemoteBibleDriver that uses an HTTP commection to
  * communicate.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class HttpRemoteBookDriver extends RemoteBookDriver
-{
+public class HttpRemoteBookDriver extends RemoteBookDriver {
     /**
      * Pass on the exception because RemoteBibleDriver.ctor() could fail due to
      * its ping start-up operation.
      */
-    public HttpRemoteBookDriver(String baseurl) throws RemoterException
-    {
+    public HttpRemoteBookDriver(String baseurl) throws RemoterException {
         remoter = new HttpRemoter(baseurl);
         ping();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.remote.RemoteBookDriver#getRemoter()
      */
     /* @Override */
-    protected Remoter getRemoter()
-    {
+    protected Remoter getRemoter() {
         return remoter;
     }
 
@@ -66,13 +65,12 @@ public class HttpRemoteBookDriver extends RemoteBookDriver
 
     /**
      * Accessor for the URLs that we talk to.
+     * 
      * @return String
      */
-    public static String[] getURLs()
-    {
+    public static String[] getURLs() {
         String[] copy = new String[urls.length];
-        for (int i = 0; i < copy.length; i++)
-        {
+        for (int i = 0; i < copy.length; i++) {
             copy[i] = urls[i];
         }
 
@@ -82,17 +80,12 @@ public class HttpRemoteBookDriver extends RemoteBookDriver
     /**
      * Accessor for the URLs that we talk to.
      */
-    public static void setURLs(String[] urls)
-    {
+    public static void setURLs(String[] urls) {
         // first unregister all the old drivers
-        for (int i=0; i<drivers.length; i++)
-        {
-            try
-            {
+        for (int i = 0; i < drivers.length; i++) {
+            try {
                 Books.installed().unregisterDriver(drivers[i]);
-            }
-            catch (BookException ex)
-            {
+            } catch (BookException ex) {
                 Reporter.informUser(HttpRemoteBookDriver.class, ex);
             }
         }
@@ -100,17 +93,13 @@ public class HttpRemoteBookDriver extends RemoteBookDriver
         // Then create and register the new ones
         HttpRemoteBookDriver.urls = urls;
         List dlist = new ArrayList();
-        for (int i=0; i<urls.length; i++)
-        {
-            try
-            {
-                BookDriver driver = new HttpRemoteBookDriver(urls[i]); 
+        for (int i = 0; i < urls.length; i++) {
+            try {
+                BookDriver driver = new HttpRemoteBookDriver(urls[i]);
                 dlist.add(driver);
                 Books.installed().registerDriver(driver);
-            }
-            catch (Exception ex)
-            {
-                log.warn("Failed to start driver using: "+urls[i]); //$NON-NLS-1$
+            } catch (Exception ex) {
+                log.warn("Failed to start driver using: " + urls[i]); //$NON-NLS-1$
             }
         }
 
@@ -129,9 +118,9 @@ public class HttpRemoteBookDriver extends RemoteBookDriver
      * An array of the urls that we are currently using.
      */
     private static String[] urls = new String[0];
-    
+
     /**
-     * An array of the drivers that we are currently using. 
+     * An array of the drivers that we are currently using.
      */
     private static HttpRemoteBookDriver[] drivers = new HttpRemoteBookDriver[0];
 }

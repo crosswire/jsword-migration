@@ -20,7 +20,6 @@
  * ID: $Id: JSwordLimboAllTests.java 879 2006-01-19 10:08:28 -0500 (Thu, 19 Jan 2006) dmsmith $
  */
 // package default;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -28,19 +27,16 @@ import junit.framework.TestSuite;
 /**
  * JUnit Test.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class JSwordLimboAllTests extends TestCase
-{
-    public JSwordLimboAllTests(String s)
-    {
+public class JSwordLimboAllTests extends TestCase {
+    public JSwordLimboAllTests(String s) {
         super(s);
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite();
 
         suite.addTestSuite(org.crosswire.jsword.book.jdbc.JDBCBookTest.class);

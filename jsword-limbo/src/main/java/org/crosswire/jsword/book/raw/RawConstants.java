@@ -24,12 +24,11 @@ package org.crosswire.jsword.book.raw;
 /**
  * Various constants for RawBooks.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class RawConstants
-{
+public class RawConstants {
     static final String SIG_PARA_INST = "RAW:AI"; //$NON-NLS-1$
     static final String SIG_PUNC_INST = "RAW:PI"; //$NON-NLS-1$
     static final String SIG_CASE_INST = "RAW:CI"; //$NON-NLS-1$
@@ -47,11 +46,10 @@ public class RawConstants
     static final String FILE_WORD_ITEM = "word.idx"; //$NON-NLS-1$
 
     static final String FILE_BIBLE_PROPERTIES = "bible.properties"; //$NON-NLS-1$
-    
+
     /**
      * Prevent instantiation
      */
-    private RawConstants()
-    {
+    private RawConstants() {
     }
 }

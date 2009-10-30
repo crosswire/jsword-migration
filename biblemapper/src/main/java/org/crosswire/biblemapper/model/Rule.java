@@ -22,47 +22,57 @@
 package org.crosswire.biblemapper.model;
 
 /**
- * A Rule has the ability to specify where it would like a node to be
- * positioned in space. 
+ * A Rule has the ability to specify where it would like a node to be positioned
+ * in space.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public interface Rule
-{
+public interface Rule {
     /**
-     * Specify where it would like a node to be positioned in space.
-     * The Position is added to the results from all Rules and averaged
-     * out. A reply of null indicated no preference.
-     * @param map The Map to select a node from
-     * @param book The book number
-     * @param chapter The chapter 
+     * Specify where it would like a node to be positioned in space. The
+     * Position is added to the results from all Rules and averaged out. A reply
+     * of null indicated no preference.
+     * 
+     * @param map
+     *            The Map to select a node from
+     * @param book
+     *            The book number
+     * @param chapter
+     *            The chapter
      * @return Desired position.
      */
     Position getDesiredPosition(Map map, int book, int chapter);
 
     /**
-     * Specify where it would like a node to be positioned in space weighted
-     * buy the current scale
-     * @param map The Map to select a node from
-     * @param book The book number
-     * @param chapter The chapter 
+     * Specify where it would like a node to be positioned in space weighted buy
+     * the current scale
+     * 
+     * @param map
+     *            The Map to select a node from
+     * @param book
+     *            The book number
+     * @param chapter
+     *            The chapter
      * @return Desired position.
      */
     Position[] getScaledPosition(Map map, int book, int chapter);
 
     /**
-     * Each call to getDesiredPosition() returns an array of Positions,
-     * this method sets the preferred length of that returned array.
-     * @param scale The preferred length of the desired position array
+     * Each call to getDesiredPosition() returns an array of Positions, this
+     * method sets the preferred length of that returned array.
+     * 
+     * @param scale
+     *            The preferred length of the desired position array
      * @see #getDesiredPosition(Map, int, int)
      */
     void setScale(int scale);
 
     /**
-     * Each call to getDesiredPosition() returns an array of Positions,
-     * this method gets the preferred length of that returned array.
+     * Each call to getDesiredPosition() returns an array of Positions, this
+     * method gets the preferred length of that returned array.
+     * 
      * @return The preferred length of the desired position array
      * @see #getDesiredPosition(Map, int, int)
      */

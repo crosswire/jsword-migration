@@ -29,55 +29,52 @@ import java.util.Map;
  * RemoteMethod is a simple way to encapsulate the name and parameters of a
  * remote method call.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class RemoteMethod
-{
+public class RemoteMethod {
     /**
      * Constructor RemoteMethod.
      */
-    public RemoteMethod(MethodName methodname)
-    {
+    public RemoteMethod(MethodName methodname) {
         this.methodname = methodname;
     }
 
     /**
      * Accessor for the method name
+     * 
      * @return String
      */
-    public MethodName getMethodName()
-    {
+    public MethodName getMethodName() {
         return methodname;
     }
 
     /**
      * Accessor for a parameter
      */
-    public String getParameter(ParamName key)
-    {
+    public String getParameter(ParamName key) {
         return (String) params.get(key);
     }
 
     /**
      * Accessor for the keys
      */
-    public Iterator getParameterKeys()
-    {
+    public Iterator getParameterKeys() {
         return params.keySet().iterator();
     }
 
     /**
-     * Add a parameter to this method call.
-     * The slightly unorthodox return allows us to chain calls to addParam()
-     * one behind the other,
-     * @param name The parameter name
-     * @param value The value to assign to this parameter
+     * Add a parameter to this method call. The slightly unorthodox return
+     * allows us to chain calls to addParam() one behind the other,
+     * 
+     * @param name
+     *            The parameter name
+     * @param value
+     *            The value to assign to this parameter
      * @return this to allow addParam chains
      */
-    public RemoteMethod addParam(ParamName name, String value)
-    {
+    public RemoteMethod addParam(ParamName name, String value) {
         params.put(name, value);
         return this;
     }
@@ -85,8 +82,7 @@ public class RemoteMethod
     /**
      * Remove all the parameters
      */
-    public void clearParams()
-    {
+    public void clearParams() {
         params = new HashMap();
     }
 

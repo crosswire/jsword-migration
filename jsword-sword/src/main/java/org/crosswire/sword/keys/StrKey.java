@@ -6,16 +6,15 @@
 
 package org.crosswire.sword.keys;
 
-
 public class StrKey extends SWKey {
 
-/******************************************************************************
- * StrKey Constructor - initializes instance of StrKey
- *
- * ENT:	ikey - text key (word, city, name, etc.)
- */
+    /******************************************************************************
+     * StrKey Constructor - initializes instance of StrKey
+     * 
+     * ENT: ikey - text key (word, city, name, etc.)
+     */
 
-	StrKey(String ikey) {
-		super(ikey);
-	}
+    StrKey(String ikey) {
+        super(ikey);
+    }
 }

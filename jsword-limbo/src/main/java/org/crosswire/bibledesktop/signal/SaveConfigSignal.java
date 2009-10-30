@@ -26,19 +26,16 @@ import java.util.Properties;
 /**
  * Asks for a saving of the configuration to permanent storage
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Don Brown [mrdon at twdata dot org]
  */
-public class SaveConfigSignal
-{
-    public SaveConfigSignal(Properties props)
-    {
+public class SaveConfigSignal {
+    public SaveConfigSignal(Properties props) {
         this.props = props;
     }
 
-    public Properties getProperties()
-    {
+    public Properties getProperties() {
         return props;
     }
 

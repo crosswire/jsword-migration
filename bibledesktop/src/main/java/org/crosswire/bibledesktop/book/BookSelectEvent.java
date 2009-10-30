@@ -28,28 +28,28 @@ import org.crosswire.jsword.book.BookProvider;
 /**
  * A BookSelectEvent happens whenever a user selects a book.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class BookSelectEvent extends EventObject
-{
+public class BookSelectEvent extends EventObject {
     /**
-     * Create a BookSelectionEvent, declaring that the BookProvider has a new selection.
+     * Create a BookSelectionEvent, declaring that the BookProvider has a new
+     * selection.
      * 
-     * @param source The thing that started this off
+     * @param source
+     *            The thing that started this off
      */
-    public BookSelectEvent(BookProvider source)
-    {
+    public BookSelectEvent(BookProvider source) {
         super(source);
     }
 
     /**
      * Get all the books.
+     * 
      * @return the books
      */
-    public BookProvider getBookProvider()
-    {
+    public BookProvider getBookProvider() {
         return (BookProvider) getSource();
     }
 

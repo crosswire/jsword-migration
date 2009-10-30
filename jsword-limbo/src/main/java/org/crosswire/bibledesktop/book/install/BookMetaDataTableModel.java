@@ -26,50 +26,42 @@ import org.crosswire.jsword.book.BookMetaData;
 
 /**
  * A TableModel that displays the data in a BookMetaData object.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class BookMetaDataTableModel extends MapTableModel
-{
+public class BookMetaDataTableModel extends MapTableModel {
     /**
      * Simple ctor
      */
-    public BookMetaDataTableModel()
-    {
+    public BookMetaDataTableModel() {
         setBookMetaData(null);
     }
 
     /**
      * Simple ctor with default BookMetaData
      */
-    public BookMetaDataTableModel(BookMetaData bmd)
-    {
+    public BookMetaDataTableModel(BookMetaData bmd) {
         setBookMetaData(bmd);
     }
 
     /**
      * @return Returns the BookMetaData.
      */
-    public BookMetaData getBookMetaData()
-    {
+    public BookMetaData getBookMetaData() {
         return bmd;
     }
 
     /**
-     * @param bmd The BookMetaData to set.
+     * @param bmd
+     *            The BookMetaData to set.
      */
-    public final void setBookMetaData(BookMetaData bmd)
-    {
-        if (bmd != this.bmd)
-        {
-            if (bmd == null)
-            {
+    public final void setBookMetaData(BookMetaData bmd) {
+        if (bmd != this.bmd) {
+            if (bmd == null) {
                 setMap(null);
-            }
-            else
-            {
+            } else {
                 setMap(bmd.getProperties());
             }
 

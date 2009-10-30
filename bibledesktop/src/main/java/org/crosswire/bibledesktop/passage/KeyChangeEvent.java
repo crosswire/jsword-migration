@@ -28,19 +28,20 @@ import org.crosswire.jsword.passage.Key;
 /**
  * A KeyChangeEvent happens whenever a user changes a key.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class KeyChangeEvent extends EventObject
-{
+public class KeyChangeEvent extends EventObject {
     /**
      * For when a key has been changed
-     * @param source The thing that started this off
-     * @param key The selected Key
+     * 
+     * @param source
+     *            The thing that started this off
+     * @param key
+     *            The selected Key
      */
-    public KeyChangeEvent(Object source, Key key)
-    {
+    public KeyChangeEvent(Object source, Key key) {
         super(source);
 
         this.key = key;
@@ -48,10 +49,10 @@ public class KeyChangeEvent extends EventObject
 
     /**
      * Get the key with its changes
+     * 
      * @return the changed key
      */
-    public Key getKey()
-    {
+    public Key getKey() {
         return key;
     }
 

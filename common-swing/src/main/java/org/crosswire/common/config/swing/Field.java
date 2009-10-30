@@ -27,36 +27,40 @@ import org.crosswire.common.config.Choice;
 
 /**
  * A Field is an interface for a visual representation of a Choice.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public interface Field
-{
+public interface Field {
     /**
-     * Some fields will need some extra info to display properly
-     * like the options in an options field. FieldMap calls this
-     * method with options provided by the choice.
-     * @param param The options provided by the Choice
+     * Some fields will need some extra info to display properly like the
+     * options in an options field. FieldMap calls this method with options
+     * provided by the choice.
+     * 
+     * @param param
+     *            The options provided by the Choice
      */
     void setChoice(Choice param);
 
     /**
      * Return a string version of the current value
+     * 
      * @return The current value
      */
     String getValue();
 
     /**
      * Set the current value.
-     * @param value The new text
+     * 
+     * @param value
+     *            The new text
      */
     void setValue(String value);
 
     /**
-     * Get the actual component that we can add to a Panel.
-     * (This can well be <code>this</code> in an implementation).
+     * Get the actual component that we can add to a Panel. (This can well be
+     * <code>this</code> in an implementation).
      */
     JComponent getComponent();
 }

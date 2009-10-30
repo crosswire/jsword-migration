@@ -27,18 +27,16 @@ import javax.swing.border.Border;
 
 /**
  * Provides customization to MetalLF Tabbed panes
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Willie Thean [williethean at yahoo dot com]
  */
-public class MetalLFCustoms extends AbstractLFCustoms
-{
+public class MetalLFCustoms extends AbstractLFCustoms {
     /**
      * Default constructor.
      */
-    public MetalLFCustoms()
-    {
+    public MetalLFCustoms() {
         super();
     }
 
@@ -46,17 +44,16 @@ public class MetalLFCustoms extends AbstractLFCustoms
      * Install Metal platform specific UI defaults.
      */
     /* @Override */
-    protected void initPlatformUIDefaults()
-    {
-        // Border panelSelectBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
-        Border panelSelectBorder = BorderFactory.createCompoundBorder(
-            new MetalPanelBorder(MetalPanelBorder.TOP | MetalPanelBorder.LEFT | MetalPanelBorder.RIGHT),
-            BorderFactory.createEmptyBorder(5, 5, 5, 5));
+    protected void initPlatformUIDefaults() {
+        // Border panelSelectBorder = BorderFactory.createEmptyBorder(5, 5, 5,
+        // 5);
+        Border panelSelectBorder = BorderFactory.createCompoundBorder(new MetalPanelBorder(MetalPanelBorder.TOP | MetalPanelBorder.LEFT
+                | MetalPanelBorder.RIGHT), BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         Object[] metalUIDefaults = new Object[] {
-            "BibleViewPane.TabbedPaneUI", MetalBorderlessTabbedPaneUI.createUI(null), //$NON-NLS-1$
-            "SplitPane.dividerSize", new Integer(5), //$NON-NLS-1$
-            "SelectPanel.border", panelSelectBorder //$NON-NLS-1$
+                "BibleViewPane.TabbedPaneUI", MetalBorderlessTabbedPaneUI.createUI(null), //$NON-NLS-1$
+                "SplitPane.dividerSize", new Integer(5), //$NON-NLS-1$
+                "SelectPanel.border", panelSelectBorder //$NON-NLS-1$
         };
 
         UIManager.getDefaults().putDefaults(metalUIDefaults);

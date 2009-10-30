@@ -31,51 +31,44 @@ import org.crosswire.common.swing.GuiUtil;
 
 /**
  * A JPanel class where it's child components will paint on top of its border.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Willie Thean [williethean at yahoo dot com]
  */
-public class TabbedPanePanel extends JPanel
-{
-    public TabbedPanePanel()
-    {
+public class TabbedPanePanel extends JPanel {
+    public TabbedPanePanel() {
         super();
         init();
     }
 
-    public TabbedPanePanel(boolean isDoubleBuffered)
-    {
+    public TabbedPanePanel(boolean isDoubleBuffered) {
         super(isDoubleBuffered);
         init();
     }
 
-    public TabbedPanePanel(LayoutManager layout)
-    {
+    public TabbedPanePanel(LayoutManager layout) {
         super(layout);
         init();
     }
 
-    public TabbedPanePanel(LayoutManager layout, boolean isDoubleBuffered)
-    {
+    public TabbedPanePanel(LayoutManager layout, boolean isDoubleBuffered) {
         super(layout, isDoubleBuffered);
         init();
     }
 
-    private void init()
-    {
+    private void init() {
         this.setBorder(UIManager.getBorder("TabbedPanePanel.border")); //$NON-NLS-1$
         GuiUtil.applyDefaultOrientation(this);
     }
 
     /**
-     * If we setBorder on this JPanel, the border width will be part of the insets.
-     * We return an insets of 0 so the child components will paint on top of the
-     * border.
+     * If we setBorder on this JPanel, the border width will be part of the
+     * insets. We return an insets of 0 so the child components will paint on
+     * top of the border.
      */
     /* @Override */
-    public Insets getInsets()
-    {
+    public Insets getInsets() {
         return new Insets(0, 0, 0, 0);
     }
 

@@ -26,15 +26,14 @@ import java.io.Serializable;
 import org.crosswire.common.util.MsgBase;
 
 /**
- * A definition of how open a Bible is. Can is be freely copied or is
- * it proprietary.
+ * A definition of how open a Bible is. Can is be freely copied or is it
+ * proprietary.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class Openness implements Serializable
-{
+public class Openness implements Serializable {
     /**
      * If the data of unknown distribution status
      */
@@ -63,21 +62,17 @@ public class Openness implements Serializable
     /**
      * Prevent anyone else from doing this
      */
-    private Openness(MsgBase msg)
-    {
+    private Openness(MsgBase msg) {
         name = msg.toString();
     }
 
     /**
      * Lookup method to convert from a String
      */
-    public static Openness fromString(String name)
-    {
-        for (int i = 0; i < VALUES.length; i++)
-        {
+    public static Openness fromString(String name) {
+        for (int i = 0; i < VALUES.length; i++) {
             Openness o = VALUES[i];
-            if (o.name.equalsIgnoreCase(name))
-            {
+            if (o.name.equalsIgnoreCase(name)) {
                 return o;
             }
         }
@@ -89,34 +84,36 @@ public class Openness implements Serializable
     /**
      * Lookup method to convert from an integer
      */
-    public static Openness fromInteger(int i)
-    {
+    public static Openness fromInteger(int i) {
         return VALUES[i];
     }
 
     /**
-     * Prevent subclasses from overriding canonical identity based Object methods
+     * Prevent subclasses from overriding canonical identity based Object
+     * methods
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public final boolean equals(Object o)
-    {
+    public final boolean equals(Object o) {
         return super.equals(o);
     }
 
     /**
-     * Prevent subclasses from overriding canonical identity based Object methods
+     * Prevent subclasses from overriding canonical identity based Object
+     * methods
+     * 
      * @see java.lang.Object#hashCode()
      */
-    public final int hashCode()
-    {
+    public final int hashCode() {
         return super.hashCode();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
-    public String toString()
-    {
+    public String toString() {
         return name;
     }
 
@@ -129,18 +126,12 @@ public class Openness implements Serializable
     private static int nextObj;
     private final int obj = nextObj++;
 
-    Object readResolve()
-    {
+    Object readResolve() {
         return VALUES[obj];
     }
 
-    private static final Openness[] VALUES =
-    {
-        UNKNOWN,
-        PD,
-        FREE,
-        COPYABLE,
-        COMMERCIAL
+    private static final Openness[] VALUES = {
+            UNKNOWN, PD, FREE, COPYABLE, COMMERCIAL
     };
 
     /**

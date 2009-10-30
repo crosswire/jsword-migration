@@ -31,23 +31,19 @@ import javax.swing.plaf.TabbedPaneUI;
 
 import org.crosswire.common.swing.GuiUtil;
 
-
 /**
- * TDI (Tabbed Document Interface) manager of how we layout views
- * as tabs.
- *
- * @see gnu.lgpl.License for license details.
+ * TDI (Tabbed Document Interface) manager of how we layout views as tabs.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class TDIViewLayout extends AbstractViewLayout
-{
+public class TDIViewLayout extends AbstractViewLayout {
     /**
      * Build a TDI layout
      */
-    public TDIViewLayout()
-    {
+    public TDIViewLayout() {
         super();
         tabs = new JTabbedPane();
         if (UIManager.getDefaults().containsKey("BibleViewPane.TabbedPaneUI")) //$NON-NLS-1$
@@ -58,17 +54,18 @@ public class TDIViewLayout extends AbstractViewLayout
         GuiUtil.applyDefaultOrientation(tabs);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.swing.desktop.AbstractViewLayout#addView(java.awt.Component)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.swing.desktop.AbstractViewLayout#addView(java.awt
+     * .Component)
      */
-    public void addView(Component component)
-    {
+    public void addView(Component component) {
         int viewCount = getViewCount();
 
-        if (viewCount > 0)
-        {
-            if (viewCount == 1)
-            {
+        if (viewCount > 0) {
+            if (viewCount == 1) {
                 Component first = getView(0);
                 getPanel().remove(first);
                 tabs.add(first, getTitle(first));
@@ -77,26 +74,25 @@ public class TDIViewLayout extends AbstractViewLayout
 
             tabs.add(component, getTitle(component));
             tabs.setSelectedComponent(component);
-        }
-        else
-        {
+        } else {
             getPanel().add(component, getConstraint());
         }
 
         super.addView(component);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.swing.desktop.AbstractViewLayout#removeView(java.awt.Component)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.swing.desktop.AbstractViewLayout#removeView(java
+     * .awt.Component)
      */
-    public void removeView(Component component)
-    {
+    public void removeView(Component component) {
         int viewCount = getViewCount();
 
-        if (viewCount == 1)
-        {
-            if (component instanceof Clearable)
-            {
+        if (viewCount == 1) {
+            if (component instanceof Clearable) {
                 ((Clearable) component).clear();
             }
             return;
@@ -106,8 +102,7 @@ public class TDIViewLayout extends AbstractViewLayout
 
         // There were two tabs and now there is one
         // We migrate from tabs to just the component
-        if (viewCount == 2)
-        {
+        if (viewCount == 2) {
             Component remaining = tabs.getComponentAt(0);
             // remove both tabs, because 0 will be reparented
             tabs.removeTabAt(0);
@@ -118,25 +113,24 @@ public class TDIViewLayout extends AbstractViewLayout
         super.removeView(component);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.swing.desktop.AbstractViewLayout#forceRemoveView(java.awt.Component)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.swing.desktop.AbstractViewLayout#forceRemoveView
+     * (java.awt.Component)
      */
-    protected void forceRemoveView(Component component)
-    {
+    protected void forceRemoveView(Component component) {
         int viewCount = getViewCount();
 
-        if (viewCount == 1)
-        {
+        if (viewCount == 1) {
             getPanel().remove(component);
-        }
-        else
-        {
+        } else {
             tabs.remove(component);
 
             // There were two tabs and now there is one
             // We migrate from tabs to just the component
-            if (viewCount == 2)
-            {
+            if (viewCount == 2) {
                 Component remaining = tabs.getComponentAt(0);
                 // remove both tabs, because 0 will be reparented
                 tabs.removeTabAt(0);
@@ -147,49 +141,51 @@ public class TDIViewLayout extends AbstractViewLayout
         super.forceRemoveView(component);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.desktop.ViewLayout#update(org.crosswire.bibledesktop.book.BibleViewPane)
+    /*
+     * (non-Javadoc)
+     * 
+     * @seeorg.crosswire.bibledesktop.desktop.ViewLayout#update(org.crosswire.
+     * bibledesktop.book.BibleViewPane)
      */
-    public void updateTitle(Component component)
-    {
-        if (getViewCount() > 1)
-        {
+    public void updateTitle(Component component) {
+        if (getViewCount() > 1) {
             int index = tabs.indexOfComponent(component);
             tabs.setTitleAt(index, getTitle(component));
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.bibledesktop.desktop.ViewLayout#getSelected()
      */
-    public Component getSelected()
-    {
-        if (getViewCount() == 1)
-        {
+    public Component getSelected() {
+        if (getViewCount() == 1) {
             return getView(0);
         }
         return tabs.getSelectedComponent();
     }
 
-
-    /* (non-Javadoc)
-     * @see org.crosswire.common.swing.desktop.AbstractViewLayout#select(java.awt.Component)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.swing.desktop.AbstractViewLayout#select(java.awt
+     * .Component)
      */
-    public void select(Component component)
-    {
+    public void select(Component component) {
         // If we don't have tabs then it is selected.
-        if (getViewCount() > 1)
-        {
+        if (getViewCount() > 1) {
             tabs.setSelectedComponent(component);
         }
     }
 
     /**
      * Bind a popup to the tabbed page
+     * 
      * @param popup
      */
-    public void addPopup(JPopupMenu popup)
-    {
+    public void addPopup(JPopupMenu popup) {
         MouseListener ml = new TabPopupListener(tabs, popup);
         tabs.addMouseListener(ml);
     }

@@ -37,56 +37,55 @@ import org.crosswire.common.util.Logger;
 
 /**
  * Allow the user to choose from a combo box.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class MappedOptionsField implements Field
-{
+public class MappedOptionsField implements Field {
     /**
      * Create an empty MappedOptionsField
      */
-    public MappedOptionsField()
-    {
-        combo = new JComboBox(new String[] { Msg.NO_OPTIONS.toString() });
-        // Set the preferred width. Note, the actual combo box will resize to the width of it's container
+    public MappedOptionsField() {
+        combo = new JComboBox(new String[] {
+            Msg.NO_OPTIONS.toString()
+        });
+        // Set the preferred width. Note, the actual combo box will resize to
+        // the width of it's container
         combo.setPreferredSize(new Dimension(100, combo.getPreferredSize().height));
         GuiUtil.applyDefaultOrientation(combo);
     }
 
     /**
-     * Some fields will need some extra info to display properly
-     * like the options in an options field. FieldMap calls this
-     * method with options provided by the choice.
-     * @param param The options provided by the Choice
+     * Some fields will need some extra info to display properly like the
+     * options in an options field. FieldMap calls this method with options
+     * provided by the choice.
+     * 
+     * @param param
+     *            The options provided by the Choice
      */
-    public void setChoice(Choice param)
-    {
-        if (!(param instanceof MappedChoice))
-        {
+    public void setChoice(Choice param) {
+        if (!(param instanceof MappedChoice)) {
             throw new IllegalArgumentException("Illegal type for Choice. Not a MappedChoice. " + param.getKey()); //$NON-NLS-1$
         }
         MappedChoice mc = (MappedChoice) param;
         Map map = mc.getOptions();
-        if (map == null)
-        {
+        if (map == null) {
             throw new IllegalArgumentException("getOptions() returns null for option: " + param.getKey()); //$NON-NLS-1$
         }
         combo.setModel(new MapComboBoxModel(map));
         combo.setRenderer(new MapEntryRenderer());
-   }
+    }
 
     /**
      * Return a string for use in the properties file
+     * 
      * @return The current value
      */
-    public String getValue()
-    {
+    public String getValue() {
         Object reply = combo.getSelectedItem();
 
-        if (reply instanceof Map.Entry)
-        {
+        if (reply instanceof Map.Entry) {
             return ((Map.Entry) reply).getKey().toString();
         }
         return reply == null ? "" : reply.toString(); //$NON-NLS-1$
@@ -94,20 +93,18 @@ public class MappedOptionsField implements Field
 
     /**
      * Set the current value
-     * @param value The new text
+     * 
+     * @param value
+     *            The new text
      */
-    public void setValue(String value)
-    {
+    public void setValue(String value) {
         ComboBoxModel model = combo.getModel();
         int size = model.getSize();
-        for (int i = 0; i < size; i++)
-        {
+        for (int i = 0; i < size; i++) {
             Object match = model.getElementAt(i);
-            if (match instanceof Map.Entry)
-            {
+            if (match instanceof Map.Entry) {
                 Map.Entry mapEntry = (Map.Entry) match;
-                if (mapEntry.getKey().toString().equals(value) || mapEntry.getValue().toString().equals(value))
-                {
+                if (mapEntry.getKey().toString().equals(value) || mapEntry.getValue().toString().equals(value)) {
                     combo.setSelectedItem(mapEntry);
                     return;
                 }
@@ -116,18 +113,16 @@ public class MappedOptionsField implements Field
 
         // Equate null and empty string
         Object selected = combo.getSelectedItem();
-        if (value.length() > 0 && selected != null)
-        {
-            log.warn("Checked for options without finding: '" + value + "'. Defaulting to first option: " + selected);  //$NON-NLS-1$//$NON-NLS-2$
+        if (value.length() > 0 && selected != null) {
+            log.warn("Checked for options without finding: '" + value + "'. Defaulting to first option: " + selected); //$NON-NLS-1$//$NON-NLS-2$
         }
     }
 
     /**
-     * Get the actual component that we can add to a Panel.
-     * (This can well be this in an implementation).
+     * Get the actual component that we can add to a Panel. (This can well be
+     * this in an implementation).
      */
-    public JComponent getComponent()
-    {
+    public JComponent getComponent() {
         return combo;
     }
 

@@ -26,26 +26,22 @@ import com.manning.blogapps.chapter08.blogclient.Blog;
 /**
  * Notifies that an blog entry is to be loaded
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Don Brown [mrdon at twdata dot org]
- *
+ * 
  */
-public class LoadEntrySignal
-{
-    public LoadEntrySignal(Blog site, String id)
-    {
+public class LoadEntrySignal {
+    public LoadEntrySignal(Blog site, String id) {
         this.site = site;
         this.id = id;
     }
 
-    public String getId()
-    {
+    public String getId() {
         return id;
     }
 
-    public Blog getBlog()
-    {
+    public Blog getBlog() {
         return site;
     }
 

@@ -27,29 +27,31 @@ import org.crosswire.jsword.book.install.InstallerFactory;
 
 /**
  * A Factory for instances of FtpSwordInstaller.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class FtpSwordInstallerFactory implements InstallerFactory
-{
-    /* (non-Javadoc)
+public class FtpSwordInstallerFactory implements InstallerFactory {
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.install.InstallerFactory#createInstaller()
      */
-    public Installer createInstaller()
-    {
+    public Installer createInstaller() {
         return new FtpSwordInstaller();
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.install.InstallerFactory#createInstaller(java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.install.InstallerFactory#createInstaller(java
+     * .lang.String)
      */
-    public Installer createInstaller(String url)
-    {
+    public Installer createInstaller(String url) {
         String[] parts = url.split(NetUtil.SEPARATOR, 4);
-        if (parts.length < 4)
-        {
+        if (parts.length < 4) {
             throw new IllegalArgumentException(Msg.INVALID_DEFINITION.toString(url));
         }
 
@@ -57,26 +59,21 @@ public class FtpSwordInstallerFactory implements InstallerFactory
         // part[0] is the 'protocol' which we don't care about
         // part[1] is the blank between the first 2 slashes
         String part2 = parts[2];
-        if (part2.indexOf(NetUtil.AUTH_SEPERATOR_USERNAME) >= 0)
-        {
+        if (part2.indexOf(NetUtil.AUTH_SEPERATOR_USERNAME) >= 0) {
             String[] chop2 = part2.split(NetUtil.AUTH_SEPERATOR_USERNAME);
-            if (chop2.length != 2)
-            {
+            if (chop2.length != 2) {
                 throw new IllegalArgumentException(FTPMsg.URL_AT_COUNT.toString(url));
             }
 
             String[] chop3 = chop2[0].split(NetUtil.AUTH_SEPERATOR_PASSWORD);
-            if (chop3.length != 2)
-            {
+            if (chop3.length != 2) {
                 throw new IllegalArgumentException(FTPMsg.URL_COLON_COUNT.toString(url));
             }
 
             reply.setUsername(chop3[0]);
             reply.setPassword(chop3[1]);
             reply.setHost(chop2[1]);
-        }
-        else
-        {
+        } else {
             reply.setHost(part2);
         }
         reply.setPackageDirectory(NetUtil.SEPARATOR + parts[3]);

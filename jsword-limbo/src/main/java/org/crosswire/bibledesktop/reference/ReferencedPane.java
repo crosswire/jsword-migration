@@ -59,17 +59,15 @@ import org.crosswire.jsword.passage.NoSuchKeyException;
 /**
  * Builds a panel on which all the Dictionaries and their entries are visible.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ReferencedPane extends JPanel implements BookDataDisplay
-{
-	/**
+public class ReferencedPane extends JPanel implements BookDataDisplay {
+    /**
      * Simple ctor
      */
-    public ReferencedPane()
-    {
+    public ReferencedPane() {
         filter = BookFilters.getAll();
         init();
     }
@@ -77,8 +75,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     /**
      * Ctor that filters the books displayed
      */
-    public ReferencedPane(BookFilter filter)
-    {
+    public ReferencedPane(BookFilter filter) {
         this.filter = filter;
         init();
     }
@@ -86,20 +83,16 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     /**
      * GUI initialiser
      */
-    private void init()
-    {
+    private void init() {
         mdlBooks.setFilter(filter);
         tblBooks.setVisibleRowCount(4);
         tblBooks.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblBooks.setModel(mdlBooks);
         tblBooks.setCellRenderer(new BookListCellRenderer());
         tblBooks.setPrototypeCellValue(BookListCellRenderer.PROTOTYPE_BOOK_NAME);
-        tblBooks.addListSelectionListener(new ListSelectionListener()
-        {
-            public void valueChanged(ListSelectionEvent ev)
-            {
-                if (ev.getValueIsAdjusting())
-                {
+        tblBooks.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent ev) {
+                if (ev.getValueIsAdjusting()) {
                     return;
                 }
 
@@ -108,13 +101,12 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
         });
         scrBooks.setViewportView(tblBooks);
 
-        //treEntries.setCellRenderer(new KeyTreeCellRenderer());
-        //treEntries.setModel(new DefaultTreeModel(new DefaultMutableTreeNode()));
+        // treEntries.setCellRenderer(new KeyTreeCellRenderer());
+        // treEntries.setModel(new DefaultTreeModel(new
+        // DefaultMutableTreeNode()));
         treEntries.setModel(new ReferenceTreeModel());
-        treEntries.addTreeSelectionListener(new TreeSelectionListener()
-        {
-            public void valueChanged(TreeSelectionEvent ev)
-            {
+        treEntries.addTreeSelectionListener(new TreeSelectionListener() {
+            public void valueChanged(TreeSelectionEvent ev) {
                 newEntry();
             }
         });
@@ -132,62 +124,72 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#clearBookData()
      */
-    public void clearBookData()
-    {
-        setBookData(null, null);        
+    public void clearBookData() {
+        setBookData(null, null);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book[], org.crosswire.jsword.passage.Key)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire
+     * .jsword.book.Book[], org.crosswire.jsword.passage.Key)
      */
-    public void setBookData(Book[] books, Key key)
-    {
+    public void setBookData(Book[] books, Key key) {
         throw new UnsupportedOperationException();
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#setCompareBooks(boolean)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.bibledesktop.display.BookDataDisplay#setCompareBooks(boolean
+     * )
      */
-    public void setCompareBooks(boolean compare)
-    {
+    public void setCompareBooks(boolean compare) {
         throw new UnsupportedOperationException();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#refresh()
      */
-    public void refresh()
-    {
-        throw new UnsupportedOperationException(); 
+    public void refresh() {
+        throw new UnsupportedOperationException();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getComponent()
      */
-    public Component getComponent()
-    {
+    public Component getComponent() {
         return this;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#copy()
      */
-    public void copy()
-    {
+    public void copy() {
         display.copy();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getKey()
      */
-    public Key getKey()
-    {
+    public Key getKey() {
         TreePath path = treEntries.getSelectionPath();
-        if (path == null)
-        {
+        if (path == null) {
             return null;
         }
 
@@ -195,86 +197,99 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
         return keytn.getKey();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBooks()
      */
-    public Book[] getBooks()
-    {
-        return new Book[] {book};
+    public Book[] getBooks() {
+        return new Book[] {
+            book
+        };
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getFirstBook()
      */
-    public Book getFirstBook()
-    {
+    public Book getFirstBook() {
         return book;
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.bibledesktop.display.BookDataDisplay#addKeyChangeListener
+     * (org.crosswire.bibledesktop.passage.KeyChangeListener)
      */
-    public void addKeyChangeListener(KeyChangeListener listener)
-    {
+    public void addKeyChangeListener(KeyChangeListener listener) {
         display.addKeyChangeListener(listener);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.bibledesktop.display.BookDataDisplay#removeKeyChangeListener
+     * (org.crosswire.bibledesktop.passage.KeyChangeListener)
      */
-    public void removeKeyChangeListener(KeyChangeListener listener)
-    {
+    public void removeKeyChangeListener(KeyChangeListener listener) {
         display.removeKeyChangeListener(listener);
     }
 
-    /* (non-Javadoc)
-     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @seejava.beans.PropertyChangeListener#propertyChange(java.beans.
+     * PropertyChangeEvent)
      */
-    public void propertyChange(PropertyChangeEvent evt)
-    {
+    public void propertyChange(PropertyChangeEvent evt) {
         display.propertyChange(evt);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#addURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.bibledesktop.display.BookDataDisplay#addURIEventListener
+     * (org.crosswire.bibledesktop.display.URIEventListener)
      */
-    public void addURIEventListener(URIEventListener listener)
-    {
+    public void addURIEventListener(URIEventListener listener) {
         display.addURIEventListener(listener);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.bibledesktop.display.BookDataDisplay#removeURIEventListener
+     * (org.crosswire.bibledesktop.display.URIEventListener)
      */
-    public void removeURIEventListener(URIEventListener listener)
-    {
+    public void removeURIEventListener(URIEventListener listener) {
         display.removeURIEventListener(listener);
     }
 
     /**
      * See if the current book has a mention of the word in question.
-     * LATER(joe): add a background task to highlight other dictionaries that have the word.
+     * LATER(joe): add a background task to highlight other dictionaries that
+     * have the word.
      */
-    public void setWord(String data)
-    {
-        try
-        {
-            if (book == null)
-            {
+    public void setWord(String data) {
+        try {
+            if (book == null) {
                 return;
             }
 
             Key key = book.getKey(data);
-            if (key != null)
-            {
+            if (key != null) {
                 List lpath = new ArrayList();
-                while (true)
-                {
+                while (true) {
                     lpath.add(0, key);
                     key = key.getParent();
 
-                    if (key == null)
-                    {
+                    if (key == null) {
                         break;
                     }
                 }
@@ -283,37 +298,24 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
                 TreePath path = new TreePath(keys);
                 treEntries.setSelectionPath(path);
             }
-        }
-        catch (NoSuchKeyException ex)
-        {
+        } catch (NoSuchKeyException ex) {
             // ignore
         }
     }
 
     /*
-        // Code to search for a word
-        for (Iterator it = Books.getBooks(filter).iterator(); it.hasNext();)
-        {
-            Book book = (Book) it.next();
-            try
-            {
-                Key key = book.getKey(data);
-                lstdicts.setSelectedValue(book, true);
-                lstentries.setSelectedValue(key, true);
-                return;
-            }
-            catch (BookException ex)
-            {
-                // ignore - we only wanted to see if it could be done.
-            }
-        }     
-    */
+     * // Code to search for a word for (Iterator it =
+     * Books.getBooks(filter).iterator(); it.hasNext();) { Book book = (Book)
+     * it.next(); try { Key key = book.getKey(data);
+     * lstdicts.setSelectedValue(book, true); lstentries.setSelectedValue(key,
+     * true); return; } catch (BookException ex) { // ignore - we only wanted to
+     * see if it could be done. } }
+     */
 
     /**
      * Called when someone selects a new Book
      */
-    protected void newBook()
-    {
+    protected void newBook() {
         Object selected = tblBooks.getSelectedValue();
         book = (Book) selected;
         Key set = book.getGlobalKeyList();
@@ -325,18 +327,15 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     /**
      * Called when someone selects a new entry from the current book
      */
-    protected void newEntry()
-    {
-        try
-        {
+    protected void newEntry() {
+        try {
             Key key = getKey();
-            if (key != null)
-            {
-                display.setBookData(new Book[] {book}, key);
+            if (key != null) {
+                display.setBookData(new Book[] {
+                    book
+                }, key);
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Reporter.informUser(this, ex);
         }
     }
@@ -356,7 +355,7 @@ public class ReferencedPane extends JPanel implements BookDataDisplay
     private JList tblBooks = new JList();
     private JSplitPane sptMain = new JSplitPane();
     private JScrollPane scrEntries = new JScrollPane();
-    private JScrollPane scrDisplay =new JScrollPane();
+    private JScrollPane scrDisplay = new JScrollPane();
     private JTree treEntries = new JTree();
 
     /**

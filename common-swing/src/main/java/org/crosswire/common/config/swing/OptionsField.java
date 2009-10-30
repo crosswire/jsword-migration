@@ -36,60 +36,59 @@ import org.crosswire.common.util.Logger;
 
 /**
  * Allow the user to choose from a combo box.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class OptionsField implements Field
-{
+public class OptionsField implements Field {
 
     /**
      * Create an empty OptionsField
      */
-    public OptionsField()
-    {
-        combo = new JComboBox(new String[] { Msg.NO_OPTIONS.toString() });
-        // Set the preferred width. Note, the actual combo box will resize to the width of it's container
+    public OptionsField() {
+        combo = new JComboBox(new String[] {
+            Msg.NO_OPTIONS.toString()
+        });
+        // Set the preferred width. Note, the actual combo box will resize to
+        // the width of it's container
         combo.setPreferredSize(new Dimension(100, combo.getPreferredSize().height));
         GuiUtil.applyDefaultOrientation(combo);
     }
 
     /**
-     * Some fields will need some extra info to display properly
-     * like the options in an options field. FieldMap calls this
-     * method with options provided by the choice.
-     * @param param The options provided by the Choice
+     * Some fields will need some extra info to display properly like the
+     * options in an options field. FieldMap calls this method with options
+     * provided by the choice.
+     * 
+     * @param param
+     *            The options provided by the Choice
      */
-    public void setChoice(Choice param)
-    {
-        if (param instanceof MultipleChoice)
-        {
+    public void setChoice(Choice param) {
+        if (param instanceof MultipleChoice) {
             MultipleChoice mc = (MultipleChoice) param;
             list = mc.getOptions();
 
-            if (list == null)
-            {
+            if (list == null) {
                 throw new IllegalArgumentException("getOptions() returns null for option with help text " + mc.getHelpText()); //$NON-NLS-1$
             }
             combo.setModel(new DefaultComboBoxModel(list));
-        }
-        else
-        {
-            list = new String[] { Msg.ERROR.toString() };
+        } else {
+            list = new String[] {
+                Msg.ERROR.toString()
+            };
         }
     }
 
     /**
      * Return a string for use in the properties file
+     * 
      * @return The current value
      */
-    public String getValue()
-    {
+    public String getValue() {
         Object reply = combo.getSelectedItem();
 
-        if (reply instanceof Map.Entry)
-        {
+        if (reply instanceof Map.Entry) {
             return ((Map.Entry) reply).getKey().toString();
         }
         return reply == null ? "" : reply.toString(); //$NON-NLS-1$
@@ -97,17 +96,15 @@ public class OptionsField implements Field
 
     /**
      * Set the current value
-     * @param value The new text
+     * 
+     * @param value
+     *            The new text
      */
-    public void setValue(String value)
-    {
-        if (list != null && list.length > 0)
-        {
+    public void setValue(String value) {
+        if (list != null && list.length > 0) {
             int distance = value.length();
-            for (int i = 0; i < list.length; i++)
-            {
-                if (value.equals(list[i]))
-                {
+            for (int i = 0; i < list.length; i++) {
+                if (value.equals(list[i])) {
                     combo.setSelectedItem(list[i]);
                     return;
                 }
@@ -115,40 +112,36 @@ public class OptionsField implements Field
             }
 
             // We didn't find an exact match so look for the closest one.
-            distance++; // A number larger than the length of any of the strings in question.
+            distance++; // A number larger than the length of any of the strings
+            // in question.
             int bestMatch = 0;
-            for (int i = 0; i < list.length; i++)
-            {
+            for (int i = 0; i < list.length; i++) {
                 int newDistance = Distance.getLevenshteinDistance(value, list[i]);
-                if (distance > newDistance)
-                {
+                if (distance > newDistance) {
                     bestMatch = i;
                     distance = newDistance;
                 }
             }
 
             combo.setSelectedItem(list[bestMatch]);
-            if (bestMatch > 0)
-            {
-                log.warn("Checked for options without finding exact match: '" + value + "'. Best match is: " + combo.getSelectedItem());  //$NON-NLS-1$//$NON-NLS-2$
+            if (bestMatch > 0) {
+                log.warn("Checked for options without finding exact match: '" + value + "'. Best match is: " + combo.getSelectedItem()); //$NON-NLS-1$//$NON-NLS-2$
                 return;
             }
         }
 
         // Equate null and empty string
         Object selected = combo.getSelectedItem();
-        if (value.length() > 0 && selected != null)
-        {
-            log.warn("Checked for options without finding: '" + value + "'. Defaulting to first option: " + selected);  //$NON-NLS-1$//$NON-NLS-2$
+        if (value.length() > 0 && selected != null) {
+            log.warn("Checked for options without finding: '" + value + "'. Defaulting to first option: " + selected); //$NON-NLS-1$//$NON-NLS-2$
         }
     }
 
     /**
-     * Get the actual component that we can add to a Panel.
-     * (This can well be this in an implementation).
+     * Get the actual component that we can add to a Panel. (This can well be
+     * this in an implementation).
      */
-    public JComponent getComponent()
-    {
+    public JComponent getComponent() {
         return combo;
     }
 

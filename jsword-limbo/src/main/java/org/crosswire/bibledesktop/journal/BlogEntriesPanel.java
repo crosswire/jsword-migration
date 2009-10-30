@@ -36,23 +36,19 @@ import com.manning.blogapps.chapter08.blogclient.Blog;
 
 /**
  * Panel with table that lists recent blog entries.
+ * 
  * @author David M Johnson
  */
-public class BlogEntriesPanel extends JPanel implements BlogClientTab
-{
+public class BlogEntriesPanel extends JPanel implements BlogClientTab {
     /**
      * Creates new form BlogEntriesPanel
      */
-    public BlogEntriesPanel()
-    {
+    public BlogEntriesPanel() {
         initComponents();
-        mBlogEntries.addMouseListener(new MouseAdapter()
-        {
+        mBlogEntries.addMouseListener(new MouseAdapter() {
             /* @Override */
-            public void mouseClicked(MouseEvent e)
-            {
-                if (e.getClickCount() == 2)
-                {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
                     int row = mBlogEntries.rowAtPoint(e.getPoint());
                     TableModel model = mBlogEntries.getModel();
                     String id = (String) model.getValueAt(row, ID_COLUMN);
@@ -63,11 +59,9 @@ public class BlogEntriesPanel extends JPanel implements BlogClientTab
     }
 
     /**
-     * This method is called from within the constructor to
-     * initialize the form.
+     * This method is called from within the constructor to initialize the form.
      */
-    private void initComponents()
-    {
+    private void initComponents() {
         mScrollPane = new JScrollPane();
         mBlogEntries = new JTable();
 
@@ -76,20 +70,20 @@ public class BlogEntriesPanel extends JPanel implements BlogClientTab
         setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
         mScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         mScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        mBlogEntries.setModel(new DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                Msg.ENTRY_TITLE.toString(new Integer(1)),
-                Msg.ENTRY_TITLE.toString(new Integer(2)),
-                Msg.ENTRY_TITLE.toString(new Integer(3)),
+        mBlogEntries.setModel(new DefaultTableModel(new Object[][] {
+                {
+                        null, null, null, null
+                }, {
+                        null, null, null, null
+                }, {
+                        null, null, null, null
+                }, {
+                        null, null, null, null
+                }
+        }, new String[] {
+                Msg.ENTRY_TITLE.toString(new Integer(1)), Msg.ENTRY_TITLE.toString(new Integer(2)), Msg.ENTRY_TITLE.toString(new Integer(3)),
                 Msg.ENTRY_TITLE.toString(new Integer(4)),
-            }
-        ));
+        }));
         mScrollPane.setViewportView(mBlogEntries);
 
         add(mScrollPane, BorderLayout.NORTH);
@@ -98,8 +92,7 @@ public class BlogEntriesPanel extends JPanel implements BlogClientTab
     /**
      * Inject BlogSite dependency.
      */
-    public void setBlog(Blog blogSite)
-    {
+    public void setBlog(Blog blogSite) {
         this.blogSite = blogSite;
         reset();
     }
@@ -107,13 +100,11 @@ public class BlogEntriesPanel extends JPanel implements BlogClientTab
     /**
      * Update table of blog entries.
      */
-    public void onSelected()
-    {
+    public void onSelected() {
         reset();
     }
 
-    public void reset()
-    {
+    public void reset() {
         AbstractTableModel model = new BlogEntriesTableModel(blogSite);
         mBlogEntries.setModel(model);
         model.fireTableDataChanged();

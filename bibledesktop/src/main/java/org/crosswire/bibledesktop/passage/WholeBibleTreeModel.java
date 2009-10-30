@@ -27,18 +27,16 @@ import javax.swing.tree.DefaultTreeModel;
  * The PassageTreeModel class implements TreeModel using various custom
  * TreeNodes, and simply extending DefaultTreeModel.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @see DefaultTreeModel
  */
-public class WholeBibleTreeModel extends DefaultTreeModel
-{
+public class WholeBibleTreeModel extends DefaultTreeModel {
     /**
      * Basic constructor.
      */
-    public WholeBibleTreeModel()
-    {
+    public WholeBibleTreeModel() {
         super(WholeBibleTreeNode.getRootNode());
     }
 

@@ -50,23 +50,23 @@ import org.crosswire.jsword.book.install.InstallerListener;
 
 /**
  * A SitesPane manages library sites.
- * <p>so start one of these call:
+ * <p>
+ * so start one of these call:
+ * 
  * <pre>
  * sitesPane = new SitesPane();
  * sitesPane.showInDialog(parent);
  * </pre>
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class SitesPane extends JPanel
-{
+public class SitesPane extends JPanel {
     /**
      * Simple ctor
      */
-    public SitesPane()
-    {
+    public SitesPane() {
         init();
 
         imanager = new InstallManager();
@@ -81,8 +81,7 @@ public class SitesPane extends JPanel
     /**
      * Build the GUI components
      */
-    private void init()
-    {
+    private void init() {
         actions = new ActionFactory(SitesPane.class, this);
 
         tabMain = new JTabbedPane();
@@ -95,12 +94,10 @@ public class SitesPane extends JPanel
     /**
      * Re-create the list of installers
      */
-    protected final void addAllInstallers()
-    {
+    protected final void addAllInstallers() {
         // Now add panels for book installation sites
         Iterator iter = installers.keySet().iterator();
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             String name = (String) iter.next();
             Installer installer = (Installer) installers.get(name);
 
@@ -115,16 +112,14 @@ public class SitesPane extends JPanel
     /**
      * Remove all the non-local installers
      */
-    protected void removeAllInstallers()
-    {
+    protected void removeAllInstallers() {
         tabMain.removeAll();
     }
 
     /**
      * Add a site to the list of install sources.
      */
-    public void doManageSites()
-    {
+    public void doManageSites() {
         EditSitePane edit = new EditSitePane(imanager);
         edit.showInDialog(this);
     }
@@ -132,10 +127,8 @@ public class SitesPane extends JPanel
     /**
      * We are done, close the window
      */
-    public void doSitesClose()
-    {
-        if (dlgMain != null)
-        {
+    public void doSitesClose() {
+        if (dlgMain != null) {
             LayoutPersistence.instance().saveLayout(dlgMain);
             dlgMain.setVisible(false);
         }
@@ -144,8 +137,7 @@ public class SitesPane extends JPanel
     /**
      * Open this Panel in it's own dialog box.
      */
-    public void showInDialog(Component parent)
-    {
+    public void showInDialog(Component parent) {
         Frame root = JOptionPane.getFrameForComponent(parent);
         dlgMain = new JDialog(root);
         dlgMain.getContentPane().setLayout(new BorderLayout());
@@ -153,17 +145,15 @@ public class SitesPane extends JPanel
         dlgMain.getContentPane().add(createButtons(), BorderLayout.SOUTH);
         dlgMain.setTitle(Msg.AVAILABLE_BOOKS.toString());
         dlgMain.setResizable(true);
-        //dlgMain.setModal(true);
+        // dlgMain.setModal(true);
         // Set the name for Persistent Layout
         dlgMain.setName("Sites"); //$NON-NLS-1$
-        dlgMain.addWindowListener(new WindowAdapter()
-        {
+        dlgMain.addWindowListener(new WindowAdapter() {
             /* (non-Javadoc)
              * @see java.awt.event.WindowListener#windowClosed(java.awt.event.WindowEvent)
              */
             /* @Override */
-            public void windowClosed(WindowEvent ev)
-            {
+            public void windowClosed(WindowEvent ev) {
                 doSitesClose();
             }
         });
@@ -172,16 +162,12 @@ public class SitesPane extends JPanel
         // Restore window size, position, and layout if previously opened,
         // otherwise use defaults.
         LayoutPersistence layoutPersistence = LayoutPersistence.instance();
-        if (layoutPersistence.isLayoutPersisted(dlgMain))
-        {
+        if (layoutPersistence.isLayoutPersisted(dlgMain)) {
             layoutPersistence.restoreLayout(dlgMain);
-        }
-        else
-        {
+        } else {
             dlgMain.setSize(750, 500);
             GuiUtil.centerOnScreen(dlgMain);
         }
-
 
         dlgMain.setVisible(true);
         dlgMain.toFront();
@@ -191,10 +177,8 @@ public class SitesPane extends JPanel
     /**
      *
      */
-    private Component createButtons()
-    {
-        if (pnlButtons == null)
-        {
+    private Component createButtons() {
+        if (pnlButtons == null) {
             JButton btnOK = new JButton(actions.getAction(CLOSE));
 
             JButton btnAdd = new JButton(actions.getAction(EDIT_SITE));
@@ -215,8 +199,7 @@ public class SitesPane extends JPanel
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         actions = new ActionFactory(SitesPane.class, this);
         imanager = new InstallManager();
         installers = imanager.getInstallers();
@@ -231,14 +214,12 @@ public class SitesPane extends JPanel
     /**
      * Local listener for install events.
      */
-    class SiteInstallerListener implements InstallerListener
-    {
+    class SiteInstallerListener implements InstallerListener {
 
         /* (non-Javadoc)
          * @see org.crosswire.jsword.book.install.InstallerListener#installerAdded(org.crosswire.jsword.book.install.InstallerEvent)
          */
-        public void installerAdded(InstallerEvent ev)
-        {
+        public void installerAdded(InstallerEvent ev) {
             Installer installer = ev.getInstaller();
             String name = imanager.getInstallerNameForInstaller(installer);
 
@@ -249,8 +230,7 @@ public class SitesPane extends JPanel
         /* (non-Javadoc)
          * @see org.crosswire.jsword.book.install.InstallerListener#installerRemoved(org.crosswire.jsword.book.install.InstallerEvent)
          */
-        public void installerRemoved(InstallerEvent ev)
-        {
+        public void installerRemoved(InstallerEvent ev) {
             // This gets tricky because if you add a site with a new name
             // but the same details as an old one, then the old name goes
             // so we can't get the old name to remove it's tab (and anyway

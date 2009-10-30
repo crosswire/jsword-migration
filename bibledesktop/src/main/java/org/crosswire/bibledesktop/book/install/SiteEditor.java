@@ -26,25 +26,28 @@ import org.crosswire.jsword.book.install.Installer;
 /**
  * A SiteEditor allows for the editing of a site.
  * 
- * @see gnu.gpl.License
+ * @see gnu.gpl.License for license details.<br>
+ *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public interface SiteEditor
-{
+public interface SiteEditor {
     /**
      * Establish the installer for this SiteEditor.
+     * 
      * @param newInstaller
      */
     void setInstaller(Installer newInstaller);
 
     /**
      * Get the installer associated with this SiteEditor
+     * 
      * @return the installer
      */
     Installer getInstaller();
 
     /**
      * Change the Editable state of this SiteEditor.
+     * 
      * @param editable
      */
     void setEditable(boolean editable);

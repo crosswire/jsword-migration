@@ -37,53 +37,42 @@ import org.crosswire.jsword.book.basic.BookRoot;
 /**
  * This represents all of the RawBibles.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class RawBookDriver extends AbstractBookDriver
-{
-    /* (non-Javadoc)
+public class RawBookDriver extends AbstractBookDriver {
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.BookDriver#getBooks()
      */
-    public Book[] getBooks()
-    {
+    public Book[] getBooks() {
         URI dir = null;
         String[] names = null;
-        try
-        {
+        try {
             dir = BookRoot.findBibleRoot(getDriverName());
 
-            if (!NetUtil.isDirectory(dir))
-            {
+            if (!NetUtil.isDirectory(dir)) {
                 log.debug("Missing raw directory: " + dir); //$NON-NLS-1$
                 return new Book[0];
             }
 
-            if (dir == null)
-            {
+            if (dir == null) {
                 names = new String[0];
-            }
-            else
-            {
+            } else {
                 names = NetUtil.list(dir, new NetUtil.IsDirectoryURIFilter(dir));
             }
-        }
-        catch (MalformedURLException e1)
-        {
+        } catch (MalformedURLException e1) {
             names = new String[0];
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             names = new String[0];
         }
 
         List books = new ArrayList();
 
-        for (int i = 0; i < names.length; i++)
-        {
-            try
-            {
+        for (int i = 0; i < names.length; i++) {
+            try {
                 URI uri = NetUtil.lengthenURI(dir, names[i]);
                 URI propURI = NetUtil.lengthenURI(uri, RawConstants.FILE_BIBLE_PROPERTIES);
 
@@ -92,9 +81,7 @@ public class RawBookDriver extends AbstractBookDriver
                 Book book = new RawBook(this, prop, uri);
 
                 books.add(book);
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 continue;
             }
         }
@@ -102,11 +89,12 @@ public class RawBookDriver extends AbstractBookDriver
         return (Book[]) books.toArray(new Book[books.size()]);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.BookDriver#getDriverName()
      */
-    public String getDriverName()
-    {
+    public String getDriverName() {
         return "raw"; //$NON-NLS-1$
     }
 

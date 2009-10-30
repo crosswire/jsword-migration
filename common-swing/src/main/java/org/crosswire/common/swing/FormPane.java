@@ -34,18 +34,16 @@ import javax.swing.JPanel;
 
 /**
  * A Panel customized to hold fields.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class FormPane extends JPanel
-{
+public class FormPane extends JPanel {
     /**
      * Create a FormPane
      */
-    public FormPane()
-    {
+    public FormPane() {
         setLayout(new BorderLayout());
         inner = new JPanel(new GridBagLayout());
         add(inner, BorderLayout.NORTH);
@@ -56,11 +54,13 @@ public class FormPane extends JPanel
 
     /**
      * Add a field to this panel
-     * @param prompt The name for the field
-     * @param comp The component to add alongside the label
+     * 
+     * @param prompt
+     *            The name for the field
+     * @param comp
+     *            The component to add alongside the label
      */
-    public void addEntry(String prompt, String tooltip, Component comp)
-    {
+    public void addEntry(String prompt, String tooltip, Component comp) {
         JLabel label = new JLabel(prompt);
         label.setToolTipText(tooltip);
 
@@ -68,12 +68,12 @@ public class FormPane extends JPanel
         c.anchor = GridBagConstraints.LINE_END;
         c.insets = new Insets(5, 5, 5, 5);
 
-        c.gridwidth = GridBagConstraints.RELATIVE; //next-to-last
-        c.fill = GridBagConstraints.NONE;      //reset to default
-        c.weightx = 0.0;                       //reset to default
+        c.gridwidth = GridBagConstraints.RELATIVE; // next-to-last
+        c.fill = GridBagConstraints.NONE; // reset to default
+        c.weightx = 0.0; // reset to default
         inner.add(label, c);
 
-        c.gridwidth = GridBagConstraints.REMAINDER;     //end row
+        c.gridwidth = GridBagConstraints.REMAINDER; // end row
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1.0;
         inner.add(comp, c);
@@ -84,10 +84,11 @@ public class FormPane extends JPanel
 
     /**
      * Add a field to this panel
-     * @param prompt The name for the field
+     * 
+     * @param prompt
+     *            The name for the field
      */
-    public void removeEntry(String prompt)
-    {
+    public void removeEntry(String prompt) {
         JLabel label = (JLabel) comps.get(prompt + SUFFIX_LABEL);
         Component comp = (Component) comps.get(prompt + SUFFIX_COMP);
 
@@ -101,21 +102,18 @@ public class FormPane extends JPanel
     /**
      * Is this panel empty
      */
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return comps.size() == 0;
     }
 
     /**
      * Get a list of the labels
      */
-    public String[] getFieldNames()
-    {
+    public String[] getFieldNames() {
         int count = getComponentCount() / 2;
         String[] list = new String[count];
 
-        for (int i = 0; i < count; i++)
-        {
+        for (int i = 0; i < count; i++) {
             JLabel label = (JLabel) getComponent(i * 2);
             list[i] = label.getText();
         }
@@ -126,13 +124,11 @@ public class FormPane extends JPanel
     /**
      * Get at list of the values in the fields
      */
-    public String[] getFieldValues()
-    {
+    public String[] getFieldValues() {
         int count = getComponentCount() / 2;
         String[] list = new String[count];
 
-        for (int i = 0; i < count; i++)
-        {
+        for (int i = 0; i < count; i++) {
             Component comp = getComponent(i * 2 + 1);
             list[i] = GuiUtil.getText(comp);
         }

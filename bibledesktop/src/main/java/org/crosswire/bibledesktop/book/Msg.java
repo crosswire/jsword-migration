@@ -26,12 +26,11 @@ import org.crosswire.common.util.MsgBase;
 /**
  * Compile safe Msg resource settings.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-final class Msg extends MsgBase
-{
+final class Msg extends MsgBase {
     static final Msg EMPTY_FILE = new Msg("BibleViewPane.EmptyFile"); //$NON-NLS-1$
     static final Msg VERSE_LIST_DESC = new Msg("BibleViewPane.VerseListDesc"); //$NON-NLS-1$
     static final Msg BOOKS = new Msg("BibleViewPane.Books"); //$NON-NLS-1$
@@ -65,8 +64,7 @@ final class Msg extends MsgBase
     /**
      * Passthrough ctor
      */
-    private Msg(String name)
-    {
+    private Msg(String name) {
         super(name);
     }
 }

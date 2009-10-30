@@ -32,50 +32,50 @@ import org.crosswire.jsword.passage.Key;
  * The Search Word for a Word to search for. The default if no other SearchWords
  * match.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class SubLeftParamWord implements ParamWord
-{
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.parse.ParamWord#getWord(org.crosswire.jsword.book.search.parse.Searcher)
+public class SubLeftParamWord implements ParamWord {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.parse.ParamWord#getWord(org.crosswire
+     * .jsword.book.search.parse.Searcher)
      */
-    public String getWord(IndexSearcher engine) throws BookException
-    {
+    public String getWord(IndexSearcher engine) throws BookException {
         throw new BookException(Msg.LEFT_PARAM);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.parse.ParamWord#getPassage(org.crosswire.jsword.book.search.parse.Searcher)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.parse.ParamWord#getPassage(org.crosswire
+     * .jsword.book.search.parse.Searcher)
      */
-    public Key getKeyList(IndexSearcher engine) throws BookException
-    {
+    public Key getKeyList(IndexSearcher engine) throws BookException {
         Iterator it = engine.iterator();
         List output = new ArrayList();
 
         int parenLevel = 1;
-        while (true)
-        {
-            if (!it.hasNext())
-            {
+        while (true) {
+            if (!it.hasNext()) {
                 throw new BookException(Msg.LEFT_BRACKETS);
             }
 
             Word word = (Word) it.next();
 
-            if (word instanceof SubLeftParamWord)
-            {
+            if (word instanceof SubLeftParamWord) {
                 parenLevel++;
             }
 
-            if (word instanceof SubRightParamWord)
-            {
+            if (word instanceof SubRightParamWord) {
                 parenLevel--;
             }
 
-            if (parenLevel == 0)
-            {
+            if (parenLevel == 0) {
                 break;
             }
 

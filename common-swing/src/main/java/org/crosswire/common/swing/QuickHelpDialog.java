@@ -40,18 +40,16 @@ import javax.swing.text.html.HTMLEditorKit;
 
 /**
  * .
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class QuickHelpDialog extends JDialog
-{
+public class QuickHelpDialog extends JDialog {
     /**
      * This is the default constructor
      */
-    public QuickHelpDialog(Frame owner, String title, String helpText)
-    {
+    public QuickHelpDialog(Frame owner, String title, String helpText) {
         super(owner);
 
         initialize();
@@ -63,22 +61,21 @@ public class QuickHelpDialog extends JDialog
     /**
      * This method initializes the GUI
      */
-    private void initialize()
-    {
+    private void initialize() {
         actions = new ActionFactory(QuickHelpDialog.class, this);
 
         txtHelp = new JEditorPane();
         txtHelp.setEditable(false);
         txtHelp.setEditorKit(new HTMLEditorKit());
         txtHelp.setMargin(new Insets(5, 5, 0, 5));
-        txtHelp.addKeyListener(new KeyAdapter()
-        {
-            /* (non-Javadoc)
+        txtHelp.addKeyListener(new KeyAdapter() {
+            /*
+             * (non-Javadoc)
+             * 
              * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
              */
             /* @Override */
-            public void keyTyped(KeyEvent ev)
-            {
+            public void keyTyped(KeyEvent ev) {
                 close();
             }
         });
@@ -103,27 +100,28 @@ public class QuickHelpDialog extends JDialog
         this.setModal(true);
         this.setContentPane(pnlHelp);
         this.getRootPane().setDefaultButton(btnOK);
-        this.addWindowListener(new WindowAdapter()
-        {
-            /* (non-Javadoc)
-             * @see java.awt.event.WindowListener#windowClosing(java.awt.event.WindowEvent)
+        this.addWindowListener(new WindowAdapter() {
+            /*
+             * (non-Javadoc)
+             * 
+             * @seejava.awt.event.WindowListener#windowClosing(java.awt.event.
+             * WindowEvent)
              */
             /* @Override */
-            public void windowClosing(WindowEvent ev)
-            {
+            public void windowClosing(WindowEvent ev) {
                 close();
             }
         });
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.awt.Component#setVisible(boolean)
      */
     /* @Override */
-    public void setVisible(boolean visible)
-    {
-        if (visible)
-        {
+    public void setVisible(boolean visible) {
+        if (visible) {
             GuiUtil.centerOnScreen(this);
         }
 
@@ -133,16 +131,14 @@ public class QuickHelpDialog extends JDialog
     /**
      * Someone clicked OK
      */
-    public void doOK()
-    {
+    public void doOK() {
         close();
     }
 
     /**
      *
      */
-    public final void close()
-    {
+    public final void close() {
         setVisible(false);
     }
 

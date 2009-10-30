@@ -60,36 +60,34 @@ import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.basic.Verifier;
 
 /**
- * Bible Generator allows the creation of new Books - although it
- * really only converts from one implementation of Book to another.
- * This is needed because I drivers like JDBCBook and GBMLBook will not
- * be very speed optimized.
- * <p>To start one of these call:
+ * Bible Generator allows the creation of new Books - although it really only
+ * converts from one implementation of Book to another. This is needed because I
+ * drivers like JDBCBook and GBMLBook will not be very speed optimized.
+ * <p>
+ * To start one of these call:
+ * 
  * <pre>
  * MaintenancePane maint = new MaintenancePane();
  * maint.showInDialog(getComponent());
  * </pre>
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class GeneratorPane extends EirPanel
-{
-	// I18N: This class has not been internationalized, because it is not used.
+public class GeneratorPane extends EirPanel {
+    // I18N: This class has not been internationalized, because it is not used.
     /**
      * Construct a Bible Generator tool, this simply calls jbInit
      */
-    public GeneratorPane()
-    {
+    public GeneratorPane() {
         init();
     }
 
     /**
      * Create the GUI components.
      */
-    private void init()
-    {
+    private void init() {
         cboSource.setModel(mdlSource);
         cboSource.setRenderer(new BookListCellRenderer());
         lblSource.setText("  Source Bible: "); //$NON-NLS-1$
@@ -107,7 +105,8 @@ public class GeneratorPane extends EirPanel
 
         pnlDest.add(lblName, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 5), 0, 0));
         pnlDest.add(lblDriver, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0));
-        pnlDest.add(cboDriver, new GridBagConstraints(1, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 5), 0, 0));
+        pnlDest.add(cboDriver, new GridBagConstraints(1, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 5),
+                0, 0));
 
         barProg.setBorderPainted(true);
         barProg.setMaximum(100);
@@ -121,10 +120,8 @@ public class GeneratorPane extends EirPanel
         boxMain.add(pnlSource, null);
         boxMain.add(pnlDest, null);
 
-        btnGenerate.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        btnGenerate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 generate();
             }
         });
@@ -148,24 +145,21 @@ public class GeneratorPane extends EirPanel
     /**
      * Show this Panel in a new dialog
      */
-    public void showInDialog(Component parent)
-    {
+    public void showInDialog(Component parent) {
         showInDialog(parent, "Generator", false); //$NON-NLS-1$
     }
 
     /**
-     * This allows up to easily display this component in a window and
-     * have the 2 work together on close actions and so on.
+     * This allows up to easily display this component in a window and have the
+     * 2 work together on close actions and so on.
      */
-    public void showInFrame(Frame parent)
-    {
+    public void showInFrame(Frame parent) {
         final JDialog frame = new JDialog(parent, "Bible Generator"); //$NON-NLS-1$
 
         btnClose = new JButton("Close"); //$NON-NLS-1$
         btnClose.setMnemonic('C');
         btnClose.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev)
-            {
+            public void actionPerformed(ActionEvent ev) {
                 frame.setVisible(false);
                 frame.dispose();
             }
@@ -176,8 +170,7 @@ public class GeneratorPane extends EirPanel
 
         frame.addWindowListener(new WindowAdapter() {
             /* @Override */
-            public void windowClosed(WindowEvent ev)
-            {
+            public void windowClosed(WindowEvent ev) {
                 if (work != null)
                     work.interrupt();
             }
@@ -194,8 +187,7 @@ public class GeneratorPane extends EirPanel
     /**
      * Actually start generating the new Book
      */
-    public void generate()
-    {
+    public void generate() {
         // New thread to do the real work
         work = new Thread(new GeneratorRunnable());
         work.start();
@@ -228,8 +220,7 @@ public class GeneratorPane extends EirPanel
     protected JComboBox cboSource = new JComboBox();
 
     /**
-     * The model for the sources.
-     * Bibles are required in GeneratorRunnable.run()
+     * The model for the sources. Bibles are required in GeneratorRunnable.run()
      */
     protected BooksComboBoxModel mdlSource = new BooksComboBoxModel(BookFilters.getOnlyBibles());
 
@@ -296,7 +287,7 @@ public class GeneratorPane extends EirPanel
     /**
      * Work in progress
      */
-    protected Thread work =  null;
+    protected Thread work = null;
 
     /**
      * The progress listener
@@ -309,18 +300,14 @@ public class GeneratorPane extends EirPanel
     private static final long serialVersionUID = 3979270239726743601L;
 
     /**
-     * A class to be run in a Thread to do the real work of generating the
-     * new Bible
+     * A class to be run in a Thread to do the real work of generating the new
+     * Bible
      */
-    class GeneratorRunnable implements Runnable
-    {
-        public void run()
-        {
+    class GeneratorRunnable implements Runnable {
+        public void run() {
             // While we are working stop anyone editing the values
-            SwingUtilities.invokeLater(new Runnable()
-            {
-                public void run()
-                {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
                     cboSource.setEnabled(false);
                     cboDriver.setEnabled(false);
                     btnGenerate.setEnabled(false);
@@ -329,8 +316,7 @@ public class GeneratorPane extends EirPanel
                 }
             });
 
-            try
-            {
+            try {
                 // Get the values
                 // This cast is safe because the ctor filers for Bibles
                 Book source = mdlSource.getSelectedBook();
@@ -341,8 +327,7 @@ public class GeneratorPane extends EirPanel
                 Book destVersion = destDriver.create(source);
 
                 // Check
-                if (chkVerify.isEnabled())
-                {
+                if (chkVerify.isEnabled()) {
                     Verifier ver = new Verifier(source, destVersion);
 
                     CompareResultsPane results = new CompareResultsPane(ver);
@@ -351,23 +336,17 @@ public class GeneratorPane extends EirPanel
                     results.showInFrame(GuiUtil.getFrame(GeneratorPane.this));
                     results.startStop();
                 }
-            }
-            catch (final Exception ex)
-            {
-                SwingUtilities.invokeLater(new Runnable()
-                {
-                    public void run()
-                    {
+            } catch (final Exception ex) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
                         ExceptionPane.showExceptionDialog(GeneratorPane.this, ex);
                     }
                 });
             }
 
             // Re-enable the values
-            SwingUtilities.invokeLater(new Runnable()
-            {
-                public void run()
-                {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
                     cboSource.setEnabled(true);
                     cboDriver.setEnabled(true);
                     btnGenerate.setEnabled(true);
@@ -381,17 +360,17 @@ public class GeneratorPane extends EirPanel
     /**
      * Report progress changes to the screen
      */
-    class CustomProgressListener implements WorkListener
-    {
-        /* (non-Javadoc)
-         * @see org.crosswire.common.progress.WorkListener#progressMade(org.crosswire.common.progress.WorkEvent)
+    class CustomProgressListener implements WorkListener {
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * org.crosswire.common.progress.WorkListener#progressMade(org.crosswire
+         * .common.progress.WorkEvent)
          */
-        public void workProgressed(final WorkEvent ev)
-        {
-            SwingUtilities.invokeLater(new Runnable()
-            {
-                public void run()
-                {
+        public void workProgressed(final WorkEvent ev) {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
                     Progress job = ev.getJob();
                     int percent = job.getWork();
                     barProg.setString(job.getSectionName() + ": (" + percent + "%)"); //$NON-NLS-1$  //$NON-NLS-2$
@@ -400,11 +379,14 @@ public class GeneratorPane extends EirPanel
             });
         }
 
-        /* (non-Javadoc)
-         * @see org.crosswire.common.progress.WorkListener#workStateChanged(org.crosswire.common.progress.WorkEvent)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * org.crosswire.common.progress.WorkListener#workStateChanged(org.crosswire
+         * .common.progress.WorkEvent)
          */
-        public void workStateChanged(WorkEvent ev)
-        {
+        public void workStateChanged(WorkEvent ev) {
         }
     }
 }

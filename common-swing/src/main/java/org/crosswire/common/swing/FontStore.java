@@ -33,51 +33,49 @@ import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.ResourceUtil;
 
 /**
- * Font Store maintains a persistent, hierarchical store of user font preferences. A font
- * preference consists of the name of a resource and a font specification for
- * that resource. The name of the resource may be any unique value that
- * follows the rules for a property key. The font specification is the font
- * itself or a string representation of the font that can be turned into a font
- * with <code>Font.decode(String)</code>.
+ * Font Store maintains a persistent, hierarchical store of user font
+ * preferences. A font preference consists of the name of a resource and a font
+ * specification for that resource. The name of the resource may be any unique
+ * value that follows the rules for a property key. The font specification is
+ * the font itself or a string representation of the font that can be turned
+ * into a font with <code>Font.decode(String)</code>.
  * <p>
  * Many languages share the same script. Rather than setting a font spec for
- * many resources with the same language, this class makes it possible to set
- * a font spec for each language.
+ * many resources with the same language, this class makes it possible to set a
+ * font spec for each language.
  * </p>
  * <p>
- * Thus, the look up hierarchy begins with an exact match for the requested resource.
- * If it does not work the lookup continues in the following order: 
- * the specified language's font, the fallback font, and
- * the default font. Of course, if that does not work, use any font that
- * Java thinks is appropriate, but use the size and style of the default
- * font.
- * Since scripts are shared by many languages, this FontStore supports the
- * setting of Language defaults. If the requested language font does not exist a
- * more general one will be provided.
+ * Thus, the look up hierarchy begins with an exact match for the requested
+ * resource. If it does not work the lookup continues in the following order:
+ * the specified language's font, the fallback font, and the default font. Of
+ * course, if that does not work, use any font that Java thinks is appropriate,
+ * but use the size and style of the default font. Since scripts are shared by
+ * many languages, this FontStore supports the setting of Language defaults. If
+ * the requested language font does not exist a more general one will be
+ * provided.
  * </p>
  * <p>
- * Note: Some languages are represented as transliterations
- * and others have more than one script, which may or may not be supported by a single font.
+ * Note: Some languages are represented as transliterations and others have more
+ * than one script, which may or may not be supported by a single font.
  * </p>
  * 
  * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class FontStore
-{
+public class FontStore {
 
     /**
      * Create an new FontStore with the given persistent store.
      * 
-     * @param storeName The name of the store, used as a file name and as a label inside the
-     *            fontStore.
-     * @param fontDir The location where the fontStore can be stored.
+     * @param storeName
+     *            The name of the store, used as a file name and as a label
+     *            inside the fontStore.
+     * @param fontDir
+     *            The location where the fontStore can be stored.
      */
-    public FontStore(String storeName, URI fontDir)
-    {
-        if (fontDir == null)
-        {
+    public FontStore(String storeName, URI fontDir) {
+        if (fontDir == null) {
             throw new IllegalArgumentException("fontStore cannot be null"); //$NON-NLS-1$
         }
         this.storeName = storeName;
@@ -88,18 +86,17 @@ public class FontStore
     /**
      * @return the defaultFont
      */
-    public String getDefaultFont()
-    {
+    public String getDefaultFont() {
         load();
         defaultFont = fontMap.getProperty(DEFAULT_KEY, DEFAULT_FONT);
         return defaultFont;
     }
 
     /**
-     * @param defaultFont the defaultFont to set
+     * @param defaultFont
+     *            the defaultFont to set
      */
-    public void setDefaultFont(String defaultFont)
-    {
+    public void setDefaultFont(String defaultFont) {
         load();
         this.defaultFont = defaultFont;
         fontMap.setProperty(DEFAULT_KEY, defaultFont);
@@ -109,13 +106,13 @@ public class FontStore
     /**
      * Store a font specification for the resource.
      * 
-     * @param resource the resource
-     * @param font the font
+     * @param resource
+     *            the resource
+     * @param font
+     *            the font
      */
-    public void setFont(String resource, Font font)
-    {
-        if (resource == null || font == null)
-        {
+    public void setFont(String resource, Font font) {
+        if (resource == null || font == null) {
             return;
         }
         load();
@@ -126,13 +123,13 @@ public class FontStore
     /**
      * Store a font specification for the language.
      * 
-     * @param lang the language
-     * @param font the font
+     * @param lang
+     *            the language
+     * @param font
+     *            the font
      */
-    public void setFont(Language lang, Font font)
-    {
-        if (lang == null || font == null)
-        {
+    public void setFont(Language lang, Font font) {
+        if (lang == null || font == null) {
             return;
         }
         load();
@@ -143,10 +140,10 @@ public class FontStore
     /**
      * Remove the font settings for a given key
      * 
-     * @param key the book initials or language code 
+     * @param key
+     *            the book initials or language code
      */
-    public void resetFont(String key)
-    {
+    public void resetFont(String key) {
         load();
         fontMap.remove(key);
         store();
@@ -159,51 +156,45 @@ public class FontStore
      * Java thinks is appropriate, but use the size and style of the default
      * font.
      * 
-     * @param resource the name of the resource for whom the font is stored.
-     * @param lang the language of the resource
-     * @param fallback the fontspec for the fallback font
+     * @param resource
+     *            the name of the resource for whom the font is stored.
+     * @param lang
+     *            the language of the resource
+     * @param fallback
+     *            the fontspec for the fallback font
      * @return the requested font if possible. A fallback font otherwise.
      */
-    public Font getFont(String resource, Language lang, String fallback)
-    {
+    public Font getFont(String resource, Language lang, String fallback) {
         load();
 
         String fontSpec = null;
-        if (resource != null)
-        {
+        if (resource != null) {
             fontSpec = fontMap.getProperty(resource);
         }
 
-        if (fontSpec != null)
-        {
+        if (fontSpec != null) {
             Font obtainedFont = obtainFont(fontSpec);
-            if (obtainedFont != null)
-            {
+            if (obtainedFont != null) {
                 return obtainedFont;
             }
             fontSpec = null;
         }
 
-        if (lang != null)
-        {
+        if (lang != null) {
             fontSpec = fontMap.getProperty(new StringBuffer(LANG_KEY_PREFIX).append(lang.getCode()).toString());
         }
 
-        if (fontSpec != null)
-        {
+        if (fontSpec != null) {
             Font obtainedFont = obtainFont(fontSpec);
-            if (obtainedFont != null)
-            {
+            if (obtainedFont != null) {
                 return obtainedFont;
             }
         }
 
         fontSpec = fallback;
-        if (fontSpec != null)
-        {
+        if (fontSpec != null) {
             Font obtainedFont = obtainFont(fontSpec);
-            if (obtainedFont != null)
-            {
+            if (obtainedFont != null) {
                 return obtainedFont;
             }
         }
@@ -214,84 +205,75 @@ public class FontStore
     /**
      * @return the storeName
      */
-    protected String getStoreName()
-    {
+    protected String getStoreName() {
         return storeName;
     }
 
     /**
-     * @param storeName the storeName to set
+     * @param storeName
+     *            the storeName to set
      */
-    protected void setStoreName(String storeName)
-    {
+    protected void setStoreName(String storeName) {
         this.storeName = storeName;
     }
 
     /**
      * @return the fontStore
      */
-    protected URI getFontStore()
-    {
+    protected URI getFontStore() {
         return fontStore;
     }
 
     /**
-     * @param fontStore the fontStore to set
+     * @param fontStore
+     *            the fontStore to set
      */
-    protected void setFontStore(URI fontStore)
-    {
+    protected void setFontStore(URI fontStore) {
         this.fontStore = fontStore;
     }
 
     /**
      * @return the loaded
      */
-    protected boolean isLoaded()
-    {
+    protected boolean isLoaded() {
         return loaded;
     }
 
     /**
-     * @param loaded the loaded to set
+     * @param loaded
+     *            the loaded to set
      */
-    protected void setLoaded(boolean loaded)
-    {
+    protected void setLoaded(boolean loaded) {
         this.loaded = loaded;
     }
 
     /**
      * @return the fontMap
      */
-    protected Properties getFontMap()
-    {
+    protected Properties getFontMap() {
         return fontMap;
     }
 
     /**
-     * @param fontMap the fontMap to set
+     * @param fontMap
+     *            the fontMap to set
      */
-    protected void setFontMap(Properties fontMap)
-    {
+    protected void setFontMap(Properties fontMap) {
         this.fontMap = fontMap;
     }
 
     /**
      * Load the store, if it has not been loaded.
      */
-    protected void load()
-    {
-        if (loaded)
-        {
+    protected void load() {
+        if (loaded) {
             return;
         }
 
-        try
-        {
+        try {
             fontMap = ResourceUtil.getProperties(storeName);
             loaded = true;
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             log.error("Unable to load the font store: " + fontStore); //$NON-NLS-1$
             fontMap = new Properties();
         }
@@ -300,45 +282,39 @@ public class FontStore
     /**
      * Store the store, if it exists.
      */
-    protected void store()
-    {
+    protected void store() {
         load();
 
-        try
-        {
+        try {
             NetUtil.storeProperties(fontMap, fontStore, storeName);
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             log.error("Failed to save BibleDesktop UI Translation", ex); //$NON-NLS-1$
         }
     }
 
-    protected Font obtainFont(String fontSpec)
-    {
-        if (fontSpec != null)
-        {
-            // Creating a font never fails. Java just silently does substitution.
+    protected Font obtainFont(String fontSpec) {
+        if (fontSpec != null) {
+            // Creating a font never fails. Java just silently does
+            // substitution.
             // Ensure that substitution does not happen.
             Font obtainedFont = GuiConvert.string2Font(fontSpec);
             String obtainedFontSpec = GuiConvert.font2String(obtainedFont);
-            if (obtainedFontSpec != null && obtainedFontSpec.equalsIgnoreCase(fontSpec))
-            {
+            if (obtainedFontSpec != null && obtainedFontSpec.equalsIgnoreCase(fontSpec)) {
                 return obtainedFont;
             }
         }
         return null;
     }
 
-    protected static final String DEFAULT_FONT    = "Dialog-PLAIN-12";                //$NON-NLS-1$
-    protected static final String LANG_KEY_PREFIX = "lang.";                          //$NON-NLS-1$
-    protected static final String DEFAULT_KEY     = "default";                        //$NON-NLS-1$
+    protected static final String DEFAULT_FONT = "Dialog-PLAIN-12"; //$NON-NLS-1$
+    protected static final String LANG_KEY_PREFIX = "lang."; //$NON-NLS-1$
+    protected static final String DEFAULT_KEY = "default"; //$NON-NLS-1$
 
-    private String              storeName;
-    private String              defaultFont;
-    private URI                 fontStore;
-    private boolean             loaded;
-    private Properties          fontMap;
+    private String storeName;
+    private String defaultFont;
+    private URI fontStore;
+    private boolean loaded;
+    private Properties fontMap;
 
-    private static final Logger log             = Logger.getLogger(FontStore.class);
+    private static final Logger log = Logger.getLogger(FontStore.class);
 }

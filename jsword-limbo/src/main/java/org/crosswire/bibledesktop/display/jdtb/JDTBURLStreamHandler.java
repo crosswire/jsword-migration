@@ -29,18 +29,18 @@ import java.net.URLStreamHandler;
 /**
  * .
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class JDTBURLStreamHandler extends URLStreamHandler
-{
-    /* (non-Javadoc)
+public class JDTBURLStreamHandler extends URLStreamHandler {
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.net.URLStreamHandler#openConnection(java.net.URL)
      */
     /* @Override */
-    protected URLConnection openConnection(URL url) throws IOException
-    {
+    protected URLConnection openConnection(URL url) throws IOException {
         return new JDTBURLConnection(url);
     }
 }

@@ -55,21 +55,20 @@ import org.crosswire.common.swing.GuiUtil;
 
 /**
  * A Configuration Editor that provides a tree for navigating to options.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class TreeConfigEditor extends AbstractConfigEditor
-{
+public class TreeConfigEditor extends AbstractConfigEditor {
     /**
-     * <br />Danger - this method is not called by the TreeConfigEditor
-     * constructor, it is called by the AbstractConfigEditor constructor so
-     * any field initializers will be called AFTER THIS METHOD EXECUTES
-     * so don't use field initializers.
+     * <br />
+     * Danger - this method is not called by the TreeConfigEditor constructor,
+     * it is called by the AbstractConfigEditor constructor so any field
+     * initializers will be called AFTER THIS METHOD EXECUTES so don't use field
+     * initializers.
      */
-    protected void initializeGUI()
-    {
+    protected void initializeGUI() {
         JPanel panel = new JPanel();
         JPanel blank = new JPanel();
         DefaultTreeCellRenderer dtcr = new DefaultTreeCellRenderer();
@@ -95,10 +94,8 @@ public class TreeConfigEditor extends AbstractConfigEditor
         tree.setRootVisible(false);
         tree.putClientProperty("JTree.lineStyle", "None"); //$NON-NLS-1$ //$NON-NLS-2$
         tree.setSelectionRow(0);
-        tree.addTreeSelectionListener(new TreeSelectionListener()
-        {
-            public void valueChanged(TreeSelectionEvent ev)
-            {
+        tree.addTreeSelectionListener(new TreeSelectionListener() {
+            public void valueChanged(TreeSelectionEvent ev) {
                 selectCard();
             }
         });
@@ -135,12 +132,10 @@ public class TreeConfigEditor extends AbstractConfigEditor
     /**
      * Updates to the tree that we need to do on any change
      */
-    protected void updateTree()
-    {
+    protected void updateTree() {
         // expand the tree
         int row = 0;
-        while (row < tree.getRowCount())
-        {
+        while (row < tree.getRowCount()) {
             tree.expandRow(row++);
         }
 
@@ -150,10 +145,8 @@ public class TreeConfigEditor extends AbstractConfigEditor
     /**
      * Add a Choice to our set of panels
      */
-    protected void addChoice(Choice model)
-    {
-        if (model.isHidden())
-        {
+    protected void addChoice(Choice model) {
+        if (model.isHidden()) {
             return;
         }
 
@@ -162,8 +155,7 @@ public class TreeConfigEditor extends AbstractConfigEditor
         // Sort the tree out
         String path = Config.getPath(model.getFullPath());
         FormPane card = (FormPane) decks.get(path);
-        if (card != null && card.getParent() == null)
-        {
+        if (card != null && card.getParent() == null) {
             JScrollPane scroll = new CWScrollPane(card);
             scroll.setBorder(BorderFactory.createEmptyBorder());
             deck.add(scroll, path);
@@ -173,29 +165,24 @@ public class TreeConfigEditor extends AbstractConfigEditor
     /**
      * Add a Choice to our set of panels
      */
-    protected void removeChoice(Choice model)
-    {
+    protected void removeChoice(Choice model) {
         super.removeChoice(model);
 
         // Sort the tree out
         String path = Config.getPath(model.getFullPath());
         FormPane card = (FormPane) decks.get(path);
-        if (card != null && card.isEmpty())
-        {
+        if (card != null && card.isEmpty()) {
             deck.remove(card.getParent());
         }
     }
 
     /**
-     * Used to update the configuration panel whenever someone
-     * selects a different item form the tree on the LHS of the
-     * configuration dialog.
+     * Used to update the configuration panel whenever someone selects a
+     * different item form the tree on the LHS of the configuration dialog.
      */
-    public void selectCard()
-    {
+    public void selectCard() {
         Object obj = tree.getLastSelectedPathComponent();
-        if (obj == null)
-        {
+        if (obj == null) {
             return;
         }
 
@@ -205,10 +192,8 @@ public class TreeConfigEditor extends AbstractConfigEditor
         Object[] list = tree.getSelectionPath().getPath();
         StringBuffer path = new StringBuffer();
 
-        for (int i = 1; i < list.length; i++)
-        {
-            if (i > 1)
-            {
+        for (int i = 1; i < list.length; i++) {
+            if (i > 1) {
                 path.append('.');
             }
 
@@ -217,12 +202,9 @@ public class TreeConfigEditor extends AbstractConfigEditor
 
         String key = path.toString();
         GuiUtil.applyDefaultOrientation(deck);
-        if (decks.containsKey(key))
-        {
+        if (decks.containsKey(key)) {
             layout.show(deck, key);
-        }
-        else
-        {
+        } else {
             layout.show(deck, BLANK);
         }
 
@@ -266,57 +248,51 @@ public class TreeConfigEditor extends AbstractConfigEditor
 
     /**
      * A custom data model for the TreeConfig Tree
+     * 
      * @author Claude Duguay
      * @author Joe Walker
      */
-    protected class ConfigureTreeModel implements TreeModel
-    {
-        /* (non-Javadoc)
+    protected class ConfigureTreeModel implements TreeModel {
+        /*
+         * (non-Javadoc)
+         * 
          * @see javax.swing.tree.TreeModel#getRoot()
          */
-        public Object getRoot()
-        {
+        public Object getRoot() {
             return root;
         }
 
         /**
          * Get a List of the children rooted at path
          */
-        protected List getChildren(String path)
-        {
+        protected List getChildren(String path) {
             List retcode = new ArrayList();
 
             Iterator it = config.iterator();
-            while (it.hasNext())
-            {
+            while (it.hasNext()) {
                 Choice choice = (Choice) it.next();
-                if (choice.isHidden())
-                {
+                if (choice.isHidden()) {
                     continue;
                 }
 
                 String temp = choice.getFullPath();
 
-                if (temp.startsWith(path) && !temp.equals(path))
-                {
+                if (temp.startsWith(path) && !temp.equals(path)) {
                     // Chop off the similar start
                     temp = temp.substring(path.length());
-                    if (temp.charAt(0) == '.')
-                    {
+                    if (temp.charAt(0) == '.') {
                         temp = temp.substring(1);
                     }
 
                     // Chop off all after the first dot
                     int dot_pos = temp.indexOf('.');
-                    if (dot_pos == -1)
-                    {
+                    if (dot_pos == -1) {
                         continue;
                     }
                     temp = temp.substring(0, dot_pos);
 
                     // Add it to the list if needed
-                    if (temp.length() > 0 && !retcode.contains(temp))
-                    {
+                    if (temp.length() > 0 && !retcode.contains(temp)) {
                         retcode.add(temp);
                     }
                 }
@@ -325,101 +301,112 @@ public class TreeConfigEditor extends AbstractConfigEditor
             return retcode;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see javax.swing.tree.TreeModel#getChild(java.lang.Object, int)
          */
-        public Object getChild(Object parent, int index)
-        {
+        public Object getChild(Object parent, int index) {
             String path = ((Node) parent).getFullName();
             String name = (String) getChildren(path).get(index);
             return new Node(path, name);
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see javax.swing.tree.TreeModel#getChildCount(java.lang.Object)
          */
-        public int getChildCount(Object parent)
-        {
+        public int getChildCount(Object parent) {
             String path = ((Node) parent).getFullName();
             return getChildren(path).size();
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see javax.swing.tree.TreeModel#isLeaf(java.lang.Object)
          */
-        public boolean isLeaf(Object node)
-        {
+        public boolean isLeaf(Object node) {
             String path = ((Node) node).getFullName();
             return getChildren(path).size() == 0;
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.tree.TreeModel#valueForPathChanged(javax.swing.tree.TreePath, java.lang.Object)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * javax.swing.tree.TreeModel#valueForPathChanged(javax.swing.tree.TreePath
+         * , java.lang.Object)
          */
-        public void valueForPathChanged(TreePath path, Object value)
-        {
+        public void valueForPathChanged(TreePath path, Object value) {
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.tree.TreeModel#getIndexOfChild(java.lang.Object, java.lang.Object)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see javax.swing.tree.TreeModel#getIndexOfChild(java.lang.Object,
+         * java.lang.Object)
          */
-        public int getIndexOfChild(Object parent, Object child)
-        {
+        public int getIndexOfChild(Object parent, Object child) {
             String path = ((Node) parent).getFullName();
             List children = getChildren(path);
             return children.indexOf(child);
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.tree.TreeModel#addTreeModelListener(javax.swing.event.TreeModelListener)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * javax.swing.tree.TreeModel#addTreeModelListener(javax.swing.event
+         * .TreeModelListener)
          */
-        public void addTreeModelListener(TreeModelListener li)
-        {
+        public void addTreeModelListener(TreeModelListener li) {
             listeners.add(TreeModelListener.class, li);
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.tree.TreeModel#removeTreeModelListener(javax.swing.event.TreeModelListener)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * javax.swing.tree.TreeModel#removeTreeModelListener(javax.swing.event
+         * .TreeModelListener)
          */
-        public void removeTreeModelListener(TreeModelListener li)
-        {
+        public void removeTreeModelListener(TreeModelListener li) {
             listeners.remove(TreeModelListener.class, li);
         }
 
         /**
-         * Notify all listeners that have registered interest for
-         * notification on this event type.  The event instance
-         * is lazily created using the parameters passed into
-         * the fire method.
+         * Notify all listeners that have registered interest for notification
+         * on this event type. The event instance is lazily created using the
+         * parameters passed into the fire method.
+         * 
          * @see EventListenerList
          */
-        protected void fireTreeStructureChanged(Object source)
-        {
-            fireTreeStructureChanged(source, new Object[] { root });
+        protected void fireTreeStructureChanged(Object source) {
+            fireTreeStructureChanged(source, new Object[] {
+                root
+            });
         }
 
         /**
-         * Notify all listeners that have registered interest for
-         * notification on this event type.  The event instance
-         * is lazily created using the parameters passed into
-         * the fire method.
+         * Notify all listeners that have registered interest for notification
+         * on this event type. The event instance is lazily created using the
+         * parameters passed into the fire method.
+         * 
          * @see EventListenerList
          */
-        protected void fireTreeStructureChanged(Object source, Object[] path)
-        {
+        protected void fireTreeStructureChanged(Object source, Object[] path) {
             // Guaranteed to return a non-null array
             Object[] array = listeners.getListenerList();
             TreeModelEvent ev = null;
 
             // Process the listeners last to first, notifying
             // those that are interested in this event
-            for (int i = array.length - 2; i >= 0; i -= 2)
-            {
-                if (array[i] == TreeModelListener.class)
-                {
+            for (int i = array.length - 2; i >= 0; i -= 2) {
+                if (array[i] == TreeModelListener.class) {
                     // Lazily create the event:
-                    if (ev == null)
-                    {
+                    if (ev == null) {
                         ev = new TreeModelEvent(source, path);
                     }
 
@@ -436,38 +423,35 @@ public class TreeConfigEditor extends AbstractConfigEditor
         /**
          * The root node
          */
-        private Node root = new Node("", "");  //$NON-NLS-1$//$NON-NLS-2$
+        private Node root = new Node("", ""); //$NON-NLS-1$//$NON-NLS-2$
     }
 
     /**
      * Simple Tree Node
      */
-    protected static class Node
-    {
+    protected static class Node {
         /**
          * Create a node with a name and path
          */
-        protected Node(String path, String name)
-        {
+        protected Node(String path, String name) {
             this.path = path;
             this.name = name;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.lang.Object#toString()
          */
-        public String toString()
-        {
+        public String toString() {
             return name;
         }
 
         /**
          * The path to us
          */
-        public String getFullName()
-        {
-            if (path.length() == 0 || name.length() == 0)
-            {
+        public String getFullName() {
+            if (path.length() == 0 || name.length() == 0) {
                 return path + name;
             }
             return path + "." + name; //$NON-NLS-1$

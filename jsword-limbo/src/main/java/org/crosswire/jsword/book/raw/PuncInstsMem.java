@@ -30,43 +30,48 @@ import java.io.OutputStream;
 import org.crosswire.jsword.versification.BibleInfo;
 
 /**
- * A PuncInstsMem provides access to the list of punctuation ids that
- * make up a Passage. The central interface is an Eumeration over the
- * words in the given verse.
+ * A PuncInstsMem provides access to the list of punctuation ids that make up a
+ * Passage. The central interface is an Eumeration over the words in the given
+ * verse.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class PuncInstsMem extends InstsMem
-{
+public class PuncInstsMem extends InstsMem {
     /**
      * Basic constructor
-     * @param raw Reference to the RawBook that is using us
-     * @param create Should we start all over again
+     * 
+     * @param raw
+     *            Reference to the RawBook that is using us
+     * @param create
+     *            Should we start all over again
      */
-    public PuncInstsMem(RawBook raw, boolean create) throws Exception
-    {
+    public PuncInstsMem(RawBook raw, boolean create) throws Exception {
         super(raw, RawConstants.FILE_PUNC_INST, create);
     }
 
     /**
      * Basic constructor
-     * @param raw Reference to the RawBook that is using us
-     * @param create Should we start all over again
-     * @param messages We append stuff here if something went wrong
+     * 
+     * @param raw
+     *            Reference to the RawBook that is using us
+     * @param create
+     *            Should we start all over again
+     * @param messages
+     *            We append stuff here if something went wrong
      */
-    public PuncInstsMem(RawBook raw, boolean create, StringBuffer messages)
-    {
+    public PuncInstsMem(RawBook raw, boolean create, StringBuffer messages) {
         super(raw, RawConstants.FILE_PUNC_INST, create, messages);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Mem#load(java.io.InputStream)
      */
     /* @Override */
-    public void load(InputStream in) throws IOException
-    {
+    public void load(InputStream in) throws IOException {
         DataInputStream din = new DataInputStream(in);
 
         byte[] asig = new byte[6];
@@ -75,12 +80,10 @@ public class PuncInstsMem extends InstsMem
         String ssig = new String(asig);
         assert ssig.equals(RawConstants.SIG_PUNC_INST);
 
-        for (int i=0; i<BibleInfo.versesInBible(); i++)
-        {
+        for (int i = 0; i < BibleInfo.versesInBible(); i++) {
             int insts = din.readByte();
             array[i] = new int[insts];
-            for (int j=0; j<insts; j++)
-            {
+            for (int j = 0; j < insts; j++) {
                 array[i][j] = din.readByte();
             }
         }
@@ -88,27 +91,23 @@ public class PuncInstsMem extends InstsMem
         din.close();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Mem#save(java.io.OutputStream)
      */
     /* @Override */
-    public void save(OutputStream out) throws IOException
-    {
+    public void save(OutputStream out) throws IOException {
         DataOutputStream dout = new DataOutputStream(out);
 
         dout.writeBytes(RawConstants.SIG_PUNC_INST);
 
-        for (int i=0; i<BibleInfo.versesInBible(); i++)
-        {
-            if (array[i] == null)
-            {
+        for (int i = 0; i < BibleInfo.versesInBible(); i++) {
+            if (array[i] == null) {
                 dout.writeByte(0);
-            }
-            else
-            {
+            } else {
                 dout.writeByte(array[i].length);
-                for (int j=0; j<array[i].length; j++)
-                {
+                for (int j = 0; j < array[i].length; j++) {
                     dout.writeByte(array[i][j]);
                 }
             }
@@ -117,4 +116,3 @@ public class PuncInstsMem extends InstsMem
         dout.close();
     }
 }
-

@@ -28,17 +28,20 @@ import org.crosswire.jsword.passage.Key;
  * Alter the Passage by calling retainAll with a Passage grabbed from the next
  * word in the search string.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class RetainCommandWord implements CommandWord
-{
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.parse.CommandWord#updatePassage(org.crosswire.jsword.book.search.parse.Searcher, org.crosswire.jsword.passage.Passage)
+public class RetainCommandWord implements CommandWord {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.parse.CommandWord#updatePassage(org.
+     * crosswire.jsword.book.search.parse.Searcher,
+     * org.crosswire.jsword.passage.Passage)
      */
-    public void updatePassage(IndexSearcher engine, Key key) throws BookException
-    {
+    public void updatePassage(IndexSearcher engine, Key key) throws BookException {
         key.retainAll(engine.iteratePassage());
     }
 }

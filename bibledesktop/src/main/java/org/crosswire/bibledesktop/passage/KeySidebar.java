@@ -51,18 +51,16 @@ import org.crosswire.jsword.passage.VerseRange;
 
 /**
  * A list view of a key range list.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChangeListener
-{
+public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChangeListener {
     /**
      * Initialize the SplitBookDataDisplay
      */
-    public KeySidebar(Book[] books)
-    {
+    public KeySidebar(Book[] books) {
         this.books = books == null ? null : (Book[]) books.clone();
         init();
         setActive();
@@ -71,19 +69,15 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     /**
      * Create the GUI
      */
-    private void init()
-    {
+    private void init() {
         setLayout(new BorderLayout());
 
         model = new RangeListModel(RestrictionType.CHAPTER);
 
         list = new JList(model);
-        list.addListSelectionListener(new ListSelectionListener()
-        {
-            public void valueChanged(ListSelectionEvent ev)
-            {
-                if (ev.getValueIsAdjusting())
-                {
+        list.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent ev) {
+                if (ev.getValueIsAdjusting()) {
                     return;
                 }
 
@@ -100,14 +94,14 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
         actBlur5 = actions.getAction(BLUR5);
 
         JButton delete = new JButton(actDelete);
-        //delete.setBorder(BorderFactory.createEmptyBorder(2, 5, 2, 5));
+        // delete.setBorder(BorderFactory.createEmptyBorder(2, 5, 2, 5));
         delete.setText(null);
         JButton blur1 = new JButton(actBlur1);
         blur1.setText(null);
-        //blur1.setBorder(BorderFactory.createEmptyBorder(2, 5, 2, 5));
+        // blur1.setBorder(BorderFactory.createEmptyBorder(2, 5, 2, 5));
         JButton blur5 = new JButton(actBlur5);
         blur5.setText(null);
-        //blur5.setBorder(BorderFactory.createEmptyBorder(2, 5, 2, 5));
+        // blur5.setBorder(BorderFactory.createEmptyBorder(2, 5, 2, 5));
 
         JPanel mutate = new JPanel(new FlowLayout());
         mutate.add(delete);
@@ -119,30 +113,29 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     }
 
     /**
-     * Blur (expand) the current passage action by one verse on each side.
-     * This bound by the boundaries of the Chapter.
+     * Blur (expand) the current passage action by one verse on each side. This
+     * bound by the boundaries of the Chapter.
      */
-    public void doBlur1()
-    {
+    public void doBlur1() {
         doBlur(1);
     }
 
     /**
-     * Blur (expand) the current key by five verses on each side.
-     * This bound by the boundaries of the Chapter.
+     * Blur (expand) the current key by five verses on each side. This bound by
+     * the boundaries of the Chapter.
      */
-    public void doBlur5()
-    {
+    public void doBlur5() {
         doBlur(5);
     }
 
     /**
-     * Blur (expand) the current key action by amount verses on each side.
-     * This bound by the default Blur Restriction.
-     * @param amount The amount of blurring
+     * Blur (expand) the current key action by amount verses on each side. This
+     * bound by the default Blur Restriction.
+     * 
+     * @param amount
+     *            The amount of blurring
      */
-    private void doBlur(int amount)
-    {
+    private void doBlur(int amount) {
         // Remember what was selected
         List selected = new ArrayList(Arrays.asList(list.getSelectedValues()));
 
@@ -150,15 +143,11 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
         Key copy = (Key) key.clone();
 
         // Either blur the entire unselected list or just the selected elements.
-        if (selected.isEmpty())
-        {
+        if (selected.isEmpty()) {
             copy.blur(amount, RestrictionType.getDefaultBlurRestriction());
-        }
-        else
-        {
+        } else {
             Iterator iter = selected.iterator();
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 Key k = (Key) iter.next();
                 // Create a copy so the selection can be restored
                 Key keyCopy = (Key) k.clone();
@@ -170,25 +159,21 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
 
         // Restore the selection
         int total = model.getSize();
-        for (int i = 0; i < total; i++)
-        {
+        for (int i = 0; i < total; i++) {
             Key listedKey = (Key) model.getElementAt(i);
 
             // As keys are found, remove them
             Iterator iter = selected.iterator();
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 Key selectedKey = (Key) iter.next();
-                if (listedKey.contains(selectedKey))
-                {
+                if (listedKey.contains(selectedKey)) {
                     list.addSelectionInterval(i, i);
                     iter.remove();
                 }
             }
 
             // If the list is empty then we are done.
-            if (selected.isEmpty())
-            {
+            if (selected.isEmpty()) {
                 break;
             }
         }
@@ -199,14 +184,12 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     /**
      * Remove the selected verses out of this KeySidebar.
      */
-    public void doDeleteSelected()
-    {
+    public void doDeleteSelected() {
         RangeListModel rlm = (RangeListModel) list.getModel();
 
         Passage ref = rlm.getPassage();
         Object[] selected = list.getSelectedValues();
-        for (int i = 0; i < selected.length; i++)
-        {
+        for (int i = 0; i < selected.length; i++) {
             VerseRange range = (VerseRange) selected[i];
             ref.remove(range);
         }
@@ -219,20 +202,16 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
         setActive();
     }
 
-    public Key getKey()
-    {
+    public Key getKey() {
         return key;
     }
 
-    private void setKey(Key newKey)
-    {
-        if (partial != null && partial.equals(newKey))
-        {
+    private void setKey(Key newKey) {
+        if (partial != null && partial.equals(newKey)) {
             return;
         }
 
-        if (key != null && key.equals(newKey))
-        {
+        if (key != null && key.equals(newKey)) {
             return;
         }
 
@@ -240,14 +219,10 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
         // since we allow it to be blurred and
         // that would cause the shared location
         // to get the change w/o seeing it.
-        if (newKey == null)
-        {
+        if (newKey == null) {
             key = null;
-        }
-        else
-        {
-            if (key != newKey)
-            {
+        } else {
+            if (key != newKey) {
                 key = (Key) newKey.clone();
             }
         }
@@ -260,23 +235,18 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     /**
      * Someone clicked on a value in the list
      */
-    /*private*/ final void selection()
-    {
+    /*private*/final void selection() {
         Object[] selected = list.getSelectedValues();
 
-        if (selected.length > 0)
-        {
+        if (selected.length > 0) {
             partial = books[0].createEmptyKeyList();
 
-            for (int i = 0; i < selected.length; i++)
-            {
+            for (int i = 0; i < selected.length; i++) {
                 partial.addAll((Key) selected[i]);
             }
 
             fireKeyChanged(new KeyChangeEvent(this, partial));
-        }
-        else
-        {
+        } else {
             // Nothing selected so use the whole passage
             fireKeyChanged(new KeyChangeEvent(this, key));
         }
@@ -287,8 +257,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     /**
      * Make sure the correct buttons are made active
      */
-    private void setActive()
-    {
+    private void setActive() {
         Object[] selected = list.getSelectedValues();
 
         // make sure the mutator buttons are correctly active
@@ -301,41 +270,35 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.DisplaySelectListener#passageSelected(org.crosswire.bibledesktop.book.DisplaySelectEvent)
      */
-    public void passageSelected(DisplaySelectEvent ev)
-    {
+    public void passageSelected(DisplaySelectEvent ev) {
         setKey(ev.getKey());
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.DisplaySelectListener#bookChosen(org.crosswire.bibledesktop.book.DisplaySelectEvent)
      */
-    public void bookChosen(DisplaySelectEvent ev)
-    {
+    public void bookChosen(DisplaySelectEvent ev) {
         books = ev.getBookProvider().getBooks();
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.KeyChangeListener#keyChanged(org.crosswire.bibledesktop.book.KeyChangeEvent)
      */
-    public void keyChanged(KeyChangeEvent ev)
-    {
+    public void keyChanged(KeyChangeEvent ev) {
         setKey(ev.getKey());
     }
 
     /**
      * Add a command listener
      */
-    public synchronized void addKeyChangeListener(KeyChangeListener listener)
-    {
+    public synchronized void addKeyChangeListener(KeyChangeListener listener) {
         List temp = new ArrayList(2);
 
-        if (keyChangeListeners != null)
-        {
+        if (keyChangeListeners != null) {
             temp.addAll(keyChangeListeners);
         }
 
-        if (!temp.contains(listener))
-        {
+        if (!temp.contains(listener)) {
             temp.add(listener);
             keyChangeListeners = temp;
         }
@@ -344,10 +307,8 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     /**
      * Remove a command listener
      */
-    public synchronized void removeKeyChangeListener(KeyChangeListener listener)
-    {
-        if (keyChangeListeners != null && keyChangeListeners.contains(listener))
-        {
+    public synchronized void removeKeyChangeListener(KeyChangeListener listener) {
+        if (keyChangeListeners != null && keyChangeListeners.contains(listener)) {
             List temp = new ArrayList();
             temp.addAll(keyChangeListeners);
 
@@ -359,12 +320,9 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     /**
      * Inform the command keyChangeListeners
      */
-    /*private*/ final synchronized void fireKeyChanged(KeyChangeEvent ev)
-    {
-        if (keyChangeListeners != null)
-        {
-            for (int i = 0; i < keyChangeListeners.size(); i++)
-            {
+    /*private*/final synchronized void fireKeyChanged(KeyChangeEvent ev) {
+        if (keyChangeListeners != null) {
+            for (int i = 0; i < keyChangeListeners.size(); i++) {
                 KeyChangeListener li = (KeyChangeListener) keyChangeListeners.get(i);
                 li.keyChanged(ev);
             }
@@ -378,8 +336,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         // Broken but we don't serialize views
         books = null;
         keyChangeListeners = null;

@@ -24,49 +24,45 @@ package org.crosswire.biblemapper.model;
 /**
  * LinkAttractionRule.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class LinkAttractionRule extends AbstractRule
-{
+public class LinkAttractionRule extends AbstractRule {
     /**
-     * Specify where it would like a node to be positioned in space.
-     * Rules return an array of positions where the average of them
-     * specifies the real desired position. So to specify a single place
-     * simply return an array of one position. The positions are added
-     * to the results from all Rules so to specify a single position
-     * more strongly, return an array conataining that position many
-     * times.
-     * @param map The Map to select a node from
+     * Specify where it would like a node to be positioned in space. Rules
+     * return an array of positions where the average of them specifies the real
+     * desired position. So to specify a single place simply return an array of
+     * one position. The positions are added to the results from all Rules so to
+     * specify a single position more strongly, return an array conataining that
+     * position many times.
+     * 
+     * @param map
+     *            The Map to select a node from
      * @return An array of desired positions.
      */
-    public Position getDesiredPosition(Map map, int b, int c)
-    {
+    public Position getDesiredPosition(Map map, int b, int c) {
         // Go through all the links and find their average positions when
         // weighted by their strength
         Link[] links = la.getLinks(b, c);
         int dimensions = map.getDimensions();
         float[] total_pos = new float[dimensions];
         int total_strength = 0;
-        for (int i=0; i<links.length; i++)
-        {
+        for (int i = 0; i < links.length; i++) {
             int dest_book = links[i].getDestinationBook();
             int dest_chap = links[i].getDestinationChapter();
             float[] dest_pos = map.getPositionArrayCopy(dest_book, dest_chap);
 
-            for (int d=0; d<total_pos.length; d++)
-            {
+            for (int d = 0; d < total_pos.length; d++) {
                 total_pos[d] = total_pos[d] + (dest_pos[d] * links[i].getStrength());
             }
 
             total_strength += links[i].getStrength();
         }
-        
+
         // Now we know the total position and strength, we can work out the mean
         float[] pos = new float[dimensions];
-        for (int d=0; d<pos.length; d++)
-        {
+        for (int d = 0; d < pos.length; d++) {
             pos[d] = total_pos[d] / total_strength;
         }
 
@@ -75,19 +71,20 @@ public class LinkAttractionRule extends AbstractRule
 
     /**
      * Returns the link array.
+     * 
      * @return LinkArray
      */
-    public LinkArray getLinkArray()
-    {
+    public LinkArray getLinkArray() {
         return la;
     }
 
     /**
      * Sets the link array.
-     * @param la The link array to set
+     * 
+     * @param la
+     *            The link array to set
      */
-    public void setLinkArray(LinkArray la)
-    {
+    public void setLinkArray(LinkArray la) {
         this.la = la;
     }
 

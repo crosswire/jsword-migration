@@ -28,47 +28,33 @@ import org.crosswire.common.util.PluginUtil;
 /**
  * Factory for OSIS renderers.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public final class BookDataDisplayFactory
-{
+public final class BookDataDisplayFactory {
     /**
      * Prevent Use
      */
-    private BookDataDisplayFactory()
-    {
+    private BookDataDisplayFactory() {
     }
 
     /**
      * Create a new Files
      */
-    public static BookDataDisplay createBookDataDisplay()
-    {
+    public static BookDataDisplay createBookDataDisplay() {
         Exception ex = null;
-        try
-        {
+        try {
             return (BookDataDisplay) PluginUtil.getImplementation(BookDataDisplay.class);
-        }
-        catch (ClassCastException e)
-        {
+        } catch (ClassCastException e) {
             ex = e;
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             ex = e;
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             ex = e;
-        }
-        catch (InstantiationException e)
-        {
+        } catch (InstantiationException e) {
             ex = e;
-        }
-        catch (IllegalAccessException e)
-        {
+        } catch (IllegalAccessException e) {
             ex = e;
         }
 

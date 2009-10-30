@@ -25,27 +25,28 @@ import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.passage.Key;
 
 /**
- * CommandWord extends Word to allow actions that alter a base
- * Passage. Implementations of this interface may use the Searcher to
- * get at a default Bible (or they may have one hard coded if necessary)
- * or to get at ParamWords that follow this command.
+ * CommandWord extends Word to allow actions that alter a base Passage.
+ * Implementations of this interface may use the Searcher to get at a default
+ * Bible (or they may have one hard coded if necessary) or to get at ParamWords
+ * that follow this command.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
-*/
-public interface CommandWord extends Word
-{
+ */
+public interface CommandWord extends Word {
     /**
-     * Alter a Passage in whatever manner is appropriate for
-     * this command.
-     * For example the "~" command does something like this:
-     * <code>ref.blur(engine.elements.next.getWord);</code>
-     * The "&" command looks like this:
+     * Alter a Passage in whatever manner is appropriate for this command. For
+     * example the "~" command does something like this:
+     * <code>ref.blur(engine.elements.next.getWord);</code> The "&" command
+     * looks like this:
      * <code>ref.addAll(engine.elements.next.getPassage);</code>
-     * @param engine The controller that can provide access to the search
-     *               string or a default Bible.
-     * @param ref The Passage to alter (if necessary)
+     * 
+     * @param engine
+     *            The controller that can provide access to the search string or
+     *            a default Bible.
+     * @param ref
+     *            The Passage to alter (if necessary)
      */
     void updatePassage(IndexSearcher engine, Key ref) throws BookException;
 }

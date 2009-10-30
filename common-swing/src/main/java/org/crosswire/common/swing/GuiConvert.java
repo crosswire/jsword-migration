@@ -29,45 +29,44 @@ import org.crosswire.common.util.StringUtil;
 
 /**
  * Conversions between various types and Strings.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public final class GuiConvert
-{
+public final class GuiConvert {
     /**
      * We don't want anyone doing this ...
      */
-    private GuiConvert()
-    {
+    private GuiConvert() {
     }
 
     /**
      * Convert a String to a Font. Accepts one of two inputs:
-     * FamilyName-STYLE-size, where STYLE is either PLAIN, BOLD, ITALIC or BOLDITALIC<br/>
+     * FamilyName-STYLE-size, where STYLE is either PLAIN, BOLD, ITALIC or
+     * BOLDITALIC<br/>
      * or<br/>
-     * FamilyName,style,size, where STYLE is 0 for PLAIN, 1 for BOLD, 2 for ITALIC or 3 for BOLDITALIC.
-     * @param value the thing to convert
+     * FamilyName,style,size, where STYLE is 0 for PLAIN, 1 for BOLD, 2 for
+     * ITALIC or 3 for BOLDITALIC.
+     * 
+     * @param value
+     *            the thing to convert
      * @return the converted data
      */
-    public static Font string2Font(String value)
-    {
+    public static Font string2Font(String value) {
         if (value == null || value.equals("")) //$NON-NLS-1$
         {
             return null;
         }
 
         // new way
-        if (value.indexOf(',') == -1)
-        {
+        if (value.indexOf(',') == -1) {
             return Font.decode(value);
         }
 
         // old way
         String[] values = StringUtil.split(value, ","); //$NON-NLS-1$
-        if (values.length != 3)
-        {
+        if (values.length != 3) {
             log.warn("Illegal font name: " + value); //$NON-NLS-1$
             return null;
         }
@@ -75,45 +74,43 @@ public final class GuiConvert
     }
 
     /**
-     * Convert a Font to a String. Produces a format that can be read with <code>Font.decode(String)</code>.
+     * Convert a Font to a String. Produces a format that can be read with
+     * <code>Font.decode(String)</code>.
      * 
-     * @param font the thing to convert
+     * @param font
+     *            the thing to convert
      * @return the converted data
      */
-    public static String font2String(Font font)
-    {
-        if (font == null)
-        {
+    public static String font2String(Font font) {
+        if (font == null) {
             return ""; //$NON-NLS-1$
         }
 
-        String  strStyle = "plain"; //$NON-NLS-1$
+        String strStyle = "plain"; //$NON-NLS-1$
 
-        if (font.isBold())
-        {
+        if (font.isBold()) {
             strStyle = font.isItalic() ? "bolditalic" : "bold"; //$NON-NLS-1$ //$NON-NLS-2$
-        }
-        else if (font.isItalic())
-        {
+        } else if (font.isItalic()) {
             strStyle = "italic"; //$NON-NLS-1$
         }
-
 
         return font.getName() + "-" + strStyle + "-" + font.getSize(); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
-     * Create a font just like the another with regard to style and size, but differing in font family.
-     * @param fontspec the font to model
-     * @param fontName the font to use
+     * Create a font just like the another with regard to style and size, but
+     * differing in font family.
+     * 
+     * @param fontspec
+     *            the font to model
+     * @param fontName
+     *            the font to use
      * @return the font
      */
-    public static Font deriveFont(String fontspec, String fontName)
-    {
+    public static Font deriveFont(String fontspec, String fontName) {
         Font font = string2Font(fontspec);
         Font derived = null;
-        if (font != null && fontName != null)
-        {
+        if (font != null && fontName != null) {
             derived = new Font(fontName, font.getStyle(), font.getSize());
         }
         return derived;
@@ -121,18 +118,18 @@ public final class GuiConvert
 
     /**
      * Convert a String to a Color
-     * @param value the thing to convert
+     * 
+     * @param value
+     *            the thing to convert
      * @return the converted data
      */
-    public static Color string2Color(String value)
-    {
+    public static Color string2Color(String value) {
         if (value == null || value.equals("")) //$NON-NLS-1$
         {
             return null;
         }
 
-        if (value.length() != 7)
-        {
+        if (value.length() != 7) {
             log.warn("Illegal colour name: " + value); //$NON-NLS-1$
             return null;
         }
@@ -143,20 +140,18 @@ public final class GuiConvert
         String blue = value.substring(5, 7);
         // log.fine("red=" + red + " green=" + green + " blue=" + blue);
 
-        return new Color(Integer.parseInt(red, 16),
-                         Integer.parseInt(green, 16),
-                         Integer.parseInt(blue, 16));
+        return new Color(Integer.parseInt(red, 16), Integer.parseInt(green, 16), Integer.parseInt(blue, 16));
     }
 
     /**
      * Convert a Color to a String
-     * @param color the thing to convert
+     * 
+     * @param color
+     *            the thing to convert
      * @return the converted data
      */
-    public static String color2String(Color color)
-    {
-        if (color == null)
-        {
+    public static String color2String(Color color) {
+        if (color == null) {
             return ""; //$NON-NLS-1$
         }
 

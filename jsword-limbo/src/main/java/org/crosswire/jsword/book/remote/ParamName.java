@@ -26,34 +26,29 @@ import java.io.Serializable;
 /**
  * Some constants so that everyone can agree on the names for various methods.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ParamName implements Serializable
-{
-	static final ParamName PARAM_BIBLE = new ParamName("bible"); //$NON-NLS-1$
+public class ParamName implements Serializable {
+    static final ParamName PARAM_BIBLE = new ParamName("bible"); //$NON-NLS-1$
     static final ParamName PARAM_PASSAGE = new ParamName("passage"); //$NON-NLS-1$
     static final ParamName PARAM_FINDSTRING = new ParamName("word"); //$NON-NLS-1$
 
     /**
      * Only we should be doing this
      */
-    private ParamName(String name)
-    {
+    private ParamName(String name) {
         this.name = name;
     }
 
     /**
      * Lookup method to convert from a String
      */
-    public static ParamName fromString(String name)
-    {
-        for (int i = 0; i < VALUES.length; i++)
-        {
+    public static ParamName fromString(String name) {
+        for (int i = 0; i < VALUES.length; i++) {
             ParamName o = VALUES[i];
-            if (o.name.equalsIgnoreCase(name))
-            {
+            if (o.name.equalsIgnoreCase(name)) {
                 return o;
             }
         }
@@ -65,34 +60,36 @@ public class ParamName implements Serializable
     /**
      * Lookup method to convert from an integer
      */
-    public static ParamName fromInteger(int i)
-    {
+    public static ParamName fromInteger(int i) {
         return VALUES[i];
     }
 
     /**
-     * Prevent subclasses from overriding canonical identity based Object methods
+     * Prevent subclasses from overriding canonical identity based Object
+     * methods
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public final boolean equals(Object o)
-    {
+    public final boolean equals(Object o) {
         return super.equals(o);
     }
 
     /**
-     * Prevent subclasses from overriding canonical identity based Object methods
+     * Prevent subclasses from overriding canonical identity based Object
+     * methods
+     * 
      * @see java.lang.Object#hashCode()
      */
-    public final int hashCode()
-    {
+    public final int hashCode() {
         return super.hashCode();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
-    public String toString()
-    {
+    public String toString() {
         return name;
     }
 
@@ -105,16 +102,12 @@ public class ParamName implements Serializable
     private static int nextObj;
     private final int obj = nextObj++;
 
-    Object readResolve()
-    {
+    Object readResolve() {
         return VALUES[obj];
     }
 
-    private static final ParamName[] VALUES =
-    {
-        PARAM_BIBLE,
-        PARAM_PASSAGE,
-        PARAM_FINDSTRING,
+    private static final ParamName[] VALUES = {
+            PARAM_BIBLE, PARAM_PASSAGE, PARAM_FINDSTRING,
     };
 
     /**

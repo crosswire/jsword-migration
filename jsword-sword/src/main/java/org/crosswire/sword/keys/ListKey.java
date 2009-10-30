@@ -11,203 +11,189 @@ import java.util.ArrayList;
 
 public class ListKey extends SWKey {
 
-	protected int arraypos;
-	protected List array;
+    protected int arraypos;
+    protected List array;
 
+    /******************************************************************************
+     * ListKey Constructor - initializes instance of ListKey
+     * 
+     * ENT: ikey - text key
+     */
 
-/******************************************************************************
- * ListKey Constructor - initializes instance of ListKey
- *
- * ENT:	ikey - text key
- */
+    public ListKey() {
+        this(""); //$NON-NLS-1$
+    }
 
-	public ListKey() {
-		this(""); //$NON-NLS-1$
-	}
-
-	public ListKey(String ikey) {
-		super(ikey);
-		ClearList();
-	}
-
+    public ListKey(String ikey) {
+        super(ikey);
+        ClearList();
+    }
 
     /* @Override */
-	public boolean traversable() { return true; }
+    public boolean traversable() {
+        return true;
+    }
 
-
-	public ListKey(ListKey k) {
-		super(k.keytext);
-		arraypos = k.arraypos;
-		array = new ArrayList();
-		for (int i = 0; i < array.size(); i++)
-			array.add(((SWKey)k.array.get(i)).clone());
-	}
-
-
-    /* @Override */
-	public Object clone() {
-		return new ListKey(this);
-	}
-
-
-	public void ClearList() {
-		array.clear();
-		arraypos  = 0;
-	}
-
-
-/******************************************************************************
- * ListKey::operator = Equates this ListKey to another ListKey object
- *
- * ENT:	ikey - other ListKey object
- */
-
-	public void set(ListKey ikey) {
-		ClearList();
-
-		arraypos = ikey.arraypos;
-		for (int i = 0; i < array.size(); i++)
-			array.add(((SWKey)ikey.array.get(i)).clone());
-
-		setToElement(0);
-	}
-
-
-/******************************************************************************
- * ListKey::operator << - Adds an element to the list
- */
-
-	public void add(SWKey ikey) {
-		array.add(ikey.clone());
-		setToElement(array.size()-1);
-	}
-
-
-/******************************************************************************
- * ListKey::operator =(POSITION)	- Positions this key
- *
- * ENT:	p	- position
- *
- * RET:	*this
- */
+    public ListKey(ListKey k) {
+        super(k.keytext);
+        arraypos = k.arraypos;
+        array = new ArrayList();
+        for (int i = 0; i < array.size(); i++)
+            array.add(((SWKey) k.array.get(i)).clone());
+    }
 
     /* @Override */
-	public void position(int p) {
-		switch (p) {
-		case TOP:
-			setToElement(0);
-			break;
-		case BOTTOM:
-			setToElement(array.size()-1);
-			break;
-		}
-	}
+    public Object clone() {
+        return new ListKey(this);
+    }
 
+    public void ClearList() {
+        array.clear();
+        arraypos = 0;
+    }
 
-/******************************************************************************
- * ListKey::operator += - Increments a number of elements
- */
+    /******************************************************************************
+     * ListKey::operator = Equates this ListKey to another ListKey object
+     * 
+     * ENT: ikey - other ListKey object
+     */
 
-	public void next(int increment) {
-		if (increment < 0) {
-			previous(increment*-1);
-		}
-		else {
-			getError();		// clear error
-			for (; (increment != 0  && (getError() == 0)); increment--) {
-				if (arraypos < array.size()) {
-					((SWKey)array.get(arraypos)).next();
-					if (((SWKey)array.get(arraypos)).getError() != 0) {
-						setToElement(arraypos+1);
-					}
-					else setText(((SWKey)array.get(arraypos)).getText());
-				}
-				else error = KEYERR_OUTOFBOUNDS;
-			}
-		}
-	}
+    public void set(ListKey ikey) {
+        ClearList();
 
+        arraypos = ikey.arraypos;
+        for (int i = 0; i < array.size(); i++)
+            array.add(((SWKey) ikey.array.get(i)).clone());
 
-/******************************************************************************
- * ListKey::operator -= - Decrements a number of elements
- */
+        setToElement(0);
+    }
 
-	public void previous(int decrement) {
-		if (decrement < 0) {
-			next(decrement*-1);
-		}
-		else {
-			getError();		// clear error
-			for (; ((decrement != 0) && (getError() == 0)); decrement--) {
-				if (arraypos > -1) {
-					((SWKey)array.get(arraypos)).previous();
-					if (((SWKey)array.get(arraypos)).getError() != 0) {
-						setToElement(arraypos-1, BOTTOM);
-					}
-					else setText(((SWKey)array.get(arraypos)).getText());
-				}
-				else error = KEYERR_OUTOFBOUNDS;
-			}
-		}
-	}
+    /******************************************************************************
+     * ListKey::operator << - Adds an element to the list
+     */
 
+    public void add(SWKey ikey) {
+        array.add(ikey.clone());
+        setToElement(array.size() - 1);
+    }
 
-/******************************************************************************
- * ListKey::Count	- Returns number of elements in list
- */
+    /******************************************************************************
+     * ListKey::operator =(POSITION) - Positions this key
+     * 
+     * ENT: p - position
+     * 
+     * RET: *this
+     */
 
-	public int count() {
-		return array.size();
-	}
+    /* @Override */
+    public void position(int p) {
+        switch (p) {
+        case TOP:
+            setToElement(0);
+            break;
+        case BOTTOM:
+            setToElement(array.size() - 1);
+            break;
+        }
+    }
 
+    /******************************************************************************
+     * ListKey::operator += - Increments a number of elements
+     */
 
-/******************************************************************************
- * ListKey::setToElement	- Sets key to element number
- *
- * ENT:	ielement	- element number to set to
- *
- * RET:	error status
- */
+    public void next(int increment) {
+        if (increment < 0) {
+            previous(increment * -1);
+        } else {
+            getError(); // clear error
+            for (; (increment != 0 && (getError() == 0)); increment--) {
+                if (arraypos < array.size()) {
+                    ((SWKey) array.get(arraypos)).next();
+                    if (((SWKey) array.get(arraypos)).getError() != 0) {
+                        setToElement(arraypos + 1);
+                    } else
+                        setText(((SWKey) array.get(arraypos)).getText());
+                } else
+                    error = KEYERR_OUTOFBOUNDS;
+            }
+        }
+    }
 
-	public int setToElement(int ielement, int pos) {
-		arraypos = ielement;
-		if (arraypos >= array.size()) {
-			arraypos = (array.size()>0) ? array.size() - 1:0;
-			error = KEYERR_OUTOFBOUNDS;
-		}
-		else {
-			if (arraypos < 0) {
-				arraypos = 0;
-				error = KEYERR_OUTOFBOUNDS;
-			}
-			else {
-				error = 0;
-			}
-		}
+    /******************************************************************************
+     * ListKey::operator -= - Decrements a number of elements
+     */
 
-		if (array.size() > 1) {
-			((SWKey)array.get(arraypos)).position(pos);
-			setText(((SWKey)array.get(arraypos)).getText());
-		}
-		else setText(""); //$NON-NLS-1$
+    public void previous(int decrement) {
+        if (decrement < 0) {
+            next(decrement * -1);
+        } else {
+            getError(); // clear error
+            for (; ((decrement != 0) && (getError() == 0)); decrement--) {
+                if (arraypos > -1) {
+                    ((SWKey) array.get(arraypos)).previous();
+                    if (((SWKey) array.get(arraypos)).getError() != 0) {
+                        setToElement(arraypos - 1, BOTTOM);
+                    } else
+                        setText(((SWKey) array.get(arraypos)).getText());
+                } else
+                    error = KEYERR_OUTOFBOUNDS;
+            }
+        }
+    }
 
-		return error;
-	}
+    /******************************************************************************
+     * ListKey::Count - Returns number of elements in list
+     */
 
-	public int setToElement(int ielement) {
-		return setToElement(ielement, TOP);
-	}
+    public int count() {
+        return array.size();
+    }
 
-/******************************************************************************
- * ListKey::Remove	- Removes current element from list
- */
+    /******************************************************************************
+     * ListKey::setToElement - Sets key to element number
+     * 
+     * ENT: ielement - element number to set to
+     * 
+     * RET: error status
+     */
 
-	void remove() {
-		if ((arraypos > -1) && (arraypos < array.size())) {
-			if (arraypos < array.size() - 1)
-				array.remove(arraypos);
+    public int setToElement(int ielement, int pos) {
+        arraypos = ielement;
+        if (arraypos >= array.size()) {
+            arraypos = (array.size() > 0) ? array.size() - 1 : 0;
+            error = KEYERR_OUTOFBOUNDS;
+        } else {
+            if (arraypos < 0) {
+                arraypos = 0;
+                error = KEYERR_OUTOFBOUNDS;
+            } else {
+                error = 0;
+            }
+        }
 
-			setToElement((arraypos > 0) ? arraypos-1 : 0);
-		}
-	}
+        if (array.size() > 1) {
+            ((SWKey) array.get(arraypos)).position(pos);
+            setText(((SWKey) array.get(arraypos)).getText());
+        } else
+            setText(""); //$NON-NLS-1$
+
+        return error;
+    }
+
+    public int setToElement(int ielement) {
+        return setToElement(ielement, TOP);
+    }
+
+    /******************************************************************************
+     * ListKey::Remove - Removes current element from list
+     */
+
+    void remove() {
+        if ((arraypos > -1) && (arraypos < array.size())) {
+            if (arraypos < array.size() - 1)
+                array.remove(arraypos);
+
+            setToElement((arraypos > 0) ? arraypos - 1 : 0);
+        }
+    }
 }

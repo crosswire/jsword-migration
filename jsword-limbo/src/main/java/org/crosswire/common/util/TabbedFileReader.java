@@ -27,42 +27,40 @@ import java.io.IOException;
 import java.net.URL;
 
 /**
- * A TabbedFileReader reads a file consisting of lines with
- * tab separated columns.
- *
- * @see gnu.lgpl.License for license details.
+ * A TabbedFileReader reads a file consisting of lines with tab separated
+ * columns.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at yahoo dot com]
  */
-public class TabbedFileReader
-{
+public class TabbedFileReader {
     /**
      * This is a utility class, so it should not be constructed.
-     *
+     * 
      */
-    private TabbedFileReader()
-    {
+    private TabbedFileReader() {
     }
 
     /**
      * Process all the lines in the file.
-     * @param fileName java.lang.String
-     * @param columns int
-     * @param lp lineProcessor
+     * 
+     * @param fileName
+     *            java.lang.String
+     * @param columns
+     *            int
+     * @param lp
+     *            lineProcessor
      * @throws IOException
      */
     // Ideas: Add an array of index positions giving the columns that are useful
     // Add an array of class types that the string is to become
-    public static void read(String fileName, int columns, RowProcessor lp) throws IOException
-    {
+    public static void read(String fileName, int columns, RowProcessor lp) throws IOException {
         URL fileURL = ResourceUtil.getResource(fileName);
         FileReader reader = null;
-        try
-        {
+        try {
             reader = new FileReader(fileURL.getFile());
-        }
-        catch (IOException ex1)
-        {
+        } catch (IOException ex1) {
             reader = new FileReader(fileName);
         }
 
@@ -73,22 +71,18 @@ public class TabbedFileReader
 
         // read the file a line at a time and send it to the
         // processor for processing
-        while (true)
-        {
+        while (true) {
             String line = in.readLine();
-            if (line == null)
-            {
+            if (line == null) {
                 break;
             }
 
             // Split it on tabs
             int previousLoc = 0;
             int lastColumn = columns - 1;
-            for (int col = 0; col < lastColumn; col++)
-            {
+            for (int col = 0; col < lastColumn; col++) {
                 int loc = line.indexOf('\t', previousLoc);
-                if (loc == -1)
-                {
+                if (loc == -1) {
                     throw new ArrayIndexOutOfBoundsException();
                 }
                 row[col] = line.substring(previousLoc, loc);

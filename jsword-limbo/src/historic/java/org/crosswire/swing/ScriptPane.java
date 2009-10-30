@@ -25,7 +25,7 @@ import org.mozilla.javascript.NativeJavaObject;
  * ScriptPane is a GUI interface to the IBM BSF library for executing
  * arbitary commands in a variety of scripting languages.
  *
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker
  */

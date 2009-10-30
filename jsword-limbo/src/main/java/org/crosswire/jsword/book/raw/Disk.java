@@ -22,14 +22,13 @@
 package org.crosswire.jsword.book.raw;
 
 /**
- * Disk is the root of all the data sources that load only load an index
- * into memory at init time, and read the rest of the data when requested.
- * This is slower than the Mem alternative fast but less memory hungry.
+ * Disk is the root of all the data sources that load only load an index into
+ * memory at init time, and read the rest of the data when requested. This is
+ * slower than the Mem alternative fast but less memory hungry.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class Disk
-{
+public class Disk {
 }

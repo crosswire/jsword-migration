@@ -29,27 +29,24 @@ import org.crosswire.jsword.versification.BibleInfo;
 /**
  * A MapEvent happens whenever a Map changes.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class MapEvent extends EventObject
-{
-	/**
+public class MapEvent extends EventObject {
+    /**
      * Initialize a MapEvent
-     * @param source The map that started this off
+     * 
+     * @param source
+     *            The map that started this off
      */
-    public MapEvent(Map source, int book, int chapter)
-    {
+    public MapEvent(Map source, int book, int chapter) {
         super(source);
 
-        try
-        {
+        try {
             if (chapter < 1 || chapter > BibleInfo.chaptersInBook(book))
                 throw new IllegalArgumentException("Invalid chapter");
-        }
-        catch (NoSuchVerseException ex)
-        {
+        } catch (NoSuchVerseException ex) {
             throw new IllegalArgumentException("Invalid book");
         }
 
@@ -59,10 +56,11 @@ public class MapEvent extends EventObject
 
     /**
      * Initialize a MapEvent
-     * @param source The Object that started this off
+     * 
+     * @param source
+     *            The Object that started this off
      */
-    public MapEvent(Map source)
-    {
+    public MapEvent(Map source) {
         super(source);
 
         book = -1;
@@ -70,22 +68,22 @@ public class MapEvent extends EventObject
     }
 
     /**
-     * Get the verse ordinal that changed position or null if the whole
-     * table changed
+     * Get the verse ordinal that changed position or null if the whole table
+     * changed
+     * 
      * @return The progress
      */
-    public int getChangedBook()
-    {
+    public int getChangedBook() {
         return book;
     }
 
     /**
-     * Get the verse ordinal that changed position or null if the whole
-     * table changed
+     * Get the verse ordinal that changed position or null if the whole table
+     * changed
+     * 
      * @return The progress
      */
-    public int getChangedChapter()
-    {
+    public int getChangedChapter() {
         return chapter;
     }
 

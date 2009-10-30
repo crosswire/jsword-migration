@@ -29,33 +29,29 @@ import javax.swing.ListModel;
 /**
  * A simple implementation of ListModel that is backed by a List.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ListListModel extends AbstractListModel implements ListModel
-{
+public class ListListModel extends AbstractListModel implements ListModel {
     /**
      * Constructor for ListListModel.
      */
-    public ListListModel(List list)
-    {
+    public ListListModel(List list) {
         this.list = list;
     }
 
     /**
      * @see javax.swing.ListModel#getSize()
      */
-    public int getSize()
-    {
+    public int getSize() {
         return list.size();
     }
 
     /**
      * @see javax.swing.ListModel#getElementAt(int)
      */
-    public Object getElementAt(int index)
-    {
+    public Object getElementAt(int index) {
         return list.get(index);
     }
 

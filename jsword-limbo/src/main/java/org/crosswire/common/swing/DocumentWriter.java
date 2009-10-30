@@ -30,176 +30,163 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
 /**
- * A DocumentWriter is-a Writer that uses a Document so all text printed
- * to the Writer ends up in the JTextArea.
- * A Document is a Container for text that supports editing and provides
- * notification of changes (serves as the model in an MVC relationship).
+ * A DocumentWriter is-a Writer that uses a Document so all text printed to the
+ * Writer ends up in the JTextArea. A Document is a Container for text that
+ * supports editing and provides notification of changes (serves as the model in
+ * an MVC relationship).
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class DocumentWriter extends Writer
-{
+public class DocumentWriter extends Writer {
     /**
-     * Create the DocumentWriter with no Document, that just
-     * dumps the text it get into the bin
+     * Create the DocumentWriter with no Document, that just dumps the text it
+     * get into the bin
      */
-    public DocumentWriter()
-    {
+    public DocumentWriter() {
     }
 
     /**
      * Create the DocumentWriter with a Document to write to
-     * @param doc The destination Document
+     * 
+     * @param doc
+     *            The destination Document
      */
-    public DocumentWriter(Document doc)
-    {
+    public DocumentWriter(Document doc) {
         this.doc = doc;
     }
 
     /**
      * Accessor for the Document that we are updating
      */
-    public Document getDocument()
-    {
+    public Document getDocument() {
         return doc;
     }
 
     /**
      * Accessor for the Document that we are updating
      */
-    public void setDocument(Document doc)
-    {
-        try
-        {
+    public void setDocument(Document doc) {
+        try {
             flush();
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             // we just wanted to make sure that updates to the old
             // Document didn't go to the new one, so dumping the
             // exception whilst not ideal seems like the best option.
         }
 
-        synchronized (lock)
-        {
+        synchronized (lock) {
             this.doc = doc;
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.io.Writer#write(char[], int, int)
      */
     /* @Override */
-    public void write(char[] cbuf, int off, int len)
-    {
-        synchronized (lock)
-        {
+    public void write(char[] cbuf, int off, int len) {
+        synchronized (lock) {
             queue = queue + new String(cbuf, off, len);
             update();
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.io.Writer#write(int)
      */
     /* @Override */
-    public void write(int c)
-    {
-        synchronized (lock)
-        {
+    public void write(int c) {
+        synchronized (lock) {
             queue = queue + (char) c;
             update();
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.io.Writer#write(char[])
      */
     /* @Override */
-    public void write(char[] cbuf)
-    {
-        synchronized (lock)
-        {
+    public void write(char[] cbuf) {
+        synchronized (lock) {
             queue = queue + new String(cbuf);
             update();
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.io.Writer#write(java.lang.String)
      */
     /* @Override */
-    public void write(String str)
-    {
-        synchronized (lock)
-        {
+    public void write(String str) {
+        synchronized (lock) {
             queue = queue + str;
             update();
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.io.Writer#write(java.lang.String, int, int)
      */
     /* @Override */
-    public void write(String str, int off, int len)
-    {
-        synchronized (lock)
-        {
-            queue = queue + str.substring(off, off+len);
+    public void write(String str, int off, int len) {
+        synchronized (lock) {
+            queue = queue + str.substring(off, off + len);
             update();
         }
     }
 
     /**
-     * Set up the gui to read an update. Note this must only be called
-     * from within a synchronized (lock) section of code
+     * Set up the gui to read an update. Note this must only be called from
+     * within a synchronized (lock) section of code
      */
-    private void update()
-    {
-        if (updater == null)
-        {
+    private void update() {
+        if (updater == null) {
             updater = new Updater();
             SwingUtilities.invokeLater(updater);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.io.Writer#flush()
      */
     /* @Override */
-    public void flush() throws IOException
-    {
-        if (updater != null)
-        {
+    public void flush() throws IOException {
+        if (updater != null) {
             // Changes are outstanding. It is OK to force an update using
             // this method because the scheduled update will kick in
             // later, find that the queue is empty, and do nothing. No
             // problem. It would be good to cancel an update but I dont
             // know of a way to do that.
-            try
-            {
+            try {
                 SwingUtilities.invokeAndWait(updater);
-            }
-            catch (InterruptedException ex)
-            {
-                throw new IOException(""+ex); //$NON-NLS-1$
-            }
-            catch (InvocationTargetException ex)
-            {
-                throw new IOException(""+ex); //$NON-NLS-1$
+            } catch (InterruptedException ex) {
+                throw new IOException("" + ex); //$NON-NLS-1$
+            } catch (InvocationTargetException ex) {
+                throw new IOException("" + ex); //$NON-NLS-1$
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.io.Writer#close()
      */
     /* @Override */
-    public void close()
-    {
+    public void close() {
         closed = true;
     }
 
@@ -231,14 +218,10 @@ public class DocumentWriter extends Writer
     /**
      * For Thread/Swing correctness we should only update in the GUI thread
      */
-    class Updater implements Runnable
-    {
-        public void run()
-        {
-            synchronized (lock)
-            {
-                try
-                {
+    class Updater implements Runnable {
+        public void run() {
+            synchronized (lock) {
+                try {
                     doc.insertString(doc.getLength(), queue, null);
 
                     queue = ""; //$NON-NLS-1$
@@ -248,9 +231,7 @@ public class DocumentWriter extends Writer
                     // executed. The practical effect is that any further
                     // writes know to create a new updater
                     updater = null;
-                }
-                catch (BadLocationException ex)
-                {
+                } catch (BadLocationException ex) {
                     assert false : ex;
                 }
             }

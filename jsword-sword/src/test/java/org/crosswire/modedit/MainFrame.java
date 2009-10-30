@@ -75,14 +75,15 @@ public class MainFrame extends JFrame {
     JMenuItem jMenuItem4 = new JMenuItem();
     JMenuItem jMenuItem5 = new JMenuItem();
 
-    /**Construct the frame*/
+    /** Construct the frame */
     public MainFrame() {
         enableEvents(AWTEvent.WINDOW_EVENT_MASK);
         jbInit();
     }
-    /**Component initialization*/
+
+    /** Component initialization */
     private void jbInit() {
-        //setIconImage(Toolkit.getDefaultToolkit().createImage(Frame1.class.getResource("[Your Icon]")));
+        // setIconImage(Toolkit.getDefaultToolkit().createImage(Frame1.class.getResource("[Your Icon]")));
         contentPane = (JPanel) this.getContentPane();
         contentPane.setLayout(borderLayout1);
         this.setJMenuBar(jMenuBar1);
@@ -169,20 +170,20 @@ public class MainFrame extends JFrame {
                 jMenuItem5_actionPerformed();
             }
         });
-        jPanel2.add(jLabel1,  BorderLayout.WEST);
-        jPanel2.add(jTextField2,  BorderLayout.CENTER);
-        jPanel2.add(jButton2,  BorderLayout.EAST);
-        jPanel2.add(jSlider1,  BorderLayout.SOUTH);
+        jPanel2.add(jLabel1, BorderLayout.WEST);
+        jPanel2.add(jTextField2, BorderLayout.CENTER);
+        jPanel2.add(jButton2, BorderLayout.EAST);
+        jPanel2.add(jSlider1, BorderLayout.SOUTH);
         contentPane.add(jScrollPane1, BorderLayout.CENTER);
         jScrollPane1.getViewport().add(jTextArea1, null);
         jPanel1.add(jPanel2, BorderLayout.NORTH);
         jPanel1.add(jPanel3, BorderLayout.CENTER);
-        jPanel3.add(jLabel2,  BorderLayout.WEST);
-        jPanel3.add(jButton1,  BorderLayout.EAST);
+        jPanel3.add(jLabel2, BorderLayout.WEST);
+        jPanel3.add(jButton1, BorderLayout.EAST);
         jPanel3.add(jTextField1, BorderLayout.CENTER);
         contentPane.add(jPanel4, BorderLayout.SOUTH);
         jPanel4.add(statusBar, BorderLayout.NORTH);
-        jPanel4.add(jPanel5,  BorderLayout.EAST);
+        jPanel4.add(jPanel5, BorderLayout.EAST);
         jPanel5.add(jLabel3, null);
         jPanel5.add(imComboBox, null);
         contentPane.add(jPanel1, BorderLayout.NORTH);
@@ -198,7 +199,8 @@ public class MainFrame extends JFrame {
         imComboBox.addItem(new NullIM("Latin")); //$NON-NLS-1$
         imComboBox.addItem(new HebrewMCIM("Michigan-Claremont")); //$NON-NLS-1$
     }
-    /**Overridden so we can exit when window is closed*/
+
+    /** Overridden so we can exit when window is closed */
     /* @Override */
     protected void processWindowEvent(WindowEvent e) {
         super.processWindowEvent(e);
@@ -214,13 +216,14 @@ public class MainFrame extends JFrame {
             URLConnection connection = new URL(jTextField2.getText()).openConnection();
             InputStream is = connection.getInputStream();
             Font font = Font.createFont(Font.TRUETYPE_FONT, is);
-            Font newFont = font.deriveFont((float)18.0);
+            Font newFont = font.deriveFont((float) 18.0);
             jSlider1.setValue(18);
             this.jTextArea1.setFont(newFont);
             is.close();
             statusBar.setText("New Font Loaded."); //$NON-NLS-1$
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
         }
-        catch (Exception ex) { ex.printStackTrace(System.err); }
 
     }
 
@@ -243,9 +246,10 @@ public class MainFrame extends JFrame {
             } while (len != -1);
             newText = new String(bos.toByteArray(), "UTF-8"); //$NON-NLS-1$
             jTextArea1.setText(newText);
-            statusBar.setText(Integer.toString(newText.length())+" characters of content loaded."); //$NON-NLS-1$
+            statusBar.setText(Integer.toString(newText.length()) + " characters of content loaded."); //$NON-NLS-1$
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
         }
-        catch (Exception ex) { ex.printStackTrace(System.err); }
 
     }
 
@@ -258,22 +262,21 @@ public class MainFrame extends JFrame {
 
         pushChar = inputMethod.translate(typedChar);
         if (inputMethod.getState() > 1) {
-            statusBar.setText("Compound '"+typedChar+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+            statusBar.setText("Compound '" + typedChar + "'"); //$NON-NLS-1$ //$NON-NLS-2$
             e.consume();
-        }
-        else {
+        } else {
             if (pushChar.length() > 1) {
                 e.consume();
                 jTextArea1.insert(pushChar, jTextArea1.getCaretPosition());
-            }
-            else e.setKeyChar(pushChar.charAt(0));
+            } else
+                e.setKeyChar(pushChar.charAt(0));
         }
     }
 
     void jSlider1_stateChanged() {
-            Font font = jTextArea1.getFont();
-            Font newFont = font.deriveFont((float)jSlider1.getValue());
-            jTextArea1.setFont(newFont);
+        Font font = jTextArea1.getFont();
+        Font newFont = font.deriveFont((float) jSlider1.getValue());
+        jTextArea1.setFont(newFont);
     }
 
     void imComboBox_itemStateChanged() {
@@ -282,21 +285,22 @@ public class MainFrame extends JFrame {
 
     void jMenuItem1_actionPerformed() {
         String currentEntry = jTextField1.getText();
-        javax.swing.JFileChooser fileChooser = new JFileChooser((currentEntry.startsWith("file://") ? currentEntry.substring(7):".")); //$NON-NLS-1$ //$NON-NLS-2$
+        javax.swing.JFileChooser fileChooser = new JFileChooser((currentEntry.startsWith("file://") ? currentEntry.substring(7) : ".")); //$NON-NLS-1$ //$NON-NLS-2$
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            jTextField1.setText("file://"+ fileChooser.getSelectedFile().getAbsolutePath()); //$NON-NLS-1$
+            jTextField1.setText("file://" + fileChooser.getSelectedFile().getAbsolutePath()); //$NON-NLS-1$
         }
     }
 
     void jMenuItem3_actionPerformed() {
         String currentEntry = jTextField1.getText();
-        javax.swing.JFileChooser fileChooser = new JFileChooser((currentEntry.startsWith("file://") ? currentEntry.substring(7):".")); //$NON-NLS-1$ //$NON-NLS-2$
+        javax.swing.JFileChooser fileChooser = new JFileChooser((currentEntry.startsWith("file://") ? currentEntry.substring(7) : ".")); //$NON-NLS-1$ //$NON-NLS-2$
         if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             File outFile = fileChooser.getSelectedFile();
             try {
                 jTextArea1.write(new OutputStreamWriter(new FileOutputStream(outFile), "UTF-8")); //$NON-NLS-1$
+            } catch (Exception e1) {
+                e1.printStackTrace(System.err);
             }
-            catch (Exception e1) { e1.printStackTrace(System.err); }
         }
 
     }

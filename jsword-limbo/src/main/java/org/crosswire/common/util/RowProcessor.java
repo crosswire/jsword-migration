@@ -24,16 +24,17 @@ package org.crosswire.common.util;
 /**
  * A RowProcessor processes a single row consisting of an array of objects.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at yahoo dot com]
  */
-public interface RowProcessor
-{
+public interface RowProcessor {
 
     /**
      * Process a row of Objects making up a line.
-     * @param row the row to handle
+     * 
+     * @param row
+     *            the row to handle
      */
     void process(Object[] row);
 

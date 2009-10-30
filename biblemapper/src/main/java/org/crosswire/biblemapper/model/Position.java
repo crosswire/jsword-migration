@@ -24,37 +24,33 @@ package org.crosswire.biblemapper.model;
 import java.io.Serializable;
 
 /**
- * A Position is simply an array of floats that specify a place for a
- * Key to be.
+ * A Position is simply an array of floats that specify a place for a Key to be.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class Position implements Serializable
-{
+public class Position implements Serializable {
     /**
      * Basic constructor
      */
-    public Position(float[] pos)
-    {
+    public Position(float[] pos) {
         this.pos = pos;
     }
 
     /**
      * Accessor for the array of positions
+     * 
      * @return The array of positions
      */
-    public float[] getPosition()
-    {
+    public float[] getPosition() {
         return pos;
     }
 
     /**
      * Accessor for the array of positions
      */
-    public void setPosition(float[] pos)
-    {
+    public void setPosition(float[] pos) {
         this.pos = pos;
     }
 

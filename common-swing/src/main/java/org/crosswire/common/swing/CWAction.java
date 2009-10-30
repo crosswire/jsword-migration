@@ -29,43 +29,42 @@ import javax.swing.Action;
 import javax.swing.event.EventListenerList;
 
 /**
- * A CrossWire Action is a generic extension of AbstractAction,
- * that adds LARGE_ICON to Action and also forwards the Action
- * to its listeners after modifying the ActionEvent to include
- * the ACTION_COMMAND_KEY.
- *
- * @see gnu.lgpl.License for license details.
+ * A CrossWire Action is a generic extension of AbstractAction, that adds
+ * LARGE_ICON to Action and also forwards the Action to its listeners after
+ * modifying the ActionEvent to include the ACTION_COMMAND_KEY.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class CWAction extends AbstractAction
-{
+public class CWAction extends AbstractAction {
     /**
-     * The icon to display when a large one is needed.
-     * This is still not part of Java as of 1.5
+     * The icon to display when a large one is needed. This is still not part of
+     * Java as of 1.5
      */
     public static final String LARGE_ICON = "LargeIcon"; //$NON-NLS-1$
 
     /**
-     * The tooltip to display. This is an alias for SHORT_DESCRIPTION.
-     * The creator and user of a CWAction is to store and retrieve SHORT_DESCRIPTION.
+     * The tooltip to display. This is an alias for SHORT_DESCRIPTION. The
+     * creator and user of a CWAction is to store and retrieve
+     * SHORT_DESCRIPTION.
      */
     public static final String TOOL_TIP = "ToolTip"; //$NON-NLS-1$
 
     /**
      * Forwards the ActionEvent to the registered listener.
-     * @param evt ActionEvent
+     * 
+     * @param evt
+     *            ActionEvent
      */
-    public void actionPerformed(ActionEvent evt)
-    {
-        if (listeners != null)
-        {
+    public void actionPerformed(ActionEvent evt) {
+        if (listeners != null) {
             Object[] listenerList = listeners.getListenerList();
 
-            // Recreate the ActionEvent and stuff the value of the ACTION_COMMAND_KEY
+            // Recreate the ActionEvent and stuff the value of the
+            // ACTION_COMMAND_KEY
             ActionEvent e = new ActionEvent(evt.getSource(), evt.getID(), (String) getValue(Action.ACTION_COMMAND_KEY));
-            for (int i = 0; i <= listenerList.length - 2; i += 2)
-            {
+            for (int i = 0; i <= listenerList.length - 2; i += 2) {
                 ((ActionListener) listenerList[i + 1]).actionPerformed(e);
             }
         }
@@ -73,12 +72,12 @@ public class CWAction extends AbstractAction
 
     /**
      * Adds a listener for Action events.
-     * @param listener <code>ActionListener</code> to add
+     * 
+     * @param listener
+     *            <code>ActionListener</code> to add
      */
-    public void addActionListener(ActionListener listener)
-    {
-        if (listeners == null)
-        {
+    public void addActionListener(ActionListener listener) {
+        if (listeners == null) {
             listeners = new EventListenerList();
         }
         listeners.add(ActionListener.class, listener);
@@ -86,12 +85,12 @@ public class CWAction extends AbstractAction
 
     /**
      * Remove an ActionListener
-     * @param listener <code>ActionListener</code> to remove
+     * 
+     * @param listener
+     *            <code>ActionListener</code> to remove
      */
-    public void removeActionListener(ActionListener listener)
-    {
-        if (listeners == null)
-        {
+    public void removeActionListener(ActionListener listener) {
+        if (listeners == null) {
             return;
         }
         listeners.remove(ActionListener.class, listener);
@@ -99,11 +98,10 @@ public class CWAction extends AbstractAction
 
     /**
      * String representation of this object suitable for debugging
-     *
+     * 
      */
     /* @Override */
-    public String toString()
-    {
+    public String toString() {
         StringBuffer sb = new StringBuffer();
 
         sb.append("Name:"); //$NON-NLS-1$
@@ -122,20 +120,15 @@ public class CWAction extends AbstractAction
     }
 
     /**
-     * Create a clone that does not copy the listeners.
-     * These CWActions need to have listeners added to be
-     * meaningful.
+     * Create a clone that does not copy the listeners. These CWActions need to
+     * have listeners added to be meaningful.
      */
-    public Object clone()
-    {
+    public Object clone() {
         CWAction action = null;
-        try
-        {
+        try {
             action = (CWAction) super.clone();
             action.listeners = null;
-        }
-        catch (CloneNotSupportedException e)
-        {
+        } catch (CloneNotSupportedException e) {
             assert false : e;
         }
         return action;

@@ -32,50 +32,55 @@ import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.Verse;
 
 /**
- * A ParaInstsMem provides access to the list of paragraphs that
- * punctuate the Bible.
+ * A ParaInstsMem provides access to the list of paragraphs that punctuate the
+ * Bible.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ParaInstsMem extends InstsMem
-{
+public class ParaInstsMem extends InstsMem {
     /**
      * Basic constructor
-     * @param raw Reference to the RawBook that is using us
-     * @param create Should we start all over again
+     * 
+     * @param raw
+     *            Reference to the RawBook that is using us
+     * @param create
+     *            Should we start all over again
      */
-    public ParaInstsMem(RawBook raw, boolean create) throws IOException
-    {
+    public ParaInstsMem(RawBook raw, boolean create) throws IOException {
         super(raw, RawConstants.FILE_PARA_INST, create);
     }
 
     /**
      * Basic constructor
-     * @param raw Reference to the RawBook that is using us
-     * @param create Should we start all over again
+     * 
+     * @param raw
+     *            Reference to the RawBook that is using us
+     * @param create
+     *            Should we start all over again
      */
-    public ParaInstsMem(RawBook raw, boolean create, StringBuffer messages)
-    {
+    public ParaInstsMem(RawBook raw, boolean create, StringBuffer messages) {
         super(raw, RawConstants.FILE_PARA_INST, create, messages);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Mem#init()
      */
     /* @Override */
-    public void init()
-    {
+    public void init() {
         key = raw.createEmptyKeyList();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Mem#load(java.io.InputStream)
      */
     /* @Override */
-    public void load(InputStream in) throws IOException
-    {
+    public void load(InputStream in) throws IOException {
         ObjectInputStream oin = new ObjectInputStream(in);
 
         byte[] asig = new byte[6];
@@ -84,24 +89,22 @@ public class ParaInstsMem extends InstsMem
 
         assert ssig.equals(RawConstants.SIG_PARA_INST);
 
-        try
-        {
+        try {
             key = (Passage) oin.readObject();
-        }
-        catch (ClassNotFoundException ex)
-        {
+        } catch (ClassNotFoundException ex) {
             throw new IOException(ex.getMessage());
         }
 
         oin.close();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Mem#save(java.io.OutputStream)
      */
     /* @Override */
-    public void save(OutputStream out) throws IOException
-    {
+    public void save(OutputStream out) throws IOException {
         ObjectOutputStream oout = new ObjectOutputStream(out);
 
         oout.writeBytes(RawConstants.SIG_PARA_INST);
@@ -112,28 +115,28 @@ public class ParaInstsMem extends InstsMem
 
     /**
      * Set the new paragraph status for a verse
-     * @param para The paragraph status
-     * @param verse The Verse to set data on
+     * 
+     * @param para
+     *            The paragraph status
+     * @param verse
+     *            The Verse to set data on
      */
-    public void setPara(boolean para, Verse verse)
-    {
-        if (para)
-        {
+    public void setPara(boolean para, Verse verse) {
+        if (para) {
             key.addAll(verse);
-        }
-        else
-        {
+        } else {
             key.removeAll(verse);
         }
     }
 
     /**
-     * Set the new paragraph status for a verse.
-     * If the load failed then we treat each verse as a new paragraph
-     * @param verse The Verse to get data on
+     * Set the new paragraph status for a verse. If the load failed then we
+     * treat each verse as a new paragraph
+     * 
+     * @param verse
+     *            The Verse to get data on
      */
-    public boolean getPara(Verse verse)
-    {
+    public boolean getPara(Verse verse) {
         return key.contains(verse);
     }
 

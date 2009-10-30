@@ -67,19 +67,17 @@ import org.xml.sax.SAXException;
 
 /**
  * A JDK JTextPane implementation of an OSIS displayer.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListener, PropertyChangeListener
-{
+public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListener, PropertyChangeListener {
     /**
      * Simple ctor
      */
-    public TextPaneBookDataDisplay()
-    {
+    public TextPaneBookDataDisplay() {
         converter = ConverterFactory.getConverter();
         txtView = new AntiAliasedTextPane();
         txtView.setEditable(false);
@@ -94,23 +92,18 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#clearBookData()
      */
-    public void clearBookData()
-    {
+    public void clearBookData() {
         setBookData(null, null);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book[], org.crosswire.jsword.passage.Key)
      */
-    public void setBookData(Book[] books, Key key)
-    {
-        if (books == null || books.length == 0 || books[0] == null || key == null)
-        {
+    public void setBookData(Book[] books, Key key) {
+        if (books == null || books.length == 0 || books[0] == null || key == null) {
             bdata = null;
-        }
-        else if (bdata == null || !Arrays.equals(books, bdata.getBooks()) || !key.equals(bdata.getKey()))
-        {
-           bdata = new BookData(books, key, compareBooks);
+        } else if (bdata == null || !Arrays.equals(books, bdata.getBooks()) || !key.equals(bdata.getKey())) {
+            bdata = new BookData(books, key, compareBooks);
         }
 
         refresh();
@@ -119,11 +112,9 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#setCompareBooks(boolean)
      */
-    public void setCompareBooks(boolean compare)
-    {
+    public void setCompareBooks(boolean compare) {
         compareBooks = compare;
-        if (bdata != null)
-        {
+        if (bdata != null) {
             bdata = new BookData(bdata.getBooks(), bdata.getKey(), compareBooks);
             refresh();
         }
@@ -132,18 +123,15 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#refresh()
      */
-    public void refresh()
-    {
-        if (bdata == null)
-        {
+    public void refresh() {
+        if (bdata == null) {
             txtView.setText(""); //$NON-NLS-1$
             return;
         }
 
         // Make sure Hebrew displays from Right to Left
         BookMetaData bmd = getFirstBook().getBookMetaData();
-        if (bmd == null)
-        {
+        if (bmd == null) {
             txtView.setText(""); //$NON-NLS-1$
             return;
         }
@@ -157,8 +145,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
         txtView.setLocale(new Locale(bmd.getLanguage().getCode()));
 
         String fontSpec = GuiConvert.font2String(BookFont.instance().getFont(getFirstBook()));
-        try
-        {
+        try {
             SAXEventProvider osissep = bdata.getSAXEventProvider();
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
 
@@ -167,12 +154,9 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             URI loc = bmd.getLocation();
             XSLTProperty.BASE_URL.setState(loc == null ? "" : loc.getPath()); //$NON-NLS-1$
 
-            if (bmd.getBookCategory() == BookCategory.BIBLE)
-            {
+            if (bmd.getBookCategory() == BookCategory.BIBLE) {
                 XSLTProperty.setProperties(htmlsep);
-            }
-            else
-            {
+            } else {
                 XSLTProperty.CSS.setProperty(htmlsep);
                 XSLTProperty.BASE_URL.setProperty(htmlsep);
                 XSLTProperty.DIRECTION.setProperty(htmlsep);
@@ -186,8 +170,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
              * It appears that it is a line too long issue.
              */
             /* Apply the fix if the text is too long and we are not Java 1.5 or greater */
-            if (text.length() > 32768 && BookCategory.GENERAL_BOOK.equals(getFirstBook().getBookCategory()))
-            {
+            if (text.length() > 32768 && BookCategory.GENERAL_BOOK.equals(getFirstBook().getBookCategory())) {
                 String javaVersion = System.getProperty("java.specification.version"); //$NON-NLS-1$
                 if (javaVersion == null || "1.5".compareTo(javaVersion) > 0) //$NON-NLS-1$
                 {
@@ -196,17 +179,11 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             }
             txtView.setText(text);
             txtView.select(0, 0);
-        }
-        catch (SAXException e)
-        {
+        } catch (SAXException e) {
             Reporter.informUser(this, e);
-        }
-        catch (BookException e)
-        {
+        } catch (BookException e) {
             Reporter.informUser(this, e);
-        }
-        catch (TransformerException e)
-        {
+        } catch (TransformerException e) {
             Reporter.informUser(this, e);
         }
     }
@@ -214,50 +191,45 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     /* (non-Javadoc)
      * @see javax.swing.event.HyperlinkListener#hyperlinkUpdate(javax.swing.event.HyperlinkEvent)
      */
-    public void hyperlinkUpdate(HyperlinkEvent ev)
-    {
+    public void hyperlinkUpdate(HyperlinkEvent ev) {
         // SPEEDUP(DMS): This needs to be optimized. It takes too much CPU
-        try
-        {
+        try {
             HyperlinkEvent.EventType type = ev.getEventType();
             JTextPane pane = (JTextPane) ev.getSource();
 
             String uri = ev.getDescription();
             String[] parts = getParts(uri);
-            if (type == HyperlinkEvent.EventType.ACTIVATED)
-            {
+            if (type == HyperlinkEvent.EventType.ACTIVATED) {
                 // There are some errors which make an empty url
-                if (parts[1].length() > 0)
-                {
-                    if (parts[1].charAt(0) == '#')
-                    {
-                        log.debug(MessageFormat.format(SCROLL_TO_URI, new Object[] { uri }));
+                if (parts[1].length() > 0) {
+                    if (parts[1].charAt(0) == '#') {
+                        log.debug(MessageFormat.format(SCROLL_TO_URI, new Object[] {
+                            uri
+                        }));
                         // This must be relative to the current document
-                        // in which case we assume that it is an in page reference.
-                        // We ignore the frame case (example code within JEditorPane
+                        // in which case we assume that it is an in page
+                        // reference.
+                        // We ignore the frame case (example code within
+                        // JEditorPane
                         // JavaDoc).
                         // Remove the leading #
                         uri = uri.substring(1);
                         pane.scrollToReference(uri);
-                    }
-                    else
-                    {
+                    } else {
                         // Fully formed, so we hand it off to be processed
                         fireActivateURI(new URIEvent(this, parts[0], parts[1]));
                     }
                 }
-            }
-            else
-            {
+            } else {
                 // Must be either an enter or an exit event
-                // simulate a link rollover effect, a CSS style not supported in JDK 1.4
+                // simulate a link rollover effect, a CSS style not supported in
+                // JDK 1.4
 
                 boolean isEnter = type == HyperlinkEvent.EventType.ENTERED;
 
                 int start = lastStart;
                 int length = lastLength;
-                if (isEnter)
-                {
+                if (isEnter) {
                     javax.swing.text.Element textElement = ev.getSourceElement();
                     start = textElement.getStartOffset();
                     length = textElement.getEndOffset() - start;
@@ -268,18 +240,13 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
                 StyleConstants.setUnderline(style, isEnter);
                 styledDoc.setCharacterAttributes(start, length, style, false);
 
-                if (isEnter)
-                {
+                if (isEnter) {
                     fireEnterURI(new URIEvent(this, parts[0], parts[1]));
-                }
-                else
-                {
+                } else {
                     fireLeaveURI(new URIEvent(this, parts[0], parts[1]));
                 }
             }
-        }
-        catch (MalformedURLException ex)
-        {
+        } catch (MalformedURLException ex) {
             Reporter.informUser(this, ex);
         }
     }
@@ -287,108 +254,94 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     /* (non-Javadoc)
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
-    public void propertyChange(PropertyChangeEvent evt)
-    {
-        if (evt.getPropertyName().equals(BookDataDisplay.COMPARE_BOOKS))
-        {
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals(BookDataDisplay.COMPARE_BOOKS)) {
             setCompareBooks(Boolean.valueOf(evt.getNewValue().toString()).booleanValue());
         }
     }
 
-    private String[] getParts(String reference) throws MalformedURLException
-    {
+    private String[] getParts(String reference) throws MalformedURLException {
         String protocol = RELATIVE_URI_PROTOCOL;
         String data = reference;
         int match = data.indexOf(':');
-        if (match == -1)
-        {
+        if (match == -1) {
             // So there is no protocol, this must be relative to the current
             // in which case we assume that it is an in page reference.
             // We ignore the frame case (example code within JEditorPane
             // JavaDoc).
-            if (data.charAt(0) != '#')
-            {
+            if (data.charAt(0) != '#') {
                 throw new MalformedURLException(Msg.BAD_PROTOCOL_URL.toString(data));
             }
-        }
-        else
-        {
+        } else {
             protocol = data.substring(0, match);
             data = data.substring(match + 1);
         }
 
-        if (data.startsWith(DOUBLE_SLASH))
-        {
+        if (data.startsWith(DOUBLE_SLASH)) {
             data = data.substring(2);
         }
 
-        return new String[] { protocol, data };
+        return new String[] {
+                protocol, data
+        };
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getComponent()
      */
-    public Component getComponent()
-    {
+    public Component getComponent() {
         return txtView;
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#copy()
      */
-    public void copy()
-    {
+    public void copy() {
         txtView.copy();
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#addKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
      */
-    public synchronized void addKeyChangeListener(KeyChangeListener listener)
-    {
+    public synchronized void addKeyChangeListener(KeyChangeListener listener) {
         listenerList.add(KeyChangeListener.class, listener);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
      */
-    public synchronized void removeKeyChangeListener(KeyChangeListener listener)
-    {
+    public synchronized void removeKeyChangeListener(KeyChangeListener listener) {
         listenerList.remove(KeyChangeListener.class, listener);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#addURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
      */
-    public synchronized void addURIEventListener(URIEventListener listener)
-    {
+    public synchronized void addURIEventListener(URIEventListener listener) {
         listenerList.add(URIEventListener.class, listener);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
      */
-    public synchronized void removeURIEventListener(URIEventListener listener)
-    {
+    public synchronized void removeURIEventListener(URIEventListener listener) {
         listenerList.remove(URIEventListener.class, listener);
     }
 
     /**
      * Notify the listeners that the hyperlink (URI) has been activated.
-     *
-     * @param e the event
+     * 
+     * @param e
+     *            the event
      * @see EventListenerList
      */
-    public void fireActivateURI(URIEvent e)
-    {
+    public void fireActivateURI(URIEvent e) {
         // Guaranteed to return a non-null array
         Object[] listeners = listenerList.getListenerList();
         // Process the listeners last to first, notifying
         // those that are interested in this event
-        for (int i = listeners.length - 2; i >= 0; i -= 2)
-        {
-            if (listeners[i] == URIEventListener.class)
-            {
+        for (int i = listeners.length - 2; i >= 0; i -= 2) {
+            if (listeners[i] == URIEventListener.class) {
                 ((URIEventListener) listeners[i + 1]).activateURI(e);
             }
         }
@@ -396,20 +349,18 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
 
     /**
      * Notify the listeners that the hyperlink (URI) has been entered.
-     *
-     * @param e the event
+     * 
+     * @param e
+     *            the event
      * @see EventListenerList
      */
-    public void fireEnterURI(URIEvent e)
-    {
+    public void fireEnterURI(URIEvent e) {
         // Guaranteed to return a non-null array
         Object[] listeners = listenerList.getListenerList();
         // Process the listeners last to first, notifying
         // those that are interested in this event
-        for (int i = listeners.length - 2; i >= 0; i -= 2)
-        {
-            if (listeners[i] == URIEventListener.class)
-            {
+        for (int i = listeners.length - 2; i >= 0; i -= 2) {
+            if (listeners[i] == URIEventListener.class) {
                 ((URIEventListener) listeners[i + 1]).enterURI(e);
             }
         }
@@ -417,20 +368,18 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
 
     /**
      * Notify the listeners that the hyperlink (URI) has been left.
-     *
-     * @param e the event
+     * 
+     * @param e
+     *            the event
      * @see EventListenerList
      */
-    public void fireLeaveURI(URIEvent e)
-    {
+    public void fireLeaveURI(URIEvent e) {
         // Guaranteed to return a non-null array
         Object[] listeners = listenerList.getListenerList();
         // Process the listeners last to first, notifying
         // those that are interested in this event
-        for (int i = listeners.length - 2; i >= 0; i -= 2)
-        {
-            if (listeners[i] == URIEventListener.class)
-            {
+        for (int i = listeners.length - 2; i >= 0; i -= 2) {
+            if (listeners[i] == URIEventListener.class) {
                 ((URIEventListener) listeners[i + 1]).leaveURI(e);
             }
         }
@@ -439,40 +388,35 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     /**
      * Forward the mouse listener to our child components
      */
-    public void removeMouseListener(MouseListener li)
-    {
+    public void removeMouseListener(MouseListener li) {
         txtView.removeMouseListener(li);
     }
 
     /**
      * Forward the mouse listener to our child components
      */
-    public void addMouseListener(MouseListener li)
-    {
+    public void addMouseListener(MouseListener li) {
         txtView.addMouseListener(li);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getKey()
      */
-    public Key getKey()
-    {
+    public Key getKey() {
         return bdata == null ? null : bdata.getKey();
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBook()
      */
-    public Book[] getBooks()
-    {
+    public Book[] getBooks() {
         return bdata.getBooks();
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getFirstBook()
      */
-    public Book getFirstBook()
-    {
+    public Book getFirstBook() {
         return bdata.getFirstBook();
     }
 

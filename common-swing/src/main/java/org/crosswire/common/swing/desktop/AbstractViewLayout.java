@@ -38,20 +38,18 @@ import org.crosswire.common.util.Iterable;
 
 /**
  * Abstract manager of how we layout views.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public abstract class AbstractViewLayout implements Viewable, Iterable
-{
+public abstract class AbstractViewLayout implements Viewable, Iterable {
     /**
-     * This constructor is protected because it only needs to be seen by
-     * the sub classes
+     * This constructor is protected because it only needs to be seen by the sub
+     * classes
      */
-    protected AbstractViewLayout()
-    {
+    protected AbstractViewLayout() {
         panel = new JPanel(new BorderLayout());
         GuiUtil.applyDefaultOrientation(panel);
         views = new ArrayList();
@@ -61,16 +59,14 @@ public abstract class AbstractViewLayout implements Viewable, Iterable
     /**
      * Add a view to the set.
      */
-    public void addView(Component component)
-    {
+    public void addView(Component component) {
         views.add(component);
     }
 
     /**
      * Remove a view from the set.
      */
-    public void removeView(Component component)
-    {
+    public void removeView(Component component) {
         views.remove(component);
         fireViewRemoved(new ViewEvent(component));
     }
@@ -78,45 +74,43 @@ public abstract class AbstractViewLayout implements Viewable, Iterable
     /**
      * Unconditionally remove a view from the set.
      */
-    protected void forceRemoveView(Component component)
-    {
+    protected void forceRemoveView(Component component) {
         views.remove(component);
     }
 
     /**
      * Get a snapshot of the views as a collection.
+     * 
      * @return the views
      */
-    public Collection getViews()
-    {
+    public Collection getViews() {
         return new ArrayList(views);
     }
 
     /**
      * Get an iterator of a snapshot of views.
+     * 
      * @return an iterator over the views.
      */
-    public Iterator iterator()
-    {
+    public Iterator iterator() {
         return getViews().iterator();
     }
 
     /**
      * Copies all the views from the one layout to the other
-     * @param other the other layout
+     * 
+     * @param other
+     *            the other layout
      */
-    public void moveTo(AbstractViewLayout other)
-    {
+    public void moveTo(AbstractViewLayout other) {
         // Make sure we are copying to something else
-        if (getClass() == other.getClass())
-        {
+        if (getClass() == other.getClass()) {
             return;
         }
         // Go through the views removing them from the layout
         // and adding them to the other
         Iterator it = iterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             Component view = (Component) it.next();
             forceRemoveView(view);
             other.addView(view);
@@ -127,11 +121,9 @@ public abstract class AbstractViewLayout implements Viewable, Iterable
      * Close all the views. Note the policy is enforced that one view is kept.
      * This will keep the last one added.
      */
-    public void closeAll()
-    {
+    public void closeAll() {
         Iterator it = iterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             Component view = (Component) it.next();
             removeView(view);
         }
@@ -139,16 +131,15 @@ public abstract class AbstractViewLayout implements Viewable, Iterable
 
     /**
      * Close all the views but the one provided.
-     * @param component the view that is to remain open.
+     * 
+     * @param component
+     *            the view that is to remain open.
      */
-    public void closeOthers(Component component)
-    {
+    public void closeOthers(Component component) {
         Iterator it = iterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             Component view = (Component) it.next();
-            if (view != component)
-            {
+            if (view != component) {
                 removeView(view);
             }
         }
@@ -156,75 +147,77 @@ public abstract class AbstractViewLayout implements Viewable, Iterable
 
     /**
      * Visit every view in the order that they were added.
-     * @param visitor The visitor for the view
+     * 
+     * @param visitor
+     *            The visitor for the view
      */
-    public void visit(ViewVisitor visitor)
-    {
+    public void visit(ViewVisitor visitor) {
         Iterator it = iterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             Component view = (Component) it.next();
             visitor.visitView(view);
         }
     }
 
     /**
-     * Update the title of the view. If the component does not
-     * implement Titleable, then a generated title will be used.
-     * @param component the component whose title is to be used
+     * Update the title of the view. If the component does not implement
+     * Titleable, then a generated title will be used.
+     * 
+     * @param component
+     *            the component whose title is to be used
      */
     public abstract void updateTitle(Component component);
 
     /**
-     * Returns the top view. If no view is the top, it returns the
-     * first one added.
+     * Returns the top view. If no view is the top, it returns the first one
+     * added.
      */
     public abstract Component getSelected();
 
     /**
      * Find the view and select it.
+     * 
      * @param component
      */
     public abstract void select(Component component);
 
     /**
      * The number of views held by this layout.
+     * 
      * @return the number of views held by this layout
      */
-    public int getViewCount()
-    {
+    public int getViewCount() {
         return views.size();
     }
 
     /**
-     * Get the view by position. Note that adding and removing views
-     * changes the indexes of the views. Do not use this for iteration
-     * as it is not thread safe.
-     * @param i the index of the view
+     * Get the view by position. Note that adding and removing views changes the
+     * indexes of the views. Do not use this for iteration as it is not thread
+     * safe.
+     * 
+     * @param i
+     *            the index of the view
      * @return the requested view.
      */
-    public Component getView(int i)
-    {
+    public Component getView(int i) {
         return (Component) views.get(i);
     }
 
     /**
-     * Get the title from the component, truncating it if necessary.
-     * If the component does not implement Titleable of if the title is empty,
-     * then titles are generated.
-     * @param component from whom the title is gotten
+     * Get the title from the component, truncating it if necessary. If the
+     * component does not implement Titleable of if the title is empty, then
+     * titles are generated.
+     * 
+     * @param component
+     *            from whom the title is gotten
      * @return the title, possibly truncated or generated
      */
-    protected String getTitle(Component component)
-    {
-        if (component instanceof Titleable)
-        {
+    protected String getTitle(Component component) {
+        if (component instanceof Titleable) {
             Titleable view = (Titleable) component;
             String title = view.getTitle();
-            if (title != null && title.length() > 0)
-            {
-                if (title.length() <= MAX_TITLE_LEN)
-                {
+            if (title != null && title.length() > 0) {
+                if (title.length() <= MAX_TITLE_LEN) {
                     return title;
                 }
                 return title.substring(0, MAX_TITLE_LEN - 3) + "..."; //$NON-NLS-1$
@@ -238,69 +231,67 @@ public abstract class AbstractViewLayout implements Viewable, Iterable
 
     /**
      * Generates a generic title
+     * 
      * @return the generated title
      */
-    private String generateTitle()
-    {
+    private String generateTitle() {
         return UserMsg.UNTITLED.toString(new Integer(base++));
     }
 
     /**
-     * All parts are put into a panel. This prevents the programmer from
-     * having to change containers.
+     * All parts are put into a panel. This prevents the programmer from having
+     * to change containers.
+     * 
      * @return Returns the panel.
      */
-    protected JPanel getPanel()
-    {
+    protected JPanel getPanel() {
         return panel;
     }
 
     /**
-     * A constraint that allows the panel to be filled up,
-     * stretching horizonally and vertically.
+     * A constraint that allows the panel to be filled up, stretching
+     * horizonally and vertically.
+     * 
      * @return the constraint
      */
-    protected Object getConstraint()
-    {
+    protected Object getConstraint() {
         return null;
     }
 
     /**
      * Adds a view event listener for notification of any changes to the view.
-     *
-     * @param listener the listener
+     * 
+     * @param listener
+     *            the listener
      */
-    public synchronized void addViewEventListener(ViewEventListener listener)
-    {
+    public synchronized void addViewEventListener(ViewEventListener listener) {
         listenerList.add(ViewEventListener.class, listener);
     }
 
     /**
      * Removes a view event listener.
-     *
-     * @param listener the listener
+     * 
+     * @param listener
+     *            the listener
      */
-    public synchronized void removeViewEventListener(ViewEventListener listener)
-    {
+    public synchronized void removeViewEventListener(ViewEventListener listener) {
         listenerList.remove(ViewEventListener.class, listener);
     }
 
     /**
      * Notify the listeners that the view has been removed.
-     *
-     * @param e the event
+     * 
+     * @param e
+     *            the event
      * @see EventListenerList
      */
-    public void fireViewRemoved(ViewEvent e)
-    {
+    public void fireViewRemoved(ViewEvent e) {
         // Guaranteed to return a non-null array
         Object[] listeners = listenerList.getListenerList();
         // Process the listeners last to first, notifying
         // those that are interested in this event
-        for (int i = listeners.length - 2; i >= 0; i -= 2)
-        {
-            if (listeners[i] == ViewEventListener.class)
-            {
+        for (int i = listeners.length - 2; i >= 0; i -= 2) {
+            if (listeners[i] == ViewEventListener.class) {
                 ((ViewEventListener) listeners[i + 1]).viewRemoved(e);
             }
         }

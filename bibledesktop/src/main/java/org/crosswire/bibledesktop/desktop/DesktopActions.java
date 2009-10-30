@@ -55,26 +55,25 @@ import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.util.WebWarning;
 
 /**
- * DesktopAction is nothing more than a holder of the behavior
- * of the Desktop. It could easily be member methods in that class.
- * It is here simply to simplify the Desktop class and minimize
- * maintenance cost.
- *
+ * DesktopAction is nothing more than a holder of the behavior of the Desktop.
+ * It could easily be member methods in that class. It is here simply to
+ * simplify the Desktop class and minimize maintenance cost.
+ * 
  * Previously each of the "do" methods was a separate class.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class DesktopActions implements Actionable
-{
+public class DesktopActions implements Actionable {
     /**
      * Create the actions for the desktop
-     * @param desktop the desktop for which these actions apply
+     * 
+     * @param desktop
+     *            the desktop for which these actions apply
      */
-    public DesktopActions(Desktop desktop)
-    {
+    public DesktopActions(Desktop desktop) {
         this.desktop = desktop;
         actions = new ActionFactory(Desktop.class, this);
 
@@ -83,47 +82,44 @@ public class DesktopActions implements Actionable
 
     /**
      * Get a particular action by internal name
-     * @param key the internal name for the action
+     * 
+     * @param key
+     *            the internal name for the action
      * @return the action requested or null if it does not exist
      */
-    public Action getAction(String key)
-    {
+    public Action getAction(String key) {
         return actions.getAction(key);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.common.swing.Actionable#actionPerformed(java.lang.String)
      */
-    public void actionPerformed(String action)
-    {
+    public void actionPerformed(String action) {
         actions.actionPerformed(action);
     }
 
     /**
      * @return the desktop to which these actions apply
      */
-    public Desktop getDesktop()
-    {
+    public Desktop getDesktop() {
         return desktop;
     }
 
     /**
      * Determines whether MacOSX has been registered.
+     * 
      * @return true when there is full MacOSX integration.
      */
-    public boolean isOSXRegistered()
-    {
+    public boolean isOSXRegistered() {
         return osxRegistered;
     }
 
     /**
      * @return the Bible installer dialog
      */
-    public SitesPane getSites()
-    {
-        if (sites == null)
-        {
-                sites = new SitesPane();
+    public SitesPane getSites() {
+        if (sites == null) {
+            sites = new SitesPane();
         }
         return sites;
     }
@@ -131,19 +127,13 @@ public class DesktopActions implements Actionable
     /**
      * Open a new passage window from a file.
      */
-    public void doOpen()
-    {
-        try
-        {
+    public void doOpen() {
+        try {
             BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
             view.open();
-        }
-        catch (NoSuchVerseException e)
-        {
+        } catch (NoSuchVerseException e) {
             Reporter.informUser(getDesktop(), e);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             Reporter.informUser(getDesktop(), e);
         }
     }
@@ -151,21 +141,16 @@ public class DesktopActions implements Actionable
     /**
      * Save the current passage window.
      */
-    public void doSave()
-    {
-        try
-        {
+    public void doSave() {
+        try {
             BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
-            if (!view.maySave())
-            {
+            if (!view.maySave()) {
                 Reporter.informUser(getDesktop(), Msg.NO_PASSAGE);
                 return;
             }
 
             view.save();
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Reporter.informUser(getDesktop(), ex);
         }
     }
@@ -173,21 +158,16 @@ public class DesktopActions implements Actionable
     /**
      * Save the current passage window under a new name.
      */
-    public void doSaveAs()
-    {
-        try
-        {
+    public void doSaveAs() {
+        try {
             BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
-            if (!view.maySave())
-            {
+            if (!view.maySave()) {
                 Reporter.informUser(getDesktop(), Msg.NO_PASSAGE);
                 return;
             }
 
             view.saveAs();
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Reporter.informUser(getDesktop(), ex);
         }
     }
@@ -195,38 +175,30 @@ public class DesktopActions implements Actionable
     /**
      * Save all the passage windows.
      */
-    public void doSaveAll()
-    {
+    public void doSaveAll() {
         boolean ok = false;
 
         Iterator iter = getDesktop().getViews().iterator();
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             Component comp = (Component) iter.next();
             BibleViewPane view = (BibleViewPane) comp;
-            if (view.maySave())
-            {
+            if (view.maySave()) {
                 ok = true;
             }
         }
 
-        if (!ok)
-        {
+        if (!ok) {
             Reporter.informUser(getDesktop(), Msg.NO_PASSAGE);
             return;
         }
 
         iter = getDesktop().getViews().iterator();
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             Component comp = (Component) iter.next();
-            try
-            {
+            try {
                 BibleViewPane view = (BibleViewPane) comp;
                 view.save();
-            }
-            catch (IOException ex)
-            {
+            } catch (IOException ex) {
                 Reporter.informUser(getDesktop(), ex);
             }
         }
@@ -235,8 +207,7 @@ public class DesktopActions implements Actionable
     /**
      * Exits the VM.
      */
-    public void doExit()
-    {
+    public void doExit() {
         LayoutPersistence.instance().saveLayout(desktop);
         System.exit(0);
     }
@@ -244,8 +215,7 @@ public class DesktopActions implements Actionable
     /**
      * Copy the selected text from the "active" display area to the clipboard.
      */
-    public void doCopy()
-    {
+    public void doCopy() {
         BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
         SplitBookDataDisplay da = view.getPassagePane();
         da.copy();
@@ -254,21 +224,18 @@ public class DesktopActions implements Actionable
     /**
      * Go to previous passage.
      */
-    public void doBack()
-    {
+    public void doBack() {
         getDesktop().selectHistory(-1);
     }
 
     /**
      * Go to next passage.
      */
-    public void doForward()
-    {
+    public void doForward() {
         getDesktop().selectHistory(1);
     }
 
-    public void doStrongs(ActionEvent ev)
-    {
+    public void doStrongs(ActionEvent ev) {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         XSLTProperty.STRONGS_NUMBERS.setState(toggle.isSelected());
         BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
@@ -276,8 +243,7 @@ public class DesktopActions implements Actionable
         da.getBookDataDisplay().refresh();
     }
 
-    public void doMorph(ActionEvent ev)
-    {
+    public void doMorph(ActionEvent ev) {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         XSLTProperty.MORPH.setState(toggle.isSelected());
         BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
@@ -285,8 +251,7 @@ public class DesktopActions implements Actionable
         da.getBookDataDisplay().refresh();
     }
 
-    public void doVLine(ActionEvent ev)
-    {
+    public void doVLine(ActionEvent ev) {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         XSLTProperty.START_VERSE_ON_NEWLINE.setState(toggle.isSelected());
         BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
@@ -294,8 +259,7 @@ public class DesktopActions implements Actionable
         da.getBookDataDisplay().refresh();
     }
 
-    public void doVNum()
-    {
+    public void doVNum() {
         XSLTProperty.VERSE_NUMBERS.setState(true);
         XSLTProperty.CV.setState(false);
         XSLTProperty.BCV.setState(false);
@@ -305,8 +269,7 @@ public class DesktopActions implements Actionable
         da.getBookDataDisplay().refresh();
     }
 
-    public void doTinyVNum(ActionEvent ev)
-    {
+    public void doTinyVNum(ActionEvent ev) {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         XSLTProperty.TINY_VERSE_NUMBERS.setState(toggle.isSelected());
         BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
@@ -314,8 +277,7 @@ public class DesktopActions implements Actionable
         da.getBookDataDisplay().refresh();
     }
 
-    public void doBCVNum()
-    {
+    public void doBCVNum() {
         XSLTProperty.VERSE_NUMBERS.setState(false);
         XSLTProperty.CV.setState(false);
         XSLTProperty.BCV.setState(true);
@@ -325,8 +287,7 @@ public class DesktopActions implements Actionable
         da.getBookDataDisplay().refresh();
     }
 
-    public void doCVNum()
-    {
+    public void doCVNum() {
         XSLTProperty.VERSE_NUMBERS.setState(false);
         XSLTProperty.CV.setState(true);
         XSLTProperty.BCV.setState(false);
@@ -336,8 +297,7 @@ public class DesktopActions implements Actionable
         da.getBookDataDisplay().refresh();
     }
 
-    public void doNoVNum()
-    {
+    public void doNoVNum() {
         XSLTProperty.VERSE_NUMBERS.setState(false);
         XSLTProperty.CV.setState(false);
         XSLTProperty.BCV.setState(false);
@@ -350,14 +310,12 @@ public class DesktopActions implements Actionable
     /**
      * Show differences between Bible Book versions.
      */
-    public void doCompareToggle(ActionEvent ev)
-    {
+    public void doCompareToggle(ActionEvent ev) {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         getDesktop().setCompareShowing(toggle.getState());
     }
 
-    public void doHeadings(ActionEvent ev)
-    {
+    public void doHeadings(ActionEvent ev) {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         XSLTProperty.HEADINGS.setState(toggle.isSelected());
         BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
@@ -365,8 +323,7 @@ public class DesktopActions implements Actionable
         da.getBookDataDisplay().refresh();
     }
 
-    public void doNotes(ActionEvent ev)
-    {
+    public void doNotes(ActionEvent ev) {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         XSLTProperty.NOTES.setState(toggle.isSelected());
         BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
@@ -374,8 +331,7 @@ public class DesktopActions implements Actionable
         da.getBookDataDisplay().refresh();
     }
 
-    public void doXRef(ActionEvent ev)
-    {
+    public void doXRef(ActionEvent ev) {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         XSLTProperty.XREF.setState(toggle.isSelected());
         BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
@@ -384,26 +340,23 @@ public class DesktopActions implements Actionable
     }
 
     /**
-     * View the HTML as interpreted by the current window.
-     * This HTML will not return the styling present in the viewer.
-     * That is all class="" are stripped out.
-     * Also you may find additional whitespace added to the original.
+     * View the HTML as interpreted by the current window. This HTML will not
+     * return the styling present in the viewer. That is all class="" are
+     * stripped out. Also you may find additional whitespace added to the
+     * original.
      */
-    public void doViewSource()
-    {
+    public void doViewSource() {
         // Limit view source to the current tab.
         BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
         SplitBookDataDisplay da = view.getPassagePane();
         BookDataDisplay bdd = da.getBookDataDisplay();
-        if (bdd instanceof TabbedBookDataDisplay)
-        {
+        if (bdd instanceof TabbedBookDataDisplay) {
             bdd = ((TabbedBookDataDisplay) bdd).getInnerDisplayPane();
         }
 
         Key key = bdd.getKey();
 
-        if (key == null)
-        {
+        if (key == null) {
             Reporter.informUser(getDesktop(), Msg.SOURCE_MISSING);
             return;
         }
@@ -415,16 +368,13 @@ public class DesktopActions implements Actionable
     /**
      * Opens the Book installer window (aka a SitesPane)
      */
-    public void doBooks()
-    {
+    public void doBooks() {
         int webAccess = InternetWarning.GRANTED;
-        if (WebWarning.instance().isShown())
-        {
+        if (WebWarning.instance().isShown()) {
             webAccess = InternetWarning.showDialog(desktop, "?"); //$NON-NLS-1$
         }
 
-        if (webAccess == InternetWarning.GRANTED)
-        {
+        if (webAccess == InternetWarning.GRANTED) {
             getSites().showInDialog(getDesktop());
         }
     }
@@ -432,8 +382,7 @@ public class DesktopActions implements Actionable
     /**
      * Opens the Options window
      */
-    public void doOptions()
-    {
+    public void doOptions() {
         URI configUri = CWProject.instance().getWritableURI("desktop", FileUtil.EXTENSION_PROPERTIES); //$NON-NLS-1$
         ConfigEditorFactory.showDialog(desktop.getConfig(), desktop, configUri);
     }
@@ -441,18 +390,15 @@ public class DesktopActions implements Actionable
     /**
      * For opening a help file.
      */
-    public void doContents()
-    {
+    public void doContents() {
         CWOptionPane.showMessageDialog(getDesktop(), Msg.NO_HELP);
     }
 
     /**
      * For opening the About window
      */
-    public void doAbout()
-    {
-        if (atp == null)
-        {
+    public void doAbout() {
+        if (atp == null) {
             atp = new AboutPane();
         }
 
@@ -462,8 +408,7 @@ public class DesktopActions implements Actionable
     /**
      * Show large or small tool bar icons.
      */
-    public void doToolTipToggle(ActionEvent ev)
-    {
+    public void doToolTipToggle(ActionEvent ev) {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         ToolTipManager.sharedInstance().setEnabled(toggle.isSelected());
     }
@@ -471,8 +416,7 @@ public class DesktopActions implements Actionable
     /**
      * Show large or small tool bar icons.
      */
-    public void doStatusToggle(ActionEvent ev)
-    {
+    public void doStatusToggle(ActionEvent ev) {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         desktop.showStatusBar(toggle.isSelected());
     }
@@ -480,8 +424,7 @@ public class DesktopActions implements Actionable
     /**
      * Show large or small tool bar icons.
      */
-    public void doSidebarToggle(ActionEvent ev)
-    {
+    public void doSidebarToggle(ActionEvent ev) {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         final boolean show = toggle.isSelected();
         desktop.getViews().visit(new ShowSideBarVisitor(show));
@@ -490,45 +433,43 @@ public class DesktopActions implements Actionable
     /**
      * Show web journal or not.
      */
-    public void doJournalToggle(ActionEvent ev)
-    {
+    public void doJournalToggle(ActionEvent ev) {
         JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
         desktop.showWebJournal(toggle.isSelected());
     }
 
     /**
-     * Register the application with Apple EAWT, which provides support for the Application Menu, with
-     * About, Preferences (Options) and Quit (Exit).
+     * Register the application with Apple EAWT, which provides support for the
+     * Application Menu, with About, Preferences (Options) and Quit (Exit).
+     * 
      * @return true on success
      */
-    public boolean macOSXRegistration()
-    {
-        if (OSType.MAC.equals(OSType.getOSType()))
-        {
-            try
-            {
+    public boolean macOSXRegistration() {
+        if (OSType.MAC.equals(OSType.getOSType())) {
+            try {
                 Class osxAdapter = ClassUtil.forName("org.crosswire.common.aqua.OSXAdapter"); //$NON-NLS-1$
-                Object[] registerOSXArgs = { actions, DesktopActions.ABOUT, DesktopActions.OPTIONS, DesktopActions.EXIT };
+                Object[] registerOSXArgs = {
+                        actions, DesktopActions.ABOUT, DesktopActions.OPTIONS, DesktopActions.EXIT
+                };
                 ReflectionUtil.invoke(osxAdapter, osxAdapter, "registerMacOSXApplication", registerOSXArgs); //$NON-NLS-1$
 
-                // To call a method taking a type of boolean, the type has to match but the object has to be wrapped
-                Class[] enablePrefTypes = { boolean.class };
-                Object[] enablePrefArgs = { Boolean.TRUE };
+                // To call a method taking a type of boolean, the type has to
+                // match but the object has to be wrapped
+                Class[] enablePrefTypes = {
+                    boolean.class
+                };
+                Object[] enablePrefArgs = {
+                    Boolean.TRUE
+                };
                 ReflectionUtil.invoke(osxAdapter, osxAdapter, "enablePrefs", enablePrefArgs, enablePrefTypes); //$NON-NLS-1$
                 return true;
-            }
-            catch (NoClassDefFoundError e)
-            {
+            } catch (NoClassDefFoundError e) {
                 // This is thrown when EAWT or MacOSXadapter is not present.
-                log.error("This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled (" + e + ")");  //$NON-NLS-1$//$NON-NLS-2$
-            }
-            catch (ClassNotFoundException e)
-            {
+                log.error("This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled (" + e + ")"); //$NON-NLS-1$//$NON-NLS-2$
+            } catch (ClassNotFoundException e) {
                 // Should not happen
-                log.error("This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled (" + e + ")");  //$NON-NLS-1$//$NON-NLS-2$
-            }
-            catch (Exception e)
-            {
+                log.error("This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled (" + e + ")"); //$NON-NLS-1$//$NON-NLS-2$
+            } catch (Exception e) {
                 // Everything else.
                 log.error("Exception while loading the OSXAdapter:", e); //$NON-NLS-1$
             }
@@ -539,23 +480,19 @@ public class DesktopActions implements Actionable
     /**
      *
      */
-    private static final class ShowSideBarVisitor implements ViewVisitor
-    {
+    private static final class ShowSideBarVisitor implements ViewVisitor {
         /**
          * @param show
          */
-        public ShowSideBarVisitor(boolean show)
-        {
+        public ShowSideBarVisitor(boolean show) {
             this.show = show;
         }
 
         /* (non-Javadoc)
          * @see org.crosswire.common.swing.desktop.ViewVisitor#visitView(java.awt.Component)
          */
-        public void visitView(Component component)
-        {
-            if (component instanceof BibleViewPane)
-            {
+        public void visitView(Component component) {
+            if (component instanceof BibleViewPane) {
                 BibleViewPane view = (BibleViewPane) component;
                 SplitBookDataDisplay sbDisplay = view.getPassagePane();
                 sbDisplay.showSidebar(show);

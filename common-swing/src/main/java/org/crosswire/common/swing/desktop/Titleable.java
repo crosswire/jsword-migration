@@ -25,29 +25,30 @@ import org.crosswire.common.swing.desktop.event.TitleChangedListener;
 
 /**
  * A Titleable object has a title which may be gotten.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at yahoo dot com]
  */
-public interface Titleable
-{
+public interface Titleable {
     /**
-     * The title is something that can be displayed to a user
-     * either in the tab of a TDIViewLayout or a title bar of
-     * a MDIViewLayout window.
+     * The title is something that can be displayed to a user either in the tab
+     * of a TDIViewLayout or a title bar of a MDIViewLayout window.
+     * 
      * @return the title
      */
     String getTitle();
 
     /**
      * Register an interest in being notified of changes to the title.
+     * 
      * @param listener
      */
     void addTitleChangedListener(TitleChangedListener listener);
 
     /**
      * Remove regristration of interest in listening for title changes
+     * 
      * @param listener
      */
     void removeTitleChangedListener(TitleChangedListener listener);

@@ -4,36 +4,35 @@ import java.applet.AppletContext;
 import java.io.OutputStream;
 
 /**
- * BrowserOutputStream allows output to the status line of a Browser
- * This probably would be more useful as a BrowserWriter
+ * BrowserOutputStream allows output to the status line of a Browser This
+ * probably would be more useful as a BrowserWriter
+ * 
  * @author Joe Walker
  */
-public class BrowserOutputStream extends OutputStream
-{
+public class BrowserOutputStream extends OutputStream {
     /**
      * Display in the Browser Status bar
-     * @param new_appcx The Brower Context
+     * 
+     * @param new_appcx
+     *            The Brower Context
      */
-    public BrowserOutputStream(AppletContext new_appcx)
-    {
+    public BrowserOutputStream(AppletContext new_appcx) {
         appcx = new_appcx;
     }
 
     /**
      * The standard write mathod
-     * @param b The byte to be written, as normal.
+     * 
+     * @param b
+     *            The byte to be written, as normal.
      */
     /* @Override */
-    public void write(int b)
-    {
+    public void write(int b) {
         char ch = (char) b;
 
-        if (ch == '\n' || ch == '\r')
-        {
+        if (ch == '\n' || ch == '\r') {
             text = ""; //$NON-NLS-1$
-        }
-        else
-        {
+        } else {
             text += ch;
             appcx.showStatus(text);
         }

@@ -53,28 +53,24 @@ import org.crosswire.common.swing.MapTableModel;
 import org.crosswire.common.util.CollectionUtil;
 
 /**
- * AboutPane is a window that contains various advanced user tools in
- * one place.
- *
- * @see gnu.gpl.License for license details.
+ * AboutPane is a window that contains various advanced user tools in one place.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class AboutPane
-{
+public class AboutPane {
     /**
      * Basic constructor
      */
-    public AboutPane()
-    {
+    public AboutPane() {
         init();
     }
 
     /**
      * Build the GUI components
      */
-    private void init()
-    {
+    private void init() {
         Icon icon = GuiUtil.getIcon(Msg.SPLASH_IMAGE.toString());
 
         JLabel lblPicture = new JLabel();
@@ -115,9 +111,9 @@ public class AboutPane
         tabMain.add(pnlSplash, appName);
 
         License license = new License(appName);
-//        Font fixedFont = new Font("Monospaced", 0, 18); //$NON-NLS-1$
+        //        Font fixedFont = new Font("Monospaced", 0, 18); //$NON-NLS-1$
         JTextPane warranty = new AntiAliasedTextPane();
-        //warranty.setFont(fixedFont);
+        // warranty.setFont(fixedFont);
         warranty.setEditable(false);
         warranty.setEditorKit(new HTMLEditorKit());
         warranty.setText(license.getWarranty());
@@ -130,7 +126,7 @@ public class AboutPane
         tabMain.add(warrantyPnl, Msg.WARRANTY_TAB_TITLE.toString());
 
         JTextPane details = new AntiAliasedTextPane();
-        //details.setFont(fixedFont);
+        // details.setFont(fixedFont);
         details.setEditable(false);
         details.setEditorKit(new HTMLEditorKit());
         details.setText(license.getDetails());
@@ -143,8 +139,7 @@ public class AboutPane
         tabMain.add(detailsPnl, Msg.DETAILS_TAB_TITLE.toString());
 
         // Put in tabs if advanced
-        if (advanced)
-        {
+        if (advanced) {
             // create and add the System Properties tab
             JTable tblProps = new JTable();
             MapTableModel mdlProps = new MapTableModel(CollectionUtil.properties2Map(System.getProperties()));
@@ -165,10 +160,8 @@ public class AboutPane
     /**
      * Close this dialog
      */
-    public void doAboutOK()
-    {
-        if (dlgMain != null)
-        {
+    public void doAboutOK() {
+        if (dlgMain != null) {
             dlgMain.dispose();
             dlgMain = null;
         }
@@ -176,24 +169,23 @@ public class AboutPane
 
     /**
      * A method to be exposed by our children
-     * @param parent The component to which to attach the new dialog
+     * 
+     * @param parent
+     *            The component to which to attach the new dialog
      */
-    public void showInDialog(Component parent)
-    {
+    public void showInDialog(Component parent) {
         Frame root = JOptionPane.getFrameForComponent(parent);
         dlgMain = new JDialog(root);
 
         dlgMain.getContentPane().add(pnlMain);
         dlgMain.setTitle(Msg.getAboutInfo());
         dlgMain.setModal(true);
-        dlgMain.addWindowListener(new WindowAdapter()
-        {
+        dlgMain.addWindowListener(new WindowAdapter() {
             /* (non-Javadoc)
              * @see java.awt.event.WindowListener#windowClosed(java.awt.event.WindowEvent)
              */
             /* @Override */
-            public void windowClosed(WindowEvent ev)
-            {
+            public void windowClosed(WindowEvent ev) {
                 doAboutOK();
             }
         });
@@ -206,16 +198,15 @@ public class AboutPane
     /**
      * @return Returns whether the window should show an advanced view.
      */
-    public static synchronized boolean isAdvanced()
-    {
+    public static synchronized boolean isAdvanced() {
         return advanced;
     }
 
     /**
-     * @param advanced Turn on an advanced view of the window.
+     * @param advanced
+     *            Turn on an advanced view of the window.
      */
-    public static synchronized void setAdvanced(boolean advanced)
-    {
+    public static synchronized void setAdvanced(boolean advanced) {
         AboutPane.advanced = advanced;
     }
 

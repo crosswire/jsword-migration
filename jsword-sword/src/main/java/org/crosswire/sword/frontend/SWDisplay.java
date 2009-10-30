@@ -9,19 +9,18 @@ import org.crosswire.sword.modules.SWModule;
 
 public class SWDisplay {
 
+    /******************************************************************************
+     * SWDisplay::Display - casts a module to a character pointer and displays
+     * it to raw output (overriden for different display types and module types
+     * if necessary)
+     * 
+     * ENT: imodule - module to display
+     * 
+     * RET: error status
+     */
 
-/******************************************************************************
- * SWDisplay::Display - casts a module to a character pointer and displays it to
- *			raw output (overriden for different display types and
- *			module types if necessary)
- *
- * ENT:	imodule - module to display
- *
- * RET:	error status
- */
-
-	public char display(SWModule imodule) {
-		System.out.println(imodule.getText());
-		return 0;
-	}
+    public char display(SWModule imodule) {
+        System.out.println(imodule.getText());
+        return 0;
+    }
 }

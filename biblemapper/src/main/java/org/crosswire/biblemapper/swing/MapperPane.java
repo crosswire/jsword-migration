@@ -41,17 +41,15 @@ import org.crosswire.jsword.versification.BibleInfo;
 /**
  * This is an Swing GUI interface to the BMap project.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class MapperPane extends JPanel implements Scrollable
-{
-	/**
+public class MapperPane extends JPanel implements Scrollable {
+    /**
      * Basic Constructor
      */
-    public MapperPane(Map map)
-    {
+    public MapperPane(Map map) {
         setMap(map);
         setSize(new Dimension(500, 500));
     }
@@ -59,27 +57,25 @@ public class MapperPane extends JPanel implements Scrollable
     /**
      * Basic Constructor
      */
-    public MapperPane()
-    {
+    public MapperPane() {
         setMap(null);
         setSize(new Dimension(500, 500));
     }
 
     /**
      * Setup a new map to view
-     * @param map The new map to model
+     * 
+     * @param map
+     *            The new map to model
      */
-    public void setMap(Map map)
-    {
-        if (map != null)
-        {
+    public void setMap(Map map) {
+        if (map != null) {
             map.removeMapListener(cml);
         }
 
         this.map = map;
 
-        if (map != null)
-        {
+        if (map != null) {
             map.addMapListener(cml);
         }
 
@@ -88,62 +84,64 @@ public class MapperPane extends JPanel implements Scrollable
 
     /**
      * Get the map being viewed
+     * 
      * @return The current map
      */
-    public Map getMap()
-    {
+    public Map getMap() {
         return map;
     }
 
     /**
      * Set the way in which we color the map
-     * @param versecolor The new map colorizer
+     * 
+     * @param versecolor
+     *            The new map colorizer
      */
-    public void setVerseColor(VerseColor versecolor)
-    {
+    public void setVerseColor(VerseColor versecolor) {
         this.versecolor = versecolor;
         repaint();
     }
 
     /**
      * Get the way in which we color the map
+     * 
      * @return The current map colorizer
      */
-    public VerseColor getVerseColor()
-    {
+    public VerseColor getVerseColor() {
         return versecolor;
     }
 
     /**
      * Do we force the height and width of this panel to be the same
-     * @param lock_aspect The new aspect locking state
+     * 
+     * @param lock_aspect
+     *            The new aspect locking state
      */
-    public void setLockAspectRation(boolean lock_aspect)
-    {
+    public void setLockAspectRation(boolean lock_aspect) {
         this.lock_aspect = lock_aspect;
     }
 
     /**
      * Do we force the height and width of this panel to be the same
+     * 
      * @return The current aspect locking state
      */
-    public boolean getLockAspectRation()
-    {
+    public boolean getLockAspectRation() {
         return lock_aspect;
     }
 
     /**
      * Paint the map
-     * @param g The graphics instance to paint with
+     * 
+     * @param g
+     *            The graphics instance to paint with
      */
     /* @Override */
-    public void paintComponent(Graphics g)
-    {
+    public void paintComponent(Graphics g) {
         g.setColor(versecolor.getBackground());
         g.fillRect(translateX(0), translateY(0), translateX(getWidth()), translateY(getHeight()));
 
-        if (map == null)
-        {
+        if (map == null) {
             g.setColor(Color.red);
             g.drawRect(translateX(0), translateY(0), translateX(getWidth()), translateY(getHeight()));
             g.drawLine(translateX(0), translateY(0), translateX(getWidth()), translateY(getHeight()));
@@ -152,13 +150,11 @@ public class MapperPane extends JPanel implements Scrollable
             return;
         }
 
-        try
-        {
+        try {
             int[] pos;
             int[] prev;
 
-            for (int b=1; b<=BibleInfo.booksInBible(); b++)
-            {
+            for (int b = 1; b <= BibleInfo.booksInBible(); b++) {
                 pos = getPosition(b, 1);
 
                 Color col = versecolor.getForeground();
@@ -169,45 +165,42 @@ public class MapperPane extends JPanel implements Scrollable
                 g.setColor(col);
 
                 int cib = BibleInfo.chaptersInBook(b);
-                for (int c=1; c<=cib; c++)
-                {
+                for (int c = 1; c <= cib; c++) {
                     pos = getPosition(b, 1);
-                    g.fillOval(pos[X]-1, pos[Y]-1, 3, 3);
+                    g.fillOval(pos[X] - 1, pos[Y] - 1, 3, 3);
 
-                    if (c != 1)
-                    {
-                        prev = getPosition(b, c-1);
+                    if (c != 1) {
+                        prev = getPosition(b, c - 1);
                         pos = getPosition(b, c);
 
                         g.drawLine(prev[X], prev[Y], pos[X], pos[Y]);
                     }
                 }
             }
-        }
-        catch (NoSuchVerseException ex)
-        {
+        } catch (NoSuchVerseException ex) {
             assert false : ex;
         }
     }
 
     /**
      * Get a (2D) position based on a verse ordinal
+     * 
      * @return A position array
      */
-    private int[] getPosition(int book, int chapter)
-    {
+    private int[] getPosition(int book, int chapter) {
         float[] fpos = map.getPositionArrayCopy(book, chapter);
         return translate(fpos);
     }
 
     /**
-     * Map a (0-1) float coordinate into the int based coordinate that we
-     * can paint with
-     * @param orig The (x,y) float array
+     * Map a (0-1) float coordinate into the int based coordinate that we can
+     * paint with
+     * 
+     * @param orig
+     *            The (x,y) float array
      * @return A int position array
      */
-    private final int[] translate(float[] orig)
-    {
+    private final int[] translate(float[] orig) {
         int[] pos = new int[2];
         pos[X] = translateX(orig[X]);
         pos[Y] = translateX(orig[Y]);
@@ -215,41 +208,38 @@ public class MapperPane extends JPanel implements Scrollable
     }
 
     /**
-     * Map a (0-1) float width into the int based coordinate that we
-     * can paint with
-     * @param orig The width as a float
+     * Map a (0-1) float width into the int based coordinate that we can paint
+     * with
+     * 
+     * @param orig
+     *            The width as a float
      * @return The width as an int
      */
-    private final int translateX(float orig)
-    {
-        return (int) (orig*getWidth());
+    private final int translateX(float orig) {
+        return (int) (orig * getWidth());
     }
 
     /**
-     * Map a (0-1) float height into the int based coordinate that we
-     * can paint with
-     * @param orig The height as a float
+     * Map a (0-1) float height into the int based coordinate that we can paint
+     * with
+     * 
+     * @param orig
+     *            The height as a float
      * @return The height as an int
      */
-    private final int translateY(float orig)
-    {
-        return (int) (orig*getHeight());
+    private final int translateY(float orig) {
+        return (int) (orig * getHeight());
     }
 
     /**
-     * The size of this map
-     * public void reshape(int x, int y, int w, int h)
+     * The size of this map public void reshape(int x, int y, int w, int h)
      */
     /* @Override */
-    public void setSize(Dimension x)
-    {
-        if (lock_aspect)
-        {
+    public void setSize(Dimension x) {
+        if (lock_aspect) {
             int max = Math.max(x.width, x.height);
             super.setSize(new Dimension(max, max));
-        }
-        else
-        {
+        } else {
             super.setSize(x);
         }
 
@@ -264,88 +254,77 @@ public class MapperPane extends JPanel implements Scrollable
     }
 
     /**
-     * Get the unit or block increment in pixels. The Rectangle parameter
-     * is the bounds of the currently visible rectangle. The first int
-     * parameter is either SwingConstants.HORIZONTAL or
-     * SwingConstants.VERTICAL depending on what scroll bar the user
-     * clicked on. The second int parameter indicates which direction to
-     * scroll. A value less than 0 indicates up or left. A value greater
-     * than 0 indicates down or right.
+     * Get the unit or block increment in pixels. The Rectangle parameter is the
+     * bounds of the currently visible rectangle. The first int parameter is
+     * either SwingConstants.HORIZONTAL or SwingConstants.VERTICAL depending on
+     * what scroll bar the user clicked on. The second int parameter indicates
+     * which direction to scroll. A value less than 0 indicates up or left. A
+     * value greater than 0 indicates down or right.
      */
-    public int getScrollableUnitIncrement(Rectangle rec, int bar, int dir)
-    {
-        if (bar == SwingConstants.HORIZONTAL)
-        {
+    public int getScrollableUnitIncrement(Rectangle rec, int bar, int dir) {
+        if (bar == SwingConstants.HORIZONTAL) {
             return getWidth() / 60;
         }
-		return getHeight() / 60;
+        return getHeight() / 60;
     }
 
     /**
-     * Set the unit or block increment in pixels. The Rectangle parameter
-     * is the bounds of the currently visible rectangle. The first int
-     * parameter is either SwingConstants.HORIZONTAL or
-     * SwingConstants.VERTICAL depending on what scroll bar the user
-     * clicked on. The second int parameter indicates which direction to
-     * scroll. A value less than 0 indicates up or left. A value greater
-     * than 0 indicates down or right.
+     * Set the unit or block increment in pixels. The Rectangle parameter is the
+     * bounds of the currently visible rectangle. The first int parameter is
+     * either SwingConstants.HORIZONTAL or SwingConstants.VERTICAL depending on
+     * what scroll bar the user clicked on. The second int parameter indicates
+     * which direction to scroll. A value less than 0 indicates up or left. A
+     * value greater than 0 indicates down or right.
      */
-    public int getScrollableBlockIncrement(Rectangle rec, int bar, int dir)
-    {
-        if (bar == SwingConstants.HORIZONTAL)
-        {
+    public int getScrollableBlockIncrement(Rectangle rec, int bar, int dir) {
+        if (bar == SwingConstants.HORIZONTAL) {
             return getWidth() / 6;
         }
-		return getHeight() / 6;
+        return getHeight() / 6;
     }
 
     /**
      * Get the preferred size of the viewport. This allows the client to
-     * influence the size of the viewport in which it will be displayed.
-     * If the viewport size is unimportant, implement this method to
-     * return getPreferredSize.
+     * influence the size of the viewport in which it will be displayed. If the
+     * viewport size is unimportant, implement this method to return
+     * getPreferredSize.
      */
-    public Dimension getPreferredScrollableViewportSize()
-    {
+    public Dimension getPreferredScrollableViewportSize() {
         return getPreferredSize();
     }
 
     /**
-     * If we are is displayed in a JViewport, don't change its width
-     * when the viewports width changes.  This allows horizontal
-     * scrolling if the JViewport is itself embedded in a JScrollPane.
+     * If we are is displayed in a JViewport, don't change its width when the
+     * viewports width changes. This allows horizontal scrolling if the
+     * JViewport is itself embedded in a JScrollPane.
+     * 
      * @return False - don't track the viewports width.
      * @see Scrollable#getScrollableTracksViewportWidth()
      */
-    public boolean getScrollableTracksViewportWidth()
-    {
+    public boolean getScrollableTracksViewportWidth() {
         /*
-        // Code to automatically grow the map if the window is too big
-        if (getParent() instanceof JViewport)
-        {
-            return ((JViewport) getParent()).getWidth() > getPreferredSize().width;
-        }
-        */
+         * // Code to automatically grow the map if the window is too big if
+         * (getParent() instanceof JViewport) { return ((JViewport)
+         * getParent()).getWidth() > getPreferredSize().width; }
+         */
 
         return false;
     }
 
     /**
-     * If we are is displayed in a JViewport, don't change its height
-     * when the viewports height changes.  This allows vertical
-     * scrolling if the JViewport is itself embedded in a JScrollPane.
+     * If we are is displayed in a JViewport, don't change its height when the
+     * viewports height changes. This allows vertical scrolling if the JViewport
+     * is itself embedded in a JScrollPane.
+     * 
      * @return False - don't track the viewports width.
      * @see Scrollable#getScrollableTracksViewportWidth()
      */
-    public boolean getScrollableTracksViewportHeight()
-    {
+    public boolean getScrollableTracksViewportHeight() {
         /*
-        // Code to automatically grow the map if the window is too big
-        if (getParent() instanceof JViewport)
-        {
-            return ((JViewport) getParent()).getHeight() > getPreferredSize().height;
-        }
-        */
+         * // Code to automatically grow the map if the window is too big if
+         * (getParent() instanceof JViewport) { return ((JViewport)
+         * getParent()).getHeight() > getPreferredSize().height; }
+         */
 
         return false;
     }
@@ -388,21 +367,17 @@ public class MapperPane extends JPanel implements Scrollable
     /**
      * Sync the map and the table
      */
-    class CustomMapListener implements MapListener
-    {
+    class CustomMapListener implements MapListener {
         /**
-         * This method is called to indicate that a node on the map has
-         * moved.
-         * @param ev Describes the change
+         * This method is called to indicate that a node on the map has moved.
+         * 
+         * @param ev
+         *            Describes the change
          */
-        public void mapChanged(final MapEvent ev)
-        {
-            if (!SwingUtilities.isEventDispatchThread())
-            {
-                SwingUtilities.invokeLater(new Runnable()
-                {
-                    public void run()
-                    {
+        public void mapChanged(final MapEvent ev) {
+            if (!SwingUtilities.isEventDispatchThread()) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
                         mapChanged(ev);
                     }
                 });
@@ -414,16 +389,14 @@ public class MapperPane extends JPanel implements Scrollable
 
         /**
          * This method is called to indicate that the whole map has changed
-         * @param ev Describes the change
+         * 
+         * @param ev
+         *            Describes the change
          */
-        public void mapRewritten(final MapEvent ev)
-        {
-            if (!SwingUtilities.isEventDispatchThread())
-            {
-                SwingUtilities.invokeLater(new Runnable()
-                {
-                    public void run()
-                    {
+        public void mapRewritten(final MapEvent ev) {
+            if (!SwingUtilities.isEventDispatchThread()) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
                         mapRewritten(ev);
                     }
                 });

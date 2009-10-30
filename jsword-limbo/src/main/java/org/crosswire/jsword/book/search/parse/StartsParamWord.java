@@ -31,33 +31,37 @@ import org.crosswire.jsword.passage.Key;
 /**
  * The Search Word for a Word to search for.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class StartsParamWord implements ParamWord
-{
+public class StartsParamWord implements ParamWord {
     /**
      * Default ctor
      */
-    public StartsParamWord() throws InstantiationException
-    {
+    public StartsParamWord() throws InstantiationException {
         thesaurus = ThesaurusFactory.createThesaurus();
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.parse.ParamWord#getWord(org.crosswire.jsword.book.search.parse.Searcher)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.parse.ParamWord#getWord(org.crosswire
+     * .jsword.book.search.parse.Searcher)
      */
-    public String getWord(IndexSearcher engine) throws BookException
-    {
+    public String getWord(IndexSearcher engine) throws BookException {
         throw new BookException(Msg.STARTS_WORD);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.parse.ParamWord#getKeyList(org.crosswire.jsword.book.search.parse.IndexSearcher)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.parse.ParamWord#getKeyList(org.crosswire
+     * .jsword.book.search.parse.IndexSearcher)
      */
-    public Key getKeyList(IndexSearcher engine) throws BookException
-    {
+    public Key getKeyList(IndexSearcher engine) throws BookException {
         String word = engine.iterateWord();
 
         Collection col = thesaurus.getSynonyms(word);

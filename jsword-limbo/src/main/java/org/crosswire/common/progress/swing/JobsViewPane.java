@@ -51,25 +51,22 @@ import org.crosswire.common.util.Logger;
 
 /**
  * JobsViewPane is a large(ish) viewer for current jobs.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class JobsViewPane extends JPanel implements WorkListener
-{
+public class JobsViewPane extends JPanel implements WorkListener {
     /**
      * Simple ctor
      */
-    public JobsViewPane()
-    {
+    public JobsViewPane() {
         init();
 
         JobManager.addWorkListener(this);
 
         Set current = JobManager.getJobs();
-        for (Iterator it = current.iterator(); it.hasNext(); )
-        {
+        for (Iterator it = current.iterator(); it.hasNext();) {
             Progress job = (Progress) it.next();
             addJob(job);
         }
@@ -79,8 +76,7 @@ public class JobsViewPane extends JPanel implements WorkListener
     /**
      * GUI initializer
      */
-    private void init()
-    {
+    private void init() {
         noJobLabel = new JLabel(Msg.NO_JOBS.toString());
         jobs = new HashMap();
         positions = new ArrayList();
@@ -103,27 +99,32 @@ public class JobsViewPane extends JPanel implements WorkListener
         this.add(new JPanel(), BorderLayout.NORTH);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.progress.WorkListener#workProgressed(org.crosswire.common.progress.WorkEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.progress.WorkListener#workProgressed(org.crosswire
+     * .common.progress.WorkEvent)
      */
-    public synchronized void workProgressed(final WorkEvent ev)
-    {
+    public synchronized void workProgressed(final WorkEvent ev) {
         SwingUtilities.invokeLater(new JobRunner(this, ev));
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.progress.WorkListener#workStateChanged(org.crosswire.common.progress.WorkEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.progress.WorkListener#workStateChanged(org.crosswire
+     * .common.progress.WorkEvent)
      */
-    public void workStateChanged(WorkEvent ev)
-    {
+    public void workStateChanged(WorkEvent ev) {
         // Not needed
     }
 
     /**
      * Create a new set of components for the new Job
      */
-    /*private*/ final void addJob(final Progress job)
-    {
+    /* private */final void addJob(final Progress job) {
         int i = findEmptyPosition();
         log.debug("adding job to panel at " + i + ": " + job.getJobName()); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -137,31 +138,29 @@ public class JobsViewPane extends JPanel implements WorkListener
 
         // It is clumsy to use an ActionFactory for these buttons,
         // since there is one cancel button per job.
-        // An ActionFactory creates actions to be shared, and whose behavior is shared.
+        // An ActionFactory creates actions to be shared, and whose behavior is
+        // shared.
         // Each cancel must:
         // 1) have its own cancel
         // 2) not have a mnemonic
         // 3) not have an accelerator
         JButton cancel = new JButton(Msg.CANCEL.toString());
-        if (!job.isCancelable())
-        {
+        if (!job.isCancelable()) {
             cancel.setEnabled(false);
         }
         cancel.addActionListener(new JobCancelListener(job));
 
         jobsPanel.add(label, new GridBagConstraints(0, i, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 0, 0));
-        jobsPanel.add(progress, new GridBagConstraints(1, i, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+        jobsPanel.add(progress, new GridBagConstraints(1, i, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0),
+                0, 0));
         jobsPanel.add(cancel, new GridBagConstraints(2, i, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(5, 5, 5, 5), 0, 0));
         GuiUtil.refresh(this);
 
         JobData jobdata = new JobData(job, i, label, progress, cancel);
         jobs.put(job, jobdata);
-        if (i >= positions.size())
-        {
+        if (i >= positions.size()) {
             positions.add(jobdata);
-        }
-        else
-        {
+        } else {
             positions.set(i, jobdata);
         }
     }
@@ -169,8 +168,7 @@ public class JobsViewPane extends JPanel implements WorkListener
     /**
      * Update the job details because it have just progressed
      */
-    protected void updateJob(Progress job)
-    {
+    protected void updateJob(Progress job) {
         JobData jobdata = (JobData) jobs.get(job);
 
         int percent = job.getWork();
@@ -182,8 +180,7 @@ public class JobsViewPane extends JPanel implements WorkListener
     /**
      * Remove the set of components from the panel
      */
-    protected void removeJob(Progress job)
-    {
+    protected void removeJob(Progress job) {
         JobData jobdata = (JobData) jobs.get(job);
 
         log.debug("removing job from panel at " + jobdata.getIndex() + ": " + job.getJobName()); //$NON-NLS-1$ //$NON-NLS-2$
@@ -203,17 +200,16 @@ public class JobsViewPane extends JPanel implements WorkListener
     /**
      * Add the "no jobs" label
      */
-    protected void addEmptyLabel()
-    {
-        jobsPanel.add(noJobLabel, new GridBagConstraints(0, 0, 3, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 0, 0));
+    protected void addEmptyLabel() {
+        jobsPanel.add(noJobLabel, new GridBagConstraints(0, 0, 3, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 0,
+                0));
         GuiUtil.refresh(this);
     }
 
     /**
      * Get rid of the "no jobs" label
      */
-    protected void removeEmptyLabel()
-    {
+    protected void removeEmptyLabel() {
         jobsPanel.remove(noJobLabel);
         GuiUtil.refresh(this);
     }
@@ -221,18 +217,14 @@ public class JobsViewPane extends JPanel implements WorkListener
     /**
      * Where is the next hole in the positions array
      */
-    private int findEmptyPosition()
-    {
+    private int findEmptyPosition() {
         int i = 0;
-        while (true)
-        {
-            if (i >= positions.size())
-            {
+        while (true) {
+            if (i >= positions.size()) {
                 break;
             }
 
-            if (positions.get(i) == null)
-            {
+            if (positions.get(i) == null) {
                 break;
             }
 
@@ -275,30 +267,27 @@ public class JobsViewPane extends JPanel implements WorkListener
     /**
      *
      */
-    private static final class JobRunner implements Runnable
-    {
+    private static final class JobRunner implements Runnable {
         /**
          * @param jvp
          * @param ev
          */
-        public JobRunner(JobsViewPane jvp, WorkEvent ev)
-        {
+        public JobRunner(JobsViewPane jvp, WorkEvent ev) {
             pane = jvp;
             event = ev;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.lang.Runnable#run()
          */
-        public void run()
-        {
+        public void run() {
             Progress job = event.getJob();
 
-            if (!pane.jobs.containsKey(job))
-            {
+            if (!pane.jobs.containsKey(job)) {
                 // do we need an 'empty' label
-                if (pane.jobs.isEmpty())
-                {
+                if (pane.jobs.isEmpty()) {
                     pane.removeEmptyLabel();
                 }
 
@@ -307,13 +296,11 @@ public class JobsViewPane extends JPanel implements WorkListener
 
             pane.updateJob(job);
 
-            if (job.isFinished())
-            {
+            if (job.isFinished()) {
                 pane.removeJob(job);
 
                 // do we need an 'empty' label
-                if (pane.jobs.isEmpty())
-                {
+                if (pane.jobs.isEmpty()) {
                     pane.addEmptyLabel();
                 }
             }
@@ -326,13 +313,11 @@ public class JobsViewPane extends JPanel implements WorkListener
     /**
      * A simple struct to group information about a Job
      */
-    private static class JobData
-    {
+    private static class JobData {
         /**
          * Simple ctor
          */
-        public JobData(Progress job, int index, JLabel label, JProgressBar progress, JButton cancel)
-        {
+        public JobData(Progress job, int index, JLabel label, JProgressBar progress, JButton cancel) {
             this.job = job;
             this.index = index;
             this.label = label;
@@ -343,8 +328,7 @@ public class JobsViewPane extends JPanel implements WorkListener
         /**
          * Make sure we can't be used any more
          */
-        void invalidate()
-        {
+        void invalidate() {
             this.job = null;
             this.label = null;
             this.progress = null;
@@ -355,40 +339,35 @@ public class JobsViewPane extends JPanel implements WorkListener
         /**
          * Accessor for the job
          */
-        Progress getJob()
-        {
+        Progress getJob() {
             return job;
         }
 
         /**
          * Accessor for the label for this job
          */
-        JLabel getLabel()
-        {
+        JLabel getLabel() {
             return label;
         }
 
         /**
          * Accessor for the gui progress component
          */
-        JProgressBar getProgress()
-        {
+        JProgressBar getProgress() {
             return progress;
         }
 
         /**
          * Accessor for the cancel button
          */
-        JButton getCancel()
-        {
+        JButton getCancel() {
             return cancel;
         }
 
         /**
          * Accessor for the index in the list of jobs
          */
-        int getIndex()
-        {
+        int getIndex() {
             return index;
         }
 

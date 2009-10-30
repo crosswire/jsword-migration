@@ -4,19 +4,21 @@ import java.io.IOException;
 import java.io.Reader;
 
 /**
- * TimeoutReader is a simple reader that unblocks (excepts)
- * after a specified timeout
+ * TimeoutReader is a simple reader that unblocks (excepts) after a specified
+ * timeout
+ * 
  * @author Joe Walker
  */
-public class TimeoutReader extends Reader implements Runnable
-{
+public class TimeoutReader extends Reader implements Runnable {
     /**
      * Use the specified Reader as the source
-     * @param in The Stream to take input from
-     * @param timeout The time (in ms) to wait for input
+     * 
+     * @param in
+     *            The Stream to take input from
+     * @param timeout
+     *            The time (in ms) to wait for input
      */
-    public TimeoutReader(Reader in, int timeout)
-    {
+    public TimeoutReader(Reader in, int timeout) {
         this.in = in;
         this.timeout = timeout;
     }
@@ -24,24 +26,19 @@ public class TimeoutReader extends Reader implements Runnable
     /**
      * Setup the timeout
      */
-    public void run()
-    {
-        try
-        {
+    public void run() {
+        try {
             Thread.sleep(timeout);
 
             // Kill the thread that is blocked
-            if (calling != null)
-            {
+            if (calling != null) {
                 // This was broken at JDK 1.1.3
                 calling.interrupt();
 
                 // This is deprecated as of JDK 1.2
                 // calling.stop(new InterruptedException("Timeout"));
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             // for some reason we were prevented from killing
             // so we just do nothing
         }
@@ -51,15 +48,13 @@ public class TimeoutReader extends Reader implements Runnable
      * @return The byte to be read, as normal.
      */
     /* @Override */
-    public int read(char[] cbuf, int off, int len) throws IOException
-    {
+    public int read(char[] cbuf, int off, int len) throws IOException {
         calling = Thread.currentThread();
 
         work = new Thread(this);
         work.start();
 
-        try
-        {
+        try {
             int read = in.read(cbuf, off, len);
 
             calling = null;
@@ -67,9 +62,7 @@ public class TimeoutReader extends Reader implements Runnable
             work = null;
 
             return read;
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             // I would like to catch InterruptedException however the stupid
             // compiler thinks that InterruptedException can never be
             // thrown in the preceeding block. Dumb compiler in my opinion.
@@ -82,15 +75,12 @@ public class TimeoutReader extends Reader implements Runnable
     }
 
     /**
-     * If someone closes the TimeoutReader then we close the
-     * original, but leave the others, as they might not have finished
-     * yet.
+     * If someone closes the TimeoutReader then we close the original, but leave
+     * the others, as they might not have finished yet.
      */
     /* @Override */
-    public void close() throws IOException
-    {
-        if (work == null)
-        {
+    public void close() throws IOException {
+        if (work == null) {
             // Kill Thread
         }
 
@@ -98,31 +88,27 @@ public class TimeoutReader extends Reader implements Runnable
     }
 
     /**
-     * Accessor for the timeout.
-     * Works only for the next read. Does not change the current.
+     * Accessor for the timeout. Works only for the next read. Does not change
+     * the current.
      */
-    public void timeoutNow()
-    {
-        if (work == null)
-        {
+    public void timeoutNow() {
+        if (work == null) {
             // Kill Thread
         }
     }
 
     /**
-     * Accessor for the timeout.
-     * Works only for the next read. Does not change the current.
+     * Accessor for the timeout. Works only for the next read. Does not change
+     * the current.
      */
-    public void setTimeout(int timeout)
-    {
+    public void setTimeout(int timeout) {
         this.timeout = timeout;
     }
 
     /**
      * Accessor for the timeout.
      */
-    public int getTimeout()
-    {
+    public int getTimeout() {
         return timeout;
     }
 

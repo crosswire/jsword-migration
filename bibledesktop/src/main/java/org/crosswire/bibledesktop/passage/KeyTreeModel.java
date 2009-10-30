@@ -28,36 +28,35 @@ import org.crosswire.jsword.passage.Key;
 /**
  * A TreeModel that helps with working with Keys.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class KeyTreeModel extends DefaultTreeModel
-{
+public class KeyTreeModel extends DefaultTreeModel {
     /**
      * Simple ctor
-     * @param key The root TreeNode
+     * 
+     * @param key
+     *            The root TreeNode
      */
-    public KeyTreeModel(Key key)
-    {
+    public KeyTreeModel(Key key) {
         super(new KeyTreeNode(key, null));
         this.key = key;
     }
 
     /**
      * What key is this tree editing
+     * 
      * @return Returns the key.
      */
-    public Key getKey()
-    {
+    public Key getKey() {
         return key;
     }
 
     /**
      * Sets the key is this tree editing
      */
-    public void setKey(Key key)
-    {
+    public void setKey(Key key) {
         this.key = key;
         setRoot(new KeyTreeNode(key, null));
     }

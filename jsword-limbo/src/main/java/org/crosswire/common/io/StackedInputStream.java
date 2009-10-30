@@ -6,25 +6,22 @@ import java.util.Vector;
 
 import org.crosswire.common.util.Logger;
 
-
 /**
- * This class allows you to have a stack of inputs.
- * When you try to read from the StackedInput you get
- * the input from the top of the stack. When that is
+ * This class allows you to have a stack of inputs. When you try to read from
+ * the StackedInput you get the input from the top of the stack. When that is
  * exausted, we move on to the next.
+ * 
  * @author Joe Walker
  */
-public class StackedInputStream extends InputStream
-{
+public class StackedInputStream extends InputStream {
     /**
-     * Add a new InputStream to the stack.
-     * This Stream then becomes the current.
-     * @param in The new Stream to be added.
+     * Add a new InputStream to the stack. This Stream then becomes the current.
+     * 
+     * @param in
+     *            The new Stream to be added.
      */
-    public StackedInputStream push(InputStream in)
-    {
-        if (current != null)
-        {
+    public StackedInputStream push(InputStream in) {
+        if (current != null) {
             list.addElement(current);
         }
 
@@ -34,23 +31,19 @@ public class StackedInputStream extends InputStream
 
     /**
      * Remove the bottom-most stream from the stack.
+     * 
      * @return The Stream that has been removed.
      */
-    public InputStream pop() throws IOException
-    {
+    public InputStream pop() throws IOException {
         InputStream dead = null;
 
-        if (current == null)
-        {
+        if (current == null) {
             throw new IOException();
         }
 
-        if (list.size() == 0)
-        {
+        if (list.size() == 0) {
             current = null;
-        }
-        else
-        {
+        } else {
             dead = current;
             current = (InputStream) list.lastElement();
             list.removeElement(current);
@@ -61,47 +54,39 @@ public class StackedInputStream extends InputStream
 
     /**
      * Override to pass out to the current Stream.
+     * 
      * @return The byte read, as normal.
      */
-    public int read() throws IOException
-    {
-        while (true)
-        {
-            if (current == null) return -1;
+    public int read() throws IOException {
+        while (true) {
+            if (current == null)
+                return -1;
 
             int retcode = current.read();
 
-            if (retcode == -1)
-            {
+            if (retcode == -1) {
                 InputStream dead = pop();
                 dead.close();
-            }
-            else
-            {
+            } else {
                 return retcode;
             }
         }
     }
 
     /**
-     * If someone closes the StackedInputStream then we go round
-     * and close all the Streams on the stack.
+     * If someone closes the StackedInputStream then we go round and close all
+     * the Streams on the stack.
      */
-    public void close() throws IOException
-    {
+    public void close() throws IOException {
         // Close each InputStream catching and noting IOExceptions
         // Then rethrow at end if any failed.
         boolean failed = false;
 
-        for (int i=0; i<list.size(); i++)
-        {
-            try
-            {
+        for (int i = 0; i < list.size(); i++) {
+            try {
                 InputStream in = (InputStream) list.elementAt(i);
                 in.close();
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 log.warn("Failure during close", ex); //$NON-NLS-1$
                 failed = true;
             }
@@ -109,16 +94,15 @@ public class StackedInputStream extends InputStream
 
         list.removeAllElements();
 
-        if (failed) throw new IOException();
+        if (failed)
+            throw new IOException();
     }
 
     /**
      * @return The number of items on the stack
      */
-    public int size()
-    {
-        if (current == null)
-        {
+    public int size() {
+        if (current == null) {
             return 0;
         }
         return list.size() + 1;
@@ -126,18 +110,17 @@ public class StackedInputStream extends InputStream
 
     /**
      * Primarily for debugging. Reports on th state of the Stream.
+     * 
      * @return A String containing the report.
      */
-    public String toString()
-    {
+    public String toString() {
         String retcode = ""; //$NON-NLS-1$
         String NEWLINE = System.getProperty("line.separator", "\r\n"); //$NON-NLS-1$ //$NON-NLS-2$
 
         retcode += "There are " + list.size() + " input(s)" + NEWLINE; //$NON-NLS-1$ //$NON-NLS-2$
         retcode += "Curr: " + current.toString() + NEWLINE; //$NON-NLS-1$
 
-        for (int i=list.size()-1; i>=0; i--)
-        {
+        for (int i = list.size() - 1; i >= 0; i--) {
             InputStream in = (InputStream) list.elementAt(i);
             retcode += "Next: " + in.toString() + NEWLINE; //$NON-NLS-1$
         }

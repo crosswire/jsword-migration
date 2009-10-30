@@ -26,12 +26,11 @@ import org.crosswire.common.util.MsgBase;
 /**
  * Compile safe Msg resource settings.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public final class VerifierMsg extends MsgBase
-{
+public final class VerifierMsg extends MsgBase {
     static final VerifierMsg VERIFY_START = new VerifierMsg("Verifier.Start"); //$NON-NLS-1$
     static final VerifierMsg VERIFY_VERSES = new VerifierMsg("Verifier.Verses"); //$NON-NLS-1$
     static final VerifierMsg VERIFY_VERSE = new VerifierMsg("Verifier.Verse"); //$NON-NLS-1$
@@ -41,8 +40,7 @@ public final class VerifierMsg extends MsgBase
     /**
      * Passthrough ctor
      */
-    private VerifierMsg(String name)
-    {
+    private VerifierMsg(String name) {
         super(name);
     }
 }

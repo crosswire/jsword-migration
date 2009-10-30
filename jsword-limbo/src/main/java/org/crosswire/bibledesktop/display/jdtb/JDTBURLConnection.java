@@ -42,46 +42,41 @@ import org.crosswire.jsword.util.ConverterFactory;
 /**
  * .
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class JDTBURLConnection extends URLConnection
-{
+public class JDTBURLConnection extends URLConnection {
     /**
      * @param url
      */
-    protected JDTBURLConnection(URL url) throws IOException
-    {
+    protected JDTBURLConnection(URL url) throws IOException {
         super(url);
 
-        try
-        {
+        try {
             String astext = url.toString();
             int sep1 = astext.indexOf(PROTOCOL_SEPARATOR1);
             int sep2 = astext.indexOf(PROTOCOL_SEPARATOR2);
             String bookName = astext.substring(sep1, sep2);
             String keyName = astext.substring(sep2);
             book = Books.installed().getBook(bookName);
-    
+
             key = book.getKey(keyName);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             throw new IOException(ex.toString());
         }
-    
+
         converter = ConverterFactory.getConverter();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.net.URLConnection#connect()
      */
     /* @Override */
-    public void connect() throws IOException
-    {
-        try
-        {
+    public void connect() throws IOException {
+        try {
             BookData data = new BookData(book, key);
             BookMetaData bmd = book.getBookMetaData();
             boolean direction = bmd.isLeftToRight();
@@ -93,21 +88,19 @@ public class JDTBURLConnection extends URLConnection
             String outputText = XMLUtil.writeToString(htmlsep);
             byte[] bytes = outputText.getBytes();
             in = new ByteArrayInputStream(bytes);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             throw new IOException(ex.toString());
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.net.URLConnection#getInputStream()
      */
     /* @Override */
-    public InputStream getInputStream() throws IOException
-    {
-        if (!connected)
-        {
+    public InputStream getInputStream() throws IOException {
+        if (!connected) {
             connect();
         }
 
@@ -116,10 +109,11 @@ public class JDTBURLConnection extends URLConnection
 
     /**
      * Create a URL from a Book and a Key
-     * @throws MalformedURLException if URL creation fails
+     * 
+     * @throws MalformedURLException
+     *             if URL creation fails
      */
-    public static URL createURL(Book book, Key key) throws MalformedURLException
-    {
+    public static URL createURL(Book book, Key key) throws MalformedURLException {
         return new URL(PROTOCOL_NAME + PROTOCOL_SEPARATOR1 + book.getInitials() + PROTOCOL_SEPARATOR2 + key);
     }
 

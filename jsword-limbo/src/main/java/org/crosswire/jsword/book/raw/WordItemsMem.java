@@ -98,64 +98,63 @@ import org.crosswire.common.util.Logger;
  *     reading from files from similar locations.
  * </ul>
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class WordItemsMem extends ItemsMem
-{
+public class WordItemsMem extends ItemsMem {
     /**
      * Create a WordMemResourceIndex from a File that contains the dictionary.
-     * @param raw Reference to the RawBook that is using us
-     * @param create Should we start all over again
+     * 
+     * @param raw
+     *            Reference to the RawBook that is using us
+     * @param create
+     *            Should we start all over again
      */
-    public WordItemsMem(RawBook raw, boolean create) throws IOException
-    {
+    public WordItemsMem(RawBook raw, boolean create) throws IOException {
         super(raw, RawConstants.FILE_WORD_ITEM, create);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Items#getIndex(java.lang.String)
      */
     /* @Override */
-    public int getIndex(String data)
-    {
+    public int getIndex(String data) {
         return super.getIndex(data.toLowerCase());
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.ItemsMem#getMaxItems()
      */
     /* @Override */
-    public int getMaxItems()
-    {
+    public int getMaxItems() {
         return 20000;
     }
 
     /**
      * Find a list of words that start with the given word
-     * @param word The word to search for
+     * 
+     * @param word
+     *            The word to search for
      * @return An array of matches
      */
-    public Collection getStartsWith(String word)
-    {
+    public Collection getStartsWith(String word) {
         assert array != null;
 
         List list = new ArrayList();
         word = word.toLowerCase();
 
-        // This bit is  s_l_o_w. We do a one end to the other search through all
+        // This bit is s_l_o_w. We do a one end to the other search through all
         // the words for starts-with matches, putting the results into a vector.
-        for (int i=0; i<array.length; i++)
-        {
-            if (array[i] == null)
-            {
-                log.warn("null word at index "+i); //$NON-NLS-1$
-            }
-            else
-            {
-                if (array[i].startsWith(word))
-                {    
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == null) {
+                log.warn("null word at index " + i); //$NON-NLS-1$
+            } else {
+                if (array[i].startsWith(word)) {
                     list.add(array[i]);
                 }
             }
@@ -164,12 +163,13 @@ public class WordItemsMem extends ItemsMem
         return list;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Mem#load(java.io.InputStream)
      */
     /* @Override */
-    public void load(InputStream in) throws IOException
-    {
+    public void load(InputStream in) throws IOException {
         DataInputStream din = new DataInputStream(in);
 
         byte[] asig = new byte[6];
@@ -182,8 +182,7 @@ public class WordItemsMem extends ItemsMem
         hash = new Hashtable(count);
         array = new String[count];
 
-        for (int i=0; i<count; i++)
-        {
+        for (int i = 0; i < count; i++) {
             byte wordlen = din.readByte();
             byte[] aword = new byte[wordlen];
             din.readFully(aword);
@@ -196,19 +195,19 @@ public class WordItemsMem extends ItemsMem
         din.close();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Mem#save(java.io.OutputStream)
      */
     /* @Override */
-    public void save(OutputStream out) throws IOException
-    {
+    public void save(OutputStream out) throws IOException {
         DataOutputStream dout = new DataOutputStream(out);
 
         dout.writeBytes(RawConstants.SIG_WORD_ITEM);
         dout.writeInt(hash.size());
 
-        for (int i=0; i<hash.size(); i++)
-        {
+        for (int i = 0; i < hash.size(); i++) {
             dout.writeByte(array[i].length());
             dout.writeBytes(array[i]);
         }

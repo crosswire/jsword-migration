@@ -34,19 +34,19 @@ import javax.swing.table.TableColumn;
 /**
  * A SortRenderer indicates the column that is sorted by italizing it.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class SortRenderer extends DefaultTableCellRenderer
-{
+public class SortRenderer extends DefaultTableCellRenderer {
     /**
      * Constructor for SortRenderer
-     * @param stm SegmentTableModel
+     * 
+     * @param stm
+     *            SegmentTableModel
      */
-    public SortRenderer(RowTableModel stm)
-    {
+    public SortRenderer(RowTableModel stm) {
         model = stm;
         pressedColumn = null;
         setHorizontalAlignment(SwingConstants.CENTER);
@@ -54,33 +54,34 @@ public class SortRenderer extends DefaultTableCellRenderer
 
     /**
      * Method getTableCellRendererComponent
-     * @param table JTable
-     * @param value Object
-     * @param isSelected boolean
-     * @param hasFocus boolean
-     * @param row int
-     * @param column int
+     * 
+     * @param table
+     *            JTable
+     * @param value
+     *            Object
+     * @param isSelected
+     *            boolean
+     * @param hasFocus
+     *            boolean
+     * @param row
+     *            int
+     * @param column
+     *            int
      * @return Component
      */
     /* @Override */
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
-    {
-        if (table != null)
-        {
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        if (table != null) {
             setToolTipText(model.getHeaderToolTip(column));
             final JTableHeader header = table.getTableHeader();
             final TableColumn tableColumn = table.getColumnModel().getColumn(column);
-            if (header != null)
-            {
+            if (header != null) {
                 setForeground(header.getForeground());
                 setBackground(header.getBackground());
                 final Font headerFont = header.getFont();
-                if (tableColumn == pressedColumn)
-                {
+                if (tableColumn == pressedColumn) {
                     setFont(headerFont.deriveFont(Font.ITALIC));
-                }
-                else
-                {
+                } else {
                     setFont(headerFont);
                 }
             }
@@ -93,19 +94,20 @@ public class SortRenderer extends DefaultTableCellRenderer
 
     /**
      * Method getPressedColumn
+     * 
      * @return the table column
      */
-    public TableColumn getPressedColumn()
-    {
+    public TableColumn getPressedColumn() {
         return pressedColumn;
     }
 
     /**
      * Method setPressedColumn
-     * @param tc the table column
+     * 
+     * @param tc
+     *            the table column
      */
-    public void setPressedColumn(TableColumn tc)
-    {
+    public void setPressedColumn(TableColumn tc) {
         pressedColumn = tc;
     }
 

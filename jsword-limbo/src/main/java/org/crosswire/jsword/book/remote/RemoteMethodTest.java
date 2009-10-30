@@ -25,23 +25,22 @@ import junit.framework.TestCase;
 
 /**
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class RemoteMethodTest extends TestCase
-{
+public class RemoteMethodTest extends TestCase {
 
     /**
      * Constructor for RemoteMethodTest.
+     * 
      * @param arg0
      */
-    public RemoteMethodTest(String arg0)
-    {
+    public RemoteMethodTest(String arg0) {
         super(arg0);
     }
-    public void testRemoteMethod()
-    {
+
+    public void testRemoteMethod() {
         RemoteMethod rmt1 = new RemoteMethod(MethodName.FINDPASSAGE);
         RemoteMethod rmt2 = new RemoteMethod(MethodName.GETBIBLES);
         RemoteMethod rmt3 = new RemoteMethod(MethodName.GETDATA);

@@ -24,19 +24,16 @@ package org.crosswire.bibledesktop.signal;
 /**
  * The new status text
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Don Brown [mrdon at twdata dot org]
  */
-public class StatusSignal
-{
-    public StatusSignal(String msg)
-    {
+public class StatusSignal {
+    public StatusSignal(String msg) {
         this.message = msg;
     }
 
-    public String getMessage()
-    {
+    public String getMessage() {
         return message;
     }
 

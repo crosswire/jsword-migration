@@ -24,34 +24,28 @@ package org.crosswire.biblemapper.model;
 /**
  * Various position related utils.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class PositionUtil
-{
+public class PositionUtil {
     /**
      * We shouldn't be creating these.
      */
-    private PositionUtil()
-    {
+    private PositionUtil() {
     }
 
     /**
      * Find the average position of an 2D array of Positions. All the positions
      * in the 2D array are considered equal.
      */
-    public static Position average(Position[][] array, int dimensions)
-    {
+    public static Position average(Position[][] array, int dimensions) {
         double[] tot = new double[dimensions];
         int count = 0;
 
-        for (int b=1; b<array.length; b++)
-        {
-            for (int c=1; c<array[b].length; c++)
-            {
-                for (int j=0; j<dimensions; j++)
-                {
+        for (int b = 1; b < array.length; b++) {
+            for (int c = 1; c < array[b].length; c++) {
+                for (int j = 0; j < dimensions; j++) {
                     tot[j] += array[b][c].pos[j];
                 }
 
@@ -61,8 +55,7 @@ public class PositionUtil
 
         float[] retcode = new float[dimensions];
 
-        for (int j=0; j<dimensions; j++)
-        {
+        for (int j = 0; j < dimensions; j++) {
             retcode[j] = (float) (tot[j] / count);
         }
 
@@ -72,24 +65,20 @@ public class PositionUtil
     /**
      * Find the average position of an array of Positions
      */
-    public static Position average(Position[] array, int dimensions)
-    {
+    public static Position average(Position[] array, int dimensions) {
         double[] tot = new double[dimensions];
 
         // for all the array members and all the dimensions
         // add up the positions
-        for (int i=0; i<array.length; i++)
-        {
-            for (int j=0; j<dimensions; j++)
-            {
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < dimensions; j++) {
                 tot[j] += array[i].pos[j];
             }
         }
 
         // divide by the number of members
         float[] retcode = new float[dimensions];
-        for (int j=0; j<dimensions; j++)
-        {
+        for (int j = 0; j < dimensions; j++) {
             retcode[j] = (float) (tot[j] / array.length);
         }
 

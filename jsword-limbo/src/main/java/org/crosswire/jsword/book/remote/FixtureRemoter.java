@@ -26,25 +26,22 @@ import org.jdom.Document;
 /**
  * A Fixture to help testing Converters and Remoters
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class FixtureRemoter implements Remoter
-{
+public class FixtureRemoter implements Remoter {
     /**
      * @see org.crosswire.jsword.book.remote.Remoter#execute(org.crosswire.jsword.book.remote.RemoteMethod)
      */
-    public Document execute(RemoteMethod method)
-    {
+    public Document execute(RemoteMethod method) {
         return null;
     }
 
     /**
      * @see org.crosswire.jsword.book.remote.Remoter#getRemoterName()
      */
-    public String getRemoterName()
-    {
+    public String getRemoterName() {
         return "Fixture Remote"; //$NON-NLS-1$
     }
 

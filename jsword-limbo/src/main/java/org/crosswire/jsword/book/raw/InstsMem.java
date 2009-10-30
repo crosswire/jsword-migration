@@ -31,52 +31,58 @@ import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.versification.BibleInfo;
 
 /**
- * InstsMem is a Base implementation of the Insts interface using the in
- * memory model (Mem).
+ * InstsMem is a Base implementation of the Insts interface using the in memory
+ * model (Mem).
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public abstract class InstsMem extends Mem implements Insts
-{
+public abstract class InstsMem extends Mem implements Insts {
     /**
      * Basic constructor
-     * @param raw Reference to the RawBook that is using us
-     * @param create Should we start all over again
+     * 
+     * @param raw
+     *            Reference to the RawBook that is using us
+     * @param create
+     *            Should we start all over again
      */
-    public InstsMem(RawBook raw, String leafname, boolean create) throws IOException
-    {
+    public InstsMem(RawBook raw, String leafname, boolean create) throws IOException {
         super(raw, leafname, create);
     }
 
     /**
      * Basic constructor
-     * @param raw Reference to the RawBook that is using us
-     * @param create Should we start all over again
-     * @param messages We append stuff here if something went wrong
+     * 
+     * @param raw
+     *            Reference to the RawBook that is using us
+     * @param create
+     *            Should we start all over again
+     * @param messages
+     *            We append stuff here if something went wrong
      */
-    public InstsMem(RawBook raw, String leafname, boolean create, StringBuffer messages)
-    {
+    public InstsMem(RawBook raw, String leafname, boolean create, StringBuffer messages) {
         super(raw, leafname, create, messages);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Mem#init()
      */
     /* @Override */
-    public void init()
-    {
+    public void init() {
         array = new int[BibleInfo.versesInBible()][];
     }
 
     /**
-     * Load the Resource from a stream. This has been renamed from the
-     * default load() to ensure that the custom versions are called.
-     * @param in The stream to read from
+     * Load the Resource from a stream. This has been renamed from the default
+     * load() to ensure that the custom versions are called.
+     * 
+     * @param in
+     *            The stream to read from
      */
-    protected void defaultLoad(InputStream in) throws IOException, ClassNotFoundException
-    {
+    protected void defaultLoad(InputStream in) throws IOException, ClassNotFoundException {
         ObjectInputStream obj_in = new ObjectInputStream(in);
 
         array = (int[][]) obj_in.readObject();
@@ -84,41 +90,48 @@ public abstract class InstsMem extends Mem implements Insts
     }
 
     /**
-     * Ensure that all changes to the index of words are written to a
-     * stream. This has been renamed from the default save() to ensure
-     * that the custom versions are called.
-     * @param out The stream to write to
+     * Ensure that all changes to the index of words are written to a stream.
+     * This has been renamed from the default save() to ensure that the custom
+     * versions are called.
+     * 
+     * @param out
+     *            The stream to write to
      */
-    public void defaultSave(OutputStream out) throws IOException
-    {
+    public void defaultSave(OutputStream out) throws IOException {
         ObjectOutputStream obj_out = new ObjectOutputStream(out);
 
         obj_out.writeObject(array);
         obj_out.close();
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.raw.Insts#getIndexes(org.crosswire.jsword.passage.Verse)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.raw.Insts#getIndexes(org.crosswire.jsword.passage
+     * .Verse)
      */
-    public int[] getIndexes(Verse verse)
-    {
-        return array[verse.getOrdinal()-1];
+    public int[] getIndexes(Verse verse) {
+        return array[verse.getOrdinal() - 1];
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.crosswire.jsword.book.raw.Insts#getIndexes(int)
      */
-    public int[] getIndexes(int ordinal)
-    {
-        return array[ordinal-1];
+    public int[] getIndexes(int ordinal) {
+        return array[ordinal - 1];
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.raw.Insts#setIndexes(int[], org.crosswire.jsword.passage.Verse)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.crosswire.jsword.book.raw.Insts#setIndexes(int[],
+     * org.crosswire.jsword.passage.Verse)
      */
-    public void setIndexes(int[] indexes, Verse verse)
-    {
-        array[verse.getOrdinal()-1] = indexes;
+    public void setIndexes(int[] indexes, Verse verse) {
+        array[verse.getOrdinal() - 1] = indexes;
     }
 
     /**

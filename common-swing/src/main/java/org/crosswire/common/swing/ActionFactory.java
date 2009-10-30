@@ -47,90 +47,96 @@ import org.crosswire.common.util.OSType;
 import org.crosswire.common.util.StringUtil;
 
 /**
- * The ActionFactory is responsible for creating CWActions
- * and making them available to the program. Each Action is
- * constructed from resources of the form: ActionName.field=value
- * where ActionName is the ACTION_COMMAND_KEY value and
- * field is one of the CWAction constants, e.g. LargeIcon.
- * <br/>
+ * The ActionFactory is responsible for creating CWActions and making them
+ * available to the program. Each Action is constructed from resources of the
+ * form: ActionName.field=value where ActionName is the ACTION_COMMAND_KEY value
+ * and field is one of the CWAction constants, e.g. LargeIcon. <br/>
  * Field is one of:
  * <ul>
  * <li>Name - This is required. The value is used for the text of the Action.</li>
- * <li>Mnemonic - An upper case letter or other character in the value of the Name field.
- *     If found, using a case insensitive search, the mnemonic will cause the corresponding
- *     character to be underlined. In a platform dependent way it provides a keyboard
- *     mechanism to fire the action. For example, on Windows, alt + mnemonic will cause
- *     a visible, active element with that mnemonic to fire. For this reason, it is important to
- *     ensure that two visible, active elements do not have the same mnemonic.<br/>
- *     Note: Mnemonics are suppressed on MacOSX.</li>
- * <li>ToolTip - A tip to show when the mouse is over an element. If not present, Name is used.
- *     This is likely to change. It is redundant to show a tooltip that is identical to the shown text.</li>
- * <li>SmallIcon - A 16x16 pixel image to be shown for the item. The value for this is a path which
- *     can be found as a resource.<br/>
- *     Note: the small icon will be used when actions are tied to menu items and buttons.</li>
- * <li>LargeIcon - A 24x24 pixel image to be shown for the item when large items are shown.
- *     Currently, these are only used for the ToolBar, when a large toolbar is requested.
- *     The value is a resource path to the image.</li>
- * <li>AcceleratorKey - A key on the keyboard, which may be specified with 0x25 kind of notation.<br/><br/>
- *     Accelerators are global key combinations that work within an application to fire the action.
- *     When the action is shown as a menu item the accelerator will be listed with the name.
- *     Note: The accelerator key and it's modifiers are converted into a <code>KeyStroke</code>
- *     with <code>KeyStroke.getKeyStroke(key, modifierMask);</code></li>
- * <li>AcceleratorKey.Modifier - A comma separated list of ctrl, alt, and shift, indicating what
- *     modifiers are necessary for the accelerator.<br/>
- *     Note: ctrl will use a platform's command key. On MacOSX this is the Apple/Command key.
- *     Other platforms use Ctrl.</li>
- * <li>Enabled - Defaults to true when not present. It is disabled when the value does not match
- *     "true" regardless of case. This is used to initialize widgets tied to actions to disabled.
- *     Once the action is created, it's state can be changed and the tied widgets will behave
- *     appropriately.</li>
- * <li>Shared - Defaults to true when not present. It is unshared when the value does not match
- *     "true" regardless of case. When false, each copy of the action is independent of other
- *     copies.</li>
+ * <li>Mnemonic - An upper case letter or other character in the value of the
+ * Name field. If found, using a case insensitive search, the mnemonic will
+ * cause the corresponding character to be underlined. In a platform dependent
+ * way it provides a keyboard mechanism to fire the action. For example, on
+ * Windows, alt + mnemonic will cause a visible, active element with that
+ * mnemonic to fire. For this reason, it is important to ensure that two
+ * visible, active elements do not have the same mnemonic.<br/>
+ * Note: Mnemonics are suppressed on MacOSX.</li>
+ * <li>ToolTip - A tip to show when the mouse is over an element. If not
+ * present, Name is used. This is likely to change. It is redundant to show a
+ * tooltip that is identical to the shown text.</li>
+ * <li>SmallIcon - A 16x16 pixel image to be shown for the item. The value for
+ * this is a path which can be found as a resource.<br/>
+ * Note: the small icon will be used when actions are tied to menu items and
+ * buttons.</li>
+ * <li>LargeIcon - A 24x24 pixel image to be shown for the item when large items
+ * are shown. Currently, these are only used for the ToolBar, when a large
+ * toolbar is requested. The value is a resource path to the image.</li>
+ * <li>AcceleratorKey - A key on the keyboard, which may be specified with 0x25
+ * kind of notation.<br/>
+ * <br/>
+ * Accelerators are global key combinations that work within an application to
+ * fire the action. When the action is shown as a menu item the accelerator will
+ * be listed with the name. Note: The accelerator key and it's modifiers are
+ * converted into a <code>KeyStroke</code> with
+ * <code>KeyStroke.getKeyStroke(key, modifierMask);</code></li>
+ * <li>AcceleratorKey.Modifier - A comma separated list of ctrl, alt, and shift,
+ * indicating what modifiers are necessary for the accelerator.<br/>
+ * Note: ctrl will use a platform's command key. On MacOSX this is the
+ * Apple/Command key. Other platforms use Ctrl.</li>
+ * <li>Enabled - Defaults to true when not present. It is disabled when the
+ * value does not match "true" regardless of case. This is used to initialize
+ * widgets tied to actions to disabled. Once the action is created, it's state
+ * can be changed and the tied widgets will behave appropriately.</li>
+ * <li>Shared - Defaults to true when not present. It is unshared when the value
+ * does not match "true" regardless of case. When false, each copy of the action
+ * is independent of other copies.</li>
  * </ul>
  * 
  * <p>
- * In order to facilitate easier translation, Enabled, SmallIcon and LargeIcon can be specified in
- * a parallel resource, whose name is suffixed with "_control" as in Desktop_control. This is meant
- * to extrapolate the constant behavior of an action into a file that probably does not need to be
- * internationalized. If it does, for example, to suppress the display of icons, then one would
- * create a resource further suffixed with the language and perhaps country, as in Desktop_control_fa.
+ * In order to facilitate easier translation, Enabled, SmallIcon and LargeIcon
+ * can be specified in a parallel resource, whose name is suffixed with
+ * "_control" as in Desktop_control. This is meant to extrapolate the constant
+ * behavior of an action into a file that probably does not need to be
+ * internationalized. If it does, for example, to suppress the display of icons,
+ * then one would create a resource further suffixed with the language and
+ * perhaps country, as in Desktop_control_fa.
  * </p>
  * 
  * <p>
- * To add another twist, several actions may have the same name and mnemonic, differing perhaps by
- * tooltip. To facilitate the sharing of these definitions, an Aliases resource is defined to contain
- * common values. If the value of a ActionName.Name is prefixed with "Alias.", as in Go.Name=Alias.Go,
- * then Go will be used as the ActionName to look up values in the Aliases resource.
+ * To add another twist, several actions may have the same name and mnemonic,
+ * differing perhaps by tooltip. To facilitate the sharing of these definitions,
+ * an Aliases resource is defined to contain common values. If the value of a
+ * ActionName.Name is prefixed with "Alias.", as in Go.Name=Alias.Go, then Go
+ * will be used as the ActionName to look up values in the Aliases resource.
  * </p>
  * 
  * <p>
- * Aliases defines defaults that can be overridden by the referring resource file. The only value that
- * cannot be overridden is Name. 
+ * Aliases defines defaults that can be overridden by the referring resource
+ * file. The only value that cannot be overridden is Name.
  * </p>
  * 
  * <p>
- * When an action is fired, this class, as a listener, reflects the action on the class providing the
- * resource. For example, DesktopActions creates an ActionFactory from the Desktop ResourceBundle.
- * When the Exit action is fired, ActionFactory calls DesktopActions.doExit(ActionEvent event) or
+ * When an action is fired, this class, as a listener, reflects the action on
+ * the class providing the resource. For example, DesktopActions creates an
+ * ActionFactory from the Desktop ResourceBundle. When the Exit action is fired,
+ * ActionFactory calls DesktopActions.doExit(ActionEvent event) or
  * DesktopActions.doExit(), if the first did not exist.
  * </p>
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ActionFactory implements ActionListener, Actionable
-{
+public class ActionFactory implements ActionListener, Actionable {
     /**
-     * Constructor that distinguishes between the object to call and the type
-     * to look up resources against. This is useful for when you are writing
-     * a class with subclasses but wish to keep the resources registered in
-     * the name of the superclass.
+     * Constructor that distinguishes between the object to call and the type to
+     * look up resources against. This is useful for when you are writing a
+     * class with subclasses but wish to keep the resources registered in the
+     * name of the superclass.
      */
-    public ActionFactory(Class type, Object bean)
-    {
+    public ActionFactory(Class type, Object bean) {
         actions = new HashMap();
 
         buildActionMap(type);
@@ -138,20 +144,24 @@ public class ActionFactory implements ActionListener, Actionable
         this.bean = bean;
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.common.swing.Actionable#performAction(java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.common.swing.Actionable#performAction(java.lang.String)
      */
-    public void actionPerformed(String action)
-    {
+    public void actionPerformed(String action) {
         Action act = getAction(action);
         act.actionPerformed(new ActionEvent(this, 0, action));
     }
 
-    /* (non-Javadoc)
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
-    public void actionPerformed(ActionEvent ev)
-    {
+    public void actionPerformed(ActionEvent ev) {
         String action = ev.getActionCommand();
 
         assert action != null;
@@ -161,65 +171,56 @@ public class ActionFactory implements ActionListener, Actionable
         // use reflection to do a direct lookup and call
         String methodName = METHOD_PREFIX + action;
         Exception ex = null;
-        try
-        {
-            try
-            {
-                Method doMethod = bean.getClass().getDeclaredMethod(methodName, new Class[] { ActionEvent.class });
-                doMethod.invoke(bean, new Object[] { ev });
-            }
-            catch (NoSuchMethodException e)
-            {
+        try {
+            try {
+                Method doMethod = bean.getClass().getDeclaredMethod(methodName, new Class[] {
+                    ActionEvent.class
+                });
+                doMethod.invoke(bean, new Object[] {
+                    ev
+                });
+            } catch (NoSuchMethodException e) {
                 Method doMethod = bean.getClass().getDeclaredMethod(methodName, new Class[0]);
                 doMethod.invoke(bean, new Object[0]);
             }
-        }
-        catch (NoSuchMethodException e)
-        {
+        } catch (NoSuchMethodException e) {
             ex = e;
-        }
-        catch (IllegalArgumentException e)
-        {
+        } catch (IllegalArgumentException e) {
             ex = e;
-        }
-        catch (IllegalAccessException e)
-        {
+        } catch (IllegalAccessException e) {
             ex = e;
-        }
-        catch (InvocationTargetException e)
-        {
+        } catch (InvocationTargetException e) {
             ex = e;
         }
 
-        if (ex != null)
-        {
+        if (ex != null) {
             log.error("Could not execute method " + bean.getClass().getName() + "." + methodName + "()", ex); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         }
     }
 
     /**
      * Get the Action for the given actionName.
-     * @param key the internal name of the CWAction
+     * 
+     * @param key
+     *            the internal name of the CWAction
      * @return CWAction null if it does not exist
      */
-    public Action getAction(String key)
-    {
+    public Action getAction(String key) {
         return getAction(key, null);
     }
 
     /**
      * Get the Action for the given actionName.
-     * @param key the internal name of the CWAction
+     * 
+     * @param key
+     *            the internal name of the CWAction
      * @return CWAction null if it does not exist
      */
-    public Action getAction(String key, ActionListener listener)
-    {
+    public Action getAction(String key, ActionListener listener) {
         CWAction action = (CWAction) actions.get(key);
 
-        if (action != null)
-        {
-            if (listener != null)
-            {
+        if (action != null) {
+            if (listener != null) {
                 action = (CWAction) action.clone();
                 action.addActionListener(listener);
             }
@@ -239,21 +240,22 @@ public class ActionFactory implements ActionListener, Actionable
     }
 
     /**
-     * Construct a JLabel from the Action.
-     * Only Action.NAME and Action.MNEMONIC_KEY are used.
-     * @param key the internal name of the CWAction
-     * @return A label, asserting if missing resources or with default values otherwise
+     * Construct a JLabel from the Action. Only Action.NAME and
+     * Action.MNEMONIC_KEY are used.
+     * 
+     * @param key
+     *            the internal name of the CWAction
+     * @return A label, asserting if missing resources or with default values
+     *         otherwise
      */
-    public JLabel createJLabel(String key)
-    {
+    public JLabel createJLabel(String key) {
         Action action = getAction(key);
 
         JLabel label = new JLabel();
         label.setText(action.getValue(Action.NAME).toString());
 
         Integer mnemonic = (Integer) action.getValue(Action.MNEMONIC_KEY);
-        if (mnemonic != null)
-        {
+        if (mnemonic != null) {
             label.setDisplayedMnemonic(mnemonic.intValue());
         }
 
@@ -262,21 +264,23 @@ public class ActionFactory implements ActionListener, Actionable
 
     /**
      * Build a button from an action that consist solely of the icon.
-     * @param key the action to use
+     * 
+     * @param key
+     *            the action to use
      * @return the button
      */
-    public JButton createActionIcon(String key)
-    {
+    public JButton createActionIcon(String key) {
         return createActionIcon(key, null);
     }
 
     /**
      * Build a button from an action that consist solely of the icon.
-     * @param key the action to use
+     * 
+     * @param key
+     *            the action to use
      * @return the button
      */
-    public JButton createActionIcon(String key, ActionListener listener)
-    {
+    public JButton createActionIcon(String key, ActionListener listener) {
         Action action = getAction(key, listener);
 
         JButton button = new JButton(action);
@@ -289,68 +293,61 @@ public class ActionFactory implements ActionListener, Actionable
 
     /**
      * Build a button from an action.
-     * @param key the action to use
+     * 
+     * @param key
+     *            the action to use
      * @return the button
      */
-    public JButton createJButton(String key)
-    {
+    public JButton createJButton(String key) {
         return createJButton(key, null);
     }
 
     /**
      * Build a button from an action.
-     * @param key the action to use
+     * 
+     * @param key
+     *            the action to use
      * @return the button
      */
-    public JButton createJButton(String key, ActionListener listener)
-    {
+    public JButton createJButton(String key, ActionListener listener) {
         return new JButton(getAction(key, listener));
     }
 
     /**
      * Build the map of actions from resources
      */
-    private void buildActionMap(Class basis)
-    {
-        try
-        {
+    private void buildActionMap(Class basis) {
+        try {
             StringBuffer basisName = new StringBuffer(basis.getName());
             ResourceBundle resources = ResourceBundle.getBundle(basisName.toString(), Locale.getDefault(), CWClassLoader.instance(basis));
             ResourceBundle controls = null;
-            try
-            {
+            try {
                 basisName.append("_control"); //$NON-NLS-1$
                 controls = ResourceBundle.getBundle(basisName.toString(), Locale.getDefault(), CWClassLoader.instance(basis));
-            }
-            catch (MissingResourceException ex)
-            {
-                // It is OK for this to not exist. This just means that the defaults are used
+            } catch (MissingResourceException ex) {
+                // It is OK for this to not exist. This just means that the
+                // defaults are used
             }
 
             Enumeration en = resources.getKeys();
-            while (en.hasMoreElements())
-            {
+            while (en.hasMoreElements()) {
                 String key = (String) en.nextElement();
-                if (key.endsWith(TEST))
-                {
+                if (key.endsWith(TEST)) {
                     String actionName = key.substring(0, key.length() - TEST.length());
 
                     String name = getActionString(resources, actionName, Action.NAME);
                     ResourceBundle nickname = null;
-                    if (name.startsWith(ActionFactory.ALIAS))
-                    {
+                    if (name.startsWith(ActionFactory.ALIAS)) {
                         String newActionName = name.substring(ActionFactory.ALIAS.length());
                         String newName = getActionString(aliases, newActionName, Action.NAME);
-                        if (newName != null)
-                        {
+                        if (newName != null) {
                             name = newName;
                             nickname = aliases;
                         }
                     }
 
                     String tooltip = getOptionalActionString(nickname, resources, actionName, CWAction.TOOL_TIP);
-                    if (tooltip == null)
-                    {
+                    if (tooltip == null) {
                         tooltip = name;
                     }
 
@@ -364,22 +361,16 @@ public class ActionFactory implements ActionListener, Actionable
 
                     CWAction cwAction = new CWAction();
 
-                    if (actionName == null || actionName.length() == 0)
-                    {
+                    if (actionName == null || actionName.length() == 0) {
                         log.warn("Acronymn is missing for CWAction"); //$NON-NLS-1$
-                    }
-                    else
-                    {
+                    } else {
                         cwAction.putValue(Action.ACTION_COMMAND_KEY, actionName);
                     }
 
-                    if (name == null || name.length() == 0)
-                    {
+                    if (name == null || name.length() == 0) {
                         log.warn("Name is missing for CWAction"); //$NON-NLS-1$
                         cwAction.putValue(Action.NAME, "?"); //$NON-NLS-1$
-                    }
-                    else
-                    {
+                    } else {
                         cwAction.putValue(Action.NAME, name);
                     }
 
@@ -387,8 +378,7 @@ public class ActionFactory implements ActionListener, Actionable
                     cwAction.putValue(Action.SMALL_ICON, smallIcon);
                     cwAction.putValue(Action.SHORT_DESCRIPTION, tooltip);
                     // Mac's don't have mnemonics
-                    if (!OSType.MAC.equals(OSType.getOSType()))
-                    {
+                    if (!OSType.MAC.equals(OSType.getOSType())) {
                         cwAction.putValue(Action.MNEMONIC_KEY, mnemonic);
                     }
                     cwAction.putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -399,9 +389,7 @@ public class ActionFactory implements ActionListener, Actionable
                     actions.put(actionName, cwAction);
                 }
             }
-        }
-        catch (MissingResourceException ex)
-        {
+        } catch (MissingResourceException ex) {
             log.error("Missing resource for class: " + basis.getName()); //$NON-NLS-1$
             throw ex;
         }
@@ -411,14 +399,10 @@ public class ActionFactory implements ActionListener, Actionable
      * Lookup an action/field combination, warning about missing resources
      * rather than excepting.
      */
-    private String getActionString(ResourceBundle resources, String actionName, String field)
-    {
-        try
-        {
+    private String getActionString(ResourceBundle resources, String actionName, String field) {
+        try {
             return resources.getString(actionName + '.' + field);
-        }
-        catch (MissingResourceException ex)
-        {
+        } catch (MissingResourceException ex) {
             log.info("Missing key for " + actionName, ex); //$NON-NLS-1$
             return null;
         }
@@ -427,8 +411,7 @@ public class ActionFactory implements ActionListener, Actionable
     /**
      * Lookup an action/field combination, returning null for missing resources.
      */
-    private String getOptionalActionString(ResourceBundle resources, String actionName, String field)
-    {
+    private String getOptionalActionString(ResourceBundle resources, String actionName, String field) {
         return getOptionalActionString(null, resources, actionName, field);
     }
 
@@ -436,32 +419,23 @@ public class ActionFactory implements ActionListener, Actionable
      * Lookup an action/field combination, returning null for missing resources.
      * If aliases are present use them, with values in resources over-riding.
      */
-    private String getOptionalActionString(ResourceBundle nicknames, ResourceBundle resources, String actionName, String field)
-    {
+    private String getOptionalActionString(ResourceBundle nicknames, ResourceBundle resources, String actionName, String field) {
         String result = null;
-        try
-        {
+        try {
             // Look for aliases first
-            if (nicknames != null)
-            {
+            if (nicknames != null) {
                 result = nicknames.getString(actionName + '.' + field);
             }
-        }
-        catch (MissingResourceException ex)
-        {
+        } catch (MissingResourceException ex) {
             // do nothing
         }
 
-        try
-        {
+        try {
             // The control resource file does not have to exist.
-            if (resources != null)
-            {
+            if (resources != null) {
                 result = resources.getString(actionName + '.' + field);
             }
-        }
-        catch (MissingResourceException ex)
-        {
+        } catch (MissingResourceException ex) {
             // do nothing
         }
 
@@ -471,12 +445,10 @@ public class ActionFactory implements ActionListener, Actionable
     /**
      * Get an icon for the string
      */
-    private Icon getIcon(ResourceBundle resources, String actionName, String iconName)
-    {
+    private Icon getIcon(ResourceBundle resources, String actionName, String iconName) {
         Icon icon = null;
         String iconStr = getOptionalActionString(resources, actionName, iconName);
-        if (iconStr != null && iconStr.length() > 0)
-        {
+        if (iconStr != null && iconStr.length() > 0) {
             icon = GuiUtil.getIcon(iconStr);
         }
         return icon;
@@ -485,18 +457,13 @@ public class ActionFactory implements ActionListener, Actionable
     /**
      * Convert the string to a mnemonic
      */
-    private Integer getMnemonic(ResourceBundle nicknames, ResourceBundle resources, String actionName)
-    {
+    private Integer getMnemonic(ResourceBundle nicknames, ResourceBundle resources, String actionName) {
         Integer mnemonic = null;
         String mnemonicStr = getOptionalActionString(nicknames, resources, actionName, Action.MNEMONIC_KEY);
-        if (mnemonicStr != null && mnemonicStr.length() > 0)
-        {
-            try
-            {
+        if (mnemonicStr != null && mnemonicStr.length() > 0) {
+            try {
                 mnemonic = new Integer(getInteger(mnemonicStr));
-            }
-            catch (NumberFormatException ex)
-            {
+            } catch (NumberFormatException ex) {
                 log.warn("Could not parse integer for mnemonic of action " + actionName, ex); //$NON-NLS-1$
             }
         }
@@ -506,25 +473,20 @@ public class ActionFactory implements ActionListener, Actionable
     /**
      * Convert the string to a valid Accelerator (ie a KeyStroke)
      */
-    private KeyStroke getAccelerator(ResourceBundle nicknames, ResourceBundle resources, String actionName)
-    {
+    private KeyStroke getAccelerator(ResourceBundle nicknames, ResourceBundle resources, String actionName) {
         // Create the KeyStroke for the action's shortcut/accelerator
         KeyStroke accelerator = null;
         String acceleratorStr = getOptionalActionString(nicknames, resources, actionName, Action.ACCELERATOR_KEY);
-        if (acceleratorStr != null && acceleratorStr.length() > 0)
-        {
+        if (acceleratorStr != null && acceleratorStr.length() > 0) {
             String[] modifiers = StringUtil.split(getActionString(resources, actionName, Action.ACCELERATOR_KEY + ".Modifiers"), ','); //$NON-NLS-1$
 
-            try
-            {
+            try {
                 int shortcut = getInteger(acceleratorStr);
                 int keyModifier = getModifier(modifiers);
 
                 // Now we can create it
                 accelerator = KeyStroke.getKeyStroke(shortcut, keyModifier);
-            }
-            catch (NumberFormatException nfe)
-            {
+            } catch (NumberFormatException nfe) {
                 log.warn("Could not parse integer for accelerator of action " + actionName, nfe); //$NON-NLS-1$
             }
         }
@@ -534,22 +496,18 @@ public class ActionFactory implements ActionListener, Actionable
     /**
      * Convert the string to an integer. The string is either a single character
      * or it is hex number.
+     * 
      * @return the integer value of the accelerator
      */
-    private int getInteger(String str) throws NumberFormatException
-    {
+    private int getInteger(String str) throws NumberFormatException {
         int val = 0;
         int length = str.length();
         if (str.startsWith("0x")) //$NON-NLS-1$
         {
             val = Integer.parseInt(str.substring(2), 16);
-        }
-        else if (length == 1)
-        {
+        } else if (length == 1) {
             val = str.charAt(0);
-        }
-        else
-        {
+        } else {
             val = Integer.parseInt(str);
         }
 
@@ -559,23 +517,19 @@ public class ActionFactory implements ActionListener, Actionable
     /**
      *
      */
-    private int getModifier(String[] modifiers)
-    {
+    private int getModifier(String[] modifiers) {
         int keyModifier = 0;
-        for (int j = 0; j < modifiers.length; j++)
-        {
+        for (int j = 0; j < modifiers.length; j++) {
             String modifier = modifiers[j];
             if ("ctrl".equalsIgnoreCase(modifier)) //$NON-NLS-1$
             {
                 // use this so MacOS users are happy
                 // It will map to the CMD key on Mac; CTRL otherwise.
                 keyModifier |= Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
-            }
-            else if ("shift".equalsIgnoreCase(modifier)) //$NON-NLS-1$
+            } else if ("shift".equalsIgnoreCase(modifier)) //$NON-NLS-1$
             {
                 keyModifier |= InputEvent.SHIFT_MASK;
-            }
-            else if ("alt".equalsIgnoreCase(modifier)) //$NON-NLS-1$
+            } else if ("alt".equalsIgnoreCase(modifier)) //$NON-NLS-1$
             {
                 keyModifier |= InputEvent.ALT_MASK;
             }
@@ -585,8 +539,8 @@ public class ActionFactory implements ActionListener, Actionable
     }
 
     /**
-     * The tooltip for actions that we generate to paper around missing resources
-     * Normally we would assert, but in live we might want to limp on.
+     * The tooltip for actions that we generate to paper around missing
+     * resources Normally we would assert, but in live we might want to limp on.
      */
     private static final String MISSING_RESOURCE = "Missing Resource"; //$NON-NLS-1$
 
@@ -624,14 +578,10 @@ public class ActionFactory implements ActionListener, Actionable
      */
     private static ResourceBundle aliases;
 
-    static
-    {
-        try
-        {
+    static {
+        try {
             aliases = ResourceBundle.getBundle(ALIASES, Locale.getDefault(), CWClassLoader.instance(ActionFactory.class));
-        }
-        catch (MissingResourceException ex)
-        {
+        } catch (MissingResourceException ex) {
             log.error("Tell me it isn't so. The Aliases.properties does exist!", ex); //$NON-NLS-1$
         }
     }

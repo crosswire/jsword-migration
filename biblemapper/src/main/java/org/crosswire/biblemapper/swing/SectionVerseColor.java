@@ -28,87 +28,84 @@ import org.crosswire.jsword.versification.BibleInfo;
 import org.crosswire.jsword.versification.SectionNames;
 
 /**
- * SectionVerseColor gives a color to a selected group of books,
- * leaving the others grey. 
+ * SectionVerseColor gives a color to a selected group of books, leaving the
+ * others grey.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class SectionVerseColor implements VerseColor
-{
+public class SectionVerseColor implements VerseColor {
     /**
-    * Basic constructor
-    */
-    public SectionVerseColor(int section)
-    {
+     * Basic constructor
+     */
+    public SectionVerseColor(int section) {
         this.section = section;
     }
 
     /**
-    * Accessor for the currently highlighted section
-    * @param section The new highlighted section
-    */
-    public void setSection(int section)
-    {
+     * Accessor for the currently highlighted section
+     * 
+     * @param section
+     *            The new highlighted section
+     */
+    public void setSection(int section) {
         this.section = section;
     }
 
     /**
-    * Accessor for the currently highlighted section
-    * @return The current highlighted section
-    */
-    public int getSection()
-    {
+     * Accessor for the currently highlighted section
+     * 
+     * @return The current highlighted section
+     */
+    public int getSection() {
         return section;
     }
 
     /**
-    * What Color should we use to represent this verse
-    * @param book The book number (Gen=1, Rev=66)
-    * @param chapter The chapter number
-    * @param verse The verse number
-    * @return The Color for this verse
-    */
-    public Color getColor(int book, int chapter, int verse)
-    {
-        if (section != SectionNames.getSection(book))
-        {
+     * What Color should we use to represent this verse
+     * 
+     * @param book
+     *            The book number (Gen=1, Rev=66)
+     * @param chapter
+     *            The chapter number
+     * @param verse
+     *            The verse number
+     * @return The Color for this verse
+     */
+    public Color getColor(int book, int chapter, int verse) {
+        if (section != SectionNames.getSection(book)) {
             return Color.gray;
         }
-		return Color.red;
+        return Color.red;
     }
 
     /**
-    * What Color would set off the Verses painted on it
-    * @return An appropriate background color
-    */
-    public Color getBackground()
-    {
+     * What Color would set off the Verses painted on it
+     * 
+     * @return An appropriate background color
+     */
+    public Color getBackground() {
         return Color.black;
     }
 
     /**
-    * What Color should text be painted in
-    * @return An appropriate font color
-    */
-    public Color getForeground()
-    {
+     * What Color should text be painted in
+     * 
+     * @return An appropriate font color
+     */
+    public Color getForeground() {
         return Color.white;
     }
 
     /**
-    * The name for display in a combo box
-    */
+     * The name for display in a combo box
+     */
     /* @Override */
-    public String toString()
-    {
-        try
-        {
-            return "Section - "+BibleInfo.getSectionName(section);
-        }
-        catch (NoSuchVerseException ex)
-        {
+    public String toString() {
+        try {
+            return "Section - " + BibleInfo.getSectionName(section);
+        } catch (NoSuchVerseException ex) {
             return "Section - Error";
         }
     }

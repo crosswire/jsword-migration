@@ -22,32 +22,30 @@
 package org.crosswire.biblemapper.model;
 
 /**
- * AbstractRule. 
+ * AbstractRule.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public abstract class AbstractRule implements Rule
-{
+public abstract class AbstractRule implements Rule {
     /**
-     * We sometimes need to take a single reply and multiply it up
-     * according to the current scale.
-     * @see org.crosswire.biblemapper.model.Rule#getScaledPosition(Map, int, int)
+     * We sometimes need to take a single reply and multiply it up according to
+     * the current scale.
+     * 
+     * @see org.crosswire.biblemapper.model.Rule#getScaledPosition(Map, int,
+     *      int)
      */
-    public Position[] getScaledPosition(Map map, int book, int chapter)
-    {
+    public Position[] getScaledPosition(Map map, int book, int chapter) {
         // get a copy of scale, since it can change out from under
         int size = scale;
-        if (size == 0)
-        {
+        if (size == 0) {
             return new Position[0];
         }
 
         Position single = getDesiredPosition(map, book, chapter);
         Position[] reply = new Position[size];
-        for (int i=0; i<size; i++)
-        {
+        for (int i = 0; i < size; i++) {
             reply[i] = single;
         }
 
@@ -55,22 +53,23 @@ public abstract class AbstractRule implements Rule
     }
 
     /**
-     * Each call to getDesiredPosition() returns an array of Positions,
-     * this method sets the preferred length of that returned array.
-     * @param scale The preferred length of the desired position array
+     * Each call to getDesiredPosition() returns an array of Positions, this
+     * method sets the preferred length of that returned array.
+     * 
+     * @param scale
+     *            The preferred length of the desired position array
      */
-    public void setScale(int scale)
-    {
+    public void setScale(int scale) {
         this.scale = scale;
     }
 
     /**
-     * Each call to getDesiredPosition() returns an array of Positions,
-     * this method gets the preferred length of that returned array.
+     * Each call to getDesiredPosition() returns an array of Positions, this
+     * method gets the preferred length of that returned array.
+     * 
      * @return The preferred length of the desired position array
      */
-    public int getScale()
-    {
+    public int getScale() {
         return scale;
     }
 

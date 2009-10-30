@@ -35,26 +35,26 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * EirPanel is an extension of JPanel that adds the ability to be visible in
- * a separate dialog.
+ * EirPanel is an extension of JPanel that adds the ability to be visible in a
+ * separate dialog.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class EirPanel extends JPanel
-{
-	// I18N: This class has not been internationalized, because it is not used.
+public class EirPanel extends JPanel {
+    // I18N: This class has not been internationalized, because it is not used.
     /**
      * A method to be exposed by our children
-     * @param parent The component to which to attach the new dialog
-     * @param title The title for the new dialog
+     * 
+     * @param parent
+     *            The component to which to attach the new dialog
+     * @param title
+     *            The title for the new dialog
      * @param modal
      */
-    public void showInDialog(Component parent, String title, boolean modal)
-    {
-        if (dlgMain != null)
-        {
+    public void showInDialog(Component parent, String title, boolean modal) {
+        if (dlgMain != null) {
             dlgMain.setVisible(true);
             return;
         }
@@ -62,10 +62,8 @@ public class EirPanel extends JPanel
         // I18N: migrate this to an ActionFactory
         btnOk = new JButton();
         btnOk.setText(LimboMsg.CLOSE.toString());
-        btnOk.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        btnOk.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 close();
             }
         });
@@ -84,11 +82,9 @@ public class EirPanel extends JPanel
         dlgMain.getContentPane().add(pnlMain);
         dlgMain.setTitle(title);
         dlgMain.setModal(modal);
-        dlgMain.addWindowListener(new WindowAdapter()
-        {
+        dlgMain.addWindowListener(new WindowAdapter() {
             /* @Override */
-            public void windowClosed(WindowEvent ev)
-            {
+            public void windowClosed(WindowEvent ev) {
                 close();
             }
         });
@@ -100,10 +96,8 @@ public class EirPanel extends JPanel
     /**
      * Close this dialog
      */
-    protected void close()
-    {
-        if (dlgMain != null)
-        {
+    protected void close() {
+        if (dlgMain != null) {
             dlgMain.dispose();
             dlgMain = null;
         }

@@ -29,16 +29,14 @@ import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.xml.TransformingSAXEventProvider;
 
-
 /**
  * Defines properties that control the behavior of translating OSIS to HTML.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at yahoo dot com]
  */
-public final class XSLTProperty implements Serializable
-{
+public final class XSLTProperty implements Serializable {
     /**
      * Determines whether Strong's Numbers should show
      */
@@ -95,20 +93,20 @@ public final class XSLTProperty implements Serializable
     public static final XSLTProperty XREF = new XSLTProperty("XRef", true); //$NON-NLS-1$
 
     /**
-     * What is the base of the current document.
-     * Note this needs to be set each time the document is shown.
+     * What is the base of the current document. Note this needs to be set each
+     * time the document is shown.
      */
     public static final XSLTProperty BASE_URL = new XSLTProperty("baseURL", "", true); //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
-     * What is the base of the current document.
-     *  Note this needs to be set each time the document is shown.
+     * What is the base of the current document. Note this needs to be set each
+     * time the document is shown.
      */
     public static final XSLTProperty DIRECTION = new XSLTProperty("direction", ""); //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
-     * What is the base of the current document.
-     * Note this needs to be set each time the font changes.
+     * What is the base of the current document. Note this needs to be set each
+     * time the font changes.
      */
     public static final XSLTProperty FONT = new XSLTProperty("font", "Serif-PLAIN-14"); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -118,29 +116,32 @@ public final class XSLTProperty implements Serializable
     public static final XSLTProperty CSS = new XSLTProperty("css", "", true); //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
-     * @param name The name of this property
-     * @param defaultState The initial state of the property.
+     * @param name
+     *            The name of this property
+     * @param defaultState
+     *            The initial state of the property.
      */
-    private XSLTProperty(String name, boolean defaultState)
-    {
+    private XSLTProperty(String name, boolean defaultState) {
         this(name, Boolean.toString(defaultState));
     }
 
     /**
-     * @param name The name of this property
-     * @param defaultState The initial state of the property.
+     * @param name
+     *            The name of this property
+     * @param defaultState
+     *            The initial state of the property.
      */
-    private XSLTProperty(String name, String defaultState)
-    {
+    private XSLTProperty(String name, String defaultState) {
         this(name, defaultState, false);
     }
 
     /**
-     * @param name The name of this property
-     * @param defaultState The initial state of the property.
+     * @param name
+     *            The name of this property
+     * @param defaultState
+     *            The initial state of the property.
      */
-    private XSLTProperty(String name, String defaultState, boolean asURL)
-    {
+    private XSLTProperty(String name, String defaultState, boolean asURL) {
         this.name = name;
         this.defaultState = defaultState;
         this.state = defaultState;
@@ -150,54 +151,41 @@ public final class XSLTProperty implements Serializable
     /**
      * @return the name of the property
      */
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public boolean getDefaultState()
-    {
+    public boolean getDefaultState() {
         return Boolean.valueOf(defaultState).booleanValue();
     }
 
-    public String getDefaultStringState()
-    {
+    public String getDefaultStringState() {
         return defaultState;
     }
 
-    public boolean getState()
-    {
+    public boolean getState() {
         return Boolean.valueOf(state).booleanValue();
     }
 
-    public String getStringState()
-    {
+    public String getStringState() {
         return state;
     }
 
-    public void setState(boolean newState)
-    {
+    public void setState(boolean newState) {
         state = Boolean.toString(newState);
     }
 
-    public void setState(String newState)
-    {
+    public void setState(String newState) {
         state = newState;
     }
 
-    public void setProperty(TransformingSAXEventProvider provider)
-    {
-        if (state != null && state.length() > 0)
-        {
+    public void setProperty(TransformingSAXEventProvider provider) {
+        if (state != null && state.length() > 0) {
             String theState = state;
-            if (asURL)
-            {
-                try
-                {
+            if (asURL) {
+                try {
                     theState = NetUtil.getURI(new File(state)).toURL().toString();
-                }
-                catch (MalformedURLException ex)
-                {
+                } catch (MalformedURLException ex) {
                     Reporter.informUser(this, ex);
                 }
             }
@@ -205,10 +193,8 @@ public final class XSLTProperty implements Serializable
         }
     }
 
-    public static void setProperties(TransformingSAXEventProvider provider)
-    {
-        for (int i = 0; i < VALUES.length; i++)
-        {
+    public static void setProperties(TransformingSAXEventProvider provider) {
+        for (int i = 0; i < VALUES.length; i++) {
             VALUES[i].setProperty(provider);
         }
     }
@@ -216,13 +202,10 @@ public final class XSLTProperty implements Serializable
     /**
      * Lookup method to convert from a String
      */
-    public static XSLTProperty fromString(String name)
-    {
-        for (int i = 0; i < VALUES.length; i++)
-        {
+    public static XSLTProperty fromString(String name) {
+        for (int i = 0; i < VALUES.length; i++) {
             XSLTProperty o = VALUES[i];
-            if (o.name.equalsIgnoreCase(name))
-            {
+            if (o.name.equalsIgnoreCase(name)) {
                 return o;
             }
         }
@@ -233,16 +216,14 @@ public final class XSLTProperty implements Serializable
     /**
      * Lookup method to convert from an integer
      */
-    public static XSLTProperty fromInteger(int i)
-    {
+    public static XSLTProperty fromInteger(int i) {
         return VALUES[i];
     }
 
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
-    {
+    public String toString() {
         return name;
     }
 
@@ -262,7 +243,8 @@ public final class XSLTProperty implements Serializable
     private String state;
 
     /**
-     * Whether the string state should be converted to an URL when setting the property.
+     * Whether the string state should be converted to an URL when setting the
+     * property.
      */
     private boolean asURL;
 
@@ -270,28 +252,13 @@ public final class XSLTProperty implements Serializable
     private static int nextObj;
     private final int obj = nextObj++;
 
-    Object readResolve()
-    {
+    Object readResolve() {
         return VALUES[obj];
     }
 
-    private static final XSLTProperty[] VALUES =
-    {
-        STRONGS_NUMBERS,
-        MORPH,
-        START_VERSE_ON_NEWLINE,
-        VERSE_NUMBERS,
-        CV,
-        BCV,
-        NO_VERSE_NUMBERS,
-        TINY_VERSE_NUMBERS,
-        HEADINGS,
-        NOTES,
-        XREF,
-        BASE_URL,
-        DIRECTION,
-        FONT,
-        CSS,
+    private static final XSLTProperty[] VALUES = {
+            STRONGS_NUMBERS, MORPH, START_VERSE_ON_NEWLINE, VERSE_NUMBERS, CV, BCV, NO_VERSE_NUMBERS, TINY_VERSE_NUMBERS, HEADINGS, NOTES, XREF, BASE_URL,
+            DIRECTION, FONT, CSS,
     };
 
     /**

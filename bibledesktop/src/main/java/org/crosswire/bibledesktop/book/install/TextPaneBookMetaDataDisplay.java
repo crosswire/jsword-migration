@@ -42,19 +42,17 @@ import org.xml.sax.SAXException;
 
 /**
  * A JDK JTextPane implementation of an OSIS displayer.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class TextPaneBookMetaDataDisplay
-{
+public class TextPaneBookMetaDataDisplay {
     /**
      * Simple ctor
      */
-    public TextPaneBookMetaDataDisplay()
-    {
+    public TextPaneBookMetaDataDisplay() {
         converter = ConverterFactory.getConverter();
         txtView = new AntiAliasedTextPane();
         txtView.setEditable(false);
@@ -63,18 +61,16 @@ public class TextPaneBookMetaDataDisplay
 
     /**
      * Change the book being displayed to a new one.
+     * 
      * @param book
      */
-    public void setBook(Book book)
-    {
-        if (book == null)
-        {
+    public void setBook(Book book) {
+        if (book == null) {
             txtView.setText(""); //$NON-NLS-1$
             return;
         }
 
-        try
-        {
+        try {
 
             SAXEventProvider osissep = new JDOMSAXEventProvider(book.toOSIS());
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
@@ -83,13 +79,9 @@ public class TextPaneBookMetaDataDisplay
 
             txtView.setText(text);
             txtView.select(0, 0);
-        }
-        catch (SAXException e)
-        {
+        } catch (SAXException e) {
             Reporter.informUser(this, e);
-        }
-        catch (TransformerException e)
-        {
+        } catch (TransformerException e) {
             Reporter.informUser(this, e);
         }
     }
@@ -97,8 +89,7 @@ public class TextPaneBookMetaDataDisplay
     /**
      * Accessor for the Swing component
      */
-    public Component getComponent()
-    {
+    public Component getComponent() {
         return txtView;
     }
 

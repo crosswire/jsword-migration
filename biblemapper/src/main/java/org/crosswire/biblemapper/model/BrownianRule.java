@@ -26,29 +26,27 @@ import java.util.Random;
 /**
  * BrownianRule.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class BrownianRule extends AbstractRule
-{
+public class BrownianRule extends AbstractRule {
     /**
-     * Specify where it would like a node to be positioned in space.
-     * Rules return an array of positions where the average of them
-     * specifies the real desired position. So to specify a single place
-     * simply return an array of one position. The positions are added
-     * to the results from all Rules so to specify a single position
-     * more strongly, return an array conataining that position many
-     * times.
-     * @param map The Map to select a node from
+     * Specify where it would like a node to be positioned in space. Rules
+     * return an array of positions where the average of them specifies the real
+     * desired position. So to specify a single place simply return an array of
+     * one position. The positions are added to the results from all Rules so to
+     * specify a single position more strongly, return an array conataining that
+     * position many times.
+     * 
+     * @param map
+     *            The Map to select a node from
      * @return An array of desired positions.
      */
-    public Position getDesiredPosition(Map map, int book, int chapter)
-    {
+    public Position getDesiredPosition(Map map, int book, int chapter) {
         float[] pos = map.getPositionArrayCopy(book, chapter);
 
-        for (int i=0; i<pos.length; i++)
-        {
+        for (int i = 0; i < pos.length; i++) {
             pos[i] += (float) (rand.nextGaussian() * HEAT);
         }
 
@@ -56,10 +54,9 @@ public class BrownianRule extends AbstractRule
     }
 
     /**
-     * The max random jiggle.
-     * How much is it possible to a node to move randomly each turn.
-     * A heat of 1.0 means that any node could move roughly anywhere across the
-     * board each turn, so a heat of 0.001 is probably more useful.
+     * The max random jiggle. How much is it possible to a node to move randomly
+     * each turn. A heat of 1.0 means that any node could move roughly anywhere
+     * across the board each turn, so a heat of 0.001 is probably more useful.
      * To be precise the heat is the standard deviation in a gaussian
      * distribution.
      */

@@ -68,18 +68,16 @@ import org.crosswire.jsword.index.search.SearchType;
 
 /**
  * An advanced search dialog.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class AdvancedSearchPane extends JPanel implements DocumentListener
-{
+public class AdvancedSearchPane extends JPanel implements DocumentListener {
     /**
      * This is the default constructor
      */
-    public AdvancedSearchPane()
-    {
+    public AdvancedSearchPane() {
         presets = Msg.PRESETS.toString().split("\\|"); //$NON-NLS-1$
 
         initialize();
@@ -88,8 +86,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     /**
      * This method initializes this GUI
      */
-    private void initialize()
-    {
+    private void initialize() {
         shaper = new NumberShaper();
         presetStart = Msg.PRESET_START.toString();
         presetEnd = Msg.PRESET_END.toString();
@@ -140,26 +137,20 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         lblRank = actions.createJLabel(RANK);
         setLabelRank(DisplaySelectPane.getNumRankedVerses());
         lblRank.setVisible(false);
-        sliderRank = new JSlider(SwingConstants.HORIZONTAL,
-                    0, DisplaySelectPane.getMaxNumRankedVerses(), DisplaySelectPane.getNumRankedVerses());
+        sliderRank = new JSlider(SwingConstants.HORIZONTAL, 0, DisplaySelectPane.getMaxNumRankedVerses(), DisplaySelectPane.getNumRankedVerses());
         sliderRank.setMajorTickSpacing(DisplaySelectPane.getMaxNumRankedVerses() / 5);
         sliderRank.setMinorTickSpacing(DisplaySelectPane.getMaxNumRankedVerses() / 20);
         sliderRank.setLabelTable(createSliderLabels());
         sliderRank.setPaintTicks(true);
         sliderRank.setPaintLabels(true);
         sliderRank.setVisible(false);
-        sliderRank.addChangeListener(new ChangeListener()
-        {
-            public void stateChanged(ChangeEvent e)
-            {
+        sliderRank.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
                 JSlider source = (JSlider) e.getSource();
                 int val = source.getValue();
-                if (source.getValueIsAdjusting())
-                {
+                if (source.getValueIsAdjusting()) {
                     setLabelRank(val);
-                }
-                else
-                {
+                } else {
                     DisplaySelectPane.setNumRankedVerses(val);
                 }
             }
@@ -173,10 +164,8 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         lblPresets.setVisible(false);
         cboPresets = new JComboBox(presets);
         cboPresets.setVisible(false);
-        cboPresets.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        cboPresets.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 updatePreset();
             }
         });
@@ -202,45 +191,45 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         scrSummary = new CWScrollPane(txtSummary);
         scrSummary.setVisible(false);
 
-//        chkHebGrk = new JCheckBox(actions.getAction(HEAD_ORIGINAL));
-//        chkHebGrk.setBackground(headBG);
-//        chkHebGrk.setForeground(headFG);
-//        chkHebGrk.setFont(headFont);
-//        lblHebInc = actions.createJLabel(HEBREW_INCLUDE);
-//        lblHebInc.setVisible(false);
-//        txtHebInc = new JTextField();
-//        txtHebInc.setVisible(false);
-//        txtHebInc.getDocument().addDocumentListener(this);
-//        lblHebExc = actions.createJLabel(HEBREW_EXCLUDE);
-//        lblHebExc.setVisible(false);
-//        txtHebExc = new JTextField();
-//        txtHebExc.setVisible(false);
-//        txtHebExc.getDocument().addDocumentListener(this);
-//        lblGrkInc = actions.createJLabel(GREEK_INCLUDE);
-//        lblGrkInc.setVisible(false);
-//        txtGrkInc = new JTextField();
-//        txtGrkInc.setVisible(false);
-//        txtGrkInc.getDocument().addDocumentListener(this);
-//        lblGrkExc = actions.createJLabel(GREEK_EXCLUDE);
-//        lblGrkExc.setVisible(false);
-//        txtGrkExc = new JTextField();
-//        txtGrkExc.setVisible(false);
-//        txtGrkExc.getDocument().addDocumentListener(this);
-//
-//        chkTime = new JCheckBox(actions.getAction(HEAD_TIME));
-//        chkTime.setBackground(headBG);
-//        chkTime.setForeground(headFG);
-//        chkTime.setFont(headFont);
-//        lblAfter = actions.createJLabel(AFTER);
-//        lblAfter.setVisible(false);
-//        txtAfter = new JTextField();
-//        txtAfter.setVisible(false);
-//        txtAfter.getDocument().addDocumentListener(this);
-//        lblBefore = actions.createJLabel(BEFORE);
-//        lblBefore.setVisible(false);
-//        txtBefore = new JTextField();
-//        txtBefore.setVisible(false);
-//        txtBefore.getDocument().addDocumentListener(this);
+        // chkHebGrk = new JCheckBox(actions.getAction(HEAD_ORIGINAL));
+        // chkHebGrk.setBackground(headBG);
+        // chkHebGrk.setForeground(headFG);
+        // chkHebGrk.setFont(headFont);
+        // lblHebInc = actions.createJLabel(HEBREW_INCLUDE);
+        // lblHebInc.setVisible(false);
+        // txtHebInc = new JTextField();
+        // txtHebInc.setVisible(false);
+        // txtHebInc.getDocument().addDocumentListener(this);
+        // lblHebExc = actions.createJLabel(HEBREW_EXCLUDE);
+        // lblHebExc.setVisible(false);
+        // txtHebExc = new JTextField();
+        // txtHebExc.setVisible(false);
+        // txtHebExc.getDocument().addDocumentListener(this);
+        // lblGrkInc = actions.createJLabel(GREEK_INCLUDE);
+        // lblGrkInc.setVisible(false);
+        // txtGrkInc = new JTextField();
+        // txtGrkInc.setVisible(false);
+        // txtGrkInc.getDocument().addDocumentListener(this);
+        // lblGrkExc = actions.createJLabel(GREEK_EXCLUDE);
+        // lblGrkExc.setVisible(false);
+        // txtGrkExc = new JTextField();
+        // txtGrkExc.setVisible(false);
+        // txtGrkExc.getDocument().addDocumentListener(this);
+        //
+        // chkTime = new JCheckBox(actions.getAction(HEAD_TIME));
+        // chkTime.setBackground(headBG);
+        // chkTime.setForeground(headFG);
+        // chkTime.setFont(headFont);
+        // lblAfter = actions.createJLabel(AFTER);
+        // lblAfter.setVisible(false);
+        // txtAfter = new JTextField();
+        // txtAfter.setVisible(false);
+        // txtAfter.getDocument().addDocumentListener(this);
+        // lblBefore = actions.createJLabel(BEFORE);
+        // lblBefore.setVisible(false);
+        // txtBefore = new JTextField();
+        // txtBefore.setVisible(false);
+        // txtBefore.getDocument().addDocumentListener(this);
 
         btnGo = new JButton(actions.getAction(DONE));
 
@@ -290,11 +279,13 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
 
     /**
      * Open us in a new (optionally modal) dialog window
-     * @param parent The component to which to attach the new dialog
-     * @param title The title for the new dialog
+     * 
+     * @param parent
+     *            The component to which to attach the new dialog
+     * @param title
+     *            The title for the new dialog
      */
-    public String showInDialog(Component parent, String title, boolean modal, String search)
-    {
+    public String showInDialog(Component parent, String title, boolean modal, String search) {
         txtSummary.setText(search);
 
         Frame root = JOptionPane.getFrameForComponent(parent);
@@ -303,10 +294,8 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         KeyStroke esc = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
         bailout = true;
 
-        ActionListener closer = new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        ActionListener closer = new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 dlgMain.dispose();
             }
         };
@@ -325,31 +314,23 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         GuiUtil.applyDefaultOrientation(dlgMain);
         dlgMain.setVisible(true);
 
-        if (bailout)
-        {
+        if (bailout) {
             return null;
         }
 
         return txtSummary.getText();
     }
 
-    public boolean isRanked()
-    {
+    public boolean isRanked() {
         return chkRank.isSelected();
     }
 
-    public final void setLabelRank(int val)
-    {
-        if (val == 0)
-        {
+    public final void setLabelRank(int val) {
+        if (val == 0) {
             lblRank.setText(shaper.shape(Msg.RANK.toString("All"))); //$NON-NLS-1$
-        }
-        else if (val == 1)
-        {
+        } else if (val == 1) {
             lblRank.setText(shaper.shape(Msg.RANK_ONE.toString()));
-        }
-        else
-        {
+        } else {
             lblRank.setText(shaper.shape(Msg.RANK.toString(new Integer(val))));
         }
     }
@@ -357,15 +338,13 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     /**
      * Someone clicked the rank check button
      */
-    public void doHeadRank()
-    {
+    public void doHeadRank() {
         boolean visible = chkRank.isSelected();
 
         lblRank.setVisible(visible);
         sliderRank.setVisible(visible);
 
-        if (dlgMain != null)
-        {
+        if (dlgMain != null) {
             dlgMain.pack();
         }
     }
@@ -373,8 +352,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     /**
      * Someone clicked the restrict toggle button
      */
-    public void doHeadRestrict()
-    {
+    public void doHeadRestrict() {
         boolean visible = chkRestrict.isSelected();
 
         lblPresets.setVisible(visible);
@@ -383,8 +361,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         txtRestrict.setVisible(visible);
         btnRestrict.setVisible(visible);
 
-        if (dlgMain != null)
-        {
+        if (dlgMain != null) {
             dlgMain.pack();
         }
     }
@@ -392,15 +369,13 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     /**
      * Someone clicked the restrict toggle button
      */
-    public void doHeadSummary()
-    {
+    public void doHeadSummary() {
         boolean visible = chkSummary.isSelected();
 
         lblSummary.setVisible(visible);
         scrSummary.setVisible(visible);
 
-        if (dlgMain != null)
-        {
+        if (dlgMain != null) {
             dlgMain.pack();
         }
     }
@@ -408,56 +383,51 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     /**
      * Someone clicked the original strongs toggle button
      */
-    public void doHeadOriginal()
-    {
-//        boolean visible = chkHebGrk.isSelected();
-//
-//        lblHebInc.setVisible(visible);
-//        txtHebInc.setVisible(visible);
-//        lblHebExc.setVisible(visible);
-//        txtHebExc.setVisible(visible);
-//        lblGrkInc.setVisible(visible);
-//        txtGrkInc.setVisible(visible);
-//        lblGrkExc.setVisible(visible);
-//        txtGrkExc.setVisible(visible);
-//
-//        if (dlgMain != null)
-//        {
-//            dlgMain.pack();
-//        }
+    public void doHeadOriginal() {
+        // boolean visible = chkHebGrk.isSelected();
+        //
+        // lblHebInc.setVisible(visible);
+        // txtHebInc.setVisible(visible);
+        // lblHebExc.setVisible(visible);
+        // txtHebExc.setVisible(visible);
+        // lblGrkInc.setVisible(visible);
+        // txtGrkInc.setVisible(visible);
+        // lblGrkExc.setVisible(visible);
+        // txtGrkExc.setVisible(visible);
+        //
+        // if (dlgMain != null)
+        // {
+        // dlgMain.pack();
+        // }
     }
 
     /**
      * Someone clicked the original strongs toggle button
      */
-    public void doHeadTime()
-    {
-//        boolean visible = chkTime.isSelected();
-//
-//        lblBefore.setVisible(visible);
-//        txtBefore.setVisible(visible);
-//        lblAfter.setVisible(visible);
-//        txtAfter.setVisible(visible);
-//
-//        if (dlgMain != null)
-//        {
-//            dlgMain.pack();
-//        }
+    public void doHeadTime() {
+        // boolean visible = chkTime.isSelected();
+        //
+        // lblBefore.setVisible(visible);
+        // txtBefore.setVisible(visible);
+        // lblAfter.setVisible(visible);
+        // txtAfter.setVisible(visible);
+        //
+        // if (dlgMain != null)
+        // {
+        // dlgMain.pack();
+        // }
     }
 
     /**
      *
      */
-    public void doRestrictSelect()
-    {
-        if (dlgSelect == null)
-        {
+    public void doRestrictSelect() {
+        if (dlgSelect == null) {
             dlgSelect = new PassageSelectionPane();
         }
 
         String passg = dlgSelect.showInDialog(this, Msg.ADVANCED_SELECT_TITLE.toString(), true, txtRestrict.getText());
-        if (passg != null)
-        {
+        if (passg != null) {
             cboPresets.setSelectedItem(presets[presets.length - 1]);
             txtRestrict.setText(passg);
         }
@@ -466,8 +436,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     /**
      * Someone clicked on OK
      */
-    public void doDone()
-    {
+    public void doDone() {
         bailout = false;
         dlgMain.dispose();
     }
@@ -475,22 +444,18 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     /**
      *
      */
-    public final void updatePreset()
-    {
-        if (editingRestrict)
-        {
+    public final void updatePreset() {
+        if (editingRestrict) {
             return;
         }
 
         String include = ""; //$NON-NLS-1$
         String preset = (String) cboPresets.getSelectedItem();
-        if (preset != null)
-        {
+        if (preset != null) {
             int open = preset.indexOf(presetStart);
             int close = preset.indexOf(presetEnd);
 
-            if (open != -1 && close != -1)
-            {
+            if (open != -1 && close != -1) {
                 include = preset.substring(open + 1, close);
             }
         }
@@ -501,15 +466,12 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     /**
      * Regenerate the search string from the input boxes
      */
-    private void updateSearchString()
-    {
+    private void updateSearchString() {
         StringBuffer search = new StringBuffer();
 
         String restrict = txtRestrict.getText();
-        if (restrict != null && restrict.trim().length() > 0)
-        {
-            if (search.length() != 0)
-            {
+        if (restrict != null && restrict.trim().length() > 0) {
+            if (search.length() != 0) {
                 search.append(SPACE);
             }
 
@@ -517,10 +479,8 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         }
 
         String phrase = txtPhrase.getText();
-        if (phrase != null && phrase.trim().length() > 0)
-        {
-            if (search.length() != 0)
-            {
+        if (phrase != null && phrase.trim().length() > 0) {
+            if (search.length() != 0) {
                 search.append(SPACE);
             }
 
@@ -528,10 +488,8 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         }
 
         String includes = txtIncludes.getText();
-        if (includes != null && includes.trim().length() > 0)
-        {
-            if (search.length() != 0)
-            {
+        if (includes != null && includes.trim().length() > 0) {
+            if (search.length() != 0) {
                 search.append(SPACE);
             }
 
@@ -539,10 +497,8 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         }
 
         String excludes = txtExcludes.getText();
-        if (excludes != null && excludes.trim().length() > 0)
-        {
-            if (search.length() != 0)
-            {
+        if (excludes != null && excludes.trim().length() > 0) {
+            if (search.length() != 0) {
                 search.append(SPACE);
             }
 
@@ -550,10 +506,8 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         }
 
         String spell = txtSpell.getText();
-        if (spell != null && spell.trim().length() > 0)
-        {
-            if (search.length() != 0)
-            {
+        if (spell != null && spell.trim().length() > 0) {
+            if (search.length() != 0) {
                 search.append(SPACE);
             }
 
@@ -561,10 +515,8 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         }
 
         String startsWith = txtStartsWith.getText();
-        if (startsWith != null && startsWith.trim().length() > 0)
-        {
-            if (search.length() != 0)
-            {
+        if (startsWith != null && startsWith.trim().length() > 0) {
+            if (search.length() != 0) {
                 search.append(SPACE);
             }
 
@@ -578,71 +530,73 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
         boolean match = false;
         ComboBoxModel model = cboPresets.getModel();
         String find = presetStart + restrict + presetEnd;
-        for (int i = 0; !match && i < model.getSize(); i++)
-        {
+        for (int i = 0; !match && i < model.getSize(); i++) {
             String element = (String) model.getElementAt(i);
-            if (element.indexOf(find) != -1)
-            {
+            if (element.indexOf(find) != -1) {
                 cboPresets.setSelectedIndex(i);
                 match = true;
             }
         }
 
-        if (!match)
-        {
+        if (!match) {
             cboPresets.setSelectedItem(presets[presets.length - 1]);
         }
 
         editingRestrict = false;
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @seejavax.swing.event.DocumentListener#changedUpdate(javax.swing.event.
+     * DocumentEvent)
      */
-    public void changedUpdate(DocumentEvent ev)
-    {
+    public void changedUpdate(DocumentEvent ev) {
         updateSearchString();
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @seejavax.swing.event.DocumentListener#insertUpdate(javax.swing.event.
+     * DocumentEvent)
      */
-    public void insertUpdate(DocumentEvent ev)
-    {
+    public void insertUpdate(DocumentEvent ev) {
         updateSearchString();
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @seejavax.swing.event.DocumentListener#removeUpdate(javax.swing.event.
+     * DocumentEvent)
      */
-    public void removeUpdate(DocumentEvent ev)
-    {
+    public void removeUpdate(DocumentEvent ev) {
         updateSearchString();
     }
 
-//    /**
-//     * Temporary driver.
-//     * @param args The command line arguments
-//     */
-//    public static void main(String[] args)
-//    {
-//        LookAndFeelUtil.initialize();
-//        AdvancedSearchPane adv = new AdvancedSearchPane();
-//        String reply = adv.showInDialog(null, "Advanced Search", true, "test"); //$NON-NLS-1$ //$NON-NLS-2$
-//        log.debug(reply);
-//        System.exit(0);
-//    }
+    // /**
+    // * Temporary driver.
+    // * @param args The command line arguments
+    // */
+    // public static void main(String[] args)
+    // {
+    // LookAndFeelUtil.initialize();
+    // AdvancedSearchPane adv = new AdvancedSearchPane();
+    //        String reply = adv.showInDialog(null, "Advanced Search", true, "test"); //$NON-NLS-1$ //$NON-NLS-2$
+    // log.debug(reply);
+    // System.exit(0);
+    // }
 
     /**
      * Create the internationalized labels for the slider.
+     * 
      * @return the labels
      */
-    private Dictionary createSliderLabels()
-    {
+    private Dictionary createSliderLabels() {
         Dictionary labels = new Hashtable();
         int max = DisplaySelectPane.getMaxNumRankedVerses();
-        for (int i = 0; i <= max; i += 20)
-        {
+        for (int i = 0; i <= max; i += 20) {
             Integer label = new Integer(i);
             labels.put(label, new JLabel(shaper.shape(label.toString()), SwingConstants.CENTER));
         }
@@ -656,8 +610,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         actions = new ActionFactory(AdvancedSearchPane.class, this);
         is.defaultReadObject();
     }
@@ -680,14 +633,14 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     private static final String RESTRICT_SELECT = "RestrictSelect"; //$NON-NLS-1$
     private static final String HEAD_SUMMARY = "HeadSummary"; //$NON-NLS-1$
     private static final String SUMMARY = "Summary"; //$NON-NLS-1$
-//    private static final String HEAD_ORIGINAL = "HeadOriginal"; //$NON-NLS-1$
-//    private static final String HEBREW_INCLUDE = "HebrewInclude"; //$NON-NLS-1$
-//    private static final String HEBREW_EXCLUDE = "HebrewExclude"; //$NON-NLS-1$
-//    private static final String GREEK_INCLUDE = "GreekInclude"; //$NON-NLS-1$
-//    private static final String GREEK_EXCLUDE = "GreekExclude"; //$NON-NLS-1$
-//    private static final String HEAD_TIME = "HeadTime"; //$NON-NLS-1$
-//    private static final String AFTER = "After"; //$NON-NLS-1$
-//    private static final String BEFORE = "Before"; //$NON-NLS-1$
+    //    private static final String HEAD_ORIGINAL = "HeadOriginal"; //$NON-NLS-1$
+    //    private static final String HEBREW_INCLUDE = "HebrewInclude"; //$NON-NLS-1$
+    //    private static final String HEBREW_EXCLUDE = "HebrewExclude"; //$NON-NLS-1$
+    //    private static final String GREEK_INCLUDE = "GreekInclude"; //$NON-NLS-1$
+    //    private static final String GREEK_EXCLUDE = "GreekExclude"; //$NON-NLS-1$
+    //    private static final String HEAD_TIME = "HeadTime"; //$NON-NLS-1$
+    //    private static final String AFTER = "After"; //$NON-NLS-1$
+    //    private static final String BEFORE = "Before"; //$NON-NLS-1$
 
     /**
      * In our parsing we use space quite a lot and this ensures there is only
@@ -750,29 +703,30 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener
     private JLabel lblPresets;
     private JComboBox cboPresets;
     protected JDialog dlgMain;
-//    private JCheckBox chkHebGrk;
-//    private JLabel lblHebInc;
-//    private JTextField txtHebInc;
-//    private JLabel lblHebExc;
-//    private JTextField txtHebExc;
-//    private JLabel lblGrkInc;
-//    private JTextField txtGrkInc;
-//    private JLabel lblGrkExc;
-//    private JTextField txtGrkExc;
-//    private JCheckBox chkTime;
-//    private JLabel lblBefore;
-//    private JTextField txtBefore;
-//    private JLabel lblAfter;
-//    private JTextField txtAfter;
+    // private JCheckBox chkHebGrk;
+    // private JLabel lblHebInc;
+    // private JTextField txtHebInc;
+    // private JLabel lblHebExc;
+    // private JTextField txtHebExc;
+    // private JLabel lblGrkInc;
+    // private JTextField txtGrkInc;
+    // private JLabel lblGrkExc;
+    // private JTextField txtGrkExc;
+    // private JCheckBox chkTime;
+    // private JLabel lblBefore;
+    // private JTextField txtBefore;
+    // private JLabel lblAfter;
+    // private JTextField txtAfter;
     private JLabel lblSummary;
     private JCheckBox chkSummary;
     private JTextArea txtSummary;
     private JScrollPane scrSummary;
 
-//    /**
-//     * The log stream
-//     */
-//    private static final Logger log = Logger.getLogger(AdvancedSearchPane.class);
+    // /**
+    // * The log stream
+    // */
+    // private static final Logger log =
+    // Logger.getLogger(AdvancedSearchPane.class);
 
     /**
      * Serialization ID

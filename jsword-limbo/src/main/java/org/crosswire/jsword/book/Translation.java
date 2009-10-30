@@ -27,22 +27,25 @@ import org.crosswire.jsword.passage.Key;
  * A Translation links a Greek/Hebrew work with a localized translation, and can
  * link a number of verses that are examples of the given translation.
  * 
- * <p>Perhpas we should consider linking to the Bible that translated the
- * original in the ways listed in the Key?.</p>
+ * <p>
+ * Perhpas we should consider linking to the Bible that translated the original
+ * in the ways listed in the Key?.
+ * </p>
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class Translation
-{
+public class Translation {
     /**
      * All translations must be from a greek/hebrew word, to a localized word
-     * @param word The localized word(s).
-     * @param strongs The original word.
+     * 
+     * @param word
+     *            The localized word(s).
+     * @param strongs
+     *            The original word.
      */
-    public Translation(String word, Strongs strongs, Key key)
-    {
+    public Translation(String word, Strongs strongs, Key key) {
         this.word = word;
         this.strongs = strongs;
         this.key = key;
@@ -51,24 +54,21 @@ public class Translation
     /**
      * Accessor for the localized translation
      */
-    public String getWord()
-    {
+    public String getWord() {
         return word;
     }
 
     /**
      * Accessor for the original word.
      */
-    public Strongs getStrongs()
-    {
+    public Strongs getStrongs() {
         return strongs;
     }
 
     /**
      * Accessor for the Keys that translate the word/number in this way.
      */
-    public Key getKey()
-    {
+    public Key getKey() {
         return key;
     }
 

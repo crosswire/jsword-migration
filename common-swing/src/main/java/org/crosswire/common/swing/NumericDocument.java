@@ -26,34 +26,32 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
 /**
- * A numeric document simply extends document to refuse all non-numeric
- * data entered according to Character.isDigit.
- *
- * @see gnu.lgpl.License for license details.
+ * A numeric document simply extends document to refuse all non-numeric data
+ * entered according to Character.isDigit.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @see java.lang.Character#isDigit(char)
  */
-public class NumericDocument extends PlainDocument
-{
-    /* (non-Javadoc)
-     * @see javax.swing.text.Document#insertString(int, java.lang.String, javax.swing.text.AttributeSet)
+public class NumericDocument extends PlainDocument {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see javax.swing.text.Document#insertString(int, java.lang.String,
+     * javax.swing.text.AttributeSet)
      */
     /* @Override */
-    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException
-    {
-        if (str == null)
-        {
+    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+        if (str == null) {
             return;
         }
 
         char[] upper = str.toCharArray();
         StringBuffer clear = new StringBuffer();
 
-        for (int i = 0; i < upper.length; i++)
-        {
-            if (Character.isDigit(upper[i]))
-            {
+        for (int i = 0; i < upper.length; i++) {
+            if (Character.isDigit(upper[i])) {
                 clear.append(upper[i]);
             }
         }

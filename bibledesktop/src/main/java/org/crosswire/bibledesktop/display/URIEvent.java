@@ -26,18 +26,18 @@ import java.util.EventObject;
 /**
  * A URIEvent happens whenever a user selects a URI.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class URIEvent extends EventObject
-{
+public class URIEvent extends EventObject {
     /**
      * For when a command has been made
-     * @param source The thing that started this off
+     * 
+     * @param source
+     *            The thing that started this off
      */
-    public URIEvent(Object source, String scheme, String uri)
-    {
+    public URIEvent(Object source, String scheme, String uri) {
         super(source);
 
         this.scheme = scheme;
@@ -47,16 +47,14 @@ public class URIEvent extends EventObject
     /**
      * @return Returns the scheme.
      */
-    public String getScheme()
-    {
+    public String getScheme() {
         return scheme;
     }
 
     /**
      * @return Returns the uri.
      */
-    public String getURI()
-    {
+    public String getURI() {
         return uri;
     }
 

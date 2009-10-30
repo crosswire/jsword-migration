@@ -25,13 +25,12 @@ import org.crosswire.common.util.MsgBase;
 
 /**
  * Compile safe Msg resource settings.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public final class Msg extends MsgBase
-{
+public final class Msg extends MsgBase {
     // Strings used by Desktop
     // String for the title and version
     static final Msg APP_TITLE = new Msg("Desktop.Title"); //$NON-NLS-1$
@@ -83,8 +82,7 @@ public final class Msg extends MsgBase
     /**
      * Passthrough ctor
      */
-    private Msg(String name)
-    {
+    private Msg(String name) {
         super(name);
     }
 
@@ -92,38 +90,39 @@ public final class Msg extends MsgBase
      * get the title of the application
      * @return the title of the application
      */
-    public static String getApplicationTitle()
-    {
+    public static String getApplicationTitle() {
         return Msg.APP_TITLE.toString();
     }
 
     /**
      * get a version string of the form "Version: 1.0"
+     * 
      * @return the version string
      */
-    public static String getVersionInfo()
-    {
+    public static String getVersionInfo() {
         String version = Msg.APP_VERSION.toString();
         return Msg.VERSION_TITLE.toString(version);
     }
 
     /**
      * get a title of the form "App Name v1.0"
+     * 
      * @return a versioned title
      */
-    public static String getVersionedApplicationTitle()
-    {
+    public static String getVersionedApplicationTitle() {
         String title = Msg.APP_TITLE.toString();
         String version = Msg.APP_VERSION.toString();
-        return Msg.VERSION_APP_TITLE.toString(new Object[] { title, version });
+        return Msg.VERSION_APP_TITLE.toString(new Object[] {
+                title, version
+        });
     }
 
     /**
      * get an About string of the form "About App Name"
+     * 
      * @return Info for "About"
      */
-    public static String getAboutInfo()
-    {
+    public static String getAboutInfo() {
         return Msg.ABOUT_TITLE.toString(getApplicationTitle());
     }
 }

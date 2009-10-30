@@ -43,27 +43,23 @@ import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.util.WebWarning;
 
 /**
- * InternetWarning is used to request permission of the user to access
- * the Internet. An option allows them to request that they are not asked
- * again. The default for the option is to be asked every time.
- *
- * @see gnu.lgpl.License for license details.
+ * InternetWarning is used to request permission of the user to access the
+ * Internet. An option allows them to request that they are not asked again. The
+ * default for the option is to be asked every time.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class InternetWarning extends JPanel
-{
+public class InternetWarning extends JPanel {
     /**
      * Create a WebWarningDialog.
      */
-    public InternetWarning()
-    {
+    public InternetWarning() {
         actions = new ActionFactory(InternetWarning.class, this);
 
-        ItemListener changer = new ItemListener()
-        {
-            public void itemStateChanged(ItemEvent ev)
-            {
+        ItemListener changer = new ItemListener() {
+            public void itemStateChanged(ItemEvent ev) {
                 fireStateChange();
             }
         };
@@ -83,8 +79,7 @@ public class InternetWarning extends JPanel
     /**
      * Display a InternetWarning as a dialog
      */
-    public static int showDialog(Component parent, String title)
-    {
+    public static int showDialog(Component parent, String title) {
         final InternetWarning webWarning = new InternetWarning();
 
         JPanel buttons = new JPanel();
@@ -95,9 +90,7 @@ public class InternetWarning extends JPanel
 
         Component root = SwingUtilities.getRoot(parent);
 
-        JDialog dialog = (root instanceof JFrame)
-                      ? new JDialog((JFrame) root, title, true)
-                      : new JDialog((JDialog) root, title, true);
+        JDialog dialog = (root instanceof JFrame) ? new JDialog((JFrame) root, title, true) : new JDialog((JDialog) root, title, true);
 
         webWarning.dialog = dialog;
         webWarning.choice = InternetWarning.DENIED;
@@ -118,14 +111,12 @@ public class InternetWarning extends JPanel
         return webWarning.choice;
     }
 
-    public void doYes()
-    {
+    public void doYes() {
         dialog.setVisible(false);
         choice = InternetWarning.GRANTED;
     }
 
-    public void doNo()
-    {
+    public void doNo() {
         dialog.setVisible(false);
         choice = InternetWarning.DENIED;
     }
@@ -133,8 +124,7 @@ public class InternetWarning extends JPanel
     /**
      * When something changes we must inform out listeners.
      */
-    protected void fireStateChange()
-    {
+    protected void fireStateChange() {
         WebWarning.instance().setShown(showWarning.isSelected());
     }
 
@@ -145,8 +135,7 @@ public class InternetWarning extends JPanel
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         actions = new ActionFactory(InternetWarning.class, this);
         is.defaultReadObject();
     }
@@ -154,12 +143,12 @@ public class InternetWarning extends JPanel
     /**
      * Access to the Internet is granted.
      */
-    public static final int    GRANTED = 0;
+    public static final int GRANTED = 0;
 
     /**
      * Access to the Internet is denied.
      */
-    public static final int    DENIED  = 1;
+    public static final int DENIED = 1;
 
     /*
      * The ActionFactory holding the actions used by this

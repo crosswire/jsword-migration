@@ -31,17 +31,15 @@ import org.crosswire.common.swing.CWScrollPane;
 /**
  * An inner component of Passage pane that can't show the list.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ScrolledBookDataDisplay extends ProxyBookDataDisplay
-{
+public class ScrolledBookDataDisplay extends ProxyBookDataDisplay {
     /**
      * Simple Constructor
      */
-    public ScrolledBookDataDisplay(BookDataDisplay child)
-    {
+    public ScrolledBookDataDisplay(BookDataDisplay child) {
         super(child);
         scrView = new CWScrollPane(getProxy().getComponent());
         scrView.getViewport().setPreferredSize(new Dimension(500, 400));
@@ -51,8 +49,7 @@ public class ScrolledBookDataDisplay extends ProxyBookDataDisplay
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getComponent()
      */
     /* @Override */
-    public Component getComponent()
-    {
+    public Component getComponent() {
         return scrView;
     }
 

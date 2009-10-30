@@ -31,30 +31,28 @@ import org.crosswire.jsword.versification.BookName;
 
 /**
  * Render a list of Bible Book names with their full name as a tooltip
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class BibleNameCellRenderer extends DefaultListCellRenderer
-{
+public class BibleNameCellRenderer extends DefaultListCellRenderer {
     /**
-     * Constructs a default renderer object for an item in a list,
-     * using full names.
+     * Constructs a default renderer object for an item in a list, using full
+     * names.
      */
-    public BibleNameCellRenderer()
-    {
+    public BibleNameCellRenderer() {
         this(false);
     }
 
     /**
-     * Constructs a renderer object for an item in a list,
-     * using abbreviated names if desired.
+     * Constructs a renderer object for an item in a list, using abbreviated
+     * names if desired.
      * 
-     * @param abbreviated use the initials in the list.
+     * @param abbreviated
+     *            use the initials in the list.
      */
-    public BibleNameCellRenderer(boolean abbreviated)
-    {
+    public BibleNameCellRenderer(boolean abbreviated) {
         super();
         this.abbreviated = abbreviated;
         GuiUtil.applyDefaultOrientation(this);
@@ -63,39 +61,35 @@ public class BibleNameCellRenderer extends DefaultListCellRenderer
     /**
      * @return the abbreviated
      */
-    public boolean isAbbreviated()
-    {
+    public boolean isAbbreviated() {
         return abbreviated;
     }
 
     /**
-     * @param newAbbreviated the abbreviated to set
+     * @param newAbbreviated
+     *            the abbreviated to set
      */
-    public void setAbbreviated(boolean newAbbreviated)
-    {
+    public void setAbbreviated(boolean newAbbreviated) {
         this.abbreviated = newAbbreviated;
     }
 
     /* (non-Javadoc)
      * @see javax.swing.DefaultListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
      */
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean selected, boolean focus)
-    {
+    public Component getListCellRendererComponent(JList list, Object value, int index, boolean selected, boolean focus) {
         // Do the default rendering
         Component comp = super.getListCellRendererComponent(list, value, index, selected, focus);
 
         // Do our rendering
         setToolTipText(null);
 
-        if (value == null)
-        {
+        if (value == null) {
             setText(Msg.NONE.toString());
             setEnabled(false);
         }
 
         // Hack to allow us to use PROTOTYPE_BOOK_NAME as a prototype value
-        if (value instanceof BookName)
-        {
+        if (value instanceof BookName) {
             BookName bookName = (BookName) value;
             String name = bookName.getLongName();
 

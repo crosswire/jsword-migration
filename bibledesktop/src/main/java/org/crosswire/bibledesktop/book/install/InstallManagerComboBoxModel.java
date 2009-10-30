@@ -37,18 +37,16 @@ import org.crosswire.jsword.book.install.InstallerListener;
 /**
  * A ListModel for a JList that uses the list of Installers given by the
  * InstallManager.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class InstallManagerComboBoxModel extends AbstractListModel implements ComboBoxModel
-{
+public class InstallManagerComboBoxModel extends AbstractListModel implements ComboBoxModel {
     /**
      * Simple ctor
      */
-    public InstallManagerComboBoxModel(InstallManager imanager)
-    {
+    public InstallManagerComboBoxModel(InstallManager imanager) {
         this.imanager = imanager;
 
         update(null);
@@ -60,53 +58,46 @@ public class InstallManagerComboBoxModel extends AbstractListModel implements Co
     /* (non-Javadoc)
      * @see javax.swing.ComboBoxModel#getSelectedItem()
      */
-    public Object getSelectedItem()
-    {
+    public Object getSelectedItem() {
         return selection;
     }
 
     /* (non-Javadoc)
      * @see javax.swing.ComboBoxModel#setSelectedItem(java.lang.Object)
      */
-    public void setSelectedItem(Object selection)
-    {
+    public void setSelectedItem(Object selection) {
         this.selection = selection;
     }
 
     /* (non-Javadoc)
      * @see javax.swing.ListModel#getSize()
      */
-    public int getSize()
-    {
+    public int getSize() {
         return names.size();
     }
 
     /* (non-Javadoc)
      * @see javax.swing.ListModel#getElementAt(int)
      */
-    public final Object getElementAt(int index)
-    {
+    public final Object getElementAt(int index) {
         return names.get(index);
     }
 
     /**
      * Listens to the InstallManager for Installer changes
      */
-    class CustomInstallerListener implements InstallerListener
-    {
+    class CustomInstallerListener implements InstallerListener {
         /* (non-Javadoc)
          * @see org.crosswire.jsword.book.install.InstallerListener#installerAdded(org.crosswire.jsword.book.install.InstallerEvent)
          */
-        public void installerAdded(InstallerEvent ev)
-        {
+        public void installerAdded(InstallerEvent ev) {
             update(ev);
         }
 
         /* (non-Javadoc)
          * @see org.crosswire.jsword.book.install.InstallerListener#installerRemoved(org.crosswire.jsword.book.install.InstallerEvent)
          */
-        public void installerRemoved(InstallerEvent ev)
-        {
+        public void installerRemoved(InstallerEvent ev) {
             update(ev);
         }
     }
@@ -114,16 +105,14 @@ public class InstallManagerComboBoxModel extends AbstractListModel implements Co
     /**
      * Simple way to avoid eclipse private/protected warning
      */
-    protected final void update(InstallerEvent ev)
-    {
+    protected final void update(InstallerEvent ev) {
         int oldmax = names.size();
 
         names.clear();
         names.addAll(imanager.getInstallers().keySet());
         Collections.sort(names);
 
-        if (ev != null)
-        {
+        if (ev != null) {
             fireContentsChanged(ev.getSource(), 0, oldmax);
         }
     }
@@ -135,8 +124,7 @@ public class InstallManagerComboBoxModel extends AbstractListModel implements Co
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         // Broken but we don't serialize views
         imanager = null;
         is.defaultReadObject();

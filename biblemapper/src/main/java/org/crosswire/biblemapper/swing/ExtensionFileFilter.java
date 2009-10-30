@@ -27,51 +27,51 @@ import javax.swing.filechooser.FileFilter;
 
 /**
  * ExtensionFileFilter.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ExtensionFileFilter extends FileFilter
-{
+public class ExtensionFileFilter extends FileFilter {
     /**
      * Basic constructor
-     * @param extensions An array of allowed extensions without the .
+     * 
+     * @param extensions
+     *            An array of allowed extensions without the .
      */
-    public ExtensionFileFilter(String[] extensions)
-    {
+    public ExtensionFileFilter(String[] extensions) {
         this.extensions = extensions;
     }
 
     /**
      * Basic constructor
-     * @param extensions An array of allowed extensions without the .
-     * @param desc The description of this filter
+     * 
+     * @param extensions
+     *            An array of allowed extensions without the .
+     * @param desc
+     *            The description of this filter
      */
-    public ExtensionFileFilter(String[] extensions, String desc)
-    {
+    public ExtensionFileFilter(String[] extensions, String desc) {
         this.desc = desc;
         this.extensions = extensions;
     }
 
     /**
      * Is the given file valid?
-     * @param file The object to test
+     * 
+     * @param file
+     *            The object to test
      */
     /* @Override */
-    public boolean accept(File file)
-    {
-        if (file.isDirectory())
-        {
+    public boolean accept(File file) {
+        if (file.isDirectory()) {
             return true;
         }
 
         String extension = getExtension(file);
 
-        for (int i=0; i<extensions.length; i++)
-        {
-            if (extension.equals(extensions[i]))
-            {
+        for (int i = 0; i < extensions.length; i++) {
+            if (extension.equals(extensions[i])) {
                 return true;
             }
         }
@@ -83,18 +83,14 @@ public class ExtensionFileFilter extends FileFilter
      *
      */
     /* @Override */
-    public String getDescription()
-    {
-        if (desc != null)
-        {
+    public String getDescription() {
+        if (desc != null) {
             return desc;
         }
 
         StringBuffer buff = new StringBuffer("("); //$NON-NLS-1$
-        for (int i=0; i<extensions.length; i++)
-        {
-            if (i != 0)
-            {
+        for (int i = 0; i < extensions.length; i++) {
+            if (i != 0) {
                 buff.append(", "); //$NON-NLS-1$
             }
 
@@ -109,14 +105,12 @@ public class ExtensionFileFilter extends FileFilter
     /**
      * Get the extension of a file.
      */
-    public static String getExtension(File file)
-    {
+    public static String getExtension(File file) {
         String name = file.getName();
         int idx = name.lastIndexOf('.');
 
-        if (idx > 0 && idx < name.length()-1)
-        {
-            return name.substring(idx+1).toLowerCase();
+        if (idx > 0 && idx < name.length() - 1) {
+            return name.substring(idx + 1).toLowerCase();
         }
 
         return ""; //$NON-NLS-1$

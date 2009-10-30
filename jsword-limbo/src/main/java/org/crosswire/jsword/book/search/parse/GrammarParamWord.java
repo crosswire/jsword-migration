@@ -30,36 +30,40 @@ import org.crosswire.jsword.book.search.ThesaurusFactory;
 import org.crosswire.jsword.passage.Key;
 
 /**
- * The Search Word for a Word to search for. The default
- * if no other SearchWords match.
+ * The Search Word for a Word to search for. The default if no other SearchWords
+ * match.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class GrammarParamWord implements ParamWord
-{
+public class GrammarParamWord implements ParamWord {
     /**
      * Default ctor
      */
-    public GrammarParamWord() throws InstantiationException
-    {
+    public GrammarParamWord() throws InstantiationException {
         thesaurus = ThesaurusFactory.createThesaurus();
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.parse.ParamWord#getWord(org.crosswire.jsword.book.search.parse.IndexSearcher)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.parse.ParamWord#getWord(org.crosswire
+     * .jsword.book.search.parse.IndexSearcher)
      */
-    public String getWord(IndexSearcher engine) throws BookException
-    {
+    public String getWord(IndexSearcher engine) throws BookException {
         throw new BookException(Msg.GRAMMAR_WORD);
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.jsword.book.search.parse.ParamWord#getPassage(org.crosswire.jsword.book.search.parse.IndexSearcher)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.crosswire.jsword.book.search.parse.ParamWord#getPassage(org.crosswire
+     * .jsword.book.search.parse.IndexSearcher)
      */
-    public Key getKeyList(IndexSearcher engine) throws BookException
-    {
+    public Key getKeyList(IndexSearcher engine) throws BookException {
         String root = Grammar.getRoot(engine.iterateWord());
 
         Collection col = thesaurus.getSynonyms(root);

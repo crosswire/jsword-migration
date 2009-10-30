@@ -24,17 +24,19 @@ package org.crosswire.bibledesktop.book;
 import java.util.EventListener;
 
 /**
- * Implement BookSelectListener to recieve notification that the list of selected books has been updated.
+ * Implement BookSelectListener to receive notification that the list of
+ * selected books has been updated.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public interface BookSelectListener extends EventListener
-{
+public interface BookSelectListener extends EventListener {
     /**
      * Notify that the list of Books has changed.
-     * @param ev Describes the change
+     * 
+     * @param ev
+     *            Describes the change
      */
     void booksChosen(BookSelectEvent ev);
 }

@@ -66,18 +66,16 @@ import org.crosswire.common.xml.XMLUtil;
 
 /**
  * A simple way of reporting problems to the user.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public final class ExceptionPane extends JPanel
-{
+public final class ExceptionPane extends JPanel {
     /**
      * Use showExceptionDialog for the time being
      */
-    private ExceptionPane(Throwable ex)
-    {
+    private ExceptionPane(Throwable ex) {
         this.ex = ex;
         initialise();
         setDisplayedException(ex);
@@ -86,10 +84,11 @@ public final class ExceptionPane extends JPanel
     /**
      * Setup the GUI
      */
-    private void initialise()
-    {
+    private void initialise() {
         MessageFormat msgFormat = new MessageFormat("<html><font size=\"-1\">{0}</font> {1}"); //$NON-NLS-1$
-        String exmsg = msgFormat.format(new Object[] { UserMsg.ERROR_OCCURED.toString(), ExceptionPane.getHTMLDescription(ex) });
+        String exmsg = msgFormat.format(new Object[] {
+                UserMsg.ERROR_OCCURED.toString(), ExceptionPane.getHTMLDescription(ex)
+        });
 
         // The upper pane
         JLabel message = new JLabel();
@@ -115,8 +114,7 @@ public final class ExceptionPane extends JPanel
         detail = new JCheckBox();
         detail.addItemListener(new SelectedItemListener(this));
         detail.setText(UserMsg.DETAILS.toString());
-        if (detailShown)
-        {
+        if (detailShown) {
             buttons.add(detail, BorderLayout.LINE_START);
         }
 
@@ -126,8 +124,7 @@ public final class ExceptionPane extends JPanel
 
         List causes = new ArrayList();
         Throwable throwable = ex;
-        while (throwable != null)
-        {
+        while (throwable != null) {
             causes.add(throwable);
             throwable = throwable.getCause();
         }
@@ -145,12 +142,9 @@ public final class ExceptionPane extends JPanel
 
         // If we have sources then show an area for the source.
         // Otherwise just list the exception trace
-        if (sources.length == 0)
-        {
+        if (sources.length == 0) {
             lower.add(new CWScrollPane(list), BorderLayout.CENTER);
-        }
-        else
-        {
+        } else {
             // The lower pane
             label = new JLabel();
             label.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
@@ -182,14 +176,10 @@ public final class ExceptionPane extends JPanel
     /**
      * Is the detail area shown?
      */
-    protected synchronized void changeDetail()
-    {
-        if (detail.isSelected())
-        {
+    protected synchronized void changeDetail() {
+        if (detail.isSelected()) {
             ExceptionPane.this.add(lower, BorderLayout.CENTER);
-        }
-        else
-        {
+        } else {
             ExceptionPane.this.remove(lower);
         }
 
@@ -199,11 +189,9 @@ public final class ExceptionPane extends JPanel
     /**
      * Display a different nested exception
      */
-    protected synchronized void setDisplayedException(Throwable ex)
-    {
+    protected synchronized void setDisplayedException(Throwable ex) {
         StackTrace st = new StackTrace(ex);
-        if (sources.length > 0)
-        {
+        if (sources.length > 0) {
             list.addListSelectionListener(new ExceptionPane.CustomLister(st, text, label));
         }
         list.setModel(new StackTraceListModel(st));
@@ -211,11 +199,13 @@ public final class ExceptionPane extends JPanel
 
     /**
      * Show a dialog containing the exception
-     * @param parent Something to attach the Dialog to
-     * @param ex The Exception to display
+     * 
+     * @param parent
+     *            Something to attach the Dialog to
+     * @param ex
+     *            The Exception to display
      */
-    public static void showExceptionDialog(Component parent, Throwable ex)
-    {
+    public static void showExceptionDialog(Component parent, Throwable ex) {
         final ExceptionPane pane = new ExceptionPane(ex);
 
         // Setting for the whole dialog
@@ -230,16 +220,14 @@ public final class ExceptionPane extends JPanel
         dialog.getRootPane().setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, pane.upper.getBackground()));
         dialog.getRootPane().add(pane, BorderLayout.CENTER);
 
-
         final ActionFactory actions = new ActionFactory(ExceptionPane.class, pane);
 
         JButton ok = actions.createJButton("OK", new ActionListener() //$NON-NLS-1$
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                dialog.dispose();
-            }
-        });
+                {
+                    public void actionPerformed(ActionEvent e) {
+                        dialog.dispose();
+                    }
+                });
 
         pane.okBox.add(ok);
         dialog.getRootPane().setDefaultButton(ok);
@@ -252,66 +240,64 @@ public final class ExceptionPane extends JPanel
 
     /**
      * This is only used by config
+     * 
      * @return Whether the "details" check box should be shown.
      * @see #setDetailShown(boolean)
      */
-    public static boolean isDetailShown()
-    {
+    public static boolean isDetailShown() {
         return ExceptionPane.detailShown;
     }
 
     /**
      * Set whether the "details" check box should be shown.
-     * @param detailShown indicates the whether details should be available.
+     * 
+     * @param detailShown
+     *            indicates the whether details should be available.
      * @see #isDetailShown()
      */
-    public static void setDetailShown(boolean detailShown)
-    {
+    public static void setDetailShown(boolean detailShown) {
         ExceptionPane.detailShown = detailShown;
     }
 
     /**
      * Set the directories to search for source files.
-     * @param sourcePath A string array of the source directories
+     * 
+     * @param sourcePath
+     *            A string array of the source directories
      */
-    public static void setSourcePath(File[] sourcePath)
-    {
+    public static void setSourcePath(File[] sourcePath) {
         ExceptionPane.sources = (File[]) sourcePath.clone();
     }
 
     /**
      * Get the directories searched for source files.
+     * 
      * @return A string array of the source directories
      */
-    public static File[] getSourcePath()
-    {
+    public static File[] getSourcePath() {
         return (File[]) sources.clone();
     }
 
     /**
-     * You must call setJoinHelpDesk() in order to start displaying
-     * Exceptions sent to the Log, and in order to properly
-     * close this class you must call it again (with false).
-     * @param joined Are we listening to the Log
+     * You must call setJoinHelpDesk() in order to start displaying Exceptions
+     * sent to the Log, and in order to properly close this class you must call
+     * it again (with false).
+     * 
+     * @param joined
+     *            Are we listening to the Log
      */
-    public static synchronized void setHelpDeskListener(boolean joined)
-    {
-        if (joined)
-        {
+    public static synchronized void setHelpDeskListener(boolean joined) {
+        if (joined) {
             Reporter.addReporterListener(li);
-        }
-        else
-        {
+        } else {
             Reporter.removeReporterListener(li);
         }
     }
 
     /**
-     * Gets a short HTML description of an Exception for display in a
-     * window
+     * Gets a short HTML description of an Exception for display in a window
      */
-    public static String getHTMLDescription(Throwable ex)
-    {
+    public static String getHTMLDescription(Throwable ex) {
         StringBuffer retcode = new StringBuffer();
 
         // The message in the exception
@@ -325,28 +311,26 @@ public final class ExceptionPane extends JPanel
 
         // The name of the exception
         /*
-        String classname = ex.getClass().getName();
-        int lastdot = classname.lastIndexOf('.');
-        if (lastdot != -1)
-            classname = classname.substring(lastdot+1);
-        if (classname.endsWith("Exception") && classname.length() > "Exception".length())
-            classname = classname.substring(0, classname.length() - "Exception".length());
-        if (classname.endsWith("Error") && classname.length() > "Error".length())
-            classname = classname.substring(0, classname.length() - "Error".length());
-        classname = StringUtil.createTitle(classname);
-        if (classname.equals("IO")) classname = "Input / Output";
-
-        retcode.append("<font size=\"-1\"><strong>");
-        retcode.append(classname);
-        retcode.append("</strong></font>");
-        */
+         * String classname = ex.getClass().getName(); int lastdot =
+         * classname.lastIndexOf('.'); if (lastdot != -1) classname =
+         * classname.substring(lastdot+1); if (classname.endsWith("Exception")
+         * && classname.length() > "Exception".length()) classname =
+         * classname.substring(0, classname.length() - "Exception".length()); if
+         * (classname.endsWith("Error") && classname.length() >
+         * "Error".length()) classname = classname.substring(0,
+         * classname.length() - "Error".length()); classname =
+         * StringUtil.createTitle(classname); if (classname.equals("IO"))
+         * classname = "Input / Output";
+         * 
+         * retcode.append("<font size=\"-1\"><strong>");
+         * retcode.append(classname); retcode.append("</strong></font>");
+         */
         retcode.append("<br>"); //$NON-NLS-1$
         retcode.append(msg);
 
         // If this is a LucidException with a nested Exception
         Throwable nex = ex.getCause();
-        if (nex != null)
-        {
+        if (nex != null) {
             retcode.append("<p><br><font size=\"-1\">"); //$NON-NLS-1$
             retcode.append(UserMsg.CAUSED_BY);
             retcode.append("</font>"); //$NON-NLS-1$
@@ -359,21 +343,22 @@ public final class ExceptionPane extends JPanel
     /**
      *
      */
-    private static final class SelectedItemListener implements ItemListener
-    {
+    private static final class SelectedItemListener implements ItemListener {
         /**
          * @param ep
          */
-        public SelectedItemListener(ExceptionPane ep)
-        {
+        public SelectedItemListener(ExceptionPane ep) {
             pane = ep;
         }
 
-        /* (non-Javadoc)
-         * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent
+         * )
          */
-        public void itemStateChanged(ItemEvent ev)
-        {
+        public void itemStateChanged(ItemEvent ev) {
             pane.changeDetail();
         }
 
@@ -383,23 +368,24 @@ public final class ExceptionPane extends JPanel
     /**
      *
      */
-    private static final class SelectActionListener implements ActionListener
-    {
+    private static final class SelectActionListener implements ActionListener {
         /**
          * @param ep
          * @param cb
          */
-        public SelectActionListener(ExceptionPane ep, JComboBox cb)
-        {
+        public SelectActionListener(ExceptionPane ep, JComboBox cb) {
             pane = ep;
             traces = cb;
         }
 
-        /* (non-Javadoc)
-         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+         * )
          */
-        public void actionPerformed(ActionEvent ev)
-        {
+        public void actionPerformed(ActionEvent ev) {
             Throwable th = (Throwable) traces.getSelectedItem();
             pane.setDisplayedException(th);
         }
@@ -409,32 +395,36 @@ public final class ExceptionPane extends JPanel
     }
 
     /**
-     * List listener to update the contents of the text area
-     * whenever someone clicks in the list
+     * List listener to update the contents of the text area whenever someone
+     * clicks in the list
      */
-    private static final class CustomLister implements ListSelectionListener
-    {
+    private static final class CustomLister implements ListSelectionListener {
         /**
-         * Initialize with the stuff we need to act on the
-         * change, when the list is clicked.
-         * @param st The list of elements in the exception
-         * @param text The editable file
-         * @param label The filename label
+         * Initialize with the stuff we need to act on the change, when the list
+         * is clicked.
+         * 
+         * @param st
+         *            The list of elements in the exception
+         * @param text
+         *            The editable file
+         * @param label
+         *            The filename label
          */
-        public CustomLister(StackTrace st, JTextArea text, JLabel label)
-        {
+        public CustomLister(StackTrace st, JTextArea text, JLabel label) {
             this.st = st;
             this.mytext = text;
             this.mylabel = label;
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * javax.swing.event.ListSelectionListener#valueChanged(javax.swing.
+         * event.ListSelectionEvent)
          */
-        public void valueChanged(ListSelectionEvent ev)
-        {
-            if (ev.getValueIsAdjusting())
-            {
+        public void valueChanged(ListSelectionEvent ev) {
+            if (ev.getValueIsAdjusting()) {
                 return;
             }
 
@@ -446,8 +436,7 @@ public final class ExceptionPane extends JPanel
             int level = lst.getSelectedIndex();
             String name = st.getClassName(level);
 
-            if (name.indexOf('$') != -1)
-            {
+            if (name.indexOf('$') != -1) {
                 name = name.substring(0, name.indexOf('$'));
             }
 
@@ -458,12 +447,10 @@ public final class ExceptionPane extends JPanel
 
             // Find a file
             name = File.separator + orig.replace('.', File.separatorChar) + FileUtil.EXTENSION_JAVA;
-            File [] srcs = ExceptionPane.getSourcePath();
-            for (int i = 0; i < srcs.length; i++)
-            {
+            File[] srcs = ExceptionPane.getSourcePath();
+            for (int i = 0; i < srcs.length; i++) {
                 File file = new File(srcs[i], name);
-                if (file.isFile() && file.canRead())
-                {
+                if (file.isFile() && file.canRead()) {
                     // Found the file, load it into the window
                     StringBuffer data = new StringBuffer();
 
@@ -472,45 +459,34 @@ public final class ExceptionPane extends JPanel
                     int selection_end = 0;
 
                     LineNumberReader in = null;
-                    try
-                    {
-                        String found = UserMsg.SOURCE_FOUND.toString(new Object[] { errorLine, file.getCanonicalPath() });
+                    try {
+                        String found = UserMsg.SOURCE_FOUND.toString(new Object[] {
+                                errorLine, file.getCanonicalPath()
+                        });
                         mylabel.setText(found);
                         in = new LineNumberReader(new FileReader(file));
-                        while (true)
-                        {
+                        while (true) {
                             String line = in.readLine();
-                            if (line == null)
-                            {
+                            if (line == null) {
                                 break;
                             }
                             data.append(line).append('\n');
 
                             int current_line = in.getLineNumber();
-                            if (current_line == line_num - 1)
-                            {
+                            if (current_line == line_num - 1) {
                                 selection_start = data.length();
                             }
-                            if (current_line == line_num)
-                            {
+                            if (current_line == line_num) {
                                 selection_end = data.length() - 1;
                             }
                         }
-                    }
-                    catch (IOException ex)
-                    {
+                    } catch (IOException ex) {
                         data.append(ex.getMessage());
-                    }
-                    finally
-                    {
-                        if (in != null)
-                        {
-                            try
-                            {
+                    } finally {
+                        if (in != null) {
+                            try {
                                 in.close();
-                            }
-                            catch (IOException e)
-                            {
+                            } catch (IOException e) {
                                 data.append(e.getMessage());
                             }
                         }
@@ -527,10 +503,13 @@ public final class ExceptionPane extends JPanel
             }
 
             // If we can't find a matching file
-            StringBuffer error = new StringBuffer(UserMsg.SOURCE_NOT_FOUND.toString(new Object[] { st.getClassName(level), errorLine }));
-            for (int i = 0; i < srcs.length; i++)
-            {
-                error.append(UserMsg.SOURCE_ATTEMPT.toString(new Object[] { srcs[i].getAbsolutePath() + name }));
+            StringBuffer error = new StringBuffer(UserMsg.SOURCE_NOT_FOUND.toString(new Object[] {
+                    st.getClassName(level), errorLine
+            }));
+            for (int i = 0; i < srcs.length; i++) {
+                error.append(UserMsg.SOURCE_ATTEMPT.toString(new Object[] {
+                    srcs[i].getAbsolutePath() + name
+                }));
             }
 
             mytext.setText(error.toString());
@@ -556,24 +535,25 @@ public final class ExceptionPane extends JPanel
     /**
      * The ExceptionPane instance that we add to the Log
      */
-    static final class ExceptionPaneReporterListener implements ReporterListener
-    {
+    static final class ExceptionPaneReporterListener implements ReporterListener {
         /**
          * Called whenever Reporter.informUser() is passed an Exception
-         * @param ev The event describing the Exception
+         * 
+         * @param ev
+         *            The event describing the Exception
          */
-        public void reportException(ReporterEvent ev)
-        {
+        public void reportException(ReporterEvent ev) {
             // This faf is to ensure that we don't break any SwingThread rules
             SwingUtilities.invokeLater(new ExceptionRunner(ev));
         }
 
         /**
          * Called whenever Reporter.informUser() is passed a message
-         * @param ev The event describing the message
+         * 
+         * @param ev
+         *            The event describing the message
          */
-        public void reportMessage(ReporterEvent ev)
-        {
+        public void reportMessage(ReporterEvent ev) {
             // This faf is to ensure that we don't break any SwingThread rules
             SwingUtilities.invokeLater(new MessageRunner(ev));
         }
@@ -582,27 +562,23 @@ public final class ExceptionPane extends JPanel
     /**
     *
     */
-    private static final class ExceptionRunner implements Runnable
-    {
+    private static final class ExceptionRunner implements Runnable {
         /**
          * @param ev
          */
-        public ExceptionRunner(ReporterEvent ev)
-        {
+        public ExceptionRunner(ReporterEvent ev) {
             event = ev;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.lang.Runnable#run()
          */
-        public void run()
-        {
-            if (event.getSource() instanceof Component)
-            {
+        public void run() {
+            if (event.getSource() instanceof Component) {
                 showExceptionDialog((Component) event.getSource(), event.getException());
-            }
-            else
-            {
+            } else {
                 showExceptionDialog(null, event.getException());
             }
         }
@@ -610,30 +586,26 @@ public final class ExceptionPane extends JPanel
         private ReporterEvent event;
     }
 
-   /**
+    /**
      *
      */
-    private static final class MessageRunner implements Runnable
-    {
+    private static final class MessageRunner implements Runnable {
         /**
          * @param ev
          */
-        public MessageRunner(ReporterEvent ev)
-        {
+        public MessageRunner(ReporterEvent ev) {
             event = ev;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.lang.Runnable#run()
          */
-        public void run()
-        {
-            if (event.getSource() instanceof Component)
-            {
+        public void run() {
+            if (event.getSource() instanceof Component) {
                 CWOptionPane.showMessageDialog((Component) event.getSource(), event.getMessage());
-            }
-            else
-            {
+            } else {
                 CWOptionPane.showMessageDialog(null, event.getMessage());
             }
         }

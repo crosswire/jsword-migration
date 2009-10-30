@@ -73,27 +73,24 @@ import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * Passage Selection area.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class DisplaySelectPane extends JPanel implements KeyChangeListener, BookSelectListener, BookProvider
-{
+public class DisplaySelectPane extends JPanel implements KeyChangeListener, BookSelectListener, BookProvider {
     /**
      * General constructor
      */
-    public DisplaySelectPane()
-    {
+    public DisplaySelectPane() {
         initialize();
     }
 
     /**
      * Initialize the GUI
      */
-    private void initialize()
-    {
+    private void initialize() {
         listeners = new EventListenerList();
 
         advanced = new AdvancedSearchPane();
@@ -102,25 +99,21 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
 
         actions = new ActionFactory(DisplaySelectPane.class, this);
 
-        isl = new IndexStatusListener()
-        {
-            public void statusChanged(IndexStatusEvent ev)
-            {
+        isl = new IndexStatusListener() {
+            public void statusChanged(IndexStatusEvent ev) {
                 enableComponents();
             }
         };
 
-        // search() and version() rely on this returning only Books indexed by verses
+        // search() and version() rely on this returning only Books indexed by
+        // verses
         biblePicker = new ParallelBookPicker(BookFilters.getBibles(), BookComparators.getInitialComparator());
         biblePicker.addBookListener(this);
         selected = biblePicker.getBooks();
-        if (selected != null && selected.length > 0)
-        {
+        if (selected != null && selected.length > 0) {
             selected[0].addIndexStatusListener(isl);
             key = selected[0].createEmptyKeyList();
-        }
-        else
-        {
+        } else {
             // The application has started and there are no installed bibles.
             // Should always get a key from book, unless we need a PassageTally
             // But here we don't have a book yet.
@@ -130,23 +123,18 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         JComboBox cboBooks = new JComboBox();
         JComboBox cboChaps = new JComboBox();
         quickSet = new BibleComboBoxModelSet(cboBooks, cboChaps, null);
-        quickSet.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        quickSet.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 BibleComboBoxModelSet set = (BibleComboBoxModelSet) ev.getSource();
                 Verse start = set.getVerse();
                 int book = start.getBook();
                 int chapter = start.getChapter();
-                try
-                {
+                try {
                     VerseRange range = new VerseRange(start, new Verse(book, chapter, BibleInfo.versesInChapter(book, chapter)));
                     txtSearch.setText(""); //$NON-NLS-1$
                     txtKey.setText(range.getName());
                     doGoPassage();
-                }
-                catch (NoSuchVerseException ex)
-                {
+                } catch (NoSuchVerseException ex) {
                     assert false : ex;
                 }
             }
@@ -163,16 +151,13 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         JLabel lblKey = actions.createJLabel(VIEW_LABEL);
         txtKey = new JTextField();
         txtKey.setAction(actions.getAction(PASSAGE_FIELD));
-        txtKey.addKeyListener(new KeyAdapter()
-        {
+        txtKey.addKeyListener(new KeyAdapter() {
             /* (non-Javadoc)
              * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
              */
             /* @Override */
-            public void keyTyped(KeyEvent ev)
-            {
-                if (ev.getKeyChar() == '\n' && ev.getModifiers() == Toolkit.getDefaultToolkit().getMenuShortcutKeyMask())
-                {
+            public void keyTyped(KeyEvent ev) {
+                if (ev.getKeyChar() == '\n' && ev.getModifiers() == Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()) {
                     showSelectDialog();
                 }
             }
@@ -193,21 +178,31 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         btnIndex = new JButton(actions.getAction(INDEX));
 
         this.setLayout(new GridBagLayout());
-        this.add(lblBible,    new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 5), 0, 0));
-        this.add(biblePicker, new GridBagConstraints(2, 0, 2, 1, 1.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+        this
+                .add(lblBible, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 5),
+                        0, 0));
+        this.add(biblePicker, new GridBagConstraints(2, 0, 2, 1, 1.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL,
+                new Insets(0, 0, 0, 0), 0, 0));
         this.add(quickPicker, new GridBagConstraints(4, 0, 2, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
-        this.add(lblKey,      new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));
-        this.add(txtKey,      new GridBagConstraints(2, 1, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 0, 1, 2), 0, 0));
-        this.add(btnKeyGo,    new GridBagConstraints(4, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(btnKey,      new GridBagConstraints(5, 1, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, new Insets(2, 0, 2, 2), 0, 0));
+        this.add(lblKey, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));
+        this.add(txtKey, new GridBagConstraints(2, 1, 2, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 0, 1, 2), 0, 0));
+        this
+                .add(btnKeyGo, new GridBagConstraints(4, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0),
+                        0, 0));
+        this
+                .add(btnKey, new GridBagConstraints(5, 1, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, new Insets(2, 0, 2, 2),
+                        0, 0));
 
-        this.add(btnHelp,     new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(lblSearch,   new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));
-        this.add(btnIndex,    new GridBagConstraints(2, 2, 1, 1, 1.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(2, 0, 2, 2), 0, 0));
-        this.add(txtSearch,   new GridBagConstraints(2, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 0, 3, 2), 0, 0));
-        this.add(btnSearch,   new GridBagConstraints(4, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(btnAdvanced, new GridBagConstraints(5, 2, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, new Insets(2, 0, 2, 2), 0, 0));
+        this.add(btnHelp, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(lblSearch, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(0, 0, 0, 5), 0, 0));
+        this.add(btnIndex, new GridBagConstraints(2, 2, 1, 1, 1.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(2, 0, 2, 2), 0, 0));
+        this.add(txtSearch,
+                new GridBagConstraints(2, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 0, 3, 2), 0, 0));
+        this.add(btnSearch,
+                new GridBagConstraints(4, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(btnAdvanced, new GridBagConstraints(5, 2, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, new Insets(2, 0, 2, 2),
+                0, 0));
 
         enableComponents();
         GuiUtil.applyDefaultOrientation(this);
@@ -215,23 +210,19 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     }
 
     /**
-     * During view creation, allow firing off an event to display the initial book/chapter.
-     * This is copied from quickSet.addActionListener().
+     * During view creation, allow firing off an event to display the initial
+     * book/chapter. This is copied from quickSet.addActionListener().
      */
-    public void doInitialTextDisplay()
-    {
+    public void doInitialTextDisplay() {
         Verse start = quickSet.getVerse();
         int book = start.getBook();
         int chapter = start.getChapter();
-        try
-        {
+        try {
             VerseRange range = new VerseRange(start, new Verse(book, chapter, BibleInfo.versesInChapter(book, chapter)));
             txtSearch.setText(""); //$NON-NLS-1$
             txtKey.setText(range.getName());
             doGoPassage();
-        }
-        catch (NoSuchVerseException ex)
-        {
+        } catch (NoSuchVerseException ex) {
             assert false : ex;
         }
     }
@@ -239,24 +230,21 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     /**
      * What are the currently selected Books?
      */
-    public Book[] getBooks()
-    {
+    public Book[] getBooks() {
         return (Book[]) selected.clone();
     }
 
     /**
      * What is the first currently selected book?
      */
-    public Book getFirstBook()
-    {
+    public Book getFirstBook() {
         return selected != null && selected.length > 0 ? selected[0] : null;
     }
 
     /**
      *
      */
-    public void clear()
-    {
+    public void clear() {
         setKey(selected == null || selected.length == 0 ? new RocketPassage() : selected[0].createEmptyKeyList());
         setTitle(CLEAR);
     }
@@ -264,43 +252,37 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     /**
      *
      */
-    public boolean isClear()
-    {
+    public boolean isClear() {
         return title.indexOf(Msg.CLEAR.toString()) != -1;
     }
 
     /**
      * More (...) button was clicked
      */
-    public void doMore()
-    {
+    public void doMore() {
         showSelectDialog();
     }
 
     /**
      * Go button was clicked
      */
-    public void doGoPassage()
-    {
+    public void doGoPassage() {
         doPassageAction();
     }
 
     /**
      * Go button was clicked
      */
-    public void doGoSearch()
-    {
+    public void doGoSearch() {
         doSearchAction();
     }
 
     /**
      * Someone pressed return in the passage area
      */
-    public void doPassageAction()
-    {
+    public void doPassageAction() {
         setKey(txtKey.getText());
-        if (!key.isEmpty())
-        {
+        if (!key.isEmpty()) {
             txtSearch.setText(""); //$NON-NLS-1$
             setTitle(PASSAGE);
         }
@@ -309,19 +291,15 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     /**
      * Someone pressed return in the search area
      */
-    public void doSearchAction()
-    {
-        if (selected == null || selected.length == 0)
-        {
+    public void doSearchAction() {
+        if (selected == null || selected.length == 0) {
             noBookInstalled();
             return;
         }
 
-        try
-        {
+        try {
             String param = txtSearch.getText();
-            if (param == null || param.length() == 0)
-            {
+            if (param == null || param.length() == 0) {
                 return;
             }
 
@@ -332,8 +310,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
 
             // If ranking see if the results are being limited.
             int rankCount = getNumRankedVerses();
-            if (rank && rankCount != 0)
-            {
+            if (rank && rankCount != 0) {
                 modifier.setMaxResults(rankCount);
             }
 
@@ -342,33 +319,30 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
             int total = partial;
 
             // we should get PassageTallys for rank searches
-            if (results instanceof PassageTally)
-            {
+            if (results instanceof PassageTally) {
                 PassageTally tally = (PassageTally) results;
                 total = tally.getTotal();
                 tally.setOrdering(PassageTally.ORDER_TALLY);
             }
 
-            if (total == 0)
-            {
-                Reporter.informUser(this, Msg.NO_HITS, new Object[] { param });
-            }
-            else
-            {
-                if (total == partial)
-                {
-                    Reporter.informUser(this, Msg.HITS, new Object[] {param, new Integer(total)});
-                }
-                else
-                {
-                    Reporter.informUser(this, Msg.PARTIAL_HITS, new Object[] {param, Integer.toString(partial), Integer.toString(total)});
+            if (total == 0) {
+                Reporter.informUser(this, Msg.NO_HITS, new Object[] {
+                    param
+                });
+            } else {
+                if (total == partial) {
+                    Reporter.informUser(this, Msg.HITS, new Object[] {
+                            param, new Integer(total)
+                    });
+                } else {
+                    Reporter.informUser(this, Msg.PARTIAL_HITS, new Object[] {
+                            param, Integer.toString(partial), Integer.toString(total)
+                    });
                 }
                 setTitle(SEARCH);
                 setKey(results);
             }
-        }
-        catch (BookException ex)
-        {
+        } catch (BookException ex) {
             Reporter.informUser(this, ex);
         }
     }
@@ -376,41 +350,35 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     /**
      * Someone has clicked on the advanced search button
      */
-    public void doAdvanced()
-    {
+    public void doAdvanced() {
         String reply = advanced.showInDialog(this, Msg.ADVANCED_TITLE.toString(), true, txtSearch.getText());
-        if (reply != null)
-        {
+        if (reply != null) {
             txtSearch.setText(reply);
             doSearchAction();
         }
     }
 
     /**
-     * Rank is an action, but we don't need to do anything because rank is
-     * only used when search is clicked. But ActionFactory will complain if we
-     * leave it out.
+     * Rank is an action, but we don't need to do anything because rank is only
+     * used when search is clicked. But ActionFactory will complain if we leave
+     * it out.
      */
-    public void doRank()
-    {
+    public void doRank() {
         // Do nothing
     }
 
     /**
      * Someone clicked help
      */
-    public void doHelpAction()
-    {
+    public void doHelpAction() {
         dlgHelp.setVisible(true);
     }
 
     /**
      * Someone clicked one the index button
      */
-    public void doIndex()
-    {
-        if (selected == null || selected.length == 0)
-        {
+    public void doIndex() {
+        if (selected == null || selected.length == 0) {
             noBookInstalled();
             return;
         }
@@ -422,10 +390,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     /**
      * Sync the viewed passage with the passage text box
      */
-    private void updateDisplay()
-    {
-        if (selected == null || selected.length == 0)
-        {
+    private void updateDisplay() {
+        if (selected == null || selected.length == 0) {
             noBookInstalled();
             return;
         }
@@ -436,42 +402,32 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     /**
      * Accessor for the default name
      */
-    public String getTitle()
-    {
+    public String getTitle() {
         return title;
     }
 
     /**
      * @return the picker
      */
-    public ParallelBookPicker getBiblePicker()
-    {
+    public ParallelBookPicker getBiblePicker() {
         return biblePicker;
     }
 
-    public void setKey(String newKey)
-    {
-        if (selected == null || selected.length == 0)
-        {
+    public void setKey(String newKey) {
+        if (selected == null || selected.length == 0) {
             return;
         }
 
-        try
-        {
+        try {
             setKey(selected[0].getKey(newKey));
-        }
-        catch (NoSuchKeyException e)
-        {
+        } catch (NoSuchKeyException e) {
             Reporter.informUser(this, e);
         }
     }
 
-    public void setKey(Key newKey)
-    {
-        if (newKey == null || newKey.isEmpty())
-        {
-            if (!key.isEmpty())
-            {
+    public void setKey(Key newKey) {
+        if (newKey == null || newKey.isEmpty()) {
+            if (!key.isEmpty()) {
                 key = selected[0].createEmptyKeyList();
                 txtKey.setText(""); //$NON-NLS-1$
                 txtSearch.setText(""); //$NON-NLS-1$
@@ -479,15 +435,12 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
                 updateDisplay();
                 setTitle(CLEAR);
             }
-        }
-        else if (!newKey.equals(key))
-        {
+        } else if (!newKey.equals(key)) {
             key = newKey;
             String text = key.getName();
             txtKey.setText(text);
             updateDisplay();
-            if (isClear())
-            {
+            if (isClear()) {
                 setTitle(PASSAGE);
                 txtSearch.setText(""); //$NON-NLS-1$
             }
@@ -497,10 +450,10 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     /**
      * Gets the number of verses that should be shown when a search result is
      * ranked. A value of 0 means show all.
+     * 
      * @return Returns the numRankedVerses.
      */
-    public static int getNumRankedVerses()
-    {
+    public static int getNumRankedVerses() {
         return numRankedVerses;
     }
 
@@ -508,17 +461,15 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
      * Sets the number of verses that should be shown when a search result is
      * ranked. This can be a value in the range of 0 to maxNumRankedVerses.
      * Values outside this range are silently constrained to the range.
-     * @param newNumRankedVerses The numRankedVerses to set.
+     * 
+     * @param newNumRankedVerses
+     *            The numRankedVerses to set.
      */
-    public static void setNumRankedVerses(int newNumRankedVerses)
-    {
+    public static void setNumRankedVerses(int newNumRankedVerses) {
         int count = newNumRankedVerses;
-        if (count < 0)
-        {
+        if (count < 0) {
             count = 0;
-        }
-        else if (count > maxNumRankedVerses)
-        {
+        } else if (count > maxNumRankedVerses) {
             count = maxNumRankedVerses;
         }
         numRankedVerses = count;
@@ -527,29 +478,25 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     /**
      * @return Returns the maxNumRankedVerses.
      */
-    public static int getMaxNumRankedVerses()
-    {
+    public static int getMaxNumRankedVerses() {
         return maxNumRankedVerses;
     }
 
     /**
-     * @param newMaxNumRankedVerses The maxNumRankedVerses to set.
+     * @param newMaxNumRankedVerses
+     *            The maxNumRankedVerses to set.
      */
-    public static void setMaxNumRankedVerses(int newMaxNumRankedVerses)
-    {
+    public static void setMaxNumRankedVerses(int newMaxNumRankedVerses) {
         int count = newMaxNumRankedVerses;
-        if (count < numRankedVerses)
-        {
+        if (count < numRankedVerses) {
             count = numRankedVerses;
         }
         maxNumRankedVerses = count;
     }
 
-    private void setTitle(int newMode)
-    {
+    private void setTitle(int newMode) {
         mode = newMode;
-        switch (mode)
-        {
+        switch (mode) {
         case CLEAR:
             title = Msg.UNTITLED.toString(new Integer(base++));
             break;
@@ -562,12 +509,9 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         default:
             assert false;
         }
-        if (title.length() == 0)
-        {
+        if (title.length() == 0) {
             setTitle(CLEAR);
-        }
-        else
-        {
+        } else {
             fireTitleChanged(new TitleChangedEvent(this, title));
         }
     }
@@ -575,8 +519,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     /**
      * Display a dialog indicating that no Bible is installed.
      */
-    private void noBookInstalled()
-    {
+    private void noBookInstalled() {
         String noBible = Msg.NO_INSTALLED_BIBLE.toString();
         CWOptionPane.showMessageDialog(this, noBible, noBible, JOptionPane.WARNING_MESSAGE);
     }
@@ -584,8 +527,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     /**
      * Ensure that the right components are enabled
      */
-    /*private*/ final void enableComponents()
-    {
+    /*private*/final void enableComponents() {
         boolean readable = selected != null && selected.length > 0;
         boolean searchable = readable && selected[0].getIndexStatus().equals(IndexStatus.DONE);
         boolean indexable = readable && selected[0].getIndexStatus().equals(IndexStatus.UNDONE);
@@ -606,16 +548,13 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     /**
      * Someone clicked the "..." button
      */
-    /*private*/ final void showSelectDialog()
-    {
-        if (dlgSelect == null)
-        {
+    /*private*/final void showSelectDialog() {
+        if (dlgSelect == null) {
             dlgSelect = new PassageSelectionPane();
         }
 
         String passg = dlgSelect.showInDialog(this, Msg.SELECT_PASSAGE_TITLE.toString(), true, txtKey.getText());
-        if (passg != null)
-        {
+        if (passg != null) {
             txtKey.setText(passg);
             doPassageAction();
         }
@@ -624,15 +563,13 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.BookSelectListener#booksChosen(org.crosswire.bibledesktop.book.BookSelectEvent)
      */
-    public void booksChosen(BookSelectEvent ev)
-    {
+    public void booksChosen(BookSelectEvent ev) {
         Book[] books = ev.getBookProvider().getBooks();
         assert books.length > 0;
 
         Book newSelected = ev.getBookProvider().getFirstBook();
 
-        if (selected.length > 0 && selected[0] != newSelected)
-        {
+        if (selected.length > 0 && selected[0] != newSelected) {
             selected[0].removeIndexStatusListener(isl);
             newSelected.addIndexStatusListener(isl);
         }
@@ -641,8 +578,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
 
         enableComponents();
 
-        if (selected == null || selected.length == 0)
-        {
+        if (selected == null || selected.length == 0) {
             noBookInstalled();
             return;
         }
@@ -653,42 +589,38 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.book.KeyChangeListener#keyChanged(org.crosswire.bibledesktop.book.KeyChangeEvent)
      */
-    public void keyChanged(KeyChangeEvent ev)
-    {
+    public void keyChanged(KeyChangeEvent ev) {
         setKey(ev.getKey());
     }
 
     /**
      * Add a TitleChangedEvent listener
      */
-    public synchronized void addTitleChangedListener(TitleChangedListener li)
-    {
+    public synchronized void addTitleChangedListener(TitleChangedListener li) {
         listeners.add(TitleChangedListener.class, li);
     }
 
     /**
      * Remove a TitleChangedEvent listener
      */
-    public synchronized void removeTitleChangedListener(TitleChangedListener li)
-    {
+    public synchronized void removeTitleChangedListener(TitleChangedListener li) {
         listeners.remove(TitleChangedListener.class, li);
     }
 
     /**
      * Listen for changes to the title
-     * @param ev the event to throw
+     * 
+     * @param ev
+     *            the event to throw
      */
-    protected void fireTitleChanged(TitleChangedEvent ev)
-    {
+    protected void fireTitleChanged(TitleChangedEvent ev) {
         // Guaranteed to return a non-null array
         Object[] contents = listeners.getListenerList();
 
         // Process the listeners last to first, notifying
         // those that are interested in this event
-        for (int i = contents.length - 2; i >= 0; i -= 2)
-        {
-            if (contents[i] == TitleChangedListener.class)
-            {
+        for (int i = contents.length - 2; i >= 0; i -= 2) {
+            if (contents[i] == TitleChangedListener.class) {
                 ((TitleChangedListener) contents[i + 1]).titleChanged(ev);
             }
         }
@@ -697,33 +629,28 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     /**
      * Add a DisplaySelectEvent listener
      */
-    public synchronized void addCommandListener(DisplaySelectListener li)
-    {
+    public synchronized void addCommandListener(DisplaySelectListener li) {
         listeners.add(DisplaySelectListener.class, li);
     }
 
     /**
      * Remove a DisplaySelectEvent listener
      */
-    public synchronized void removeCommandListener(DisplaySelectListener li)
-    {
+    public synchronized void removeCommandListener(DisplaySelectListener li) {
         listeners.remove(DisplaySelectListener.class, li);
     }
 
     /**
      * Inform the command listeners
      */
-    protected void fireCommandMade(DisplaySelectEvent ev)
-    {
+    protected void fireCommandMade(DisplaySelectEvent ev) {
         // Guaranteed to return a non-null array
         Object[] contents = listeners.getListenerList();
 
         // Process the listeners last to first, notifying
         // those that are interested in this event
-        for (int i = contents.length - 2; i >= 0; i -= 2)
-        {
-            if (contents[i] == DisplaySelectListener.class)
-            {
+        for (int i = contents.length - 2; i >= 0; i -= 2) {
+            if (contents[i] == DisplaySelectListener.class) {
                 ((DisplaySelectListener) contents[i + 1]).passageSelected(ev);
             }
         }
@@ -732,17 +659,14 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     /**
      * Inform the version listeners
      */
-    protected void fireVersionChanged(DisplaySelectEvent ev)
-    {
+    protected void fireVersionChanged(DisplaySelectEvent ev) {
         // Guaranteed to return a non-null array
         Object[] contents = listeners.getListenerList();
 
         // Process the listeners last to first, notifying
         // those that are interested in this event
-        for (int i = contents.length - 2; i >= 0; i -= 2)
-        {
-            if (contents[i] == DisplaySelectListener.class)
-            {
+        for (int i = contents.length - 2; i >= 0; i -= 2) {
+            if (contents[i] == DisplaySelectListener.class) {
                 ((DisplaySelectListener) contents[i + 1]).bookChosen(ev);
             }
         }
@@ -755,8 +679,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         // We don't serialize views
         selected = null;
 
@@ -764,10 +687,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
 
         actions = new ActionFactory(DisplaySelectPane.class, this);
 
-        isl = new IndexStatusListener()
-        {
-            public void statusChanged(IndexStatusEvent ev)
-            {
+        isl = new IndexStatusListener() {
+            public void statusChanged(IndexStatusEvent ev) {
                 enableComponents();
             }
         };

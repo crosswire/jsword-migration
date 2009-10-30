@@ -30,51 +30,53 @@ import javax.swing.ComboBoxModel;
 
 /**
  * A ComboBoxModel for selecting entries from a map.
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class MapComboBoxModel extends AbstractListModel implements ComboBoxModel
-{
+public class MapComboBoxModel extends AbstractListModel implements ComboBoxModel {
     /**
      * Simple ctor for an entry from a map.
      */
-    public MapComboBoxModel(Map map)
-    {
+    public MapComboBoxModel(Map map) {
         list = new ArrayList(map.entrySet());
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.ComboBoxModel#setSelectedItem(java.lang.Object)
      */
-    public void setSelectedItem(Object newSelection)
-    {
+    public void setSelectedItem(Object newSelection) {
         selected = newSelection;
         fireContentsChanged(this, -1, -1);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.ComboBoxModel#getSelectedItem()
      */
-    public Object getSelectedItem()
-    {
+    public Object getSelectedItem() {
         return selected;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.ListModel#getSize()
      */
-    public int getSize()
-    {
+    public int getSize() {
         return list.size();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.ListModel#getElementAt(int)
      */
-    public Object getElementAt(int index)
-    {
+    public Object getElementAt(int index) {
         return list.get(index);
     }
 

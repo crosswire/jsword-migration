@@ -44,29 +44,23 @@ import org.crosswire.common.util.ReporterListener;
 
 /**
  * This is broken.
- *
- * @see gnu.lgpl.License for license details.
+ * 
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ExceptionShelf extends JPanel
-{
+public class ExceptionShelf extends JPanel {
     /**
      *
      */
-    public ExceptionShelf()
-    {
-        toggle.addUpActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+    public ExceptionShelf() {
+        toggle.addUpActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 previousException();
             }
         });
-        toggle.addDownActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        toggle.addDownActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 nextException();
             }
         });
@@ -87,24 +81,21 @@ public class ExceptionShelf extends JPanel
     /**
      *
      */
-    public void close()
-    {
+    public void close() {
         SHELVES.remove(this);
     }
 
     /**
-     * Add an exception to the list of things that have gone wrong.
-     * This method looks after the internal data structures but leaves the
-     * gui work to the private addPanel() method
+     * Add an exception to the list of things that have gone wrong. This method
+     * looks after the internal data structures but leaves the gui work to the
+     * private addPanel() method
      */
-    public void addException(Throwable ex)
-    {
+    public void addException(Throwable ex) {
         // Error checking
         assert ex != null;
 
         // Get rid of the 'no problems' panel if it exists
-        if (total == 0)
-        {
+        if (total == 0) {
             removePanel(noproblems);
         }
 
@@ -118,19 +109,17 @@ public class ExceptionShelf extends JPanel
     }
 
     /**
-     * Remove an exception from the list of things that have gone wrong.
-     * This method looks after the internal data structures but leaves the
-     * gui work to the private addPanel() method
+     * Remove an exception from the list of things that have gone wrong. This
+     * method looks after the internal data structures but leaves the gui work
+     * to the private addPanel() method
      */
-    public void removeException(Throwable ex)
-    {
+    public void removeException(Throwable ex) {
         // Error checking
         assert ex != null;
 
         // Remove the old panel
         int index = exceptions.indexOf(ex);
-        if (index != -1)
-        {
+        if (index != -1) {
             removePanel((JPanel) panels.get(index));
             total--;
             exceptions.remove(index);
@@ -138,8 +127,7 @@ public class ExceptionShelf extends JPanel
             setToggles();
 
             // Add in the 'no problems' panel if we are empty
-            if (total == 0)
-            {
+            if (total == 0) {
                 addPanel(noproblems);
                 card.first(shelf);
             }
@@ -147,13 +135,11 @@ public class ExceptionShelf extends JPanel
     }
 
     /**
-     * Show the previous Exception in the list. If there are no more
-     * Exceptions to view we do nothing.
+     * Show the previous Exception in the list. If there are no more Exceptions
+     * to view we do nothing.
      */
-    protected void previousException()
-    {
-        if (current < 1)
-        {
+    protected void previousException() {
+        if (current < 1) {
             return;
         }
 
@@ -165,13 +151,11 @@ public class ExceptionShelf extends JPanel
     }
 
     /**
-     * Show the next Exception in the list. If there are no more
-     * Exceptions to view we do nothing.
+     * Show the next Exception in the list. If there are no more Exceptions to
+     * view we do nothing.
      */
-    protected void nextException()
-    {
-        if (current > (total - 1))
-        {
+    protected void nextException() {
+        if (current > (total - 1)) {
             return;
         }
 
@@ -185,8 +169,7 @@ public class ExceptionShelf extends JPanel
     /**
      *
      */
-    private void setToggles()
-    {
+    private void setToggles() {
         toggle.setUpEnabled(current > 0);
         toggle.setDownEnabled(current < (total - 1));
     }
@@ -194,14 +177,10 @@ public class ExceptionShelf extends JPanel
     /**
      *
      */
-    protected void reporter()
-    {
-        if (total == 0)
-        {
+    protected void reporter() {
+        if (total == 0) {
             JOptionPane.showMessageDialog(this, LimboMsg.NO_PROBLEMS, LimboMsg.STATUS.toString(), JOptionPane.INFORMATION_MESSAGE);
-        }
-        else
-        {
+        } else {
             ExceptionPane.showExceptionDialog(this, (Throwable) exceptions.get(current));
         }
     }
@@ -209,16 +188,14 @@ public class ExceptionShelf extends JPanel
     /**
      *
      */
-    protected void remover()
-    {
+    protected void remover() {
         removeException((Throwable) exceptions.get(current));
     }
 
     /**
      *
      */
-    private void addPanel(JPanel panel)
-    {
+    private void addPanel(JPanel panel) {
         String key = Integer.toString(panel.hashCode());
         shelf.add(panel, key);
 
@@ -230,21 +207,17 @@ public class ExceptionShelf extends JPanel
     /**
      *
      */
-    private void removePanel(JPanel panel)
-    {
+    private void removePanel(JPanel panel) {
         int index = panels.indexOf(panel);
         // log.fine("Removing tab at index="+index);
 
-        if (index != -1)
-        {
-            if (index == current && index == 0)
-            {
+        if (index != -1) {
+            if (index == current && index == 0) {
                 nextException();
                 current--;
             }
 
-            if (index == current && index != 0)
-            {
+            if (index == current && index != 0) {
                 previousException();
             }
         }
@@ -256,28 +229,23 @@ public class ExceptionShelf extends JPanel
     /**
      *
      */
-    private JPanel createExceptionPanel(Throwable ex)
-    {
+    private JPanel createExceptionPanel(Throwable ex) {
         JPanel retcode = new JPanel();
         // I18N: migrate this to an ActionFactory
         JButton remove = new JButton(LimboMsg.REMOVE.toString());
         JButton report = new JButton();
 
-        if (small == null)
-        {
+        if (small == null) {
             Font norm = report.getFont();
             small = new Font(norm.getName(), norm.getStyle(), norm.getSize() - 2);
         }
 
-        if (ex == null)
-        {
+        if (ex == null) {
             // I18N: migrate this to an ActionFactory
             report.setText(LimboMsg.NO_PROBLEMS.toString());
             report.setIcon(UIManager.getIcon("OptionPane.informationIcon")); //$NON-NLS-1$
             remove.setEnabled(false);
-        }
-        else
-        {
+        } else {
             report.setText("<html>" + ExceptionPane.getHTMLDescription(ex)); //$NON-NLS-1$
             report.setIcon(UIManager.getIcon("OptionPane.errorIcon")); //$NON-NLS-1$
             remove.setEnabled(true);
@@ -294,17 +262,13 @@ public class ExceptionShelf extends JPanel
         remove.setVerticalAlignment(SwingConstants.BOTTOM);
         remove.setMargin(new Insets(0, 3, 3, 3));
 
-        report.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        report.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 reporter();
             }
         });
-        remove.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        remove.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 remover();
             }
         });
@@ -358,18 +322,15 @@ public class ExceptionShelf extends JPanel
 
     /**
      * You must call setHelpDeskListener() in order to start displaying
-     * Exceptions sent to the Log, and in order to properly
-     * close this class you must call it again (with false).
+     * Exceptions sent to the Log, and in order to properly close this class you
+     * must call it again (with false).
      */
-    public static void setHelpDeskListener(boolean action)
-    {
-        if (action && !joined)
-        {
+    public static void setHelpDeskListener(boolean action) {
+        if (action && !joined) {
             Reporter.addReporterListener(li);
         }
 
-        if (!action && joined)
-        {
+        if (!action && joined) {
             Reporter.removeReporterListener(li);
         }
 
@@ -377,10 +338,9 @@ public class ExceptionShelf extends JPanel
     }
 
     /**
-    * Get the listening status
-    */
-    public static boolean isHelpDeskListener()
-    {
+     * Get the listening status
+     */
+    public static boolean isHelpDeskListener() {
         return li != null;
     }
 
@@ -412,21 +372,26 @@ public class ExceptionShelf extends JPanel
     /**
      * A class to listen to Exceptions
      */
-    static class ShelfCaptureListener implements ReporterListener
-    {
-        /* (non-Javadoc)
-         * @see org.crosswire.common.util.event.ReporterListener#reportException(org.crosswire.common.util.event.ReporterEvent)
+    static class ShelfCaptureListener implements ReporterListener {
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * org.crosswire.common.util.event.ReporterListener#reportException(
+         * org.crosswire.common.util.event.ReporterEvent)
          */
-        public void reportException(final ReporterEvent ev)
-        {
+        public void reportException(final ReporterEvent ev) {
             SwingUtilities.invokeLater(new ExceptionRunner(ev));
         }
 
-        /* (non-Javadoc)
-         * @see org.crosswire.common.util.event.ReporterListener#reportMessage(org.crosswire.common.util.event.ReporterEvent)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * org.crosswire.common.util.event.ReporterListener#reportMessage(org
+         * .crosswire.common.util.event.ReporterEvent)
          */
-        public void reportMessage(final ReporterEvent ev)
-        {
+        public void reportMessage(final ReporterEvent ev) {
             SwingUtilities.invokeLater(new MessageRunner(ev));
         }
     }
@@ -434,24 +399,22 @@ public class ExceptionShelf extends JPanel
     /**
      *
      */
-    private static final class ExceptionRunner implements Runnable
-    {
+    private static final class ExceptionRunner implements Runnable {
         /**
          * @param ev
          */
-        public ExceptionRunner(ReporterEvent ev)
-        {
+        public ExceptionRunner(ReporterEvent ev) {
             event = ev;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.lang.Runnable#run()
          */
-        public void run()
-        {
+        public void run() {
             Iterator it = SHELVES.iterator();
-            while (it.hasNext())
-            {
+            while (it.hasNext()) {
                 ExceptionShelf es = (ExceptionShelf) it.next();
                 es.addException(event.getException());
             }
@@ -463,24 +426,22 @@ public class ExceptionShelf extends JPanel
     /**
      *
      */
-    private static final class MessageRunner implements Runnable
-    {
+    private static final class MessageRunner implements Runnable {
         /**
          * @param ev
          */
-        public MessageRunner(ReporterEvent ev)
-        {
+        public MessageRunner(ReporterEvent ev) {
             event = ev;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.lang.Runnable#run()
          */
-        public void run()
-        {
+        public void run() {
             Iterator it = SHELVES.iterator();
-            while (it.hasNext())
-            {
+            while (it.hasNext()) {
                 ExceptionShelf es = (ExceptionShelf) it.next();
                 es.addException(new Exception(event.getMessage()));
             }

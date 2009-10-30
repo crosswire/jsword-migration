@@ -33,33 +33,33 @@ import java.net.URL;
 import javax.swing.JFrame;
 
 /**
- * This class simplifies running Applets as applications
- * It mirrors the actions of a Browser in an application.
- * The methods without specific JavaDoc comments mirror the methods
- * of AppletStub and AppletContext, returning null, true, this or ""
- * where appropriate.
+ * This class simplifies running Applets as applications It mirrors the actions
+ * of a Browser in an application. The methods without specific JavaDoc comments
+ * mirror the methods of AppletStub and AppletContext, returning null, true,
+ * this or "" where appropriate.
  * 
- * @see gnu.lgpl.License for license details.
+ * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class AppletFrame extends JFrame
-{
-	/**
-     * Creates a Frame and runs an Applet in the frame.
-     * Mirrors the actions of a Browser in an application.
-     * @param name The text that should appear in the title bar.
-     * @param app The Applet that we should run in the new frame.
-     * @param width The horizontal size of the frame.
-     * @param height The vertical size of the frame.
+public class AppletFrame extends JFrame {
+    /**
+     * Creates a Frame and runs an Applet in the frame. Mirrors the actions of a
+     * Browser in an application.
+     * 
+     * @param name
+     *            The text that should appear in the title bar.
+     * @param app
+     *            The Applet that we should run in the new frame.
+     * @param width
+     *            The horizontal size of the frame.
+     * @param height
+     *            The vertical size of the frame.
      */
-    public AppletFrame(String name, Applet app, int width, int height)
-    {
-        addWindowListener(new WindowAdapter()
-        {
+    public AppletFrame(String name, Applet app, int width, int height) {
+        addWindowListener(new WindowAdapter() {
             /* @Override */
-            public void windowClosing(WindowEvent e)
-            {
+            public void windowClosing(WindowEvent e) {
                 close();
             }
         });
@@ -68,7 +68,7 @@ public class AppletFrame extends JFrame
         app.init();
         app.start();
 
-        /*getContentPane().setLayout(new BorderLayout()); */
+        /* getContentPane().setLayout(new BorderLayout()); */
         getContentPane().add(BorderLayout.CENTER, app);
 
         setTitle(name);
@@ -77,25 +77,30 @@ public class AppletFrame extends JFrame
     }
 
     /**
-     * Creates a Frame and runs an Applet in the frame.
-     * The frame is given the default name of the Applet Class.
-     * @param app The Applet that we should run in the new frame.
-     * @param width The horizontal size of the frame.
-     * @param height The vertical size of the frame.
+     * Creates a Frame and runs an Applet in the frame. The frame is given the
+     * default name of the Applet Class.
+     * 
+     * @param app
+     *            The Applet that we should run in the new frame.
+     * @param width
+     *            The horizontal size of the frame.
+     * @param height
+     *            The vertical size of the frame.
      */
-    public AppletFrame(Applet app, int width, int height)
-    {
+    public AppletFrame(Applet app, int width, int height) {
         this(app.getClass().getName(), app, width, height);
     }
 
     /**
-     * Creates a Frame and runs an Applet in the frame.
-     * The frame is given the default name of the Applet Class.
-     * @param name The text that should appear in the title bar.
-     * @param app The Applet that we should run in the new frame.
+     * Creates a Frame and runs an Applet in the frame. The frame is given the
+     * default name of the Applet Class.
+     * 
+     * @param name
+     *            The text that should appear in the title bar.
+     * @param app
+     *            The Applet that we should run in the new frame.
      */
-    public AppletFrame(String name, Applet app)
-    {
+    public AppletFrame(String name, Applet app) {
         this(name, app, 100, 100);
 
         Dimension x = app.getPreferredSize();
@@ -103,20 +108,20 @@ public class AppletFrame extends JFrame
     }
 
     /**
-     * Creates a Frame and runs an Applet in the frame.
-     * The frame is given the default name of the Applet Class.
-     * @param app The Applet that we should run in the new frame.
+     * Creates a Frame and runs an Applet in the frame. The frame is given the
+     * default name of the Applet Class.
+     * 
+     * @param app
+     *            The Applet that we should run in the new frame.
      */
-    public AppletFrame(Applet app)
-    {
+    public AppletFrame(Applet app) {
         this(app.getClass().getName(), app);
     }
 
     /**
      * Close everything down and exit from the JVM
      */
-    public void close()
-    {
+    public void close() {
         dispose();
         System.exit(0);
     }
@@ -129,53 +134,58 @@ public class AppletFrame extends JFrame
     /**
      * So that we can be an AppletStub
      */
-    static class AppletFrameStub implements AppletStub
-    {
-        /* (non-Javadoc)
+    static class AppletFrameStub implements AppletStub {
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.applet.AppletStub#isActive()
          */
-        public boolean isActive()
-        {
+        public boolean isActive() {
             return true;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.applet.AppletStub#getDocumentBase()
          */
-        public URL getDocumentBase()
-        {
+        public URL getDocumentBase() {
             return null;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.applet.AppletStub#getCodeBase()
          */
-        public URL getCodeBase()
-        {
+        public URL getCodeBase() {
             return null;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.applet.AppletStub#getParameter(java.lang.String)
          */
-        public String getParameter(String name)
-        {
+        public String getParameter(String name) {
             return ""; //$NON-NLS-1$
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.applet.AppletStub#getAppletContext()
          */
-        public AppletContext getAppletContext()
-        {
+        public AppletContext getAppletContext() {
             return null;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.applet.AppletStub#appletResize(int, int)
          */
-        public void appletResize(int w, int h)
-        {
+        public void appletResize(int w, int h) {
         }
     }
 }

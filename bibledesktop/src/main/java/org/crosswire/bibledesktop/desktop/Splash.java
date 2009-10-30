@@ -50,24 +50,24 @@ import org.crosswire.common.swing.GuiUtil;
 
 /**
  * A Simple splash screen.
- * <p>so start one of these call:
+ * <p>
+ * so start one of these call:
+ * 
  * <pre>
  * Splash s = new Splash();
  * ... // init code
  * s.close();
  * </pre>
- *
- * @see gnu.gpl.License for license details.
+ * 
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class Splash extends JWindow
-{
+public class Splash extends JWindow {
     /**
      * Create a splash window
      */
-    public Splash()
-    {
+    public Splash() {
         super(GuiUtil.getFrame(null));
 
         init();
@@ -76,15 +76,14 @@ public class Splash extends JWindow
     /**
      * Init the graphics
      */
-    private void init()
-    {
+    private void init() {
         Icon icon = GuiUtil.getIcon(Msg.SPLASH_IMAGE.toString());
 
         JLabel lblPicture = new JLabel();
         lblPicture.setBackground(Color.WHITE);
         lblPicture.setOpaque(true);
         lblPicture.setIcon(icon);
-        //lblPicture.setBorder(null);
+        // lblPicture.setBorder(null);
         lblPicture.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 
         /*
@@ -99,15 +98,18 @@ public class Splash extends JWindow
 
         JPanel pnlDisplay = new JPanel();
         pnlDisplay.setLayout(new GridBagLayout());
-        //pnlDisplay.add(lblText, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 10), 0, 0));
-        pnlDisplay.add(lblPicture, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+        // pnlDisplay.add(lblText, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+        // GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0,
+        // 0, 10), 0, 0));
+        pnlDisplay.add(lblPicture, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0,
+                0));
 
         JLabel lblInfo = new JLabel();
         lblInfo.setBorder(null);
         lblInfo.setFont(new Font(SPLASH_FONT, Font.PLAIN, 9));
         lblInfo.setForeground(Color.WHITE);
         lblInfo.setBackground(Color.BLACK);
-        //lblInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
+        // lblInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
         lblInfo.setHorizontalAlignment(SwingConstants.TRAILING);
         lblInfo.setText(Msg.getVersionInfo() + ' ');
         lblInfo.setOpaque(true);
@@ -120,7 +122,7 @@ public class Splash extends JWindow
         JPanel pnlInfo = new JPanel();
         pnlInfo.setLayout(new BorderLayout(5, 0));
         pnlInfo.setOpaque(true);
-        //pnlInfo.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
+        // pnlInfo.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
         pnlInfo.add(lblInfo, BorderLayout.CENTER);
         pnlInfo.add(pnlJobs, BorderLayout.SOUTH);
 
@@ -134,14 +136,12 @@ public class Splash extends JWindow
 
         JobManager.addWorkListener(listener);
 
-        this.addMouseListener(new MouseAdapter()
-        {
+        this.addMouseListener(new MouseAdapter() {
             /* (non-Javadoc)
              * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
              */
             /* @Override */
-            public void mousePressed(MouseEvent ev)
-            {
+            public void mousePressed(MouseEvent ev) {
                 close();
             }
         });
@@ -154,8 +154,7 @@ public class Splash extends JWindow
     /**
      * Shut up shop
      */
-    public final void close()
-    {
+    public final void close() {
         JobManager.removeWorkListener(listener);
 
         setVisible(false);
@@ -169,8 +168,7 @@ public class Splash extends JWindow
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         listener = new CustomWorkListener();
         is.defaultReadObject();
     }
@@ -187,16 +185,13 @@ public class Splash extends JWindow
     /**
      * Pack the frame if we get new jobs that could shunt things around
      */
-    final class CustomWorkListener implements WorkListener
-    {
+    final class CustomWorkListener implements WorkListener {
         /* (non-Javadoc)
          * @see org.crosswire.common.progress.WorkListener#workProgressed(org.crosswire.common.progress.WorkEvent)
          */
-        public void workProgressed(WorkEvent ev)
-        {
+        public void workProgressed(WorkEvent ev) {
             Progress job = ev.getJob();
-            if (job.getWork() == 0 || job.isFinished())
-            {
+            if (job.getWork() == 0 || job.isFinished()) {
                 Splash.this.pack();
             }
         }
@@ -204,8 +199,7 @@ public class Splash extends JWindow
         /* (non-Javadoc)
          * @see org.crosswire.common.progress.WorkListener#workStateChanged(org.crosswire.common.progress.WorkEvent)
          */
-        public void workStateChanged(WorkEvent ev)
-        {
+        public void workStateChanged(WorkEvent ev) {
             // we don't care about these events.
         }
     }

@@ -27,33 +27,29 @@ import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.VerseRange;
 
 /**
- * A Simple extension to JList to customize it to hold a Passage and
- * provide Passage related actions.
+ * A Simple extension to JList to customize it to hold a Passage and provide
+ * Passage related actions.
  * 
- * @see gnu.gpl.License for license details.
+ * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public final class PassageGuiUtil
-{
+public final class PassageGuiUtil {
     /**
      * Prevent instantiation
      */
-    private PassageGuiUtil()
-    {
+    private PassageGuiUtil() {
     }
 
     /**
      * Remove all of the selected verses from the passage
      */
-    public static void deleteSelectedVersesFromList(JList list)
-    {
+    public static void deleteSelectedVersesFromList(JList list) {
         RangeListModel rlm = (RangeListModel) list.getModel();
 
         Passage ref = rlm.getPassage();
         Object[] selected = list.getSelectedValues();
-        for (int i = 0; i < selected.length; i++)
-        {
+        for (int i = 0; i < selected.length; i++) {
             VerseRange range = (VerseRange) selected[i];
             ref.remove(range);
         }
@@ -62,38 +58,38 @@ public final class PassageGuiUtil
     }
 
     /**
-     * @param tree The tree to delete selected verses from
+     * @param tree
+     *            The tree to delete selected verses from
      */
-//    public static void deleteSelectedVersesFromTree(JTree tree)
-//    {
-//        Key selected = getSelectedKeys(tree);
-//
-//        KeyTreeModel mdl = (KeyTreeModel) tree.getModel();
-//        Key root = mdl.getKey();
-//
-//        for (Iterator it = selected.iterator(); it.hasNext(); )
-//        {
-//            Key key = (Key) it.next();
-//            root.removeAll(key);
-//        }
-//
-//        mdl.setKey(root);
-//    }
-
+    // public static void deleteSelectedVersesFromTree(JTree tree)
+    // {
+    // Key selected = getSelectedKeys(tree);
+    //
+    // KeyTreeModel mdl = (KeyTreeModel) tree.getModel();
+    // Key root = mdl.getKey();
+    //
+    // for (Iterator it = selected.iterator(); it.hasNext(); )
+    // {
+    // Key key = (Key) it.next();
+    // root.removeAll(key);
+    // }
+    //
+    // mdl.setKey(root);
+    // }
     /**
      * @return The selected keys in the tree
      */
-//    public static Key getSelectedKeys(JTree tree)
-//    {
-//        Key selected = new DefaultKeyList();
-//        TreePath[] paths = tree.getSelectionPaths();
-//
-//        for (int i = 0; i < paths.length; i++)
-//        {
-//            KeyTreeNode node = (KeyTreeNode) paths[1].getLastPathComponent();
-//            selected.addAll(node.getKey());
-//        }
-//
-//        return selected;
-//    }
+    // public static Key getSelectedKeys(JTree tree)
+    // {
+    // Key selected = new DefaultKeyList();
+    // TreePath[] paths = tree.getSelectionPaths();
+    //
+    // for (int i = 0; i < paths.length; i++)
+    // {
+    // KeyTreeNode node = (KeyTreeNode) paths[1].getLastPathComponent();
+    // selected.addAll(node.getKey());
+    // }
+    //
+    // return selected;
+    // }
 }
