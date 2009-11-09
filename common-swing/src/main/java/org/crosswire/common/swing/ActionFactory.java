@@ -329,26 +329,38 @@ public class ActionFactory implements ActionListener, Actionable {
                 // defaults are used
             }
 
+            // Get all the keys but we only need those that end with .Name
             Enumeration en = resources.getKeys();
             while (en.hasMoreElements()) {
                 String key = (String) en.nextElement();
                 if (key.endsWith(TEST)) {
                     String actionName = key.substring(0, key.length() - TEST.length());
 
-                    String name = getActionString(resources, actionName, Action.NAME);
                     ResourceBundle nickname = null;
-                    if (name.startsWith(ActionFactory.ALIAS)) {
-                        String newActionName = name.substring(ActionFactory.ALIAS.length());
-                        String newName = getActionString(aliases, newActionName, Action.NAME);
-                        if (newName != null) {
-                            name = newName;
-                            nickname = aliases;
-                        }
+                    String nameValue = getActionString(resources, null, actionName, Action.NAME);
+                    
+                    // We know this should never happen because we are merely rebuilding the key.
+                    if (nameValue == null) {
+                        log.warn("Missing original key for " + actionName + '.' + Action.NAME); //$NON-NLS-1$
+                        continue;
                     }
 
-                    String tooltip = getOptionalActionString(nickname, resources, actionName, CWAction.TOOL_TIP);
+                    // If the value starts with alias, we have to dig the actual name out of the aliases
+                    if (nameValue.startsWith(ActionFactory.ALIAS)) {
+                        String newActionName = nameValue.substring(ActionFactory.ALIAS.length());
+                        String newNameValue = getActionString(aliases, null, newActionName, Action.NAME);
+                        // We had a clear request for an Alias. So newNameValue should never be null here.
+                        if (newNameValue == null) {
+                            log.warn("Missing alias key for " + actionName + '.' + Action.NAME); //$NON-NLS-1$
+                            continue;
+                        }
+                        nameValue = newNameValue;
+                        nickname = aliases;
+                    }
+
+                    String tooltip = getActionString(resources, nickname, actionName, CWAction.TOOL_TIP);
                     if (tooltip == null) {
-                        tooltip = name;
+                        tooltip = nameValue;
                     }
 
                     Integer mnemonic = getMnemonic(nickname, resources, actionName);
@@ -356,7 +368,7 @@ public class ActionFactory implements ActionListener, Actionable {
 
                     Icon smallIcon = getIcon(controls, actionName, Action.SMALL_ICON);
                     Icon largeIcon = getIcon(controls, actionName, CWAction.LARGE_ICON);
-                    String enabledStr = getOptionalActionString(controls, actionName, "Enabled"); //$NON-NLS-1$
+                    String enabledStr = getActionString(controls, null, actionName, "Enabled"); //$NON-NLS-1$
                     boolean enabled = enabledStr == null ? true : Boolean.valueOf(enabledStr).booleanValue();
 
                     CWAction cwAction = new CWAction();
@@ -367,11 +379,11 @@ public class ActionFactory implements ActionListener, Actionable {
                         cwAction.putValue(Action.ACTION_COMMAND_KEY, actionName);
                     }
 
-                    if (name == null || name.length() == 0) {
+                    if (nameValue == null || nameValue.length() == 0) {
                         log.warn("Name is missing for CWAction"); //$NON-NLS-1$
                         cwAction.putValue(Action.NAME, "?"); //$NON-NLS-1$
                     } else {
-                        cwAction.putValue(Action.NAME, name);
+                        cwAction.putValue(Action.NAME, nameValue);
                     }
 
                     cwAction.putValue(CWAction.LARGE_ICON, largeIcon);
@@ -396,47 +408,28 @@ public class ActionFactory implements ActionListener, Actionable {
     }
 
     /**
-     * Lookup an action/field combination, warning about missing resources
-     * rather than excepting.
-     */
-    private String getActionString(ResourceBundle resources, String actionName, String field) {
-        try {
-            return resources.getString(actionName + '.' + field);
-        } catch (MissingResourceException ex) {
-            log.info("Missing key for " + actionName, ex); //$NON-NLS-1$
-            return null;
-        }
-    }
-
-    /**
-     * Lookup an action/field combination, returning null for missing resources.
-     */
-    private String getOptionalActionString(ResourceBundle resources, String actionName, String field) {
-        return getOptionalActionString(null, resources, actionName, field);
-    }
-
-    /**
      * Lookup an action/field combination, returning null for missing resources.
      * If aliases are present use them, with values in resources over-riding.
      */
-    private String getOptionalActionString(ResourceBundle nicknames, ResourceBundle resources, String actionName, String field) {
+    private String getActionString(ResourceBundle resources, ResourceBundle nicknames, String actionName, String field) {
         String result = null;
         try {
-            // Look for aliases first
-            if (nicknames != null) {
-                result = nicknames.getString(actionName + '.' + field);
-            }
-        } catch (MissingResourceException ex) {
-            // do nothing
-        }
-
-        try {
+            // The normal case is not to have aliases so look for the resource as not aliased
             // The control resource file does not have to exist.
             if (resources != null) {
                 result = resources.getString(actionName + '.' + field);
             }
         } catch (MissingResourceException ex) {
-            // do nothing
+            // do something later, if not optional
+        }
+
+        try {
+            // If there were no result and we are aliasing then look for the alias
+            if (result == null && nicknames != null) {
+                result = nicknames.getString(actionName + '.' + field);
+            }
+        } catch (MissingResourceException ex) {
+            // do something later, if not optional
         }
 
         return result;
@@ -447,7 +440,7 @@ public class ActionFactory implements ActionListener, Actionable {
      */
     private Icon getIcon(ResourceBundle resources, String actionName, String iconName) {
         Icon icon = null;
-        String iconStr = getOptionalActionString(resources, actionName, iconName);
+        String iconStr = getActionString(resources, null, actionName, iconName);
         if (iconStr != null && iconStr.length() > 0) {
             icon = GuiUtil.getIcon(iconStr);
         }
@@ -459,7 +452,7 @@ public class ActionFactory implements ActionListener, Actionable {
      */
     private Integer getMnemonic(ResourceBundle nicknames, ResourceBundle resources, String actionName) {
         Integer mnemonic = null;
-        String mnemonicStr = getOptionalActionString(nicknames, resources, actionName, Action.MNEMONIC_KEY);
+        String mnemonicStr = getActionString(resources, nicknames, actionName, Action.MNEMONIC_KEY);
         if (mnemonicStr != null && mnemonicStr.length() > 0) {
             try {
                 mnemonic = new Integer(getInteger(mnemonicStr));
@@ -471,14 +464,22 @@ public class ActionFactory implements ActionListener, Actionable {
     }
 
     /**
-     * Convert the string to a valid Accelerator (ie a KeyStroke)
+     * Convert the string to a valid Accelerator (that is a KeyStroke)
      */
     private KeyStroke getAccelerator(ResourceBundle nicknames, ResourceBundle resources, String actionName) {
         // Create the KeyStroke for the action's shortcut/accelerator
         KeyStroke accelerator = null;
-        String acceleratorStr = getOptionalActionString(nicknames, resources, actionName, Action.ACCELERATOR_KEY);
+        String acceleratorStr = getActionString(resources, nicknames, actionName, Action.ACCELERATOR_KEY);
         if (acceleratorStr != null && acceleratorStr.length() > 0) {
-            String[] modifiers = StringUtil.split(getActionString(resources, actionName, Action.ACCELERATOR_KEY + ".Modifiers"), ','); //$NON-NLS-1$
+            String modifierName = Action.ACCELERATOR_KEY + ".Modifiers";  //$NON-NLS-1$
+            // Not every accelerator needs a modifier
+            String modifierSpec = getActionString(resources, nicknames, actionName, modifierName);
+            if (modifierSpec == null)
+            {
+                return accelerator;
+            }
+
+            String[] modifiers = StringUtil.split(modifierSpec, ',');
 
             try {
                 int shortcut = getInteger(acceleratorStr);
