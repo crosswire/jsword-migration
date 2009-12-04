@@ -149,7 +149,7 @@ public class SWConfig {
          * taking into account that some properties may have multiple values.
          */
         /* @Override */
-        public Object put(Object key, Object value) {
+        public synchronized Object put(Object key, Object value) {
             // if the key isn't a String it's not one of the properties
             // we are looking for, so return without setting it.
             if (!(key instanceof String)) {

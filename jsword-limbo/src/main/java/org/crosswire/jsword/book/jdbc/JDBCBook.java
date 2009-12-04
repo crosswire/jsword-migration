@@ -161,7 +161,9 @@ public class JDBCBook extends AbstractPassageBook {
             log.fatal("read failed", ex); //$NON-NLS-1$
         } finally {
             try {
-                rs.close();
+                if (rs != null) {
+                    rs.close();
+                }
             } catch (SQLException ex) {
                 log.fatal("close() failed", ex); //$NON-NLS-1$
             }

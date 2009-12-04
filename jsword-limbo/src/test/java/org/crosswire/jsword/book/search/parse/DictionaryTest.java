@@ -45,7 +45,7 @@ public class DictionaryTest extends TestCase {
     protected void tearDown() throws Exception {
     }
 
-    public void testGetRoot() throws Exception {
+    public void testGetRoot() {
         assertEquals(Grammar.getRoot("joseph"), "joseph"); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(Grammar.getRoot("joseph's"), "joseph"); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(Grammar.getRoot("walker"), "walk"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -54,7 +54,7 @@ public class DictionaryTest extends TestCase {
         assertEquals(Grammar.getRoot("boxes"), "box"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    public void testIsSmallWord() throws Exception {
+    public void testIsSmallWord() {
         assertTrue(Grammar.isSmallWord("the")); //$NON-NLS-1$
         assertTrue(Grammar.isSmallWord("and")); //$NON-NLS-1$
         assertTrue(!Grammar.isSmallWord("lord")); //$NON-NLS-1$
@@ -72,7 +72,7 @@ public class DictionaryTest extends TestCase {
         assertTrue(Grammar.isSmallWord("  ")); //$NON-NLS-1$
     }
 
-    public void testStripSmallWords() throws Exception {
+    public void testStripSmallWords() {
         String[] temp = Grammar.stripSmallWords(new String[] {
                 "i", "am", "but", "nothing", "o", "the", "lord", "god", "and", "",}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$
         assertEquals(temp[0], "nothing"); //$NON-NLS-1$
@@ -81,7 +81,7 @@ public class DictionaryTest extends TestCase {
         assertEquals(temp.length, 3);
     }
 
-    public void testTokenizeWithoutSmallWords() throws Exception {
+    public void testTokenizeWithoutSmallWords() {
         String[] temp = Grammar.tokenizeWithoutSmallWords("i am but nothing o the lord god and ", " "); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(temp[0], "nothing"); //$NON-NLS-1$
         assertEquals(temp[1], "lord"); //$NON-NLS-1$

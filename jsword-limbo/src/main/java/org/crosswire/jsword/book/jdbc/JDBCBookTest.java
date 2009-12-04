@@ -35,7 +35,7 @@ public class JDBCBookTest extends BookParentTst {
         super(s);
     }
 
-    public void testVerseOrdinal() throws Exception {
+    public void testVerseOrdinal() {
         /*
          * LATER: JDBCBook is in limbo for (int i=0; i<bibles.length; i++) { if
          * (!(bibles[i] instanceof JDBCBook)) continue;

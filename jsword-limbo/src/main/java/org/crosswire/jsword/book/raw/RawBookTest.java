@@ -35,7 +35,7 @@ public class RawBookTest extends BookAdvancedParentTst {
         super(s);
     }
 
-    public void testRawUtil() throws Exception {
+    public void testRawUtil() {
         for (int i = 0; i < bibles.length; i++) {
             // LATER: RawBook is in limbo
             // if (!(bibles[i] instanceof RawBook))

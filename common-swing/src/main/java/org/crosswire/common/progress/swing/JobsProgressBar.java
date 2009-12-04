@@ -323,16 +323,6 @@ public class JobsProgressBar extends JPanel implements WorkListener {
         }
 
         /**
-         * @return Returns the cancelButton.
-         */
-        public JButton getCancelButton() {
-            if (cancelButton == null) {
-                cancelButton = bar.createCancelButton(job);
-            }
-            return cancelButton;
-        }
-
-        /**
          * Accessor for the index
          */
         int getIndex() {

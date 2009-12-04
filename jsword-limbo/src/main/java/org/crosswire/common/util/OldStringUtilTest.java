@@ -22,13 +22,13 @@ public class OldStringUtilTest extends TestCase {
     protected void tearDown() throws Exception {
     }
 
-    public void testGetCapitals() throws Exception {
+    public void testGetCapitals() {
         assertEquals(OldStringUtil.getCapitals("Church of England"), "CE"); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(OldStringUtil.getCapitals("Java DataBase Connectivity"), "JDBC"); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(OldStringUtil.getCapitals(""), ""); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    public void testCreateJavaName() throws Exception {
+    public void testCreateJavaName() {
         assertEquals(OldStringUtil.createJavaName("one  _Two"), "OneTwo"); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(OldStringUtil.createJavaName("one_two"), "OneTwo"); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(OldStringUtil.createJavaName("onetwo"), "Onetwo"); //$NON-NLS-1$ //$NON-NLS-2$

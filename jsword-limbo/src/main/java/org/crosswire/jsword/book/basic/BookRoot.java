@@ -61,7 +61,7 @@ public class BookRoot {
                     log.warn("Missing " + PROP_HOMEDIR + " under: " + test); //$NON-NLS-1$ //$NON-NLS-2$
                 }
             } catch (URISyntaxException e) {
-                root = null;
+                // root is null
             }
 
         }

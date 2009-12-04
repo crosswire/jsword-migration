@@ -379,7 +379,7 @@ public class ActionFactory implements ActionListener, Actionable {
                         cwAction.putValue(Action.ACTION_COMMAND_KEY, actionName);
                     }
 
-                    if (nameValue == null || nameValue.length() == 0) {
+                    if (nameValue.length() == 0) {
                         log.warn("Name is missing for CWAction"); //$NON-NLS-1$
                         cwAction.putValue(Action.NAME, "?"); //$NON-NLS-1$
                     } else {

@@ -33,7 +33,7 @@ public class DOMDefaultHandler extends DefaultHandler {
         this.doc = base.getOwnerDocument();
         this.base = base;
 
-        if (base == null)
+        if (this.base == null)
             current = doc;
         else
             current = base;

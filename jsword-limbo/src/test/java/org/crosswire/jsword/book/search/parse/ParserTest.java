@@ -45,7 +45,7 @@ public class ParserTest extends TestCase {
     protected void tearDown() throws Exception {
     }
 
-    public void testSearch() throws Exception {
+    public void testSearch() {
         // We shouldn't need a SearchableBible here because all of these should
         // fail before any searching is done.
         IndexSearcher engine = new IndexSearcher();
@@ -91,7 +91,7 @@ public class ParserTest extends TestCase {
         // (BookException ex) { }
     }
 
-    public void testBestMatch() throws Exception {
+    public void testBestMatch() {
         /*
          * version = new FileBible(); commands = Options.getSearchHashtable();
          * engine = new Searcher(version, commands);

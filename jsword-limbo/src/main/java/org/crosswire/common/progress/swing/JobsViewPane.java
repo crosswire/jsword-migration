@@ -156,7 +156,7 @@ public class JobsViewPane extends JPanel implements WorkListener {
         jobsPanel.add(cancel, new GridBagConstraints(2, i, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(5, 5, 5, 5), 0, 0));
         GuiUtil.refresh(this);
 
-        JobData jobdata = new JobData(job, i, label, progress, cancel);
+        JobData jobdata = new JobData(i, label, progress, cancel);
         jobs.put(job, jobdata);
         if (i >= positions.size()) {
             positions.add(jobdata);
@@ -317,8 +317,7 @@ public class JobsViewPane extends JPanel implements WorkListener {
         /**
          * Simple ctor
          */
-        public JobData(Progress job, int index, JLabel label, JProgressBar progress, JButton cancel) {
-            this.job = job;
+        public JobData(int index, JLabel label, JProgressBar progress, JButton cancel) {
             this.index = index;
             this.label = label;
             this.progress = progress;
@@ -329,18 +328,10 @@ public class JobsViewPane extends JPanel implements WorkListener {
          * Make sure we can't be used any more
          */
         void invalidate() {
-            this.job = null;
             this.label = null;
             this.progress = null;
             this.cancel = null;
             this.index = -1;
-        }
-
-        /**
-         * Accessor for the job
-         */
-        Progress getJob() {
-            return job;
         }
 
         /**
@@ -371,7 +362,6 @@ public class JobsViewPane extends JPanel implements WorkListener {
             return index;
         }
 
-        private Progress job;
         private JLabel label;
         private JProgressBar progress;
         private JButton cancel;

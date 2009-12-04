@@ -44,7 +44,7 @@ import org.crosswire.jsword.book.sword.SwordBookMetaData;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class FtpSwordInstaller extends AbstractSwordInstaller implements Comparable {
+public class FtpSwordInstaller extends AbstractSwordInstaller {
     /*
      * (non-Javadoc)
      * 

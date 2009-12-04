@@ -4,8 +4,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Insets;
-import java.awt.LayoutManager2;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -28,7 +26,7 @@ import java.util.Map;
  * @author Joe Walker
  * @author Claude Duguay Copyright (c) 1998
  */
-public class DeckLayout extends AbstractLayout implements LayoutManager2, Serializable {
+public class DeckLayout extends AbstractLayout {
     /**
      * 
      */

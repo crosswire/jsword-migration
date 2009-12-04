@@ -260,10 +260,31 @@ public class SWModule {
         }
 
         position(SWKey.TOP);
-        /*
-         * if (searchType >= 0) { flags |=searchType|REG_NOSUB|REG_EXTENDED;
-         * regcomp(&preg, istr, flags); }
-         */
+
+        if (searchType >= 0) {
+            /*
+             * if (searchType >= 0) { flags |=searchType|REG_NOSUB|REG_EXTENDED;
+             * regcomp(&preg, istr, flags); }
+             */
+            while ((getError() != 0) && !terminateSearch) {
+                /*
+                 * if (!regexec(&preg, StripText(), 0, 0, 0)) { textkey =
+                 * KeyText(); listkey << textkey; }
+                 */
+            }
+        }
+
+        if (searchType == -1) {
+            while ((getError() != 0) && !terminateSearch) {
+                // sres = ((flags & REG_ICASE) == REG_ICASE) ?
+                // stristr(StripText(), istr) : strstr(StripText(), istr);
+                int offset = ((flags & 1) == 1) ? stripText().indexOf(istr) : stripText().toUpperCase().indexOf(istr.toUpperCase());
+                if (offset > -1) {
+                    textkey = new SWKey(getKeyText());
+                    listKey.add(textkey);
+                }
+            }
+        }
 
         if (searchType == -2) {
             // wordBuf = istr;
@@ -274,39 +295,19 @@ public class SWModule {
              * = (char **)realloc(words, sizeof(char *)*allocWords); }
              * words[wordCount] = strtok(NULL, " "); }
              */
-        }
-
-        while ((getError() != 0) && !terminateSearch) {
-            if (searchType >= 0) {
-                /*
-                 * if (!regexec(&preg, StripText(), 0, 0, 0)) { textkey =
-                 * KeyText(); listkey << textkey; }
-                 */
-            } else {
-                if (searchType == -1) {
-                    // sres = ((flags & REG_ICASE) == REG_ICASE) ?
-                    // stristr(StripText(), istr) : strstr(StripText(), istr);
-                    int offset = ((flags & 1) == 1) ? stripText().indexOf(istr) : stripText().toUpperCase().indexOf(istr.toUpperCase());
-                    if (offset > -1) {
-                        textkey = new SWKey(getKeyText());
-                        listKey.add(textkey);
-                    }
+            while ((getError() != 0) && !terminateSearch) {
+                int i;
+                for (i = 0; i < wordCount; i++) {
+                    int offset = ((flags & 1) == 1) ? stripText().indexOf((String) words.get(i)) : stripText().toUpperCase().indexOf(
+                            ((String) words.get(i)).toUpperCase());
+                    if (offset < 0)
+                        break;
                 }
-                if (searchType == -2) {
-                    int i;
-                    for (i = 0; i < wordCount; i++) {
-                        int offset = ((flags & 1) == 1) ? stripText().indexOf((String) words.get(i)) : stripText().toUpperCase().indexOf(
-                                ((String) words.get(i)).toUpperCase());
-                        if (offset < 0)
-                            break;
-                    }
-                    if (i == wordCount) {
-                        textkey = new SWKey(getKeyText());
-                        listKey.add(textkey);
-                    }
+                if (i == wordCount) {
+                    textkey = new SWKey(getKeyText());
+                    listKey.add(textkey);
                 }
             }
-            // next();
         }
         // if (searchType >= 0)
         // regfree(&preg);

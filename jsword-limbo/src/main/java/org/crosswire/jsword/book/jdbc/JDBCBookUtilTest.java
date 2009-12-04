@@ -35,7 +35,7 @@ public class JDBCBookUtilTest extends BookParentTst {
         super(s);
     }
 
-    public void testChop() throws Exception {
+    public void testChop() {
         // LATER: JDBCBook is in limbo
         //        assertEquals(JDBCBibleUtil.chop1("123(456)789", "(", ")"), "123789"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         //        assertEquals(JDBCBibleUtil.chop1("(123456)789", "(", ")"), "789"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$

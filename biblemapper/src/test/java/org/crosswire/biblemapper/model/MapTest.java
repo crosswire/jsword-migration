@@ -77,7 +77,7 @@ public class MapTest extends TestCase {
     protected void tearDown() throws Exception {
     }
 
-    public void testCat() throws Exception {
+    public void testCat() {
         assertEquals(ar[0].pos[0], 1F, 0F);
         assertEquals(ar[1].pos[0], 2F, 0F);
         assertEquals(ar[2].pos[0], 3F, 0F);
@@ -90,7 +90,7 @@ public class MapTest extends TestCase {
         assertEquals(ar.length, 9);
     }
 
-    public void testAverage() throws Exception {
+    public void testAverage() {
         Position ave = PositionUtil.average(ar, 2);
         assertEquals(ave.pos[0], 5F, 0F);
         assertEquals(ave.pos[1], 5F, 0F);

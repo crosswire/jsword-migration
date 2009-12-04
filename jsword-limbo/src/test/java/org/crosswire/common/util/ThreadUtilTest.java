@@ -45,11 +45,11 @@ public class ThreadUtilTest extends TestCase {
     protected void tearDown() throws Exception {
     }
 
-    public void testFindRoot() throws Exception {
+    public void testFindRoot() {
         assertTrue(ThreadUtil.findRoot() != null);
     }
 
-    public void testGetListing() throws Exception {
+    public void testGetListing() {
         /*
          * String[] result = ThreadUtil.getListing(); String result2 =
          * StringUtil.cat(result, NEWLINE);

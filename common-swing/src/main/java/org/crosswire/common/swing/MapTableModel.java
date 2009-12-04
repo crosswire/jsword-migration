@@ -279,22 +279,6 @@ public class MapTableModel extends AbstractTableModel {
         }
 
         /**
-         * @param key
-         *            The key to set.
-         */
-        public void setKey(String key) {
-            this.key = key;
-        }
-
-        /**
-         * @param value
-         *            The value to set.
-         */
-        public void setValue(String value) {
-            this.value = value;
-        }
-
-        /**
          * <code>key</code> is the string representation of a Map entry key
          */
         private String key;

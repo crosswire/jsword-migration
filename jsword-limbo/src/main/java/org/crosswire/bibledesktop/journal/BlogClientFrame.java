@@ -161,7 +161,7 @@ public class BlogClientFrame extends JPanel {
         getInstance().resetBlogClientLib();
     }
 
-    private JTabbedPane initBlogClientUI(Blog blog) throws Exception {
+    private JTabbedPane initBlogClientUI(Blog blog) {
 
         final BlogClientPanel clientPanel = new BlogClientPanel();
         final BlogEntriesPanel entriesPanel = new BlogEntriesPanel();

@@ -23,7 +23,6 @@ package org.crosswire.common.util;
 
 import java.util.AbstractList;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -33,7 +32,7 @@ import java.util.NoSuchElementException;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class RobustList extends AbstractList implements List {
+public class RobustList extends AbstractList {
     /**
      * Does this list contains the specified element?
      * 

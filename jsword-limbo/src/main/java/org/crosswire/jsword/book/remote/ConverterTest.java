@@ -46,7 +46,7 @@ public class ConverterTest extends TestCase {
         super(arg0);
     }
 
-    public void testConvertMetaData() throws Exception {
+    public void testConvertMetaData() {
         /*
          * 
          * BookMetaData[] t1; String[] uid1; BookMetaData[] t2; Document doc;
@@ -82,7 +82,7 @@ public class ConverterTest extends TestCase {
          */
     }
 
-    public void testConvertPassage() throws Exception {
+    public void testConvertPassage() {
         /*
          * Passage p1; Key p2; Document doc;
          * 
@@ -100,7 +100,7 @@ public class ConverterTest extends TestCase {
          */
     }
 
-    public void testConvertStartsWith() throws Exception {
+    public void testConvertStartsWith() {
         List l1;
         Iterator t1;
         Iterator t2;

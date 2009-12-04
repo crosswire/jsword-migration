@@ -91,7 +91,7 @@ public class WordsTest extends TestCase {
         assertEquals(engine.search("t3 ~5").getName(), "Mar 2:1-8"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    public void testStartsParamWord() throws Exception {
+    public void testStartsParamWord() {
         // assertEquals(engine.search("startswith joshu"),
         // engine.search("joshua"));
         // assertEquals(engine.search("sw joshu"), engine.search("joshua"));
@@ -109,7 +109,7 @@ public class WordsTest extends TestCase {
         assertEquals(engine.search("t1&(t2|(t3))&(t3|t2)").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    public void testGetAlternatives() throws Exception {
+    public void testGetAlternatives() {
         /*
          * GrammarParamWord grammar = new GrammarParamWord(); String[] temp =
          * grammar.getAlternatives("joseph"); assertEquals(temp[0], "joseph");
@@ -120,7 +120,7 @@ public class WordsTest extends TestCase {
          */
     }
 
-    public void testUpdatePassage() throws Exception {
+    public void testUpdatePassage() {
         // assertEquals(engine.search("grammar joseph"),
         // engine.search("joseph / joseph's"));
         // assertEquals(engine.search("gr joseph"),

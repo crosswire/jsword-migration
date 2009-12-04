@@ -24,7 +24,6 @@ package org.crosswire.common.swing;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
-import javax.swing.ListModel;
 
 /**
  * A simple implementation of ListModel that is backed by a List.
@@ -33,7 +32,7 @@ import javax.swing.ListModel;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ListListModel extends AbstractListModel implements ListModel {
+public class ListListModel extends AbstractListModel {
     /**
      * Constructor for ListListModel.
      */
