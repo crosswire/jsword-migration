@@ -326,7 +326,8 @@ public class CWOptionPane extends JOptionPane {
      * @see java.awt.GraphicsEnvironment#isHeadless
      */
     public static Object showInputDialog(Component parentComponent, Object message, String title, int messageType, Icon icon, Object[] selectionValues,
-            Object initialSelectionValue) throws HeadlessException {
+            Object initialSelectionValue) throws HeadlessException
+    {
         CWOptionPane pane = new CWOptionPane(message, messageType, OK_CANCEL_OPTION, icon, null, null);
 
         pane.setWantsInput(true);
@@ -543,7 +544,8 @@ public class CWOptionPane extends JOptionPane {
      * @see java.awt.GraphicsEnvironment#isHeadless
      */
     public static int showConfirmDialog(Component parentComponent, Object message, String title, int optionType, int messageType, Icon icon)
-            throws HeadlessException {
+            throws HeadlessException
+    {
         return showOptionDialog(parentComponent, message, title, optionType, messageType, icon, null, null);
     }
 
@@ -599,7 +601,8 @@ public class CWOptionPane extends JOptionPane {
      * @see java.awt.GraphicsEnvironment#isHeadless
      */
     public static int showOptionDialog(Component parentComponent, Object message, String title, int optionType, int messageType, Icon icon, Object[] options,
-            Object initialValue) throws HeadlessException {
+            Object initialValue) throws HeadlessException
+    {
         CWOptionPane pane = new CWOptionPane(message, messageType, optionType, icon, options, initialValue);
 
         pane.setInitialValue(initialValue);
@@ -626,23 +629,21 @@ public class CWOptionPane extends JOptionPane {
             return CLOSED_OPTION;
         }
 
-        if (getActionName("Yes").equals(selectedValue)) //$NON-NLS-1$
-        {
+        if (getActionName("Yes").equals(selectedValue)) { //$NON-NLS-1$
+
             return YES_OPTION;
         }
 
-        if (getActionName("No").equals(selectedValue)) //$NON-NLS-1$
-        {
+        if (getActionName("No").equals(selectedValue)) { //$NON-NLS-1$
+
             return NO_OPTION;
         }
 
-        if (getActionName("OK").equals(selectedValue)) //$NON-NLS-1$
-        {
+        if (getActionName("OK").equals(selectedValue)) { //$NON-NLS-1$
             return OK_OPTION;
         }
 
-        if (getActionName("Cancel").equals(selectedValue)) //$NON-NLS-1$
-        {
+        if (getActionName("Cancel").equals(selectedValue)) { //$NON-NLS-1$
             return CANCEL_OPTION;
         }
 
@@ -712,7 +713,8 @@ public class CWOptionPane extends JOptionPane {
                 // if the user closed the window without selecting a button
                 // (newValue = null in that case). Otherwise, close the dialog.
                 if (dialog.isVisible() && event.getSource() == CWOptionPane.this && event.getPropertyName().equals(VALUE_PROPERTY)
-                        && event.getNewValue() != null && event.getNewValue() != JOptionPane.UNINITIALIZED_VALUE) {
+                        && event.getNewValue() != null && event.getNewValue() != JOptionPane.UNINITIALIZED_VALUE)
+                {
                     dialog.setVisible(false);
                 }
             }

@@ -51,8 +51,7 @@ public class KeyTreeCellRenderer extends DefaultTreeCellRenderer {
             if (key != null) {
                 setText(key.getName());
             }
-        } else // if (value != null)
-        {
+        } else { // if (value != null)
             log.warn("value is not a key: " + value.getClass().getName()); //$NON-NLS-1$
         }
 

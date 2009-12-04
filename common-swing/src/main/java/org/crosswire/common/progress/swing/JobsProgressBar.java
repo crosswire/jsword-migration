@@ -76,7 +76,8 @@ public class JobsProgressBar extends JPanel implements WorkListener {
         JobManager.addWorkListener(this);
 
         Set current = JobManager.getJobs();
-        for (Iterator it = current.iterator(); it.hasNext();) {
+        Iterator it = current.iterator();
+        while (it.hasNext()) {
             Progress job = (Job) it.next();
             addJob(job);
         }

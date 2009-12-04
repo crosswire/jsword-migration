@@ -181,11 +181,9 @@ public final class LookAndFeelUtil {
     private static void customizeBDLookandFeel() {
         String currentLF = UIManager.getLookAndFeel().getClass().getName();
 
-        if (currentLF.indexOf("MetalLookAndFeel") != -1) //$NON-NLS-1$
-        {
+        if (currentLF.indexOf("MetalLookAndFeel") != -1) { //$NON-NLS-1$
             new MetalLFCustoms().initUIDefaults();
-        } else if (currentLF.indexOf("WindowsLookAndFeel") != -1) //$NON-NLS-1$
-        {
+        } else if (currentLF.indexOf("WindowsLookAndFeel") != -1) { //$NON-NLS-1$
             new WindowsLFCustoms().initUIDefaults();
         } else {
             new OtherLFCustoms().initUIDefaults();

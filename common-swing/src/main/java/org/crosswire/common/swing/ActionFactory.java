@@ -338,7 +338,7 @@ public class ActionFactory implements ActionListener, Actionable {
 
                     ResourceBundle nickname = null;
                     String nameValue = getActionString(resources, null, actionName, Action.NAME);
-                    
+
                     // We know this should never happen because we are merely rebuilding the key.
                     if (nameValue == null) {
                         log.warn("Missing original key for " + actionName + '.' + Action.NAME); //$NON-NLS-1$
@@ -474,8 +474,7 @@ public class ActionFactory implements ActionListener, Actionable {
             String modifierName = Action.ACCELERATOR_KEY + ".Modifiers";  //$NON-NLS-1$
             // Not every accelerator needs a modifier
             String modifierSpec = getActionString(resources, nicknames, actionName, modifierName);
-            if (modifierSpec == null)
-            {
+            if (modifierSpec == null) {
                 return accelerator;
             }
 
@@ -503,8 +502,7 @@ public class ActionFactory implements ActionListener, Actionable {
     private int getInteger(String str) throws NumberFormatException {
         int val = 0;
         int length = str.length();
-        if (str.startsWith("0x")) //$NON-NLS-1$
-        {
+        if (str.startsWith("0x")) { //$NON-NLS-1$
             val = Integer.parseInt(str.substring(2), 16);
         } else if (length == 1) {
             val = str.charAt(0);
@@ -522,16 +520,14 @@ public class ActionFactory implements ActionListener, Actionable {
         int keyModifier = 0;
         for (int j = 0; j < modifiers.length; j++) {
             String modifier = modifiers[j];
-            if ("ctrl".equalsIgnoreCase(modifier)) //$NON-NLS-1$
-            {
+            if ("ctrl".equalsIgnoreCase(modifier)) { //$NON-NLS-1$
                 // use this so MacOS users are happy
                 // It will map to the CMD key on Mac; CTRL otherwise.
                 keyModifier |= Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
-            } else if ("shift".equalsIgnoreCase(modifier)) //$NON-NLS-1$
-            {
+            } else if ("shift".equalsIgnoreCase(modifier)) { //$NON-NLS-1$
                 keyModifier |= InputEvent.SHIFT_MASK;
-            } else if ("alt".equalsIgnoreCase(modifier)) //$NON-NLS-1$
-            {
+            } else if ("alt".equalsIgnoreCase(modifier)) { //$NON-NLS-1$
+
                 keyModifier |= InputEvent.ALT_MASK;
             }
         }

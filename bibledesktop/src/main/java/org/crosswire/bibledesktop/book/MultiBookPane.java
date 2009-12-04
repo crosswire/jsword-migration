@@ -66,20 +66,19 @@ import org.crosswire.jsword.passage.PreferredKey;
 import org.crosswire.jsword.passage.Verse;
 
 /**
- * Builds a panel on which all the non-Bible books and their entries are visible.
+ * Builds a panel on which all the non-Bible books and their entries are
+ * visible.
  * 
  * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class MultiBookPane extends JSplitPane implements BookDataDisplay
-{
+public class MultiBookPane extends JSplitPane implements BookDataDisplay {
     /**
-     * Setup the GUI 
+     * Setup the GUI
      */
-    public MultiBookPane()
-    {
+    public MultiBookPane() {
         init();
 
         // This must come after the setViewportView() calls so scrolling works
@@ -89,8 +88,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
     /**
      * GUI initializer
      */
-    private void init()
-    {
+    private void init() {
         display = BookDataDisplayFactory.createBookDataDisplay();
 
         Component bookPicker = createBookPicker();
@@ -110,16 +108,15 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
         sptMain.setTopComponent(new JPanel());
         sptMain.setBottomComponent(scrDisplay);
 
-//        this.setResizeWeight(0.1D);
-//        this.setMinimumSize(new Dimension(0, 0));
+        // this.setResizeWeight(0.1D);
+        // this.setMinimumSize(new Dimension(0, 0));
         this.setOrientation(JSplitPane.VERTICAL_SPLIT);
         this.setTopComponent(bookPicker);
         this.setBottomComponent(sptMain);
         this.setBorder(null);
 
         Object thisUI = this.getUI();
-        if (thisUI instanceof javax.swing.plaf.basic.BasicSplitPaneUI)
-        {
+        if (thisUI instanceof javax.swing.plaf.basic.BasicSplitPaneUI) {
             ((javax.swing.plaf.basic.BasicSplitPaneUI) thisUI).getDivider().setBorder(null);
         }
     }
@@ -127,133 +124,117 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#clearBookData()
      */
-    public void clearBookData()
-    {
+    public void clearBookData() {
         setBookData(null, null);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#setBookData(org.crosswire.jsword.book.Book[], org.crosswire.jsword.passage.Key)
      */
-    public void setBookData(Book[] books, Key key)
-    {
+    public void setBookData(Book[] books, Key key) {
         display.setBookData(books, key);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#setCompareBooks(boolean)
      */
-    public void setCompareBooks(boolean compare)
-    {
+    public void setCompareBooks(boolean compare) {
         display.setCompareBooks(compare);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#refresh()
      */
-    public void refresh()
-    {
+    public void refresh() {
         display.refresh();
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getComponent()
      */
-    public Component getComponent()
-    {
+    public Component getComponent() {
         return this;
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#copy()
      */
-    public void copy()
-    {
+    public void copy() {
         display.copy();
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getKey()
      */
-    public Key getKey()
-    {
+    public Key getKey() {
         return (Key) dictionaryKeyList.getSelectedValue();
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#addKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
      */
-    public void addKeyChangeListener(KeyChangeListener listener)
-    {
+    public void addKeyChangeListener(KeyChangeListener listener) {
         display.addKeyChangeListener(listener);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeKeyChangeListener(org.crosswire.bibledesktop.passage.KeyChangeListener)
      */
-    public void removeKeyChangeListener(KeyChangeListener listener)
-    {
+    public void removeKeyChangeListener(KeyChangeListener listener) {
         display.removeKeyChangeListener(listener);
     }
 
     /* (non-Javadoc)
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
-    public void propertyChange(PropertyChangeEvent evt)
-    {
+    public void propertyChange(PropertyChangeEvent evt) {
         display.propertyChange(evt);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#addURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
      */
-    public void addURIEventListener(URIEventListener listener)
-    {
+    public void addURIEventListener(URIEventListener listener) {
         display.addURIEventListener(listener);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#removeURIEventListener(org.crosswire.bibledesktop.display.URIEventListener)
      */
-    public void removeURIEventListener(URIEventListener listener)
-    {
+    public void removeURIEventListener(URIEventListener listener) {
         display.removeURIEventListener(listener);
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getBooks()
      */
-    public Book[] getBooks()
-    {
-        return new Book[] {book};
+    public Book[] getBooks() {
+        return new Book[] {
+            book
+        };
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#getFirstBook()
      */
-    public Book getFirstBook()
-    {
+    public Book getFirstBook() {
         return book;
     }
 
     /**
      * See if the current dictionary has a mention of the word in question.
-     * LATER(joe): add a background task to highlight other dictionaries that have the word.
+     * LATER(joe): add a background task to highlight other dictionaries that
+     * have the word.
      */
-    public void setWord(String data)
-    {
-        if (book == null)
-        {
+    public void setWord(String data) {
+        if (book == null) {
             return;
         }
 
-        try
-        {
+        try {
             Key key = book.getKey(data);
             dictionaryKeyList.setSelectedValue(key, true);
-        }
-        catch (NoSuchKeyException ex)
-        {
+        } catch (NoSuchKeyException ex) {
             return;
         }
 
@@ -262,13 +243,10 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
     /**
      * Accessor for the current passage
      */
-    public void setKey(Key key)
-    {
-        if (key instanceof Passage)
-        {
+    public void setKey(Key key) {
+        if (key instanceof Passage) {
             Passage ref = (Passage) key;
-            if (ref.countVerses() > 0)
-            {
+            if (ref.countVerses() > 0) {
                 set.setVerse(ref.getVerseAt(0));
             }
         }
@@ -296,17 +274,16 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
         }     
     */
 
-    public void selectBook(Book selectedBook)
-    {
+    public void selectBook(Book selectedBook) {
         bookList.setSelectedValue(selectedBook, true);
     }
 
     /**
      * Create a book picker of all non-bibles
+     * 
      * @return The scrollable picker
      */
-    private Component createBookPicker()
-    {
+    private Component createBookPicker() {
         BookFilter filter = BookFilters.getNonBibles();
         BooksComboBoxModel mdlBooks = new BooksComboBoxModel(filter);
 
@@ -316,12 +293,9 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
         bookList.setModel(mdlBooks);
         bookList.setCellRenderer(new BookListCellRenderer());
         bookList.setPrototypeCellValue(BookListCellRenderer.PROTOTYPE_BOOK_NAME);
-        bookList.addListSelectionListener(new ListSelectionListener()
-        {
-            public void valueChanged(ListSelectionEvent ev)
-            {
-                if (ev.getValueIsAdjusting())
-                {
+        bookList.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent ev) {
+                if (ev.getValueIsAdjusting()) {
                     return;
                 }
 
@@ -337,17 +311,14 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
     /**
      * Build a tree for a GenBook
      */
-    private Component createCommentaryPicker()
-    {
+    private Component createCommentaryPicker() {
         JComboBox cboBooks = new JComboBox();
         JComboBox cboChaps = new JComboBox();
         JComboBox cboVerse = new JComboBox();
         set = new BibleComboBoxModelSet(cboBooks, cboChaps, cboVerse);
 
-        set.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ev)
-            {
+        set.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
                 updateDisplay();
             }
         });
@@ -366,13 +337,10 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
     /**
      * Build a tree for a GenBook
      */
-    private Component createDictionaryPicker()
-    {
+    private Component createDictionaryPicker() {
         dictionaryKeyList = new JList();
-        dictionaryKeyList.addListSelectionListener(new ListSelectionListener()
-        {
-            public void valueChanged(ListSelectionEvent ev)
-            {
+        dictionaryKeyList.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent ev) {
                 newEntry();
             }
         });
@@ -384,18 +352,15 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
     /**
      * Build a tree for a GenBook
      */
-    private Component createGenBookPicker()
-    {
+    private Component createGenBookPicker() {
         genBookKeyTree = new JTree();
         genBookKeyTree.setModel(new KeyTreeModel(null));
         genBookKeyTree.setShowsRootHandles(true);
         genBookKeyTree.setRootVisible(false);
         genBookKeyTree.putClientProperty("JTree.lineStyle", "Angled"); //$NON-NLS-1$//$NON-NLS-2$
         genBookKeyTree.setCellRenderer(new KeyTreeCellRenderer());
-        genBookKeyTree.addTreeSelectionListener(new TreeSelectionListener()
-        {
-            public void valueChanged(TreeSelectionEvent ev)
-            {
+        genBookKeyTree.addTreeSelectionListener(new TreeSelectionListener() {
+            public void valueChanged(TreeSelectionEvent ev) {
                 selected();
             }
         });
@@ -408,22 +373,17 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
     /**
      * Called when someone selects a new Dictionary
      */
-    /*private*/ final void newBook()
-    {
+    /*private*/final void newBook() {
         // First ensure that all the pickers make sense if the user
         // unselects the book
-        if (book != null)
-        {
+        if (book != null) {
             KeyType currentCategory = book.getBookMetaData().getKeyType();
-            if (KeyType.LIST.equals(currentCategory))
-            {
+            if (KeyType.LIST.equals(currentCategory)) {
                 // Don't leave the scroller in the middle of the list!
                 dictionaryKeyList.ensureIndexIsVisible(0);
                 // Make sure that the list of keys is empty.
                 dictionaryKeyList.setModel(new KeyListListModel(null));
-            }
-            else if (KeyType.TREE.equals(currentCategory))
-            {
+            } else if (KeyType.TREE.equals(currentCategory)) {
                 // Don't leave the scroller in the middle of the list!
                 genBookKeyTree.scrollRowToVisible(0);
 
@@ -436,27 +396,23 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
         display.clearBookData();
 
         Object selected = bookList.getSelectedValue();
-        if (selected != null)
-        {
+        if (selected != null) {
             Book selectedBook = (Book) selected;
             KeyType category = selectedBook.getBookMetaData().getKeyType();
-            //divider snaps back to its starting point when a new component is set
+            // divider snaps back to its starting point when a new component is
+            // set
             int dividerLocation = sptMain.getDividerLocation();
-            if (KeyType.VERSE.equals(category))
-            {
+            if (KeyType.VERSE.equals(category)) {
                 updateDisplay();
                 sptMain.setTopComponent(commentaryPicker);
-            }
-            else if (KeyType.LIST.equals(category))
-            {
+            } else if (KeyType.LIST.equals(category)) {
                 book = selectedBook;
                 Key key = book.getGlobalKeyList();
 
                 KeyListListModel model = new KeyListListModel(key);
                 dictionaryKeyList.setModel(model);
 
-                if (book instanceof PreferredKey)
-                {
+                if (book instanceof PreferredKey) {
                     PreferredKey pref = (PreferredKey) book;
                     Key prefkey = pref.getPreferred();
 
@@ -464,9 +420,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
                 }
 
                 sptMain.setTopComponent(dictionaryKeyScroller);
-            }
-            else // KeyType.TREE.equals(category)
-            {
+            } else  { // KeyType.TREE.equals(category)
                 book = selectedBook;
                 Key key = book.getGlobalKeyList();
 
@@ -483,44 +437,43 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
     /**
      * 
      */
-    /*protected*/ final void updateDisplay()
-    {
+    /*protected*/final void updateDisplay() {
         Book selectedBook = (Book) bookList.getSelectedValue();
-        if (selectedBook == null)
-        {
+        if (selectedBook == null) {
             log.warn("no selected book"); //$NON-NLS-1$
             return;
         }
 
         Verse verse = set.getVerse();
-        display.setBookData(new Book[] {selectedBook}, verse);
+        display.setBookData(new Book[] {
+            selectedBook
+        }, verse);
     }
 
     /**
      * Called when someone selects a new entry from the current dictionary
      */
-    /*private*/ final void newEntry()
-    {
+    /*private*/final void newEntry() {
         Key key = (Key) dictionaryKeyList.getSelectedValue();
-        if (key != null)
-        {
-            display.setBookData(new Book[] {book}, key);
+        if (key != null) {
+            display.setBookData(new Book[] {
+                book
+            }, key);
         }
     }
 
     /**
      * Something has been (un)selected in the tree
      */
-    /*private*/ void selected()
-    {
+    /*private*/void selected() {
         TreePath path = genBookKeyTree.getSelectionPath();
 
-        if (path != null)
-        {
+        if (path != null) {
             KeyTreeNode node = (KeyTreeNode) path.getLastPathComponent();
-            if (node != null)
-            {
-                display.setBookData(new Book[] {book}, node.getKey());
+            if (node != null) {
+                display.setBookData(new Book[] {
+                    book
+                }, node.getKey());
             }
         }
 
@@ -533,8 +486,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException
-    {
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         // We don't serialize views
         display = BookDataDisplayFactory.createBookDataDisplay();
         book = null;

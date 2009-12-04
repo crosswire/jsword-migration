@@ -158,13 +158,13 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         Translations.instance().setLocale();
 
         // Load the configuration. And create the lists of installed books.
-        // This has to be done before any gui components are created
+        // This has to be done before any GUI components are created
         // (Including the splash).
         // This includes code that is invoked by it.
         // This has to be done after setting the locale.
         generateConfig();
 
-        // Make this be the root frame of optiondialogs
+        // Make this be the root frame of OptionDialogs
         JOptionPane.setRootFrame(this);
 
         // Grab errors
@@ -813,13 +813,13 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
                     }
                 }
             });
-        }
-        // Something went wrong before we've managed to get on our feet.
-        // so we want the best possible shot at working out what failed.
-        catch (IOException e) {
+        } catch (IOException e) {
+            // Something went wrong before we've managed to get on our feet.
+            // so we want the best possible shot at working out what failed.
             e.printStackTrace(System.err);
             ExceptionPane.showExceptionDialog(null, e);
         } catch (JDOMException e) {
+            // Ditto
             e.printStackTrace(System.err);
             ExceptionPane.showExceptionDialog(null, e);
         }

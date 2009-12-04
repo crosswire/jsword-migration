@@ -302,8 +302,7 @@ public final class ExceptionPane extends JPanel {
 
         // The message in the exception
         String msg = ex.getMessage();
-        if (msg == null || msg.equals("")) //$NON-NLS-1$
-        {
+        if (msg == null || msg.equals("")) { //$NON-NLS-1$
             msg = UserMsg.NO_DESC.toString();
         }
         String orig = XMLUtil.escape(msg);

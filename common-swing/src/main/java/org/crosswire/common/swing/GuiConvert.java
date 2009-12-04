@@ -54,8 +54,7 @@ public final class GuiConvert {
      * @return the converted data
      */
     public static Font string2Font(String value) {
-        if (value == null || value.equals("")) //$NON-NLS-1$
-        {
+        if (value == null || value.equals("")) { //$NON-NLS-1$
             return null;
         }
 
@@ -124,8 +123,7 @@ public final class GuiConvert {
      * @return the converted data
      */
     public static Color string2Color(String value) {
-        if (value == null || value.equals("")) //$NON-NLS-1$
-        {
+        if (value == null || value.equals("")) { //$NON-NLS-1$
             return null;
         }
 

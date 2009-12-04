@@ -345,10 +345,13 @@ public class SitePane extends JPanel {
 
         try {
             IndexManager imanager = IndexManagerFactory.getIndexManager();
-            if (imanager.isIndexed(book) && CWOptionPane.showConfirmDialog(this, Msg.CONFIRM_UNINSTALL_BOOK.toString(new Object[] {
-                book.getName()
-            }), Msg.CONFIRM_UNINSTALL_TITLE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                imanager.deleteIndex(book);
+            if (imanager.isIndexed(book)) {
+                String formattedMsg = Msg.CONFIRM_UNINSTALL_BOOK.toString(new Object[] {
+                    book.getName()
+                });
+                if (CWOptionPane.showConfirmDialog(this, formattedMsg, Msg.CONFIRM_UNINSTALL_TITLE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    imanager.deleteIndex(book);
+                }
             }
             actions.getAction(UNINDEX).setEnabled(imanager.isIndexed(book));
         } catch (BookException e) {
@@ -417,9 +420,10 @@ public class SitePane extends JPanel {
                 msg = Msg.MB_SIZE;
             }
 
-            if (CWOptionPane.showConfirmDialog(this, msg.toString(new Object[] {
+            String formattedMsg = msg.toString(new Object[] {
                     name.getName(), new Float(size)
-            }), Msg.CONFIRMATION_TITLE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            });
+            if (CWOptionPane.showConfirmDialog(this, formattedMsg, Msg.CONFIRMATION_TITLE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 installer.install(name);
             }
         } catch (InstallException ex) {

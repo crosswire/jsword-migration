@@ -158,13 +158,13 @@
       <property name="option" value="text"/>
     </module>
     <module name="LeftCurly">
-      <property name="option" value="nl"/>
+      <property name="option" value="nlow"/>
     </module>
     <module name="NeedBraces">
       <property name="tokens" value="LITERAL_DO, LITERAL_ELSE, LITERAL_FOR, LITERAL_WHILE"/> <!-- LITERAL_IF, -->
     </module>
     <module name="RightCurly">
-      <property name="option" value="alone"/>
+      <property name="option" value="same"/>
     </module>
     <module name="AvoidNestedBlocks">
       <property name="allowInSwitchCase" value="false"/>
@@ -313,6 +313,7 @@
     <module name="RegexpSinglelineJava">
       <property name="format" value="\s$"/>
       <property name="ignoreComments" value="true"/>
+      <property name="message" value="Line has trailing spaces."/>
     </module>
 
     <module name="TodoComment"/>
