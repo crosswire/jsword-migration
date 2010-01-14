@@ -1085,13 +1085,13 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     private static final String SPLASH_PROPS = "splash"; //$NON-NLS-1$
 
     // Strings for URL protocols/URI schemes
-    private static final String BIBLE_PROTOCOL = "bible"; //$NON-NLS-1$
-    private static final String DICTIONARY_PROTOCOL = "dict"; //$NON-NLS-1$
-    private static final String GREEK_DEF_PROTOCOL = "gdef"; //$NON-NLS-1$
-    private static final String HEBREW_DEF_PROTOCOL = "hdef"; //$NON-NLS-1$
-    private static final String GREEK_MORPH_PROTOCOL = "gmorph"; //$NON-NLS-1$
-    private static final String HEBREW_MORPH_PROTOCOL = "hmorph"; //$NON-NLS-1$
-    private static final String COMMENTARY_PROTOCOL = "comment"; //$NON-NLS-1$
+    public static final String BIBLE_PROTOCOL = "bible"; //$NON-NLS-1$
+    public static final String DICTIONARY_PROTOCOL = "dict"; //$NON-NLS-1$
+    public static final String GREEK_DEF_PROTOCOL = "gdef"; //$NON-NLS-1$
+    public static final String HEBREW_DEF_PROTOCOL = "hdef"; //$NON-NLS-1$
+    public static final String GREEK_MORPH_PROTOCOL = "gmorph"; //$NON-NLS-1$
+    public static final String HEBREW_MORPH_PROTOCOL = "hmorph"; //$NON-NLS-1$
+    public static final String COMMENTARY_PROTOCOL = "comment"; //$NON-NLS-1$
 
     // Empty String
     private static final String EMPTY_STRING = ""; //$NON-NLS-1$
