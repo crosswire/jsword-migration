@@ -8,7 +8,7 @@
   <property name="dependency.jar"     value="../bibledesktop/${target.jar}"/>
 
   <!--=======================================================================-->
-  <property name="source.web"       value="${source.root}/webapp"/>
+  <property name="source.web"       value="${source.root}/main/webapp"/>
 
   <property name="webapp.jsword"    value="${target.root}/webapp"/> <!-- override -->
   <property name="jnlp.hostname"    value="localhost:8080"/> <!-- override -->

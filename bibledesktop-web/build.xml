@@ -6,7 +6,7 @@
   <property name="dependency.install" value="../${dependency}/${target.root}/${dependency}"/>
 
   <!--=======================================================================-->
-  <property name="source.web"          value="${source.root}/webapp"/>
+  <property name="source.web"          value="${source.root}/main/webapp"/>
   <property name="webapp.bibledesktop" value="${target.root}/webapp"/> <!-- override -->
 
   <!--=======================================================================-->
