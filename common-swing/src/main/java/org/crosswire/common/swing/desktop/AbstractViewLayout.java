@@ -34,7 +34,6 @@ import javax.swing.event.EventListenerList;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.swing.desktop.event.ViewEvent;
 import org.crosswire.common.swing.desktop.event.ViewEventListener;
-import org.crosswire.common.util.Iterable;
 
 /**
  * Abstract manager of how we layout views.
@@ -44,7 +43,7 @@ import org.crosswire.common.util.Iterable;
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public abstract class AbstractViewLayout implements Viewable, Iterable {
+public abstract class AbstractViewLayout implements Viewable {
     /**
      * This constructor is protected because it only needs to be seen by the sub
      * classes

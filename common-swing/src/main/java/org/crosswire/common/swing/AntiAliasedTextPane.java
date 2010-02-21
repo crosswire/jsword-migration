@@ -28,8 +28,8 @@ import java.awt.RenderingHints;
 import javax.swing.JTextPane;
 
 /**
- * An extension of JTextPane that does Anti-Aliasing. JDK15(joe): we will need
- * to take a bit of care not clashing with J2SE5 AA
+ * An extension of JTextPane that does Anti-Aliasing.
+ * JDK15(joe): we will need to take a bit of care not clashing with J2SE5 AA
  * 
  * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.

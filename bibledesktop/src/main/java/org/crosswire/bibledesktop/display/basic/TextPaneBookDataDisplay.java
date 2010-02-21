@@ -25,7 +25,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.text.MessageFormat;
@@ -76,7 +75,7 @@ import org.xml.sax.SAXException;
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListener, PropertyChangeListener {
+public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListener {
 
     /**
      * Simple ctor
