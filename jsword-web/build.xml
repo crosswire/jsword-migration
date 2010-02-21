@@ -8,9 +8,9 @@
   <property name="dependency.jar"     value="../bibledesktop/${target.jar}"/>
 
   <!--=======================================================================-->
-  <property name="source.web"       value="${source.root}/web"/>
+  <property name="source.web"       value="${source.root}/webapp"/>
 
-  <property name="webapp.jsword"    value="${target.root}/web"/> <!-- override -->
+  <property name="webapp.jsword"    value="${target.root}/webapp"/> <!-- override -->
   <property name="jnlp.hostname"    value="localhost:8080"/> <!-- override -->
   <property name="ftp.base"         value="${basedir}/${target.root}/download"/> <!-- override -->
   <property name="ftp.prefix"       value="../download"/> <!-- override -->
