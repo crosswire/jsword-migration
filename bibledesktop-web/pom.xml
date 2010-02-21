@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <artifactId>jsword-base</artifactId>
+    <groupId>org.crosswire</groupId>
+    <version>1.6.1-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.crosswire.cv_accounting</groupId>
+  <artifactId>bibldesktop-web</artifactId>
+  <packaging>war</packaging>
+  <version>${parent.version}</version>
+  <name>bibledesktop-web</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <properties>
+    <context.path>${project.artifactId}</context.path>
+  </properties>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>tomcat-maven-plugin</artifactId>
+        <configuration>
+          <server>${tomcat.server}</server>
+          <url>${tomcat.manager.url}</url>
+          <!-- Set this context path property in the profile you're using -->
+          <path>${context.path}</path>
+        </configuration>
+      </plugin>
+            <plugin>
+                <groupId>org.glassfish.maven.plugin</groupId>
+                <artifactId>maven-glassfish-plugin</artifactId>
+                <version>2.1</version>
+            </plugin>
+      
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <!-- This profile sets up a context.xml to point to your target/finalName
+       folder.  So,
+       when you call tomcat:deploy, you end up deploying the context.xml
+       instead of the whole WAR.  You should only need to do this once.  This
+       speeds up the performance of development deployments because now we only
+       have to compile our code, not deploy an entire WAR to tomcat.
+
+       Please note that any time you do a clean, you will need to do a tomcat:deploy
+       again.  But, you do not need to do a tomcat:undeploy, because tomcat (v6)
+       automatically removes the context when you remove the context directory.
+
+       I personally (Trent) put tomcat in my own group (trenta) so that it
+       has access to my stuff.  That way, it has full access to read my
+       target directory.
+
+       Example:
+         mvn -Plocal package tomcat:deploy
+         OR
+         mvn -Plocal package tomcat:deploy
+
+       subsequent builds...
+         mvn -Plocal package
+         OR
+         mvn -Plocal package
+      -->
+      <id>local</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>tomcat-maven-plugin</artifactId>
+            <configuration>
+              <mode>context</mode>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.1-alpha-1</version>
+            <configuration>
+              <webResources>
+                <resource>
+                  <directory>src/main/</directory>
+                  <!-- override the destination directory for this resource -->
+                  <targetPath>META-INF</targetPath>
+                  <!-- enable filtering -->
+                  <filtering>true</filtering>
+                  <includes>
+                    <include>context.xml</include>
+                  </includes>
+                </resource>
+              </webResources>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
+
