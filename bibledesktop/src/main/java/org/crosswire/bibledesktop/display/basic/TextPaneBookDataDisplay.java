@@ -39,7 +39,6 @@ import javax.swing.event.HyperlinkListener;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
-import javax.swing.text.html.HTMLEditorKit;
 import javax.xml.transform.TransformerException;
 
 import org.crosswire.bibledesktop.book.install.BookFont;
@@ -85,7 +84,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
         converter = ConverterFactory.getConverter();
         txtView = new AntiAliasedTextPane();
         txtView.setEditable(false);
-        txtView.setEditorKit(new HTMLEditorKit());
+        txtView.setEditorKit(new LazyHTMLEditorKit());
         txtView.addHyperlinkListener(this);
         style = txtView.addStyle(HYPERLINK_STYLE, null);
         styledDoc = txtView.getStyledDocument();
@@ -93,8 +92,8 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
         lastLength = -1;
         
         this.addURIEventListener(
-                new URITipMgr(txtView, 
-                        new Dimension(400,300)));
+                new ActiveURITip(txtView,
+                      new Dimension(400,300)));
     }
 
     
