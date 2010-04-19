@@ -43,9 +43,11 @@
       <version>${parent.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.crosswire</groupId>
+      <groupId>com.sun</groupId>
       <artifactId>jlfgr</artifactId>
       <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/jar/jlfgr-1.0/jlfgr-1_0.jar</systemPath>
     </dependency>
   </dependencies>
   <profiles>
@@ -76,7 +78,7 @@
       <activation>
         <property>
           <name>os.name</name>
-          <value>Mac OS X</value> <!-- fix this to mac os-->
+          <value>Mac OS X</value>
         </property>
       </activation>
       <dependencies>

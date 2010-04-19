@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context docBase="${project.build.directory}/${pom.build.finalName}/"
+         antiResourceLocking="false" privileged="false" reloadable="true"/>

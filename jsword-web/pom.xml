@@ -8,10 +8,10 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.crosswire.cv_accounting</groupId>
-  <artifactId>bibledesktop-web</artifactId>
+  <artifactId>jsword-web</artifactId>
   <packaging>war</packaging>
   <version>${parent.version}</version>
-  <name>bibledesktop-web</name>
+  <name>jsword-web</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
@@ -20,6 +20,12 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.crosswire</groupId>
+      <artifactId>jsword-common</artifactId>
+      <version>${parent.version}</version>
+    </dependency>
+    
   </dependencies>
   <properties>
     <context.path>${project.artifactId}</context.path>

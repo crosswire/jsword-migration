@@ -9,10 +9,10 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.crosswire</groupId>
-  <artifactId>common-aqua</artifactId>
+  <artifactId>jsword-common-aqua</artifactId>
   <packaging>jar</packaging>
   <version>${parent.version}</version>
-  <name>common-aqua</name>
+  <name>jsword-common-aqua</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
@@ -31,6 +31,7 @@
       <groupId>org.crosswire</groupId>
       <artifactId>jsword-common-swing</artifactId>
       <version>${parent.version}</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
   <build>
