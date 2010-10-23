@@ -31,9 +31,9 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 final class Msg extends MsgBase {
-    static final Msg PLAF_CHANGE = new Msg("LookAndFeelUtil.PlafChange"); //$NON-NLS-1$
-    static final Msg KEYS = new Msg("MapTableModel.Keys"); //$NON-NLS-1$
-    static final Msg VALUES = new Msg("MapTableModel.Values"); //$NON-NLS-1$
+    static final Msg PLAF_CHANGE = new Msg("LookAndFeelUtil.PlafChange");
+    static final Msg KEYS = new Msg("MapTableModel.Keys");
+    static final Msg VALUES = new Msg("MapTableModel.Values");
 
     /**
      * Passthrough ctor

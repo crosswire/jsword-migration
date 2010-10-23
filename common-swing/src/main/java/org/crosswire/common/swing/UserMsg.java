@@ -31,24 +31,43 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 final class UserMsg extends MsgBase {
-    static final UserMsg ERROR_OCCURED = new UserMsg("ExceptionPane.ErrorOccurred"); //$NON-NLS-1$
-    static final UserMsg DETAILS = new UserMsg("ExceptionPane.Details"); //$NON-NLS-1$
-    static final UserMsg NO_FILE = new UserMsg("ExceptionPane.NoFile"); //$NON-NLS-1$
-    static final UserMsg ERROR = new UserMsg("ExceptionPane.Error"); //$NON-NLS-1$
-    static final UserMsg CAUSED_BY = new UserMsg("ExceptionPane.CausedBy"); //$NON-NLS-1$
-    static final UserMsg NO_DESC = new UserMsg("ExceptionPane.NoDesc"); //$NON-NLS-1$
-    static final UserMsg SOURCE_NOT_FOUND = new UserMsg("ExceptionPane.SourceNotFound"); //$NON-NLS-1$
-    static final UserMsg SOURCE_FOUND = new UserMsg("ExceptionPane.SourceFound"); //$NON-NLS-1$
-    static final UserMsg SOURCE_ATTEMPT = new UserMsg("ExceptionPane.SourceAttempt"); //$NON-NLS-1$
-
-    static final UserMsg SELECT_FONT = new UserMsg("FontChooser.SelectFont"); //$NON-NLS-1$
-    static final UserMsg BOLD = new UserMsg("FontChooser.Bold"); //$NON-NLS-1$
-    static final UserMsg ITALIC = new UserMsg("FontChooser.Italic"); //$NON-NLS-1$
 
     /**
-     * Passthrough ctor
+     * Get the internationalized text, but return key if key is unknown.
+     * 
+     * @param key
+     * @return the internationalized text
      */
-    private UserMsg(String name) {
-        super(name);
+    public static String gettext(String key)
+    {
+        return msg.lookup(key);
     }
+
+    /**
+     * Get the internationalized text, but return key if key is unknown.
+     * The text requires one parameter to be passed.
+     * 
+     * @param key
+     * @param param
+     * @return the formatted, internationalized text
+     */
+    public static String gettext(String key, Object param)
+    {
+        return msg.toString(key, param);
+    }
+
+    /**
+     * Get the internationalized text, but return key if key is unknown.
+     * The text requires one parameter to be passed.
+     * 
+     * @param key
+     * @param param
+     * @return the formatted, internationalized text
+     */
+    public static String gettext(String key, Object[] params)
+    {
+        return msg.toString(key, params);
+    }
+
+    private static MsgBase msg = new UserMsg();
 }

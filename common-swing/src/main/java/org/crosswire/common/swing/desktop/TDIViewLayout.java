@@ -46,9 +46,9 @@ public class TDIViewLayout extends AbstractViewLayout {
     public TDIViewLayout() {
         super();
         tabs = new JTabbedPane();
-        if (UIManager.getDefaults().containsKey("BibleViewPane.TabbedPaneUI")) //$NON-NLS-1$
+        if (UIManager.getDefaults().containsKey("BibleViewPane.TabbedPaneUI"))
         {
-            tabs.setUI((TabbedPaneUI) UIManager.get("BibleViewPane.TabbedPaneUI")); //$NON-NLS-1$
+            tabs.setUI((TabbedPaneUI) UIManager.get("BibleViewPane.TabbedPaneUI"));
         }
         tabs.setMinimumSize(new Dimension(0, 0));
         GuiUtil.applyDefaultOrientation(tabs);

@@ -59,7 +59,7 @@ public class NumberCellRenderer extends DefaultListCellRenderer {
         setToolTipText(null);
 
         if (value == null) {
-            setText(""); //$NON-NLS-1$
+            setText("");
             setEnabled(false);
         } else {
             setText(shaper.shape(value.toString()));

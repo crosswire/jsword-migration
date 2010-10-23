@@ -66,11 +66,13 @@ public class FontChooser extends JPanel {
         };
 
         font = DEFAULT_FONT.getFont();
+        name = new FontNameComboBox();
         name.setModel(new CustomComboBoxModel());
         name.setRenderer(new CustomListCellRenderer());
         name.setSelectedItem(font.deriveFont(Font.PLAIN, RENDERED_FONT_SIZE));
         name.addItemListener(changer);
 
+        size = new JComboBox();
         size.setRenderer(new NumberCellRenderer());
         for (int i = MIN_FONT_SIZE; i <= MAX_FONT_SIZE; i++) {
             size.addItem(new Integer(i));
@@ -79,9 +81,13 @@ public class FontChooser extends JPanel {
         size.setSelectedItem(new Integer(RENDERED_FONT_SIZE));
         size.addItemListener(changer);
 
+        // TRANSLATOR: This is an option for a bold font.
+        bold = new JCheckBox(UserMsg.gettext("Bold"));
         bold.setSelected(font.isBold());
         bold.addItemListener(changer);
 
+        // TRANSLATOR: This is an option for an italic font.
+        italic = new JCheckBox(UserMsg.gettext("Italic"));
         italic.setSelected(font.isItalic());
         italic.addItemListener(changer);
 
@@ -112,14 +118,14 @@ public class FontChooser extends JPanel {
 
         final ActionFactory actions = new ActionFactory(FontChooser.class, fontc);
 
-        JButton ok = actions.createJButton("OK", new ActionListener() //$NON-NLS-1$
+        JButton ok = actions.createJButton("OK", new ActionListener()
                 {
                     public void actionPerformed(ActionEvent ex) {
                         fontc.dialog.setVisible(false);
                     }
                 });
 
-        JButton cancel = actions.createJButton("Cancel", new ActionListener() //$NON-NLS-1$
+        JButton cancel = actions.createJButton("Cancel", new ActionListener()
                 {
                     public void actionPerformed(ActionEvent ex) {
                         fontc.dialog.setVisible(false);
@@ -132,7 +138,8 @@ public class FontChooser extends JPanel {
         buttons.add(ok);
         buttons.add(cancel);
 
-        fontc.setBorder(BorderFactory.createTitledBorder(UserMsg.SELECT_FONT.toString()));
+        // TRANSLATOR: Label indicating that the user should select a font.
+        fontc.setBorder(BorderFactory.createTitledBorder(UserMsg.gettext("Select Font")));
 
         fontc.dialog.getRootPane().setDefaultButton(ok);
         fontc.dialog.getContentPane().setLayout(new BorderLayout());
@@ -217,7 +224,7 @@ public class FontChooser extends JPanel {
                 // We need to exclude certain fonts that cause the JVM to crash.
                 // BUG_PARADE(DMS): 6376296
                 // It will be fixed in Java 1.6 (Mustang)
-                if (names[i].equals("padmaa") || names[i].equals("Rekha") || names[i].indexOf("Lohit") > -1 || names[i].indexOf("aakar") > -1) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                if (names[i].equals("padmaa") || names[i].equals("Rekha") || names[i].indexOf("Lohit") > -1 || names[i].indexOf("aakar") > -1)
                 {
                     continue;
                 }
@@ -307,7 +314,7 @@ public class FontChooser extends JPanel {
         public Component getListCellRendererComponent(JList listbox, Object value, int index, boolean selected, boolean focus) {
             Font defaultFont = DEFAULT_FONT.getFont();
             if (value == null) {
-                setText("<null>"); //$NON-NLS-1$
+                setText("<null>");
                 setFont(defaultFont);
             } else {
                 Font afont = (Font) value;
@@ -349,7 +356,7 @@ public class FontChooser extends JPanel {
         private static final long serialVersionUID = -7394816349446551753L;
     }
 
-    public static final String PROPERTY_STYLE = "style"; // //$NON-NLS-1$
+    public static final String PROPERTY_STYLE = "style";
 
     /**
      * A label that we can use to get defaults
@@ -384,22 +391,22 @@ public class FontChooser extends JPanel {
     /**
      * The choice of font name
      */
-    protected JComboBox name = new FontNameComboBox();
+    protected JComboBox name;
 
     /**
      * Bold font?
      */
-    protected JCheckBox bold = new JCheckBox(UserMsg.BOLD.toString());
+    protected JCheckBox bold;
 
     /**
      * Italic font?
      */
-    protected JCheckBox italic = new JCheckBox(UserMsg.ITALIC.toString());
+    protected JCheckBox italic;
 
     /**
      * The font size
      */
-    protected JComboBox size = new JComboBox();
+    protected JComboBox size;
 
     /**
      * Are we doing some processing, that makes us not want to send events?

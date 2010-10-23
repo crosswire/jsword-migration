@@ -230,9 +230,9 @@ public class ToolBar extends JToolBar {
         is.defaultReadObject();
     }
 
-    private static final String TOOLBAR_TOGGLE = "ToolBarToggle"; //$NON-NLS-1$
-    private static final String TOOLBAR_TEXT = "ToolBarText"; //$NON-NLS-1$
-    private static final String TOOLBAR_LARGE = "ToolBarLarge"; //$NON-NLS-1$
+    private static final String TOOLBAR_TOGGLE = "ToolBarToggle";
+    private static final String TOOLBAR_TEXT = "ToolBarText";
+    private static final String TOOLBAR_LARGE = "ToolBarLarge";
 
     /**
      * The frame in which the toolbar is shown. It must be border layout with

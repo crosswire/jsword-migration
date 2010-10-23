@@ -105,8 +105,8 @@ public class BooleanField extends JPanel implements Field {
         return this;
     }
 
-    private static final String YES = "Yes"; //$NON-NLS-1$
-    private static final String NO = "No"; //$NON-NLS-1$
+    private static final String YES = "Yes";
+    private static final String NO = "No";
 
     /**
      * The 'on' button

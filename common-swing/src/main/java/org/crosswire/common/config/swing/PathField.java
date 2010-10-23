@@ -64,7 +64,7 @@ public class PathField extends JPanel implements Field {
 
         JPanel buttons = new JPanel(new FlowLayout());
 
-        list.setFont(new Font("Monospaced", Font.PLAIN, 12)); //$NON-NLS-1$
+        list.setFont(new Font("Monospaced", Font.PLAIN, 12));
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         // list.setPreferredScrollableViewportSize(new Dimension(30, 100));
 
@@ -197,9 +197,9 @@ public class PathField extends JPanel implements Field {
         is.defaultReadObject();
     }
 
-    private static final String ADD = "AddPathEntry"; //$NON-NLS-1$
-    private static final String REMOVE = "RemovePathEntry"; //$NON-NLS-1$
-    private static final String UPDATE = "UpdatePathEntry"; //$NON-NLS-1$
+    private static final String ADD = "AddPathEntry";
+    private static final String REMOVE = "RemovePathEntry";
+    private static final String UPDATE = "UpdatePathEntry";
 
     private transient ActionFactory actions;
 

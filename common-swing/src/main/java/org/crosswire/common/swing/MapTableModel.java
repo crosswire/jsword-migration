@@ -98,7 +98,7 @@ public class MapTableModel extends AbstractTableModel {
     public void add(String key, String aValue) {
         String value = aValue;
         if (value == null) {
-            value = ""; //$NON-NLS-1$
+            value = "";
         }
 
         if (key == null || key.length() == 0) {

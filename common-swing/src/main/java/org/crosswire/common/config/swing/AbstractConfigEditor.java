@@ -108,7 +108,7 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
             dialog.getContentPane().add(this);
 
             // set the name for Layout Persistence
-            dialog.setName("Config"); //$NON-NLS-1$
+            dialog.setName("Config");
             dialog.addWindowListener(new WindowAdapter() {
                 /*
                  * (non-Javadoc)
@@ -275,7 +275,7 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
             String value = field.getValue();
 
             if (value == null) {
-                log.error("null value from key=" + key); //$NON-NLS-1$
+                log.error("null value from key=" + key);
             }
 
             config.setLocal(key, value);
@@ -299,7 +299,7 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
             String value = config.getLocal(key);
 
             if (field == null) {
-                log.error("Null field from key=" + key + ", skipping setting value=" + value); //$NON-NLS-1$ //$NON-NLS-2$
+                log.error("Null field from key=" + key + ", skipping setting value=" + value);
             } else {
                 field.setValue(value);
             }
@@ -345,12 +345,12 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
     /**
      * The large task icon
      */
-    protected static final ImageIcon TASK_ICON_LARGE = GuiUtil.getIcon("toolbarButtonGraphics/general/Preferences24.gif"); //$NON-NLS-1$
+    protected static final ImageIcon TASK_ICON_LARGE = GuiUtil.getIcon("toolbarButtonGraphics/general/Preferences24.gif");
 
     /**
      * The small task icon
      */
-    protected static final ImageIcon TASK_ICON_SMALL = GuiUtil.getIcon("toolbarButtonGraphics/general/Preferences16.gif"); //$NON-NLS-1$
+    protected static final ImageIcon TASK_ICON_SMALL = GuiUtil.getIcon("toolbarButtonGraphics/general/Preferences16.gif");
 
     /**
      * Serialization ID

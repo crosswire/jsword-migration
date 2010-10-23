@@ -166,7 +166,7 @@ public abstract class AbstractLayout implements LayoutManager2, Serializable {
      */
     /* @Override */
     public String toString() {
-        return getClass().getName() + "[hgap=" + hgap + ",vgap=" + vgap + ']'; //$NON-NLS-1$ //$NON-NLS-2$
+        return getClass().getName() + "[hgap=" + hgap + ",vgap=" + vgap + ']';
     }
 
     /**

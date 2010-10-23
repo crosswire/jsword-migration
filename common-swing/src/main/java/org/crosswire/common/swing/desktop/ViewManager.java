@@ -456,17 +456,17 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
         closeOthers(getSelected());
     }
 
-    public static final String TAB_MODE = "TabMode"; //$NON-NLS-1$
-    public static final String WINDOW_MODE = "WindowMode"; //$NON-NLS-1$
-    public static final String NEW_TAB = "NewTab"; //$NON-NLS-1$
-    public static final String CLOSE_VIEW = "CloseView"; //$NON-NLS-1$
-    public static final String CLEAR_VIEW = "ClearView"; //$NON-NLS-1$
-    public static final String CLOSE_ALL_VIEWS = "CloseAllViews"; //$NON-NLS-1$
-    public static final String CLOSE_OTHER_VIEWS = "CloseOtherViews"; //$NON-NLS-1$
-    public static final String OPEN = "Open"; //$NON-NLS-1$
-    public static final String SAVE = "Save"; //$NON-NLS-1$
-    public static final String SAVE_AS = "SaveAs"; //$NON-NLS-1$
-    public static final String SAVE_ALL = "SaveAll"; //$NON-NLS-1$
+    public static final String TAB_MODE = "TabMode";
+    public static final String WINDOW_MODE = "WindowMode";
+    public static final String NEW_TAB = "NewTab";
+    public static final String CLOSE_VIEW = "CloseView";
+    public static final String CLEAR_VIEW = "ClearView";
+    public static final String CLOSE_ALL_VIEWS = "CloseAllViews";
+    public static final String CLOSE_OTHER_VIEWS = "CloseOtherViews";
+    public static final String OPEN = "Open";
+    public static final String SAVE = "Save";
+    public static final String SAVE_AS = "SaveAs";
+    public static final String SAVE_ALL = "SaveAll";
 
     /**
      * The initial layout state

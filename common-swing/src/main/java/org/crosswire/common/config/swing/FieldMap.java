@@ -67,7 +67,7 @@ public final class FieldMap {
                 if (clazz != null) {
                     field = (Field) clazz.newInstance();
                 } else {
-                    log.warn("field type (" + type + ") unregistered."); //$NON-NLS-1$ //$NON-NLS-2$
+                    log.warn("field type (" + type + ") unregistered.");
                     field = new TextField();
                 }
             }
@@ -79,10 +79,10 @@ public final class FieldMap {
         }
 
         if (ex != null) {
-            log.warn("field type (" + type + ") initialization failed:", ex); //$NON-NLS-1$ //$NON-NLS-2$
+            log.warn("field type (" + type + ") initialization failed:", ex);
             Reporter.informUser(type, ex);
 
-            log.warn("field type (" + type + ") unregistered."); //$NON-NLS-1$ //$NON-NLS-2$
+            log.warn("field type (" + type + ") unregistered.");
             field = new TextField();
             field.setChoice(type);
         }

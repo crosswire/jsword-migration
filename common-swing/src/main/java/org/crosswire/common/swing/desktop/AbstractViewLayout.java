@@ -219,7 +219,7 @@ public abstract class AbstractViewLayout implements Viewable {
                 if (title.length() <= MAX_TITLE_LEN) {
                     return title;
                 }
-                return title.substring(0, MAX_TITLE_LEN - 3) + "..."; //$NON-NLS-1$
+                return title.substring(0, MAX_TITLE_LEN - 3) + "...";
             }
 
             // should set the title also
@@ -234,7 +234,9 @@ public abstract class AbstractViewLayout implements Viewable {
      * @return the generated title
      */
     private String generateTitle() {
-        return UserMsg.UNTITLED.toString(new Integer(base++));
+        // TRANSLATOR: This is the label on a Bible View tab when it is cleared.
+        // {0} is a number to make the label unique.
+        return UserMsg.gettext("Untitled {0}", new Integer(base++));
     }
 
     /**

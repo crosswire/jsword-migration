@@ -39,7 +39,7 @@ public abstract class LayoutType implements Serializable {
     /**
      * Tabbed View
      */
-    public static final LayoutType TDI = new LayoutType("TDI") //$NON-NLS-1$
+    public static final LayoutType TDI = new LayoutType("TDI")
     {
         /*
          * (non-Javadoc)
@@ -56,7 +56,9 @@ public abstract class LayoutType implements Serializable {
          * @see org.crosswire.common.swing.desktop.LayoutType#toString()
          */
         public String toString() {
-            return UserMsg.TDI.toString();
+            // TRANSLATOR: This is the name of one of two different ways to present Bible Views.
+            // These show up in Options/Preferences.
+            return UserMsg.gettext("Tabbed Document Interface");
         }
 
         /**
@@ -68,7 +70,7 @@ public abstract class LayoutType implements Serializable {
     /**
      * Multiple Document View
      */
-    public static final LayoutType MDI = new LayoutType("MDI") //$NON-NLS-1$
+    public static final LayoutType MDI = new LayoutType("MDI")
     {
         /*
          * (non-Javadoc)
@@ -85,7 +87,9 @@ public abstract class LayoutType implements Serializable {
          * @see org.crosswire.common.swing.desktop.LayoutType#toString()
          */
         public String toString() {
-            return UserMsg.MDI.toString();
+            // TRANSLATOR: This is the name of one of two different ways to present Bible Views.
+            // These show up in Options/Preferences.
+            return UserMsg.gettext("Multiple Document Interface");
         }
 
         /**

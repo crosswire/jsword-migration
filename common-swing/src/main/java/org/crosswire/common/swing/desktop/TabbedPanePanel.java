@@ -58,7 +58,7 @@ public class TabbedPanePanel extends JPanel {
     }
 
     private void init() {
-        this.setBorder(UIManager.getBorder("TabbedPanePanel.border")); //$NON-NLS-1$
+        this.setBorder(UIManager.getBorder("TabbedPanePanel.border"));
         GuiUtil.applyDefaultOrientation(this);
     }
 

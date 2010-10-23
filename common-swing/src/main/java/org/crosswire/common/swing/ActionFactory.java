@@ -53,25 +53,29 @@ import org.crosswire.common.util.StringUtil;
  * and field is one of the CWAction constants, e.g. LargeIcon. <br/>
  * Field is one of:
  * <ul>
- * <li>Name - This is required. The value is used for the text of the Action.</li>
- * <li>Mnemonic - An upper case letter or other character in the value of the
- * Name field. If found, using a case insensitive search, the mnemonic will
- * cause the corresponding character to be underlined. In a platform dependent
+ * <li>Name - This is required. The value is used for the text of the Action.<br/>
+ * A mnemonic can be specified by preceding the letter with &. Using this letter in
+ * a case insensitive search, the earliest position of that letter will
+ * cause the it to be underlined. In a platform dependent
  * way it provides a keyboard mechanism to fire the action. For example, on
  * Windows, alt + mnemonic will cause a visible, active element with that
  * mnemonic to fire. For this reason, it is important to ensure that two
  * visible, active elements do not have the same mnemonic.<br/>
  * Note: Mnemonics are suppressed on MacOSX.</li>
+ * 
  * <li>ToolTip - A tip to show when the mouse is over an element. If not
  * present, Name is used. This is likely to change. It is redundant to show a
  * tooltip that is identical to the shown text.</li>
+ * 
  * <li>SmallIcon - A 16x16 pixel image to be shown for the item. The value for
  * this is a path which can be found as a resource.<br/>
  * Note: the small icon will be used when actions are tied to menu items and
  * buttons.</li>
+ * 
  * <li>LargeIcon - A 24x24 pixel image to be shown for the item when large items
  * are shown. Currently, these are only used for the ToolBar, when a large
  * toolbar is requested. The value is a resource path to the image.</li>
+ * 
  * <li>AcceleratorKey - A key on the keyboard, which may be specified with 0x25
  * kind of notation.<br/>
  * <br/>
@@ -80,6 +84,7 @@ import org.crosswire.common.util.StringUtil;
  * be listed with the name. Note: The accelerator key and it's modifiers are
  * converted into a <code>KeyStroke</code> with
  * <code>KeyStroke.getKeyStroke(key, modifierMask);</code></li>
+ * 
  * <li>AcceleratorKey.Modifier - A comma separated list of ctrl, alt, and shift,
  * indicating what modifiers are necessary for the accelerator.<br/>
  * Note: ctrl will use a platform's command key. On MacOSX this is the
@@ -194,7 +199,7 @@ public class ActionFactory implements ActionListener, Actionable {
         }
 
         if (ex != null) {
-            log.error("Could not execute method " + bean.getClass().getName() + "." + methodName + "()", ex); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            log.error("Could not execute method " + bean.getClass().getName() + "." + methodName + "()", ex);
         }
     }
 
@@ -226,7 +231,7 @@ public class ActionFactory implements ActionListener, Actionable {
             }
             return action;
         }
-        log.info("Missing key: '" + key + "'. Known keys are: " + StringUtil.join(actions.keySet().toArray(), ", ")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        log.info("Missing key: '" + key + "'. Known keys are: " + StringUtil.join(actions.keySet().toArray(), ", "));
         assert false;
 
         CWAction getOutOfJailFreeAction = new CWAction();
@@ -322,7 +327,7 @@ public class ActionFactory implements ActionListener, Actionable {
             ResourceBundle resources = ResourceBundle.getBundle(basisName.toString(), Locale.getDefault(), CWClassLoader.instance(basis));
             ResourceBundle controls = null;
             try {
-                basisName.append("_control"); //$NON-NLS-1$
+                basisName.append("_control");
                 controls = ResourceBundle.getBundle(basisName.toString(), Locale.getDefault(), CWClassLoader.instance(basis));
             } catch (MissingResourceException ex) {
                 // It is OK for this to not exist. This just means that the
@@ -341,7 +346,7 @@ public class ActionFactory implements ActionListener, Actionable {
 
                     // We know this should never happen because we are merely rebuilding the key.
                     if (nameValue == null) {
-                        log.warn("Missing original key for " + actionName + '.' + Action.NAME); //$NON-NLS-1$
+                        log.warn("Missing original key for " + actionName + '.' + Action.NAME);
                         continue;
                     }
 
@@ -351,7 +356,7 @@ public class ActionFactory implements ActionListener, Actionable {
                         String newNameValue = getActionString(aliases, null, newActionName, Action.NAME);
                         // We had a clear request for an Alias. So newNameValue should never be null here.
                         if (newNameValue == null) {
-                            log.warn("Missing alias key for " + actionName + '.' + Action.NAME); //$NON-NLS-1$
+                            log.warn("Missing alias key for " + actionName + '.' + Action.NAME);
                             continue;
                         }
                         nameValue = newNameValue;
@@ -363,25 +368,45 @@ public class ActionFactory implements ActionListener, Actionable {
                         tooltip = nameValue;
                     }
 
-                    Integer mnemonic = getMnemonic(nickname, resources, actionName);
+                    // A Mnemonic can be specified by a preceding & in the name
+                    Integer mnemonic = null;
+                    int pos = nameValue.indexOf('&');
+                    int len = nameValue.length();
+                    if (pos == len - 1) {
+                        // There is nothing following the &. Just remove it.
+                        nameValue = nameValue.substring(0, len - 1);
+                    } else if (pos >= 0 && pos < len - 1) {
+                        // Remove the &
+                        StringBuffer buffer = new StringBuffer(nameValue.length() - 1);
+                        if (pos > 0) {
+                            buffer.append(nameValue.substring(0, pos));
+                        }
+                        buffer.append(nameValue.substring(pos + 1));
+
+                        nameValue = buffer.toString();
+
+                        // the mnemonic is now at the position that the & was.
+                        mnemonic = new Integer(nameValue.charAt(pos));
+                    }
+
                     KeyStroke accelerator = getAccelerator(nickname, resources, actionName);
 
                     Icon smallIcon = getIcon(controls, actionName, Action.SMALL_ICON);
                     Icon largeIcon = getIcon(controls, actionName, CWAction.LARGE_ICON);
-                    String enabledStr = getActionString(controls, null, actionName, "Enabled"); //$NON-NLS-1$
+                    String enabledStr = getActionString(controls, null, actionName, "Enabled");
                     boolean enabled = enabledStr == null ? true : Boolean.valueOf(enabledStr).booleanValue();
 
                     CWAction cwAction = new CWAction();
 
                     if (actionName == null || actionName.length() == 0) {
-                        log.warn("Acronymn is missing for CWAction"); //$NON-NLS-1$
+                        log.warn("Acronymn is missing for CWAction");
                     } else {
                         cwAction.putValue(Action.ACTION_COMMAND_KEY, actionName);
                     }
 
                     if (nameValue.length() == 0) {
-                        log.warn("Name is missing for CWAction"); //$NON-NLS-1$
-                        cwAction.putValue(Action.NAME, "?"); //$NON-NLS-1$
+                        log.warn("Name is missing for CWAction");
+                        cwAction.putValue(Action.NAME, "?");
                     } else {
                         cwAction.putValue(Action.NAME, nameValue);
                     }
@@ -402,7 +427,7 @@ public class ActionFactory implements ActionListener, Actionable {
                 }
             }
         } catch (MissingResourceException ex) {
-            log.error("Missing resource for class: " + basis.getName()); //$NON-NLS-1$
+            log.error("Missing resource for class: " + basis.getName());
             throw ex;
         }
     }
@@ -448,108 +473,62 @@ public class ActionFactory implements ActionListener, Actionable {
     }
 
     /**
-     * Convert the string to a mnemonic
-     */
-    private Integer getMnemonic(ResourceBundle nicknames, ResourceBundle resources, String actionName) {
-        Integer mnemonic = null;
-        String mnemonicStr = getActionString(resources, nicknames, actionName, Action.MNEMONIC_KEY);
-        if (mnemonicStr != null && mnemonicStr.length() > 0) {
-            try {
-                mnemonic = new Integer(getInteger(mnemonicStr));
-            } catch (NumberFormatException ex) {
-                log.warn("Could not parse integer for mnemonic of action " + actionName, ex); //$NON-NLS-1$
-            }
-        }
-        return mnemonic;
-    }
-
-    /**
      * Convert the string to a valid Accelerator (that is a KeyStroke)
      */
     private KeyStroke getAccelerator(ResourceBundle nicknames, ResourceBundle resources, String actionName) {
-        // Create the KeyStroke for the action's shortcut/accelerator
         KeyStroke accelerator = null;
-        String acceleratorStr = getActionString(resources, nicknames, actionName, Action.ACCELERATOR_KEY);
-        if (acceleratorStr != null && acceleratorStr.length() > 0) {
-            String modifierName = Action.ACCELERATOR_KEY + ".Modifiers";  //$NON-NLS-1$
-            // Not every accelerator needs a modifier
-            String modifierSpec = getActionString(resources, nicknames, actionName, modifierName);
-            if (modifierSpec == null) {
-                return accelerator;
-            }
-
-            String[] modifiers = StringUtil.split(modifierSpec, ',');
-
+        String acceleratorSpec = getActionString(resources, nicknames, actionName, Action.ACCELERATOR_KEY);
+        if (acceleratorSpec != null && acceleratorSpec.length() > 0) {
             try {
-                int shortcut = getInteger(acceleratorStr);
-                int keyModifier = getModifier(modifiers);
-
-                // Now we can create it
-                accelerator = KeyStroke.getKeyStroke(shortcut, keyModifier);
+                accelerator = getKeyStroke(acceleratorSpec);
             } catch (NumberFormatException nfe) {
-                log.warn("Could not parse integer for accelerator of action " + actionName, nfe); //$NON-NLS-1$
+                log.warn("Could not parse integer for accelerator of action " + actionName, nfe);
             }
         }
         return accelerator;
     }
 
-    /**
-     * Convert the string to an integer. The string is either a single character
-     * or it is hex number.
-     * 
-     * @return the integer value of the accelerator
-     */
-    private int getInteger(String str) throws NumberFormatException {
-        int val = 0;
-        int length = str.length();
-        if (str.startsWith("0x")) { //$NON-NLS-1$
-            val = Integer.parseInt(str.substring(2), 16);
-        } else if (length == 1) {
-            val = str.charAt(0);
-        } else {
-            val = Integer.parseInt(str);
-        }
-
-        return val;
-    }
-
-    /**
-     *
-     */
-    private int getModifier(String[] modifiers) {
-        int keyModifier = 0;
-        for (int j = 0; j < modifiers.length; j++) {
-            String modifier = modifiers[j];
-            if ("ctrl".equalsIgnoreCase(modifier)) { //$NON-NLS-1$
-                // use this so MacOS users are happy
-                // It will map to the CMD key on Mac; CTRL otherwise.
-                keyModifier |= Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
-            } else if ("shift".equalsIgnoreCase(modifier)) { //$NON-NLS-1$
-                keyModifier |= InputEvent.SHIFT_MASK;
-            } else if ("alt".equalsIgnoreCase(modifier)) { //$NON-NLS-1$
-
-                keyModifier |= InputEvent.ALT_MASK;
-            }
-        }
-
-        return keyModifier;
-    }
+   /**
+    *
+    */
+  private KeyStroke getKeyStroke(String acceleratorSpec) throws NumberFormatException {
+      int keyModifier = 0;
+      int key = 0;
+      String[] parts = StringUtil.split(acceleratorSpec, ',');
+      for (int j = 0; j < parts.length; j++) {
+          String part = parts[j].trim();
+          if ("ctrl".equalsIgnoreCase(part)) {
+              // use this so MacOS users are happy
+              // It will map to the CMD key on Mac; CTRL otherwise.
+              keyModifier |= Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+          } else if ("shift".equalsIgnoreCase(part)) {
+              keyModifier |= InputEvent.SHIFT_MASK;
+          } else if ("alt".equalsIgnoreCase(part)) {
+              keyModifier |= InputEvent.ALT_MASK;
+          } else if (part.startsWith("0x")) {
+              key = Integer.parseInt(part.substring(2), 16);
+          } else if (part.length() == 1) {
+              key = part.charAt(0);
+          }
+      }
+      return KeyStroke.getKeyStroke(key, keyModifier);
+  }
 
     /**
      * The tooltip for actions that we generate to paper around missing
      * resources Normally we would assert, but in live we might want to limp on.
      */
-    private static final String MISSING_RESOURCE = "Missing Resource"; //$NON-NLS-1$
+    private static final String MISSING_RESOURCE = "Missing Resource";
 
     /**
      * The prefix to methods that we call
      */
-    private static final String METHOD_PREFIX = "do"; //$NON-NLS-1$
+    private static final String METHOD_PREFIX = "do";
 
     /**
      * What we lookup
      */
-    private static final String SEPARATOR = "."; //$NON-NLS-1$
+    private static final String SEPARATOR = ".";
 
     /**
      * The test string to find actions
@@ -561,9 +540,9 @@ public class ActionFactory implements ActionListener, Actionable {
      */
     private Object bean;
 
-    private static final String ALIASES = "Aliases"; //$NON-NLS-1$
+    private static final String ALIASES = "Aliases";
 
-    private static final String ALIAS = "Alias" + SEPARATOR; //$NON-NLS-1$
+    private static final String ALIAS = "Alias" + SEPARATOR;
 
     /**
      * The log stream
@@ -579,7 +558,7 @@ public class ActionFactory implements ActionListener, Actionable {
         try {
             aliases = ResourceBundle.getBundle(ALIASES, Locale.getDefault(), CWClassLoader.instance(ActionFactory.class));
         } catch (MissingResourceException ex) {
-            log.error("Tell me it isn't so. The Aliases.properties does exist!", ex); //$NON-NLS-1$
+            log.error("Tell me it isn't so. The Aliases.properties does exist!", ex);
         }
     }
 

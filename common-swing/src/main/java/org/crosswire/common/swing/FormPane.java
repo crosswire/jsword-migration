@@ -136,8 +136,8 @@ public class FormPane extends JPanel {
         return list;
     }
 
-    private static final String SUFFIX_COMP = "_comp"; //$NON-NLS-1$
-    private static final String SUFFIX_LABEL = "_label"; //$NON-NLS-1$
+    private static final String SUFFIX_COMP = "_comp";
+    private static final String SUFFIX_LABEL = "_label";
 
     /**
      * Serialization ID

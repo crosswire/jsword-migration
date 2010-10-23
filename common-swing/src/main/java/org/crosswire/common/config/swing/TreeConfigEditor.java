@@ -80,7 +80,8 @@ public class TreeConfigEditor extends AbstractConfigEditor {
         deck = new JPanel();
         layout = new CardLayout();
 
-        blank.add(new JLabel(UserMsg.SELECT_SUBNODE.toString()));
+        // TRANSLATOR: Label indicating that the user should select a preference category.
+        blank.add(new JLabel(UserMsg.gettext("Select a preference category")));
 
         deck.setLayout(layout);
         deck.add(blank, BLANK);
@@ -92,7 +93,7 @@ public class TreeConfigEditor extends AbstractConfigEditor {
         tree.setCellRenderer(dtcr);
         tree.setShowsRootHandles(false);
         tree.setRootVisible(false);
-        tree.putClientProperty("JTree.lineStyle", "None"); //$NON-NLS-1$ //$NON-NLS-2$
+        tree.putClientProperty("JTree.lineStyle", "None");
         tree.setSelectionRow(0);
         tree.addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent ev) {
@@ -106,7 +107,8 @@ public class TreeConfigEditor extends AbstractConfigEditor {
         title.setBackground(Color.gray);
         title.setForeground(Color.white);
         title.setOpaque(true);
-        title.setText(UserMsg.PROPERTIES.toString());
+        // TRANSLATOR: This is the label for the banner when one opens Options/Preferences.
+        title.setText(UserMsg.gettext("Preferences"));
         title.setAlignmentX(SwingConstants.LEADING);
 
         panel.setLayout(new BorderLayout());
@@ -186,7 +188,9 @@ public class TreeConfigEditor extends AbstractConfigEditor {
             return;
         }
 
-        title.setText(obj + " " + UserMsg.PROPERTIES); //$NON-NLS-1$
+        // TRANSLATOR: This is the label for the banner when one opens a type of Options/Preferences.
+        // {0} is the type of preference, e.g. Bible Display
+        title.setText(UserMsg.gettext("{0} Preferences", obj));
 
         // Get the name of the current deck
         Object[] list = tree.getSelectionPath().getPath();
@@ -214,7 +218,7 @@ public class TreeConfigEditor extends AbstractConfigEditor {
     /**
      * The name of the blank tab
      */
-    protected static final String BLANK = "$$BLANK$$"; //$NON-NLS-1$
+    protected static final String BLANK = "$$BLANK$$";
 
     /**
      * The tree containing the Field sets
@@ -423,7 +427,7 @@ public class TreeConfigEditor extends AbstractConfigEditor {
         /**
          * The root node
          */
-        private Node root = new Node("", ""); //$NON-NLS-1$//$NON-NLS-2$
+        private Node root = new Node("", "");
     }
 
     /**
@@ -454,7 +458,7 @@ public class TreeConfigEditor extends AbstractConfigEditor {
             if (path.length() == 0 || name.length() == 0) {
                 return path + name;
             }
-            return path + "." + name; //$NON-NLS-1$
+            return path + "." + name;
         }
 
         /**

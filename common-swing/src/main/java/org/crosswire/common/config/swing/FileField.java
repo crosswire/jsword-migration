@@ -101,7 +101,7 @@ public class FileField extends JPanel implements Field {
         return this;
     }
 
-    private static final String BROWSE = "Browse"; //$NON-NLS-1$
+    private static final String BROWSE = "Browse";
 
     /**
      * The text field

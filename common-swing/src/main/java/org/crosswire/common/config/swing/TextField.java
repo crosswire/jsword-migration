@@ -62,7 +62,7 @@ public class TextField extends JTextField implements Field {
      */
     public void setValue(String value) {
         if (value == null) {
-            setText(""); //$NON-NLS-1$
+            setText("");
         } else {
             setText(value);
         }

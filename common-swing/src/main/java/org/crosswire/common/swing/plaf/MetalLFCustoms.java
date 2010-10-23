@@ -51,9 +51,9 @@ public class MetalLFCustoms extends AbstractLFCustoms {
                 | MetalPanelBorder.RIGHT), BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         Object[] metalUIDefaults = new Object[] {
-                "BibleViewPane.TabbedPaneUI", MetalBorderlessTabbedPaneUI.createUI(null), //$NON-NLS-1$
-                "SplitPane.dividerSize", new Integer(5), //$NON-NLS-1$
-                "SelectPanel.border", panelSelectBorder //$NON-NLS-1$
+                "BibleViewPane.TabbedPaneUI", MetalBorderlessTabbedPaneUI.createUI(null),
+                "SplitPane.dividerSize", new Integer(5),
+                "SelectPanel.border", panelSelectBorder
         };
 
         UIManager.getDefaults().putDefaults(metalUIDefaults);

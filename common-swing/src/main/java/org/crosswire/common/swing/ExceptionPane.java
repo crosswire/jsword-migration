@@ -85,16 +85,17 @@ public final class ExceptionPane extends JPanel {
      * Setup the GUI
      */
     private void initialise() {
-        MessageFormat msgFormat = new MessageFormat("<html><font size=\"-1\">{0}</font> {1}"); //$NON-NLS-1$
+        MessageFormat msgFormat = new MessageFormat("<html><font size=\"-1\">{0}</font> {1}");
         String exmsg = msgFormat.format(new Object[] {
-                UserMsg.ERROR_OCCURED.toString(), ExceptionPane.getHTMLDescription(ex)
+                // TRANSLATOR: When an error dialog is presented to the user, this labels the error.
+                UserMsg.gettext("An error has occurred:"), ExceptionPane.getHTMLDescription(ex)
         });
 
         // The upper pane
         JLabel message = new JLabel();
         message.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         message.setText(exmsg);
-        message.setIcon(GuiUtil.getIcon("toolbarButtonGraphics/general/Stop24.gif")); //$NON-NLS-1$
+        message.setIcon(GuiUtil.getIcon("toolbarButtonGraphics/general/Stop24.gif"));
         message.setIconTextGap(20);
 
         JPanel banner = new JPanel(new BorderLayout());
@@ -102,7 +103,7 @@ public final class ExceptionPane extends JPanel {
         list = new JList();
         list.setVisibleRowCount(6);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        Font courier = new Font("Monospaced", Font.PLAIN, 12); //$NON-NLS-1$
+        Font courier = new Font("Monospaced", Font.PLAIN, 12);
         list.setFont(courier);
 
         JPanel buttons = new JPanel(new BorderLayout());
@@ -113,7 +114,8 @@ public final class ExceptionPane extends JPanel {
         // Add a button if showDetails is true
         detail = new JCheckBox();
         detail.addItemListener(new SelectedItemListener(this));
-        detail.setText(UserMsg.DETAILS.toString());
+        // TRANSLATOR: When an error dialog is presented to the user, this labels the details of the error.
+        detail.setText(UserMsg.gettext("Details"));
         if (detailShown) {
             buttons.add(detail, BorderLayout.LINE_START);
         }
@@ -149,7 +151,8 @@ public final class ExceptionPane extends JPanel {
             label = new JLabel();
             label.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
             label.setFont(courier);
-            label.setText(UserMsg.NO_FILE.toString());
+            // TRANSLATOR: When an error dialog is presented to the user, this indicates that the Java source is unavailable.
+            label.setText(UserMsg.gettext("No File"));
             text = new JTextArea();
             text.setEditable(false);
             text.setFont(courier);
@@ -211,18 +214,21 @@ public final class ExceptionPane extends JPanel {
         // Setting for the whole dialog
         Frame root = GuiUtil.getFrame(parent);
 
+        // TRANSLATOR: When an error dialog is presented to the user, this is the title of the dialog.
+        String error = UserMsg.gettext("Error");
+
         // If this dialog is not modal then if we display an exception dialog
         // where there is a modal dialog displayed then although this dialog
         // is to the front, we can't interact with it until the modal dialog
         // has been closed.
-        final JDialog dialog = new JDialog(root, UserMsg.ERROR.toString(), true);
+        final JDialog dialog = new JDialog(root, error, true);
         dialog.getRootPane().setLayout(new BorderLayout());
         dialog.getRootPane().setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, pane.upper.getBackground()));
         dialog.getRootPane().add(pane, BorderLayout.CENTER);
 
         final ActionFactory actions = new ActionFactory(ExceptionPane.class, pane);
 
-        JButton ok = actions.createJButton("OK", new ActionListener() //$NON-NLS-1$
+        JButton ok = actions.createJButton("OK", new ActionListener()
                 {
                     public void actionPerformed(ActionEvent e) {
                         dialog.dispose();
@@ -302,11 +308,11 @@ public final class ExceptionPane extends JPanel {
 
         // The message in the exception
         String msg = ex.getMessage();
-        if (msg == null || msg.equals("")) { //$NON-NLS-1$
-            msg = UserMsg.NO_DESC.toString();
+        if (msg == null || msg.equals("")) {
+            msg = UserMsg.gettext("No description available.");
         }
         String orig = XMLUtil.escape(msg);
-        msg = orig.replaceAll("\n", "<br>"); //$NON-NLS-1$ //$NON-NLS-2$
+        msg = orig.replaceAll("\n", "<br>");
 
         // The name of the exception
         /*
@@ -324,15 +330,16 @@ public final class ExceptionPane extends JPanel {
          * retcode.append("<font size=\"-1\"><strong>");
          * retcode.append(classname); retcode.append("</strong></font>");
          */
-        retcode.append("<br>"); //$NON-NLS-1$
+        retcode.append("<br>");
         retcode.append(msg);
 
         // If this is a LucidException with a nested Exception
         Throwable nex = ex.getCause();
         if (nex != null) {
-            retcode.append("<p><br><font size=\"-1\">"); //$NON-NLS-1$
-            retcode.append(UserMsg.CAUSED_BY);
-            retcode.append("</font>"); //$NON-NLS-1$
+            retcode.append("<p><br><font size=\"-1\">");
+            // TRANSLATOR: When an error dialog is presented to the user, this labels the cause of the error.
+            retcode.append(UserMsg.gettext("This was caused by:"));
+            retcode.append("</font>");
             retcode.append(getHTMLDescription(nex));
         }
 
@@ -442,7 +449,8 @@ public final class ExceptionPane extends JPanel {
             int line_num = st.getLineNumber(level);
             String orig = name;
             Integer errorLine = new Integer(line_num);
-            mylabel.setText(UserMsg.NO_FILE.toString());
+            // TRANSLATOR: When an error dialog is presented to the user, this indicates that the Java source is unavailable.
+            mylabel.setText(UserMsg.gettext("No File"));
 
             // Find a file
             name = File.separator + orig.replace('.', File.separatorChar) + FileUtil.EXTENSION_JAVA;
@@ -459,7 +467,10 @@ public final class ExceptionPane extends JPanel {
 
                     LineNumberReader in = null;
                     try {
-                        String found = UserMsg.SOURCE_FOUND.toString(new Object[] {
+                        // TRANSLATOR: When an error dialog is presented to the user, this indicates that the location of the error in the Java source.
+                        // {0} is a placeholder for the line number on which the error occurred.
+                        // {1} is a placeholder for the Java file.
+                        String found = UserMsg.gettext("Error on line {0} in file {1}", new Object[] {
                                 errorLine, file.getCanonicalPath()
                         });
                         mylabel.setText(found);
@@ -501,12 +512,17 @@ public final class ExceptionPane extends JPanel {
                 }
             }
 
-            // If we can't find a matching file
-            StringBuffer error = new StringBuffer(UserMsg.SOURCE_NOT_FOUND.toString(new Object[] {
+            // TRANSLATOR: When an error dialog is presented to the user, this indicates that the Java source could not be found.
+            // {1} is a placeholder for the line number on which the error occurred.
+            // {0} is a placeholder for the Java file.
+            StringBuffer error = new StringBuffer(UserMsg.gettext("Cannot open source for: {0}, line: {1}\n", new Object[] {
                     st.getClassName(level), errorLine
             }));
             for (int i = 0; i < srcs.length; i++) {
-                error.append(UserMsg.SOURCE_ATTEMPT.toString(new Object[] {
+                // TRANSLATOR: When an error dialog is presented to the user, and the Java source could not be found
+                // this indicates what locations were tried.
+                // {0} is a placeholder for the location.
+                error.append(UserMsg.gettext("Tried: {0}\n", new Object[] {
                     srcs[i].getAbsolutePath() + name
                 }));
             }

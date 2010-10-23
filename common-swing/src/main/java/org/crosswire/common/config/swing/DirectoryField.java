@@ -45,10 +45,10 @@ public class DirectoryField extends FileField {
     public void doBrowse() {
         if (OSType.MAC.equals(OSType.getOSType())) {
             FileDialog chooser = new FileDialog(GuiUtil.getFrame(getParent()), text.getText());
-            String prop = "apple.awt.fileDialogForDirectories"; //$NON-NLS-1$
-            System.setProperty(prop, "true"); //$NON-NLS-1$
+            String prop = "apple.awt.fileDialogForDirectories";
+            System.setProperty(prop, "true");
             chooser.setVisible(true);
-            System.setProperty(prop, "false"); //$NON-NLS-1$
+            System.setProperty(prop, "false");
             String dir = chooser.getFile();
             if (dir != null) {
                 text.setText(dir);

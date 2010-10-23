@@ -62,7 +62,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
         comps = new HashMap();
 
         // Hack: tree depends on it being a Color not a sub of it.
-        Color orig = UIManager.getColor("control"); //$NON-NLS-1$
+        Color orig = UIManager.getColor("control");
         Color bg = new Color(orig.getRed(), orig.getGreen(), orig.getBlue());
 
         // This seems to be broken ...
@@ -74,7 +74,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
         tree.setCellRenderer(render);
         tree.setShowsRootHandles(true);
         tree.setRootVisible(false);
-        tree.putClientProperty("JTree.lineStyle", "None"); //$NON-NLS-1$//$NON-NLS-2$
+        tree.putClientProperty("JTree.lineStyle", "None");
         tree.setSelectionRow(0);
         tree.setEditable(true);
 
@@ -142,7 +142,9 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
             return;
         }
 
-        title.setText(obj + " " + UserMsg.PROPERTIES); //$NON-NLS-1$
+        // TRANSLATOR: This is the label for the banner when one opens a type of Options/Preferences.
+        // {0} is the type of preference, e.g. Bible Display
+        title.setText(UserMsg.gettext("{0} Preferences", obj));
 
         // Get the name of the current deck
         Object[] list = tree.getSelectionPath().getPath();

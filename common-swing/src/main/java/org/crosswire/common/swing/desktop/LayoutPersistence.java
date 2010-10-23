@@ -98,12 +98,12 @@ public class LayoutPersistence {
         settings.setProperty(window.getName(), StringUtil.join(new String[] {
                 Integer.toString(state), Integer.toString(window.getWidth()), Integer.toString(window.getHeight()), Integer.toString(window.getX()),
                 Integer.toString(window.getY())
-        }, "_") //$NON-NLS-1$
+        }, "_")
                 );
 
         try {
             URI outputURI = CWProject.instance().getWritableURI(getClass().getName(), FileUtil.EXTENSION_PROPERTIES);
-            NetUtil.storeProperties(settings, outputURI, "Persistent Window properties"); //$NON-NLS-1$
+            NetUtil.storeProperties(settings, outputURI, "Persistent Window properties");
         } catch (IOException ex) {
             log.error(ex.getLocalizedMessage(), ex);
         }

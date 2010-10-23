@@ -41,9 +41,9 @@ import org.crosswire.common.swing.EdgeBorder;
  * @author Joe Walker [joe at eireneh dot com]
  */
 public class ButtonPane extends JPanel {
-    private static final String OK = "OK"; //$NON-NLS-1$
-    private static final String CANCEL = "Cancel"; //$NON-NLS-1$
-    private static final String APPLY = "Apply"; //$NON-NLS-1$
+    private static final String OK = "OK";
+    private static final String CANCEL = "Cancel";
+    private static final String APPLY = "Apply";
 
     /**
      * Simple ctor

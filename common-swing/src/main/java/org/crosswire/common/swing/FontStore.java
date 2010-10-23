@@ -76,7 +76,7 @@ public class FontStore {
      */
     public FontStore(String storeName, URI fontDir) {
         if (fontDir == null) {
-            throw new IllegalArgumentException("fontStore cannot be null"); //$NON-NLS-1$
+            throw new IllegalArgumentException("fontStore cannot be null");
         }
         this.storeName = storeName;
         this.fontStore = NetUtil.lengthenURI(fontDir, this.storeName + FileUtil.EXTENSION_PROPERTIES);
@@ -274,7 +274,7 @@ public class FontStore {
             fontMap = ResourceUtil.getProperties(storeName);
             loaded = true;
         } catch (IOException e) {
-            log.error("Unable to load the font store: " + fontStore); //$NON-NLS-1$
+            log.error("Unable to load the font store: " + fontStore);
             fontMap = new Properties();
         }
     }
@@ -288,7 +288,7 @@ public class FontStore {
         try {
             NetUtil.storeProperties(fontMap, fontStore, storeName);
         } catch (IOException ex) {
-            log.error("Failed to save BibleDesktop UI Translation", ex); //$NON-NLS-1$
+            log.error("Failed to save BibleDesktop UI Translation", ex);
         }
     }
 
@@ -306,9 +306,9 @@ public class FontStore {
         return null;
     }
 
-    protected static final String DEFAULT_FONT = "Dialog-PLAIN-12"; //$NON-NLS-1$
-    protected static final String LANG_KEY_PREFIX = "lang."; //$NON-NLS-1$
-    protected static final String DEFAULT_KEY = "default"; //$NON-NLS-1$
+    protected static final String DEFAULT_FONT = "Dialog-PLAIN-12";
+    protected static final String LANG_KEY_PREFIX = "lang.";
+    protected static final String DEFAULT_KEY = "default";
 
     private String storeName;
     private String defaultFont;

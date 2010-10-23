@@ -255,7 +255,7 @@ public class FixedSplitPane extends JSplitPane {
     /**
      * Property for border visibility
      */
-    public static final String PROPERTYNAME_VISIBLE_DIVIDER_BORDER = "visibleDividerBorder"; //$NON-NLS-1$
+    public static final String PROPERTYNAME_VISIBLE_DIVIDER_BORDER = "visibleDividerBorder";
 
     /**
      * An Empty Border

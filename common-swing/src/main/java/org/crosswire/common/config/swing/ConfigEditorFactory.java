@@ -115,9 +115,8 @@ public final class ConfigEditorFactory {
                 config.localToApplication();
                 config.localToPermanent(uri);
             } catch (IOException ex) {
-                throw new LucidRuntimeException(UserMsg.CONFIG_SAVE_FAILED, ex, new Object[] {
-                    uri
-                });
+                // TRANSLATOR: Common error condition: Preferences could not be saved. {0} is a placeholder for the preference file.
+                throw new LucidRuntimeException(UserMsg.gettext("Could not save preferences: {0}", new Object[] { uri }), ex);
             }
         }
 

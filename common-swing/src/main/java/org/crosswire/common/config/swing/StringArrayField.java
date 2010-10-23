@@ -71,7 +71,7 @@ public class StringArrayField extends JPanel implements Field {
 
         JPanel buttons = new JPanel(new FlowLayout());
 
-        list.setFont(new Font("Monospaced", Font.PLAIN, 12)); //$NON-NLS-1$
+        list.setFont(new Font("Monospaced", Font.PLAIN, 12));
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         JScrollPane scroll = new CWScrollPane(list);
@@ -246,14 +246,14 @@ public class StringArrayField extends JPanel implements Field {
         private static final long serialVersionUID = 3256444715753878326L;
     }
 
-    private static final String ADD = "AddStringEntry"; //$NON-NLS-1$
-    private static final String REMOVE = "RemoveStringEntry"; //$NON-NLS-1$
-    private static final String UPDATE = "UpdateStringEntry"; //$NON-NLS-1$
+    private static final String ADD = "AddStringEntry";
+    private static final String REMOVE = "RemoveStringEntry";
+    private static final String UPDATE = "UpdateStringEntry";
 
     /**
      * What character do we use to separate strings?
      */
-    private static final String SEPARATOR = "#"; //$NON-NLS-1$
+    private static final String SEPARATOR = "#";
 
     private transient ActionFactory actions;
 

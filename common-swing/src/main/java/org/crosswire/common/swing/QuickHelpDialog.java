@@ -142,7 +142,7 @@ public class QuickHelpDialog extends JDialog {
         setVisible(false);
     }
 
-    private static final String OK = "OK"; //$NON-NLS-1$
+    private static final String OK = "OK";
 
     private transient ActionFactory actions;
 

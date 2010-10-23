@@ -49,8 +49,8 @@ public class OtherLFCustoms extends AbstractLFCustoms {
         Border panelSelectBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 
         Object[] otherUIDefaults = new Object[] {
-                "TabbedPanePanel.border", tabbedPanePanelBorder, //$NON-NLS-1$
-                "SelectPanel.border", panelSelectBorder //$NON-NLS-1$
+                "TabbedPanePanel.border", tabbedPanePanelBorder,
+                "SelectPanel.border", panelSelectBorder
         };
 
         UIManager.getDefaults().putDefaults(otherUIDefaults);

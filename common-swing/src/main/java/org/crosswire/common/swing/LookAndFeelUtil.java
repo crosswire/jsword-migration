@@ -143,7 +143,7 @@ public final class LookAndFeelUtil {
     /**
      * The font to be used for the application
      */
-    private static String font = "Dialog-PLAIN-12"; //$NON-NLS-1$
+    private static String font = "Dialog-PLAIN-12";
 
     /**
      * Setup the default PLAF
@@ -154,13 +154,13 @@ public final class LookAndFeelUtil {
         try {
             // Note: GTK looks good under Java 1.5, but is broken.
             // Motif still does not look good.
-            if (systemLAF.indexOf("WindowsLookAndFeel") != -1 || //$NON-NLS-1$
-                    //systemLAF.indexOf("GTKLookAndFeel") != -1 || //$NON-NLS-1$
-                    systemLAF.indexOf("AquaLookAndfeel") != -1) //$NON-NLS-1$
+            if (systemLAF.indexOf("WindowsLookAndFeel") != -1 ||
+                    //systemLAF.indexOf("GTKLookAndFeel") != -1 ||
+                    systemLAF.indexOf("AquaLookAndfeel") != -1)
             {
                 UIManager.setLookAndFeel(systemLAF);
                 // MetalLookAndFeel.setCurrentTheme(new DefaultMetalTheme());
-                // UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel"); //$NON-NLS-1$
+                // UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
                 // UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
                 // UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
                 defaultLAF = ClassUtil.forName(systemLAF);
@@ -181,9 +181,9 @@ public final class LookAndFeelUtil {
     private static void customizeBDLookandFeel() {
         String currentLF = UIManager.getLookAndFeel().getClass().getName();
 
-        if (currentLF.indexOf("MetalLookAndFeel") != -1) { //$NON-NLS-1$
+        if (currentLF.indexOf("MetalLookAndFeel") != -1) {
             new MetalLFCustoms().initUIDefaults();
-        } else if (currentLF.indexOf("WindowsLookAndFeel") != -1) { //$NON-NLS-1$
+        } else if (currentLF.indexOf("WindowsLookAndFeel") != -1) {
             new WindowsLFCustoms().initUIDefaults();
         } else {
             new OtherLFCustoms().initUIDefaults();

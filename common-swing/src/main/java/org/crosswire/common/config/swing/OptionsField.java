@@ -70,7 +70,7 @@ public class OptionsField implements Field {
             list = mc.getOptions();
 
             if (list == null) {
-                throw new IllegalArgumentException("getOptions() returns null for option with help text " + mc.getHelpText()); //$NON-NLS-1$
+                throw new IllegalArgumentException("getOptions() returns null for option with help text " + mc.getHelpText());
             }
             combo.setModel(new DefaultComboBoxModel(list));
         } else {
@@ -91,7 +91,7 @@ public class OptionsField implements Field {
         if (reply instanceof Map.Entry) {
             return ((Map.Entry) reply).getKey().toString();
         }
-        return reply == null ? "" : reply.toString(); //$NON-NLS-1$
+        return reply == null ? "" : reply.toString();
     }
 
     /**
@@ -125,7 +125,7 @@ public class OptionsField implements Field {
 
             combo.setSelectedItem(list[bestMatch]);
             if (bestMatch > 0) {
-                log.warn("Checked for options without finding exact match: '" + value + "'. Best match is: " + combo.getSelectedItem()); //$NON-NLS-1$//$NON-NLS-2$
+                log.warn("Checked for options without finding exact match: '" + value + "'. Best match is: " + combo.getSelectedItem());
                 return;
             }
         }
@@ -133,7 +133,7 @@ public class OptionsField implements Field {
         // Equate null and empty string
         Object selected = combo.getSelectedItem();
         if (value.length() > 0 && selected != null) {
-            log.warn("Checked for options without finding: '" + value + "'. Defaulting to first option: " + selected); //$NON-NLS-1$//$NON-NLS-2$
+            log.warn("Checked for options without finding: '" + value + "'. Defaulting to first option: " + selected);
         }
     }
 

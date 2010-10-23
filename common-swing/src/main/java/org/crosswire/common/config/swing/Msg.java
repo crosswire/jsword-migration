@@ -31,13 +31,13 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 public final class Msg extends MsgBase {
-    static final Msg NAME = new Msg("StringArrayField.Name"); //$NON-NLS-1$
-    static final Msg COMPONENT_EDITOR = new Msg("StringArrayField.ComponentEditor"); //$NON-NLS-1$
-    static final Msg EDIT_CLASS = new Msg("StringArrayField.EditClass"); //$NON-NLS-1$
-    static final Msg NEW_CLASS = new Msg("StringArrayField.NewClass"); //$NON-NLS-1$
+    static final Msg NAME = new Msg("StringArrayField.Name");
+    static final Msg COMPONENT_EDITOR = new Msg("StringArrayField.ComponentEditor");
+    static final Msg EDIT_CLASS = new Msg("StringArrayField.EditClass");
+    static final Msg NEW_CLASS = new Msg("StringArrayField.NewClass");
 
-    static final Msg ERROR = new Msg("OptionsField.Error"); //$NON-NLS-1$
-    static final Msg NO_OPTIONS = new Msg("OptionsField.NoOptions"); //$NON-NLS-1$
+    static final Msg ERROR = new Msg("OptionsField.Error");
+    static final Msg NO_OPTIONS = new Msg("OptionsField.NoOptions");
 
     /**
      * Passthrough ctor

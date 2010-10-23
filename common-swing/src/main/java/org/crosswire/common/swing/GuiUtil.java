@@ -78,7 +78,7 @@ public final class GuiUtil {
             URL url = ResourceUtil.getResource(name);
             return new ImageIcon(url);
         } catch (MissingResourceException ex) {
-            log.error("Failed to find icon name='" + name + "'", ex); //$NON-NLS-1$ //$NON-NLS-2$
+            log.error("Failed to find icon name='" + name + "'", ex);
             return null;
         }
     }
@@ -140,7 +140,7 @@ public final class GuiUtil {
             // and we may be able to do better than that. Unfortunately the
             // getSharedOwnerFrame() method is not public so we have to trick
             // our way to finding if we got a duff default
-            if (!option.getClass().getName().startsWith("javax.swing.SwingUtilities$")) //$NON-NLS-1$
+            if (!option.getClass().getName().startsWith("javax.swing.SwingUtilities$"))
             {
                 // So we think the JOptionPane root frame is our creation
                 return option;
@@ -279,7 +279,7 @@ public final class GuiUtil {
         honoredDim.width = finalDim.width;
         honoredDim.height = finalDim.height;
 
-        log.warn("Window size was: " + requestedDim + " is: " + honoredDim); //$NON-NLS-1$ //$NON-NLS-2$
+        log.warn("Window size was: " + requestedDim + " is: " + honoredDim);
 
         return honoredState;
     }

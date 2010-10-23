@@ -50,7 +50,7 @@ public class WindowsLFCustoms extends AbstractLFCustoms {
     protected void initPlatformUIDefaults() {
         Border tabbedPanePanelBorder = null;
         Color standardBorderColor = null;
-        Object windowsScrollPaneborder = UIManager.get("ScrollPane.border"); //$NON-NLS-1$
+        Object windowsScrollPaneborder = UIManager.get("ScrollPane.border");
         if (windowsScrollPaneborder != null) {
             if (windowsScrollPaneborder instanceof LineBorder) {
                 standardBorderColor = ((LineBorder) windowsScrollPaneborder).getLineColor();
@@ -64,10 +64,10 @@ public class WindowsLFCustoms extends AbstractLFCustoms {
                 .createEmptyBorder(5, 5, 5, 5));
 
         Object[] windowsUIDefaults = new Object[] {
-                "BibleViewPane.TabbedPaneUI", WindowsBorderlessTabbedPaneUI.createUI(null), //$NON-NLS-1$
-                "TabbedPanePanel.border", tabbedPanePanelBorder, //$NON-NLS-1$
-                "StandardBorder.color", standardBorderColor, //$NON-NLS-1$
-                "SelectPanel.border", panelSelectBorder //$NON-NLS-1$
+                "BibleViewPane.TabbedPaneUI", WindowsBorderlessTabbedPaneUI.createUI(null),
+                "TabbedPanePanel.border", tabbedPanePanelBorder,
+                "StandardBorder.color", standardBorderColor,
+                "SelectPanel.border", panelSelectBorder
         };
 
         UIManager.getDefaults().putDefaults(windowsUIDefaults);

@@ -66,12 +66,12 @@ public class MappedOptionsField implements Field {
      */
     public void setChoice(Choice param) {
         if (!(param instanceof MappedChoice)) {
-            throw new IllegalArgumentException("Illegal type for Choice. Not a MappedChoice. " + param.getKey()); //$NON-NLS-1$
+            throw new IllegalArgumentException("Illegal type for Choice. Not a MappedChoice. " + param.getKey());
         }
         MappedChoice mc = (MappedChoice) param;
         Map map = mc.getOptions();
         if (map == null) {
-            throw new IllegalArgumentException("getOptions() returns null for option: " + param.getKey()); //$NON-NLS-1$
+            throw new IllegalArgumentException("getOptions() returns null for option: " + param.getKey());
         }
         combo.setModel(new MapComboBoxModel(map));
         combo.setRenderer(new MapEntryRenderer());
@@ -88,7 +88,7 @@ public class MappedOptionsField implements Field {
         if (reply instanceof Map.Entry) {
             return ((Map.Entry) reply).getKey().toString();
         }
-        return reply == null ? "" : reply.toString(); //$NON-NLS-1$
+        return reply == null ? "" : reply.toString();
     }
 
     /**
@@ -114,7 +114,7 @@ public class MappedOptionsField implements Field {
         // Equate null and empty string
         Object selected = combo.getSelectedItem();
         if (value.length() > 0 && selected != null) {
-            log.warn("Checked for options without finding: '" + value + "'. Defaulting to first option: " + selected); //$NON-NLS-1$//$NON-NLS-2$
+            log.warn("Checked for options without finding: '" + value + "'. Defaulting to first option: " + selected);
         }
     }
 

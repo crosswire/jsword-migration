@@ -42,14 +42,14 @@ public class CWAction extends AbstractAction {
      * The icon to display when a large one is needed. This is still not part of
      * Java as of 1.5
      */
-    public static final String LARGE_ICON = "LargeIcon"; //$NON-NLS-1$
+    public static final String LARGE_ICON = "LargeIcon";
 
     /**
      * The tooltip to display. This is an alias for SHORT_DESCRIPTION. The
      * creator and user of a CWAction is to store and retrieve
      * SHORT_DESCRIPTION.
      */
-    public static final String TOOL_TIP = "ToolTip"; //$NON-NLS-1$
+    public static final String TOOL_TIP = "ToolTip";
 
     /**
      * Forwards the ActionEvent to the registered listener.
@@ -104,15 +104,15 @@ public class CWAction extends AbstractAction {
     public String toString() {
         StringBuffer sb = new StringBuffer();
 
-        sb.append("Name:"); //$NON-NLS-1$
+        sb.append("Name:");
         sb.append((String) getValue(Action.NAME));
-        sb.append("\n Desc:"); //$NON-NLS-1$
+        sb.append("\n Desc:");
         sb.append((String) getValue(Action.SHORT_DESCRIPTION));
-        sb.append("\n    ActionCommandKey:"); //$NON-NLS-1$
+        sb.append("\n    ActionCommandKey:");
         sb.append((String) getValue(Action.ACTION_COMMAND_KEY));
-        sb.append("\n    Enabled:"); //$NON-NLS-1$
+        sb.append("\n    Enabled:");
         sb.append(isEnabled());
-        sb.append("\n    ObjectID:"); //$NON-NLS-1$
+        sb.append("\n    ObjectID:");
         sb.append(System.identityHashCode(this));
         sb.append('\n');
 

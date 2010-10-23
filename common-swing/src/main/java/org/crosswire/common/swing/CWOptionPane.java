@@ -57,7 +57,7 @@ public class CWOptionPane extends JOptionPane {
      * Creates a <code>CWOptionPane</code> with a test message.
      */
     public CWOptionPane() {
-        this("CWOptionPane message", PLAIN_MESSAGE, DEFAULT_OPTION, null, null, null); //$NON-NLS-1$
+        this("CWOptionPane message", PLAIN_MESSAGE, DEFAULT_OPTION, null, null, null);
     }
 
     /**
@@ -243,7 +243,7 @@ public class CWOptionPane extends JOptionPane {
      * @see java.awt.GraphicsEnvironment#isHeadless
      */
     public static String showInputDialog(Component parentComponent, Object message) throws HeadlessException {
-        return showInputDialog(parentComponent, message, "?", QUESTION_MESSAGE); //$NON-NLS-1$
+        return showInputDialog(parentComponent, message, "?", QUESTION_MESSAGE);
     }
 
     /**
@@ -261,7 +261,7 @@ public class CWOptionPane extends JOptionPane {
      *            the value used to initialize the input field
      */
     public static String showInputDialog(Component parentComponent, Object message, Object initialSelectionValue) {
-        return (String) showInputDialog(parentComponent, message, "?", QUESTION_MESSAGE, null, null, initialSelectionValue); //$NON-NLS-1$
+        return (String) showInputDialog(parentComponent, message, "?", QUESTION_MESSAGE, null, null, initialSelectionValue);
     }
 
     /**
@@ -367,7 +367,7 @@ public class CWOptionPane extends JOptionPane {
      * @see java.awt.GraphicsEnvironment#isHeadless
      */
     public static void showMessageDialog(Component parentComponent, Object message) throws HeadlessException {
-        showOptionDialog(parentComponent, message, "?", DEFAULT_OPTION, INFORMATION_MESSAGE, null, null, null); //$NON-NLS-1$
+        showOptionDialog(parentComponent, message, "?", DEFAULT_OPTION, INFORMATION_MESSAGE, null, null, null);
     }
 
     /**
@@ -444,7 +444,7 @@ public class CWOptionPane extends JOptionPane {
      * @see java.awt.GraphicsEnvironment#isHeadless
      */
     public static int showConfirmDialog(Component parentComponent, Object message) throws HeadlessException {
-        return showOptionDialog(parentComponent, message, "?", YES_NO_CANCEL_OPTION, QUESTION_MESSAGE, null, null, null); //$NON-NLS-1$
+        return showOptionDialog(parentComponent, message, "?", YES_NO_CANCEL_OPTION, QUESTION_MESSAGE, null, null, null);
     }
 
     /**
@@ -629,21 +629,21 @@ public class CWOptionPane extends JOptionPane {
             return CLOSED_OPTION;
         }
 
-        if (getActionName("Yes").equals(selectedValue)) { //$NON-NLS-1$
+        if (getActionName("Yes").equals(selectedValue)) {
 
             return YES_OPTION;
         }
 
-        if (getActionName("No").equals(selectedValue)) { //$NON-NLS-1$
+        if (getActionName("No").equals(selectedValue)) {
 
             return NO_OPTION;
         }
 
-        if (getActionName("OK").equals(selectedValue)) { //$NON-NLS-1$
+        if (getActionName("OK").equals(selectedValue)) {
             return OK_OPTION;
         }
 
-        if (getActionName("Cancel").equals(selectedValue)) { //$NON-NLS-1$
+        if (getActionName("Cancel").equals(selectedValue)) {
             return CANCEL_OPTION;
         }
 
@@ -749,23 +749,23 @@ public class CWOptionPane extends JOptionPane {
         if (options == null) {
             if (optionType == YES_NO_OPTION) {
                 opts = new Object[] {
-                        getActionName("Yes"), //$NON-NLS-1$
-                        getActionName("No") //$NON-NLS-1$
+                        getActionName("Yes"),
+                        getActionName("No")
                 };
             } else if (optionType == OK_CANCEL_OPTION) {
                 opts = new Object[] {
-                        getActionName("OK"), //$NON-NLS-1$
-                        getActionName("Cancel") //$NON-NLS-1$
+                        getActionName("OK"),
+                        getActionName("Cancel")
                 };
             } else if (optionType == YES_NO_CANCEL_OPTION && messageType != INFORMATION_MESSAGE) {
                 opts = new Object[] {
-                        getActionName("Yes"), //$NON-NLS-1$
-                        getActionName("No"), //$NON-NLS-1$
-                        getActionName("Cancel") //$NON-NLS-1$
+                        getActionName("Yes"),
+                        getActionName("No"),
+                        getActionName("Cancel")
                 };
             } else {
                 opts = new Object[] {
-                    getActionName("OK"), //$NON-NLS-1$
+                    getActionName("OK"),
                 };
             }
         }

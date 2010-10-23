@@ -54,7 +54,7 @@ public final class GuiConvert {
      * @return the converted data
      */
     public static Font string2Font(String value) {
-        if (value == null || value.equals("")) { //$NON-NLS-1$
+        if (value == null || value.equals("")) {
             return null;
         }
 
@@ -64,9 +64,9 @@ public final class GuiConvert {
         }
 
         // old way
-        String[] values = StringUtil.split(value, ","); //$NON-NLS-1$
+        String[] values = StringUtil.split(value, ",");
         if (values.length != 3) {
-            log.warn("Illegal font name: " + value); //$NON-NLS-1$
+            log.warn("Illegal font name: " + value);
             return null;
         }
         return new Font(values[0], Integer.parseInt(values[1]), Integer.parseInt(values[2]));
@@ -82,18 +82,18 @@ public final class GuiConvert {
      */
     public static String font2String(Font font) {
         if (font == null) {
-            return ""; //$NON-NLS-1$
+            return "";
         }
 
-        String strStyle = "plain"; //$NON-NLS-1$
+        String strStyle = "plain";
 
         if (font.isBold()) {
-            strStyle = font.isItalic() ? "bolditalic" : "bold"; //$NON-NLS-1$ //$NON-NLS-2$
+            strStyle = font.isItalic() ? "bolditalic" : "bold";
         } else if (font.isItalic()) {
-            strStyle = "italic"; //$NON-NLS-1$
+            strStyle = "italic";
         }
 
-        return font.getName() + "-" + strStyle + "-" + font.getSize(); //$NON-NLS-1$ //$NON-NLS-2$
+        return font.getName() + "-" + strStyle + "-" + font.getSize();
     }
 
     /**
@@ -123,12 +123,12 @@ public final class GuiConvert {
      * @return the converted data
      */
     public static Color string2Color(String value) {
-        if (value == null || value.equals("")) { //$NON-NLS-1$
+        if (value == null || value.equals("")) {
             return null;
         }
 
         if (value.length() != 7) {
-            log.warn("Illegal colour name: " + value); //$NON-NLS-1$
+            log.warn("Illegal colour name: " + value);
             return null;
         }
 
@@ -150,18 +150,18 @@ public final class GuiConvert {
      */
     public static String color2String(Color color) {
         if (color == null) {
-            return ""; //$NON-NLS-1$
+            return "";
         }
 
-        String red = "00" + Integer.toHexString(color.getRed()); //$NON-NLS-1$
-        String green = "00" + Integer.toHexString(color.getGreen()); //$NON-NLS-1$
-        String blue = "00" + Integer.toHexString(color.getBlue()); //$NON-NLS-1$
+        String red = "00" + Integer.toHexString(color.getRed());
+        String green = "00" + Integer.toHexString(color.getGreen());
+        String blue = "00" + Integer.toHexString(color.getBlue());
 
         red = red.substring(red.length() - 2);
         green = green.substring(green.length() - 2);
         blue = blue.substring(blue.length() - 2);
 
-        return "#" + red + green + blue; //$NON-NLS-1$
+        return "#" + red + green + blue;
     }
 
     /**
