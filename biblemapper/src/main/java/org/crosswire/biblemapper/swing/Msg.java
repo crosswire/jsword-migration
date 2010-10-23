@@ -31,16 +31,43 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 final class Msg extends MsgBase {
-    // I18N: migrate this to an ActionFactory
-    static final Msg CHOOSER_CANCEL = new Msg("BookChooser.Cancel"); //$NON-NLS-1$
-    // I18N: migrate this to an ActionFactory
-    static final Msg CHOOSER_OK = new Msg("BookChooser.OK"); //$NON-NLS-1$
-    static final Msg CHOOSER_TITLE = new Msg("BookChooser.Title"); //$NON-NLS-1$
 
     /**
-     * Passthrough ctor
+     * Get the internationalized text, but return key if key is unknown.
+     * 
+     * @param key
+     * @return the internationalized text
      */
-    private Msg(String name) {
-        super(name);
+    public static String gettext(String key)
+    {
+        return msg.lookup(key);
     }
+
+    /**
+     * Get the internationalized text, but return key if key is unknown.
+     * The text requires one parameter to be passed.
+     * 
+     * @param key
+     * @param param
+     * @return the formatted, internationalized text
+     */
+    public static String gettext(String key, Object param)
+    {
+        return msg.toString(key, param);
+    }
+
+    /**
+     * Get the internationalized text, but return key if key is unknown.
+     * The text requires one parameter to be passed.
+     * 
+     * @param key
+     * @param param
+     * @return the formatted, internationalized text
+     */
+    public static String gettext(String key, Object[] params)
+    {
+        return msg.toString(key, params);
+    }
+
+    private static MsgBase msg = new Msg();
 }

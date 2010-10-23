@@ -92,8 +92,7 @@ public class BookChooser extends JPanel {
         });
 
         // I18N: migrate this to an ActionFactory
-        btnOk.setText(Msg.CHOOSER_OK.toString());
-        btnOk.setMnemonic(Msg.CHOOSER_OK.toString().charAt(0));
+        btnOk.setText(Msg.gettext("OK"));
         btnOk.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 okPressed();
@@ -103,7 +102,7 @@ public class BookChooser extends JPanel {
         btnOk.setDefaultCapable(true);
 
         // I18N: migrate this to an ActionFactory
-        btnCancel.setText(Msg.CHOOSER_CANCEL.toString());
+        btnCancel.setText(Msg.gettext("Cancel"));
         btnCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 cancelPressed();
@@ -223,7 +222,7 @@ public class BookChooser extends JPanel {
     /**
      * The title of the dialog
      */
-    private String title = Msg.CHOOSER_TITLE.toString();
+    private String title = Msg.gettext("Select a Bible");
 
     /**
      * The Bible list model

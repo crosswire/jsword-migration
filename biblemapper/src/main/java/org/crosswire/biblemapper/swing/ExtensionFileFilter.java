@@ -88,10 +88,10 @@ public class ExtensionFileFilter extends FileFilter {
             return desc;
         }
 
-        StringBuffer buff = new StringBuffer("("); //$NON-NLS-1$
+        StringBuffer buff = new StringBuffer("(");
         for (int i = 0; i < extensions.length; i++) {
             if (i != 0) {
-                buff.append(", "); //$NON-NLS-1$
+                buff.append(", ");
             }
 
             buff.append(extensions[i]);
@@ -113,7 +113,7 @@ public class ExtensionFileFilter extends FileFilter {
             return name.substring(idx + 1).toLowerCase();
         }
 
-        return ""; //$NON-NLS-1$
+        return "";
     }
 
     /**
