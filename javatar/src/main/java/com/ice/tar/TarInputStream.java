@@ -249,8 +249,8 @@ public class TarInputStream extends FilterInputStream
             long numToSkip = (this.entrySize - this.entryOffset);
 
             if (this.debug)
-                System.err.println("TarInputStream: SKIP currENTRY '" + this.currEntry.getName() + "' SZ " + this.entrySize + " OFF " + this.entryOffset //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                                + "  skipping " + numToSkip + " bytes"); //$NON-NLS-1$ //$NON-NLS-2$
+                System.err.println("TarInputStream: SKIP currENTRY '" + this.currEntry.getName() + "' SZ " + this.entrySize + " OFF " + this.entryOffset
+                                + "  skipping " + numToSkip + " bytes");
 
             if (numToSkip > 0)
             {
@@ -266,7 +266,7 @@ public class TarInputStream extends FilterInputStream
         {
             if (this.debug)
             {
-                System.err.println("READ NULL RECORD"); //$NON-NLS-1$
+                System.err.println("READ NULL RECORD");
             }
 
             this.hasHitEOF = true;
@@ -275,7 +275,7 @@ public class TarInputStream extends FilterInputStream
         {
             if (this.debug)
             {
-                System.err.println("READ EOF RECORD"); //$NON-NLS-1$
+                System.err.println("READ EOF RECORD");
             }
 
             this.hasHitEOF = true;
@@ -299,7 +299,7 @@ public class TarInputStream extends FilterInputStream
                 }
 
                 if (this.debug)
-                    System.err.println("TarInputStream: SET CURRENTRY '" + this.currEntry.getName() + "' size = " + this.currEntry.getSize()); //$NON-NLS-1$ //$NON-NLS-2$
+                    System.err.println("TarInputStream: SET CURRENTRY '" + this.currEntry.getName() + "' size = " + this.currEntry.getSize());
 
                 this.entryOffset = 0;
                 this.entrySize = this.currEntry.getSize();
@@ -309,8 +309,8 @@ public class TarInputStream extends FilterInputStream
                 this.entrySize = 0;
                 this.entryOffset = 0;
                 this.currEntry = null;
-                throw new InvalidHeaderException("bad header in block " + this.buffer.getCurrentBlockNum() + " record " + this.buffer.getCurrentRecordNum() //$NON-NLS-1$ //$NON-NLS-2$
-                                + ", " + ex.getMessage()); //$NON-NLS-1$
+                throw new InvalidHeaderException("bad header in block " + this.buffer.getCurrentBlockNum() + " record " + this.buffer.getCurrentRecordNum()
+                                + ", " + ex.getMessage());
             }
         }
 
@@ -404,7 +404,7 @@ public class TarInputStream extends FilterInputStream
             if (rec == null)
             {
                 // Unexpected EOF!
-                throw new IOException("unexpected EOF with " + numToRead + " bytes unread"); //$NON-NLS-1$ //$NON-NLS-2$
+                throw new IOException("unexpected EOF with " + numToRead + " bytes unread");
             }
 
             int sz = numToRead;

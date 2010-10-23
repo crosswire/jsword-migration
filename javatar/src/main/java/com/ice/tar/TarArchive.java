@@ -135,12 +135,12 @@ public class TarArchive extends Object
     {
         this.rootPath = null;
         this.pathPrefix = null;
-        this.tempPath = System.getProperty("user.dir"); //$NON-NLS-1$
+        this.tempPath = System.getProperty("user.dir");
 
         this.userId = 0;
-        this.userName = ""; //$NON-NLS-1$
+        this.userName = "";
         this.groupId = 0;
-        this.groupName = ""; //$NON-NLS-1$
+        this.groupName = "";
 
         this.debug = false;
         this.verbose = false;
@@ -361,7 +361,7 @@ public class TarArchive extends Object
 
     private String getTempFilePath(File eFile)
     {
-        String pathStr = this.tempPath + File.separator + eFile.getName() + ".tmp"; //$NON-NLS-1$
+        String pathStr = this.tempPath + File.separator + eFile.getName() + ".tmp";
 
         for (int i = 1; i < 5; ++i)
         {
@@ -370,7 +370,7 @@ public class TarArchive extends Object
             if (!f.exists())
                 break;
 
-            pathStr = this.tempPath + File.separator + eFile.getName() + "-" + i + ".tmp"; //$NON-NLS-1$ //$NON-NLS-2$
+            pathStr = this.tempPath + File.separator + eFile.getName() + "-" + i + ".tmp";
         }
 
         return pathStr;
@@ -410,7 +410,7 @@ public class TarArchive extends Object
             {
                 if (this.debug)
                 {
-                    System.err.println("READ EOF RECORD"); //$NON-NLS-1$
+                    System.err.println("READ EOF RECORD");
                 }
                 break;
             }
@@ -436,7 +436,7 @@ public class TarArchive extends Object
             {
                 if (this.debug)
                 {
-                    System.err.println("READ EOF RECORD"); //$NON-NLS-1$
+                    System.err.println("READ EOF RECORD");
                 }
                 break;
             }
@@ -472,7 +472,7 @@ public class TarArchive extends Object
             {
                 if (!destFile.mkdirs())
                 {
-                    throw new IOException("error making directory path '" + destFile.getPath() + "'"); //$NON-NLS-1$ //$NON-NLS-2$
+                    throw new IOException("error making directory path '" + destFile.getPath() + "'");
                 }
             }
         }
@@ -484,7 +484,7 @@ public class TarArchive extends Object
             {
                 if (!subDir.mkdirs())
                 {
-                    throw new IOException("error making directory path '" + subDir.getPath() + "'"); //$NON-NLS-1$ //$NON-NLS-2$
+                    throw new IOException("error making directory path '" + subDir.getPath() + "'");
                 }
             }
 
@@ -493,7 +493,7 @@ public class TarArchive extends Object
                 if (this.verbose)
                 {
                     if (this.progressDisplay != null)
-                        this.progressDisplay.showTarProgressMessage("not overwriting " + entry.getName()); //$NON-NLS-1$
+                        this.progressDisplay.showTarProgressMessage("not overwriting " + entry.getName());
                 }
             }
             else
@@ -513,7 +513,7 @@ public class TarArchive extends Object
 
                         mime = new MimeType(contentType);
 
-                        if (mime.getPrimaryType().equalsIgnoreCase("text")) //$NON-NLS-1$
+                        if (mime.getPrimaryType().equalsIgnoreCase("text"))
                         {
                             asciiTrans = true;
                         }
@@ -524,8 +524,8 @@ public class TarArchive extends Object
 
                     if (this.debug)
                     {
-                        System.err.println("EXTRACT TRANS? '" + asciiTrans + "'  ContentType='" + contentType + "'  PrimaryType='" + mime.getPrimaryType() //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                                        + "'"); //$NON-NLS-1$
+                        System.err.println("EXTRACT TRANS? '" + asciiTrans + "'  ContentType='" + contentType + "'  PrimaryType='" + mime.getPrimaryType()
+                                        + "'");
                     }
                 }
 
@@ -613,7 +613,7 @@ public class TarArchive extends Object
 
                 mime = new MimeType(contentType);
 
-                if (mime.getPrimaryType().equalsIgnoreCase("text")) //$NON-NLS-1$
+                if (mime.getPrimaryType().equalsIgnoreCase("text"))
                 {
                     asciiTrans = true;
                 }
@@ -625,7 +625,7 @@ public class TarArchive extends Object
 
             if (this.debug)
             {
-                System.err.println("CREATE TRANS? '" + asciiTrans + "'  ContentType='" + contentType + "'  PrimaryType='" + mime.getPrimaryType() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                System.err.println("CREATE TRANS? '" + asciiTrans + "'  ContentType='" + contentType + "'  PrimaryType='" + mime.getPrimaryType() + "'");
             }
 
             if (asciiTrans)
@@ -670,7 +670,7 @@ public class TarArchive extends Object
 
         if (this.pathPrefix != null)
         {
-            newName = (newName == null) ? this.pathPrefix + "/" + entry.getName() : this.pathPrefix + "/" + newName; //$NON-NLS-1$ //$NON-NLS-2$
+            newName = (newName == null) ? this.pathPrefix + "/" + entry.getName() : this.pathPrefix + "/" + newName;
         }
 
         if (newName != null)

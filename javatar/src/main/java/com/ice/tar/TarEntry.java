@@ -524,7 +524,7 @@ public class TarEntry extends Object implements Cloneable
             if (this.header.linkFlag == TarHeader.LF_DIR)
                 return true;
 
-            if (this.header.name.toString().endsWith("/")) //$NON-NLS-1$
+            if (this.header.name.toString().endsWith("/"))
                 return true;
         }
 
@@ -542,7 +542,7 @@ public class TarEntry extends Object implements Cloneable
         this.file = newFile;
 
         String name = newFile.getPath();
-        String osname = System.getProperty("os.name"); //$NON-NLS-1$
+        String osname = System.getProperty("os.name");
         if (osname != null)
         {
             // Strip off drive letters!
@@ -556,7 +556,7 @@ public class TarEntry extends Object implements Cloneable
 
             // Windows OS check was contributed by
             // Patrick Beard <beard@netscape.com>
-            String Win32Prefix = "windows"; //$NON-NLS-1$
+            String Win32Prefix = "windows";
             if (osname.toLowerCase().startsWith(Win32Prefix))
             {
                 if (name.length() > 2)
@@ -577,10 +577,10 @@ public class TarEntry extends Object implements Cloneable
         // Windows (and Posix?) paths can start with "\\NetworkDrive\",
         // so we loop on starting /'s.
 
-        for (; name.startsWith("/");) //$NON-NLS-1$
+        for (; name.startsWith("/");)
             name = name.substring(1);
 
-        hdr.linkName = new StringBuffer(""); //$NON-NLS-1$
+        hdr.linkName = new StringBuffer("");
 
         hdr.name = new StringBuffer(name);
 
@@ -590,7 +590,7 @@ public class TarEntry extends Object implements Cloneable
             hdr.mode = 040755;
             hdr.linkFlag = TarHeader.LF_DIR;
             if (hdr.name.charAt(hdr.name.length() - 1) != '/')
-                hdr.name.append("/"); //$NON-NLS-1$
+                hdr.name.append("/");
         }
         else
         {
@@ -663,7 +663,7 @@ public class TarEntry extends Object implements Cloneable
         if (this.isUnixTarFormat())
         {
             if (this.header.name.length() > 100)
-                throw new InvalidHeaderException("file path is greater than 100 characters, " + this.header.name); //$NON-NLS-1$
+                throw new InvalidHeaderException("file path is greater than 100 characters, " + this.header.name);
         }
 
         offset = TarHeader.getFileNameBytes(this.header.name.toString(), outbuf);
@@ -754,7 +754,7 @@ public class TarEntry extends Object implements Cloneable
         {
             StringBuffer buf = new StringBuffer(128);
 
-            buf.append("header magic is not 'ustar' or unix-style zeros, it is '"); //$NON-NLS-1$
+            buf.append("header magic is not 'ustar' or unix-style zeros, it is '");
             buf.append(headerBuf[257]);
             buf.append(headerBuf[258]);
             buf.append(headerBuf[259]);
@@ -762,19 +762,19 @@ public class TarEntry extends Object implements Cloneable
             buf.append(headerBuf[261]);
             buf.append(headerBuf[262]);
             buf.append(headerBuf[263]);
-            buf.append("', or (dec) "); //$NON-NLS-1$
+            buf.append("', or (dec) ");
             buf.append(headerBuf[257]);
-            buf.append(", "); //$NON-NLS-1$
+            buf.append(", ");
             buf.append(headerBuf[258]);
-            buf.append(", "); //$NON-NLS-1$
+            buf.append(", ");
             buf.append(headerBuf[259]);
-            buf.append(", "); //$NON-NLS-1$
+            buf.append(", ");
             buf.append(headerBuf[260]);
-            buf.append(", "); //$NON-NLS-1$
+            buf.append(", ");
             buf.append(headerBuf[261]);
-            buf.append(", "); //$NON-NLS-1$
+            buf.append(", ");
             buf.append(headerBuf[262]);
-            buf.append(", "); //$NON-NLS-1$
+            buf.append(", ");
             buf.append(headerBuf[263]);
 
             throw new InvalidHeaderException(buf.toString());
@@ -838,9 +838,9 @@ public class TarEntry extends Object implements Cloneable
         {
             hdr.devMajor = 0;
             hdr.devMinor = 0;
-            hdr.magic = new StringBuffer(""); //$NON-NLS-1$
-            hdr.userName = new StringBuffer(""); //$NON-NLS-1$
-            hdr.groupName = new StringBuffer(""); //$NON-NLS-1$
+            hdr.magic = new StringBuffer("");
+            hdr.userName = new StringBuffer("");
+            hdr.groupName = new StringBuffer("");
         }
     }
 
@@ -852,7 +852,7 @@ public class TarEntry extends Object implements Cloneable
      */
     public void nameTarHeader(TarHeader hdr, String name)
     {
-        boolean isDir = name.endsWith("/"); //$NON-NLS-1$
+        boolean isDir = name.endsWith("/");
 
         this.gnuFormat = false;
         this.ustarFormat = true;
@@ -873,9 +873,9 @@ public class TarEntry extends Object implements Cloneable
 
         hdr.linkFlag = isDir ? TarHeader.LF_DIR : TarHeader.LF_NORMAL;
 
-        hdr.linkName = new StringBuffer(""); //$NON-NLS-1$
-        hdr.userName = new StringBuffer(""); //$NON-NLS-1$
-        hdr.groupName = new StringBuffer(""); //$NON-NLS-1$
+        hdr.linkName = new StringBuffer("");
+        hdr.userName = new StringBuffer("");
+        hdr.groupName = new StringBuffer("");
 
         hdr.devMajor = 0;
         hdr.devMinor = 0;
@@ -885,9 +885,9 @@ public class TarEntry extends Object implements Cloneable
     public String toString()
     {
         StringBuffer result = new StringBuffer(128);
-        return result.append("[TarEntry name=").append(this.getName()).append(", isDir=").append(this.isDirectory()).append(", size=").append(this.getSize()) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        .append(", userId=").append(this.getUserId()).append(", user=").append(this.getUserName()).append(", groupId=").append( //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                                        this.getGroupId()).append(", group=").append(this.getGroupName()).append("]").toString(); //$NON-NLS-1$ //$NON-NLS-2$
+        return result.append("[TarEntry name=").append(this.getName()).append(", isDir=").append(this.isDirectory()).append(", size=").append(this.getSize())
+                        .append(", userId=").append(this.getUserId()).append(", user=").append(this.getUserName()).append(", groupId=").append(
+                                        this.getGroupId()).append(", group=").append(this.getGroupName()).append("]").toString();
     }
 
 }

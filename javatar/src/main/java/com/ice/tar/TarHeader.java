@@ -122,12 +122,12 @@ public class TarHeader extends Object implements Cloneable
     /**
      * The magic tag representing a POSIX tar archive.
      */
-    public static final String TMAGIC = "ustar"; //$NON-NLS-1$
+    public static final String TMAGIC = "ustar";
 
     /**
      * The magic tag representing a GNU tar archive.
      */
-    public static final String GNU_TMAGIC = "ustar  "; //$NON-NLS-1$
+    public static final String GNU_TMAGIC = "ustar  ";
 
     /**
      * The entry's name.
@@ -193,7 +193,7 @@ public class TarHeader extends Object implements Cloneable
         this.name = new StringBuffer();
         this.linkName = new StringBuffer();
 
-        String user = System.getProperty("user.name", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        String user = System.getProperty("user.name", "");
 
         if (user.length() > 31)
             user = user.substring(0, 31);
@@ -201,7 +201,7 @@ public class TarHeader extends Object implements Cloneable
         this.userId = 0;
         this.groupId = 0;
         this.userName = new StringBuffer(user);
-        this.groupName = new StringBuffer(""); //$NON-NLS-1$
+        this.groupName = new StringBuffer("");
     }
 
     /**
@@ -311,7 +311,7 @@ public class TarHeader extends Object implements Cloneable
                 result.append((char) header[i]);
             }
 
-            result.append("/"); //$NON-NLS-1$
+            result.append("/");
         }
 
         for (int i = 0; i < 100 && header[i] != 0; ++i)
@@ -364,9 +364,9 @@ public class TarHeader extends Object implements Cloneable
         if (newName.length() > 100)
         {
             // Locate a pathname "break" prior to the maximum name length...
-            int index = newName.indexOf("/", newName.length() - 100); //$NON-NLS-1$
+            int index = newName.indexOf("/", newName.length() - 100);
             if (index == -1)
-                throw new InvalidHeaderException("file name is greater than 100 characters, " + newName); //$NON-NLS-1$
+                throw new InvalidHeaderException("file name is greater than 100 characters, " + newName);
 
             // Get the "suffix subpath" of the name.
             String name = newName.substring(index + 1);
@@ -374,7 +374,7 @@ public class TarHeader extends Object implements Cloneable
             // Get the "prefix subpath", or "prefix", of the name.
             String prefix = newName.substring(0, index);
             if (prefix.length() > TarHeader.PREFIXLEN)
-                throw new InvalidHeaderException("file prefix is greater than 155 characters"); //$NON-NLS-1$
+                throw new InvalidHeaderException("file prefix is greater than 155 characters");
 
             TarHeader.getNameBytes(new StringBuffer(name), outbuf, TarHeader.NAMEOFFSET, TarHeader.NAMELEN);
 

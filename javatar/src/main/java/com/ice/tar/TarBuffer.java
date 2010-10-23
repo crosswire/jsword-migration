@@ -158,11 +158,11 @@ public class TarBuffer extends Object
     {
         if (this.debug)
         {
-            System.err.println("SkipRecord: recIdx = " + this.currRecIdx + " blkIdx = " + this.currBlkIdx); //$NON-NLS-1$ //$NON-NLS-2$
+            System.err.println("SkipRecord: recIdx = " + this.currRecIdx + " blkIdx = " + this.currBlkIdx);
         }
 
         if (this.inStream == null)
-            throw new IOException("reading (via skip) from an output buffer"); //$NON-NLS-1$
+            throw new IOException("reading (via skip) from an output buffer");
 
         if (this.currRecIdx >= this.recsPerBlock)
         {
@@ -182,11 +182,11 @@ public class TarBuffer extends Object
     {
         if (this.debug)
         {
-            System.err.println("ReadRecord: recIdx = " + this.currRecIdx + " blkIdx = " + this.currBlkIdx); //$NON-NLS-1$ //$NON-NLS-2$
+            System.err.println("ReadRecord: recIdx = " + this.currRecIdx + " blkIdx = " + this.currBlkIdx);
         }
 
         if (this.inStream == null)
-            throw new IOException("reading from an output buffer"); //$NON-NLS-1$
+            throw new IOException("reading from an output buffer");
 
         if (this.currRecIdx >= this.recsPerBlock)
         {
@@ -210,11 +210,11 @@ public class TarBuffer extends Object
     {
         if (this.debug)
         {
-            System.err.println("ReadBlock: blkIdx = " + this.currBlkIdx); //$NON-NLS-1$
+            System.err.println("ReadBlock: blkIdx = " + this.currBlkIdx);
         }
 
         if (this.inStream == null)
-            throw new IOException("reading from an output buffer"); //$NON-NLS-1$
+            throw new IOException("reading from an output buffer");
 
         this.currRecIdx = 0;
 
@@ -247,7 +247,7 @@ public class TarBuffer extends Object
             {
                 if (this.debug)
                 {
-                    System.err.println("ReadBlock: INCOMPLETE READ " + numBytes + " of " + this.blockSize + " bytes read."); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    System.err.println("ReadBlock: INCOMPLETE READ " + numBytes + " of " + this.blockSize + " bytes read.");
                 }
             }
         }
@@ -288,14 +288,14 @@ public class TarBuffer extends Object
     {
         if (this.debug)
         {
-            System.err.println("WriteRecord: recIdx = " + this.currRecIdx + " blkIdx = " + this.currBlkIdx); //$NON-NLS-1$ //$NON-NLS-2$
+            System.err.println("WriteRecord: recIdx = " + this.currRecIdx + " blkIdx = " + this.currBlkIdx);
         }
 
         if (this.outStream == null)
-            throw new IOException("writing to an input buffer"); //$NON-NLS-1$
+            throw new IOException("writing to an input buffer");
 
         if (record.length != this.recordSize)
-            throw new IOException("record to write has length '" + record.length + "' which is not the record size of '" + this.recordSize + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            throw new IOException("record to write has length '" + record.length + "' which is not the record size of '" + this.recordSize + "'");
 
         if (this.currRecIdx >= this.recsPerBlock)
         {
@@ -320,15 +320,15 @@ public class TarBuffer extends Object
     {
         if (this.debug)
         {
-            System.err.println("WriteRecord: recIdx = " + this.currRecIdx + " blkIdx = " + this.currBlkIdx); //$NON-NLS-1$ //$NON-NLS-2$
+            System.err.println("WriteRecord: recIdx = " + this.currRecIdx + " blkIdx = " + this.currBlkIdx);
         }
 
         if (this.outStream == null)
-            throw new IOException("writing to an input buffer"); //$NON-NLS-1$
+            throw new IOException("writing to an input buffer");
 
         if ((offset + this.recordSize) > buf.length)
-            throw new IOException("record has length '" + buf.length + "' with offset '" + offset + "' which is less than the record size of '" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                            + this.recordSize + "'"); //$NON-NLS-1$
+            throw new IOException("record has length '" + buf.length + "' with offset '" + offset + "' which is less than the record size of '"
+                            + this.recordSize + "'");
 
         if (this.currRecIdx >= this.recsPerBlock)
         {
@@ -347,11 +347,11 @@ public class TarBuffer extends Object
     {
         if (this.debug)
         {
-            System.err.println("WriteBlock: blkIdx = " + this.currBlkIdx); //$NON-NLS-1$
+            System.err.println("WriteBlock: blkIdx = " + this.currBlkIdx);
         }
 
         if (this.outStream == null)
-            throw new IOException("writing to an input buffer"); //$NON-NLS-1$
+            throw new IOException("writing to an input buffer");
 
         this.outStream.write(this.blockBuffer, 0, this.blockSize);
         this.outStream.flush();
@@ -368,11 +368,11 @@ public class TarBuffer extends Object
     {
         if (this.debug)
         {
-            System.err.println("TarBuffer.flushBlock() called."); //$NON-NLS-1$
+            System.err.println("TarBuffer.flushBlock() called.");
         }
 
         if (this.outStream == null)
-            throw new IOException("writing to an input buffer"); //$NON-NLS-1$
+            throw new IOException("writing to an input buffer");
 
         // Thanks to 'Todd Kofford <tkofford@bigfoot.com>' for this patch.
         // Use a buffer initialized with 0s to initialize everything in the
@@ -399,7 +399,7 @@ public class TarBuffer extends Object
     {
         if (this.debug)
         {
-            System.err.println("TarBuffer.closeBuffer()."); //$NON-NLS-1$
+            System.err.println("TarBuffer.closeBuffer().");
         }
 
         if (this.outStream != null)

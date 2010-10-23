@@ -137,14 +137,14 @@ public class FastTarStream
                         by[i] = (headerBuf[i] == 0 ? 20 : headerBuf[i]);
                     }
                     String s = new String(by);
-                    System.out.println("\n" + s); //$NON-NLS-1$
+                    System.out.println("\n" + s);
                 }
 
                 if (!(headerBuf[257] == 'u' && headerBuf[258] == 's' && headerBuf[259] == 't' && headerBuf[260] == 'a' && headerBuf[261] == 'r'))
                 {
-                    throw new InvalidHeaderException("header magic is not'ustar', but '" + headerBuf[257] + headerBuf[258] + headerBuf[259] + headerBuf[260] //$NON-NLS-1$
-                                    + headerBuf[261] + "', or (dec) " + ((int) headerBuf[257]) + ", " + ((int) headerBuf[258]) + ", " + ((int) headerBuf[259]) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                                    + ", " + ((int) headerBuf[260]) + ", " + ((int) headerBuf[261])); //$NON-NLS-1$ //$NON-NLS-2$
+                    throw new InvalidHeaderException("header magic is not'ustar', but '" + headerBuf[257] + headerBuf[258] + headerBuf[259] + headerBuf[260]
+                                    + headerBuf[261] + "', or (dec) " + ((int) headerBuf[257]) + ", " + ((int) headerBuf[258]) + ", " + ((int) headerBuf[259])
+                                    + ", " + ((int) headerBuf[260]) + ", " + ((int) headerBuf[261]));
                 }
             }
             catch (InvalidHeaderException ex)
@@ -167,13 +167,13 @@ public class FastTarStream
             int idx = 0;
             if (args.length > 0)
             {
-                if (args[idx].equals("-d")) //$NON-NLS-1$
+                if (args[idx].equals("-d"))
                 {
                     debug = true;
                     idx++;
                 }
 
-                if (args[idx].endsWith(".gz") || args[idx].endsWith(".tgz")) //$NON-NLS-1$ //$NON-NLS-2$
+                if (args[idx].endsWith(".gz") || args[idx].endsWith(".tgz"))
                 {
                     in = new GZIPInputStream(new FileInputStream(args[idx]));
                 }
@@ -203,7 +203,7 @@ public class FastTarStream
                 if (entry.isDirectory())
                 {
                     // TYPE
-                    System.out.print("D "); //$NON-NLS-1$
+                    System.out.print("D ");
 
                     // NAME
                     padBuf.setLength(0);
@@ -238,7 +238,7 @@ public class FastTarStream
                 else
                 {
                     // TYPE
-                    System.out.print("F "); //$NON-NLS-1$
+                    System.out.print("F ");
 
                     // NAME
                     padBuf.setLength(0);
@@ -273,7 +273,7 @@ public class FastTarStream
                     System.out.print(padBuf.toString());
                 }
 
-                System.out.println(""); //$NON-NLS-1$
+                System.out.println("");
             }
         }
         catch (IOException ex)
