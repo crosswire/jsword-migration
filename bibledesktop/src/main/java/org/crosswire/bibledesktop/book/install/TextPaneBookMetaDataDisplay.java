@@ -66,7 +66,7 @@ public class TextPaneBookMetaDataDisplay {
      */
     public void setBook(Book book) {
         if (book == null) {
-            txtView.setText(""); //$NON-NLS-1$
+            txtView.setText("");
             return;
         }
 

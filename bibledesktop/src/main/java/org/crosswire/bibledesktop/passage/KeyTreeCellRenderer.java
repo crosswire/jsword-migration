@@ -52,7 +52,7 @@ public class KeyTreeCellRenderer extends DefaultTreeCellRenderer {
                 setText(key.getName());
             }
         } else { // if (value != null)
-            log.warn("value is not a key: " + value.getClass().getName()); //$NON-NLS-1$
+            log.warn("value is not a key: " + value.getClass().getName());
         }
 
         return this;

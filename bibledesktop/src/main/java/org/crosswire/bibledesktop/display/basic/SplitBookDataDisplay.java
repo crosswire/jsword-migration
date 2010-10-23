@@ -98,11 +98,11 @@ public class SplitBookDataDisplay extends JPanel implements BookProvider {
 
         // Only set the passage if it has changed
         if (keyChanged) {
-            log.debug("new passage chosen: " + key.getName()); //$NON-NLS-1$
+            log.debug("new passage chosen: " + key.getName());
         }
 
         if (bookChanged) {
-            log.debug("new book(s) chosen: " + StringUtil.toString(books)); //$NON-NLS-1$
+            log.debug("new book(s) chosen: " + StringUtil.toString(books));
         }
 
         if (bookChanged || keyChanged) {

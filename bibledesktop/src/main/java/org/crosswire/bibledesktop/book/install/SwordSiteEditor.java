@@ -44,19 +44,29 @@ import org.crosswire.jsword.book.install.sword.AbstractSwordInstaller;
 public class SwordSiteEditor extends JPanel implements SiteEditor {
     public void initialize() {
         host = new JTextField();
-        JLabel hostLabel = getLabelForText(Msg.HOST, host);
+        // TRANSLATOR: Label for the host field.
+        // This is something like www.crosswire.org.
+        JLabel hostLabel = getLabelForText(Msg.gettext("Host:"), host);
 
         catalogDir = new JTextField();
-        JLabel catalogDirLabel = getLabelForText(Msg.CATALOG_DIR, catalogDir);
+        // TRANSLATOR: Label for the catalog directory field.
+        // This is the folder that contains mods.d.tar.gz.
+        JLabel catalogDirLabel = getLabelForText(Msg.gettext("Catalog Directory:"), catalogDir);
 
         packageDir = new JTextField();
-        JLabel packageDirLabel = getLabelForText(Msg.PACKAGE_DIR, packageDir);
+        // TRANSLATOR: Label for the zip directory field.
+        // SWORD modules are cached as zip files in this directory.
+        JLabel packageDirLabel = getLabelForText(Msg.gettext("Zip Directory:"), packageDir);
 
         proxyHost = new JTextField();
-        JLabel proxyHostLabel = getLabelForText(Msg.PROXY_HOST, proxyHost);
+        // TRANSLATOR: Label for the proxy host field.
+        // Sometimes users have their internet access proxied. This field allows the user to enter the proxy host.
+        JLabel proxyHostLabel = getLabelForText(Msg.gettext("Proxy Host:"), proxyHost);
 
         proxyPort = new JTextField();
-        JLabel proxyPortLabel = getLabelForText(Msg.PROXY_PORT, proxyPort);
+        // TRANSLATOR: Label for the proxy port field.
+        // Sometimes users have their internet access proxied. This field allows the user to enter the proxy port, if not 80.
+        JLabel proxyPortLabel = getLabelForText(Msg.gettext("Proxy Port:"), proxyPort);
 
         setLayout(new GridBagLayout());
         add(hostLabel,       new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
@@ -157,9 +167,9 @@ public class SwordSiteEditor extends JPanel implements SiteEditor {
         }
     }
 
-    private JLabel getLabelForText(Msg title, JTextField field) {
+    private JLabel getLabelForText(String title, JTextField field) {
         JLabel label = new JLabel();
-        label.setText(title.toString());
+        label.setText(title);
         label.setLabelFor(field);
         return label;
     }

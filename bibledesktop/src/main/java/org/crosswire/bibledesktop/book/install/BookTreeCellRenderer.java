@@ -48,13 +48,16 @@ public class BookTreeCellRenderer extends DefaultTreeCellRenderer {
                 setLeafIcon(BookIcon.getIcon(book));
 
                 if (book.isQuestionable()) {
-                    tooltip = Msg.BOOK_QUESTIONABLE.toString();
+                    // TRANSLATOR: The book is categorized as either the work of a cult, or it is unorthodox or it is otherwise questionable.
+                    tooltip = Msg.gettext("Cult / Unorthodox / Questionable");
                 }
 
                 if (!book.isSupported()) {
-                    tooltip = Msg.BOOK_UNSUPPORTED.toString();
+                    // TRANSLATOR: The book is not supported by JSword
+                    tooltip = Msg.gettext("Unsupported");
                 } else if (book.isLocked()) {
-                    tooltip = Msg.BOOK_LOCKED.toString();
+                    // TRANSLATOR: The book is enciphered and needs to be unlocked
+                    tooltip = Msg.gettext("Locked");
                 }
             }
         }

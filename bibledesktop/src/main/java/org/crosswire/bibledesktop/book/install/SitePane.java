@@ -46,7 +46,6 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import org.crosswire.common.icu.NumberShaper;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWOptionPane;
 import org.crosswire.common.swing.CWScrollPane;
@@ -101,8 +100,6 @@ public class SitePane extends JPanel {
 
         actions = new ActionFactory(SitePane.class, this);
 
-        shaper = new NumberShaper();
-
         BookList bl = installer;
         if (bl == null) {
             bl = Books.installed();
@@ -132,19 +129,23 @@ public class SitePane extends JPanel {
      *
      */
     private void updateDescription() {
-        String desc = "#ERROR#"; //$NON-NLS-1$
+        String desc = "#ERROR#";
 
         if (installer == null) {
             int bookCount = Books.installed().getBooks().size();
-            desc = Msg.INSTALLED_DESC.toString(new Object[] {
+            // TRANSLATOR: This label give the number of books that are installed. {0} is a placeholder for the number.
+            desc = Msg.gettext("{0} books installed.", new Object[] {
                 new Integer(bookCount)
             });
         } else {
             int bookCount = installer.getBooks().size();
             if (bookCount == 0) {
-                desc = Msg.NONE_AVAILABLE_DESC.toString();
+                // TRANSLATOR: This label shows up when the list of available books for a download site is missing.
+                // Change the text between <html><b> and </b>.
+                desc = Msg.gettext("<html><b>Click 'Update Available Books' to download an up to date book list.</b>");
             } else {
-                desc = Msg.AVAILABLE_DESC.toString(new Object[] {
+                // TRANSLATOR: This label give the number of books available at a download site. {0} is a placeholder for the number.
+                desc = Msg.gettext("{0} books available for download.", new Object[] {
                     new Integer(bookCount)
                 });
             }
@@ -215,7 +216,7 @@ public class SitePane extends JPanel {
 
         setTreeModel(books);
         // Add lines if viewed in Java Look & Feel
-        treAvailable.putClientProperty("JTree.lineStyle", "Angled"); //$NON-NLS-1$ //$NON-NLS-2$
+        treAvailable.putClientProperty("JTree.lineStyle", "Angled");
         treAvailable.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         treAvailable.setCellEditor(null);
         treAvailable.setRootVisible(false);
@@ -232,7 +233,7 @@ public class SitePane extends JPanel {
     private TreeModel createTreeModel(BookList books) {
         // return new BooksTreeModel(books);
         BookSet bmds = new BookSet(books.getBooks());
-        TreeNode bookRoot = new BookNode("root", bmds, 0, new Object[] { BookMetaData.KEY_CATEGORY, BookMetaData.KEY_XML_LANG}); //$NON-NLS-1$
+        TreeNode bookRoot = new BookNode("root", bmds, 0, new Object[] { BookMetaData.KEY_CATEGORY, BookMetaData.KEY_XML_LANG});
         return new DefaultTreeModel(bookRoot);
     }
 
@@ -293,10 +294,12 @@ public class SitePane extends JPanel {
         Book book = getBook(last);
 
         try {
-            String msg = shaper.shape(Msg.CONFIRM_DELETE_BOOK.toString(new Object[] {
+            // TRANSLATOR: Message asking for confirmation of a delete of a book.
+            String msg = Msg.gettext("Are you sure you want to delete {0}?", new Object[] {
                 book.getName()
-            }));
-            if (CWOptionPane.showConfirmDialog(this, msg, Msg.CONFIRM_DELETE_TITLE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            });
+            // TRANSLATOR: Title of a dialog that asks whether the book should be deleted.
+            if (CWOptionPane.showConfirmDialog(this, msg, Msg.gettext("Delete Book"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 book.getDriver().delete(book);
 
                 IndexManager imanager = IndexManagerFactory.getIndexManager();
@@ -321,9 +324,16 @@ public class SitePane extends JPanel {
         Object last = path.getLastPathComponent();
         Book book = getBook(last);
 
-        String unlockKey = (String) CWOptionPane.showInputDialog(this, Msg.UNLOCK_BOOK.toString(new Object[] {
+        // TRANSLATOR: Title to a dialog asking the user to provide an unlock key.
+        String title = Msg.gettext("Unlock Book");
+        // TRANSLATOR: Message asking the user to provide an unlock key.
+        // The unlock key is typically a string like AbCd8364efGH8472.
+        // {0} is a placeholder for the books name.
+        // In order to have long titles on the next line we use <html> and <br> to provide this.
+        String msg = Msg.gettext("<html>Please enter the unlock key for:<br> {0}?", new Object[] {
             book.getName()
-        }), Msg.UNLOCK_TITLE.toString(), JOptionPane.QUESTION_MESSAGE, null, null, book.getUnlockKey());
+        });
+        String unlockKey = (String) CWOptionPane.showInputDialog(this, msg, title, JOptionPane.QUESTION_MESSAGE, null, null, book.getUnlockKey());
 
         if (unlockKey != null && unlockKey.length() > 0) {
             book.unlock(unlockKey);
@@ -346,10 +356,14 @@ public class SitePane extends JPanel {
         try {
             IndexManager imanager = IndexManagerFactory.getIndexManager();
             if (imanager.isIndexed(book)) {
-                String formattedMsg = Msg.CONFIRM_UNINSTALL_BOOK.toString(new Object[] {
+                // TRANSLATOR: Message asking the user to confirm the delete of a search index for a book.
+                // {0} is a placeholder for the name of the book.
+                String formattedMsg = Msg.gettext("Are you sure you want to remove the index for {0}?", new Object[] {
                     book.getName()
                 });
-                if (CWOptionPane.showConfirmDialog(this, formattedMsg, Msg.CONFIRM_UNINSTALL_TITLE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                // TRANSLATOR: Title to the dialog that asks for confirmation of the deletion 
+                // of a book's search index.
+                if (CWOptionPane.showConfirmDialog(this, formattedMsg, Msg.gettext("Remove Index for Book"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     imanager.deleteIndex(book);
                 }
             }
@@ -367,7 +381,7 @@ public class SitePane extends JPanel {
             try {
                 int webAccess = InternetWarning.GRANTED;
                 if (WebWarning.instance().isShown()) {
-                    webAccess = InternetWarning.showDialog(this, "?"); //$NON-NLS-1$
+                    webAccess = InternetWarning.showDialog(this, "?");
                 }
 
                 if (webAccess == InternetWarning.GRANTED) {
@@ -395,7 +409,7 @@ public class SitePane extends JPanel {
 
         int webAccess = InternetWarning.GRANTED;
         if (WebWarning.instance().isShown()) {
-            webAccess = InternetWarning.showDialog(this, "?"); //$NON-NLS-1$
+            webAccess = InternetWarning.showDialog(this, "?");
         }
 
         if (webAccess != InternetWarning.GRANTED) {
@@ -409,21 +423,38 @@ public class SitePane extends JPanel {
             // Is the book already installed? Then nothing to do.
             Book book = Books.installed().getBook(name.getName());
             if (book != null && !installer.isNewer(name)) {
-                Reporter.informUser(this, Msg.INSTALLED, name.getName());
+                // TRANSLATOR: Popup message indicating that the book is already installed.
+                // {0} is a placeholder for the name of the book.
+                Reporter.informUser(this, Msg.gettext("Book already installed: {0}", name.getName()));
                 return;
             }
 
             float size = installer.getSize(name) / 1024.0F;
-            Msg msg = Msg.KB_SIZE;
+            
+            String formattedMsg = "";
             if (size > 1024.0F) {
                 size /= 1024.0F;
-                msg = Msg.MB_SIZE;
+                // TRANSLATOR: The size of the book is provided so that the user can decide whether to continue a download.
+                // {0} is a placeholder for the name of the book.
+                // {1,number,###,###,###.#} is a placeholder for the size of the download in megabytes.
+                // The pattern ###,###,###.# says to separate the number at every third digit and
+                //    to show one digit of fractional part.
+                // The , and . will automatically be converted into the user's proper separators.
+                formattedMsg = Msg.gettext("{0} is {1,number,###,###,###.#}MB. Continue?", new Object[] {name.getName(), new Float(size / 1024.0F)});
+            }
+            else
+            {
+                // TRANSLATOR: The size of the book is provided so that the user can decide whether to continue a download.
+                // {0} is a placeholder for the name of the book.
+                // {1,number,###,###,###.#} is a placeholder for the size of the download in kilobytes.
+                // The pattern ###,###,###.# says to separate the number at every third digit and
+                //    to show one digit of fractional part.
+                // The , and . will automatically be converted into the user's proper separators.
+                formattedMsg = Msg.gettext("{0} is {1,number,###,###,###.#}KB. Continue?", new Object[] {name.getName(), new Float(size)});
             }
 
-            String formattedMsg = msg.toString(new Object[] {
-                    name.getName(), new Float(size)
-            });
-            if (CWOptionPane.showConfirmDialog(this, formattedMsg, Msg.CONFIRMATION_TITLE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            // TRANSLATOR: Title to a dialog asking whether the user should download the book based on it's size.
+            if (CWOptionPane.showConfirmDialog(this, formattedMsg, Msg.gettext("Download Book"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 installer.install(name);
             }
         } catch (InstallException ex) {
@@ -457,13 +488,15 @@ public class SitePane extends JPanel {
         Object last = path.getLastPathComponent();
         Book book = getBook(last);
         if (book != null) {
-            Font picked = FontChooser.showDialog(this, Msg.FONT_CHOOSER.toString(), BookFont.instance().getFont(book));
+            // TRANSLATOR: Title to a dialog allowing the user to choose a font face, size and style.
+            Font picked = FontChooser.showDialog(this, Msg.gettext("Choose Font"), BookFont.instance().getFont(book));
             BookFont.instance().setFont(book, picked);
         }
 
         Language language = getLanguage(last);
         if (language != null) {
-            Font picked = FontChooser.showDialog(this, Msg.FONT_CHOOSER.toString(), BookFont.instance().getFont(language));
+            // TRANSLATOR: Title to a dialog allowing the user to choose a font face, size and style.
+            Font picked = FontChooser.showDialog(this, Msg.gettext("Choose Font"), BookFont.instance().getFont(language));
             BookFont.instance().setFont(language, picked);
         }
         actions.getAction(RESET_FONT).setEnabled(BookFont.instance().isSet(book, language));
@@ -548,17 +581,17 @@ public class SitePane extends JPanel {
         is.defaultReadObject();
     }
 
-    private static final String INSTALLED_BOOKS_LABEL = "InstalledBooksLabel"; //$NON-NLS-1$
-    private static final String AVAILABLE_BOOKS_LABEL = "AvailableBooksLabel"; //$NON-NLS-1$
-    private static final String SELECTED_BOOK_LABEL = "SelectedBookLabel"; //$NON-NLS-1$
-    private static final String REFRESH = "Refresh"; //$NON-NLS-1$
-    private static final String INSTALL = "Install"; //$NON-NLS-1$
-    private static final String INSTALL_SEARCH = "InstallSearch"; //$NON-NLS-1$
-    private static final String DELETE = "Delete"; //$NON-NLS-1$
-    private static final String UNLOCK = "Unlock"; //$NON-NLS-1$
-    private static final String CHOOSE_FONT = "ChooseFont"; //$NON-NLS-1$
-    private static final String UNINDEX = "Unindex"; //$NON-NLS-1$
-    private static final String RESET_FONT = "ResetFont"; //$NON-NLS-1$
+    private static final String INSTALLED_BOOKS_LABEL = "InstalledBooksLabel";
+    private static final String AVAILABLE_BOOKS_LABEL = "AvailableBooksLabel";
+    private static final String SELECTED_BOOK_LABEL = "SelectedBookLabel";
+    private static final String REFRESH = "Refresh";
+    private static final String INSTALL = "Install";
+    private static final String INSTALL_SEARCH = "InstallSearch";
+    private static final String DELETE = "Delete";
+    private static final String UNLOCK = "Unlock";
+    private static final String CHOOSE_FONT = "ChooseFont";
+    private static final String UNINDEX = "Unindex";
+    private static final String RESET_FONT = "ResetFont";
 
     /**
      * From which we get our list of installable books
@@ -570,7 +603,6 @@ public class SitePane extends JPanel {
      */
     private transient ActionFactory actions;
 
-    private NumberShaper shaper;
     /*
      * GUI Components
      */

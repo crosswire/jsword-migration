@@ -145,7 +145,9 @@ public class DesktopActions implements Actionable {
         try {
             BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
             if (!view.maySave()) {
-                Reporter.informUser(getDesktop(), Msg.NO_PASSAGE);
+                // TRANSLATOR: The user is trying to save the passage in the visible
+                // Bible View pane, but it is empty.
+                Reporter.informUser(getDesktop(), Msg.gettext("No Passage to Save"));
                 return;
             }
 
@@ -162,7 +164,9 @@ public class DesktopActions implements Actionable {
         try {
             BibleViewPane view = (BibleViewPane) getDesktop().getViews().getSelected();
             if (!view.maySave()) {
-                Reporter.informUser(getDesktop(), Msg.NO_PASSAGE);
+                // TRANSLATOR: The user is trying to save the passage in the visible
+                // Bible View pane, but it is empty.
+                Reporter.informUser(getDesktop(), Msg.gettext("No Passage to Save"));
                 return;
             }
 
@@ -188,7 +192,9 @@ public class DesktopActions implements Actionable {
         }
 
         if (!ok) {
-            Reporter.informUser(getDesktop(), Msg.NO_PASSAGE);
+            // TRANSLATOR: The user is trying to save the passage in all the
+            // Bible View panes, but they are all empty.
+            Reporter.informUser(getDesktop(), Msg.gettext("No Passage to Save"));
             return;
         }
 
@@ -357,7 +363,9 @@ public class DesktopActions implements Actionable {
         Key key = bdd.getKey();
 
         if (key == null) {
-            Reporter.informUser(getDesktop(), Msg.SOURCE_MISSING);
+            // TRANSLATOR: The user is trying to view the source of the passage in the visible
+            // Bible View pane, but it is empty.
+            Reporter.informUser(getDesktop(), Msg.gettext("No current passage to view"));
             return;
         }
 
@@ -371,7 +379,7 @@ public class DesktopActions implements Actionable {
     public void doBooks() {
         int webAccess = InternetWarning.GRANTED;
         if (WebWarning.instance().isShown()) {
-            webAccess = InternetWarning.showDialog(desktop, "?"); //$NON-NLS-1$
+            webAccess = InternetWarning.showDialog(desktop, "?");
         }
 
         if (webAccess == InternetWarning.GRANTED) {
@@ -383,7 +391,7 @@ public class DesktopActions implements Actionable {
      * Opens the Options window
      */
     public void doOptions() {
-        URI configUri = CWProject.instance().getWritableURI("desktop", FileUtil.EXTENSION_PROPERTIES); //$NON-NLS-1$
+        URI configUri = CWProject.instance().getWritableURI("desktop", FileUtil.EXTENSION_PROPERTIES);
         ConfigEditorFactory.showDialog(desktop.getConfig(), desktop, configUri);
     }
 
@@ -391,7 +399,8 @@ public class DesktopActions implements Actionable {
      * For opening a help file.
      */
     public void doContents() {
-        CWOptionPane.showMessageDialog(getDesktop(), Msg.NO_HELP);
+        // TRANSLATOR: Someday we'll have real help but for now this points them to the Bible Desktop web site.
+        CWOptionPane.showMessageDialog(getDesktop(), Msg.gettext("Currently on-line help is only available via the Bible Desktop's website:\nhttp://www.crosswire.org/bibledesktop"));
     }
 
     /**
@@ -447,11 +456,11 @@ public class DesktopActions implements Actionable {
     public boolean macOSXRegistration() {
         if (OSType.MAC.equals(OSType.getOSType())) {
             try {
-                Class osxAdapter = ClassUtil.forName("org.crosswire.common.aqua.OSXAdapter"); //$NON-NLS-1$
+                Class osxAdapter = ClassUtil.forName("org.crosswire.common.aqua.OSXAdapter");
                 Object[] registerOSXArgs = {
                         actions, DesktopActions.ABOUT, DesktopActions.OPTIONS, DesktopActions.EXIT
                 };
-                ReflectionUtil.invoke(osxAdapter, osxAdapter, "registerMacOSXApplication", registerOSXArgs); //$NON-NLS-1$
+                ReflectionUtil.invoke(osxAdapter, osxAdapter, "registerMacOSXApplication", registerOSXArgs);
 
                 // To call a method taking a type of boolean, the type has to
                 // match but the object has to be wrapped
@@ -461,17 +470,17 @@ public class DesktopActions implements Actionable {
                 Object[] enablePrefArgs = {
                     Boolean.TRUE
                 };
-                ReflectionUtil.invoke(osxAdapter, osxAdapter, "enablePrefs", enablePrefArgs, enablePrefTypes); //$NON-NLS-1$
+                ReflectionUtil.invoke(osxAdapter, osxAdapter, "enablePrefs", enablePrefArgs, enablePrefTypes);
                 return true;
             } catch (NoClassDefFoundError e) {
                 // This is thrown when EAWT or MacOSXadapter is not present.
-                log.error("This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled (" + e + ")"); //$NON-NLS-1$//$NON-NLS-2$
+                log.error("This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled (" + e + ")");
             } catch (ClassNotFoundException e) {
                 // Should not happen
-                log.error("This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled (" + e + ")"); //$NON-NLS-1$//$NON-NLS-2$
+                log.error("This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled (" + e + ")");
             } catch (Exception e) {
                 // Everything else.
-                log.error("Exception while loading the OSXAdapter:", e); //$NON-NLS-1$
+                log.error("Exception while loading the OSXAdapter:", e);
             }
         }
         return false;
@@ -503,31 +512,31 @@ public class DesktopActions implements Actionable {
     }
 
     // Enumeration of all the keys to known actions
-    static final String FILE = "File"; //$NON-NLS-1$
-    static final String EDIT = "Edit"; //$NON-NLS-1$
-    static final String GO = "Go"; //$NON-NLS-1$
-    static final String VIEW = "View"; //$NON-NLS-1$
-    static final String TOOLS = "Tools"; //$NON-NLS-1$
-    static final String HELP = "Help"; //$NON-NLS-1$
-    static final String OPEN = "Open"; //$NON-NLS-1$
-    static final String SAVE = "Save"; //$NON-NLS-1$
-    static final String SAVE_AS = "SaveAs"; //$NON-NLS-1$
-    static final String SAVE_ALL = "SaveAll"; //$NON-NLS-1$
-    static final String EXIT = "Exit"; //$NON-NLS-1$
-    static final String COPY = "Copy"; //$NON-NLS-1$
-    static final String BACK = "Back"; //$NON-NLS-1$
-    static final String FORWARD = "Forward"; //$NON-NLS-1$
-    static final String COMPARE_TOGGLE = "CompareToggle"; //$NON-NLS-1$
-    static final String TOOLTIP_TOGGLE = "ToolTipToggle"; //$NON-NLS-1$
-    static final String STATUS_TOGGLE = "StatusToggle"; //$NON-NLS-1$
-    static final String SIDEBAR_TOGGLE = "SidebarToggle"; //$NON-NLS-1$
-    static final String JOURNAL_TOGGLE = "JournalToggle"; //$NON-NLS-1$
-    static final String VERSE = "Verse"; //$NON-NLS-1$
-    static final String VIEW_SOURCE = "ViewSource"; //$NON-NLS-1$
-    static final String BOOKS = "Books"; //$NON-NLS-1$
-    static final String OPTIONS = "Options"; //$NON-NLS-1$
-    static final String CONTENTS = "Contents"; //$NON-NLS-1$
-    static final String ABOUT = "About"; //$NON-NLS-1$
+    static final String FILE = "File";
+    static final String EDIT = "Edit";
+    static final String GO = "Go";
+    static final String VIEW = "View";
+    static final String TOOLS = "Tools";
+    static final String HELP = "Help";
+    static final String OPEN = "Open";
+    static final String SAVE = "Save";
+    static final String SAVE_AS = "SaveAs";
+    static final String SAVE_ALL = "SaveAll";
+    static final String EXIT = "Exit";
+    static final String COPY = "Copy";
+    static final String BACK = "Back";
+    static final String FORWARD = "Forward";
+    static final String COMPARE_TOGGLE = "CompareToggle";
+    static final String TOOLTIP_TOGGLE = "ToolTipToggle";
+    static final String STATUS_TOGGLE = "StatusToggle";
+    static final String SIDEBAR_TOGGLE = "SidebarToggle";
+    static final String JOURNAL_TOGGLE = "JournalToggle";
+    static final String VERSE = "Verse";
+    static final String VIEW_SOURCE = "ViewSource";
+    static final String BOOKS = "Books";
+    static final String OPTIONS = "Options";
+    static final String CONTENTS = "Contents";
+    static final String ABOUT = "About";
 
     /**
      * The desktop on which these actions work

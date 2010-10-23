@@ -45,7 +45,7 @@ public class BookFont extends FontStore {
      * Create a persistent Book Font Store.
      */
     private BookFont() {
-        super("BookFonts", CWProject.instance().getWritableProjectDir()); //$NON-NLS-1$
+        super("BookFonts", CWProject.instance().getWritableProjectDir());
     }
 
     public static BookFont instance() {

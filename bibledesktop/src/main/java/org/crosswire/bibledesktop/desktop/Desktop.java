@@ -125,7 +125,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     private static final CWProject PROJECT = CWProject.instance();
 
     static {
-        CWProject.setHome("jsword.home", ".jsword", "JSword"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        CWProject.setHome("jsword.home", ".jsword", "JSword");
     }
 
     /**
@@ -136,7 +136,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
      */
     public static void main(String[] args) {
         try {
-            ThreadGroup group = new CatchingThreadGroup("BibleDesktopUIGroup"); //$NON-NLS-1$
+            ThreadGroup group = new CatchingThreadGroup("BibleDesktopUIGroup");
             Thread t = new DesktopThread(group);
             t.start();
         } catch (Exception ex) {
@@ -152,7 +152,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
      */
     public Desktop() {
         // Set the name that is used for Layout Persistence
-        setName("Desktop"); //$NON-NLS-1$
+        setName("Desktop");
 
         // The first thing that has to be done is to set the locale.
         Translations.instance().setLocale();
@@ -172,22 +172,25 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
 
         // Splash screen
         URI predictURI = PROJECT.getWritableURI(SPLASH_PROPS, FileUtil.EXTENSION_PROPERTIES);
-        Progress startJob = JobManager.createJob(Msg.STARTUP_TITLE.toString(), predictURI, true);
+        // TRANSLATOR: Progress label shown on BibleDesktop startup.
+        Progress startJob = JobManager.createJob(Msg.gettext("Startup"), predictURI, true);
         // startJob.setProgress(Msg.STARTUP_CONFIG.toString());
 
         // Create the Desktop Actions
         actions = new DesktopActions(this);
 
-        // Create the GUI components
-        startJob.setSectionName(Msg.STARTUP_GENERATE.toString());
+        // TRANSLATOR: Progress label shown while BibleDesktop
+        // creates the GUI components
+        startJob.setSectionName(Msg.gettext("Generating Components"));
         createComponents();
 
         // If necessary, make changes to the UI to help with debugging
         debug();
 
-        // Create the GUI layout with panes and panels,
-        // and create a few other GUI things
-        startJob.setSectionName(Msg.STARTUP_GENERAL_CONFIG.toString());
+        // TRANSLATOR: Progress label shown while BibleDesktop
+        // creates the GUI layout with panes and panels,
+        // and creates a few other GUI things
+        startJob.setSectionName(Msg.gettext("General configuration"));
         createLayout();
 
         // ReflectionBus.plug(this);
@@ -540,7 +543,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         Container contentPane = getContentPane();
         if (contentPane instanceof JComponent) {
             ((JComponent) contentPane).setPreferredSize(contentPane.getSize());
-            //log.warn("The size of the contentpane is: " + contentPane.getSize()); //$NON-NLS-1$
+            //log.warn("The size of the contentpane is: " + contentPane.getSize());
         }
     }
 
@@ -684,7 +687,8 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
             } else if (protocol.equals(DICTIONARY_PROTOCOL)) {
                 jump(Defaults.getDictionary(), data);
             } else {
-                Reporter.informUser(this, new MalformedURLException(Msg.UNKNOWN_PROTOCOL.toString(protocol)));
+                // TRANSLATOR: Uncommon error condition: JSword has provided a link that is not handled.
+                Reporter.informUser(this, new MalformedURLException(Msg.gettext("Unknown protocol {0}", protocol)));
             }
         } catch (NoSuchKeyException ex) {
             Reporter.informUser(this, ex);
@@ -772,7 +776,8 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         // Get the list of books for each book type.
         fillChoiceFactory();
 
-        config = new Config(Msg.CONFIG_TITLE.toString());
+        // TRANSLATOR: The window title of BibleDesktop's preference/option dialog.
+        config = new Config(Msg.gettext("Desktop Options"));
         try {
             Document xmlconfig = XMLUtil.getDocument(CONFIG_KEY);
 
@@ -796,7 +801,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
                 public void propertyChange(PropertyChangeEvent evt) {
                     // When the font changes update all the visible locations
                     // using it.
-                    if (evt.getPropertyName().equals("BibleDisplay.ConfigurableFont")) //$NON-NLS-1$
+                    if (evt.getPropertyName().equals("BibleDisplay.ConfigurableFont"))
                     {
                         BibleViewPane view = (BibleViewPane) getViews().getSelected();
                         SplitBookDataDisplay da = view.getPassagePane();
@@ -805,7 +810,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
                         reference.refresh();
                     }
 
-                    if (evt.getPropertyName().equals("BibleDisplay.MaxPickers")) //$NON-NLS-1$
+                    if (evt.getPropertyName().equals("BibleDisplay.MaxPickers"))
                     {
                         BibleViewPane view = (BibleViewPane) getViews().getSelected();
                         DisplaySelectPane selector = view.getSelectPane();
@@ -831,7 +836,12 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         // hand getting to the installation dialog.
         List bibles = Books.installed().getBooks(BookFilters.getBibles());
         if (bibles.isEmpty()) {
-            int reply = CWOptionPane.showConfirmDialog(this, Msg.NO_BIBLES_MESSAGE, Msg.NO_BIBLES_TITLE.toString(), JOptionPane.OK_CANCEL_OPTION,
+            // TRANSLATOR: Title of dialog asking the user to install at least one Bible.
+            String title = Msg.gettext("Install Bibles?");
+            // TRANSLATOR: HTML formatted message, telling the user that they have no Bibles installed,
+            // giving them the option to do it now and instructions on how to do it later.
+            String msg = Msg.gettext("<html>You have no Bibles installed. Do you wish to install some now?<br>(This is also available from <b>Books</b> in the <b>Tools</b> menu)");
+            int reply = CWOptionPane.showConfirmDialog(this, msg, title, JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.QUESTION_MESSAGE);
             if (reply == JOptionPane.OK_OPTION) {
                 actions.doBooks();
@@ -1010,7 +1020,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
      */
     private static final class DesktopThread extends Thread {
         DesktopThread(ThreadGroup group) {
-            super(group, "BibleDesktopUIThread"); //$NON-NLS-1$
+            super(group, "BibleDesktopUIThread");
         }
 
         /* (non-Javadoc)
@@ -1023,9 +1033,9 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
 
             // These Mac properties give the application a Mac behavior
             if (OSType.MAC.equals(OSType.getOSType())) {
-                System.setProperty("apple.laf.useScreenMenuBar", "true"); //$NON-NLS-1$ //$NON-NLS-2$
-                System.setProperty("com.apple.mrj.application.apple.menu.about.name", Msg.getApplicationTitle()); //$NON-NLS-1$
-                System.setProperty("com.apple.mrj.application.live-resize", "true"); //$NON-NLS-1$ //$NON-NLS-2$
+                System.setProperty("apple.laf.useScreenMenuBar", "true");
+                System.setProperty("com.apple.mrj.application.apple.menu.about.name", Msg.getApplicationTitle());
+                System.setProperty("com.apple.mrj.application.live-resize", "true");
             }
 
             // new BusStart();
@@ -1082,25 +1092,25 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     private boolean hasRefBooks;
 
     // Strings for the names of property files.
-    private static final String SPLASH_PROPS = "splash"; //$NON-NLS-1$
+    private static final String SPLASH_PROPS = "splash";
 
     // Strings for URL protocols/URI schemes
-    public static final String BIBLE_PROTOCOL = "bible"; //$NON-NLS-1$
-    public static final String DICTIONARY_PROTOCOL = "dict"; //$NON-NLS-1$
-    public static final String GREEK_DEF_PROTOCOL = "gdef"; //$NON-NLS-1$
-    public static final String HEBREW_DEF_PROTOCOL = "hdef"; //$NON-NLS-1$
-    public static final String GREEK_MORPH_PROTOCOL = "gmorph"; //$NON-NLS-1$
-    public static final String HEBREW_MORPH_PROTOCOL = "hmorph"; //$NON-NLS-1$
-    public static final String COMMENTARY_PROTOCOL = "comment"; //$NON-NLS-1$
+    public static final String BIBLE_PROTOCOL = "bible";
+    public static final String DICTIONARY_PROTOCOL = "dict";
+    public static final String GREEK_DEF_PROTOCOL = "gdef";
+    public static final String HEBREW_DEF_PROTOCOL = "hdef";
+    public static final String GREEK_MORPH_PROTOCOL = "gmorph";
+    public static final String HEBREW_MORPH_PROTOCOL = "hmorph";
+    public static final String COMMENTARY_PROTOCOL = "comment";
 
     // Empty String
-    private static final String EMPTY_STRING = ""; //$NON-NLS-1$
+    private static final String EMPTY_STRING = "";
 
     // Various other strings used as keys
-    private static final String CONFIG_KEY = "config"; //$NON-NLS-1$
-    private static final String DESKTOP_KEY = "desktop"; //$NON-NLS-1$
-    private static final String CONV_KEY = "converters"; //$NON-NLS-1$
-    private static final String CSWING_KEY = "cswing-styles"; //$NON-NLS-1$
+    private static final String CONFIG_KEY = "config";
+    private static final String DESKTOP_KEY = "desktop";
+    private static final String CONV_KEY = "converters";
+    private static final String CSWING_KEY = "cswing-styles";
 
     /**
      * The configuration engine
@@ -1142,7 +1152,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     /**
      * The application icon
      */
-    private static final ImageIcon ICON_APP = GuiUtil.getIcon("images/BibleDesktop16.png"); //$NON-NLS-1$
+    private static final ImageIcon ICON_APP = GuiUtil.getIcon("images/BibleDesktop16.png");
 
     private transient ViewManager views;
     private JPanel corePanel;

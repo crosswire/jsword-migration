@@ -31,10 +31,10 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 final class Msg extends MsgBase {
-    static final Msg WHOLE_BIBLE = new Msg("BibleTreeNode.WholeBible"); //$NON-NLS-1$
-    static final Msg PART_BIBLE = new Msg("BibleTreeNode.PartBible"); //$NON-NLS-1$
-    static final Msg ERROR = new Msg("WholeBibleTreeNode.Error"); //$NON-NLS-1$
-    static final Msg WHOLE = new Msg("WholeBibleTreeNode.Whole"); //$NON-NLS-1$
+    static final Msg WHOLE_BIBLE = new Msg("The Whole Bible");
+    static final Msg PART_BIBLE = new Msg("Search ({0})");
+    static final Msg ERROR = new Msg("Error");
+    static final Msg WHOLE = new Msg("The Bible");
 
     /**
      * Passthrough ctor
@@ -42,4 +42,43 @@ final class Msg extends MsgBase {
     private Msg(String name) {
         super(name);
     }
+    /**
+     * Get the internationalized text, but return key if key is unknown.
+     * 
+     * @param key
+     * @return the internationalized text
+     */
+    public static String gettext(String key)
+    {
+        return msg.lookup(key);
+    }
+
+    /**
+     * Get the internationalized text, but return key if key is unknown.
+     * The text requires one parameter to be passed.
+     * 
+     * @param key
+     * @param param
+     * @return the formatted, internationalized text
+     */
+    public static String gettext(String key, Object param)
+    {
+        return msg.toString(key, param);
+    }
+
+    /**
+     * Get the internationalized text, but return key if key is unknown.
+     * The text requires one parameter to be passed.
+     * 
+     * @param key
+     * @param param
+     * @return the formatted, internationalized text
+     */
+    public static String gettext(String key, Object[] params)
+    {
+        return msg.toString(key, params);
+    }
+
+    private static MsgBase msg = new Msg();
+    Msg() {}
 }

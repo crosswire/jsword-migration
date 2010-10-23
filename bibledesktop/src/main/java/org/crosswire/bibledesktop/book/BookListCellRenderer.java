@@ -87,7 +87,8 @@ public class BookListCellRenderer extends DefaultListCellRenderer {
         setToolTipText(null);
 
         if (value == null) {
-            setText(Msg.NONE.toString());
+            // TRANSLATOR: This is the replacement text for a blank book name in a list.
+            setText(Msg.gettext("None"));
             setEnabled(false);
         }
 
@@ -112,7 +113,7 @@ public class BookListCellRenderer extends DefaultListCellRenderer {
     /**
      * Make sure that book names are not too wide
      */
-    public static final String PROTOTYPE_BOOK_NAME = "0123456789"; //$NON-NLS-1$
+    public static final String PROTOTYPE_BOOK_NAME = "0123456789";
 
     /**
      * Serialization ID

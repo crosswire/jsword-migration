@@ -75,8 +75,8 @@ public class ParallelBookPicker extends JPanel implements BookProvider {
         actions = new ActionFactory(ParallelBookPicker.class, this);
 
         JPanel buttonBox = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
-        buttonBox.add(actions.createActionIcon("RemovePicker")); //$NON-NLS-1$
-        buttonBox.add(actions.createActionIcon("AddPicker")); //$NON-NLS-1$
+        buttonBox.add(actions.createActionIcon("RemovePicker"));
+        buttonBox.add(actions.createActionIcon("AddPicker"));
         add(buttonBox);
 
         // Add the first picker
@@ -203,8 +203,8 @@ public class ParallelBookPicker extends JPanel implements BookProvider {
 
     public void enableButtons() {
         int count = getComponentCount() - 1;
-        actions.getAction("RemovePicker").setEnabled(count > 1); //$NON-NLS-1$
-        actions.getAction("AddPicker").setEnabled(count < maxPickers); //$NON-NLS-1$
+        actions.getAction("RemovePicker").setEnabled(count > 1);
+        actions.getAction("AddPicker").setEnabled(count < maxPickers);
         getComponent(0).setVisible(maxPickers >= 2 || count > maxPickers);
     }
 

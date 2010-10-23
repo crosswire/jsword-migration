@@ -41,7 +41,7 @@ public interface BookDataDisplay extends BookProvider, PropertyChangeListener {
      * Used by property change listeners to listen for when books should be
      * compared.
      */
-    String COMPARE_BOOKS = "ComparingBooks"; //$NON-NLS-1$
+    String COMPARE_BOOKS = "ComparingBooks";
 
     /**
      * Clear any BookData that is displayed. This is equivalent to:

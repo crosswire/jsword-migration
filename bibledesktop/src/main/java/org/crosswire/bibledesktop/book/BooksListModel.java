@@ -95,7 +95,7 @@ public class BooksListModel extends AbstractListModel {
     public synchronized Object getElementAt(int index) {
         // PARANOIA(joe): this check shouldn't be needed
         if (index > books.size()) {
-            log.error("trying to get book at " + index + " when there are only " + books.size() + " known books."); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            log.error("trying to get book at " + index + " when there are only " + books.size() + " known books.");
             return null;
         }
 

@@ -83,8 +83,8 @@ public class InternetWarning extends JPanel {
         final InternetWarning webWarning = new InternetWarning();
 
         JPanel buttons = new JPanel();
-        JButton yesButton = new JButton(webWarning.actions.getAction("Yes")); //$NON-NLS-1$
-        JButton noButton = new JButton(webWarning.actions.getAction("No")); //$NON-NLS-1$
+        JButton yesButton = new JButton(webWarning.actions.getAction("Yes"));
+        JButton noButton = new JButton(webWarning.actions.getAction("No"));
         buttons.add(yesButton);
         buttons.add(noButton);
 

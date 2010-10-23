@@ -69,7 +69,8 @@ public class StatusBar extends JComponent implements MouseListener, URIEventList
      * Init the GUI
      */
     private void initialize() {
-        labelMessage.setText(Msg.STATUS_DEFAULT.toString());
+        // TRANSLATOR: This is the text in the status bar when there is nothing else to say.
+        labelMessage.setText(Msg.gettext("Ready ..."));
 
         Font font = panelProgress.getFont();
         panelProgress.setFont(font.deriveFont(6.0F));
@@ -118,7 +119,7 @@ public class StatusBar extends JComponent implements MouseListener, URIEventList
         if (protocol.length() == 0) {
             labelMessage.setText(uri);
         } else {
-            labelMessage.setText(protocol + "://" + uri); //$NON-NLS-1$
+            labelMessage.setText(protocol + "://" + uri);
         }
     }
 
@@ -126,7 +127,8 @@ public class StatusBar extends JComponent implements MouseListener, URIEventList
      * @see org.crosswire.bibledesktop.display.URIEventListener#leaveURI(org.crosswire.bibledesktop.display.URIEvent)
      */
     public void leaveURI(URIEvent ev) {
-        labelMessage.setText(Msg.STATUS_DEFAULT.toString());
+        // TRANSLATOR: This is the text in the status bar when there is nothing else to say.
+        labelMessage.setText(Msg.gettext("Ready ..."));
     }
 
     /**
@@ -137,7 +139,8 @@ public class StatusBar extends JComponent implements MouseListener, URIEventList
      */
     public void setText(String txt) {
         if (txt == null) {
-            labelMessage.setText(Msg.STATUS_DEFAULT.toString());
+            // TRANSLATOR: This is the text in the status bar when there is nothing else to say.
+            labelMessage.setText(Msg.gettext("Ready ..."));
         } else {
             labelMessage.setText(txt);
         }
@@ -186,7 +189,8 @@ public class StatusBar extends JComponent implements MouseListener, URIEventList
      * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
      */
     public void mouseExited(MouseEvent ev) {
-        labelMessage.setText(Msg.STATUS_DEFAULT.toString());
+        // TRANSLATOR: This is the text in the status bar when there is nothing else to say.
+        labelMessage.setText(Msg.gettext("Ready ..."));
     }
 
     /**

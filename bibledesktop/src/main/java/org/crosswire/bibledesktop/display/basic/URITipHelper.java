@@ -124,7 +124,7 @@ public class URITipHelper implements URIEventListener {
         }
 
         if (book == null || Books.installed().getBook(book.getName()) == null)
-            return txt = "Book Unavailable!"; //$NON-NLS-1$
+            return txt = "Book Unavailable!";
 
         BookData bdata = null;
 
@@ -138,7 +138,7 @@ public class URITipHelper implements URIEventListener {
 
         BookMetaData bmd = book.getBookMetaData();
         if (bmd == null)
-            return txt = "Book Meta Data Unavailable!"; //$NON-NLS-1$
+            return txt = "Book Meta Data Unavailable!";
 
         // Make sure Hebrew displays from Right to Left
         // Set the correct direction
@@ -153,10 +153,10 @@ public class URITipHelper implements URIEventListener {
         try {
             SAXEventProvider osissep = bdata.getSAXEventProvider();
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
-            XSLTProperty.DIRECTION.setState(direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$
+            XSLTProperty.DIRECTION.setState(direction ? "ltr" : "rtl");
 
             URI loc = bmd.getLocation();
-            XSLTProperty.BASE_URL.setState(loc == null ? "" : loc.getPath()); //$NON-NLS-1$
+            XSLTProperty.BASE_URL.setState(loc == null ? "" : loc.getPath());
 
             if (bmd.getBookCategory() == BookCategory.BIBLE) {
                 XSLTProperty.setProperties(htmlsep);
@@ -175,10 +175,10 @@ public class URITipHelper implements URIEventListener {
              */
             /* Apply the fix if the text is too long and we are not Java 1.5 or greater */
             if (txt.length() > 32768 && BookCategory.GENERAL_BOOK.equals(book.getBookCategory())) {
-                String javaVersion = System.getProperty("java.specification.version"); //$NON-NLS-1$
-                if (javaVersion == null || "1.5".compareTo(javaVersion) > 0) //$NON-NLS-1$
+                String javaVersion = System.getProperty("java.specification.version");
+                if (javaVersion == null || "1.5".compareTo(javaVersion) > 0)
                 {
-                    txt = txt.substring(0, 32760) + "..."; //$NON-NLS-1$
+                    txt = txt.substring(0, 32760) + "...";
                 }
             }
 
@@ -193,7 +193,7 @@ public class URITipHelper implements URIEventListener {
 
     public String getTipTitle() {
         if (event == null)
-            return "Untitled Tip"; //$NON-NLS-1$
+            return "Untitled Tip";
         return event.getURI();
     }
 
@@ -292,7 +292,7 @@ class FullHTMLTip extends JToolTip {
         txtView = new AntiAliasedTextPane();
         txtView.setEditable(false);
         txtView.setEditorKit(new HTMLEditorKit());
-        this.add(txtView, "HTMLTip"); //$NON-NLS-1$
+        this.add(txtView, "HTMLTip");
     }
 
     public Dimension getPreferredSize() {

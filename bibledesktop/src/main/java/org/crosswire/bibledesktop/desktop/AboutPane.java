@@ -71,7 +71,10 @@ public class AboutPane {
      * Build the GUI components
      */
     private void init() {
-        Icon icon = GuiUtil.getIcon(Msg.SPLASH_IMAGE.toString());
+        // TRANSLATOR: This image is of an English Bible. It can be replaced with a localized one.
+        // It should be named splash_ll.png where ll is the 2 letter language code and put in the
+        // images directory. Then point this to it.
+        Icon icon = GuiUtil.getIcon(Msg.gettext("/images/splash.png"));
 
         JLabel lblPicture = new JLabel();
         lblPicture.setIcon(icon);
@@ -111,7 +114,7 @@ public class AboutPane {
         tabMain.add(pnlSplash, appName);
 
         License license = new License(appName);
-        //        Font fixedFont = new Font("Monospaced", 0, 18); //$NON-NLS-1$
+        //        Font fixedFont = new Font("Monospaced", 0, 18);
         JTextPane warranty = new AntiAliasedTextPane();
         // warranty.setFont(fixedFont);
         warranty.setEditable(false);
@@ -123,7 +126,8 @@ public class AboutPane {
         JPanel warrantyPnl = new JPanel(new BorderLayout());
         warrantyPnl.add(warrantyScr, BorderLayout.CENTER);
         warrantyPnl.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        tabMain.add(warrantyPnl, Msg.WARRANTY_TAB_TITLE.toString());
+        // TRANSLATOR: The label for the tab that shows BibleDesktop's GPL Non-Warranty
+        tabMain.add(warrantyPnl, Msg.gettext("Warranty"));
 
         JTextPane details = new AntiAliasedTextPane();
         // details.setFont(fixedFont);
@@ -136,7 +140,8 @@ public class AboutPane {
         JPanel detailsPnl = new JPanel(new BorderLayout());
         detailsPnl.add(detailScr, BorderLayout.CENTER);
         detailsPnl.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        tabMain.add(detailsPnl, Msg.DETAILS_TAB_TITLE.toString());
+        // TRANSLATOR: The label for the tab that shows BibleDesktop's GPL License
+        tabMain.add(detailsPnl, Msg.gettext("License"));
 
         // Put in tabs if advanced
         if (advanced) {
@@ -152,7 +157,9 @@ public class AboutPane {
             pnlProps.setLayout(new BorderLayout());
             pnlProps.add(scrProps, BorderLayout.CENTER);
             pnlProps.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-            tabMain.add(pnlProps, Msg.SYSTEM_PROPS_TAB_TITLE.toString());
+            // TRANSLATOR: The label for the tab that shows Java's System Properties.
+            // This is an advanced option not intended for end users.
+            tabMain.add(pnlProps, Msg.gettext("System Properties"));
         }
         GuiUtil.applyDefaultOrientation(pnlMain);
     }
@@ -210,9 +217,9 @@ public class AboutPane {
         AboutPane.advanced = advanced;
     }
 
-    private static final String SPLASH_FONT = "SanSerif"; //$NON-NLS-1$
+    private static final String SPLASH_FONT = "SanSerif";
 
-    private static final String ABOUT_OK = "AboutOK"; //$NON-NLS-1$
+    private static final String ABOUT_OK = "AboutOK";
 
     private static boolean advanced;
     private JDialog dlgMain;

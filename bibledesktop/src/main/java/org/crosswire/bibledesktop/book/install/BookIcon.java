@@ -76,46 +76,46 @@ public class BookIcon {
     /**
      * The small version icon
      */
-    private static final Icon ICON_BIBLE = GuiUtil.getIcon("images/book-b16.png"); //$NON-NLS-1$
+    private static final Icon ICON_BIBLE = GuiUtil.getIcon("images/book-b16.png");
 
     /**
      * The small version icon
      */
-    private static final Icon ICON_COMNT = GuiUtil.getIcon("images/book-c16.png"); //$NON-NLS-1$
+    private static final Icon ICON_COMNT = GuiUtil.getIcon("images/book-c16.png");
 
     /**
      * The small version icon
      */
-    private static final Icon ICON_DICT = GuiUtil.getIcon("images/book-d16.png"); //$NON-NLS-1$
+    private static final Icon ICON_DICT = GuiUtil.getIcon("images/book-d16.png");
 
     /**
      * The small version icon
      */
-    private static final Icon ICON_READ = GuiUtil.getIcon("images/book-r16.png"); //$NON-NLS-1$
+    private static final Icon ICON_READ = GuiUtil.getIcon("images/book-r16.png");
 
     /**
      * The small version icon
      */
-    private static final Icon ICON_GLOSS = GuiUtil.getIcon("images/book-g16.png"); //$NON-NLS-1$
+    private static final Icon ICON_GLOSS = GuiUtil.getIcon("images/book-g16.png");
 
     /**
      * The small version icon
      */
-    private static final Icon ICON_OTHER = GuiUtil.getIcon("images/book-o16.png"); //$NON-NLS-1$
+    private static final Icon ICON_OTHER = GuiUtil.getIcon("images/book-o16.png");
 
     /**
      * The small version icon
      */
-    private static final Icon ICON_QUESTIONABLE = GuiUtil.getIcon("images/overlay-q16.png"); //$NON-NLS-1$
+    private static final Icon ICON_QUESTIONABLE = GuiUtil.getIcon("images/overlay-q16.png");
 
     /**
      * An overlay icon
      */
-    private static final Icon ICON_LOCKED = GuiUtil.getIcon("images/overlay-lock16.png"); //$NON-NLS-1$
+    private static final Icon ICON_LOCKED = GuiUtil.getIcon("images/overlay-lock16.png");
 
     /**
      * An overlay icon
      */
-    private static final Icon ICON_UNSUPPORTED = GuiUtil.getIcon("images/overlay-x16.png"); //$NON-NLS-1$
+    private static final Icon ICON_UNSUPPORTED = GuiUtil.getIcon("images/overlay-x16.png");
 
 }

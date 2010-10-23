@@ -95,7 +95,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
 
         advanced = new AdvancedSearchPane();
 
-        title = Msg.UNTITLED.toString(new Integer(base++));
+        // TRANSLATOR: This is the initial title of a Bible View. {0} is a placeholder for a number that uniquely identifies the Bible View.
+        title = Msg.gettext("Untitled {0}", new Integer(base++));
 
         actions = new ActionFactory(DisplaySelectPane.class, this);
 
@@ -131,7 +132,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
                 int chapter = start.getChapter();
                 try {
                     VerseRange range = new VerseRange(start, new Verse(book, chapter, BibleInfo.versesInChapter(book, chapter)));
-                    txtSearch.setText(""); //$NON-NLS-1$
+                    txtSearch.setText("");
                     txtKey.setText(range.getName());
                     doGoPassage();
                 } catch (NoSuchVerseException ex) {
@@ -172,7 +173,12 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         btnSearch = new JButton(actions.getAction(GO_SEARCH));
 
         JButton btnHelp = actions.createActionIcon(HELP);
-        dlgHelp = new QuickHelpDialog(GuiUtil.getFrame(this), Msg.HELP_TITLE.toString(), Msg.HELP_TEXT.toString());
+        // TRANSLATOR: Title to the dialog that shows search tips.
+        String dialogTitle = Msg.gettext("Search Quick Help");
+        // TRANSLATOR: This is html formatted examples of how to use search.
+        // TODO(DMS): Split this into individual examples and bring in each separately.
+        String msg = Msg.gettext("<html><b>Search Tips.</b><br>You can use || to join phrases, for example \"<code>balaam || balak</code>\" finds passages containing Balak OR Balaam<br>Using && requires both words, e.g. \"<code>aaron && moses</code>\" finds passages containing both Aaron AND Moses<br>Using a ! removes words from the result e.g. \"<code>lord ! jesus</code>\" is passages containing Lord BUT NOT Jesus<br>Using ~2 widens the passage by 2 verses either side on any match. So \"<code>amminadab ~1 perez</code>\" finds<br>verses containting Amminadab within 1 verse of mention of Perez.<br>Using +[Gen-Exo] at the beginning will restrict a search to that range of verses.");
+        dlgHelp = new QuickHelpDialog(GuiUtil.getFrame(this), dialogTitle, msg);
 
         btnAdvanced = new JButton(actions.getAction(ADVANCED));
         btnIndex = new JButton(actions.getAction(INDEX));
@@ -219,7 +225,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         int chapter = start.getChapter();
         try {
             VerseRange range = new VerseRange(start, new Verse(book, chapter, BibleInfo.versesInChapter(book, chapter)));
-            txtSearch.setText(""); //$NON-NLS-1$
+            txtSearch.setText("");
             txtKey.setText(range.getName());
             doGoPassage();
         } catch (NoSuchVerseException ex) {
@@ -253,7 +259,9 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
      *
      */
     public boolean isClear() {
-        return title.indexOf(Msg.CLEAR.toString()) != -1;
+        // TRANSLATOR: This must match the word that is used for "Untitled {0}".
+        // This is used to determine whether a tab is unused or not.
+        return title.indexOf(Msg.gettext("Untitled")) != -1;
     }
 
     /**
@@ -283,7 +291,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     public void doPassageAction() {
         setKey(txtKey.getText());
         if (!key.isEmpty()) {
-            txtSearch.setText(""); //$NON-NLS-1$
+            txtSearch.setText("");
             setTitle(PASSAGE);
         }
     }
@@ -326,18 +334,29 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
             }
 
             if (total == 0) {
-                Reporter.informUser(this, Msg.NO_HITS, new Object[] {
+                // TRANSLATOR: There were no verses that satisfied the search request.
+                // {0} is a placeholder for the search request.
+                Reporter.informUser(this, Msg.gettext("Could not find verses with: {0}", new Object[] {
                     param
-                });
+                }));
             } else {
                 if (total == partial) {
-                    Reporter.informUser(this, Msg.HITS, new Object[] {
+                    // TRANSLATOR: There were verses that satisfied the search request. This tells the user how many.
+                    // {0} is a placeholder for the search request.
+                    // {1} is a placeholder for the number of verses that satisfied the search request.
+                    // I18N(DMS): This needs support for singular/plural and to show internationalized numbers.
+                    Reporter.informUser(this, Msg.gettext("There are {1} verses with: {0}", new Object[] {
                             param, new Integer(total)
-                    });
+                    }));
                 } else {
-                    Reporter.informUser(this, Msg.PARTIAL_HITS, new Object[] {
+                    // TRANSLATOR: The user has done a prioritized search and there are more hits that the user has requested.
+                    // {0} is a placeholder for the search request.
+                    // {1} is a placeholder for the number of verses that is being given back to the user. This is the number of prioritized verses that the user requested.
+                    // {2} is a placeholder for the number of verses that satisfied the search request.
+                    // I18N(DMS): This needs support for singular/plural and to show internationalized numbers.
+                    Reporter.informUser(this, Msg.gettext("Showing {1} of {2} verses with: {0}", new Object[] {
                             param, Integer.toString(partial), Integer.toString(total)
-                    });
+                    }));
                 }
                 setTitle(SEARCH);
                 setKey(results);
@@ -351,7 +370,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
      * Someone has clicked on the advanced search button
      */
     public void doAdvanced() {
-        String reply = advanced.showInDialog(this, Msg.ADVANCED_TITLE.toString(), true, txtSearch.getText());
+        // TRANSLATOR: This is the title for the Advanced Search dialog.
+        String reply = advanced.showInDialog(this, Msg.gettext("Advanced Search"), true, txtSearch.getText());
         if (reply != null) {
             txtSearch.setText(reply);
             doSearchAction();
@@ -429,8 +449,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         if (newKey == null || newKey.isEmpty()) {
             if (!key.isEmpty()) {
                 key = selected[0].createEmptyKeyList();
-                txtKey.setText(""); //$NON-NLS-1$
-                txtSearch.setText(""); //$NON-NLS-1$
+                txtKey.setText("");
+                txtSearch.setText("");
 
                 updateDisplay();
                 setTitle(CLEAR);
@@ -442,7 +462,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
             updateDisplay();
             if (isClear()) {
                 setTitle(PASSAGE);
-                txtSearch.setText(""); //$NON-NLS-1$
+                txtSearch.setText("");
             }
         }
     }
@@ -498,7 +518,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         mode = newMode;
         switch (mode) {
         case CLEAR:
-            title = Msg.UNTITLED.toString(new Integer(base++));
+            // TRANSLATOR: This is the initial title of a Bible View. {0} is a placeholder for a number that uniquely identifies the Bible View.
+            title = Msg.gettext("Untitled {0}", new Integer(base++));
             break;
         case PASSAGE:
             title = key.getName();
@@ -520,7 +541,13 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
      * Display a dialog indicating that no Bible is installed.
      */
     private void noBookInstalled() {
-        String noBible = Msg.NO_INSTALLED_BIBLE.toString();
+        // TRANSLATOR: The user is trying to do something that requires at least one Bible to be installed.
+        // There are a variety of common reasons that this can happen:
+        //     The user has chosen to not install a Bible when starting the program for the first time.
+        //     The user has never installed a Bible.
+        //     The user has deleted the last installed Bible.
+        //     The books are on a CD, USB or someother removeable media and are not available.
+        String noBible = Msg.gettext("No Bible is installed");
         CWOptionPane.showMessageDialog(this, noBible, noBible, JOptionPane.WARNING_MESSAGE);
     }
 
@@ -553,7 +580,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
             dlgSelect = new PassageSelectionPane();
         }
 
-        String passg = dlgSelect.showInDialog(this, Msg.SELECT_PASSAGE_TITLE.toString(), true, txtKey.getText());
+        // TRANSLATOR: The title to the "Select Passage" dialog.
+        String passg = dlgSelect.showInDialog(this, Msg.gettext("Select Passage"), true, txtKey.getText());
         if (passg != null) {
             txtKey.setText(passg);
             doPassageAction();
@@ -696,17 +724,17 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     }
 
     // For the Passage card
-    private static final String VIEW_LABEL = "ViewLabel"; //$NON-NLS-1$
-    private static final String PASSAGE_FIELD = "PassageAction"; //$NON-NLS-1$
-    private static final String MORE = "More"; //$NON-NLS-1$
-    private static final String GO_PASSAGE = "GoPassage"; //$NON-NLS-1$
-    private static final String HELP = "HelpAction"; //$NON-NLS-1$
-    private static final String SEARCH_LABEL = "SearchLabel"; //$NON-NLS-1$
-    private static final String GO_SEARCH = "GoSearch"; //$NON-NLS-1$
-    private static final String SEARCH_FIELD = "SearchAction"; //$NON-NLS-1$
-    private static final String ADVANCED = "Advanced"; //$NON-NLS-1$
-    private static final String BIBLE = "Bible"; //$NON-NLS-1$
-    private static final String INDEX = "Index"; //$NON-NLS-1$
+    private static final String VIEW_LABEL = "ViewLabel";
+    private static final String PASSAGE_FIELD = "PassageAction";
+    private static final String MORE = "More";
+    private static final String GO_PASSAGE = "GoPassage";
+    private static final String HELP = "HelpAction";
+    private static final String SEARCH_LABEL = "SearchLabel";
+    private static final String GO_SEARCH = "GoSearch";
+    private static final String SEARCH_FIELD = "SearchAction";
+    private static final String ADVANCED = "Advanced";
+    private static final String BIBLE = "Bible";
+    private static final String INDEX = "Index";
 
     /**
      * Keep the selection up to date with indexing.

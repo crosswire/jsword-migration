@@ -63,7 +63,7 @@ public class ConfigurableSwingConverter implements Converter {
      */
     public String[] getStyles() {
         try {
-            String search = "xsl/cswing/" + NetUtil.INDEX_FILE; //$NON-NLS-1$
+            String search = "xsl/cswing/" + NetUtil.INDEX_FILE;
             URL index = ResourceUtil.getResource(search);
             return NetUtil.listByIndexFile(NetUtil.toURI(index), new XSLTFilter());
         } catch (IOException ex) {
@@ -76,7 +76,7 @@ public class ConfigurableSwingConverter implements Converter {
      */
     public SAXEventProvider convert(SAXEventProvider xmlsep) throws TransformerException {
         try {
-            String path = "xsl/cswing/" + style; //$NON-NLS-1$
+            String path = "xsl/cswing/" + style;
             URL xslurl = ResourceUtil.getResource(path);
 
             TransformingSAXEventProvider tsep = new TransformingSAXEventProvider(NetUtil.toURI(xslurl), xmlsep);
@@ -141,10 +141,10 @@ public class ConfigurableSwingConverter implements Converter {
     /**
      * The font to be used in OSIS->HTML generation
      */
-    private static String font = "Serif-PLAIN-14"; //$NON-NLS-1$
+    private static String font = "Serif-PLAIN-14";
 
     /**
      * The stylesheet we are transforming using
      */
-    private static String style = "simple.xsl"; //$NON-NLS-1$
+    private static String style = "simple.xsl";
 }

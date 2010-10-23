@@ -77,7 +77,10 @@ public class Splash extends JWindow {
      * Init the graphics
      */
     private void init() {
-        Icon icon = GuiUtil.getIcon(Msg.SPLASH_IMAGE.toString());
+        // TRANSLATOR: This image is of an English Bible. It can be replaced with a localized one.
+        // It should be named splash_ll.png where ll is the 2 letter language code and put in the
+        // images directory. Then point this to it.
+        Icon icon = GuiUtil.getIcon(Msg.gettext("/images/splash.png"));
 
         JLabel lblPicture = new JLabel();
         lblPicture.setBackground(Color.WHITE);
@@ -175,7 +178,7 @@ public class Splash extends JWindow {
 
     private transient CustomWorkListener listener = new CustomWorkListener();
 
-    private static final String SPLASH_FONT = "SanSerif"; //$NON-NLS-1$
+    private static final String SPLASH_FONT = "SanSerif";
 
     /**
      * Serialization ID

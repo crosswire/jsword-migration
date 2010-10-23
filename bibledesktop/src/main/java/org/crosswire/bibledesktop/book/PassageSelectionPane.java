@@ -119,7 +119,7 @@ public class PassageSelectionPane extends JPanel {
         treAll.setModel(new WholeBibleTreeModel());
         treAll.setShowsRootHandles(true);
         treAll.setRootVisible(false);
-        treAll.putClientProperty("JTree.lineStyle", "Angled"); //$NON-NLS-1$//$NON-NLS-2$
+        treAll.putClientProperty("JTree.lineStyle", "Angled");
         treAll.addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent ev) {
                 treeSelected();
@@ -232,7 +232,9 @@ public class PassageSelectionPane extends JPanel {
      * @param ex
      */
     private void updateMessage(NoSuchKeyException ex) {
-        lblMessage.setText(Msg.ERROR.toString(ex.getMessage()));
+        // TRANSLATOR: Error condition: An unexpected unknown error occurred.
+        // Tell the user about it. {0} is a placeholder for the error that occurred.
+        lblMessage.setText(Msg.gettext("Error: {0}", ex.getMessage()));
         lblMessage.setIcon(icoBad);
     }
 
@@ -240,7 +242,10 @@ public class PassageSelectionPane extends JPanel {
      * Write out an summary message to the message label
      */
     private void updateMessageSummary() {
-        lblMessage.setText(Msg.SUMMARY.toString(ref.getOverview()));
+        // TRANSLATOR: Output the Summary label followed by the passage
+        // that the user has built using the Select Passage Wizard.
+        // {0} is the placeholder for the passage reference.
+        lblMessage.setText(Msg.gettext("Summary: {0}", ref.getOverview()));
         lblMessage.setIcon(icoGood);
     }
 
@@ -378,14 +383,14 @@ public class PassageSelectionPane extends JPanel {
         is.defaultReadObject();
     }
 
-    private static final String BIBLE_TREE = "BibleTree"; //$NON-NLS-1$
-    private static final String ADD = "AddVerse"; //$NON-NLS-1$
-    private static final String DELETE = "DeleteVerse"; //$NON-NLS-1$
-    private static final String SELECTED_VERSES = "SelectedVerses"; //$NON-NLS-1$
-    private static final String VERSES = "Verses"; //$NON-NLS-1$
-    private static final String DONE = "Done"; //$NON-NLS-1$
-    private static final String GOOD_ICON = "toolbarButtonGraphics/general/About24.gif"; //$NON-NLS-1$
-    private static final String BAD_ICON = "toolbarButtonGraphics/general/Stop24.gif"; //$NON-NLS-1$
+    private static final String BIBLE_TREE = "BibleTree";
+    private static final String ADD = "AddVerse";
+    private static final String DELETE = "DeleteVerse";
+    private static final String SELECTED_VERSES = "SelectedVerses";
+    private static final String VERSES = "Verses";
+    private static final String DONE = "Done";
+    private static final String GOOD_ICON = "toolbarButtonGraphics/general/About24.gif";
+    private static final String BAD_ICON = "toolbarButtonGraphics/general/Stop24.gif";
 
     /**
      * To convert strings into Biblical keys

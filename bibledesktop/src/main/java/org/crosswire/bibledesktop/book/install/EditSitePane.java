@@ -231,7 +231,8 @@ public class EditSitePane extends JPanel {
         dlgMain.getRootPane().setDefaultButton(btnClose);
         dlgMain.getRootPane().registerKeyboardAction(closer, esc, JComponent.WHEN_IN_FOCUSED_WINDOW);
         dlgMain.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        dlgMain.setTitle(Msg.EDIT_SITE_TITLE.toString());
+        // TRANSLATOR: Title for the dialog allowing the editing of SWORD download sites.
+        dlgMain.setTitle(Msg.gettext("Edit Update Sites"));
         dlgMain.setResizable(true);
         dlgMain.setModal(true);
 
@@ -258,12 +259,14 @@ public class EditSitePane extends JPanel {
             String name = txtName.getText().trim();
 
             if (name.length() == 0) {
-                setState(STATE_EDIT_ERROR, Msg.MISSING_SITE.toString());
+                // TRANSLATOR: Indicate to the user that they did not supply a download site name.
+                setState(STATE_EDIT_ERROR, Msg.gettext("Missing site name"));
                 return;
             }
 
             if (imanager.getInstaller(name) != null) {
-                setState(STATE_EDIT_ERROR, Msg.DUPLICATE_SITE.toString());
+                // TRANSLATOR: Indicate that the user supplied a name that matched a download site that they already have.
+                setState(STATE_EDIT_ERROR, Msg.gettext("Duplicate site name"));
                 return;
             }
 
@@ -330,7 +333,11 @@ public class EditSitePane extends JPanel {
     public void doEdit() {
         String name = (String) lstSite.getSelectedValue();
         if (name == null) {
-            CWOptionPane.showMessageDialog(this, Msg.NO_SELECTED_SITE.toString(), Msg.NO_SITE.toString(), JOptionPane.INFORMATION_MESSAGE);
+            // TRANSLATOR: Dialog title letting the user know that they they have not selected a download site to edit.
+            String title = Msg.gettext("No Site");
+            // TRANSLATOR: Let the user know that they have not selected a download site to edit.
+            String msg = Msg.gettext("No selected site to edit");
+            CWOptionPane.showMessageDialog(this, msg, title, JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
@@ -353,8 +360,11 @@ public class EditSitePane extends JPanel {
         if (name == null) {
             return;
         }
-
-        if (CWOptionPane.showConfirmDialog(this, Msg.CONFIRM_DELETE_SITE.toString(name), Msg.DELETE_SITE.toString(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        // TRANSLATOR: Dialog title asking the user to confirm the delete of a download site.
+        String title = Msg.gettext("Delete Site?");
+        // TRANSLATOR: Message asking the user to confirm the delete of a download site. {0} is a placeholder for the name of the download site.
+        String msg = Msg.gettext("Are you sure you want to delete {0}?", name);
+        if (CWOptionPane.showConfirmDialog(this, msg, title, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             imanager.removeInstaller(name);
         }
 
@@ -509,16 +519,16 @@ public class EditSitePane extends JPanel {
         is.defaultReadObject();
     }
 
-    private static final String ADD = "Add"; //$NON-NLS-1$
-    private static final String EDIT = "Edit"; //$NON-NLS-1$
-    private static final String DELETE = "Delete"; //$NON-NLS-1$
-    private static final String NAME = "Name"; //$NON-NLS-1$
-    private static final String TYPE = "Type"; //$NON-NLS-1$
-    private static final String RESET = "Reset"; //$NON-NLS-1$
-    private static final String SAVE = "Save"; //$NON-NLS-1$
-    private static final String CLOSE = "Close"; //$NON-NLS-1$
-    private static final String EMPTY_STRING = ""; //$NON-NLS-1$
-    private static final String BLANK_STRING = " "; //$NON-NLS-1$
+    private static final String ADD = "Add";
+    private static final String EDIT = "Edit";
+    private static final String DELETE = "Delete";
+    private static final String NAME = "Name";
+    private static final String TYPE = "Type";
+    private static final String RESET = "Reset";
+    private static final String SAVE = "Save";
+    private static final String CLOSE = "Close";
+    private static final String EMPTY_STRING = "";
+    private static final String BLANK_STRING = " ";
 
     /**
      * The state is viewing a site

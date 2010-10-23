@@ -147,7 +147,11 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
             views.put(scrView, pnlNew);
 
             tabMain.add(getTabName(first), scrView);
-            tabMain.add(Msg.MORE.toString(), pnlMore);
+            // TRANSLATOR: Extra bottom tabs are created when there is too much to display in one.
+            // Rather than figuring out how many tabs there should be, we label one "More..."
+            // When the user clicks on it, it is filled with what remains. And if it is filled
+            // to overflowing, another "More..." tab is created.
+            tabMain.add(Msg.gettext("More ..."), pnlMore);
 
             setCenterComponent(tabMain);
         } else {
@@ -369,7 +373,11 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
 
         // Do we need a new more tab
         if (waiting != null) {
-            tabMain.add(Msg.MORE.toString(), pnlMore);
+            // TRANSLATOR: Extra bottom tabs are created when there is too much to display in one.
+            // Rather than figuring out how many tabs there should be, we label one "More..."
+            // When the user clicks on it, it is filled with what remains. And if it is filled
+            // to overflowing, another "More..." tab is created.
+            tabMain.add(Msg.gettext("More ..."), pnlMore);
         }
 
         // Select the real new tab in place of any more tabs
@@ -441,7 +449,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
         String tabname = key.getName();
         int len = tabname.length();
         if (len > TITLE_LENGTH) {
-            tabname = tabname.substring(0, 9) + " ... " + tabname.substring(len - 9, len); //$NON-NLS-1$
+            tabname = tabname.substring(0, 9) + " ... " + tabname.substring(len - 9, len);
         }
 
         return tabname;

@@ -357,7 +357,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay {
         genBookKeyTree.setModel(new KeyTreeModel(null));
         genBookKeyTree.setShowsRootHandles(true);
         genBookKeyTree.setRootVisible(false);
-        genBookKeyTree.putClientProperty("JTree.lineStyle", "Angled"); //$NON-NLS-1$//$NON-NLS-2$
+        genBookKeyTree.putClientProperty("JTree.lineStyle", "Angled");
         genBookKeyTree.setCellRenderer(new KeyTreeCellRenderer());
         genBookKeyTree.addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent ev) {
@@ -440,7 +440,7 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay {
     /*protected*/final void updateDisplay() {
         Book selectedBook = (Book) bookList.getSelectedValue();
         if (selectedBook == null) {
-            log.warn("no selected book"); //$NON-NLS-1$
+            log.warn("no selected book");
             return;
         }
 

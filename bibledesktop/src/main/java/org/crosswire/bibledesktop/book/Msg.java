@@ -31,40 +31,43 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 final class Msg extends MsgBase {
-    static final Msg EMPTY_FILE = new Msg("BibleViewPane.EmptyFile"); //$NON-NLS-1$
-    static final Msg VERSE_LIST_DESC = new Msg("BibleViewPane.VerseListDesc"); //$NON-NLS-1$
-    static final Msg BOOKS = new Msg("BibleViewPane.Books"); //$NON-NLS-1$
-    static final Msg SELECT_BOOK = new Msg("BibleViewPane.SelectBook"); //$NON-NLS-1$
-    static final Msg SELECT_CHAPTER = new Msg("BibleViewPane.SelectChapter"); //$NON-NLS-1$
-    static final Msg SELECT_VERSE = new Msg("BibleViewPane.SelectVerse"); //$NON-NLS-1$
-    static final Msg NONE = new Msg("BibleViewPane.None"); //$NON-NLS-1$
-
-    static final Msg BAD_VERSE = new Msg("DisplaySelectPane.BadVerse"); //$NON-NLS-1$
-    static final Msg NO_INSTALLED_BIBLE = new Msg("DisplaySelectPane.NoInstalledBible"); //$NON-NLS-1$
-    static final Msg SELECT_PASSAGE_TITLE = new Msg("DisplaySelectPane.SelectPassageTitle"); //$NON-NLS-1$
-    static final Msg CLEAR = new Msg("DisplaySelectPane.Clear"); //$NON-NLS-1$
-    static final Msg UNTITLED = new Msg("DisplaySelectPane.Untitled"); //$NON-NLS-1$
-    static final Msg NO_HITS = new Msg("DisplaySelectPane.NoHits"); //$NON-NLS-1$
-    static final Msg HITS = new Msg("DisplaySelectPane.Hits"); //$NON-NLS-1$
-    static final Msg PARTIAL_HITS = new Msg("DisplaySelectPane.PartialHits"); //$NON-NLS-1$
-    static final Msg ADVANCED_TITLE = new Msg("DisplaySelectPane.AdvancedTitle"); //$NON-NLS-1$
-    static final Msg HELP_TEXT = new Msg("DisplaySelectPane.HelpText"); //$NON-NLS-1$
-    static final Msg HELP_TITLE = new Msg("DisplaySelectPane.HelpTitle"); //$NON-NLS-1$
-
-    static final Msg ERROR = new Msg("PassageSelectionPane.Error"); //$NON-NLS-1$
-    static final Msg SUMMARY = new Msg("PassageSelectionPane.Summary"); //$NON-NLS-1$
-
-    static final Msg PRESET_START = new Msg("AdvancedSearchPane.PresetStart"); //$NON-NLS-1$
-    static final Msg PRESET_END = new Msg("AdvancedSearchPane.PresetEnd"); //$NON-NLS-1$
-    static final Msg PRESETS = new Msg("AdvancedSearchPane.Presets"); //$NON-NLS-1$
-    static final Msg ADVANCED_SELECT_TITLE = new Msg("AdvancedSearchPane.SelectPassageTitle"); //$NON-NLS-1$
-    static final Msg RANK = new Msg("AdvancedSearchPane.Rank"); //$NON-NLS-1$
-    static final Msg RANK_ONE = new Msg("AdvancedSearchPane.RankOne"); //$NON-NLS-1$
 
     /**
-     * Passthrough ctor
+     * Get the internationalized text, but return key if key is unknown.
+     * 
+     * @param key
+     * @return the internationalized text
      */
-    private Msg(String name) {
-        super(name);
+    public static String gettext(String key)
+    {
+        return msg.lookup(key);
     }
+
+    /**
+     * Get the internationalized text, but return key if key is unknown.
+     * The text requires one parameter to be passed.
+     * 
+     * @param key
+     * @param param
+     * @return the formatted, internationalized text
+     */
+    public static String gettext(String key, Object param)
+    {
+        return msg.toString(key, param);
+    }
+
+    /**
+     * Get the internationalized text, but return key if key is unknown.
+     * The text requires one parameter to be passed.
+     * 
+     * @param key
+     * @param param
+     * @return the formatted, internationalized text
+     */
+    public static String gettext(String key, Object[] params)
+    {
+        return msg.toString(key, params);
+    }
+
+    private static MsgBase msg = new Msg();
 }

@@ -343,9 +343,9 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
         is.defaultReadObject();
     }
 
-    private static final String BLUR1 = "Blur1"; //$NON-NLS-1$
-    private static final String BLUR5 = "Blur5"; //$NON-NLS-1$
-    private static final String DELETE_SELECTED = "DeleteSelected"; //$NON-NLS-1$
+    private static final String BLUR1 = "Blur1";
+    private static final String BLUR5 = "Blur5";
+    private static final String DELETE_SELECTED = "DeleteSelected";
 
     /**
      * The whole key that we are viewing

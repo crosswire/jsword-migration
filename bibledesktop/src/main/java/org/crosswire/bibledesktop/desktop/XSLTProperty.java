@@ -40,80 +40,80 @@ public final class XSLTProperty implements Serializable {
     /**
      * Determines whether Strong's Numbers should show
      */
-    public static final XSLTProperty STRONGS_NUMBERS = new XSLTProperty("Strongs", false); //$NON-NLS-1$
+    public static final XSLTProperty STRONGS_NUMBERS = new XSLTProperty("Strongs", false);
 
     /**
      * Determines whether Word Morphology (e.g. Robinson) should show
      */
-    public static final XSLTProperty MORPH = new XSLTProperty("Morph", false); //$NON-NLS-1$
+    public static final XSLTProperty MORPH = new XSLTProperty("Morph", false);
 
     /**
      * Determines whether verses should start on a new line.
      */
-    public static final XSLTProperty START_VERSE_ON_NEWLINE = new XSLTProperty("VLine", false); //$NON-NLS-1$
+    public static final XSLTProperty START_VERSE_ON_NEWLINE = new XSLTProperty("VLine", false);
 
     /**
      * Show verse numbers
      */
-    public static final XSLTProperty VERSE_NUMBERS = new XSLTProperty("VNum", true); //$NON-NLS-1$
+    public static final XSLTProperty VERSE_NUMBERS = new XSLTProperty("VNum", true);
 
     /**
      * Show chapter and verse numbers.
      */
-    public static final XSLTProperty CV = new XSLTProperty("CVNum", false); //$NON-NLS-1$
+    public static final XSLTProperty CV = new XSLTProperty("CVNum", false);
 
     /**
      * Show book, chapter and verse numbers.
      */
-    public static final XSLTProperty BCV = new XSLTProperty("BCVNum", false); //$NON-NLS-1$
+    public static final XSLTProperty BCV = new XSLTProperty("BCVNum", false);
 
     /**
      * Show no verse numbers
      */
-    public static final XSLTProperty NO_VERSE_NUMBERS = new XSLTProperty("NoVNum", false); //$NON-NLS-1$
+    public static final XSLTProperty NO_VERSE_NUMBERS = new XSLTProperty("NoVNum", false);
 
     /**
      * Show verse numbers as a superscript.
      */
-    public static final XSLTProperty TINY_VERSE_NUMBERS = new XSLTProperty("TinyVNum", true); //$NON-NLS-1$
+    public static final XSLTProperty TINY_VERSE_NUMBERS = new XSLTProperty("TinyVNum", true);
 
     /**
      * Should headings be shown
      */
-    public static final XSLTProperty HEADINGS = new XSLTProperty("Headings", true); //$NON-NLS-1$
+    public static final XSLTProperty HEADINGS = new XSLTProperty("Headings", true);
 
     /**
      * Should notes be shown
      */
-    public static final XSLTProperty NOTES = new XSLTProperty("Notes", true); //$NON-NLS-1$
+    public static final XSLTProperty NOTES = new XSLTProperty("Notes", true);
 
     /**
      * Should cross references be shown
      */
-    public static final XSLTProperty XREF = new XSLTProperty("XRef", true); //$NON-NLS-1$
+    public static final XSLTProperty XREF = new XSLTProperty("XRef", true);
 
     /**
      * What is the base of the current document. Note this needs to be set each
      * time the document is shown.
      */
-    public static final XSLTProperty BASE_URL = new XSLTProperty("baseURL", "", true); //$NON-NLS-1$ //$NON-NLS-2$
+    public static final XSLTProperty BASE_URL = new XSLTProperty("baseURL", "", true);
 
     /**
      * What is the base of the current document. Note this needs to be set each
      * time the document is shown.
      */
-    public static final XSLTProperty DIRECTION = new XSLTProperty("direction", ""); //$NON-NLS-1$ //$NON-NLS-2$
+    public static final XSLTProperty DIRECTION = new XSLTProperty("direction", "");
 
     /**
      * What is the base of the current document. Note this needs to be set each
      * time the font changes.
      */
-    public static final XSLTProperty FONT = new XSLTProperty("font", "Serif-PLAIN-14"); //$NON-NLS-1$ //$NON-NLS-2$
+    public static final XSLTProperty FONT = new XSLTProperty("font", "Serif-PLAIN-14");
 
     /**
      * What is the base of the current document.
      */
-    public static final XSLTProperty CSS = new XSLTProperty("css", "", true); //$NON-NLS-1$ //$NON-NLS-2$
+    public static final XSLTProperty CSS = new XSLTProperty("css", "", true);
 
     /**
      * @param name

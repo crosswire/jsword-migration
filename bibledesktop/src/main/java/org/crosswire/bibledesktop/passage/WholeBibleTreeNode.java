@@ -133,7 +133,8 @@ public final class WholeBibleTreeNode implements TreeNode {
         try {
             switch (level) {
             case LEVEL_BIBLE:
-                return Msg.WHOLE.toString();
+                // TRANSLATOR: The top level of the tree of Bible books, chapters and verses.
+                return Msg.gettext("The Bible");
 
             case LEVEL_BOOK:
                 return BibleInfo.getPreferredBookName(range.getStart().getBook());
@@ -145,11 +146,12 @@ public final class WholeBibleTreeNode implements TreeNode {
                 return shaper.shape(Integer.toString(range.getStart().getVerse()));
 
             default:
-                return Msg.ERROR.toString();
+                // TRANSLATOR: Unexpected error condition.
+                return Msg.gettext("Error");
             }
         } catch (NoSuchVerseException ex) {
             assert false : ex;
-            return "!Error!"; //$NON-NLS-1$
+            return "!Error!";
         }
     }
 

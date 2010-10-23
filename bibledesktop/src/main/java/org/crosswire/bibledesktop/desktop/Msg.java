@@ -31,67 +31,14 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 public final class Msg extends MsgBase {
-    // Strings used by Desktop
-    // String for the title and version
-    static final Msg APP_TITLE = new Msg("Desktop.Title"); //$NON-NLS-1$
-    static final Msg SPLASH_TITLE = new Msg("Desktop.Splash"); //$NON-NLS-1$
-    static final Msg APP_VERSION = new Msg("Desktop.Version"); //$NON-NLS-1$
-    static final Msg VERSION_TITLE = new Msg("Desktop.VersionTitle"); //$NON-NLS-1$
-    static final Msg VERSION_APP_TITLE = new Msg("Desktop.VersionAppTitle"); //$NON-NLS-1$
-
-    // Auto save of config failed
-    static final Msg CONFIG_SAVE_FAILED = new Msg("Desktop.ConfigSaveFailed"); //$NON-NLS-1$
-
-    // Strings for hyperlink URIs
-    static final Msg UNKNOWN_PROTOCOL = new Msg("Desktop.UnknownProtocol"); //$NON-NLS-1$
-
-    // Strings for the startup job
-    static final Msg STARTUP_TITLE = new Msg("Desktop.StartupTitle"); //$NON-NLS-1$
-    static final Msg STARTUP_GENERATE = new Msg("Desktop.StartupGenerate"); //$NON-NLS-1$
-    static final Msg STARTUP_GENERAL_CONFIG = new Msg("Desktop.StartupGeneral"); //$NON-NLS-1$
-
-    // No Bibles "wizard"
-    static final Msg NO_BIBLES_MESSAGE = new Msg("Desktop.NoBiblesMessage"); //$NON-NLS-1$
-    static final Msg NO_BIBLES_TITLE = new Msg("Desktop.NoBiblesTitle"); //$NON-NLS-1$
-
-    // Strings for DesktopAction
-    static final Msg NO_HELP = new Msg("DesktopActions.NoHelp"); //$NON-NLS-1$
-    static final Msg NO_PASSAGE = new Msg("DesktopActions.NoPassage"); //$NON-NLS-1$
-    static final Msg SOURCE_MISSING = new Msg("DesktopActions.SourceMissing"); //$NON-NLS-1$
-
-    // Strings for AboutPane and Splash
-    // The splash image is of an English version of the application
-    static final Msg SPLASH_IMAGE = new Msg("Splash.SplashImage"); //$NON-NLS-1$
-    static final Msg ABOUT_TITLE = new Msg("AboutPane.AboutTitle"); //$NON-NLS-1$
-    static final Msg WARRANTY_TAB_TITLE = new Msg("AboutPane.Warranty"); //$NON-NLS-1$
-    static final Msg DETAILS_TAB_TITLE = new Msg("AboutPane.Details"); //$NON-NLS-1$
-    static final Msg SYSTEM_PROPS_TAB_TITLE = new Msg("AboutPane.SystemPropsTabTitle"); //$NON-NLS-1$
-
-    // Strings for StatusBar
-    static final Msg STATUS_DEFAULT = new Msg("StatusBar.StatusDefault"); //$NON-NLS-1$
-
-    // Strings for OptionsAction
-    static final Msg CONFIG_TITLE = new Msg("OptionsAction.ConfigTitle"); //$NON-NLS-1$
-
-    // Strings for ViewSourcePane
-    static final Msg TEXT_VIEWER = new Msg("ViewSourcePane.TextViewer"); //$NON-NLS-1$
-    static final Msg ORIG = new Msg("ViewSourcePane.ORIG"); //$NON-NLS-1$
-    static final Msg OSIS = new Msg("ViewSourcePane.OSIS"); //$NON-NLS-1$
-    static final Msg HTML = new Msg("ViewSourcePane.HTML"); //$NON-NLS-1$
 
     /**
-     * Passthrough ctor
-     */
-    private Msg(String name) {
-        super(name);
-    }
-
-    /*
      * get the title of the application
      * @return the title of the application
      */
     public static String getApplicationTitle() {
-        return Msg.APP_TITLE.toString();
+        // TRANSLATOR: The name of the program.
+        return Msg.gettext("Bible Desktop");
     }
 
     /**
@@ -100,8 +47,9 @@ public final class Msg extends MsgBase {
      * @return the version string
      */
     public static String getVersionInfo() {
-        String version = Msg.APP_VERSION.toString();
-        return Msg.VERSION_TITLE.toString(version);
+        // TRANSLATOR: Gets a version string in the form "Version 1.0"
+        // {0} is a placeholder for the version
+        return Msg.gettext("Version {0}", getVersion());
     }
 
     /**
@@ -110,10 +58,11 @@ public final class Msg extends MsgBase {
      * @return a versioned title
      */
     public static String getVersionedApplicationTitle() {
-        String title = Msg.APP_TITLE.toString();
-        String version = Msg.APP_VERSION.toString();
-        return Msg.VERSION_APP_TITLE.toString(new Object[] {
-                title, version
+        // TRANSLATOR: Gets a version string in the form "Bible Desktop v1.0"
+        // {0} is a placeholder for the application name
+        // {1} is a placeholder for the version
+        return Msg.gettext("{0} v{1}", new Object[] {
+                getApplicationTitle(), getVersion()
         });
     }
 
@@ -123,6 +72,51 @@ public final class Msg extends MsgBase {
      * @return Info for "About"
      */
     public static String getAboutInfo() {
-        return Msg.ABOUT_TITLE.toString(getApplicationTitle());
+        // TRANSLATOR: An "About" string in the form "About Bible Desktop"
+        return Msg.gettext("About {0}", getApplicationTitle());
     }
+
+    private static String getVersion() {
+        // TRANSLATOR the current version of the application.
+        // When translating use digits 0-9. They will be shaped appropriately.
+        return Msg.gettext("1.6");
+    }
+    /**
+     * Get the internationalized text, but return key if key is unknown.
+     * 
+     * @param key
+     * @return the internationalized text
+     */
+    public static String gettext(String key)
+    {
+        return msg.lookup(key);
+    }
+
+    /**
+     * Get the internationalized text, but return key if key is unknown.
+     * The text requires one parameter to be passed.
+     * 
+     * @param key
+     * @param param
+     * @return the formatted, internationalized text
+     */
+    public static String gettext(String key, Object param)
+    {
+        return msg.toString(key, param);
+    }
+
+    /**
+     * Get the internationalized text, but return key if key is unknown.
+     * The text requires one parameter to be passed.
+     * 
+     * @param key
+     * @param param
+     * @return the formatted, internationalized text
+     */
+    public static String gettext(String key, Object[] params)
+    {
+        return msg.toString(key, params);
+    }
+
+    private static MsgBase msg = new Msg();
 }

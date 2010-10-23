@@ -113,7 +113,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
             }
         });
 
-        pnlSelect.setBorder(UIManager.getBorder("SelectPanel.border")); //$NON-NLS-1$
+        pnlSelect.setBorder(UIManager.getBorder("SelectPanel.border"));
 
         this.setLayout(new BorderLayout());
         this.setMinimumSize(new Dimension(0, 0));
@@ -210,7 +210,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
                 ref.writeDescription(out);
             } else {
                 out.write(key.getName());
-                out.write("\n"); //$NON-NLS-1$
+                out.write("\n");
             }
         } finally {
             if (out != null) {
@@ -238,7 +238,8 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
         if (reply == JFileChooser.APPROVE_OPTION) {
             saved = chooser.getSelectedFile();
             if (saved.length() == 0) {
-                Reporter.informUser(getRootPane(), Msg.EMPTY_FILE, saved.getName());
+                // TRANSLATOR: Let the user know that the file is empty. {0} is a placeholder for the filename.
+                Reporter.informUser(getRootPane(), Msg.gettext("File {0} is empty", saved.getName()));
                 return;
             }
 
@@ -363,8 +364,8 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
     private DisplaySelectPane pnlSelect;
     protected SplitBookDataDisplay pnlPassg;
     private JFileChooser chooser;
-    private static final String BOOKMARK_DIR = "bookmarks"; //$NON-NLS-1$
-    private static final String EXTENSION = ".lst"; //$NON-NLS-1$
+    private static final String BOOKMARK_DIR = "bookmarks";
+    private static final String EXTENSION = ".lst";
 
     /**
      * The log stream
@@ -393,7 +394,8 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
          */
         /* @Override */
         public String getDescription() {
-            return Msg.VERSE_LIST_DESC.toString(EXTENSION);
+            // TRANSLATOR: This is the label for the verse list extension. {0} is a placeholder for that extension, which must be ".lst".
+            return Msg.gettext("Verse Lists ({0})", EXTENSION);
         }
     }
 }

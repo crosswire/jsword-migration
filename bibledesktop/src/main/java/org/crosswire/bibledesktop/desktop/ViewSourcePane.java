@@ -91,7 +91,7 @@ public class ViewSourcePane extends JPanel {
                     buf.append(book.getInitials());
                     buf.append(':');
                     buf.append(osisID);
-                    buf.append(" - "); //$NON-NLS-1$
+                    buf.append(" - ");
                     buf.append(book.getRawText(currentKey));
                 }
             }
@@ -114,10 +114,10 @@ public class ViewSourcePane extends JPanel {
 
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
 
-            XSLTProperty.DIRECTION.setState(bmd.isLeftToRight() ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$
+            XSLTProperty.DIRECTION.setState(bmd.isLeftToRight() ? "ltr" : "rtl");
 
             URI loc = bmd.getLocation();
-            XSLTProperty.BASE_URL.setState(loc == null ? "" : loc.getPath()); //$NON-NLS-1$
+            XSLTProperty.BASE_URL.setState(loc == null ? "" : loc.getPath());
 
             if (bmd.getBookCategory() == BookCategory.BIBLE) {
                 XSLTProperty.setProperties(htmlsep);
@@ -202,12 +202,18 @@ public class ViewSourcePane extends JPanel {
         };
 
         pnlButtons = new JPanel(new FlowLayout(FlowLayout.TRAILING));
-        pnlButtons.add(new JButton(actions.getAction("SourceClip")), null); //$NON-NLS-1$
+        pnlButtons.add(new JButton(actions.getAction("SourceClip")), null);
 
         tabMain = new JTabbedPane();
-        tabMain.add(pnlOrig, Msg.ORIG.toString());
-        tabMain.add(pnlOsis, Msg.OSIS.toString());
-        tabMain.add(pnlHtml, Msg.HTML.toString());
+        // TRANSLATOR: Label for the View Source tab holding the raw content
+        // of the passage in the active Bible View.
+        tabMain.add(pnlOrig, Msg.gettext("Original"));
+        // TRANSLATOR: Label for the View Source tab holding the OSIS transformation
+        // of the raw content in the prior tab for the passage in the active Bible View.
+        tabMain.add(pnlOsis, Msg.gettext("OSIS"));
+        // TRANSLATOR: Label for the View Source tab holding the HTML transformation
+        // of the OSIS in the prior tab for the passage in the active Bible View.
+        tabMain.add(pnlHtml, Msg.gettext("HTML"));
 
         this.setLayout(new BorderLayout());
         this.add(tabMain, BorderLayout.CENTER);
@@ -219,9 +225,10 @@ public class ViewSourcePane extends JPanel {
      * Display this Panel in a new JFrame
      */
     public void showInFrame(Frame parent) {
-        frame = new JDialog(parent, Msg.TEXT_VIEWER.toString());
+        // TRANSLATOR: title for the Source View dialog
+        frame = new JDialog(parent, Msg.gettext("Source Viewer"));
 
-        pnlButtons.add(new JButton(actions.getAction("SourceOK")), null); //$NON-NLS-1$
+        pnlButtons.add(new JButton(actions.getAction("SourceOK")), null);
 
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
 

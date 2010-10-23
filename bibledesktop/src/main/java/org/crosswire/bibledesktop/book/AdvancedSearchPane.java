@@ -78,7 +78,14 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
      * This is the default constructor
      */
     public AdvancedSearchPane() {
-        presets = Msg.PRESETS.toString().split("\\|"); //$NON-NLS-1$
+        // TRANSLATOR: This pattern allows one to specify different, potentially overlapping divisions of the Bible.
+        // Each division is separated by a '|', which will not be shown to the user.
+        // If the division represents a part of the Bible, that part is shown after the division name.
+        // If it is not appropriate for the part to be shown in ( ), but rather some other pair of characters,
+        //    even the same character (other than '|') this can be done.
+        // The book names should be given as something that JSword can understand. Chapter and verse numbers should be 1-9 and not localized.
+        // The last choice should not have a division marker and is used when the user types something other than what is in the list.
+        presets = Msg.gettext("The Whole Bible|All Prophecy (Deu 28, Isa-Mal, Rev)|Old Testament (Gen-Mal)|New Testament (Mat-Rev)|The Pentateuch (Gen-Deu)|History (Josh-Est)|Poetry (Job-Song)|Major Prophets (Isa-Dan)|Minor Prophets (Hos-Mal)|Gospels and Acts (Mat-Act)|Letters to People (Rom-Heb)|Letters from People (Jam-Jude)|Custom").split("\\|");
 
         initialize();
     }
@@ -88,8 +95,10 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
      */
     private void initialize() {
         shaper = new NumberShaper();
-        presetStart = Msg.PRESET_START.toString();
-        presetEnd = Msg.PRESET_END.toString();
+        // TRANSLATOR: The start of the passage list for the division of the Bible
+        presetStart = Msg.gettext("(");
+        // TRANSLATOR: The end of the passage list for the division of the Bible
+        presetEnd = Msg.gettext(")");
 
         actions = new ActionFactory(AdvancedSearchPane.class, this);
 
@@ -327,11 +336,18 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
 
     public final void setLabelRank(int val) {
         if (val == 0) {
-            lblRank.setText(shaper.shape(Msg.RANK.toString("All"))); //$NON-NLS-1$
+            // TRANSLATOR: Dynamic label for prioritization slider on Advanced Search.
+            // The user has chosen 0, which means to show all verses.
+            // This used to be "Show {0} verses:" and {0} was a placeholder for the English word "All".
+            lblRank.setText(shaper.shape(Msg.gettext("Show all verses:", "All")));
         } else if (val == 1) {
-            lblRank.setText(shaper.shape(Msg.RANK_ONE.toString()));
+            // TRANSLATOR: Dynamic label for prioritization slider on Advanced Search.
+            // The user has chosen 1, which means to show one verse, presumably the one that best satisfies the search.
+            lblRank.setText(shaper.shape(Msg.gettext("Show best verse:")));
         } else {
-            lblRank.setText(shaper.shape(Msg.RANK.toString(new Integer(val))));
+            // TRANSLATOR: Dynamic label for prioritization slider on Advanced Search.
+            // The user has chosen a number other than 0 or 1. 
+            lblRank.setText(shaper.shape(Msg.gettext("Show {0} verses:", new Integer(val))));
         }
     }
 
@@ -426,7 +442,8 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
             dlgSelect = new PassageSelectionPane();
         }
 
-        String passg = dlgSelect.showInDialog(this, Msg.ADVANCED_SELECT_TITLE.toString(), true, txtRestrict.getText());
+        // TRANSLATOR: This is the title to the dialog allowing a user to select passages for a restricted search.
+        String passg = dlgSelect.showInDialog(this, Msg.gettext("Select Passages to Restrict Search to"), true, txtRestrict.getText());
         if (passg != null) {
             cboPresets.setSelectedItem(presets[presets.length - 1]);
             txtRestrict.setText(passg);
@@ -449,11 +466,11 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
             return;
         }
 
-        String include = ""; //$NON-NLS-1$
+        String include = "";
         String preset = (String) cboPresets.getSelectedItem();
         if (preset != null) {
             int open = preset.indexOf(presetStart);
-            int close = preset.indexOf(presetEnd);
+            int close = preset.indexOf(presetEnd, open + 1);
 
             if (open != -1 && close != -1) {
                 include = preset.substring(open + 1, close);
@@ -583,7 +600,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
     // {
     // LookAndFeelUtil.initialize();
     // AdvancedSearchPane adv = new AdvancedSearchPane();
-    //        String reply = adv.showInDialog(null, "Advanced Search", true, "test"); //$NON-NLS-1$ //$NON-NLS-2$
+    //        String reply = adv.showInDialog(null, "Advanced Search", true, "test");
     // log.debug(reply);
     // System.exit(0);
     // }
@@ -618,35 +635,35 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
     /*
      * Action constants
      */
-    private static final String DONE = "Done"; //$NON-NLS-1$
-    private static final String PHRASE = "Phrase"; //$NON-NLS-1$
-    private static final String RESTRICT = "Restrict"; //$NON-NLS-1$
-    private static final String HEAD_RANK = "HeadRank"; //$NON-NLS-1$
-    private static final String RANK = "RankSomeSlider"; //$NON-NLS-1$
-    private static final String HEAD_RESTRICT = "HeadRestrict"; //$NON-NLS-1$
-    private static final String HEAD_BASE = "HeadBase"; //$NON-NLS-1$
-    private static final String INCLUDES = "Includes"; //$NON-NLS-1$
-    private static final String EXCLUDES = "Excludes"; //$NON-NLS-1$
-    private static final String SPELL = "Spell"; //$NON-NLS-1$
-    private static final String STARTS_WITH = "StartsWith"; //$NON-NLS-1$
-    private static final String PRESETS = "Presets"; //$NON-NLS-1$
-    private static final String RESTRICT_SELECT = "RestrictSelect"; //$NON-NLS-1$
-    private static final String HEAD_SUMMARY = "HeadSummary"; //$NON-NLS-1$
-    private static final String SUMMARY = "Summary"; //$NON-NLS-1$
-    //    private static final String HEAD_ORIGINAL = "HeadOriginal"; //$NON-NLS-1$
-    //    private static final String HEBREW_INCLUDE = "HebrewInclude"; //$NON-NLS-1$
-    //    private static final String HEBREW_EXCLUDE = "HebrewExclude"; //$NON-NLS-1$
-    //    private static final String GREEK_INCLUDE = "GreekInclude"; //$NON-NLS-1$
-    //    private static final String GREEK_EXCLUDE = "GreekExclude"; //$NON-NLS-1$
-    //    private static final String HEAD_TIME = "HeadTime"; //$NON-NLS-1$
-    //    private static final String AFTER = "After"; //$NON-NLS-1$
-    //    private static final String BEFORE = "Before"; //$NON-NLS-1$
+    private static final String DONE = "Done";
+    private static final String PHRASE = "Phrase";
+    private static final String RESTRICT = "Restrict";
+    private static final String HEAD_RANK = "HeadRank";
+    private static final String RANK = "RankSomeSlider";
+    private static final String HEAD_RESTRICT = "HeadRestrict";
+    private static final String HEAD_BASE = "HeadBase";
+    private static final String INCLUDES = "Includes";
+    private static final String EXCLUDES = "Excludes";
+    private static final String SPELL = "Spell";
+    private static final String STARTS_WITH = "StartsWith";
+    private static final String PRESETS = "Presets";
+    private static final String RESTRICT_SELECT = "RestrictSelect";
+    private static final String HEAD_SUMMARY = "HeadSummary";
+    private static final String SUMMARY = "Summary";
+    //    private static final String HEAD_ORIGINAL = "HeadOriginal";
+    //    private static final String HEBREW_INCLUDE = "HebrewInclude";
+    //    private static final String HEBREW_EXCLUDE = "HebrewExclude";
+    //    private static final String GREEK_INCLUDE = "GreekInclude";
+    //    private static final String GREEK_EXCLUDE = "GreekExclude";
+    //    private static final String HEAD_TIME = "HeadTime";
+    //    private static final String AFTER = "After";
+    //    private static final String BEFORE = "Before";
 
     /**
      * In our parsing we use space quite a lot and this ensures there is only
      * one and that we don't have lots of NON-NLS comments everywhere
      */
-    private static final String SPACE = " "; //$NON-NLS-1$
+    private static final String SPACE = " ";
 
     private String presetEnd;
 

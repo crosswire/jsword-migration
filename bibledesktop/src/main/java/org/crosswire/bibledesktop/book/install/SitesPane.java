@@ -105,8 +105,8 @@ public class SitesPane extends JPanel {
             tabMain.add(name, site);
         }
 
-        // Add the panel for the locally installed books
-        tabMain.add(Msg.LOCAL_BOOKS.toString(), new SitePane());
+        // TRANSLATOR: Label for the tab showing the installed books.
+        tabMain.add(Msg.gettext("Installed Books"), new SitePane());
     }
 
     /**
@@ -143,11 +143,12 @@ public class SitesPane extends JPanel {
         dlgMain.getContentPane().setLayout(new BorderLayout());
         dlgMain.getContentPane().add(this, BorderLayout.CENTER);
         dlgMain.getContentPane().add(createButtons(), BorderLayout.SOUTH);
-        dlgMain.setTitle(Msg.AVAILABLE_BOOKS.toString());
+        // TRANSLATOR: Title to the window that allows the management of books. 
+        dlgMain.setTitle(Msg.gettext("Available Books"));
         dlgMain.setResizable(true);
         // dlgMain.setModal(true);
         // Set the name for Persistent Layout
-        dlgMain.setName("Sites"); //$NON-NLS-1$
+        dlgMain.setName("Sites");
         dlgMain.addWindowListener(new WindowAdapter() {
             /* (non-Javadoc)
              * @see java.awt.event.WindowListener#windowClosed(java.awt.event.WindowEvent)
@@ -242,8 +243,8 @@ public class SitesPane extends JPanel {
         }
     }
 
-    private static final String CLOSE = "SitesClose"; //$NON-NLS-1$
-    private static final String EDIT_SITE = "ManageSites"; //$NON-NLS-1$
+    private static final String CLOSE = "SitesClose";
+    private static final String EDIT_SITE = "ManageSites";
 
     /**
      * The known installers fetched from InstallManager

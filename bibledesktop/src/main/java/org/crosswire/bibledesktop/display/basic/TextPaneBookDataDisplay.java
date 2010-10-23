@@ -96,7 +96,6 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
                       new Dimension(400,300)));
     }
 
-    
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.BookDataDisplay#clearBookData()
      */
@@ -133,14 +132,14 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
      */
     public void refresh() {
         if (bdata == null) {
-            txtView.setText(""); //$NON-NLS-1$
+            txtView.setText("");
             return;
         }
 
         // Make sure Hebrew displays from Right to Left
         BookMetaData bmd = getFirstBook().getBookMetaData();
         if (bmd == null) {
-            txtView.setText(""); //$NON-NLS-1$
+            txtView.setText("");
             return;
         }
 
@@ -157,10 +156,10 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             SAXEventProvider osissep = bdata.getSAXEventProvider();
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
 
-            XSLTProperty.DIRECTION.setState(direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$
+            XSLTProperty.DIRECTION.setState(direction ? "ltr" : "rtl");
 
             URI loc = bmd.getLocation();
-            XSLTProperty.BASE_URL.setState(loc == null ? "" : loc.getPath()); //$NON-NLS-1$
+            XSLTProperty.BASE_URL.setState(loc == null ? "" : loc.getPath());
 
             if (bmd.getBookCategory() == BookCategory.BIBLE) {
                 XSLTProperty.setProperties(htmlsep);
@@ -179,10 +178,10 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
              */
             /* Apply the fix if the text is too long and we are not Java 1.5 or greater */
             if (text.length() > 32768 && BookCategory.GENERAL_BOOK.equals(getFirstBook().getBookCategory())) {
-                String javaVersion = System.getProperty("java.specification.version"); //$NON-NLS-1$
-                if (javaVersion == null || "1.5".compareTo(javaVersion) > 0) //$NON-NLS-1$
+                String javaVersion = System.getProperty("java.specification.version");
+                if (javaVersion == null || "1.5".compareTo(javaVersion) > 0)
                 {
-                    text = text.substring(0, 32760) + "..."; //$NON-NLS-1$
+                    text = text.substring(0, 32760) + "...";
                 }
             }
             txtView.setText(text);
@@ -199,7 +198,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     /* (non-Javadoc)
      * @see javax.swing.event.HyperlinkListener#hyperlinkUpdate(javax.swing.event.HyperlinkEvent)
      */
-    public void hyperlinkUpdate(HyperlinkEvent ev) { 
+    public void hyperlinkUpdate(HyperlinkEvent ev) {
         // SPEEDUP(DMS): This needs to be optimized. It takes too much CPU
         try {
             HyperlinkEvent.EventType type = ev.getEventType();
@@ -278,7 +277,9 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             // We ignore the frame case (example code within JEditorPane
             // JavaDoc).
             if (data.charAt(0) != '#') {
-                throw new MalformedURLException(Msg.BAD_PROTOCOL_URL.toString(data));
+                // TRANSLATOR: Unexpected error condition: the cross reference was bad.
+                // {0} is a placeholder for the bad URL.
+                throw new MalformedURLException(Msg.gettext("Missing : in {0}", data));
             }
         } else {
             protocol = data.substring(0, match);
@@ -429,10 +430,10 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     }
 
     // Strings for hyperlinks
-    private static final String HYPERLINK_STYLE = "Hyperlink"; //$NON-NLS-1$
-    private static final String DOUBLE_SLASH = "//"; //$NON-NLS-1$
-    private static final String SCROLL_TO_URI = "scrolling to: {0}"; //$NON-NLS-1$
-    private static final String RELATIVE_URI_PROTOCOL = ""; //$NON-NLS-1$
+    private static final String HYPERLINK_STYLE = "Hyperlink";
+    private static final String DOUBLE_SLASH = "//";
+    private static final String SCROLL_TO_URI = "scrolling to: {0}";
+    private static final String RELATIVE_URI_PROTOCOL = "";
 
     /**
      * The log stream

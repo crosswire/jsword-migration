@@ -98,11 +98,13 @@ public final class IndexResolver {
                 }
 
                 if (ex != null) {
-                    log.error("index download failed: ", ex); //$NON-NLS-1$
-                    // Reporter.informUser(parent, ex);
-
-                    String gtitle = Msg.HOW_GENERATE_TITLE.toString();
-                    Msg gmsg = Msg.HOW_GENERATE;
+                    log.error("index download failed: ", ex);
+                    // TRANSLATOR: Title to a dialog that asks whether the user wants to generate an index.
+                    // Currently unused.
+                    String gtitle = Msg.gettext("Download or generate?");
+                    // TRANSLATOR: The download failed for one reason or another. So now the user is asked whether the index should be generated.
+                    // Currently unused.
+                    String gmsg = Msg.gettext("Downloading failed.\nDo you wish to generate an index anyway?");
                     int yn = CWOptionPane.showConfirmDialog(parent, gmsg, gtitle, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
                     if (yn == JOptionPane.YES_OPTION) {
@@ -140,12 +142,16 @@ public final class IndexResolver {
             installer = (Installer) it.next();
         } else {
             JComboBox choice = new JComboBox(new InstallManagerComboBoxModel(insman));
-            JLabel label = new JLabel(Msg.HOW_SITE.toString());
+            // TRANSLATOR: Label for a list of index download sites.
+            // Currently unused.
+            JLabel label = new JLabel(Msg.gettext("Which download site do you wish to use?"));
             JPanel panel = new JPanel(new BorderLayout());
             panel.add(label, BorderLayout.NORTH);
             panel.add(choice, BorderLayout.CENTER);
 
-            String title = Msg.HOW_SITE_TITLE.toString();
+            // TRANSLATOR: Title for a dialog that asks whether the user should download the index.
+            // Currently unused.
+            String title = Msg.gettext("Download an index?");
 
             int yn = CWOptionPane.showConfirmDialog(parent, panel, title, JOptionPane.YES_OPTION);
             if (yn == JOptionPane.YES_OPTION) {
