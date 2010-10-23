@@ -95,9 +95,9 @@ public class StubDictionaryKeyFactory implements KeyFactory {
         return new DefaultKeyList();
     }
 
-    private Key set = new DefaultKeyList(null, "Stub Dictionary"); //$NON-NLS-1$
+    private Key set = new DefaultKeyList(null, "Stub Dictionary");
 
-    private static final DefaultLeafKeyList KEY_IMPL = new DefaultLeafKeyList("implementation", "implementation"); //$NON-NLS-1$ //$NON-NLS-2$
+    private static final DefaultLeafKeyList KEY_IMPL = new DefaultLeafKeyList("implementation", "implementation");
 
-    private static final DefaultLeafKeyList KEY_STUB = new DefaultLeafKeyList("stub", "stub"); //$NON-NLS-1$ //$NON-NLS-2$
+    private static final DefaultLeafKeyList KEY_STUB = new DefaultLeafKeyList("stub", "stub");
 }

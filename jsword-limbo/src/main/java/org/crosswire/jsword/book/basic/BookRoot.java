@@ -47,7 +47,7 @@ public class BookRoot {
 
         // First see if there is a System property that can help us out
         String sysprop = System.getProperty(PROP_HOMEDIR);
-        log.debug("Testing system property " + PROP_HOMEDIR + "=" + sysprop); //$NON-NLS-1$ //$NON-NLS-2$
+        log.debug("Testing system property " + PROP_HOMEDIR + "=" + sysprop);
 
         if (sysprop != null) {
             try {
@@ -55,10 +55,10 @@ public class BookRoot {
                 URI test = NetUtil.lengthenURI(found, FILE_LOCATOR);
 
                 if (NetUtil.isFile(test)) {
-                    log.debug("Found BibleRoot using system property " + PROP_HOMEDIR + " at " + test); //$NON-NLS-1$ //$NON-NLS-2$
+                    log.debug("Found BibleRoot using system property " + PROP_HOMEDIR + " at " + test);
                     root = found;
                 } else {
-                    log.warn("Missing " + PROP_HOMEDIR + " under: " + test); //$NON-NLS-1$ //$NON-NLS-2$
+                    log.warn("Missing " + PROP_HOMEDIR + " under: " + test);
                 }
             } catch (URISyntaxException e) {
                 // root is null
@@ -71,10 +71,10 @@ public class BookRoot {
             URL found = ResourceUtil.getResource(DIR_VERSIONS + File.separator + FILE_LOCATOR);
             URI test = NetUtil.shortenURI(NetUtil.toURI(found), FILE_LOCATOR);
             if (NetUtil.isFile(test)) {
-                log.debug("Found BibleRoot from current directory: " + test); //$NON-NLS-1$
+                log.debug("Found BibleRoot from current directory: " + test);
                 root = test;
             } else {
-                log.warn("Missing BibleRoot from current directory: " + test); //$NON-NLS-1$
+                log.warn("Missing BibleRoot from current directory: " + test);
             }
         }
 
@@ -88,17 +88,17 @@ public class BookRoot {
      * System property to let people re-direct where the project directory is
      * stored
      */
-    private static final String PROP_HOMEDIR = "jsword.bible.dir"; //$NON-NLS-1$
+    private static final String PROP_HOMEDIR = "jsword.bible.dir";
 
     /**
      * A file so we know if we have the right versions directory
      */
-    public static final String FILE_LOCATOR = "locator.properties"; //$NON-NLS-1$
+    public static final String FILE_LOCATOR = "locator.properties";
 
     /**
      * Versions subdirectory of the project directory
      */
-    public static final String DIR_VERSIONS = "versions"; //$NON-NLS-1$
+    public static final String DIR_VERSIONS = "versions";
 
     /**
      * The log stream

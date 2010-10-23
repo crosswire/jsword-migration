@@ -115,7 +115,7 @@ public class DebugPane extends JPanel {
             Method method = (Method) cboMethod.getSelectedItem();
             Object reply = method.invoke(this, new Object[0]);
             if (reply == null) {
-                txtResults.setText(""); //$NON-NLS-1$
+                txtResults.setText("");
             } else {
                 txtResults.setText(reply.toString());
             }
@@ -140,7 +140,7 @@ public class DebugPane extends JPanel {
         while (it.hasNext()) {
             BibleViewPane view = (BibleViewPane) it.next();
             reply.append(i++);
-            reply.append(": "); //$NON-NLS-1$
+            reply.append(": ");
             reply.append(view.getTitle());
             reply.append(' ');
             reply.append(view.toString());
@@ -153,9 +153,9 @@ public class DebugPane extends JPanel {
      * Create some test jobs
      */
     public void createTestJobs() {
-        createTestJob(30000, "test1", 20, false); //$NON-NLS-1$
-        createTestJob(30000, "test2", 3, false); //$NON-NLS-1$
-        createTestJob(30000, "test3", 3, true); //$NON-NLS-1$
+        createTestJob(30000, "test1", 20, false);
+        createTestJob(30000, "test2", 3, false);
+        createTestJob(30000, "test3", 3, true);
     }
 
     /**
@@ -176,13 +176,13 @@ public class DebugPane extends JPanel {
                 job.setSectionName(LimboMsg.DEBUG_STEPS.toString(new Object[] {
                         new Integer(0), new Integer(steps)
                 }));
-                log.debug("starting test job:"); //$NON-NLS-1$
+                log.debug("starting test job:");
 
                 for (int i = 1; i <= steps && !Thread.interrupted(); i++) {
                     try {
                         wait(millis / steps);
                     } catch (InterruptedException ex) {
-                        log.warn("Exception while waiting", ex); //$NON-NLS-1$
+                        log.warn("Exception while waiting", ex);
                     }
 
                     job.setWork((i * 100) / steps);
@@ -192,7 +192,7 @@ public class DebugPane extends JPanel {
                 }
 
                 job.done();
-                log.debug("finishing test job:"); //$NON-NLS-1$
+                log.debug("finishing test job:");
             }
         };
         test.start();
@@ -261,7 +261,7 @@ public class DebugPane extends JPanel {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             if (value instanceof Method) {
-                setText(((Method) value).getName() + "()"); //$NON-NLS-1$
+                setText(((Method) value).getName() + "()");
             }
             return this;
         }

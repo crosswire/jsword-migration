@@ -55,7 +55,7 @@ public class JDBCBookDriver extends AbstractBookDriver {
             dir = BookRoot.findBibleRoot(getDriverName());
 
             if (!NetUtil.isDirectory(dir)) {
-                log.debug("Missing jdbc directory: " + dir); //$NON-NLS-1$
+                log.debug("Missing jdbc directory: " + dir);
                 return new Book[0];
             }
 
@@ -74,7 +74,7 @@ public class JDBCBookDriver extends AbstractBookDriver {
 
         for (int i = 0; i < names.length; i++) {
             URI url = NetUtil.lengthenURI(dir, names[i]);
-            URI propUri = NetUtil.lengthenURI(url, "bible.properties"); //$NON-NLS-1$
+            URI propUri = NetUtil.lengthenURI(url, "bible.properties");
             try {
                 Properties prop = NetUtil.loadProperties(propUri);
 
@@ -97,7 +97,7 @@ public class JDBCBookDriver extends AbstractBookDriver {
      * @see org.crosswire.jsword.book.BookDriver#getDriverName()
      */
     public String getDriverName() {
-        return "jdbc"; //$NON-NLS-1$
+        return "jdbc";
     }
 
     /**

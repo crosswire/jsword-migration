@@ -243,11 +243,11 @@ public class ExceptionShelf extends JPanel {
         if (ex == null) {
             // I18N: migrate this to an ActionFactory
             report.setText(LimboMsg.NO_PROBLEMS.toString());
-            report.setIcon(UIManager.getIcon("OptionPane.informationIcon")); //$NON-NLS-1$
+            report.setIcon(UIManager.getIcon("OptionPane.informationIcon"));
             remove.setEnabled(false);
         } else {
-            report.setText("<html>" + ExceptionPane.getHTMLDescription(ex)); //$NON-NLS-1$
-            report.setIcon(UIManager.getIcon("OptionPane.errorIcon")); //$NON-NLS-1$
+            report.setText("<html>" + ExceptionPane.getHTMLDescription(ex));
+            report.setIcon(UIManager.getIcon("OptionPane.errorIcon"));
             remove.setEnabled(true);
         }
 

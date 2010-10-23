@@ -71,7 +71,7 @@ public class ReferenceRootTreeNode implements TreeNode {
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        return "Reference Works"; //$NON-NLS-1$
+        return "Reference Works";
     }
 
     /**
@@ -189,7 +189,7 @@ public class ReferenceRootTreeNode implements TreeNode {
             if (filter.test(book)) {
                 boolean changed = books.add(book);
                 if (!changed) {
-                    log.error("added a book from an event but our filtered book list did not change"); //$NON-NLS-1$
+                    log.error("added a book from an event but our filtered book list did not change");
                 }
             }
         }
@@ -207,7 +207,7 @@ public class ReferenceRootTreeNode implements TreeNode {
             if (filter.test(book)) {
                 boolean changed = books.remove(book);
                 if (!changed) {
-                    log.error("removed a book from an event but our filtered book list did not change"); //$NON-NLS-1$
+                    log.error("removed a book from an event but our filtered book list did not change");
                 }
             }
         }

@@ -29,23 +29,23 @@ package org.crosswire.jsword.book.raw;
  * @author Joe Walker [joe at eireneh dot com]
  */
 public class RawConstants {
-    static final String SIG_PARA_INST = "RAW:AI"; //$NON-NLS-1$
-    static final String SIG_PUNC_INST = "RAW:PI"; //$NON-NLS-1$
-    static final String SIG_CASE_INST = "RAW:CI"; //$NON-NLS-1$
-    static final String SIG_WORD_INST = "RAW:WI"; //$NON-NLS-1$
+    static final String SIG_PARA_INST = "RAW:AI";
+    static final String SIG_PUNC_INST = "RAW:PI";
+    static final String SIG_CASE_INST = "RAW:CI";
+    static final String SIG_WORD_INST = "RAW:WI";
 
-    static final String SIG_PUNC_ITEM = "RAW:PR"; //$NON-NLS-1$
-    static final String SIG_WORD_ITEM = "RAW:WR"; //$NON-NLS-1$
+    static final String SIG_PUNC_ITEM = "RAW:PR";
+    static final String SIG_WORD_ITEM = "RAW:WR";
 
-    static final String FILE_PARA_INST = "parainst.idx"; //$NON-NLS-1$
-    static final String FILE_PUNC_INST = "puncinst.idx"; //$NON-NLS-1$
-    static final String FILE_CASE_INST = "caseinst.idx"; //$NON-NLS-1$
-    static final String FILE_WORD_INST = "wordinst.idx"; //$NON-NLS-1$
+    static final String FILE_PARA_INST = "parainst.idx";
+    static final String FILE_PUNC_INST = "puncinst.idx";
+    static final String FILE_CASE_INST = "caseinst.idx";
+    static final String FILE_WORD_INST = "wordinst.idx";
 
-    static final String FILE_PUNC_ITEM = "punc.idx"; //$NON-NLS-1$
-    static final String FILE_WORD_ITEM = "word.idx"; //$NON-NLS-1$
+    static final String FILE_PUNC_ITEM = "punc.idx";
+    static final String FILE_WORD_ITEM = "word.idx";
 
-    static final String FILE_BIBLE_PROPERTIES = "bible.properties"; //$NON-NLS-1$
+    static final String FILE_BIBLE_PROPERTIES = "bible.properties";
 
     /**
      * Prevent instantiation

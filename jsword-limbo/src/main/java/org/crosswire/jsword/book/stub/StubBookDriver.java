@@ -39,10 +39,10 @@ public class StubBookDriver extends AbstractBookDriver {
      */
     public StubBookDriver() {
         books = new Book[] {
-                new StubBook(this, "Stub Version", BookCategory.BIBLE), //$NON-NLS-1$
-                new StubBook(this, "New Stub Version", BookCategory.BIBLE), //$NON-NLS-1$
-                new StubBook(this, "Stub Comments", BookCategory.COMMENTARY), //$NON-NLS-1$
-                new StubDictionary(this, "Stub Dict", BookCategory.DICTIONARY), //$NON-NLS-1$
+                new StubBook(this, "Stub Version", BookCategory.BIBLE),
+                new StubBook(this, "New Stub Version", BookCategory.BIBLE),
+                new StubBook(this, "Stub Comments", BookCategory.COMMENTARY),
+                new StubDictionary(this, "Stub Dict", BookCategory.DICTIONARY),
         };
     }
 
@@ -61,7 +61,7 @@ public class StubBookDriver extends AbstractBookDriver {
      * @see org.crosswire.jsword.book.BookDriver#getDriverName()
      */
     public String getDriverName() {
-        return "Stub"; //$NON-NLS-1$
+        return "Stub";
     }
 
     /**

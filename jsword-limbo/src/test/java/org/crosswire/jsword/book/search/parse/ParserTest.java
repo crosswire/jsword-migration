@@ -56,31 +56,31 @@ public class ParserTest extends TestCase {
         // try { engine.search(new Search("moses aaron", false)); fail(); }
         // catch (BookException ex) { }
         try {
-            engine.search("(");fail();} catch (BookException ex) {} //$NON-NLS-1$
+            engine.search("(");fail();} catch (BookException ex) {}
         try {
-            engine.search("~");fail();} catch (BookException ex) {} //$NON-NLS-1$
+            engine.search("~");fail();} catch (BookException ex) {}
         try {
-            engine.search(")");fail();} catch (BookException ex) {} //$NON-NLS-1$
+            engine.search(")");fail();} catch (BookException ex) {}
         try {
-            engine.search("&");fail();} catch (BookException ex) {} //$NON-NLS-1$
+            engine.search("&");fail();} catch (BookException ex) {}
         try {
-            engine.search(",");fail();} catch (BookException ex) {} //$NON-NLS-1$
+            engine.search(",");fail();} catch (BookException ex) {}
         try {
-            engine.search("+");fail();} catch (BookException ex) {} //$NON-NLS-1$
+            engine.search("+");fail();} catch (BookException ex) {}
         try {
-            engine.search("-");fail();} catch (BookException ex) {} //$NON-NLS-1$
+            engine.search("-");fail();} catch (BookException ex) {}
         try {
-            engine.search("/");fail();} catch (BookException ex) {} //$NON-NLS-1$
+            engine.search("/");fail();} catch (BookException ex) {}
         try {
-            engine.search("|");fail();} catch (BookException ex) {} //$NON-NLS-1$
+            engine.search("|");fail();} catch (BookException ex) {}
         try {
-            engine.search("sw");fail();} catch (BookException ex) {} //$NON-NLS-1$
+            engine.search("sw");fail();} catch (BookException ex) {}
         try {
-            engine.search("startswith");fail();} catch (BookException ex) {} //$NON-NLS-1$
+            engine.search("startswith");fail();} catch (BookException ex) {}
         try {
-            engine.search("gr");fail();} catch (BookException ex) {} //$NON-NLS-1$
+            engine.search("gr");fail();} catch (BookException ex) {}
         try {
-            engine.search("grammar");fail();} catch (BookException ex) {} //$NON-NLS-1$
+            engine.search("grammar");fail();} catch (BookException ex) {}
         // try { engine.search("moses ( aaron )"); fail(); } catch
         // (BookException ex) { }
         // try { engine.search("moses & ( aaron"); fail(); } catch

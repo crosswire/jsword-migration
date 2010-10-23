@@ -31,9 +31,9 @@ import java.io.Serializable;
  * @author Joe Walker [joe at eireneh dot com]
  */
 public class ParamName implements Serializable {
-    static final ParamName PARAM_BIBLE = new ParamName("bible"); //$NON-NLS-1$
-    static final ParamName PARAM_PASSAGE = new ParamName("passage"); //$NON-NLS-1$
-    static final ParamName PARAM_FINDSTRING = new ParamName("word"); //$NON-NLS-1$
+    static final ParamName PARAM_BIBLE = new ParamName("bible");
+    static final ParamName PARAM_PASSAGE = new ParamName("passage");
+    static final ParamName PARAM_FINDSTRING = new ParamName("word");
 
     /**
      * Only we should be doing this

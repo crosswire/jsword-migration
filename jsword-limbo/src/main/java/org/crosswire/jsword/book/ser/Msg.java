@@ -31,10 +31,10 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 class Msg extends MsgBase {
-    static final Msg READ_ERROR = new Msg("BookDataCache.ReadError"); //$NON-NLS-1$
-    static final Msg WRITE_ERROR = new Msg("BookDataCache.WriteError"); //$NON-NLS-1$
-    static final Msg SER_INIT = new Msg("SerBook.SerInit"); //$NON-NLS-1$
-    static final Msg NON_FILE_URL = new Msg("BookDataCache.NonFileURL"); //$NON-NLS-1$
+    static final Msg READ_ERROR = new Msg("BookDataCache.ReadError");
+    static final Msg WRITE_ERROR = new Msg("BookDataCache.WriteError");
+    static final Msg SER_INIT = new Msg("SerBook.SerInit");
+    static final Msg NON_FILE_URL = new Msg("BookDataCache.NonFileURL");
 
     /**
      * Passthrough ctor

@@ -31,11 +31,11 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 public final class VerifierMsg extends MsgBase {
-    static final VerifierMsg VERIFY_START = new VerifierMsg("Verifier.Start"); //$NON-NLS-1$
-    static final VerifierMsg VERIFY_VERSES = new VerifierMsg("Verifier.Verses"); //$NON-NLS-1$
-    static final VerifierMsg VERIFY_VERSE = new VerifierMsg("Verifier.Verse"); //$NON-NLS-1$
-    static final VerifierMsg VERIFY_PASSAGES = new VerifierMsg("Verifier.Passages"); //$NON-NLS-1$
-    static final VerifierMsg VERIFY_WORD = new VerifierMsg("Verifier.Word"); //$NON-NLS-1$
+    static final VerifierMsg VERIFY_START = new VerifierMsg("Verifier.Start");
+    static final VerifierMsg VERIFY_VERSES = new VerifierMsg("Verifier.Verses");
+    static final VerifierMsg VERIFY_VERSE = new VerifierMsg("Verifier.Verse");
+    static final VerifierMsg VERIFY_PASSAGES = new VerifierMsg("Verifier.Passages");
+    static final VerifierMsg VERIFY_WORD = new VerifierMsg("Verifier.Word");
 
     /**
      * Passthrough ctor

@@ -99,7 +99,7 @@ public class HttpRemoteBookDriver extends RemoteBookDriver {
                 dlist.add(driver);
                 Books.installed().registerDriver(driver);
             } catch (Exception ex) {
-                log.warn("Failed to start driver using: " + urls[i]); //$NON-NLS-1$
+                log.warn("Failed to start driver using: " + urls[i]);
             }
         }
 

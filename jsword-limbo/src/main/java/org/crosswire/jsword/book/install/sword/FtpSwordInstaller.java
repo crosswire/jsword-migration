@@ -51,7 +51,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller {
      * @see org.crosswire.jsword.book.install.Installer#getType()
      */
     public String getType() {
-        return "sword-ftp"; //$NON-NLS-1$
+        return "sword-ftp";
     }
 
     /*
@@ -73,7 +73,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller {
      */
     /* @Override */
     public String getInstallerDefinition() {
-        return PROTOCOL_SWORD + "://" + username + ":" + password + "@" + host + packageDirectory; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        return PROTOCOL_SWORD + "://" + username + ":" + password + "@" + host + packageDirectory;
     }
 
     /*
@@ -93,7 +93,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller {
         SwordBookMetaData sbmd = (SwordBookMetaData) bmd;
 
         try {
-            return new URI(NetUtil.PROTOCOL_FTP, host, packageDirectory + "/" + sbmd.getInitials() + ZIP_SUFFIX, null); //$NON-NLS-1$ 
+            return new URI(NetUtil.PROTOCOL_FTP, host, packageDirectory + "/" + sbmd.getInitials() + ZIP_SUFFIX, null); 
         } catch (URISyntaxException ex) {
             return null;
         }
@@ -111,7 +111,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller {
         FTPClient ftp = new FTPClient();
 
         try {
-            log.info("Connecting to site=" + host + " dir=" + dir); //$NON-NLS-1$ //$NON-NLS-2$
+            log.info("Connecting to site=" + host + " dir=" + dir);
 
             // First connect
             ftp.connect(host);
@@ -178,7 +178,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller {
                 try {
                     ftp.disconnect();
                 } catch (IOException ex2) {
-                    log.error("disconnect error", ex2); //$NON-NLS-1$
+                    log.error("disconnect error", ex2);
                 }
             }
         }
@@ -265,17 +265,17 @@ public class FtpSwordInstaller extends AbstractSwordInstaller {
     /**
      * The remote username for a valid account on the <code>host</code>.
      */
-    private String username = "anonymous"; //$NON-NLS-1$
+    private String username = "anonymous";
 
     /**
      * The password to go with <code>username</code>.
      */
-    private String password = "jsword@crosswire.com"; //$NON-NLS-1$
+    private String password = "jsword@crosswire.com";
 
     /**
      * We need to be ablee to provide a URL as part of the API
      */
-    private static final String PROTOCOL_SWORD = "sword-ftp"; //$NON-NLS-1$
+    private static final String PROTOCOL_SWORD = "sword-ftp";
 
     /**
      * The log stream

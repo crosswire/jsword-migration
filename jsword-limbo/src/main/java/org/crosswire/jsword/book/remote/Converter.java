@@ -45,15 +45,15 @@ import org.jdom.Element;
  * @author Joe Walker [joe at eireneh dot com]
  */
 public class Converter {
-    private static final String ELEMENT_MESSAGE = "message"; //$NON-NLS-1$
-    private static final String ELEMENT_EXCEPTION = "exception"; //$NON-NLS-1$
-    private static final String ELEMENT_WORD = "word"; //$NON-NLS-1$
-    private static final String ELEMENT_REF = "ref"; //$NON-NLS-1$
-    private static final String ELEMENT_ROOT = "root"; //$NON-NLS-1$
-    private static final String ELEMENT_TYPE = "type"; //$NON-NLS-1$
-    private static final String ELEMENT_NAME = "name"; //$NON-NLS-1$
-    private static final String ATTRIBUTE_ID = "id"; //$NON-NLS-1$
-    private static final String ELEMENT_METADATA = "metadata"; //$NON-NLS-1$
+    private static final String ELEMENT_MESSAGE = "message";
+    private static final String ELEMENT_EXCEPTION = "exception";
+    private static final String ELEMENT_WORD = "word";
+    private static final String ELEMENT_REF = "ref";
+    private static final String ELEMENT_ROOT = "root";
+    private static final String ELEMENT_TYPE = "type";
+    private static final String ELEMENT_NAME = "name";
+    private static final String ATTRIBUTE_ID = "id";
+    private static final String ELEMENT_METADATA = "metadata";
 
     /**
      * Prevent instantiation

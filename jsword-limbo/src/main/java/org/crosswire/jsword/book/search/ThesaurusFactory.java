@@ -45,7 +45,7 @@ public class ThesaurusFactory {
         try {
             return (Thesaurus) PluginUtil.getImplementation(Thesaurus.class);
         } catch (Exception ex) {
-            log.error("createThesaurus failed", ex); //$NON-NLS-1$
+            log.error("createThesaurus failed", ex);
             throw new InstantiationException();
         }
     }

@@ -102,7 +102,7 @@ public abstract class InstsDisk extends Disk implements Insts {
      * @see org.crosswire.jsword.book.raw.Insts#save()
      */
     public void save() {
-        assert false : "You must use a WordInstsMem to write data"; //$NON-NLS-1$
+        assert false : "You must use a WordInstsMem to write data";
     }
 
     /*
@@ -123,7 +123,7 @@ public abstract class InstsDisk extends Disk implements Insts {
      * org.crosswire.jsword.passage.Verse)
      */
     public void setIndexes(int[] indexes, Verse verse) {
-        assert false : "You must use a PuncInstsMem to write data"; //$NON-NLS-1$
+        assert false : "You must use a PuncInstsMem to write data";
     }
 
     /**

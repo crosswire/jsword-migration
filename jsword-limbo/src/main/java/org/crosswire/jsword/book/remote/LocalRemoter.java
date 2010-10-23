@@ -51,7 +51,7 @@ public class LocalRemoter implements Remoter {
      * @see org.crosswire.jsword.book.remote.Remoter#getRemoterName()
      */
     public String getRemoterName() {
-        return "Local"; //$NON-NLS-1$
+        return "Local";
     }
 
     /*
@@ -143,7 +143,7 @@ public class LocalRemoter implements Remoter {
      */
     private static String createUID() {
         int rand = (int) (Math.random() * Integer.MAX_VALUE);
-        return "uid" + rand; //$NON-NLS-1$
+        return "uid" + rand;
     }
 
     /**

@@ -55,7 +55,7 @@ public class Header implements Cloneable {
      * Does this Header represent a request for a new Cookie
      */
     public boolean isCookie() {
-        return name != null && value != null && name.equalsIgnoreCase("Set-Cookie"); //$NON-NLS-1$ 
+        return name != null && value != null && name.equalsIgnoreCase("Set-Cookie"); 
     }
 
     /**
@@ -78,7 +78,7 @@ public class Header implements Cloneable {
         if (value == null)
             return name;
 
-        return name + ": " + value; //$NON-NLS-1$ 
+        return name + ": " + value; 
     }
 
     /** NAME= ... "$Name" style is reserved */

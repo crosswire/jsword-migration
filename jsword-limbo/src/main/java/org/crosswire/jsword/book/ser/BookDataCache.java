@@ -91,7 +91,7 @@ public class BookDataCache implements Activatable {
                 try {
                     line = indexIn.readLine();
                 } catch (IOException ex) {
-                    log.error("Error reading index", ex); //$NON-NLS-1$
+                    log.error("Error reading index", ex);
                     break;
                 }
 
@@ -103,13 +103,13 @@ public class BookDataCache implements Activatable {
                     indexArr[i] = Integer.parseInt(line);
                 } catch (NumberFormatException ex) {
                     indexArr[i] = -1;
-                    log.error("Error parsing line: " + line, ex); //$NON-NLS-1$
+                    log.error("Error parsing line: " + line, ex);
                 }
             }
 
             active = true;
         } catch (IOException ex) {
-            log.warn("failed to open stream", ex); //$NON-NLS-1$
+            log.warn("failed to open stream", ex);
         } finally {
             IOUtil.close(dataRaf);
             IOUtil.close(indexIn);
@@ -209,12 +209,12 @@ public class BookDataCache implements Activatable {
     /**
      * Index filename
      */
-    private static final String FILE_INDEX = "xml.index"; //$NON-NLS-1$
+    private static final String FILE_INDEX = "xml.index";
 
     /**
      * Data filename
      */
-    private static final String FILE_DATA = "xml.data"; //$NON-NLS-1$
+    private static final String FILE_DATA = "xml.data";
 
     /**
      * Are we active

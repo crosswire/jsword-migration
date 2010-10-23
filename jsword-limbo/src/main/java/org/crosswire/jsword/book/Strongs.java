@@ -113,7 +113,7 @@ public class Strongs {
 
         // LATER(joe): I think it goes x-study:[H|G]number, but this will need
         // fixing...
-        int colonpos = lemma.indexOf(":"); //$NON-NLS-1$
+        int colonpos = lemma.indexOf(":");
         if (colonpos != -1) {
             lemma = lemma.substring(colonpos + 1);
         }
@@ -143,14 +143,14 @@ public class Strongs {
     public String getOLBName() {
         switch (type) {
         case GREEK:
-            return "<" + number + '>'; //$NON-NLS-1$
+            return "<" + number + '>';
         case HEBREW:
-            return "<0" + number + '>'; //$NON-NLS-1$
+            return "<0" + number + '>';
         case PARSING:
-            return "(" + number + ')'; //$NON-NLS-1$
+            return "(" + number + ')';
         default:
             assert false : type;
-            return "!Error!"; //$NON-NLS-1$
+            return "!Error!";
         }
     }
 
@@ -169,7 +169,7 @@ public class Strongs {
             return LimboMsg.STRONGS_PARSING.toString() + number;
         default:
             assert false : type;
-            return "!Error!"; //$NON-NLS-1$
+            return "!Error!";
         }
     }
 

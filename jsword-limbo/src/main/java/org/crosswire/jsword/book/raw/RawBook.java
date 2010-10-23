@@ -236,7 +236,7 @@ public class RawBook extends AbstractPassageBook {
             /* should have this configurable? */
             // createSearchCache();
         } catch (IOException ex) {
-            log.error("Failed to load indexes.", ex); //$NON-NLS-1$
+            log.error("Failed to load indexes.", ex);
         }
     }
 
@@ -413,7 +413,7 @@ public class RawBook extends AbstractPassageBook {
                     int[] caseIndexes = getCases(wordArray);
                     caseInsts.setIndexes(caseIndexes, verse);
                 } else {
-                    log.error("Ignoring non OSIS/Verse content of DIV."); //$NON-NLS-1$
+                    log.error("Ignoring non OSIS/Verse content of DIV.");
                 }
             }
         }

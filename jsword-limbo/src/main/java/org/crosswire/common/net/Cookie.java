@@ -66,16 +66,16 @@ public class Cookie implements Cloneable {
      * @see #setVersion
      */
     public Cookie(String name, String value) {
-        if (!isToken(name) || name.equalsIgnoreCase("Comment") //$NON-NLS-1$ // rfc2019
-                || name.equalsIgnoreCase("Discard") //$NON-NLS-1$ // 2019++
-                || name.equalsIgnoreCase("Domain") //$NON-NLS-1$ 
-                || name.equalsIgnoreCase("Expires") //$NON-NLS-1$ // (old cookies)
-                || name.equalsIgnoreCase("Max-Age") //$NON-NLS-1$ // rfc2019
-                || name.equalsIgnoreCase("Path") //$NON-NLS-1$ 
-                || name.equalsIgnoreCase("Secure") //$NON-NLS-1$ 
-                || name.equalsIgnoreCase("Version")) //$NON-NLS-1$ 
+        if (!isToken(name) || name.equalsIgnoreCase("Comment") // rfc2019
+                || name.equalsIgnoreCase("Discard") // 2019++
+                || name.equalsIgnoreCase("Domain") 
+                || name.equalsIgnoreCase("Expires") // (old cookies)
+                || name.equalsIgnoreCase("Max-Age") // rfc2019
+                || name.equalsIgnoreCase("Path") 
+                || name.equalsIgnoreCase("Secure") 
+                || name.equalsIgnoreCase("Version")) 
         {
-            throw new IllegalArgumentException("Cookie name " + name + " is a reserved token"); //$NON-NLS-1$ //$NON-NLS-2$ 
+            throw new IllegalArgumentException("Cookie name " + name + " is a reserved token"); 
         }
 
         this.name = name;
@@ -93,20 +93,20 @@ public class Cookie implements Cloneable {
      * @see #setVersion
      */
     public Cookie(String header) {
-        String[] parts = StringUtil.split(header, ";"); //$NON-NLS-1$ 
+        String[] parts = StringUtil.split(header, ";"); 
 
         // The name and value
         String base = parts[0];
-        int equals_pos = base.indexOf("="); //$NON-NLS-1$ 
+        int equals_pos = base.indexOf("="); 
         name = base.substring(0, equals_pos);
         value = base.substring(equals_pos + 1);
 
         // The other parts
         for (int i = 1; i < parts.length; i++) {
-            equals_pos = parts[i].indexOf("="); //$NON-NLS-1$ 
+            equals_pos = parts[i].indexOf("="); 
 
             if (equals_pos == -1) {
-                if (parts[1].equalsIgnoreCase("secure")) //$NON-NLS-1$ 
+                if (parts[1].equalsIgnoreCase("secure")) 
                     setSecure(true);
                 continue;
             }
@@ -114,15 +114,15 @@ public class Cookie implements Cloneable {
             String mod = parts[i].substring(0, equals_pos);
             String val = parts[i].substring(equals_pos + 1);
 
-            if (mod.equalsIgnoreCase("path")) //$NON-NLS-1$ 
+            if (mod.equalsIgnoreCase("path")) 
                 setPath(val);
-            else if (mod.equalsIgnoreCase("domain")) //$NON-NLS-1$ 
+            else if (mod.equalsIgnoreCase("domain")) 
                 setDomain(val);
-            else if (mod.equalsIgnoreCase("max-age")) //$NON-NLS-1$ 
+            else if (mod.equalsIgnoreCase("max-age")) 
                 setMaxAge(Integer.parseInt(val));
-            else if (mod.equalsIgnoreCase("comment")) //$NON-NLS-1$ 
+            else if (mod.equalsIgnoreCase("comment")) 
                 setComment(val);
-            else if (mod.equalsIgnoreCase("version")) //$NON-NLS-1$ 
+            else if (mod.equalsIgnoreCase("version")) 
                 setVersion(Integer.parseInt(val));
         }
     }
@@ -363,7 +363,7 @@ public class Cookie implements Cloneable {
      */
     /* @Override */
     public String toString() {
-        return name + ": " + value; //$NON-NLS-1$ 
+        return name + ": " + value; 
     }
 
     /*
@@ -436,5 +436,5 @@ public class Cookie implements Cloneable {
      * 2068, token special case characters private static final String tspecials
      * = "()<>@,;:\\\"/[]?={} \t";
      */
-    private static final String tspecials = ",;"; //$NON-NLS-1$ 
+    private static final String tspecials = ",;"; 
 }

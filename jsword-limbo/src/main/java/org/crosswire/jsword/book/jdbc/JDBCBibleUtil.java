@@ -68,25 +68,25 @@ public class JDBCBibleUtil {
      * Some fancy footwork we need to do to get rid of strongs numbers
      */
     protected static String processText(String text) {
-        text = chop1(text, "{", "}"); //$NON-NLS-1$ //$NON-NLS-2$
-        text = chop2(text, "<", ">"); //$NON-NLS-1$ //$NON-NLS-2$
-        text = chop2(text, "(", ")"); //$NON-NLS-1$ //$NON-NLS-2$
-        text = text.replaceAll("[", ""); //$NON-NLS-1$ //$NON-NLS-2$
-        text = text.replaceAll("]", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        text = chop1(text, "{", "}");
+        text = chop2(text, "<", ">");
+        text = chop2(text, "(", ")");
+        text = text.replaceAll("[", "");
+        text = text.replaceAll("]", "");
 
-        text = text.replaceAll("    ", " "); //$NON-NLS-1$ //$NON-NLS-2$
-        text = text.replaceAll("   ", " "); //$NON-NLS-1$ //$NON-NLS-2$
-        text = text.replaceAll("  ", " "); //$NON-NLS-1$ //$NON-NLS-2$
+        text = text.replaceAll("    ", " ");
+        text = text.replaceAll("   ", " ");
+        text = text.replaceAll("  ", " ");
 
-        text = text.replaceAll(" ,", ","); //$NON-NLS-1$ //$NON-NLS-2$
-        text = text.replaceAll(" .", "."); //$NON-NLS-1$ //$NON-NLS-2$
-        text = text.replaceAll(" !", "!"); //$NON-NLS-1$ //$NON-NLS-2$
-        text = text.replaceAll(" ?", "?"); //$NON-NLS-1$ //$NON-NLS-2$
-        text = text.replaceAll(" :", ":"); //$NON-NLS-1$ //$NON-NLS-2$
-        text = text.replaceAll(" ;", ";"); //$NON-NLS-1$ //$NON-NLS-2$
-        text = text.replaceAll(" '", "'"); //$NON-NLS-1$ //$NON-NLS-2$
-        text = text.replaceAll(" )", ")"); //$NON-NLS-1$ //$NON-NLS-2$
-        text = text.replaceAll(" -", "-"); //$NON-NLS-1$ //$NON-NLS-2$
+        text = text.replaceAll(" ,", ",");
+        text = text.replaceAll(" .", ".");
+        text = text.replaceAll(" !", "!");
+        text = text.replaceAll(" ?", "?");
+        text = text.replaceAll(" :", ":");
+        text = text.replaceAll(" ;", ";");
+        text = text.replaceAll(" '", "'");
+        text = text.replaceAll(" )", ")");
+        text = text.replaceAll(" -", "-");
 
         text = text.trim();
 
@@ -161,7 +161,7 @@ public class JDBCBibleUtil {
 
             return orig;
         } catch (StringIndexOutOfBoundsException ex) {
-            log.warn("orig=" + orig + " end_delim=" + end_delim + " end_delim=" + end_delim); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            log.warn("orig=" + orig + " end_delim=" + end_delim + " end_delim=" + end_delim);
             Reporter.informUser(JDBCBibleUtil.class, ex);
             return Msg.ERROR.toString();
         }

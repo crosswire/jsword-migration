@@ -58,7 +58,7 @@ public class PassageListCellRenderer implements ListCellRenderer, Serializable {
 
         label.setBorder(border);
         label.setOpaque(true);
-        label.setIcon(GuiUtil.getIcon("images/Passage16.png")); //$NON-NLS-1$
+        label.setIcon(GuiUtil.getIcon("images/Passage16.png"));
     }
 
     /**
@@ -83,22 +83,22 @@ public class PassageListCellRenderer implements ListCellRenderer, Serializable {
                 if (text == null) {
                     BookData bdata = new BookData(bible, range);
                     String simple = OSISUtil.getCanonicalText(bdata.getOsisFragment());
-                    text = "<html><b>" + range.getName() + "</b> " + simple; //$NON-NLS-1$ //$NON-NLS-2$
+                    text = "<html><b>" + range.getName() + "</b> " + simple;
                     hash.put(range, text);
                 }
 
                 label.setText(text);
             } catch (Exception ex) {
                 Reporter.informUser(this, ex);
-                label.setText(Msg.ERROR.toString());
+                label.setText(Msg.gettext("Error"));
             }
         } else {
-            label.setText((value == null) ? "" : value.toString()); //$NON-NLS-1$
+            label.setText((value == null) ? "" : value.toString());
         }
 
         label.setEnabled(list.isEnabled());
         label.setFont(list.getFont());
-        label.setBorder(focus ? UIManager.getBorder("List.focusCellHighlightBorder") : border); //$NON-NLS-1$
+        label.setBorder(focus ? UIManager.getBorder("List.focusCellHighlightBorder") : border);
 
         return label;
     }

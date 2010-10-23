@@ -31,21 +31,21 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 final class LimboMsg extends MsgBase {
-    static final LimboMsg OPEN_UNKNOWN = new LimboMsg("Openness.Unknown"); //$NON-NLS-1$
-    static final LimboMsg OPEN_PD = new LimboMsg("Openness.PD"); //$NON-NLS-1$
-    static final LimboMsg OPEN_FREE = new LimboMsg("Openness.Free"); //$NON-NLS-1$
-    static final LimboMsg OPEN_COPYABLE = new LimboMsg("Openness.Copyable"); //$NON-NLS-1$
-    static final LimboMsg OPEN_COMMERCIAL = new LimboMsg("Openness.Commercial"); //$NON-NLS-1$
-    static final LimboMsg STRONGS_GREEK = new LimboMsg("Strongs.Greek"); //$NON-NLS-1$
-    static final LimboMsg STRONGS_HEBREW = new LimboMsg("Strongs.Hebrew"); //$NON-NLS-1$
-    static final LimboMsg STRONGS_PARSING = new LimboMsg("Strongs.Parsing"); //$NON-NLS-1$
+    static final LimboMsg OPEN_UNKNOWN = new LimboMsg("Openness.Unknown");
+    static final LimboMsg OPEN_PD = new LimboMsg("Openness.PD");
+    static final LimboMsg OPEN_FREE = new LimboMsg("Openness.Free");
+    static final LimboMsg OPEN_COPYABLE = new LimboMsg("Openness.Copyable");
+    static final LimboMsg OPEN_COMMERCIAL = new LimboMsg("Openness.Commercial");
+    static final LimboMsg STRONGS_GREEK = new LimboMsg("Strongs.Greek");
+    static final LimboMsg STRONGS_HEBREW = new LimboMsg("Strongs.Hebrew");
+    static final LimboMsg STRONGS_PARSING = new LimboMsg("Strongs.Parsing");
 
-    static final LimboMsg STRONGS_ERROR_PARSE = new LimboMsg("Strongs.ErrorParse"); //$NON-NLS-1$
-    static final LimboMsg STRONGS_ERROR_NUMBER = new LimboMsg("Strongs.ErrorNumber"); //$NON-NLS-1$
-    static final LimboMsg STRONGS_ERROR_HEBREW = new LimboMsg("Strongs.ErrorHebrew"); //$NON-NLS-1$
-    static final LimboMsg STRONGS_ERROR_GREEK = new LimboMsg("Strongs.ErrorGreek"); //$NON-NLS-1$
-    static final LimboMsg STRONGS_ERROR_PARSING = new LimboMsg("Strongs.ErrorParsing"); //$NON-NLS-1$
-    static final LimboMsg STRONGS_ERROR_TYPE = new LimboMsg("Strongs.ErrorType"); //$NON-NLS-1$
+    static final LimboMsg STRONGS_ERROR_PARSE = new LimboMsg("Strongs.ErrorParse");
+    static final LimboMsg STRONGS_ERROR_NUMBER = new LimboMsg("Strongs.ErrorNumber");
+    static final LimboMsg STRONGS_ERROR_HEBREW = new LimboMsg("Strongs.ErrorHebrew");
+    static final LimboMsg STRONGS_ERROR_GREEK = new LimboMsg("Strongs.ErrorGreek");
+    static final LimboMsg STRONGS_ERROR_PARSING = new LimboMsg("Strongs.ErrorParsing");
+    static final LimboMsg STRONGS_ERROR_TYPE = new LimboMsg("Strongs.ErrorType");
 
     /**
      * Passthrough ctor

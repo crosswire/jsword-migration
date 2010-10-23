@@ -97,7 +97,7 @@ public class WebPage {
      */
     public void printHeaders() {
         for (Enumeration en = headers.elements(); en.hasMoreElements();) {
-            System.out.println("" + en.nextElement()); //$NON-NLS-1$
+            System.out.println("" + en.nextElement());
         }
     }
 

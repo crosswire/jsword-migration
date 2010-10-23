@@ -74,7 +74,7 @@ public class TabbedConfigEditor extends AbstractConfigEditor {
             // log.fine("TAB: path="+path);
 
             JTabbedPane nest = tab;
-            StringTokenizer st = new StringTokenizer(path, "."); //$NON-NLS-1$
+            StringTokenizer st = new StringTokenizer(path, ".");
             while (st.hasMoreTokens()) {
                 String name = st.nextToken();
                 int index = nest.indexOfTab(name);

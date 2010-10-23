@@ -118,7 +118,7 @@ public class ColorField extends JPanel implements Field {
         is.defaultReadObject();
     }
 
-    private static final String EDIT = "EditColor"; //$NON-NLS-1$
+    private static final String EDIT = "EditColor";
 
     /**
      * The action factory for the buttons

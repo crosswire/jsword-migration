@@ -90,18 +90,18 @@ public class GeneratorPane extends EirPanel {
     private void init() {
         cboSource.setModel(mdlSource);
         cboSource.setRenderer(new BookListCellRenderer());
-        lblSource.setText("  Source Bible: "); //$NON-NLS-1$
+        lblSource.setText("  Source Bible: ");
         pnlSource.setLayout(new BorderLayout());
-        pnlSource.setBorder(BorderFactory.createTitledBorder("Source")); //$NON-NLS-1$
+        pnlSource.setBorder(BorderFactory.createTitledBorder("Source"));
         pnlSource.add(lblSource, BorderLayout.LINE_START);
         pnlSource.add(cboSource, BorderLayout.CENTER);
 
-        lblName.setText("New Name:"); //$NON-NLS-1$
-        lblDriver.setText("Driver Class:"); //$NON-NLS-1$
+        lblName.setText("New Name:");
+        lblDriver.setText("Driver Class:");
 
         cboDriver.setModel(mdlDriver);
         pnlDest.setLayout(layDest);
-        pnlDest.setBorder(BorderFactory.createTitledBorder("Destination")); //$NON-NLS-1$
+        pnlDest.setBorder(BorderFactory.createTitledBorder("Destination"));
 
         pnlDest.add(lblName, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 5), 0, 0));
         pnlDest.add(lblDriver, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0));
@@ -110,10 +110,10 @@ public class GeneratorPane extends EirPanel {
 
         barProg.setBorderPainted(true);
         barProg.setMaximum(100);
-        barProg.setString(""); //$NON-NLS-1$
+        barProg.setString("");
         barProg.setStringPainted(true);
         pnlProg.setLayout(new BorderLayout());
-        pnlProg.setBorder(BorderFactory.createTitledBorder("Progress")); //$NON-NLS-1$
+        pnlProg.setBorder(BorderFactory.createTitledBorder("Progress"));
         pnlProg.add(barProg, BorderLayout.CENTER);
 
         boxMain = Box.createVerticalBox();
@@ -125,10 +125,10 @@ public class GeneratorPane extends EirPanel {
                 generate();
             }
         });
-        btnGenerate.setText("Generate"); //$NON-NLS-1$
+        btnGenerate.setText("Generate");
         btnGenerate.setMnemonic('G');
 
-        chkVerify.setText("Verify After Generation"); //$NON-NLS-1$
+        chkVerify.setText("Verify After Generation");
         chkVerify.setMnemonic('V');
         chkVerify.setSelected(false);
         layButtons.setAlignment(FlowLayout.TRAILING);
@@ -146,7 +146,7 @@ public class GeneratorPane extends EirPanel {
      * Show this Panel in a new dialog
      */
     public void showInDialog(Component parent) {
-        showInDialog(parent, "Generator", false); //$NON-NLS-1$
+        showInDialog(parent, "Generator", false);
     }
 
     /**
@@ -154,9 +154,9 @@ public class GeneratorPane extends EirPanel {
      * 2 work together on close actions and so on.
      */
     public void showInFrame(Frame parent) {
-        final JDialog frame = new JDialog(parent, "Bible Generator"); //$NON-NLS-1$
+        final JDialog frame = new JDialog(parent, "Bible Generator");
 
-        btnClose = new JButton("Close"); //$NON-NLS-1$
+        btnClose = new JButton("Close");
         btnClose.setMnemonic('C');
         btnClose.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
@@ -312,7 +312,7 @@ public class GeneratorPane extends EirPanel {
                     cboDriver.setEnabled(false);
                     btnGenerate.setEnabled(false);
                     chkVerify.setEnabled(false);
-                    btnClose.setText("Cancel"); //$NON-NLS-1$
+                    btnClose.setText("Cancel");
                 }
             });
 
@@ -331,7 +331,7 @@ public class GeneratorPane extends EirPanel {
                     Verifier ver = new Verifier(source, destVersion);
 
                     CompareResultsPane results = new CompareResultsPane(ver);
-                    results.setCheckText(""); //$NON-NLS-1$
+                    results.setCheckText("");
                     results.setCheckPassages(null);
                     results.showInFrame(GuiUtil.getFrame(GeneratorPane.this));
                     results.startStop();
@@ -351,7 +351,7 @@ public class GeneratorPane extends EirPanel {
                     cboDriver.setEnabled(true);
                     btnGenerate.setEnabled(true);
                     chkVerify.setEnabled(true);
-                    btnClose.setText("Close"); //$NON-NLS-1$
+                    btnClose.setText("Close");
                 }
             });
         }
@@ -373,7 +373,7 @@ public class GeneratorPane extends EirPanel {
                 public void run() {
                     Progress job = ev.getJob();
                     int percent = job.getWork();
-                    barProg.setString(job.getSectionName() + ": (" + percent + "%)"); //$NON-NLS-1$  //$NON-NLS-2$
+                    barProg.setString(job.getSectionName() + ": (" + percent + "%)");
                     barProg.setValue(percent);
                 }
             });

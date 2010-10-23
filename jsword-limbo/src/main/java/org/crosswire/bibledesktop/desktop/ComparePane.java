@@ -91,7 +91,7 @@ public class ComparePane extends EirPanel {
         pnlBibles.add(cboBible2, null);
 
         // TODO(joe): don't hard code this, read it from a Book
-        txtVerses.setText("Gen-Rev"); //$NON-NLS-1$
+        txtVerses.setText("Gen-Rev");
         lblVerses.setText(LimboMsg.COMPARE_VERSES.toString());
         lblVerses.setLabelFor(txtVerses);
         pnlVerses.setLayout(new BorderLayout());
@@ -151,11 +151,11 @@ public class ComparePane extends EirPanel {
             Key key = book1.getKey(refText);
 
             words = words.trim();
-            if (words.equals("*")) //$NON-NLS-1$
+            if (words.equals("*"))
             {
-                words = ""; //$NON-NLS-1$
+                words = "";
             }
-            if (words.equals("")) //$NON-NLS-1$
+            if (words.equals(""))
             {
                 words = null;
             }

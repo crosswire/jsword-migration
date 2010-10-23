@@ -52,7 +52,7 @@ class FixtureParamWord implements ParamWord {
      * .jsword.book.search.parse.Searcher)
      */
     public String getWord(IndexSearcher engine) throws BookException {
-        throw new BookException(new MsgBase("Can't get a word from a startswith command") {}); //$NON-NLS-1$
+        throw new BookException(new MsgBase("Can't get a word from a startswith command") {});
     }
 
     /*

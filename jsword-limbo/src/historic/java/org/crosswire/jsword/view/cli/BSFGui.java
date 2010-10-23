@@ -31,7 +31,7 @@ public class BSFGui extends JPanel
      */
     public static void main(String[] args)
     {
-        JFrame frame = BSFGui.showInFrame("Test GUI"); //$NON-NLS-1$
+        JFrame frame = BSFGui.showInFrame("Test GUI");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
@@ -74,7 +74,7 @@ public class BSFGui extends JPanel
             }
         });
 
-        lblcmd.setText(" > "); //$NON-NLS-1$
+        lblcmd.setText(" > ");
 
         pnlcmd.setLayout(new BorderLayout());
         pnlcmd.add(lblcmd, BorderLayout.LINE_START);
@@ -111,7 +111,7 @@ public class BSFGui extends JPanel
         Object reply = null;
 
         String command = txtcmd.getText();
-        txtcmd.setText(""); //$NON-NLS-1$
+        txtcmd.setText("");
         System.out.println(command);
 
         Context cx = Context.enter();
@@ -120,9 +120,9 @@ public class BSFGui extends JPanel
             Scriptable scope = cx.initStandardObjects(null);
 
             Scriptable jsout = Context.toObject(System.out, scope);
-            scope.put("out", scope, jsout); //$NON-NLS-1$
+            scope.put("out", scope, jsout);
 
-            reply = cx.evaluateString(scope, command, "<cmd>", 1, jsout); //$NON-NLS-1$
+            reply = cx.evaluateString(scope, command, "<cmd>", 1, jsout);
         }
         catch (Exception ex)
         {
@@ -135,7 +135,7 @@ public class BSFGui extends JPanel
         }
         
         String results = txtresult.getText();
-        results = results + "\n" + Context.toString(reply); //$NON-NLS-1$
+        results = results + "\n" + Context.toString(reply);
         txtresult.setText(results);
     }
 

@@ -31,7 +31,7 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 class Msg extends MsgBase {
-    static final Msg TRANSFORM_FAIL = new Msg("JDTBBookDataDisplay.TransformationFailure"); //$NON-NLS-1$
+    static final Msg TRANSFORM_FAIL = new Msg("JDTBBookDataDisplay.TransformationFailure");
 
     /**
      * Passthrough ctor

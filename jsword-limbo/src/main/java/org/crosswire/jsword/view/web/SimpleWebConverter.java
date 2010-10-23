@@ -27,7 +27,7 @@ public class SimpleWebConverter implements Converter {
      */
     public SAXEventProvider convert(SAXEventProvider xmlsep) throws TransformerException {
         try {
-            URL xslurl = ResourceUtil.getResource("xsl/web/simple.xsl"); //$NON-NLS-1$
+            URL xslurl = ResourceUtil.getResource("xsl/web/simple.xsl");
 
             // We used to do:
             // transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,

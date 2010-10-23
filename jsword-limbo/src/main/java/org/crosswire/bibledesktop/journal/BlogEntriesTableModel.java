@@ -44,7 +44,7 @@ public class BlogEntriesTableModel extends DefaultTableModel {
             }
         }
         assert false;
-        return "ERROR"; //$NON-NLS-1$
+        return "ERROR";
     }
 
     /* @Override */
@@ -70,7 +70,7 @@ public class BlogEntriesTableModel extends DefaultTableModel {
             assert false;
         }
         assert false;
-        return "ERROR: Invalid column index"; //$NON-NLS-1$
+        return "ERROR: Invalid column index";
     }
 
     /* @Override */

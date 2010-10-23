@@ -94,16 +94,16 @@ public class OldXMLUtil {
 
         case Node.CDATA_SECTION_NODE:
             buff.append(DOT_PADDING.substring(0, depth * 2));
-            buff.append("<![CDATA["); //$NON-NLS-1$
+            buff.append("<![CDATA[");
             buff.append(node.getNodeValue());
-            buff.append("]]>"); //$NON-NLS-1$
+            buff.append("]]>");
             break;
 
         case Node.COMMENT_NODE:
             buff.append(DOT_PADDING.substring(0, depth * 2));
-            buff.append("<!-- "); //$NON-NLS-1$
+            buff.append("<!-- ");
             buff.append(node.getNodeValue());
-            buff.append(" -->"); //$NON-NLS-1$
+            buff.append(" -->");
             break;
 
         case Node.ELEMENT_NODE:
@@ -117,7 +117,7 @@ public class OldXMLUtil {
                 for (int i = 0; i < map.getLength(); i++) {
                     buff.append(SPACE);
                     buff.append(map.item(i).getNodeName());
-                    buff.append("='"); //$NON-NLS-1$
+                    buff.append("='");
                     buff.append(map.item(i).getNodeValue());
                     buff.append('\'');
                 }
@@ -127,7 +127,7 @@ public class OldXMLUtil {
             NodeList list = node.getChildNodes();
 
             if (list == null || list.getLength() == 0) {
-                buff.append("/>"); //$NON-NLS-1$
+                buff.append("/>");
                 buff.append(StringUtil.NEWLINE);
             } else {
                 buff.append('>');
@@ -138,7 +138,7 @@ public class OldXMLUtil {
                 }
 
                 buff.append(DOT_PADDING.substring(0, depth * 2));
-                buff.append("</"); //$NON-NLS-1$
+                buff.append("</");
                 buff.append(node.getNodeName());
                 buff.append('>');
                 buff.append(StringUtil.NEWLINE);
@@ -147,7 +147,7 @@ public class OldXMLUtil {
 
         default:
             buff.append(SPACE_PADDING.substring(0, depth * 2));
-            buff.append("Not sure what to do with node of type "); //$NON-NLS-1$
+            buff.append("Not sure what to do with node of type ");
             buff.append(node.getNodeType());
         }
 
@@ -159,9 +159,9 @@ public class OldXMLUtil {
         }
     }
 
-    private static final String SPACE_PADDING = "                                                                "; //$NON-NLS-1$
-    private static final String DOT_PADDING = ".................................................................."; //$NON-NLS-1$
-    private static final String SPACE = " "; //$NON-NLS-1$
+    private static final String SPACE_PADDING = "                                                                ";
+    private static final String DOT_PADDING = "..................................................................";
+    private static final String SPACE = " ";
 
     /**
      * The log stream

@@ -30,7 +30,7 @@ package org.crosswire.common.util;
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
 final class LimboMsg extends MsgBase {
-    static final LimboMsg UNAVILABLE = new LimboMsg("ThreadUtil.Unavailable"); //$NON-NLS-1$
+    static final LimboMsg UNAVILABLE = new LimboMsg("ThreadUtil.Unavailable");
 
     /**
      * Passthrough ctor

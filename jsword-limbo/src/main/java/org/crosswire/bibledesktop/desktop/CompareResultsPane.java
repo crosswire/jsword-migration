@@ -78,7 +78,7 @@ public class CompareResultsPane extends JPanel implements Runnable {
         boxBibles.add(lblBible1, null);
         boxBibles.add(lblBible2, null);
 
-        barProgress.setString(""); //$NON-NLS-1$
+        barProgress.setString("");
         barProgress.setStringPainted(true);
         txtResults.setRows(5);
         txtResults.setColumns(40);
@@ -176,17 +176,17 @@ public class CompareResultsPane extends JPanel implements Runnable {
      * Set the title of the pane to what we are doing
      */
     private void setTitles() {
-        lblBible1.setText("<html><b>" + LimboMsg.RESULTS_BOOKS + "</b> " //$NON-NLS-1$ //$NON-NLS-2$
-                + ver.getBible1().getName() + " / " //$NON-NLS-1$
+        lblBible1.setText("<html><b>" + LimboMsg.RESULTS_BOOKS + "</b> "
+                + ver.getBible1().getName() + " / "
                 + ver.getBible2().getName());
 
-        String compare = "<html><b>" + LimboMsg.RESULTS_COMPARING + "</b> "; //$NON-NLS-1$ //$NON-NLS-2$
+        String compare = "<html><b>" + LimboMsg.RESULTS_COMPARING + "</b> ";
         if (checkRef != null) {
-            compare += LimboMsg.RESULTS_PASSAGE + "=" + checkRef + ' '; //$NON-NLS-1$
+            compare += LimboMsg.RESULTS_PASSAGE + "=" + checkRef + ' ';
         }
 
         if (checkText != null) {
-            compare += LimboMsg.RESULTS_WORDS + "=" + (checkText.equals("") ? "*" : checkText); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            compare += LimboMsg.RESULTS_WORDS + "=" + (checkText.equals("") ? "*" : checkText);
         }
 
         lblBible2.setText(compare);
@@ -303,7 +303,7 @@ public class CompareResultsPane extends JPanel implements Runnable {
                 public void run() {
                     Progress job = ev.getJob();
                     int percent = job.getWork();
-                    barProgress.setString(job.getSectionName() + ": (" + percent + "%)"); //$NON-NLS-1$ //$NON-NLS-2$
+                    barProgress.setString(job.getSectionName() + ": (" + percent + "%)");
                     barProgress.setValue(percent);
                 }
             });

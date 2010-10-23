@@ -31,15 +31,15 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 final class LimboMsg extends MsgBase {
-    static final LimboMsg ERROR_READING = new LimboMsg("BeanPanel.ErrorReading"); //$NON-NLS-1$
+    static final LimboMsg ERROR_READING = new LimboMsg("BeanPanel.ErrorReading");
 
     // I18N: migrate this to an ActionFactory
-    static final LimboMsg CLOSE = new LimboMsg("EirPanel.Close"); //$NON-NLS-1$
+    static final LimboMsg CLOSE = new LimboMsg("EirPanel.Close");
 
-    static final LimboMsg NO_PROBLEMS = new LimboMsg("ExceptionShelf.NoProblems"); //$NON-NLS-1$
-    static final LimboMsg STATUS = new LimboMsg("ExceptionShelf.Status"); //$NON-NLS-1$
+    static final LimboMsg NO_PROBLEMS = new LimboMsg("ExceptionShelf.NoProblems");
+    static final LimboMsg STATUS = new LimboMsg("ExceptionShelf.Status");
     // I18N: migrate this to an ActionFactory
-    static final LimboMsg REMOVE = new LimboMsg("ExceptionShelf.Remove"); //$NON-NLS-1$
+    static final LimboMsg REMOVE = new LimboMsg("ExceptionShelf.Remove");
 
     /**
      * Passthrough ctor

@@ -43,9 +43,9 @@ public class WordsTest extends TestCase {
     protected void setUp() throws Exception {
         Map commands = IndexSearcher.getWordMap();
 
-        commands.put("t1", new FixtureParamWord("Rut 2")); //$NON-NLS-1$ //$NON-NLS-2$
-        commands.put("t2", new FixtureParamWord("Deu 28-1Sa 1:1")); //$NON-NLS-1$ //$NON-NLS-2$
-        commands.put("t3", new FixtureParamWord("Mar 2:3")); //$NON-NLS-1$ //$NON-NLS-2$
+        commands.put("t1", new FixtureParamWord("Rut 2"));
+        commands.put("t2", new FixtureParamWord("Deu 28-1Sa 1:1"));
+        commands.put("t3", new FixtureParamWord("Mar 2:3"));
 
         // We shouldn't need a SearchableBible here because all of these should
         // complete without any searching being done.
@@ -61,34 +61,34 @@ public class WordsTest extends TestCase {
     }
 
     public void testAddCommandWord() throws Exception {
-        assertEquals(engine.search("t1").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("t2").getName(), "Deu 28:1-1Sa 1:1"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("/t1").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("/t2").getName(), "Deu 28:1-1Sa 1:1"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("|t1").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("|t2").getName(), "Deu 28:1-1Sa 1:1"); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals(engine.search("t1").getName(), "Rut 2");
+        assertEquals(engine.search("t2").getName(), "Deu 28:1-1Sa 1:1");
+        assertEquals(engine.search("/t1").getName(), "Rut 2");
+        assertEquals(engine.search("/t2").getName(), "Deu 28:1-1Sa 1:1");
+        assertEquals(engine.search("|t1").getName(), "Rut 2");
+        assertEquals(engine.search("|t2").getName(), "Deu 28:1-1Sa 1:1");
     }
 
     public void testRetainCommandWord() throws Exception {
-        assertEquals(engine.search("t2&t1").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("t1&t2").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("t2+t1").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("t1+t2").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("t2,t1").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("t1,t2").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals(engine.search("t2&t1").getName(), "Rut 2");
+        assertEquals(engine.search("t1&t2").getName(), "Rut 2");
+        assertEquals(engine.search("t2+t1").getName(), "Rut 2");
+        assertEquals(engine.search("t1+t2").getName(), "Rut 2");
+        assertEquals(engine.search("t2,t1").getName(), "Rut 2");
+        assertEquals(engine.search("t1,t2").getName(), "Rut 2");
     }
 
     public void testRemoveCommandWord() throws Exception {
-        assertEquals(engine.search("t2-t1").getName(), "Deu 28-Rut 1, Rut 3:1-1Sa 1:1"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("t1-t2").getName(), ""); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals(engine.search("t2-t1").getName(), "Deu 28-Rut 1, Rut 3:1-1Sa 1:1");
+        assertEquals(engine.search("t1-t2").getName(), "");
     }
 
     public void testBlurCommandWord() throws Exception {
-        assertEquals(engine.search("t3 ~1").getName(), "Mar 2:2-4"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("t3 ~2").getName(), "Mar 2:1-5"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("t3 ~3").getName(), "Mar 2:1-6"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("t3 ~4").getName(), "Mar 2:1-7"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("t3 ~5").getName(), "Mar 2:1-8"); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals(engine.search("t3 ~1").getName(), "Mar 2:2-4");
+        assertEquals(engine.search("t3 ~2").getName(), "Mar 2:1-5");
+        assertEquals(engine.search("t3 ~3").getName(), "Mar 2:1-6");
+        assertEquals(engine.search("t3 ~4").getName(), "Mar 2:1-7");
+        assertEquals(engine.search("t3 ~5").getName(), "Mar 2:1-8");
     }
 
     public void testStartsParamWord() {
@@ -98,15 +98,15 @@ public class WordsTest extends TestCase {
     }
 
     public void testSubXParamWord() throws Exception {
-        assertEquals(engine.search("t3 / ( t2 )").getName(), "Deu 28:1-1Sa 1:1, Mar 2:3"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("t3/(t2)").getName(), "Deu 28:1-1Sa 1:1, Mar 2:3"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("t1 & t2 | t3").getName(), "Rut 2, Mar 2:3"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("t1 & t2 - t3").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("( t1 & t2 ) | t3").getName(), "Rut 2, Mar 2:3"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("t1 & ( t2 | t3 )").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("t1 & ( t2 | t3 ) & ( t3 | t2 )").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("t1&(t2|t3)&(t3|t2)").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(engine.search("t1&(t2|(t3))&(t3|t2)").getName(), "Rut 2"); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals(engine.search("t3 / ( t2 )").getName(), "Deu 28:1-1Sa 1:1, Mar 2:3");
+        assertEquals(engine.search("t3/(t2)").getName(), "Deu 28:1-1Sa 1:1, Mar 2:3");
+        assertEquals(engine.search("t1 & t2 | t3").getName(), "Rut 2, Mar 2:3");
+        assertEquals(engine.search("t1 & t2 - t3").getName(), "Rut 2");
+        assertEquals(engine.search("( t1 & t2 ) | t3").getName(), "Rut 2, Mar 2:3");
+        assertEquals(engine.search("t1 & ( t2 | t3 )").getName(), "Rut 2");
+        assertEquals(engine.search("t1 & ( t2 | t3 ) & ( t3 | t2 )").getName(), "Rut 2");
+        assertEquals(engine.search("t1&(t2|t3)&(t3|t2)").getName(), "Rut 2");
+        assertEquals(engine.search("t1&(t2|(t3))&(t3|t2)").getName(), "Rut 2");
     }
 
     public void testGetAlternatives() {

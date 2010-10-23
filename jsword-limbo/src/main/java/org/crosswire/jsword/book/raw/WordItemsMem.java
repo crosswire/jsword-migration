@@ -152,7 +152,7 @@ public class WordItemsMem extends ItemsMem {
         // the words for starts-with matches, putting the results into a vector.
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
-                log.warn("null word at index " + i); //$NON-NLS-1$
+                log.warn("null word at index " + i);
             } else {
                 if (array[i].startsWith(word)) {
                     list.add(array[i]);

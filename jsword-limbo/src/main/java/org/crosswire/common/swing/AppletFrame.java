@@ -168,7 +168,7 @@ public class AppletFrame extends JFrame {
          * @see java.applet.AppletStub#getParameter(java.lang.String)
          */
         public String getParameter(String name) {
-            return ""; //$NON-NLS-1$
+            return "";
         }
 
         /*

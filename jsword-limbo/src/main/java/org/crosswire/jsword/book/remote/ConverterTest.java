@@ -53,14 +53,14 @@ public class ConverterTest extends TestCase {
          * RemoteBookDriver rbd = new LocalRemoteBookDriver();
          * 
          * t1 = new BookMetaData[] { new DefaultBookMetaData(rbd, null, "v1",
-         * BookCategory.BIBLE), //$NON-NLS-1$ new DefaultBookMetaData(rbd, null,
-         * "v2", BookCategory.BIBLE), //$NON-NLS-1$ new DefaultBookMetaData(rbd,
-         * null, "v3", BookCategory.BIBLE), //$NON-NLS-1$ new
+         * BookCategory.BIBLE), new DefaultBookMetaData(rbd, null,
+         * "v2", BookCategory.BIBLE), new DefaultBookMetaData(rbd,
+         * null, "v3", BookCategory.BIBLE), new
          * DefaultBookMetaData(rbd, null, "test version", BookCategory.BIBLE),
-         * //$NON-NLS-1$ new DefaultBookMetaData(rbd, null, "test version",
-         * BookCategory.BIBLE), //$NON-NLS-1$ }; uid1 = new String[] { "v1",
-         * //$NON-NLS-1$ "v2", //$NON-NLS-1$ "v3", //$NON-NLS-1$ "v4",
-         * //$NON-NLS-1$ "v5", //$NON-NLS-1$ };
+         * new DefaultBookMetaData(rbd, null, "test version",
+         * BookCategory.BIBLE), }; uid1 = new String[] { "v1",
+         * "v2", "v3", "v4",
+         * "v5", };
          * 
          * doc = Converter.convertBookMetaDatasToDocument(t1, uid1); t2 =
          * Converter.convertDocumentToBookMetaDatas(rbd, doc, new
@@ -86,15 +86,15 @@ public class ConverterTest extends TestCase {
         /*
          * Passage p1; Key p2; Document doc;
          * 
-         * p1 = PassageFactory.createPassage("Gen 1:1"); //$NON-NLS-1$ doc =
+         * p1 = PassageFactory.createPassage("Gen 1:1"); doc =
          * Converter.convertKeyListToDocument(p1); p2 =
          * Converter.convertDocumentToKeyList(doc); assertEquals(p1, p2);
          * 
-         * p1 = PassageFactory.createPassage(""); //$NON-NLS-1$ doc =
+         * p1 = PassageFactory.createPassage(""); doc =
          * Converter.convertKeyListToDocument(p1); p2 =
          * Converter.convertDocumentToKeyList(doc); assertEquals(p1, p2);
          * 
-         * p1 = PassageFactory.createPassage("Gen-Rev"); //$NON-NLS-1$ doc =
+         * p1 = PassageFactory.createPassage("Gen-Rev"); doc =
          * Converter.convertKeyListToDocument(p1); p2 =
          * Converter.convertDocumentToKeyList(doc); assertEquals(p1, p2);
          */
@@ -107,7 +107,7 @@ public class ConverterTest extends TestCase {
         Document doc;
 
         l1 = Arrays.asList(new String[] {
-                "v1", "v2", "v3"}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                "v1", "v2", "v3"});
         t1 = l1.iterator();
         doc = Converter.convertStartsWithToDocument(t1);
         t2 = Converter.convertDocumentToStartsWith(doc);
@@ -120,7 +120,7 @@ public class ConverterTest extends TestCase {
         assertEquals(l1.iterator(), t2);
 
         l1 = Arrays.asList(new String[] {
-                "v", "v", "v"}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                "v", "v", "v"});
         t1 = l1.iterator();
         doc = Converter.convertStartsWithToDocument(t1);
         t2 = Converter.convertDocumentToStartsWith(doc);
@@ -132,7 +132,7 @@ public class ConverterTest extends TestCase {
         Exception ex2;
         Document doc;
 
-        ex1 = new NullPointerException("message"); //$NON-NLS-1$
+        ex1 = new NullPointerException("message");
         doc = Converter.convertExceptionToDocument(ex1);
         ex2 = Converter.convertDocumentToException(doc);
         assertEquals(ex1.getMessage(), ex2.getMessage());

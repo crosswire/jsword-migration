@@ -160,7 +160,7 @@ public final class ThreadUtil {
         }
 
         try {
-            addItem(list, depth, thread.getName() + " (" + thread.getPriority() + ')'); //$NON-NLS-1$
+            addItem(list, depth, thread.getName() + " (" + thread.getPriority() + ')');
         } catch (SecurityException ex) {
             addItem(list, depth, LimboMsg.UNAVILABLE.toString());
         }
@@ -178,6 +178,6 @@ public final class ThreadUtil {
         list.add(PADDING.substring(0, depth * 2) + item);
     }
 
-    private static final String PADDING = "                                                                "; //$NON-NLS-1$
+    private static final String PADDING = "                                                                ";
 
 }

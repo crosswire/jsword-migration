@@ -31,14 +31,14 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 class Msg extends MsgBase {
-    static final Msg INDEX_START = new Msg("SerIndex.Indexing"); //$NON-NLS-1$
-    static final Msg SER_INIT = new Msg("SerIndex.Init"); //$NON-NLS-1$
-    static final Msg DELETE_FAILED = new Msg("SerIndex.DeleteFailed"); //$NON-NLS-1$
-    static final Msg WRITE_ERROR = new Msg("SerIndex.WriteError"); //$NON-NLS-1$
-    static final Msg FINDING_WORDS = new Msg("SerIndex.FindingWords"); //$NON-NLS-1$
-    static final Msg WRITING_WORDS = new Msg("SerIndex.WritingWords"); //$NON-NLS-1$
-    static final Msg SAVING = new Msg("SerIndex.Saving"); //$NON-NLS-1$
-    static final Msg INSTALL_FAIL = new Msg("SerIndex.InstallFailed"); //$NON-NLS-1$
+    static final Msg INDEX_START = new Msg("SerIndex.Indexing");
+    static final Msg SER_INIT = new Msg("SerIndex.Init");
+    static final Msg DELETE_FAILED = new Msg("SerIndex.DeleteFailed");
+    static final Msg WRITE_ERROR = new Msg("SerIndex.WriteError");
+    static final Msg FINDING_WORDS = new Msg("SerIndex.FindingWords");
+    static final Msg WRITING_WORDS = new Msg("SerIndex.WritingWords");
+    static final Msg SAVING = new Msg("SerIndex.Saving");
+    static final Msg INSTALL_FAIL = new Msg("SerIndex.InstallFailed");
 
     /**
      * Passthrough ctor

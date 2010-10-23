@@ -134,10 +134,10 @@ public class BookTreeNode extends BibleTreeNode {
                 return bookName;
             }
 
-            return bookName + " (" + chapters + ')'; //$NON-NLS-1$ 
+            return bookName + " (" + chapters + ')'; 
         } catch (NoSuchVerseException ex) {
             assert false : ex;
-            return "!Error!"; //$NON-NLS-1$
+            return "!Error!";
         }
     }
 

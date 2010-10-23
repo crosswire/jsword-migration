@@ -136,7 +136,7 @@ public class TextViewPanel extends JPanel {
                 clipboard();
             }
         });
-        btnClipboard.setText("Copy"); //$NON-NLS-1$
+        btnClipboard.setText("Copy");
 
         layButtons.setAlignment(FlowLayout.TRAILING);
         pnlButtons.setLayout(layButtons);
@@ -151,7 +151,7 @@ public class TextViewPanel extends JPanel {
      * Display this Panel in a new JFrame
      */
     public void showInFrame(Frame parent) {
-        frame = new JDialog(parent, "Text Viewer"); //$NON-NLS-1$
+        frame = new JDialog(parent, "Text Viewer");
 
         btnClose = new JButton(LimboMsg.CLOSE.toString());
         btnClose.setMnemonic(LimboMsg.CLOSE.toString().charAt(0));
@@ -198,7 +198,7 @@ public class TextViewPanel extends JPanel {
             this.remove(lblMain);
         }
 
-        listeners.firePropertyChange("header", old_header, new_header); //$NON-NLS-1$
+        listeners.firePropertyChange("header", old_header, new_header);
     }
 
     /**
@@ -239,7 +239,7 @@ public class TextViewPanel extends JPanel {
             GuiUtil.restrainedRePack(frame);
         }
 
-        listeners.firePropertyChange("text", old_text, new_text); //$NON-NLS-1$
+        listeners.firePropertyChange("text", old_text, new_text);
     }
 
     /**
@@ -275,7 +275,7 @@ public class TextViewPanel extends JPanel {
         Thread work = new Thread(new Runnable() {
             public void run() {
                 try {
-                    InputStream pmin = new ProgressMonitorInputStream(TextViewPanel.this, "Loading ...", in); //$NON-NLS-1$
+                    InputStream pmin = new ProgressMonitorInputStream(TextViewPanel.this, "Loading ...", in);
                     Reader rin = new InputStreamReader(pmin);
                     final String data = StringUtil.read(rin);
 

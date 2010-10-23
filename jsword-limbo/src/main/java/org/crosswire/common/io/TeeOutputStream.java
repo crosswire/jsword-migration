@@ -69,7 +69,7 @@ public class TeeOutputStream extends OutputStream {
                 OutputStream out = (OutputStream) list.elementAt(i);
                 out.close();
             } catch (Exception ex) {
-                log.warn("Error in closing loop", ex); //$NON-NLS-1$
+                log.warn("Error in closing loop", ex);
                 failed = true;
             }
         }
@@ -93,14 +93,14 @@ public class TeeOutputStream extends OutputStream {
      * @return A String containing the report.
      */
     public String toString() {
-        String retcode = ""; //$NON-NLS-1$
-        String NEWLINE = System.getProperty("line.separator", "\r\n"); //$NON-NLS-1$ //$NON-NLS-2$
+        String retcode = "";
+        String NEWLINE = System.getProperty("line.separator", "\r\n");
 
-        retcode += "There are " + list.size() + " output(s)" + NEWLINE; //$NON-NLS-1$ //$NON-NLS-2$
+        retcode += "There are " + list.size() + " output(s)" + NEWLINE;
 
         for (int i = list.size() - 1; i >= 0; i--) {
             OutputStream out = (OutputStream) list.elementAt(i);
-            retcode += "Stream" + i + ": " + out.toString() + NEWLINE; //$NON-NLS-1$ //$NON-NLS-2$
+            retcode += "Stream" + i + ": " + out.toString() + NEWLINE;
         }
 
         return retcode;

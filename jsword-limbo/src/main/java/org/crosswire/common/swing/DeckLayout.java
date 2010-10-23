@@ -76,7 +76,7 @@ public class DeckLayout extends AbstractLayout {
         if (constraints instanceof String || constraints == null) {
             addLayoutComponent((String) constraints, comp);
         } else {
-            throw new IllegalArgumentException("cannot add to layout: constraint must be a string"); //$NON-NLS-1$
+            throw new IllegalArgumentException("cannot add to layout: constraint must be a string");
         }
     }
 
@@ -177,7 +177,7 @@ public class DeckLayout extends AbstractLayout {
      */
     private void checkLayout(Container parent) {
         if (parent.getLayout() != this) {
-            throw new IllegalArgumentException("wrong parent for CardLayout"); //$NON-NLS-1$
+            throw new IllegalArgumentException("wrong parent for CardLayout");
         }
     }
 

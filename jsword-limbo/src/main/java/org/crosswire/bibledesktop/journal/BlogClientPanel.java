@@ -178,9 +178,9 @@ public class BlogClientPanel extends JPanel implements BlogClientTab {
             try {
                 int lastDot = fileName.lastIndexOf('.');
                 String ext = fileName.substring(lastDot + 1);
-                BlogResource res = blogSite.newResource(fileName, "image/" + ext, chooser.getSelectedFile()); //$NON-NLS-1$
+                BlogResource res = blogSite.newResource(fileName, "image/" + ext, chooser.getSelectedFile());
                 res.save();
-                editorPanel.setDocumentText(editorPanel.getDocumentText() + "<img src=\"" + res.getURL() + "\" />"); //$NON-NLS-1$ //$NON-NLS-2$
+                editorPanel.setDocumentText(editorPanel.getDocumentText() + "<img src=\"" + res.getURL() + "\" />");
             } catch (Exception e) {
                 e.printStackTrace(System.err);
                 JOptionPane.showMessageDialog(window, Msg.UPLOAD_ERROR);
@@ -220,7 +220,7 @@ public class BlogClientPanel extends JPanel implements BlogClientTab {
                     entry = blogSite.newEntry();
                 }
                 BlogEntry.Content content = new BlogEntry.Content(editorPanel.getDocumentText());
-                content.setType("text/html"); //$NON-NLS-1$
+                content.setType("text/html");
                 entry.setContent(content);
 
                 entry.setTitle(mTitleField.getText());
@@ -369,7 +369,7 @@ public class BlogClientPanel extends JPanel implements BlogClientTab {
         add(btnPanel, BorderLayout.LINE_END);
     }
 
-    public static final String EMPTY_STRING = ""; //$NON-NLS-1$
+    public static final String EMPTY_STRING = "";
     private Blog blogSite;
     private BlogEntry entry;
     private Window window;

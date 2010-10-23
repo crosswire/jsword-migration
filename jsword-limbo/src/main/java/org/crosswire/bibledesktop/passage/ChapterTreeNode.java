@@ -121,10 +121,10 @@ public class ChapterTreeNode extends BookTreeNode {
                 return chapNum;
             }
 
-            return chapNum + " (" + verses + ')'; //$NON-NLS-1$
+            return chapNum + " (" + verses + ')';
         } catch (NoSuchVerseException ex) {
             assert false : ex;
-            return "!Error!"; //$NON-NLS-1$
+            return "!Error!";
         }
     }
 

@@ -82,7 +82,7 @@ public class WizardConfigEditor extends AbstractConfigEditor {
         layout = new CardLayout();
         deck = new JPanel(layout);
 
-        title = new JLabel(UserMsg.PROPERTIES.toString(), SwingConstants.LEADING);
+        title = new JLabel(UserMsg.gettext("Preferences"), SwingConstants.LEADING);
         title.setIcon(TASK_ICON_LARGE);
         title.setFont(getFont().deriveFont(Font.PLAIN, 16));
         title.setPreferredSize(new Dimension(30, 30));
@@ -262,8 +262,8 @@ public class WizardConfigEditor extends AbstractConfigEditor {
         // Why is this only available in Frames?
         // dialog.setIconImage(task_small);
 
-        log.debug("Modal fails on SunOS, take care. os.name=" + System.getProperty("os.name")); //$NON-NLS-1$//$NON-NLS-2$
-        if (!"SunOS".equals(System.getProperty("os.name"))) //$NON-NLS-1$ //$NON-NLS-2$
+        log.debug("Modal fails on SunOS, take care. os.name=" + System.getProperty("os.name"));
+        if (!"SunOS".equals(System.getProperty("os.name")))
         {
             dialog.dispose();
             dialog = null;
@@ -282,11 +282,11 @@ public class WizardConfigEditor extends AbstractConfigEditor {
         is.defaultReadObject();
     }
 
-    private static final String NEXT = "WizardNext"; //$NON-NLS-1$
-    private static final String CANCEL = "WizardCancel"; //$NON-NLS-1$
-    private static final String FINISH = "WizardFinish"; //$NON-NLS-1$
-    private static final String HELP = "WizardHelp"; //$NON-NLS-1$
-    private static final String BACK = "WizardBack"; //$NON-NLS-1$
+    private static final String NEXT = "WizardNext";
+    private static final String CANCEL = "WizardCancel";
+    private static final String FINISH = "WizardFinish";
+    private static final String HELP = "WizardHelp";
+    private static final String BACK = "WizardBack";
 
     private transient ActionFactory actions;
 

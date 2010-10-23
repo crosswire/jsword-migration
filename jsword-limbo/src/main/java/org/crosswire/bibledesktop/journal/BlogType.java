@@ -31,9 +31,9 @@ import java.io.Serializable;
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
 public final class BlogType implements Serializable {
-    public static final BlogType ATOM = new BlogType("Atom"); //$NON-NLS-1$
+    public static final BlogType ATOM = new BlogType("Atom");
 
-    public static final BlogType META_WEBLOG = new BlogType("MetaWeblog"); //$NON-NLS-1$
+    public static final BlogType META_WEBLOG = new BlogType("MetaWeblog");
 
     /**
      * Simple ctor

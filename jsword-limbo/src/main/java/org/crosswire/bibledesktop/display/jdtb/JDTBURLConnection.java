@@ -83,7 +83,7 @@ public class JDTBURLConnection extends URLConnection {
 
             SAXEventProvider osissep = data.getSAXEventProvider();
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
-            htmlsep.setParameter("direction", direction ? "ltr" : "rtl"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            htmlsep.setParameter("direction", direction ? "ltr" : "rtl");
 
             String outputText = XMLUtil.writeToString(htmlsep);
             byte[] bytes = outputText.getBytes();
@@ -117,9 +117,9 @@ public class JDTBURLConnection extends URLConnection {
         return new URL(PROTOCOL_NAME + PROTOCOL_SEPARATOR1 + book.getInitials() + PROTOCOL_SEPARATOR2 + key);
     }
 
-    public static final String PROTOCOL_NAME = "book"; //$NON-NLS-1$
-    private static final String PROTOCOL_SEPARATOR1 = ":///"; //$NON-NLS-1$
-    private static final String PROTOCOL_SEPARATOR2 = "/"; //$NON-NLS-1$
+    public static final String PROTOCOL_NAME = "book";
+    private static final String PROTOCOL_SEPARATOR1 = ":///";
+    private static final String PROTOCOL_SEPARATOR2 = "/";
 
     /**
      * Where the data comes from

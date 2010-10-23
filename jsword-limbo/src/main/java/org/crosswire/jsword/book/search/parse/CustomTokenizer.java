@@ -83,9 +83,9 @@ public class CustomTokenizer {
                     throw new BookException(Msg.UNMATCHED_ESCAPE);
                 }
 
-                addWord(output, commands, "["); //$NON-NLS-1$
+                addWord(output, commands, "[");
                 addWord(output, commands, sought.substring(i + 1, end));
-                addWord(output, commands, "]"); //$NON-NLS-1$
+                addWord(output, commands, "]");
 
                 currentType = CHAR_SPACE;
                 i = end + 1;
@@ -94,9 +94,9 @@ public class CustomTokenizer {
             // Pass through everything between pairs of :: e.g. ::bread::
             // as a single word. If there is no trailing :: take it
             // to the end of the line
-            if (i != sought.length() && sought.indexOf("::", i) == i) //$NON-NLS-1$
+            if (i != sought.length() && sought.indexOf("::", i) == i)
             {
-                int end = sought.indexOf("::", i + 2); //$NON-NLS-1$
+                int end = sought.indexOf("::", i + 2);
                 if (end == -1) {
                     addWord(output, commands, sought.substring(i + 2));
                     i = sought.length();

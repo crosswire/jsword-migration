@@ -31,17 +31,17 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 public final class LimboMsg extends MsgBase {
-    static final LimboMsg CLASS = new LimboMsg("MapField.Class"); //$NON-NLS-1$
-    static final LimboMsg NAME = new LimboMsg("MapField.Name"); //$NON-NLS-1$
-    static final LimboMsg COMPONENT_EDITOR = new LimboMsg("MapField.ComponentEditor"); //$NON-NLS-1$
-    static final LimboMsg EDIT_CLASS = new LimboMsg("MapField.EditClass"); //$NON-NLS-1$
-    static final LimboMsg CLASS_NOT_FOUND = new LimboMsg("MapField.ClassNotFound."); //$NON-NLS-1$
-    static final LimboMsg BAD_SUPERCLASS = new LimboMsg("MapField.BadSuperclass"); //$NON-NLS-1$
-    static final LimboMsg NEW_CLASS = new LimboMsg("MapField.NewClass"); //$NON-NLS-1$
+    static final LimboMsg CLASS = new LimboMsg("MapField.Class");
+    static final LimboMsg NAME = new LimboMsg("MapField.Name");
+    static final LimboMsg COMPONENT_EDITOR = new LimboMsg("MapField.ComponentEditor");
+    static final LimboMsg EDIT_CLASS = new LimboMsg("MapField.EditClass");
+    static final LimboMsg CLASS_NOT_FOUND = new LimboMsg("MapField.ClassNotFound.");
+    static final LimboMsg BAD_SUPERCLASS = new LimboMsg("MapField.BadSuperclass");
+    static final LimboMsg NEW_CLASS = new LimboMsg("MapField.NewClass");
 
-    static final LimboMsg EDIT = new LimboMsg("ColorField.Edit"); //$NON-NLS-1$
-    static final LimboMsg BASIC = new LimboMsg("TabbedConfigEditor.Basic"); //$NON-NLS-1$
-    static final LimboMsg PROPERTIES_POSN = new LimboMsg("WizardConfigEditor.PropertiesPosn"); //$NON-NLS-1$
+    static final LimboMsg EDIT = new LimboMsg("ColorField.Edit");
+    static final LimboMsg BASIC = new LimboMsg("TabbedConfigEditor.Basic");
+    static final LimboMsg PROPERTIES_POSN = new LimboMsg("WizardConfigEditor.PropertiesPosn");
 
     /**
      * Passthrough ctor

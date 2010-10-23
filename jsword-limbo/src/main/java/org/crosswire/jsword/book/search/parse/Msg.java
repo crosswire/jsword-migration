@@ -31,24 +31,24 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 class Msg extends MsgBase {
-    static final Msg ADD_BLANK = new Msg("AddCommandWord.AddBlank"); //$NON-NLS-1$
-    static final Msg RIGHT_PARAM = new Msg("PassageRightParamWord.RightParam"); //$NON-NLS-1$
-    static final Msg RIGHT_BRACKETS = new Msg("PassageRightParamWord.RightBrackets"); //$NON-NLS-1$
-    static final Msg LEFT_PARAM = new Msg("PassageLeftParamWord.LeftParam"); //$NON-NLS-1$
-    static final Msg LEFT_BRACKETS = new Msg("PassageLeftParamWord.LeftBrackets"); //$NON-NLS-1$
-    static final Msg STARTS_WORD = new Msg("StartsParamWord.StartsWord"); //$NON-NLS-1$
-    static final Msg STARTS_BLANK = new Msg("StartsParamWord.StartsBlank"); //$NON-NLS-1$
-    static final Msg RETAIN_BLANK = new Msg("RetainCommandWord.RetainBlank"); //$NON-NLS-1$
-    static final Msg REMOVE_BLANK = new Msg("RemoveCommandWord.RemoveBlank"); //$NON-NLS-1$
-    static final Msg GRAMMAR_WORD = new Msg("GrammarParamWord.GrammarWord"); //$NON-NLS-1$
-    static final Msg GRAMMAR_BLANK = new Msg("GrammarParamWord.GrammarBlank"); //$NON-NLS-1$
-    static final Msg BLUR_BLANK = new Msg("BlurCommandWord.BlurBlank"); //$NON-NLS-1$
-    static final Msg BLUR_FORMAT = new Msg("BlurCommandWord.BlurFormat"); //$NON-NLS-1$
-    static final Msg ENGINE_SYNTAX = new Msg("IndexSearcher.EngineSyntax"); //$NON-NLS-1$
-    static final Msg ILLEGAL_PASSAGE = new Msg("PassageLeftParamWord.IllegalPassage"); //$NON-NLS-1$
-    static final Msg UNMATCHED_ESCAPE = new Msg("CustomTokenizer.UnmatchedEscape"); //$NON-NLS-1$
-    static final Msg SINGLE_PARAM = new Msg("PhraseParamWord.SingleParam"); //$NON-NLS-1$
-    static final Msg NO_THESAURUS = new Msg("PhraseParamWord.NoThesaurus"); //$NON-NLS-1$
+    static final Msg ADD_BLANK = new Msg("AddCommandWord.AddBlank");
+    static final Msg RIGHT_PARAM = new Msg("PassageRightParamWord.RightParam");
+    static final Msg RIGHT_BRACKETS = new Msg("PassageRightParamWord.RightBrackets");
+    static final Msg LEFT_PARAM = new Msg("PassageLeftParamWord.LeftParam");
+    static final Msg LEFT_BRACKETS = new Msg("PassageLeftParamWord.LeftBrackets");
+    static final Msg STARTS_WORD = new Msg("StartsParamWord.StartsWord");
+    static final Msg STARTS_BLANK = new Msg("StartsParamWord.StartsBlank");
+    static final Msg RETAIN_BLANK = new Msg("RetainCommandWord.RetainBlank");
+    static final Msg REMOVE_BLANK = new Msg("RemoveCommandWord.RemoveBlank");
+    static final Msg GRAMMAR_WORD = new Msg("GrammarParamWord.GrammarWord");
+    static final Msg GRAMMAR_BLANK = new Msg("GrammarParamWord.GrammarBlank");
+    static final Msg BLUR_BLANK = new Msg("BlurCommandWord.BlurBlank");
+    static final Msg BLUR_FORMAT = new Msg("BlurCommandWord.BlurFormat");
+    static final Msg ENGINE_SYNTAX = new Msg("IndexSearcher.EngineSyntax");
+    static final Msg ILLEGAL_PASSAGE = new Msg("PassageLeftParamWord.IllegalPassage");
+    static final Msg UNMATCHED_ESCAPE = new Msg("CustomTokenizer.UnmatchedEscape");
+    static final Msg SINGLE_PARAM = new Msg("PhraseParamWord.SingleParam");
+    static final Msg NO_THESAURUS = new Msg("PhraseParamWord.NoThesaurus");
 
     /**
      * Passthrough ctor

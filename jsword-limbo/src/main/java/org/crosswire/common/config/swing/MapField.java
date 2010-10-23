@@ -66,7 +66,7 @@ public class MapField extends JPanel implements Field {
 
         JPanel buttons = new JPanel(new FlowLayout());
 
-        table.setFont(new Font("Monospaced", Font.PLAIN, 12)); //$NON-NLS-1$
+        table.setFont(new Font("Monospaced", Font.PLAIN, 12));
         table.setPreferredScrollableViewportSize(new Dimension(30, 100));
         table.setColumnSelectionAllowed(false);
 
@@ -270,9 +270,9 @@ public class MapField extends JPanel implements Field {
             nameField = new JTextField();
             classField = new JTextField(20);
 
-            add(new JLabel(LimboMsg.NAME + ":")); //$NON-NLS-1$
+            add(new JLabel(LimboMsg.NAME + ":"));
             add(nameField);
-            add(new JLabel(LimboMsg.CLASS + ":")); //$NON-NLS-1$
+            add(new JLabel(LimboMsg.CLASS + ":"));
             add(classField);
 
             setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -294,9 +294,9 @@ public class MapField extends JPanel implements Field {
         private static final long serialVersionUID = 3257849861683296313L;
     }
 
-    private static final String ADD = "AddMapEntry"; //$NON-NLS-1$
-    private static final String REMOVE = "RemoveMapEntry"; //$NON-NLS-1$
-    private static final String UPDATE = "UpdateMapEntry"; //$NON-NLS-1$
+    private static final String ADD = "AddMapEntry";
+    private static final String REMOVE = "RemoveMapEntry";
+    private static final String UPDATE = "UpdateMapEntry";
 
     private transient ActionFactory actions;
 

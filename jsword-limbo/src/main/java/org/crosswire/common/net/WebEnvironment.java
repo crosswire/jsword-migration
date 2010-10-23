@@ -102,18 +102,18 @@ public class WebEnvironment {
      */
     public void setProxy(String host, int port) {
         if (host == null) {
-            System.getProperties().remove("proxySet"); //$NON-NLS-1$
-            System.getProperties().remove("proxyHost"); //$NON-NLS-1$
-            System.getProperties().remove("proxyPort"); //$NON-NLS-1$
+            System.getProperties().remove("proxySet");
+            System.getProperties().remove("proxyHost");
+            System.getProperties().remove("proxyPort");
         } else {
-            System.getProperties().put("proxySet", "true"); //$NON-NLS-1$ //$NON-NLS-2$
-            System.getProperties().put("proxyHost", host); //$NON-NLS-1$
-            System.getProperties().put("proxyPort", "" + port); //$NON-NLS-1$ //$NON-NLS-2$
+            System.getProperties().put("proxySet", "true");
+            System.getProperties().put("proxyHost", host);
+            System.getProperties().put("proxyPort", "" + port);
 
             // Maybe we should have a separate API for this?
-            System.getProperties().put("ftpProxySet", "true"); //$NON-NLS-1$ //$NON-NLS-2$
-            System.getProperties().put("ftpProxyHost", host); //$NON-NLS-1$
-            System.getProperties().put("ftpProxyPort", "" + port); //$NON-NLS-1$ //$NON-NLS-2$
+            System.getProperties().put("ftpProxySet", "true");
+            System.getProperties().put("ftpProxyHost", host);
+            System.getProperties().put("ftpProxyPort", "" + port);
         }
     }
 

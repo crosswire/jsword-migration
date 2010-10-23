@@ -31,9 +31,9 @@ import java.io.Serializable;
  * @author Joe Walker [joe at eireneh dot com]
  */
 public class MethodName implements Serializable {
-    static final MethodName GETBIBLES = new MethodName("getBibles"); //$NON-NLS-1$
-    static final MethodName GETDATA = new MethodName("getData"); //$NON-NLS-1$
-    static final MethodName FINDPASSAGE = new MethodName("findPassage"); //$NON-NLS-1$
+    static final MethodName GETBIBLES = new MethodName("getBibles");
+    static final MethodName GETDATA = new MethodName("getData");
+    static final MethodName FINDPASSAGE = new MethodName("findPassage");
 
     /**
      * Only we should be doing this

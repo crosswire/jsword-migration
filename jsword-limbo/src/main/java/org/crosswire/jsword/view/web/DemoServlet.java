@@ -38,7 +38,7 @@ public class DemoServlet extends HttpServlet {
         super.init(config);
 
         try {
-            String bookname = config.getInitParameter("book-name"); //$NON-NLS-1$
+            String bookname = config.getInitParameter("book-name");
             book = Books.installed().getBook(bookname);
         } catch (Exception ex) {
             throw new ServletException(Msg.INIT_FAILED.toString(), ex);
@@ -89,11 +89,11 @@ public class DemoServlet extends HttpServlet {
                     // JDK: A deprecation error if you don't, won't build or run
                     // on java < 1.4 if you do.
                     // String link = URLEncoder.encode(waiting.getName());
-                    String link = URLEncoder.encode(waiting.getName(), "UTF-8"); //$NON-NLS-1$
+                    String link = URLEncoder.encode(waiting.getName(), "UTF-8");
 
-                    request.setAttribute("next-link", link); //$NON-NLS-1$
-                    request.setAttribute("next-name", waiting.getName()); //$NON-NLS-1$
-                    request.setAttribute("next-overview", waiting.getOverview()); //$NON-NLS-1$
+                    request.setAttribute("next-link", link);
+                    request.setAttribute("next-name", waiting.getName());
+                    request.setAttribute("next-overview", waiting.getOverview());
                 }
 
                 BookData data = new BookData(book, ref);
@@ -101,14 +101,14 @@ public class DemoServlet extends HttpServlet {
                 SAXEventProvider htmlsep = style.convert(osissep);
                 String text = XMLUtil.writeToString(htmlsep);
 
-                request.setAttribute("reply", text); //$NON-NLS-1$
+                request.setAttribute("reply", text);
             }
         } catch (Exception ex) {
-            log.error("Failed view", ex); //$NON-NLS-1$
-            throw new ServletException("Failed view", ex); //$NON-NLS-1$
+            log.error("Failed view", ex);
+            throw new ServletException("Failed view", ex);
         }
 
-        getServletContext().getRequestDispatcher("/demo.jsp").forward(request, response); //$NON-NLS-1$
+        getServletContext().getRequestDispatcher("/demo.jsp").forward(request, response);
     }
 
     /*
@@ -128,9 +128,9 @@ public class DemoServlet extends HttpServlet {
     private Book book;
     private SimpleWebConverter style = new SimpleWebConverter();
 
-    private static final String FIELD_VIEW = "view"; //$NON-NLS-1$
-    private static final String FIELD_MATCH = "match"; //$NON-NLS-1$
-    private static final String FIELD_SEARCH = "search"; //$NON-NLS-1$
+    private static final String FIELD_VIEW = "view";
+    private static final String FIELD_MATCH = "match";
+    private static final String FIELD_SEARCH = "search";
 
     /**
      * The log stream

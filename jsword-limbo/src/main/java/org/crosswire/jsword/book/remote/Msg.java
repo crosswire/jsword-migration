@@ -31,13 +31,13 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 class Msg extends MsgBase {
-    static final Msg CONVERT_BMD = new Msg("Converter.BMD"); //$NON-NLS-1$
-    static final Msg CONVERT_NOVERSE = new Msg("Converter.NoVerse"); //$NON-NLS-1$
-    static final Msg CONVERT_NOCLASS = new Msg("Converter.NoClass"); //$NON-NLS-1$
-    static final Msg REMOTE_NOSUPPORT = new Msg("Converter.RemoteNoSupport"); //$NON-NLS-1$
-    static final Msg REMOTE_FAIL = new Msg("RemoteBook.Fail"); //$NON-NLS-1$
-    static final Msg PARSE_FAIL = new Msg("RemoteBook.ParseFail"); //$NON-NLS-1$
-    static final Msg DRIVER_READONLY = new Msg("RemoteBook.DriverReadonly"); //$NON-NLS-1$
+    static final Msg CONVERT_BMD = new Msg("Converter.BMD");
+    static final Msg CONVERT_NOVERSE = new Msg("Converter.NoVerse");
+    static final Msg CONVERT_NOCLASS = new Msg("Converter.NoClass");
+    static final Msg REMOTE_NOSUPPORT = new Msg("Converter.RemoteNoSupport");
+    static final Msg REMOTE_FAIL = new Msg("RemoteBook.Fail");
+    static final Msg PARSE_FAIL = new Msg("RemoteBook.ParseFail");
+    static final Msg DRIVER_READONLY = new Msg("RemoteBook.DriverReadonly");
 
     /**
      * Passthrough ctor#

@@ -122,8 +122,8 @@ public class Verifier {
                     // Check - this needs some work
                     if (!text1.equals(text2)) {
                         out.println(VerifierMsg.VERIFY_VERSE.toString() + subkey);
-                        out.println(book1.getName() + ": " + text1); //$NON-NLS-1$
-                        out.println(book2.getName() + ": " + text2); //$NON-NLS-1$
+                        out.println(book1.getName() + ": " + text1);
+                        out.println(book2.getName() + ": " + text2);
                         out.println();
                     }
                 } catch (Exception ex) {
@@ -191,8 +191,8 @@ public class Verifier {
         // Check
         if (!ref1.equals(ref2)) {
             out.println(VerifierMsg.VERIFY_WORD.toString() + word);
-            out.println(book1.getName() + ": " + ref1); //$NON-NLS-1$
-            out.println(book2.getName() + ": " + ref2); //$NON-NLS-1$
+            out.println(book1.getName() + ": " + ref1);
+            out.println(book2.getName() + ": " + ref2);
             out.println();
         }
     }

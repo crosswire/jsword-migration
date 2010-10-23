@@ -137,8 +137,8 @@ public abstract class ItemsMem extends Mem implements Items {
         try {
             return array[index];
         } catch (ArrayIndexOutOfBoundsException ex) {
-            log.error("illegal index: " + index); //$NON-NLS-1$
-            return "#" + index + "#"; //$NON-NLS-1$ //$NON-NLS-2$
+            log.error("illegal index: " + index);
+            return "#" + index + "#";
         }
     }
 

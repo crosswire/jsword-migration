@@ -75,7 +75,7 @@ public class MaintenancePane extends EirPanel {
      * Show this Panel in a new dialog
      */
     public void showInDialog(Component parent) {
-        showInDialog(parent, "Version Maintenance", false); //$NON-NLS-1$
+        showInDialog(parent, "Version Maintenance", false);
     }
 
     /**
@@ -96,7 +96,7 @@ public class MaintenancePane extends EirPanel {
             }
         });
 
-        btn_add.setText("Add ..."); //$NON-NLS-1$
+        btn_add.setText("Add ...");
         btn_add.setMnemonic('A');
         btn_add.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
@@ -104,7 +104,7 @@ public class MaintenancePane extends EirPanel {
             }
         });
 
-        btn_remove.setText("Remove"); //$NON-NLS-1$
+        btn_remove.setText("Remove");
         btn_remove.setMnemonic('R');
         btn_remove.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
@@ -137,14 +137,14 @@ public class MaintenancePane extends EirPanel {
         try {
             Book book = getSelected();
             if (book == null) {
-                JOptionPane.showMessageDialog(this, "Please select a Bible to delete.", //$NON-NLS-1$
-                        "Delete Bible", //$NON-NLS-1$
+                JOptionPane.showMessageDialog(this, "Please select a Bible to delete.",
+                        "Delete Bible",
                         JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
-            if (JOptionPane.showConfirmDialog(this, "Are you sure you want to delete " + book.getName() + "?\nDeleted Books can not be recovered", //$NON-NLS-1$ //$NON-NLS-2$
-                    "Delete Bible", //$NON-NLS-1$
+            if (JOptionPane.showConfirmDialog(this, "Are you sure you want to delete " + book.getName() + "?\nDeleted Books can not be recovered",
+                    "Delete Bible",
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 book.getDriver().delete(book);
             }

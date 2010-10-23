@@ -31,38 +31,38 @@ import org.crosswire.common.util.MsgBase;
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
 final class Msg extends MsgBase {
-    static final Msg BLOG_TITLE = new Msg("BlogClientFrame.BlogTitle"); //$NON-NLS-1$
-    static final Msg START_BLOG = new Msg("BlogClientFrame.StartBlog"); //$NON-NLS-1$
-    static final Msg ACCOUNT_NAME = new Msg("BlogClientFrame.AccountName"); //$NON-NLS-1$
-    static final Msg PASSWORD = new Msg("BlogClientFrame.Password"); //$NON-NLS-1$
+    static final Msg BLOG_TITLE = new Msg("BlogClientFrame.BlogTitle");
+    static final Msg START_BLOG = new Msg("BlogClientFrame.StartBlog");
+    static final Msg ACCOUNT_NAME = new Msg("BlogClientFrame.AccountName");
+    static final Msg PASSWORD = new Msg("BlogClientFrame.Password");
     // I18N: migrate this to an ActionFactory
-    static final Msg SUBMIT = new Msg("BlogClientFrame.Submit"); //$NON-NLS-1$
-    static final Msg EDIT_ENTRY = new Msg("BlogClientFrame.EditEntry"); //$NON-NLS-1$
-    static final Msg ALL_ENTRIES = new Msg("BlogClientFrame.AllEntries"); //$NON-NLS-1$
-    static final Msg CONNECTING = new Msg("BlogClientFrame.Connecting"); //$NON-NLS-1$
-    static final Msg CONNECTED = new Msg("BlogClientFrame.Connected"); //$NON-NLS-1$
-    static final Msg JOURNAL_RECEIVED = new Msg("BlogClientFrame.JournalReceived"); //$NON-NLS-1$
-    static final Msg ALL_DONE = new Msg("BlogClientFrame.AllDone"); //$NON-NLS-1$
-    static final Msg MORE = new Msg("BlogClientFrame.More"); //$NON-NLS-1$
-    static final Msg NO_JOURNALS = new Msg("BlogClientFrame.NoJournals"); //$NON-NLS-1$
-    static final Msg CANNOT_CONNECT = new Msg("BlogClientFrame.CannotConnect"); //$NON-NLS-1$
+    static final Msg SUBMIT = new Msg("BlogClientFrame.Submit");
+    static final Msg EDIT_ENTRY = new Msg("BlogClientFrame.EditEntry");
+    static final Msg ALL_ENTRIES = new Msg("BlogClientFrame.AllEntries");
+    static final Msg CONNECTING = new Msg("BlogClientFrame.Connecting");
+    static final Msg CONNECTED = new Msg("BlogClientFrame.Connected");
+    static final Msg JOURNAL_RECEIVED = new Msg("BlogClientFrame.JournalReceived");
+    static final Msg ALL_DONE = new Msg("BlogClientFrame.AllDone");
+    static final Msg MORE = new Msg("BlogClientFrame.More");
+    static final Msg NO_JOURNALS = new Msg("BlogClientFrame.NoJournals");
+    static final Msg CANNOT_CONNECT = new Msg("BlogClientFrame.CannotConnect");
 
-    static final Msg DELETE_ERROR = new Msg("BlogClientPanel.DeleteError"); //$NON-NLS-1$
-    static final Msg UPLOAD_ERROR = new Msg("BlogClientPanel.UploadError"); //$NON-NLS-1$
-    static final Msg SAVE_SUCCESS = new Msg("BlogClientPanel.SaveSuccess"); //$NON-NLS-1$
-    static final Msg MISSING_CONTENT = new Msg("BlogClientPanel.MissingContent"); //$NON-NLS-1$
-    static final Msg TITLE_ENTRY = new Msg("BlogClientPanel.TitleEntry"); //$NON-NLS-1$
-    static final Msg CATEGORY_ENTRY = new Msg("BlogClientPanel.CategoryEntry"); //$NON-NLS-1$
-    static final Msg PUBLISH = new Msg("BlogClientPanel.Publish"); //$NON-NLS-1$
-    static final Msg NEW = new Msg("BlogClientPanel.New"); //$NON-NLS-1$
-    static final Msg SAVE_DRAFT = new Msg("BlogClientPanel.SaveDraft"); //$NON-NLS-1$
-    static final Msg DELETE = new Msg("BlogClientPanel.Delete"); //$NON-NLS-1$
+    static final Msg DELETE_ERROR = new Msg("BlogClientPanel.DeleteError");
+    static final Msg UPLOAD_ERROR = new Msg("BlogClientPanel.UploadError");
+    static final Msg SAVE_SUCCESS = new Msg("BlogClientPanel.SaveSuccess");
+    static final Msg MISSING_CONTENT = new Msg("BlogClientPanel.MissingContent");
+    static final Msg TITLE_ENTRY = new Msg("BlogClientPanel.TitleEntry");
+    static final Msg CATEGORY_ENTRY = new Msg("BlogClientPanel.CategoryEntry");
+    static final Msg PUBLISH = new Msg("BlogClientPanel.Publish");
+    static final Msg NEW = new Msg("BlogClientPanel.New");
+    static final Msg SAVE_DRAFT = new Msg("BlogClientPanel.SaveDraft");
+    static final Msg DELETE = new Msg("BlogClientPanel.Delete");
 
-    static final Msg ENTRY_TITLE = new Msg("BlogEntriesPanel.EntryTitle"); //$NON-NLS-1$
+    static final Msg ENTRY_TITLE = new Msg("BlogEntriesPanel.EntryTitle");
 
-    static final Msg TITLE_COLUMN = new Msg("BlogEntriesPanel.TitleColumn"); //$NON-NLS-1$
-    static final Msg ID_COLUMN = new Msg("BlogEntriesPanel.IdColumn"); //$NON-NLS-1$
-    static final Msg DATE_COLUMN = new Msg("BlogEntriesPanel.DateColumn"); //$NON-NLS-1$
+    static final Msg TITLE_COLUMN = new Msg("BlogEntriesPanel.TitleColumn");
+    static final Msg ID_COLUMN = new Msg("BlogEntriesPanel.IdColumn");
+    static final Msg DATE_COLUMN = new Msg("BlogEntriesPanel.DateColumn");
 
     /**
      * Passthrough ctor

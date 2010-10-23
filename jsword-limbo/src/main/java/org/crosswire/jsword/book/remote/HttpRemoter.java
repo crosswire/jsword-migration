@@ -54,7 +54,7 @@ public class HttpRemoter implements Remoter {
      * A simple name
      */
     public String getRemoterName() {
-        return "Remote (HTTP)"; //$NON-NLS-1$
+        return "Remote (HTTP)";
     }
 
     /**
@@ -63,14 +63,14 @@ public class HttpRemoter implements Remoter {
     public Document execute(RemoteMethod method) throws RemoterException {
         try {
             String query = baseurl + methodToParam(method);
-            log.debug("Executing query: " + query); //$NON-NLS-1$
+            log.debug("Executing query: " + query);
 
             URL url = new URL(query);
             InputStream in = url.openStream();
             SAXBuilder builder = new SAXBuilder();
 
             Document doc = builder.build(in);
-            log.debug("Counting children of root element: " + doc.getRootElement().getChildren().size()); //$NON-NLS-1$
+            log.debug("Counting children of root element: " + doc.getRootElement().getChildren().size());
 
             return doc;
         } catch (Exception ex) {
@@ -85,7 +85,7 @@ public class HttpRemoter implements Remoter {
     public static String methodToParam(RemoteMethod method) {
         StringBuffer buffer = new StringBuffer();
 
-        buffer.append("?method="); //$NON-NLS-1$
+        buffer.append("?method=");
         buffer.append(method.getMethodName());
 
         Iterator it = method.getParameterKeys();
@@ -96,7 +96,7 @@ public class HttpRemoter implements Remoter {
                 ParamName param = ParamName.fromString(key);
                 if (param != null) {
                     String val = method.getParameter(param);
-                    String b64 = URLEncoder.encode(val, "UTF-8"); //$NON-NLS-1$
+                    String b64 = URLEncoder.encode(val, "UTF-8");
 
                     buffer.append('&');
                     buffer.append(key);
@@ -124,5 +124,5 @@ public class HttpRemoter implements Remoter {
     /**
      * For use in HttpServletRequests
      */
-    public static final String METHOD_KEY = "method"; //$NON-NLS-1$
+    public static final String METHOD_KEY = "method";
 }

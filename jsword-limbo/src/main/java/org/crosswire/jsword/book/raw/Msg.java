@@ -31,7 +31,7 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 class Msg extends MsgBase {
-    static final Msg DRIVER_READONLY = new Msg("RawBook.DriverReadonly"); //$NON-NLS-1$
+    static final Msg DRIVER_READONLY = new Msg("RawBook.DriverReadonly");
 
     /**
      * Passthrough ctor

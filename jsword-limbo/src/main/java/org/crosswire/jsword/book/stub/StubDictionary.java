@@ -69,7 +69,7 @@ public class StubDictionary extends AbstractBook {
             title.addContent(key.getName());
             content.add(title);
 
-            List osisContent = FilterFactory.getDefaultFilter().toOSIS(this, key, "stub implementation"); //$NON-NLS-1$
+            List osisContent = FilterFactory.getDefaultFilter().toOSIS(this, key, "stub implementation");
             content.add(osisContent);
 
             return content.iterator();

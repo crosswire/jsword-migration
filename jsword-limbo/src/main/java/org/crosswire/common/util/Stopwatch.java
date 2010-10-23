@@ -23,7 +23,7 @@ public class Stopwatch {
      */
     public static void start() throws IllegalStateException {
         if (local.get() != null)
-            throw new IllegalStateException("Already started"); //$NON-NLS-1$
+            throw new IllegalStateException("Already started");
 
         Long start = new Long(System.currentTimeMillis());
         origin.set(start);
@@ -40,7 +40,7 @@ public class Stopwatch {
         long start = ((Long) origin.get()).longValue();
 
         if (times == null)
-            throw new IllegalStateException("Not started"); //$NON-NLS-1$
+            throw new IllegalStateException("Not started");
 
         times.put(name, new Long(System.currentTimeMillis() - start));
     }
@@ -53,9 +53,9 @@ public class Stopwatch {
         long start = ((Long) origin.get()).longValue();
 
         if (times == null)
-            throw new IllegalStateException("Not started"); //$NON-NLS-1$
+            throw new IllegalStateException("Not started");
 
-        times.put("STOP", new Long(System.currentTimeMillis() - start)); //$NON-NLS-1$
+        times.put("STOP", new Long(System.currentTimeMillis() - start));
 
         local.set(null);
         origin.set(null);
@@ -71,7 +71,7 @@ public class Stopwatch {
     public static void report(boolean reset) {
         for (int i = 0; i < accumulated.size(); i++) {
             Map times = (Map) accumulated.get(i);
-            report("" + i, times); //$NON-NLS-1$
+            report("" + i, times);
         }
 
         if (reset) {
@@ -87,7 +87,7 @@ public class Stopwatch {
         while (it.hasNext()) {
             String name = (String) it.next();
             Long time = (Long) times.get(name);
-            System.out.println(id + "," + name + "," + time); //$NON-NLS-1$ //$NON-NLS-2$
+            System.out.println(id + "," + name + "," + time);
         }
     }
 
@@ -105,21 +105,21 @@ public class Stopwatch {
                             break;
                     }
 
-                    Stopwatch.lap("first"); //$NON-NLS-1$
+                    Stopwatch.lap("first");
 
                     while (true) {
                         if (Math.random() > 0.99999)
                             break;
                     }
 
-                    Stopwatch.lap("second"); //$NON-NLS-1$
+                    Stopwatch.lap("second");
 
                     while (true) {
                         if (Math.random() > 0.9999)
                             break;
                     }
 
-                    Stopwatch.lap("third"); //$NON-NLS-1$
+                    Stopwatch.lap("third");
 
                     while (true) {
                         if (Math.random() > 0.9999)

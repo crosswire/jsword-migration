@@ -42,7 +42,7 @@ public class FixtureRemoter implements Remoter {
      * @see org.crosswire.jsword.book.remote.Remoter#getRemoterName()
      */
     public String getRemoterName() {
-        return "Fixture Remote"; //$NON-NLS-1$
+        return "Fixture Remote";
     }
 
 }

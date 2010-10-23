@@ -37,25 +37,25 @@ public class JDBCBookUtilTest extends BookParentTst {
 
     public void testChop() {
         // LATER: JDBCBook is in limbo
-        //        assertEquals(JDBCBibleUtil.chop1("123(456)789", "(", ")"), "123789"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-        //        assertEquals(JDBCBibleUtil.chop1("(123456)789", "(", ")"), "789"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-        //        assertEquals(JDBCBibleUtil.chop1("123(456789)", "(", ")"), "123"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-        //        assertEquals(JDBCBibleUtil.chop1("(123456789)", "(", ")"), ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-        //        assertEquals(JDBCBibleUtil.chop1("123()456789", "(", ")"), "123456789"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-        //        assertEquals(JDBCBibleUtil.chop1("()123456789()", "(", ")"), "123456789"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-        //        assertEquals(JDBCBibleUtil.chop1("()123456789()", "(", ")"), "123456789"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-        //        assertEquals(JDBCBibleUtil.chop1("()()123456789()()", "(", ")"), "123456789"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-        //        assertEquals(JDBCBibleUtil.chop1("()()1234()56789()()", "(", ")"), "123456789"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-        //        assertEquals(JDBCBibleUtil.chop1("(123)(123)1234(123)(123)56789(123)(123)", "(", ")"), "123456789"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-        //        try{ JDBCBibleUtil.chop1("12(34(56)78)9", "(", ")"); fail(); } //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        //        assertEquals(JDBCBibleUtil.chop1("123(456)789", "(", ")"), "123789");
+        //        assertEquals(JDBCBibleUtil.chop1("(123456)789", "(", ")"), "789");
+        //        assertEquals(JDBCBibleUtil.chop1("123(456789)", "(", ")"), "123");
+        //        assertEquals(JDBCBibleUtil.chop1("(123456789)", "(", ")"), "");
+        //        assertEquals(JDBCBibleUtil.chop1("123()456789", "(", ")"), "123456789");
+        //        assertEquals(JDBCBibleUtil.chop1("()123456789()", "(", ")"), "123456789");
+        //        assertEquals(JDBCBibleUtil.chop1("()123456789()", "(", ")"), "123456789");
+        //        assertEquals(JDBCBibleUtil.chop1("()()123456789()()", "(", ")"), "123456789");
+        //        assertEquals(JDBCBibleUtil.chop1("()()1234()56789()()", "(", ")"), "123456789");
+        //        assertEquals(JDBCBibleUtil.chop1("(123)(123)1234(123)(123)56789(123)(123)", "(", ")"), "123456789");
+        //        try{ JDBCBibleUtil.chop1("12(34(56)78)9", "(", ")"); fail(); }
         // catch (IllegalArgumentException ex) { }
-        //        try{ JDBCBibleUtil.chop1("12(3456789", "(", ")"); fail(); } //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        //        try{ JDBCBibleUtil.chop1("12(3456789", "(", ")"); fail(); }
         // catch (IllegalArgumentException ex) { }
-        //        try{ JDBCBibleUtil.chop1("12)3456789", "(", ")"); fail(); } //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        //        try{ JDBCBibleUtil.chop1("12)3456789", "(", ")"); fail(); }
         // catch (IllegalArgumentException ex) { }
-        //        try{ JDBCBibleUtil.chop1("12(3)4(56789", "(", ")"); fail(); } //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        //        try{ JDBCBibleUtil.chop1("12(3)4(56789", "(", ")"); fail(); }
         // catch (IllegalArgumentException ex) { }
-        //        try{ JDBCBibleUtil.chop1("12(3)4)56789", "(", ")"); fail(); } //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        //        try{ JDBCBibleUtil.chop1("12(3)4)56789", "(", ")"); fail(); }
         // catch (IllegalArgumentException ex) { }
     }
 }

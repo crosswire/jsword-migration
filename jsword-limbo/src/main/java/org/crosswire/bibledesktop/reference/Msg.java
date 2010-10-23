@@ -31,7 +31,7 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 public class Msg extends MsgBase {
-    static final Msg NO_PARENT = new Msg("ReferenceTreeModel.NoParent"); //$NON-NLS-1$
+    static final Msg NO_PARENT = new Msg("ReferenceTreeModel.NoParent");
 
     /**
      * Passthrough ctor

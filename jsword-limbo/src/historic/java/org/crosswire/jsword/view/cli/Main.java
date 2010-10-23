@@ -34,7 +34,7 @@ public class Main
         Reader in = new InputStreamReader(System.in);
         Writer out = new PrintWriter(System.out);
 
-        Main main = new Main("<console>"); //$NON-NLS-1$
+        Main main = new Main("<console>");
 
         main.parse(in, out);
     }
@@ -50,10 +50,10 @@ public class Main
         scope = cx.initStandardObjects(null);
 
         Scriptable jsout = Context.toObject(System.out, scope);
-        scope.put("out", scope, jsout); //$NON-NLS-1$
+        scope.put("out", scope, jsout);
 
         Scriptable jsmodel = Context.toObject(new Model(), scope);
-        scope.put("sw", scope, jsmodel); //$NON-NLS-1$
+        scope.put("sw", scope, jsmodel);
 
         // At some stage we should call Context.exit();
     }
@@ -66,7 +66,7 @@ public class Main
         BufferedReader cin = new BufferedReader(in);
         PrintWriter pout = new PrintWriter(out);
 
-        pout.println("JSword CLI. Version "+Project.instance().getVersion()); //$NON-NLS-1$
+        pout.println("JSword CLI. Version "+Project.instance().getVersion());
 
         int linenum = 1;
         while (true)
@@ -80,7 +80,7 @@ public class Main
                 break;
             }
 
-            String reply = ""; //$NON-NLS-1$
+            String reply = "";
             try
             {
                 reply = parse(line, linenum++);

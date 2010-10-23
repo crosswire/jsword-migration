@@ -135,7 +135,7 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus {
         }
 
         word = word.toLowerCase();
-        SortedMap submap = datamap.subMap(word, word + "\u9999"); //$NON-NLS-1$
+        SortedMap submap = datamap.subMap(word, word + "\u9999");
         return submap.keySet();
     }
 
@@ -171,10 +171,10 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus {
             // De-serialize
             return PassageKeyFactory.fromBinaryRepresentation(blob);
         } catch (Exception ex) {
-            log.warn("Search failed on:"); //$NON-NLS-1$
-            log.warn("  word=" + word); //$NON-NLS-1$
-            log.warn("  offset=" + section.offset); //$NON-NLS-1$
-            log.warn("  length=" + section.length); //$NON-NLS-1$
+            log.warn("Search failed on:");
+            log.warn("  word=" + word);
+            log.warn("  offset=" + section.offset);
+            log.warn("  length=" + section.length);
             Reporter.informUser(this, ex);
 
             return book.createEmptyKeyList();
@@ -235,7 +235,7 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus {
             while (it.hasNext()) {
                 String word = (String) it.next();
                 Section section = (Section) datamap.get(word);
-                indexout.println(word + ":" + section.offset + ":" + section.length); //$NON-NLS-1$ //$NON-NLS-2$
+                indexout.println(word + ":" + section.offset + ":" + section.length);
             }
             indexout.close();
         } catch (IOException ex) {
@@ -339,8 +339,8 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus {
                 }
 
                 try {
-                    int colon1 = line.indexOf(":"); //$NON-NLS-1$
-                    int colon2 = line.lastIndexOf(":"); //$NON-NLS-1$
+                    int colon1 = line.indexOf(":");
+                    int colon2 = line.lastIndexOf(":");
                     String word = line.substring(0, colon1);
 
                     long offset = Long.parseLong(line.substring(colon1 + 1, colon2));
@@ -349,13 +349,13 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus {
                     Section section = new Section(offset, length);
                     datamap.put(word, section);
                 } catch (NumberFormatException ex) {
-                    log.error("NumberFormatException reading line: " + line, ex); //$NON-NLS-1$
+                    log.error("NumberFormatException reading line: " + line, ex);
                 }
             }
         } catch (FileNotFoundException ex) {
-            log.error("File not found exception", ex); //$NON-NLS-1$
+            log.error("File not found exception", ex);
         } catch (IOException ex) {
-            log.error("IOException", ex); //$NON-NLS-1$
+            log.error("IOException", ex);
         } finally {
             IOUtil.close(dataRaf);
             IOUtil.close(indexIn);
@@ -399,12 +399,12 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus {
     /**
      * The name of the data file
      */
-    private static final String FILE_DATA = "ref.data"; //$NON-NLS-1$
+    private static final String FILE_DATA = "ref.data";
 
     /**
      * The name of the index file
      */
-    protected static final String FILE_INDEX = "ref.index"; //$NON-NLS-1$
+    protected static final String FILE_INDEX = "ref.index";
 
     /**
      * The Bible we are indexing

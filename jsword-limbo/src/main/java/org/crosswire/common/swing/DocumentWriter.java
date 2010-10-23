@@ -173,9 +173,9 @@ public class DocumentWriter extends Writer {
             try {
                 SwingUtilities.invokeAndWait(updater);
             } catch (InterruptedException ex) {
-                throw new IOException("" + ex); //$NON-NLS-1$
+                throw new IOException("" + ex);
             } catch (InvocationTargetException ex) {
-                throw new IOException("" + ex); //$NON-NLS-1$
+                throw new IOException("" + ex);
             }
         }
     }
@@ -198,7 +198,7 @@ public class DocumentWriter extends Writer {
     /**
      * The queue of strings to be added to the GUI
      */
-    protected String queue = ""; //$NON-NLS-1$
+    protected String queue = "";
 
     /**
      * The destination Document
@@ -224,7 +224,7 @@ public class DocumentWriter extends Writer {
                 try {
                     doc.insertString(doc.getLength(), queue, null);
 
-                    queue = ""; //$NON-NLS-1$
+                    queue = "";
 
                     // This simply releases the pointer that our parent had
                     // to us, it does not affect how this thread is being

@@ -64,14 +64,14 @@ public class JDBCBook extends AbstractPassageBook {
         // Load the specified JDBC name
         int driver_attempt = 1;
         while (true) {
-            String property = "JdbcDriver" + driver_attempt; //$NON-NLS-1$
+            String property = "JdbcDriver" + driver_attempt;
             String drivername = getProperty(property).toString();
 
             try {
                 Class.forName(drivername);
                 break;
             } catch (Exception ex) {
-                log.debug("Failed to load JDBC name: " + driver + " (System Message: " + ex + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                log.debug("Failed to load JDBC name: " + driver + " (System Message: " + ex + ")");
             }
 
             driver_attempt++;
@@ -79,26 +79,26 @@ public class JDBCBook extends AbstractPassageBook {
 
         try {
             // Actually connect to the database
-            String text_url = getProperty("TextURL").toString(); //$NON-NLS-1$
+            String text_url = getProperty("TextURL").toString();
             textCon = DriverManager.getConnection(text_url);
 
-            String concord_url = getProperty("ConcordURL").toString(); //$NON-NLS-1$
+            String concord_url = getProperty("ConcordURL").toString();
             concCon = DriverManager.getConnection(concord_url);
 
             // SQL statements
-            String doc_query = getProperty("DocQuery").toString(); //$NON-NLS-1$
+            String doc_query = getProperty("DocQuery").toString();
             docStmt = textCon.prepareStatement(doc_query);
 
-            String ref_query = getProperty("RefQuery").toString(); //$NON-NLS-1$
+            String ref_query = getProperty("RefQuery").toString();
             refStmt = concCon.prepareStatement(ref_query);
 
             // String verse_query = getProperty("VerseQuery");
             // verse_stmt = textcnx.prepareStatement(verse_query);
 
-            String start_query = getProperty("StartQuery").toString(); //$NON-NLS-1$
+            String start_query = getProperty("StartQuery").toString();
             startStmt = concCon.prepareStatement(start_query);
 
-            wordsQuery = getProperty("WordsQuery").toString(); //$NON-NLS-1$
+            wordsQuery = getProperty("WordsQuery").toString();
         } catch (SQLException ex) {
             textCon = null;
             concCon = null;
@@ -139,7 +139,7 @@ public class JDBCBook extends AbstractPassageBook {
      * .jsword.passage.Key)
      */
     public String getRawText(Key key) {
-        String reply = ""; //$NON-NLS-1$
+        String reply = "";
         ResultSet rs = null;
 
         Verse verse = KeyUtil.getVerse(key);
@@ -158,14 +158,14 @@ public class JDBCBook extends AbstractPassageBook {
                 }
             }
         } catch (SQLException ex) {
-            log.fatal("read failed", ex); //$NON-NLS-1$
+            log.fatal("read failed", ex);
         } finally {
             try {
                 if (rs != null) {
                     rs.close();
                 }
             } catch (SQLException ex) {
-                log.fatal("close() failed", ex); //$NON-NLS-1$
+                log.fatal("close() failed", ex);
             }
         }
 
@@ -220,11 +220,11 @@ public class JDBCBook extends AbstractPassageBook {
 
             return retcode;
         } catch (NoSuchVerseException ex) {
-            log.error("word=" + word); //$NON-NLS-1$
+            log.error("word=" + word);
             assert false : ex;
             return createEmptyKeyList();
         } catch (SQLException ex) {
-            log.error("word=" + word); //$NON-NLS-1$
+            log.error("word=" + word);
             throw new BookException(Msg.BIBLE_DB, ex);
         }
     }
@@ -240,7 +240,7 @@ public class JDBCBook extends AbstractPassageBook {
             ArrayList output = new ArrayList();
 
             // word = JDBCBibleUtil.swapChar(word, '\'', '?');
-            startStmt.setString(1, word + "%"); //$NON-NLS-1$
+            startStmt.setString(1, word + "%");
             ResultSet rs = startStmt.executeQuery();
             while (rs.next()) {
                 output.add(rs.getString(1));
@@ -250,7 +250,7 @@ public class JDBCBook extends AbstractPassageBook {
 
             return output;
         } catch (SQLException ex) {
-            log.error("word=" + word); //$NON-NLS-1$
+            log.error("word=" + word);
             throw new BookException(Msg.BIBLE_DB, ex);
         }
     }
@@ -364,7 +364,7 @@ public class JDBCBook extends AbstractPassageBook {
 
                 return retcode;
             } catch (Exception ex) {
-                log.warn("SQL error in iteration", ex); //$NON-NLS-1$
+                log.warn("SQL error in iteration", ex);
                 throw new NoSuchElementException(ex.getMessage());
             }
         }

@@ -74,7 +74,7 @@ public class MenuUtil {
     public static JMenuBar createMenubar() {
         JMenuBar menubar = new JMenuBar();
 
-        String[] menu_names = StringUtil.split(getResourceString("menubar")); //$NON-NLS-1$
+        String[] menu_names = StringUtil.split(getResourceString("menubar"));
         for (int i = 0; i < menu_names.length; i++) {
             JMenu menu = createMenu(menu_names[i]);
             if (menu != null)
@@ -91,7 +91,7 @@ public class MenuUtil {
         String[] item_names = StringUtil.split(getResourceString(name));
         JMenu menu = new JMenu(getResourceString(name + SUFFIX_LABEL));
         for (int i = 0; i < item_names.length; i++) {
-            if (item_names[i].equals("-")) //$NON-NLS-1$
+            if (item_names[i].equals("-"))
             {
                 menu.addSeparator();
             } else {
@@ -154,9 +154,9 @@ public class MenuUtil {
      */
     public static Component createToolbar() {
         JToolBar toolbar = new JToolBar();
-        String[] toolKeys = StringUtil.split(getResourceString("toolbar")); //$NON-NLS-1$
+        String[] toolKeys = StringUtil.split(getResourceString("toolbar"));
         for (int i = 0; i < toolKeys.length; i++) {
-            if (toolKeys[i].equals("-")) //$NON-NLS-1$
+            if (toolKeys[i].equals("-"))
             {
                 toolbar.add(Box.createHorizontalStrut(5));
             } else {
@@ -269,7 +269,7 @@ public class MenuUtil {
             if (ev.getPropertyName().equals(Action.NAME)) {
                 String text = (String) ev.getNewValue();
                 menuItem.setText(text);
-            } else if (propertyName.equals("enabled")) //$NON-NLS-1$
+            } else if (propertyName.equals("enabled"))
             {
                 Boolean enabled = (Boolean) ev.getNewValue();
                 menuItem.setEnabled(enabled.booleanValue());
@@ -282,22 +282,22 @@ public class MenuUtil {
     /**
      * Suffix applied to the key used in resource file lookups for an image.
      */
-    public static final String SUFFIX_IMAGE = "Image"; //$NON-NLS-1$
+    public static final String SUFFIX_IMAGE = "Image";
 
     /**
      * Suffix applied to the key used in resource file lookups for a label.
      */
-    public static final String SUFFIX_LABEL = "Label"; //$NON-NLS-1$
+    public static final String SUFFIX_LABEL = "Label";
 
     /**
      * Suffix applied to the key used in resource file lookups for an action.
      */
-    public static final String SUFFIX_ACTIOIN = "Action"; //$NON-NLS-1$
+    public static final String SUFFIX_ACTIOIN = "Action";
 
     /**
      * Suffix applied to the key used in resource file lookups for tooltip text.
      */
-    public static final String SUFFIX_TIP = "Tooltip"; //$NON-NLS-1$
+    public static final String SUFFIX_TIP = "Tooltip";
 
     /*
      * Data

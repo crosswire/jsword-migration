@@ -227,7 +227,7 @@ public class IndexSearcher implements Searcher {
 
         Object next = iterator().next();
         if (!(next instanceof ParamWord)) {
-            log.error("next=" + next); //$NON-NLS-1$
+            log.error("next=" + next);
         }
 
         ParamWord param = (ParamWord) next;
@@ -246,7 +246,7 @@ public class IndexSearcher implements Searcher {
 
         Object next = iterator().next();
         if (!(next instanceof ParamWord)) {
-            log.error("next=" + next); //$NON-NLS-1$
+            log.error("next=" + next);
         }
 
         ParamWord param = (ParamWord) next;
@@ -275,18 +275,18 @@ public class IndexSearcher implements Searcher {
                             Class clazz = Class.forName(key);
                             preferredMap.put(clazz, value);
                         } catch (Exception ex) {
-                            log.error("can't add CommandWord: key=" + key + " Class=" + value, ex); //$NON-NLS-1$ //$NON-NLS-2$
+                            log.error("can't add CommandWord: key=" + key + " Class=" + value, ex);
                         }
                     } else {
                         try {
                             wordMap.put(key, ReflectionUtil.construct(value));
                         } catch (Exception ex) {
-                            log.error("can't add CommandWord: key=" + key + " Class=" + value, ex); //$NON-NLS-1$ //$NON-NLS-2$
+                            log.error("can't add CommandWord: key=" + key + " Class=" + value, ex);
                         }
                     }
                 }
             } catch (IOException ex) {
-                log.fatal("Missing search words", ex); //$NON-NLS-1$
+                log.fatal("Missing search words", ex);
             }
         }
 
@@ -306,7 +306,7 @@ public class IndexSearcher implements Searcher {
      * To distinguish command mappings from preferred mappings in
      * Word.properties
      */
-    private static final String PACKAGE_NAME = "org.crosswire.jsword.book.search.parse"; //$NON-NLS-1$
+    private static final String PACKAGE_NAME = "org.crosswire.jsword.book.search.parse";
 
     /**
      * The log stream

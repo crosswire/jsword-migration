@@ -31,7 +31,7 @@ public class BrowserOutputStream extends OutputStream {
         char ch = (char) b;
 
         if (ch == '\n' || ch == '\r') {
-            text = ""; //$NON-NLS-1$
+            text = "";
         } else {
             text += ch;
             appcx.showStatus(text);
@@ -39,5 +39,5 @@ public class BrowserOutputStream extends OutputStream {
     }
 
     private AppletContext appcx;
-    private String text = ""; //$NON-NLS-1$
+    private String text = "";
 }

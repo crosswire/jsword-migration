@@ -57,7 +57,7 @@ public class SerIndexManager implements IndexManager {
             URI longer = NetUtil.lengthenURI(storage, SerIndex.FILE_INDEX);
             return NetUtil.isFile(longer);
         } catch (IOException ex) {
-            log.error("Failed to find lucene index storage area.", ex); //$NON-NLS-1$
+            log.error("Failed to find lucene index storage area.", ex);
             return false;
         }
     }
@@ -171,7 +171,7 @@ public class SerIndexManager implements IndexManager {
     /**
      * The ser search index directory
      */
-    private static final String DIR_SER = "ser"; //$NON-NLS-1$
+    private static final String DIR_SER = "ser";
 
     /**
      * The log stream

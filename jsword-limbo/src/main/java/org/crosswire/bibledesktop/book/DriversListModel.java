@@ -94,7 +94,7 @@ public class DriversListModel extends AbstractListModel {
      */
     public String getDriverName(Object test) {
         String item = test.toString();
-        int end = item.indexOf(" ("); //$NON-NLS-1$
+        int end = item.indexOf(" (");
         return item.substring(0, end);
     }
 
@@ -135,7 +135,7 @@ public class DriversListModel extends AbstractListModel {
     /**
      * The small version icon
      */
-    protected static final Icon SMALL_ICON = GuiUtil.getIcon("/org/crosswire/resources/task_small.gif"); //$NON-NLS-1$
+    protected static final Icon SMALL_ICON = GuiUtil.getIcon("/org/crosswire/resources/task_small.gif");
 
     /**
      * border if we do not have focus
@@ -191,12 +191,12 @@ public class DriversListModel extends AbstractListModel {
                 setForeground(list.getForeground());
             }
 
-            setText((value == null) ? "" : value.toString()); //$NON-NLS-1$
+            setText((value == null) ? "" : value.toString());
             setIcon(SMALL_ICON);
 
             setEnabled(list.isEnabled());
             setFont(list.getFont());
-            setBorder(focus ? UIManager.getBorder("List.focusCellHighlightBorder") : NO_FOCUS_BORDER); //$NON-NLS-1$
+            setBorder(focus ? UIManager.getBorder("List.focusCellHighlightBorder") : NO_FOCUS_BORDER);
 
             return this;
         }

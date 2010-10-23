@@ -35,7 +35,7 @@ public class ThreadUtilTest extends TestCase {
         super(s);
     }
 
-    String NEWLINE = System.getProperty("line.separator", "\r\n"); //$NON-NLS-1$ //$NON-NLS-2$
+    String NEWLINE = System.getProperty("line.separator", "\r\n");
 
     /* @Override */
     protected void setUp() throws Exception {

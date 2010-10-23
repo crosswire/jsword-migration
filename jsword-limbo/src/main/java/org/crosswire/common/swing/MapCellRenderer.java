@@ -122,16 +122,16 @@ public class MapCellRenderer extends JTextArea implements TableCellRenderer {
         setFont(table.getFont());
 
         if (hasFocus) {
-            setBorder(UIManager.getBorder("Table.focusCellHighlightBorder")); //$NON-NLS-1$
+            setBorder(UIManager.getBorder("Table.focusCellHighlightBorder"));
             if (table.isCellEditable(row, column)) {
-                super.setForeground(UIManager.getColor("Table.focusCellForeground")); //$NON-NLS-1$
-                super.setBackground(UIManager.getColor("Table.focusCellBackground")); //$NON-NLS-1$
+                super.setForeground(UIManager.getColor("Table.focusCellForeground"));
+                super.setBackground(UIManager.getColor("Table.focusCellBackground"));
             }
         } else {
             setBorder(noFocusBorder);
         }
 
-        setText(value == null ? "" : value.toString()); //$NON-NLS-1$
+        setText(value == null ? "" : value.toString());
 
         return this;
     }

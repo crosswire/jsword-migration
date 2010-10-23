@@ -149,10 +149,10 @@ public class BibleTreeNode implements TreeNode {
      */
     public String toString() {
         if (ref == null) {
-            return Msg.WHOLE_BIBLE.toString();
+            return Msg.gettext("The Whole Bible");
         }
 
-        return Msg.PART_BIBLE.toString(ref.getOverview());
+        return Msg.gettext("Search ({0})", ref.getOverview());
     }
 
     /**

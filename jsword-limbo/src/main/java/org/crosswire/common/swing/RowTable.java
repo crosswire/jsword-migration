@@ -313,12 +313,12 @@ public class RowTable extends JTable {
     /**
      * Field ONE_STANDARD_CHARACTER
      */
-    private static final String ONE_STANDARD_CHARACTER = "M"; //$NON-NLS-1$
+    private static final String ONE_STANDARD_CHARACTER = "M";
 
     /**
      * Field TWO_STANDARD_CHARACTERS
      */
-    private static final String TWO_STANDARD_CHARACTERS = "MM"; //$NON-NLS-1$
+    private static final String TWO_STANDARD_CHARACTERS = "MM";
 
     /**
      * Field PADDING

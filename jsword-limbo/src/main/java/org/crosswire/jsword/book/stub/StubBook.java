@@ -74,7 +74,7 @@ public class StubBook extends AbstractPassageBook {
      */
     /* @Override */
     public String getRawText(Key key) {
-        return "stub implementation"; //$NON-NLS-1$
+        return "stub implementation";
     }
 
     /*

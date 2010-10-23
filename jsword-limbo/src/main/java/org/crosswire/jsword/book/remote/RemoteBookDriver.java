@@ -87,7 +87,7 @@ public abstract class RemoteBookDriver extends AbstractBookDriver {
 
                     rbmd = Converter.convertDocumentToBooks(this, doc, remoter);
                 } catch (Exception ex) {
-                    log.warn("failed to remote getBibleNames", ex); //$NON-NLS-1$
+                    log.warn("failed to remote getBibleNames", ex);
                     rbmd = new Book[0];
                 }
             }

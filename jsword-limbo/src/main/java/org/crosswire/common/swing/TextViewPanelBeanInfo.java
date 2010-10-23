@@ -26,22 +26,22 @@ public class TextViewPanelBeanInfo extends SimpleBeanInfo {
     public PropertyDescriptor[] getPropertyDescriptors() {
         try {
             // The header property
-            PropertyDescriptor header = new PropertyDescriptor("header", TextViewPanel.class, "getHeader", "setHeader"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            header.setDisplayName("Header"); //$NON-NLS-1$
-            header.setShortDescription("Header"); //$NON-NLS-1$
+            PropertyDescriptor header = new PropertyDescriptor("header", TextViewPanel.class, "getHeader", "setHeader");
+            header.setDisplayName("Header");
+            header.setShortDescription("Header");
             header.setBound(true);
 
             // The main text property
-            PropertyDescriptor text = new PropertyDescriptor("text", TextViewPanel.class, "getText", "setText"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            text.setDisplayName("Text"); //$NON-NLS-1$
-            text.setShortDescription("Text"); //$NON-NLS-1$
+            PropertyDescriptor text = new PropertyDescriptor("text", TextViewPanel.class, "getText", "setText");
+            text.setDisplayName("Text");
+            text.setShortDescription("Text");
             text.setBound(true);
 
             return new PropertyDescriptor[] {
                     header, text,
             };
         } catch (IntrospectionException ex) {
-            log.info("Failure", ex); //$NON-NLS-1$
+            log.info("Failure", ex);
             return null;
         }
     }
@@ -58,7 +58,7 @@ public class TextViewPanelBeanInfo extends SimpleBeanInfo {
                 superBeanInfo
             };
         } catch (IntrospectionException ex) {
-            log.info("Failure", ex); //$NON-NLS-1$
+            log.info("Failure", ex);
             return null;
         }
     }

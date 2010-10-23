@@ -60,7 +60,7 @@ public class WebBrowser {
      */
     public void printHeaders() {
         for (Enumeration en = headers.elements(); en.hasMoreElements();) {
-            log.debug("" + en.nextElement()); //$NON-NLS-1$
+            log.debug("" + en.nextElement());
         }
     }
 
@@ -100,7 +100,7 @@ public class WebBrowser {
      */
     public void printCookies() {
         for (Enumeration en = cookies.elements(); en.hasMoreElements();) {
-            log.debug("" + en.nextElement()); //$NON-NLS-1$
+            log.debug("" + en.nextElement());
         }
     }
 
@@ -118,15 +118,15 @@ public class WebBrowser {
         StringBuffer buffer = new StringBuffer();
         for (Enumeration en = cookies.elements(); en.hasMoreElements();) {
             Cookie cookie = (Cookie) en.nextElement();
-            buffer.append(cookie.getName() + "=" + cookie.getValue()); //$NON-NLS-1$
+            buffer.append(cookie.getName() + "=" + cookie.getValue());
             if (en.hasMoreElements())
-                buffer.append("; "); //$NON-NLS-1$
+                buffer.append("; ");
         }
 
         // Add a cookies header
         if (buffer.length() != 0) {
             // There are cookies now
-            cook_head = new Header("Cookie", buffer.toString()); //$NON-NLS-1$
+            cook_head = new Header("Cookie", buffer.toString());
             headers.addElement(cook_head);
         }
     }

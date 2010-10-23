@@ -87,8 +87,8 @@ public class SortRenderer extends DefaultTableCellRenderer {
             }
         }
 
-        setText((value == null) ? "" : value.toString()); //$NON-NLS-1$
-        setBorder(UIManager.getBorder("TableHeader.cellBorder")); //$NON-NLS-1$
+        setText((value == null) ? "" : value.toString());
+        setBorder(UIManager.getBorder("TableHeader.cellBorder"));
         return this;
     }
 

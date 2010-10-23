@@ -54,7 +54,7 @@ public class RawBookDriver extends AbstractBookDriver {
             dir = BookRoot.findBibleRoot(getDriverName());
 
             if (!NetUtil.isDirectory(dir)) {
-                log.debug("Missing raw directory: " + dir); //$NON-NLS-1$
+                log.debug("Missing raw directory: " + dir);
                 return new Book[0];
             }
 
@@ -95,7 +95,7 @@ public class RawBookDriver extends AbstractBookDriver {
      * @see org.crosswire.jsword.book.BookDriver#getDriverName()
      */
     public String getDriverName() {
-        return "raw"; //$NON-NLS-1$
+        return "raw";
     }
 
     /**

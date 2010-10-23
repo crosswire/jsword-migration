@@ -126,15 +126,15 @@ public class JobsViewPane extends JPanel implements WorkListener {
      */
     /* private */final void addJob(final Progress job) {
         int i = findEmptyPosition();
-        log.debug("adding job to panel at " + i + ": " + job.getJobName()); //$NON-NLS-1$ //$NON-NLS-2$
+        log.debug("adding job to panel at " + i + ": " + job.getJobName());
 
         JProgressBar progress = new JProgressBar();
         progress.setStringPainted(true);
-        progress.setString("0%"); //$NON-NLS-1$
+        progress.setString("0%");
         progress.setToolTipText(job.getJobName());
         progress.setValue(0);
 
-        JLabel label = new JLabel(job.getJobName() + ":"); //$NON-NLS-1$
+        JLabel label = new JLabel(job.getJobName() + ":");
 
         // It is clumsy to use an ActionFactory for these buttons,
         // since there is one cancel button per job.
@@ -172,7 +172,7 @@ public class JobsViewPane extends JPanel implements WorkListener {
         JobData jobdata = (JobData) jobs.get(job);
 
         int percent = job.getWork();
-        jobdata.getProgress().setString(percent + "%"); //$NON-NLS-1$
+        jobdata.getProgress().setString(percent + "%");
         jobdata.getProgress().setToolTipText(job.getSectionName());
         jobdata.getProgress().setValue(percent);
     }
@@ -183,7 +183,7 @@ public class JobsViewPane extends JPanel implements WorkListener {
     protected void removeJob(Progress job) {
         JobData jobdata = (JobData) jobs.get(job);
 
-        log.debug("removing job from panel at " + jobdata.getIndex() + ": " + job.getJobName()); //$NON-NLS-1$ //$NON-NLS-2$
+        log.debug("removing job from panel at " + jobdata.getIndex() + ": " + job.getJobName());
 
         positions.set(jobdata.getIndex(), null);
         jobs.remove(job);

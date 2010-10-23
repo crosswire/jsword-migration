@@ -31,17 +31,17 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 class Msg extends MsgBase {
-    static final Msg BIBLE_CONNECT = new Msg("JDBCBook.BibleConnect"); //$NON-NLS-1$
-    static final Msg BIBLE_DB = new Msg("JDBCBook.BibleDB"); //$NON-NLS-1$
+    static final Msg BIBLE_CONNECT = new Msg("JDBCBook.BibleConnect");
+    static final Msg BIBLE_DB = new Msg("JDBCBook.BibleDB");
 
-    static final Msg DRIVER_READONLY = new Msg("JDBCBook.DriverReadonly"); //$NON-NLS-1$
+    static final Msg DRIVER_READONLY = new Msg("JDBCBook.DriverReadonly");
 
-    static final Msg SEARCH_FAIL = new Msg("JDBCBibleUtil.SearchFail"); //$NON-NLS-1$
+    static final Msg SEARCH_FAIL = new Msg("JDBCBibleUtil.SearchFail");
 
-    static final Msg DELIM_UNMATCHED = new Msg("JDBCBibleUtil.DelimUnmatched"); //$NON-NLS-1$
-    static final Msg DELIM_NESTED = new Msg("JDBCBibleUtil.DelimNested"); //$NON-NLS-1$
+    static final Msg DELIM_UNMATCHED = new Msg("JDBCBibleUtil.DelimUnmatched");
+    static final Msg DELIM_NESTED = new Msg("JDBCBibleUtil.DelimNested");
 
-    static final Msg ERROR = new Msg("JDBCBibleUtil.Error"); //$NON-NLS-1$
+    static final Msg ERROR = new Msg("JDBCBibleUtil.Error");
 
     /**
      * Passthrough ctor

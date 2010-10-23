@@ -284,11 +284,11 @@ public class BlogClientFrame extends JPanel {
         }
     }
 
-    private static final String USER_NAME = "WebJournal.UserName"; //$NON-NLS-1$
-    private static final String PASSWORD = "WebJournal.Password"; //$NON-NLS-1$
+    private static final String USER_NAME = "WebJournal.UserName";
+    private static final String PASSWORD = "WebJournal.Password";
     private static String userName;
     private static String password;
-    private static String url = "http://www.bibleblogs.net/roller/xmlrpc"; //$NON-NLS-1$
+    private static String url = "http://www.bibleblogs.net/roller/xmlrpc";
     private static BlogType type = BlogType.META_WEBLOG;
 
     private static final BlogClientFrame SELF = new BlogClientFrame();
