@@ -21,7 +21,7 @@ public class ListKey extends SWKey {
      */
 
     public ListKey() {
-        this(""); //$NON-NLS-1$
+        this("");
     }
 
     public ListKey(String ikey) {
@@ -175,7 +175,7 @@ public class ListKey extends SWKey {
             ((SWKey) array.get(arraypos)).position(pos);
             setText(((SWKey) array.get(arraypos)).getText());
         } else
-            setText(""); //$NON-NLS-1$
+            setText("");
 
         return error;
     }

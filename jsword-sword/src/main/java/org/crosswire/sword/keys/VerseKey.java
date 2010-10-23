@@ -101,7 +101,7 @@ public class VerseKey extends SWKey {
      * VerseKey::parse for more detailed information)
      */
     public VerseKey() {
-        this(""); //$NON-NLS-1$
+        this("");
     }
 
     public VerseKey(SWKey ikey) {

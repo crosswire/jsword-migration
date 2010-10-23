@@ -101,12 +101,12 @@ public class SWConfig {
      */
     public static void main(String[] args) {
         if (args.length < 1) {
-            System.out.println("Usage: java SWConfig <file> [<file> <file> ...]"); //$NON-NLS-1$
+            System.out.println("Usage: java SWConfig <file> [<file> <file> ...]");
             System.exit(0);
         }
 
         try {
-            System.out.println("Showing Properties in file: " + args[0]); //$NON-NLS-1$
+            System.out.println("Showing Properties in file: " + args[0]);
             SWConfig config = new SWConfig(args[0]);
             // If there were multiple files given, load them
             // all.
@@ -118,18 +118,18 @@ public class SWConfig {
             Iterator sit = config.sectionNames();
             while (sit.hasNext()) {
                 String sectionName = (String) sit.next();
-                System.out.println("Section: " + sectionName); //$NON-NLS-1$
+                System.out.println("Section: " + sectionName);
                 Iterator spit = config.propertyNames(sectionName);
                 while (spit.hasNext()) {
                     String key = (String) spit.next();
                     Iterator vit = config.getProperties(sectionName, key);
                     while (vit.hasNext()) {
-                        System.out.println("\t" + key + ": " + vit.next()); //$NON-NLS-1$ //$NON-NLS-2$
+                        System.out.println("\t" + key + ": " + vit.next());
                     }
                 }
             }
         } catch (Exception ex) {
-            System.err.println("Error: " + ex.getMessage()); //$NON-NLS-1$
+            System.err.println("Error: " + ex.getMessage());
             ex.printStackTrace(System.err);
         }
 
@@ -157,7 +157,7 @@ public class SWConfig {
             }
 
             // check to see if this is the SectionName
-            if (((String) key).startsWith("[")) { //$NON-NLS-1$
+            if (((String) key).startsWith("[")) {
                 String skey = (String) key;
                 this.name = skey.substring(1, (skey.length() - 1));
                 // Shouldn't be any values associated with this
@@ -236,7 +236,7 @@ public class SWConfig {
             // Otherwise create a List, set a single value
             // and return an Iterator for it.
             List list = new LinkedList();
-            list.add(value != null ? value : ""); //$NON-NLS-1$
+            list.add(value != null ? value : "");
             return list.iterator();
         }
     }

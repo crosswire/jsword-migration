@@ -26,10 +26,10 @@ public class PackageMod {
 
     public static void copyFileToZip(ZipOutputStream zos, String sourceDir, String fileName, String prefix) {
         try {
-            if ((prefix.length() > 0) && (!prefix.endsWith("/"))) //$NON-NLS-1$
-                prefix += "/"; //$NON-NLS-1$
+            if ((prefix.length() > 0) && (!prefix.endsWith("/")))
+                prefix += "/";
             zos.putNextEntry(new ZipEntry(prefix + fileName));
-            fileName = sourceDir + ((sourceDir.endsWith("/")) ? "" : "/") + fileName; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            fileName = sourceDir + ((sourceDir.endsWith("/")) ? "" : "/") + fileName;
             FileInputStream fin = new FileInputStream(fileName);
             byte[] buffer = new byte[20000];
             int len;
@@ -48,8 +48,8 @@ public class PackageMod {
         // Vector files = new Vector();
         long lastModFile = 0;
 
-        if (!sourceDir.endsWith("/")) //$NON-NLS-1$
-            sourceDir += "/"; //$NON-NLS-1$
+        if (!sourceDir.endsWith("/"))
+            sourceDir += "/";
 
         try {
             if (mgr.config.contains(modName)) {
@@ -65,14 +65,14 @@ public class PackageMod {
                 String modFile;
                 String sourceOrig = sourceDir;
 
-                modDir = mgr.config.getProperty(modName, "DataPath"); //$NON-NLS-1$
+                modDir = mgr.config.getProperty(modName, "DataPath");
                 if (modDir != null) {
-                    entry = mgr.config.getProperty(modName, "ModDrv"); //$NON-NLS-1$
+                    entry = mgr.config.getProperty(modName, "ModDrv");
                     if (entry != null) {
-                        if (entry.equals("RawLD") || entry.equals("RawLD4")) //$NON-NLS-1$ //$NON-NLS-2$
+                        if (entry.equals("RawLD") || entry.equals("RawLD4"))
                             modDir = modDir.substring(0, modDir.lastIndexOf('/'));
                     }
-                    if (modDir.startsWith("./")) //$NON-NLS-1$
+                    if (modDir.startsWith("./"))
                         modDir = modDir.substring(2);
 
                     sourceDir += modDir;
@@ -80,7 +80,7 @@ public class PackageMod {
                     String names[] = dataDir.list();
 
                     for (int i = 0; i < names.length; i++) {
-                        if ((!names[i].equals(".")) && (!names[i].equals(".."))) { //$NON-NLS-1$ //$NON-NLS-2$
+                        if ((!names[i].equals(".")) && (!names[i].equals(".."))) {
                             File testFile = new File(dataDir, names[i]);
                             if (testFile.canRead()) {
                                 if (testFile.lastModified() > lastModFile) {
@@ -91,17 +91,17 @@ public class PackageMod {
                     }
                 }
                 sourceDir = sourceOrig;
-                sourceDir += "mods.d/"; //$NON-NLS-1$
+                sourceDir += "mods.d/";
 
                 File dataDir = new File(sourceDir);
                 String names[] = dataDir.list(new FilenameFilter() {
                     public boolean accept(File dir, String name) {
-                        return name.endsWith(".conf"); //$NON-NLS-1$
+                        return name.endsWith(".conf");
                     }
                 });
 
                 for (int i = 0; i < names.length; i++) {
-                    if ((!names[i].equals(".")) && (!names[i].equals(".."))) { //$NON-NLS-1$ //$NON-NLS-2$
+                    if ((!names[i].equals(".")) && (!names[i].equals(".."))) {
                         modFile = sourceDir;
                         modFile += names[i];
                         SWConfig config = new SWConfig(modFile);
@@ -128,31 +128,31 @@ public class PackageMod {
         String entry = null;
         Iterator fileList = null;
 
-        if (!sourceDir.endsWith("/")) //$NON-NLS-1$
-            sourceDir += "/"; //$NON-NLS-1$
+        if (!sourceDir.endsWith("/"))
+            sourceDir += "/";
 
         try {
 
             if (mgr.config.contains(modName)) {
 
-                fileList = mgr.config.getProperties(modName, "File"); //$NON-NLS-1$
+                fileList = mgr.config.getProperties(modName, "File");
                 if (fileList.hasNext()) { // copy each file
                     while (fileList.hasNext()) {
-                        copyFileToZip(zstream, sourceDir, (String) fileList.next(), ""); //$NON-NLS-1$
+                        copyFileToZip(zstream, sourceDir, (String) fileList.next(), "");
                     }
                 } else { // copy all files in DataPath directory
                     String modDir;
                     String modFile;
                     String sourceOrig = sourceDir;
 
-                    modDir = mgr.config.getProperty(modName, "DataPath"); //$NON-NLS-1$
+                    modDir = mgr.config.getProperty(modName, "DataPath");
                     if (modDir != null) {
-                        entry = mgr.config.getProperty(modName, "ModDrv"); //$NON-NLS-1$
+                        entry = mgr.config.getProperty(modName, "ModDrv");
                         if (entry != null) {
-                            if (entry.equals("RawLD") || entry.equals("RawLD4")) //$NON-NLS-1$ //$NON-NLS-2$
+                            if (entry.equals("RawLD") || entry.equals("RawLD4"))
                                 modDir = modDir.substring(0, modDir.lastIndexOf('/'));
                         }
-                        if (modDir.startsWith("./")) //$NON-NLS-1$
+                        if (modDir.startsWith("./"))
                             modDir = modDir.substring(2);
 
                         sourceDir += modDir;
@@ -160,35 +160,35 @@ public class PackageMod {
                         String names[] = dataDir.list();
 
                         for (int i = 0; i < names.length; i++) {
-                            if ((!names[i].equals(".")) && (!names[i].equals(".."))) { //$NON-NLS-1$ //$NON-NLS-2$
+                            if ((!names[i].equals(".")) && (!names[i].equals(".."))) {
                                 modFile = modDir;
-                                if (!modFile.endsWith("/")) //$NON-NLS-1$
-                                    modFile += "/"; //$NON-NLS-1$
+                                if (!modFile.endsWith("/"))
+                                    modFile += "/";
                                 modFile += names[i];
-                                copyFileToZip(zstream, sourceOrig, modFile, ""); //$NON-NLS-1$
+                                copyFileToZip(zstream, sourceOrig, modFile, "");
                             }
                         }
                     }
                     sourceDir = sourceOrig;
-                    sourceDir += "mods.d/"; //$NON-NLS-1$
+                    sourceDir += "mods.d/";
 
                     File dataDir = new File(sourceDir);
                     String names[] = dataDir.list(new FilenameFilter() {
                         public boolean accept(File dir, String name) {
-                            return name.endsWith(".conf"); //$NON-NLS-1$
+                            return name.endsWith(".conf");
                         }
                     });
 
                     for (int i = 0; i < names.length; i++) {
-                        if ((!names[i].equals(".")) && (!names[i].equals(".."))) { //$NON-NLS-1$ //$NON-NLS-2$
+                        if ((!names[i].equals(".")) && (!names[i].equals(".."))) {
                             modFile = sourceDir;
                             modFile += names[i];
                             SWConfig config = new SWConfig(modFile);
                             if (config.contains(modName)) {
                                 if (triggerInstall)
-                                    copyFileToZip(zstream, sourceOrig + "mods.d/", names[i], "newmods/"); //$NON-NLS-1$ //$NON-NLS-2$
+                                    copyFileToZip(zstream, sourceOrig + "mods.d/", names[i], "newmods/");
                                 else
-                                    copyFileToZip(zstream, sourceOrig, "mods.d/" + names[i], ""); //$NON-NLS-1$ //$NON-NLS-2$
+                                    copyFileToZip(zstream, sourceOrig, "mods.d/" + names[i], "");
                             }
                         }
                     }

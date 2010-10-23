@@ -17,7 +17,7 @@ public class SWKey implements Cloneable, Comparable {
      * SWKey Constructor - initializes instance of SWKey. ENT: ikey - text key
      */
     public SWKey() {
-        this(""); //$NON-NLS-1$
+        this("");
     }
 
     public SWKey(String ikey) {

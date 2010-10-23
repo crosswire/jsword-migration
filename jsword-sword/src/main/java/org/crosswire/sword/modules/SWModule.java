@@ -343,7 +343,7 @@ public class SWModule {
      */
 
     String stripText() {
-        return ""; //stripText(null, -1); //$NON-NLS-1$
+        return ""; //stripText(null, -1);
     }
 
     /*
@@ -387,7 +387,7 @@ public class SWModule {
 
         setKey(tmpKey);
 
-        retVal = ""; //renderText(); //$NON-NLS-1$
+        retVal = ""; //renderText();
 
         setKey(savekey);
 
@@ -423,6 +423,6 @@ public class SWModule {
     }
 
     public String getText() {
-        return ""; //$NON-NLS-1$
+        return "";
     }
 }
