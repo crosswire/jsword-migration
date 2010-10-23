@@ -21,12 +21,12 @@ import org.crosswire.common.util.Logger;
  * @author Joe Walker [joe at eireneh dot com]
  */
 public class DownloadSet implements Comparable {
-    public static final String BIN_ZIP = "-bin.zip"; //$NON-NLS-1$
-    public static final String BIN_TGZ = "-bin.tar.gz"; //$NON-NLS-1$
-    public static final String SRC_ZIP = "-src.zip"; //$NON-NLS-1$
-    public static final String SRC_TGZ = "-src.tar.gz"; //$NON-NLS-1$
-    public static final String DOC_ZIP = "-doc.zip"; //$NON-NLS-1$
-    public static final String DOC_TGZ = "-doc.tar.gz"; //$NON-NLS-1$
+    public static final String BIN_ZIP = "-bin.zip";
+    public static final String BIN_TGZ = "-bin.tar.gz";
+    public static final String SRC_ZIP = "-src.zip";
+    public static final String SRC_TGZ = "-src.tar.gz";
+    public static final String DOC_ZIP = "-doc.zip";
+    public static final String DOC_TGZ = "-doc.tar.gz";
 
     /**
      * Get an Iterator over all the Downloads in the specified Directory
@@ -37,11 +37,11 @@ public class DownloadSet implements Comparable {
             throw new IOException(Msg.NON_DIR.toString(localprefix));
         }
 
-        log.debug("dig " + localprefix); //$NON-NLS-1$
+        log.debug("dig " + localprefix);
         File[] files = dir.listFiles(new FileFilter() {
             public boolean accept(File file) {
                 String name = file.getName();
-                log.debug("found " + name); //$NON-NLS-1$
+                log.debug("found " + name);
                 return file.canRead() && name.startsWith(TEST_PREFIX) && name.endsWith(TEST_SUFFIX);
             }
         });
@@ -49,7 +49,7 @@ public class DownloadSet implements Comparable {
         SortedSet reply = new TreeSet();
         for (int i = 0; i < files.length; i++) {
             String name = files[i].getName();
-            log.debug("adding " + name); //$NON-NLS-1$
+            log.debug("adding " + name);
             String sets = name.substring(TEST_PREFIX.length(), name.length() - TEST_SUFFIX.length());
             reply.add(new DownloadSet(localprefix, webprefix, sets, datesort));
         }
@@ -66,7 +66,7 @@ public class DownloadSet implements Comparable {
         this.setname = setname;
         this.datesort = datesort;
 
-        log.debug("ctor " + webprefix); //$NON-NLS-1$
+        log.debug("ctor " + webprefix);
     }
 
     /*
@@ -76,7 +76,7 @@ public class DownloadSet implements Comparable {
      */
     public int compareTo(Object obj) {
         if (!(obj instanceof DownloadSet)) {
-            log.error("Asked to compare to non DownloadSet"); //$NON-NLS-1$
+            log.error("Asked to compare to non DownloadSet");
             return 0;
         }
 
@@ -92,7 +92,7 @@ public class DownloadSet implements Comparable {
 
                 return thisdate.compareTo(thatdate);
             } catch (ParseException ex) {
-                log.error("Failed to parse dates", ex); //$NON-NLS-1$
+                log.error("Failed to parse dates", ex);
                 return 0;
             }
         }
@@ -126,9 +126,9 @@ public class DownloadSet implements Comparable {
     public String getLinkString(String extension) {
         File file = new File(localprefix, TEST_PREFIX + setname + extension);
         String size = NF.format(file.length() / (1024.0F * 1024.0F));
-        String reply = "<a href='" + webprefix + '/' + TEST_PREFIX + setname + extension + "'>" + size + " Mb</a>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        String reply = "<a href='" + webprefix + '/' + TEST_PREFIX + setname + extension + "'>" + size + " Mb</a>";
 
-        log.debug("link=" + reply); //$NON-NLS-1$
+        log.debug("link=" + reply);
 
         return reply;
     }
@@ -138,13 +138,13 @@ public class DownloadSet implements Comparable {
     private String localprefix;
     private String setname;
 
-    private static final String TEST_PREFIX = "jsword-"; //$NON-NLS-1$
+    private static final String TEST_PREFIX = "jsword-";
     private static final String TEST_SUFFIX = BIN_ZIP;
 
     private static final NumberFormat NF = NumberFormat.getNumberInstance();
-    private static final String VERSION_DATE = "yyyyMMdd"; //$NON-NLS-1$
+    private static final String VERSION_DATE = "yyyyMMdd";
     private static final DateFormat DF_DISK = new SimpleDateFormat(VERSION_DATE);
-    private static final DateFormat DF_USER = new SimpleDateFormat("dd MMM yyyy"); //$NON-NLS-1$
+    private static final DateFormat DF_USER = new SimpleDateFormat("dd MMM yyyy");
     static {
         NF.setMaximumFractionDigits(2);
     }

@@ -10,9 +10,9 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 class Msg extends MsgBase {
-    static final Msg INIT_FAILED = new Msg("Failed to initialize"); //$NON-NLS-1$
-    static final Msg VERSION = new Msg("Version {0}"); //$NON-NLS-1$
-    static final Msg NON_DIR = new Msg("{0} is not a directory"); //$NON-NLS-1$
+    static final Msg INIT_FAILED = new Msg("Failed to initialize");
+    static final Msg VERSION = new Msg("Version {0}");
+    static final Msg NON_DIR = new Msg("{0} is not a directory");
 
     /**
      * Passthrough ctor
