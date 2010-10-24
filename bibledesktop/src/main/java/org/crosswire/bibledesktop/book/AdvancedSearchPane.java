@@ -660,8 +660,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
     //    private static final String BEFORE = "Before";
 
     /**
-     * In our parsing we use space quite a lot and this ensures there is only
-     * one and that we don't have lots of NON-NLS comments everywhere
+     * In our parsing we use space quite a lot and this ensures there is only one.
      */
     private static final String SPACE = " ";
 

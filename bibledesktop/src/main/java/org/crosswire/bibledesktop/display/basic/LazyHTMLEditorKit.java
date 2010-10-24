@@ -58,7 +58,7 @@ public class LazyHTMLEditorKit extends HTMLEditorKit {
             if (mls[i] instanceof HTMLEditorKit.LinkController){
                 if (linkCtrl == null)
                     linkCtrl = (HTMLEditorKit.LinkController) mls[i];
-                else throw new RuntimeException("Multiple Link Controllers!"); //$NON-NLS-1$
+                else throw new RuntimeException("Multiple Link Controllers!");
             }
         //c.removeMouseListener(linkCtrl);
         c.removeMouseMotionListener(linkCtrl);      
