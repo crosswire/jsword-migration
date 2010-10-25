@@ -54,7 +54,7 @@ import org.crosswire.common.util.StringUtil;
  * Field is one of:
  * <ul>
  * <li>Name - This is required. The value is used for the text of the Action.<br/>
- * A mnemonic can be specified by preceding the letter with &. Using this letter in
+ * A mnemonic can be specified by preceding the letter with _. Using this letter in
  * a case insensitive search, the earliest position of that letter will
  * cause the it to be underlined. In a platform dependent
  * way it provides a keyboard mechanism to fire the action. For example, on
@@ -368,15 +368,15 @@ public class ActionFactory implements ActionListener, Actionable {
                         tooltip = nameValue;
                     }
 
-                    // A Mnemonic can be specified by a preceding & in the name
+                    // A Mnemonic can be specified by a preceding _ in the name
                     Integer mnemonic = null;
-                    int pos = nameValue.indexOf('&');
+                    int pos = nameValue.indexOf('_');
                     int len = nameValue.length();
                     if (pos == len - 1) {
-                        // There is nothing following the &. Just remove it.
+                        // There is nothing following the _. Just remove it.
                         nameValue = nameValue.substring(0, len - 1);
                     } else if (pos >= 0 && pos < len - 1) {
-                        // Remove the &
+                        // Remove the _
                         StringBuffer buffer = new StringBuffer(nameValue.length() - 1);
                         if (pos > 0) {
                             buffer.append(nameValue.substring(0, pos));
@@ -385,7 +385,7 @@ public class ActionFactory implements ActionListener, Actionable {
 
                         nameValue = buffer.toString();
 
-                        // the mnemonic is now at the position that the & was.
+                        // the mnemonic is now at the position that the _ was.
                         mnemonic = new Integer(nameValue.charAt(pos));
                     }
 
