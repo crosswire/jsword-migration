@@ -79,7 +79,7 @@ import org.crosswire.jsword.util.ConverterFactory;
  *      The copyright to this program is held by it's authors.
  * @author Yingjie Lan [lanyjie at yahoo dot com]
  */
-public class URITipMgr extends MouseAdapter implements ActionListener, MouseMotionListener, URIEventListener {
+public class URITipMgr extends MouseAdapter implements ActionListener, URIEventListener {
     
     Component owner;
     JTextPane txtView;
