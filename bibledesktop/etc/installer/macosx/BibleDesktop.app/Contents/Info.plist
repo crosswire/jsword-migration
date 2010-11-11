@@ -38,7 +38,6 @@
 			<array>
 			<string>$JAVAROOT/bibledesktop-@release.version@.jar</string>
 			<string>$JAVAROOT/jsword-@release.version@.jar</string>
-			<string>$JAVAROOT/jsword-common-@release.version@.jar</string>
 			<string>$JAVAROOT/jsword-common-swing-@release.version@.jar</string>
 			<string>$JAVAROOT/jsword-common-aqua-1.0.6.jar</string>
 			<string>$JAVAROOT/lucene-core-2.9.1.jar</string>

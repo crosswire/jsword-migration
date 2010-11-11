@@ -1,8 +1,8 @@
 <project name="bibledesktop" default="all">
 
   <!-- This build uses the core build targets -->
-  <import file="../common/core.xml"/>
-  <property name="dependency"       value="jsword"/>
+  <import file="../jsword/core.xml"/>
+  <property name="dependency"       value="common-swing"/>
   <property name="dependency.jar"   value="../${dependency}/${target.jar}"/>
 
   <!--=======================================================================-->
@@ -20,7 +20,7 @@
     <xslt
         in="${source.res}/config.xml"
         out="${gener.root}/config/ConfigTest.java"
-        style="../common/etc/config-test.xsl">
+        style="../jsword/etc/config-test.xsl">
       <xmlcatalog refid="commonDTDs"/>
     </xslt>
     <javac debug="on" includes="**/*.java" destdir="${test.classes}">

@@ -29,11 +29,6 @@
     </dependency>
     <dependency>
       <groupId>org.crosswire</groupId>
-      <artifactId>jsword-common</artifactId>
-      <version>${parent.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.crosswire</groupId>
       <artifactId>jsword-common-swing</artifactId>
       <version>${parent.version}</version>
     </dependency>

@@ -20,11 +20,6 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.crosswire</groupId>
-      <artifactId>jsword-common</artifactId>
-      <version>${parent.version}</version>
-    </dependency>
     
   </dependencies>
   <properties>

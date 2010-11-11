@@ -30,7 +30,6 @@
     <j2se version="1.4+"/>
     <jar href="bibledesktop-@release.version@.jar"/>
     <jar href="jsword-@release.version@.jar"/>
-    <jar href="jsword-common-@release.version@.jar"/>
     <jar href="jsword-common-swing-@release.version@.jar"/>
     <jar href="jsword-common-aqua-1.0.6.jar"/>
     <jar href="javatar-2.5.jar"/>

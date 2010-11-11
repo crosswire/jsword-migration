@@ -23,7 +23,6 @@
         jvmargs="-Xmx512m">
       <class location="${target.jar}/bibledesktop-${release.version}.jar"/>
       <class location="${target.jar}/jsword-${release.version}.jar"/>
-      <class location="${target.jar}/jsword-common-${release.version}.jar"/>
       <class location="${target.jar}/jsword-common-swing-${release.version}.jar"/>
       <sourcePath>
         <dirset dir=".." includes="**/${source.java}"/>

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry exported="true" sourcepath="/jsword-support/othersource/jakarta-servletapi-4-src-20021215.zip" kind="lib" path="jar/servlet-2.3/servlet.jar"/>
+	<classpathentry exported="true" kind="lib" path="jar/servlet-2.3/servlet.jar" sourcepath="/jsword-support/othersource/jakarta-servletapi-4-src-20021215.zip"/>
 	<classpathentry kind="src" path="/jsword"/>
-	<classpathentry kind="src" path="/common"/>
 	<classpathentry kind="src" path="/bibledesktop"/>
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/main/java"/>

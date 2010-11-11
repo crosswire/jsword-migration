@@ -12,9 +12,8 @@
   <properties>
     <maven.test.skip>true</maven.test.skip>
     <project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
-
-    <project.reporting.outputEncoding>iso-8859-1</project.reporting.outputEncoding>
-
+    <project.reporting.outputEncoding>iso-8859-1
+    </project.reporting.outputEncoding>
   </properties>
 
   <dependencies>
@@ -88,10 +87,11 @@
 
 
   <modules>
-    <module>common</module>
     <module>common-swing</module>
     <module>jsword</module>
     <module>bibledesktop</module>
+    <module>bibledesktop-web</module>
+    <module>jsword-web</module>
   </modules>
 
   <profiles>
@@ -106,12 +106,38 @@
       <activation>
         <property>
           <name>os.name</name>
-          <value>Mac OS X</value> <!-- fix this to mac os-->
+          <value>Mac OS X</value>
         </property>
       </activation>
       <modules>
         <module>common-aqua</module>
       </modules>
+    </profile>
+
+    <profile>
+      <id>sign</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jarsigner-plugin</artifactId>
+            <version>1.2</version>
+            <configuration>
+              <keystore>../jsword/crosswire.keystore</keystore>
+              <storepass>p455w0rd</storepass>
+              <alias>jsword</alias>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+                <phase>package</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 

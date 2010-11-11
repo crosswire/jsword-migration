@@ -2,7 +2,7 @@
 
   <property name="target.installed" value="../bibledesktop/target/installed"/> <!-- override -->
 
-  <import file="../common/core.xml"/>
+  <import file="../jsword/core.xml"/>
 
   <property name="dependency"         value="bibledesktop-web"/>
   <property name="dependency.jar"     value="../bibledesktop/${target.jar}"/>
@@ -21,14 +21,12 @@
 
   <!--=======================================================================-->
   <path id="path.alljava">
-    <pathelement path="../common/src/main/java"/>
     <pathelement path="../common-swing/src/main/java"/>
     <pathelement path="../jsword/src/main/java"/>
     <pathelement path="../bibledesktop/src/main/java"/>
     <pathelement path="../jsword-web/src/main/java"/>
   </path>
   <patternset id="pattern.alljava">
-    <include name="common/src/main/java/**/*.java"/>
     <include name="common-swing/src/main/java/**/*.java"/>
     <include name="jsword/src/main/java/**/*.java"/>
     <include name="bibledesktop/src/main/java/**/*.java"/>
@@ -38,7 +36,6 @@
     <patternset refid="pattern.alljava"/>
   </fileset>
   <path id="path.allclasses">
-    <pathelement path="../common/${target.classes}"/>
     <pathelement path="../common-swing/${target.classes}"/>
     <pathelement path="../jsword/${target.classes}"/>
     <pathelement path="../bibledesktop/${target.classes}"/>
@@ -188,21 +185,17 @@
     <mkdir dir="${directory}"/>
     <zip zipfile="${directory}/jsword-${version}-src.zip">
       <zipfileset prefix="jsword-${version}/jsword"       dir="../jsword/src/main/java"/>
-      <!-- <zipfileset prefix="jsword-${version}/jsword"       dir="../jsword/src/main/resources"/> -->
+      <zipfileset prefix="jsword-${version}/jsword"       dir="../jsword/src/main/resources"/>
       <zipfileset prefix="jsword-${version}/common-swing" dir="../common-swing/src/main/java"/>
       <!-- <zipfileset prefix="jsword-${version}/common-swing" dir="../common-swing/src/main/resources"/> -->
-      <zipfileset prefix="jsword-${version}/common"       dir="../common/src/main/java"/>
-      <zipfileset prefix="jsword-${version}/common"       dir="../common/src/main/resources"/>
       <zipfileset prefix="jsword-${version}/bibledesktop" dir="../bibledesktop/src/main/java"/>
       <zipfileset prefix="jsword-${version}/bibledesktop" dir="../bibledesktop/src/main/resources"/>
     </zip>
     <tar tarfile="${directory}/jsword-${version}-src.tar.gz" compression="gzip">
       <tarfileset prefix="jsword-${version}/jsword"       dir="../jsword/src/main/java"/>
-      <!-- <tarfileset prefix="jsword-${version}/jsword"       dir="../jsword/src/main/resources"/> -->
+      <tarfileset prefix="jsword-${version}/jsword"       dir="../jsword/src/main/resources"/>
       <tarfileset prefix="jsword-${version}/common-swing" dir="../common-swing/src/main/java"/>
       <!-- <tarfileset prefix="jsword-${version}/common-swing" dir="../common-swing/src/main/resources"/> -->
-      <tarfileset prefix="jsword-${version}/common"       dir="../common/src/main/java"/>
-      <tarfileset prefix="jsword-${version}/common"       dir="../common/src/main/resources"/>
       <tarfileset prefix="jsword-${version}/bibledesktop" dir="../bibledesktop/src/main/java"/>
       <tarfileset prefix="jsword-${version}/bibledesktop" dir="../bibledesktop/src/main/resources"/>
     </tar>

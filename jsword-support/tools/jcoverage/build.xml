@@ -16,11 +16,8 @@
   <!-- Location of JUnit report -->
   <property name="target.web.junit" value="${target.web}/junit"/>
   
-  <property name="source.java.common" value="../common/${source.java}"/>
   <property name="source.java.jsword" value="../jsword/${source.java}"/>
-  <property name="target.classes.common" value="../common/${target.classes}"/>
   <property name="target.classes.jsword" value="../jsword/${target.classes}"/>
-  <property name="test.classes.common" value="../common/${test.classes}"/>
   <property name="test.classes.jsword" value="../jsword/${test.classes}"/>
 
   <path id="jcoverage">
@@ -54,7 +51,6 @@
       <arg value="org.apache.log4j.*"/>
       <arg value="-d"/>
       <arg file="${target.jcov.classes}"/>
-      <arg file="${target.classes.common}"/>
       <arg file="${target.classes.jsword}"/>
     </java>
 
@@ -102,7 +98,6 @@ Otherwise, run the junit.antlibs task to copy jars to ANT_HOME/lib</echo>
       <!-- Location of log4j.properties -->
       <classpath location="${target.jcov.root}"/>
       <!-- Need to include the test code -->
-      <classpath location="${test.classes.common}"/>
       <classpath location="${test.classes.jsword}"/>
       <!-- And the classes that testing needs -->
       <classpath refid="test.jarpath"/>
@@ -129,7 +124,7 @@ Otherwise, run the junit.antlibs task to copy jars to ANT_HOME/lib</echo>
       -->
     <copy todir="${target.jcov.src}">
       <mapper type="regexp" from=".*[\\/](org[\\/].*)" to="\1"/>
-      <fileset dir="../common/${source.java}" casesensitive="yes">
+      <fileset dir="../jsword/${source.java}" casesensitive="yes">
         <patternset refid="java.compile"/>
       </fileset>
       <fileset dir="../jsword/${source.java}" casesensitive="yes">

@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src/main/java"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/common"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jsword"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
