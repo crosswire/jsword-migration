@@ -90,7 +90,7 @@ public class OSXAdapter extends ApplicationAdapter {
             actionable.actionPerformed(action);
             ae.setHandled(handledState);
         } else {
-            throw new IllegalStateException("handleQuit: MyApp instance detached from listener"); //$NON-NLS-1$
+            throw new IllegalStateException("handleQuit: MyApp instance detached from listener");
         }
     }
 
