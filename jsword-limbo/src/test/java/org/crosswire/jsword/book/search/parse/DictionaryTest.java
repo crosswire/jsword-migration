@@ -74,7 +74,7 @@ public class DictionaryTest extends TestCase {
 
     public void testStripSmallWords() {
         String[] temp = Grammar.stripSmallWords(new String[] {
-                "i", "am", "but", "nothing", "o", "the", "lord", "god", "and", "",}); //$NON-NLS-10$
+                "i", "am", "but", "nothing", "o", "the", "lord", "god", "and", "",});
         assertEquals(temp[0], "nothing");
         assertEquals(temp[1], "lord");
         assertEquals(temp[2], "god");
