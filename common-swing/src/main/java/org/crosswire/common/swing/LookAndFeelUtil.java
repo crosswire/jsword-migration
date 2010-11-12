@@ -154,10 +154,8 @@ public final class LookAndFeelUtil {
         try {
             // Note: GTK looks good under Java 1.5, but is broken.
             // Motif still does not look good.
-            if (systemLAF.indexOf("WindowsLookAndFeel") != -1 ||
-                    //systemLAF.indexOf("GTKLookAndFeel") != -1 ||
-                    systemLAF.indexOf("AquaLookAndfeel") != -1)
-            {
+            // systemLAF.indexOf("GTKLookAndFeel") != -1 ||
+            if (systemLAF.indexOf("WindowsLookAndFeel") != -1 || systemLAF.indexOf("AquaLookAndfeel") != -1) {
                 UIManager.setLookAndFeel(systemLAF);
                 // MetalLookAndFeel.setCurrentTheme(new DefaultMetalTheme());
                 // UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");

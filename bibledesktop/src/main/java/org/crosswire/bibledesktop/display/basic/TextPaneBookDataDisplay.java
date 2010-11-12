@@ -90,10 +90,10 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
         styledDoc = txtView.getStyledDocument();
         lastStart = -1;
         lastLength = -1;
-        
+
         this.addURIEventListener(
                 new ActiveURITip(txtView,
-                      new Dimension(400,300)));
+                      new Dimension(400, 300)));
     }
 
     /* (non-Javadoc)
@@ -179,8 +179,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             /* Apply the fix if the text is too long and we are not Java 1.5 or greater */
             if (text.length() > 32768 && BookCategory.GENERAL_BOOK.equals(getFirstBook().getBookCategory())) {
                 String javaVersion = System.getProperty("java.specification.version");
-                if (javaVersion == null || "1.5".compareTo(javaVersion) > 0)
-                {
+                if (javaVersion == null || "1.5".compareTo(javaVersion) > 0) {
                     text = text.substring(0, 32760) + "...";
                 }
             }
@@ -453,7 +452,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
     /**
      * To convert OSIS to HTML
      */
-    Converter converter;
+    private Converter converter;
 
     /**
      * The display component

@@ -36,6 +36,7 @@ import javax.swing.JTextPane;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import javax.swing.border.TitledBorder;
+import javax.xml.transform.TransformerException;
 
 import org.crosswire.bibledesktop.book.install.BookFont;
 import org.crosswire.bibledesktop.desktop.Desktop;
@@ -53,11 +54,13 @@ import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.book.BookData;
+import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.Defaults;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.util.ConverterFactory;
+import org.xml.sax.SAXException;
 
 /**
  * How it works: 1. When mouse clicked with the right button on a link, show the
@@ -68,17 +71,6 @@ import org.crosswire.jsword.util.ConverterFactory;
  * @author Yingjie Lan [lanyjie at yahoo dot com]
  */
 public class ActiveURITip extends MouseAdapter implements URIEventListener {
-
-    JTextPane owner;
-    LazyHTMLEditorKit lazykit;
-    JTextPane txtView;
-    JScrollPane scrView;
-    TitledBorder title;
-    Popup popup;
-
-    int lastx, lasty, lastb;
-
-    Converter converter;
 
     public ActiveURITip(JTextPane own, Dimension dim) {
         converter = ConverterFactory.getConverter();
@@ -135,7 +127,7 @@ public class ActiveURITip extends MouseAdapter implements URIEventListener {
             return;
         }
 
-        assert (book == bdata.getFirstBook());
+        assert book == bdata.getFirstBook();
 
         BookMetaData bmd = book.getBookMetaData();
         if (bmd == null) {
@@ -173,14 +165,21 @@ public class ActiveURITip extends MouseAdapter implements URIEventListener {
             /* Apply the fix if the text is too long and we are not Java 1.5 or greater */
             if (txt.length() > 32768 && BookCategory.GENERAL_BOOK.equals(book.getBookCategory())) {
                 String javaVersion = System.getProperty("java.specification.version");
-                if (javaVersion == null || "1.5".compareTo(javaVersion) > 0)
-                {
+                if (javaVersion == null || "1.5".compareTo(javaVersion) > 0) {
                     txt = txt.substring(0, 32760) + "...";
                 }
             }
-
-        } catch (Exception e) {
-            // SAXException, BookException, TransformerException
+        } catch (SAXException e) {
+            Reporter.informUser(this, e);
+            e.printStackTrace();
+            txtView.setText(e.getMessage());
+            title.setTitle("Exception");
+        } catch (TransformerException e) {
+            Reporter.informUser(this, e);
+            e.printStackTrace();
+            txtView.setText(e.getMessage());
+            title.setTitle("Exception");
+        } catch (BookException e) {
             Reporter.informUser(this, e);
             e.printStackTrace();
             txtView.setText(e.getMessage());
@@ -206,22 +205,24 @@ public class ActiveURITip extends MouseAdapter implements URIEventListener {
         int horizDist = 30; // these numbers are hard coded
         int vertiDist = 10; // but they depend on font size.
         // always show tips in the 'better half'
-        if (x + x > s.width)
+        if (x + x > s.width) {
             x -= horizDist + d.width;
-        else
+        } else {
             x += horizDist;
-        if (y + y > s.height)
+        }
+        if (y + y > s.height) {
             y -= vertiDist + d.height;
-        else
+        } else {
             y += vertiDist;
-
+        }
         popup = PopupFactory.getSharedInstance().getPopup(owner, scrView, x, y);
         popup.show();
     }
 
     void hideTip() {
-        if (popup != null)
+        if (popup != null) {
             popup.hide();
+        }
         popup = null;
     }
 
@@ -232,14 +233,18 @@ public class ActiveURITip extends MouseAdapter implements URIEventListener {
     boolean interested(URIEvent ev) {
         // tell if it is interested in ev
         String protocol = ev.getScheme();
-        if (protocol.equals(Desktop.GREEK_DEF_PROTOCOL))
+        if (protocol.equals(Desktop.GREEK_DEF_PROTOCOL)) {
             return true;
-        if (protocol.equals(Desktop.HEBREW_DEF_PROTOCOL))
+        }
+        if (protocol.equals(Desktop.HEBREW_DEF_PROTOCOL)) {
             return true;
-        if (protocol.equals(Desktop.GREEK_MORPH_PROTOCOL))
+        }
+        if (protocol.equals(Desktop.GREEK_MORPH_PROTOCOL)) {
             return true;
-        if (protocol.equals(Desktop.HEBREW_MORPH_PROTOCOL))
+        }
+        if (protocol.equals(Desktop.HEBREW_MORPH_PROTOCOL)) {
             return true;
+        }
         return false;
     }
 
@@ -248,7 +253,6 @@ public class ActiveURITip extends MouseAdapter implements URIEventListener {
      */
     public void activateURI(URIEvent ev) {
         // TODO Auto-generated method stub
-
     }
 
     /* (non-Javadoc)
@@ -283,4 +287,16 @@ public class ActiveURITip extends MouseAdapter implements URIEventListener {
         // lazykit.getLinkCtrl().mouseClicked(e);
     }
 
+    private JTextPane owner;
+    private LazyHTMLEditorKit lazykit;
+    private JTextPane txtView;
+    private JScrollPane scrView;
+    private TitledBorder title;
+    private Popup popup;
+
+    private int lastx;
+    private int lasty;
+    private int lastb;
+
+    private Converter converter;
 }

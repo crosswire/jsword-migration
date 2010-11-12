@@ -61,7 +61,7 @@ final class Msg extends MsgBase {
      * The text requires one parameter to be passed.
      * 
      * @param key
-     * @param param
+     * @param params
      * @return the formatted, internationalized text
      */
     public static String gettext(String key, Object[] params)

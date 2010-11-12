@@ -35,14 +35,6 @@ import javax.swing.text.html.HTMLEditorKit;
  * @author Yingjie Lan [lanyjie at yahoo dot com]
  */
 public class LazyHTMLEditorKit extends HTMLEditorKit {
-
-    /**
-     * Auto generated.
-     */
-    private static final long serialVersionUID = 4673477549981614993L;
-    private HTMLEditorKit.LinkController linkCtrl = null;
-
-    
      /**
       * Called when the kit is being installed into the
       * a JEditorPane.
@@ -50,20 +42,20 @@ public class LazyHTMLEditorKit extends HTMLEditorKit {
       * @param c the JEditorPane
       */
      public void install(JEditorPane c) {
-        //c.addMouseListener(linkHandler);
-        //c.addMouseMotionListener(linkHandler);
         super.install(c);
         MouseListener[] mls = c.getMouseListeners();
-        for(int i=0; i<mls.length; i++)
-            if (mls[i] instanceof HTMLEditorKit.LinkController){
-                if (linkCtrl == null)
+        for (int i = 0; i < mls.length; i++) {
+            if (mls[i] instanceof HTMLEditorKit.LinkController) {
+                if (linkCtrl == null) {
                     linkCtrl = (HTMLEditorKit.LinkController) mls[i];
-                else throw new RuntimeException("Multiple Link Controllers!");
+                } else {
+                    throw new RuntimeException("Multiple Link Controllers!");
+                }
             }
-        //c.removeMouseListener(linkCtrl);
-        c.removeMouseMotionListener(linkCtrl);      
+        }
+        c.removeMouseMotionListener(linkCtrl);
       }
-     
+
        /**
         * Called when the kit is being removed from the
         * JEditorPane. This is used to unregister any
@@ -73,13 +65,17 @@ public class LazyHTMLEditorKit extends HTMLEditorKit {
         */
         public void deinstall(JEditorPane c) {
             c.addMouseMotionListener(linkCtrl);
-            //c.addMouseListener(linkCtrl);
             super.deinstall(c);
             linkCtrl = null;
         }
-        
-        public HTMLEditorKit.LinkController getLinkCtrl(){
+
+        public HTMLEditorKit.LinkController getLinkCtrl() {
             return  linkCtrl;
         }
 
+        /**
+         * Auto generated.
+         */
+        private static final long serialVersionUID = 4673477549981614993L;
+        private HTMLEditorKit.LinkController linkCtrl;
 }

@@ -31,7 +31,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.net.URI;
 import java.util.Locale;
 
@@ -42,6 +41,7 @@ import javax.swing.PopupFactory;
 import javax.swing.Timer;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.html.HTMLEditorKit;
+import javax.xml.transform.TransformerException;
 
 import org.crosswire.bibledesktop.book.install.BookFont;
 import org.crosswire.bibledesktop.desktop.Desktop;
@@ -59,11 +59,13 @@ import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.book.BookData;
+import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.Defaults;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.util.ConverterFactory;
+import org.xml.sax.SAXException;
 
 /**
  * How it works:
@@ -80,20 +82,21 @@ import org.crosswire.jsword.util.ConverterFactory;
  * @author Yingjie Lan [lanyjie at yahoo dot com]
  */
 public class URITipMgr extends MouseAdapter implements ActionListener, URIEventListener {
-    
-    Component owner;
-    JTextPane txtView;
-    JScrollPane scrView;
-    TitledBorder title;
-    Popup popup;
-    boolean sticky;
 
-    int lastx, lasty;
-    URIEvent event;
-    Timer timer;
+    private Component owner;
+    private JTextPane txtView;
+    private JScrollPane scrView;
+    private TitledBorder title;
+    private Popup popup;
+    private boolean sticky;
 
-    Converter converter;
-    
+    private int lastx;
+    private int lasty;
+    private URIEvent event;
+    private Timer timer;
+
+    private Converter converter;
+
     public URITipMgr(Component own, Dimension dim) {
         converter = ConverterFactory.getConverter();
         owner = own;
@@ -112,15 +115,18 @@ public class URITipMgr extends MouseAdapter implements ActionListener, URIEventL
         txtView.addMouseListener(this);
         setDelay(1500);
     }
-    
-    public void setDelay(int delay){
-        if(timer!=null) timer.stop();
+
+    public void setDelay(int delay) {
+        if (timer != null) {
+            timer.stop();
+        }
         timer = new Timer(delay, this);
     }
-    
+
     public void updateText() {
-        if (event == null)
+        if (event == null) {
             return;
+        }
         String txt = null;
         String protocol = event.getScheme();
         Book book = null;
@@ -154,7 +160,7 @@ public class URITipMgr extends MouseAdapter implements ActionListener, URIEventL
             return;
         }
 
-        assert (book == bdata.getFirstBook());
+        assert book == bdata.getFirstBook();
 
         BookMetaData bmd = book.getBookMetaData();
         if (bmd == null) {
@@ -181,6 +187,7 @@ public class URITipMgr extends MouseAdapter implements ActionListener, URIEventL
                 XSLTProperty.BASE_URL.setProperty(htmlsep);
                 XSLTProperty.DIRECTION.setProperty(htmlsep);
             }
+
             // Override the default if needed
             htmlsep.setParameter(XSLTProperty.FONT.getName(), fontSpec);
 
@@ -197,14 +204,23 @@ public class URITipMgr extends MouseAdapter implements ActionListener, URIEventL
                     txt = txt.substring(0, 32760) + "...";
                 }
             }
-
-        } catch (Exception e) {
-            // SAXException, BookException, TransformerException
+        } catch (SAXException e) {
+            Reporter.informUser(this, e);
+            e.printStackTrace();
+            txtView.setText(e.getMessage());
+            title.setTitle("Exception");
+        } catch (TransformerException e) {
+            Reporter.informUser(this, e);
+            e.printStackTrace();
+            txtView.setText(e.getMessage());
+            title.setTitle("Exception");
+        } catch (BookException e) {
             Reporter.informUser(this, e);
             e.printStackTrace();
             txtView.setText(e.getMessage());
             title.setTitle("Exception");
         }
+
         // Set the correct direction
         GuiUtil.applyOrientation(txtView, direction);
 
@@ -215,7 +231,7 @@ public class URITipMgr extends MouseAdapter implements ActionListener, URIEventL
         txtView.setText(txt);
         txtView.setCaretPosition(0);
     }
-    
+
     void showTip() {
         // when it is time to do so
         updateText();
@@ -227,19 +243,21 @@ public class URITipMgr extends MouseAdapter implements ActionListener, URIEventL
         int horizDist = 30; // these numbers are hard coded
         int vertiDist = 10; // but they depend on font size.
         // always show tips in the 'better half'
-        if (x + x > s.width)
+        if (x + x > s.width) {
             x -= horizDist + d.width;
-        else
+        } else {
             x += horizDist;
-        if (y + y > s.height)
+        }
+        if (y + y > s.height) {
             y -= vertiDist + d.height;
-        else
+        } else {
             y += vertiDist;
+        }
 
         popup = PopupFactory.getSharedInstance().getPopup(owner, scrView, x, y);
         popup.show();
     }
-    
+
     void hideTip(boolean stick) {
         if (popup != null) {
             popup.hide();
@@ -247,11 +265,11 @@ public class URITipMgr extends MouseAdapter implements ActionListener, URIEventL
         popup = null;
         sticky = stick;
     }
-    
+
     /**
      * @param ev if we are interested in this event 
      */
-    boolean interested(URIEvent ev){
+    boolean interested(URIEvent ev) {
        //tell if it is interested in ev
         String protocol = ev.getScheme();
         if (protocol.equals(Desktop.GREEK_DEF_PROTOCOL)) {
@@ -287,8 +305,9 @@ public class URITipMgr extends MouseAdapter implements ActionListener, URIEventL
         if (sticky) {
             hideTip(true); // remain sticky
             showTip(); // new tip immediately
-        } else
+        } else {
             timer.start();
+        }
     }
 
     /* (non-Javadoc)
@@ -309,7 +328,7 @@ public class URITipMgr extends MouseAdapter implements ActionListener, URIEventL
         //A timer fires, time to show the tip.
         //A tip might have been shown
         hideTip(false); //unset sticky
-        showTip(); 
+        showTip();
         timer.stop();
     }
 
@@ -318,7 +337,6 @@ public class URITipMgr extends MouseAdapter implements ActionListener, URIEventL
      */
     public void mouseDragged(MouseEvent e) {
         // TODO Auto-generated method stub
-        
     }
 
     /* (non-Javadoc)
@@ -328,7 +346,7 @@ public class URITipMgr extends MouseAdapter implements ActionListener, URIEventL
         lastx = e.getX();
         lasty = e.getY();
     }
-    
+
     public void mouseClicked(MouseEvent e) {
         // System.out.println(e);
         if (e.getSource() == txtView && e.getClickCount() == 1) {

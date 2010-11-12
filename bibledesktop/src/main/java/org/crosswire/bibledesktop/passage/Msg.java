@@ -31,25 +31,13 @@ import org.crosswire.common.util.MsgBase;
  * @author Joe Walker [joe at eireneh dot com]
  */
 final class Msg extends MsgBase {
-    static final Msg WHOLE_BIBLE = new Msg("The Whole Bible");
-    static final Msg PART_BIBLE = new Msg("Search ({0})");
-    static final Msg ERROR = new Msg("Error");
-    static final Msg WHOLE = new Msg("The Bible");
-
-    /**
-     * Passthrough ctor
-     */
-    private Msg(String name) {
-        super(name);
-    }
     /**
      * Get the internationalized text, but return key if key is unknown.
      * 
      * @param key
      * @return the internationalized text
      */
-    public static String gettext(String key)
-    {
+    public static String gettext(String key) {
         return msg.lookup(key);
     }
 
@@ -61,8 +49,7 @@ final class Msg extends MsgBase {
      * @param param
      * @return the formatted, internationalized text
      */
-    public static String gettext(String key, Object param)
-    {
+    public static String gettext(String key, Object param) {
         return msg.toString(key, param);
     }
 
@@ -71,14 +58,12 @@ final class Msg extends MsgBase {
      * The text requires one parameter to be passed.
      * 
      * @param key
-     * @param param
+     * @param params
      * @return the formatted, internationalized text
      */
-    public static String gettext(String key, Object[] params)
-    {
+    public static String gettext(String key, Object[] params) {
         return msg.toString(key, params);
     }
 
     private static MsgBase msg = new Msg();
-    Msg() {}
 }

@@ -368,7 +368,8 @@ public class JobsProgressBar extends JPanel implements WorkListener {
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridwidth = 1;
             gbc.fill = GridBagConstraints.NONE;
-            panel.add(bar.createCancelButton(job), gbc);
+            cancelButton = bar.createCancelButton(job);
+            panel.add(cancelButton, gbc);
             gbc.weightx = 1.0;
             gbc.gridwidth = GridBagConstraints.REMAINDER;
             gbc.fill = GridBagConstraints.HORIZONTAL;

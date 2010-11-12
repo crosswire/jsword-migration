@@ -775,11 +775,10 @@ public class CWOptionPane extends JOptionPane {
     /**
      * The actions for this dialog.
      */
-    /* protected */static ActionFactory actions = new ActionFactory(CWOptionPane.class, null);
+    private static ActionFactory actions = new ActionFactory(CWOptionPane.class, null);
 
     /**
      * Serialization ID
      */
     private static final long serialVersionUID = -1870422750863765033L;
-
 }

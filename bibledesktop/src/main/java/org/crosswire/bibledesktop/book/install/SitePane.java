@@ -430,7 +430,7 @@ public class SitePane extends JPanel {
             }
 
             float size = installer.getSize(name) / 1024.0F;
-            
+
             String formattedMsg = "";
             if (size > 1024.0F) {
                 size /= 1024.0F;
@@ -441,9 +441,7 @@ public class SitePane extends JPanel {
                 //    to show one digit of fractional part.
                 // The , and . will automatically be converted into the user's proper separators.
                 formattedMsg = Msg.gettext("{0} is {1,number,###,###,###.#}MB. Continue?", new Object[] {name.getName(), new Float(size / 1024.0F)});
-            }
-            else
-            {
+            } else {
                 // TRANSLATOR: The size of the book is provided so that the user can decide whether to continue a download.
                 // {0} is a placeholder for the name of the book.
                 // {1,number,###,###,###.#} is a placeholder for the size of the download in kilobytes.
