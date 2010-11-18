@@ -319,6 +319,98 @@ public class ActionFactory implements ActionListener, Actionable {
     }
 
     /**
+     * Lookup an existing action for actionName. Otherwise construct, store and return an action.
+     * 
+     * @param key
+     *            The short name by which this action is known. It is used to
+     *            lookup the action for reuse.
+     * @param name
+     *            This is required. The value is used for the text of the
+     *            Action.<br/>
+     *            A mnemonic can be specified by preceding the letter with _.
+     *            Using this letter in a case insensitive search, the earliest
+     *            position of that letter will cause the it to be underlined. In
+     *            a platform dependent way it provides a keyboard mechanism to
+     *            fire the action. For example, on Windows, alt + mnemonic will
+     *            cause a visible, active element with that mnemonic to fire.
+     *            For this reason, it is important to ensure that two visible,
+     *            active elements do not have the same mnemonic.<br/>
+     *            Note: Mnemonics are suppressed on MacOSX.
+     * @param tooltip
+     *            A tip to show when the mouse is over an element. If not
+     *            present, Name is used. This is likely to change. It is
+     *            redundant to show a tooltip that is identical to the shown
+     *            text.
+     * @param smallIconPath
+     *            An optional specification of a 16x16 pixel image to be shown
+     *            for the item. The value for this is a path which can be found
+     *            as a resource.<br/>
+     *            Note: the small icon will be used when actions are tied to
+     *            menu items and buttons.
+     * @param largIconPath
+     *            An optional specification of a 24x24 pixel image to be shown
+     *            for the item when large items are shown. Currently, these are
+     *            only used for the ToolBar, when a large toolbar is requested.
+     *            The value is a resource path to the image.
+     * @param acceleratorSpec
+     *            A key on the keyboard, which may be specified with 0x25 kind
+     *            of notation.<br/>
+     *            Accelerators are global key combinations that work within an
+     *            application to fire the action. When the action is shown as a
+     *            menu item the accelerator will be listed with the name. Note:
+     *            The accelerator key and it's modifiers are converted into a
+     *            <code>KeyStroke</code> with
+     *            <code>KeyStroke.getKeyStroke(key, modifierMask);</code><br/>
+     *            The modifiers are specified with comma separated list of ctrl,
+     *            alt, and shift, indicating what modifiers are necessary for
+     *            the accelerator.<br/>
+     *            Note: ctrl will use a platform's command key. On MacOSX this
+     *            is the Apple/Command key. Other platforms use Ctrl.
+     * @param enabled
+     *            Defaults to true when not present. It is disabled when the
+     *            value does not match "true" regardless of case. This is used
+     *            to initialize widgets tied to actions to disabled. Once the
+     *            action is created, it's state can be changed and the tied
+     *            widgets will behave appropriately.
+     * @return the stored or newly constructed action
+     */
+    public CWAction buildAction(String key, String name, String tooltip, String smallIconPath, String largIconPath, String acceleratorSpec, String enabled)
+    {
+        if (key == null || key.length() == 0) {
+            log.warn("Acronymn is missing for CWAction");
+        } 
+
+        CWAction cwAction = (CWAction) actions.get(key);
+
+        if (cwAction != null) {
+            return cwAction;
+        }
+
+        cwAction = new CWAction();
+        cwAction.putValue(Action.ACTION_COMMAND_KEY, key);
+
+        CWLabel cwLabel = new CWLabel(name);
+        cwAction.putValue(Action.NAME, cwLabel.getLabel());
+
+        // Mac's don't have mnemonics
+        if (!OSType.MAC.equals(OSType.getOSType())) {
+            cwAction.putValue(Action.MNEMONIC_KEY, cwLabel.getMnemonic());
+        }
+
+        cwAction.putValue(Action.SHORT_DESCRIPTION, tooltip);
+
+        cwAction.putValue(CWAction.LARGE_ICON, getIcon(largIconPath));
+        cwAction.putValue(Action.SMALL_ICON, getIcon(smallIconPath));
+
+        cwAction.putValue(Action.ACCELERATOR_KEY, getAccelerator(key, acceleratorSpec));
+
+        boolean flag = enabled == null ? true : Boolean.valueOf(enabled).booleanValue();
+        cwAction.setEnabled(flag);
+
+        return cwAction;
+    }
+
+    /**
      * Build the map of actions from resources
      */
     private void buildActionMap(Class basis) {
@@ -341,88 +433,36 @@ public class ActionFactory implements ActionListener, Actionable {
                 if (key.endsWith(TEST)) {
                     String actionName = key.substring(0, key.length() - TEST.length());
 
-                    ResourceBundle nickname = null;
-                    String nameValue = getActionString(resources, null, actionName, Action.NAME);
+                    String label = getActionString(resources, null, actionName, Action.NAME);
+                    String smallIconStr = getActionString(controls, null, actionName, Action.SMALL_ICON);
+                    String largeIconStr = getActionString(controls, null, actionName, CWAction.LARGE_ICON);
+                    String enabledStr = getActionString(controls, null, actionName, "Enabled");
 
                     // We know this should never happen because we are merely rebuilding the key.
-                    if (nameValue == null) {
+                    if (label == null) {
                         log.warn("Missing original key for " + actionName + '.' + Action.NAME);
                         continue;
                     }
 
                     // If the value starts with alias, we have to dig the actual name out of the aliases
-                    if (nameValue.startsWith(ActionFactory.ALIAS)) {
-                        String newActionName = nameValue.substring(ActionFactory.ALIAS.length());
-                        String newNameValue = getActionString(aliases, null, newActionName, Action.NAME);
+                    ResourceBundle nickname = null;
+                    if (label.startsWith(ActionFactory.ALIAS)) {
+                        String newActionName = label.substring(ActionFactory.ALIAS.length());
+                        String newLabel = getActionString(aliases, null, newActionName, Action.NAME);
                         // We had a clear request for an Alias. So newNameValue should never be null here.
-                        if (newNameValue == null) {
+                        if (newLabel == null) {
                             log.warn("Missing alias key for " + actionName + '.' + Action.NAME);
                             continue;
                         }
-                        nameValue = newNameValue;
+                        label = newLabel;
                         nickname = aliases;
                     }
 
                     String tooltip = getActionString(resources, nickname, actionName, CWAction.TOOL_TIP);
-                    if (tooltip == null) {
-                        tooltip = nameValue;
-                    }
+                    String acceleratorSpec = getActionString(resources, nickname, actionName, Action.ACCELERATOR_KEY);
 
-                    // A Mnemonic can be specified by a preceding _ in the name
-                    Integer mnemonic = null;
-                    int pos = nameValue.indexOf('_');
-                    int len = nameValue.length();
-                    if (pos == len - 1) {
-                        // There is nothing following the _. Just remove it.
-                        nameValue = nameValue.substring(0, len - 1);
-                    } else if (pos >= 0 && pos < len - 1) {
-                        // Remove the _
-                        StringBuffer buffer = new StringBuffer(nameValue.length() - 1);
-                        if (pos > 0) {
-                            buffer.append(nameValue.substring(0, pos));
-                        }
-                        buffer.append(nameValue.substring(pos + 1));
-
-                        nameValue = buffer.toString();
-
-                        // the mnemonic is now at the position that the _ was.
-                        mnemonic = new Integer(nameValue.charAt(pos));
-                    }
-
-                    KeyStroke accelerator = getAccelerator(nickname, resources, actionName);
-
-                    Icon smallIcon = getIcon(controls, actionName, Action.SMALL_ICON);
-                    Icon largeIcon = getIcon(controls, actionName, CWAction.LARGE_ICON);
-                    String enabledStr = getActionString(controls, null, actionName, "Enabled");
-                    boolean enabled = enabledStr == null ? true : Boolean.valueOf(enabledStr).booleanValue();
-
-                    CWAction cwAction = new CWAction();
-
-                    if (actionName == null || actionName.length() == 0) {
-                        log.warn("Acronymn is missing for CWAction");
-                    } else {
-                        cwAction.putValue(Action.ACTION_COMMAND_KEY, actionName);
-                    }
-
-                    if (nameValue.length() == 0) {
-                        log.warn("Name is missing for CWAction");
-                        cwAction.putValue(Action.NAME, "?");
-                    } else {
-                        cwAction.putValue(Action.NAME, nameValue);
-                    }
-
-                    cwAction.putValue(CWAction.LARGE_ICON, largeIcon);
-                    cwAction.putValue(Action.SMALL_ICON, smallIcon);
-                    cwAction.putValue(Action.SHORT_DESCRIPTION, tooltip);
-                    // Mac's don't have mnemonics
-                    if (!OSType.MAC.equals(OSType.getOSType())) {
-                        cwAction.putValue(Action.MNEMONIC_KEY, mnemonic);
-                    }
-                    cwAction.putValue(Action.ACCELERATOR_KEY, accelerator);
-                    cwAction.setEnabled(enabled);
-
+                    CWAction cwAction = buildAction(actionName, label, tooltip, smallIconStr, largeIconStr, acceleratorSpec, enabledStr);
                     cwAction.addActionListener(this);
-
                     actions.put(actionName, cwAction);
                 }
             }
@@ -463,9 +503,8 @@ public class ActionFactory implements ActionListener, Actionable {
     /**
      * Get an icon for the string
      */
-    private Icon getIcon(ResourceBundle resources, String actionName, String iconName) {
+    private Icon getIcon(String iconStr) {
         Icon icon = null;
-        String iconStr = getActionString(resources, null, actionName, iconName);
         if (iconStr != null && iconStr.length() > 0) {
             icon = GuiUtil.getIcon(iconStr);
         }
@@ -475,9 +514,8 @@ public class ActionFactory implements ActionListener, Actionable {
     /**
      * Convert the string to a valid Accelerator (that is a KeyStroke)
      */
-    private KeyStroke getAccelerator(ResourceBundle nicknames, ResourceBundle resources, String actionName) {
+    private KeyStroke getAccelerator(String actionName, String acceleratorSpec) {
         KeyStroke accelerator = null;
-        String acceleratorSpec = getActionString(resources, nicknames, actionName, Action.ACCELERATOR_KEY);
         if (acceleratorSpec != null && acceleratorSpec.length() > 0) {
             try {
                 accelerator = getKeyStroke(acceleratorSpec);
