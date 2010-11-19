@@ -347,7 +347,7 @@ public class ActionFactory implements ActionListener, Actionable {
      *            as a resource.<br/>
      *            Note: the small icon will be used when actions are tied to
      *            menu items and buttons.
-     * @param largIconPath
+     * @param largeIconPath
      *            An optional specification of a 24x24 pixel image to be shown
      *            for the item when large items are shown. Currently, these are
      *            only used for the ToolBar, when a large toolbar is requested.
@@ -374,8 +374,18 @@ public class ActionFactory implements ActionListener, Actionable {
      *            widgets will behave appropriately.
      * @return the stored or newly constructed action
      */
-    public CWAction buildAction(String key, String name, String tooltip, String smallIconPath, String largIconPath, String acceleratorSpec, String enabled)
-    {
+    public CWAction addAction(String key, String name, String tooltip, String smallIconPath, String largeIconPath, String acceleratorSpec, String enabled) {
+        CWAction cwAction = buildAction(key, name, tooltip, smallIconPath, largeIconPath, acceleratorSpec, enabled);
+        cwAction.addActionListener(this);
+        actions.put(key, cwAction);
+        return cwAction;
+    }
+
+    public CWAction addAction(String key, String name) {
+        return addAction(key, name, null, null, null, null, null);
+    }
+
+    private CWAction buildAction(String key, String name, String tooltip, String smallIconPath, String largeIconPath, String acceleratorSpec, String enabled) {
         if (key == null || key.length() == 0) {
             log.warn("Acronymn is missing for CWAction");
         } 
@@ -399,7 +409,7 @@ public class ActionFactory implements ActionListener, Actionable {
 
         cwAction.putValue(Action.SHORT_DESCRIPTION, tooltip);
 
-        cwAction.putValue(CWAction.LARGE_ICON, getIcon(largIconPath));
+        cwAction.putValue(CWAction.LARGE_ICON, getIcon(largeIconPath));
         cwAction.putValue(Action.SMALL_ICON, getIcon(smallIconPath));
 
         cwAction.putValue(Action.ACCELERATOR_KEY, getAccelerator(key, acceleratorSpec));

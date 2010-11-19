@@ -62,6 +62,7 @@ import javax.swing.event.DocumentListener;
 
 import org.crosswire.common.icu.NumberShaper;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWLabel;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.index.search.SearchType;
@@ -108,42 +109,50 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         Color headFG = Color.BLACK;
         Font headFont = temp.getFont().deriveFont(Font.BOLD);
 
-        lblHeading = actions.createJLabel(HEAD_BASE);
+        // TRANSLATOR: Heading for the first, most useful several search options.
+        lblHeading = new CWLabel(Msg.gettext("Search for verses with the following details")).createJLabel();
         lblHeading.setBorder(BorderFactory.createLineBorder(headBG, 3));
         lblHeading.setBackground(headBG);
         lblHeading.setForeground(headFG);
         lblHeading.setFont(headFont);
         lblHeading.setOpaque(true);
 
-        lblPhrase = actions.createJLabel(PHRASE);
+        // TRANSLATOR: Label for an input box for searching of phrases.
+        lblPhrase = new CWLabel(Msg.gettext("Includes this phrase:")).createJLabel();
         txtPhrase = new JTextField();
         txtPhrase.getDocument().addDocumentListener(this);
 
         txtIncludes = new JTextField();
         txtIncludes.getDocument().addDocumentListener(this);
-        lblIncludes = actions.createJLabel(INCLUDES);
+        // TRANSLATOR: Label for an input box for searching of all of the given words.
+        lblIncludes = new CWLabel(Msg.gettext("Includes these words:")).createJLabel();
         lblIncludes.setLabelFor(txtIncludes);
 
         txtExcludes = new JTextField();
         txtExcludes.getDocument().addDocumentListener(this);
-        lblExcludes = actions.createJLabel(EXCLUDES);
+        // TRANSLATOR: Label for an input box for searching of verses not containing the given words.
+        lblExcludes = new CWLabel(Msg.gettext("Excludes all these words:")).createJLabel();
         lblExcludes.setLabelFor(txtExcludes);
 
         txtSpell = new JTextField();
         txtSpell.getDocument().addDocumentListener(this);
-        lblSpell = actions.createJLabel(SPELL);
+        // TRANSLATOR: Label for an input box for searching of words whose spelling is unknown or varies.
+        lblSpell = new CWLabel(Msg.gettext("Something like this spelling:")).createJLabel();
         lblSpell.setLabelFor(txtSpell);
 
         txtStartsWith = new JTextField();
         txtStartsWith.getDocument().addDocumentListener(this);
-        lblStartsWith = actions.createJLabel(STARTS_WITH);
+        // TRANSLATOR: Label for an input box for searching of words by their prefix
+        lblStartsWith = new CWLabel(Msg.gettext("Includes words starting with:")).createJLabel();
         lblStartsWith.setLabelFor(txtStartsWith);
 
-        chkRank = new JCheckBox(actions.getAction(HEAD_RANK));
+        // TRANSLATOR: Heading for section to perform a search for the best verse match
+        chkRank = new JCheckBox(actions.addAction("HeadRank", Msg.gettext("Prioritize the found verses")));
         chkRank.setBackground(headBG);
         chkRank.setForeground(headFG);
         chkRank.setFont(headFont);
-        lblRank = actions.createJLabel(RANK);
+        // TRANSLATOR: Label for a slider how many of the best verses to show.
+        lblRank = new CWLabel(Msg.gettext("Show")).createJLabel();
         setLabelRank(DisplaySelectPane.getNumRankedVerses());
         lblRank.setVisible(false);
         sliderRank = new JSlider(SwingConstants.HORIZONTAL, 0, DisplaySelectPane.getMaxNumRankedVerses(), DisplaySelectPane.getNumRankedVerses());
@@ -165,11 +174,14 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
             }
         });
 
-        chkRestrict = new JCheckBox(actions.getAction(HEAD_RESTRICT));
+        // TRANSLATOR: Heading for section allowing user to restrict search to parts of the Bible.
+        chkRestrict = new JCheckBox(actions.addAction("HeadRestrict", Msg.gettext("Restrict search to parts of the Bible")));
         chkRestrict.setBackground(headBG);
         chkRestrict.setForeground(headFG);
         chkRestrict.setFont(headFont);
-        lblPresets = actions.createJLabel(PRESETS);
+
+        // TRANSLATOR: Label for a dropdown with preset verse ranges for searching.
+        lblPresets = new CWLabel(Msg.gettext("Preset Ranges:")).createJLabel();
         lblPresets.setVisible(false);
         cboPresets = new JComboBox(presets);
         cboPresets.setVisible(false);
@@ -178,19 +190,88 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
                 updatePreset();
             }
         });
-        lblRestrict = actions.createJLabel(RESTRICT);
+
+        // TRANSLATOR: Label for an input box for searching only in the specified verses
+        // This is filled in when the user enters input or picks an entry from the Preset Ranges dropdown.
+        // When the user enters input the dropdown is adjusted to show the last entry.
+        lblRestrict = new CWLabel(Msg.gettext("Include these verses:")).createJLabel();
         lblRestrict.setVisible(false);
         txtRestrict = new JTextField();
         txtRestrict.setVisible(false);
         txtRestrict.getDocument().addDocumentListener(this);
-        btnRestrict = new JButton(actions.getAction(RESTRICT_SELECT));
+        // TRANSLATOR: Button to bring up the verse selection dialog
+        btnRestrict = new JButton(actions.addAction("RestrictSelect", Msg.gettext("Select")));
         btnRestrict.setVisible(false);
 
-        chkSummary = new JCheckBox(actions.getAction(HEAD_SUMMARY));
+        // TRANSLATOR: Heading for section allowing user to specify Hebrew and Greek Strong's Numbers to include or exclude from search
+        // Not currently implemented.
+        chkHebGrk = new JCheckBox(actions.addAction("HeadOriginal", Msg.gettext("Contains Strong's Hebrew and Greek")));
+        chkHebGrk.setBackground(headBG);
+        chkHebGrk.setForeground(headFG);
+        chkHebGrk.setFont(headFont);
+
+        // TRANSLATOR: Label for an input box for searching for verses containing Hebrew Strong's Numbers.
+        // Not currently implemented.
+        lblHebInc = new CWLabel(Msg.gettext("Includes Hebrew Numbers:")).createJLabel();
+        lblHebInc.setVisible(false);
+        txtHebInc = new JTextField();
+        txtHebInc.setVisible(false);
+        txtHebInc.getDocument().addDocumentListener(this);
+
+        // TRANSLATOR: Label for an input box for searching for verses not containing Hebrew Strong's Numbers.
+        // Not currently implemented.
+        lblHebExc = new CWLabel(Msg.gettext("Excludes Hebrew Numbers:")).createJLabel();
+        lblHebExc.setVisible(false);
+        txtHebExc = new JTextField();
+        txtHebExc.setVisible(false);
+        txtHebExc.getDocument().addDocumentListener(this);
+
+        // TRANSLATOR: Label for an input box for searching for verses containing Greek Strong's Numbers.
+        // Not currently implemented.
+        lblGrkInc = new CWLabel(Msg.gettext("Includes Greek Numbers:")).createJLabel();
+        lblGrkInc.setVisible(false);
+        txtGrkInc = new JTextField();
+        txtGrkInc.setVisible(false);
+        txtGrkInc.getDocument().addDocumentListener(this);
+
+        // TRANSLATOR: Label for an input box for searching for verses not containing Greek Strong's Numbers.
+        // Not currently implemented.
+        lblGrkExc = new CWLabel(Msg.gettext("Excludes Greek Numbers:")).createJLabel();
+        lblGrkExc.setVisible(false);
+        txtGrkExc = new JTextField();
+        txtGrkExc.setVisible(false);
+        txtGrkExc.getDocument().addDocumentListener(this);
+
+        // TRANSLATOR: Heading for section allowing user to specify time boundaries on search.
+        // Not currently implemented. Not sure it ever will be.
+        chkTime = new JCheckBox(actions.addAction("HeadTime", Msg.gettext("Narrow search by time period")));
+        chkTime.setBackground(headBG);
+        chkTime.setForeground(headFG);
+        chkTime.setFont(headFont);
+
+        // TRANSLATOR: Label for an input box for a timeline search for verses written after the ones given. 
+        // Not currently implemented. Not sure it ever will be.
+        lblAfter = new CWLabel(Msg.gettext("Restrict to verses written after:")).createJLabel();
+        lblAfter.setVisible(false);
+        txtAfter = new JTextField();
+        txtAfter.setVisible(false);
+        txtAfter.getDocument().addDocumentListener(this);
+
+        // TRANSLATOR: Label for an input box for a timeline search for verses written before the ones given.
+        // Not currently implemented. Not sure it ever will be.
+        lblBefore = new CWLabel(Msg.gettext("Restrict to verses written before:")).createJLabel();
+        lblBefore.setVisible(false);
+        txtBefore = new JTextField();
+        txtBefore.setVisible(false);
+        txtBefore.getDocument().addDocumentListener(this);
+
+        // TRANSLATOR: Label for section showing user's search.
+        chkSummary = new JCheckBox(actions.addAction("HeadSummary", Msg.gettext("Show quick search syntax")));
         chkSummary.setBackground(headBG);
         chkSummary.setForeground(headFG);
         chkSummary.setFont(headFont);
-        lblSummary = actions.createJLabel(SUMMARY);
+        // TRANSLATOR: Label for a text box that shows, dynamically, the search syntax as the other boxes are filled in.
+        lblSummary = new CWLabel(Msg.gettext("Quick search syntax:")).createJLabel();
         lblSummary.setVisible(false);
         txtSummary = new JTextArea();
         txtSummary.setBackground(SystemColor.control);
@@ -200,47 +281,8 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         scrSummary = new CWScrollPane(txtSummary);
         scrSummary.setVisible(false);
 
-        // chkHebGrk = new JCheckBox(actions.getAction(HEAD_ORIGINAL));
-        // chkHebGrk.setBackground(headBG);
-        // chkHebGrk.setForeground(headFG);
-        // chkHebGrk.setFont(headFont);
-        // lblHebInc = actions.createJLabel(HEBREW_INCLUDE);
-        // lblHebInc.setVisible(false);
-        // txtHebInc = new JTextField();
-        // txtHebInc.setVisible(false);
-        // txtHebInc.getDocument().addDocumentListener(this);
-        // lblHebExc = actions.createJLabel(HEBREW_EXCLUDE);
-        // lblHebExc.setVisible(false);
-        // txtHebExc = new JTextField();
-        // txtHebExc.setVisible(false);
-        // txtHebExc.getDocument().addDocumentListener(this);
-        // lblGrkInc = actions.createJLabel(GREEK_INCLUDE);
-        // lblGrkInc.setVisible(false);
-        // txtGrkInc = new JTextField();
-        // txtGrkInc.setVisible(false);
-        // txtGrkInc.getDocument().addDocumentListener(this);
-        // lblGrkExc = actions.createJLabel(GREEK_EXCLUDE);
-        // lblGrkExc.setVisible(false);
-        // txtGrkExc = new JTextField();
-        // txtGrkExc.setVisible(false);
-        // txtGrkExc.getDocument().addDocumentListener(this);
-        //
-        // chkTime = new JCheckBox(actions.getAction(HEAD_TIME));
-        // chkTime.setBackground(headBG);
-        // chkTime.setForeground(headFG);
-        // chkTime.setFont(headFont);
-        // lblAfter = actions.createJLabel(AFTER);
-        // lblAfter.setVisible(false);
-        // txtAfter = new JTextField();
-        // txtAfter.setVisible(false);
-        // txtAfter.getDocument().addDocumentListener(this);
-        // lblBefore = actions.createJLabel(BEFORE);
-        // lblBefore.setVisible(false);
-        // txtBefore = new JTextField();
-        // txtBefore.setVisible(false);
-        // txtBefore.getDocument().addDocumentListener(this);
-
-        btnGo = new JButton(actions.getAction(DONE));
+        // TRANSLATOR: Button to initiate the close the window and initiate search.
+        btnGo = new JButton(actions.addAction("Done", Msg.gettext("Search")));
 
         this.setBorder(BorderFactory.createLineBorder(SystemColor.control, 5));
         this.setLayout(new GridBagLayout());
@@ -400,38 +442,36 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
      * Someone clicked the original strongs toggle button
      */
     public void doHeadOriginal() {
-        // boolean visible = chkHebGrk.isSelected();
-        //
-        // lblHebInc.setVisible(visible);
-        // txtHebInc.setVisible(visible);
-        // lblHebExc.setVisible(visible);
-        // txtHebExc.setVisible(visible);
-        // lblGrkInc.setVisible(visible);
-        // txtGrkInc.setVisible(visible);
-        // lblGrkExc.setVisible(visible);
-        // txtGrkExc.setVisible(visible);
-        //
-        // if (dlgMain != null)
-        // {
-        // dlgMain.pack();
-        // }
+        boolean visible = chkHebGrk.isSelected();
+
+        lblHebInc.setVisible(visible);
+        txtHebInc.setVisible(visible);
+        lblHebExc.setVisible(visible);
+        txtHebExc.setVisible(visible);
+        lblGrkInc.setVisible(visible);
+        txtGrkInc.setVisible(visible);
+        lblGrkExc.setVisible(visible);
+        txtGrkExc.setVisible(visible);
+
+        if (dlgMain != null) {
+            dlgMain.pack();
+        }
     }
 
     /**
      * Someone clicked the original strongs toggle button
      */
     public void doHeadTime() {
-        // boolean visible = chkTime.isSelected();
-        //
-        // lblBefore.setVisible(visible);
-        // txtBefore.setVisible(visible);
-        // lblAfter.setVisible(visible);
-        // txtAfter.setVisible(visible);
-        //
-        // if (dlgMain != null)
-        // {
-        // dlgMain.pack();
-        // }
+        boolean visible = chkTime.isSelected();
+
+        lblBefore.setVisible(visible);
+        txtBefore.setVisible(visible);
+        lblAfter.setVisible(visible);
+        txtAfter.setVisible(visible);
+
+        if (dlgMain != null) {
+            dlgMain.pack();
+        }
     }
 
     /**
@@ -632,33 +672,6 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         is.defaultReadObject();
     }
 
-    /*
-     * Action constants
-     */
-    private static final String DONE = "Done";
-    private static final String PHRASE = "Phrase";
-    private static final String RESTRICT = "Restrict";
-    private static final String HEAD_RANK = "HeadRank";
-    private static final String RANK = "RankSomeSlider";
-    private static final String HEAD_RESTRICT = "HeadRestrict";
-    private static final String HEAD_BASE = "HeadBase";
-    private static final String INCLUDES = "Includes";
-    private static final String EXCLUDES = "Excludes";
-    private static final String SPELL = "Spell";
-    private static final String STARTS_WITH = "StartsWith";
-    private static final String PRESETS = "Presets";
-    private static final String RESTRICT_SELECT = "RestrictSelect";
-    private static final String HEAD_SUMMARY = "HeadSummary";
-    private static final String SUMMARY = "Summary";
-    //    private static final String HEAD_ORIGINAL = "HeadOriginal";
-    //    private static final String HEBREW_INCLUDE = "HebrewInclude";
-    //    private static final String HEBREW_EXCLUDE = "HebrewExclude";
-    //    private static final String GREEK_INCLUDE = "GreekInclude";
-    //    private static final String GREEK_EXCLUDE = "GreekExclude";
-    //    private static final String HEAD_TIME = "HeadTime";
-    //    private static final String AFTER = "After";
-    //    private static final String BEFORE = "Before";
-
     /**
      * In our parsing we use space quite a lot and this ensures there is only one.
      */
@@ -719,30 +732,24 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
     private JLabel lblPresets;
     private JComboBox cboPresets;
     protected JDialog dlgMain;
-    // private JCheckBox chkHebGrk;
-    // private JLabel lblHebInc;
-    // private JTextField txtHebInc;
-    // private JLabel lblHebExc;
-    // private JTextField txtHebExc;
-    // private JLabel lblGrkInc;
-    // private JTextField txtGrkInc;
-    // private JLabel lblGrkExc;
-    // private JTextField txtGrkExc;
-    // private JCheckBox chkTime;
-    // private JLabel lblBefore;
-    // private JTextField txtBefore;
-    // private JLabel lblAfter;
-    // private JTextField txtAfter;
+    private JCheckBox chkHebGrk;
+    private JLabel lblHebInc;
+    private JTextField txtHebInc;
+    private JLabel lblHebExc;
+    private JTextField txtHebExc;
+    private JLabel lblGrkInc;
+    private JTextField txtGrkInc;
+    private JLabel lblGrkExc;
+    private JTextField txtGrkExc;
+    private JCheckBox chkTime;
+    private JLabel lblBefore;
+    private JTextField txtBefore;
+    private JLabel lblAfter;
+    private JTextField txtAfter;
     private JLabel lblSummary;
     private JCheckBox chkSummary;
     private JTextArea txtSummary;
     private JScrollPane scrSummary;
-
-    // /**
-    // * The log stream
-    // */
-    // private static final Logger log =
-    // Logger.getLogger(AdvancedSearchPane.class);
 
     /**
      * Serialization ID
