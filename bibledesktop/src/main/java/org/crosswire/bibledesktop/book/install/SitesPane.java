@@ -82,7 +82,7 @@ public class SitesPane extends JPanel {
      * Build the GUI components
      */
     private void init() {
-        actions = new ActionFactory(SitesPane.class, this);
+        actions = new ActionFactory(Msg.class, this);
 
         tabMain = new JTabbedPane();
         this.setLayout(new BorderLayout());

@@ -46,6 +46,7 @@ import org.crosswire.bibledesktop.book.install.IndexResolver;
 import org.crosswire.bibledesktop.passage.KeyChangeEvent;
 import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWLabel;
 import org.crosswire.common.swing.CWOptionPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.swing.QuickHelpDialog;
@@ -98,7 +99,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         // TRANSLATOR: This is the initial title of a Bible View. {0} is a placeholder for a number that uniquely identifies the Bible View.
         title = Msg.gettext("Untitled {0}", new Integer(base++));
 
-        actions = new ActionFactory(DisplaySelectPane.class, this);
+        actions = new ActionFactory(Msg.class, this);
 
         isl = new IndexStatusListener() {
             public void statusChanged(IndexStatusEvent ev) {
@@ -146,10 +147,10 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         quickPicker.add(cboBooks);
         quickPicker.add(cboChaps);
 
-        JLabel lblBible = actions.createJLabel(BIBLE);
+        JLabel lblBible = CWLabel.createJLabel(Msg.gettext("Bible:"));
         lblBible.setLabelFor(biblePicker);
 
-        JLabel lblKey = actions.createJLabel(VIEW_LABEL);
+        JLabel lblKey = CWLabel.createJLabel(Msg.gettext("Show Passage:"));
         txtKey = new JTextField();
         txtKey.setAction(actions.getAction(PASSAGE_FIELD));
         txtKey.addKeyListener(new KeyAdapter() {
@@ -168,7 +169,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
 
         txtSearch = new JTextField();
         txtSearch.setAction(actions.getAction(SEARCH_FIELD));
-        JLabel lblSearch = actions.createJLabel(SEARCH_LABEL);
+        JLabel lblSearch = CWLabel.createJLabel(Msg.gettext("Search:"));
         lblSearch.setLabelFor(txtSearch);
         btnSearch = new JButton(actions.getAction(GO_SEARCH));
 
@@ -724,16 +725,13 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     }
 
     // For the Passage card
-    private static final String VIEW_LABEL = "ViewLabel";
     private static final String PASSAGE_FIELD = "PassageAction";
     private static final String MORE = "More";
     private static final String GO_PASSAGE = "GoPassage";
     private static final String HELP = "HelpAction";
-    private static final String SEARCH_LABEL = "SearchLabel";
     private static final String GO_SEARCH = "GoSearch";
     private static final String SEARCH_FIELD = "SearchAction";
     private static final String ADVANCED = "Advanced";
-    private static final String BIBLE = "Bible";
     private static final String INDEX = "Index";
 
     /**

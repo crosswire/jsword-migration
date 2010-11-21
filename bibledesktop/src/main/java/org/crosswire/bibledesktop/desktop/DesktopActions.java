@@ -75,7 +75,7 @@ public class DesktopActions implements Actionable {
      */
     public DesktopActions(Desktop desktop) {
         this.desktop = desktop;
-        actions = new ActionFactory(Desktop.class, this);
+        actions = new ActionFactory(Msg.class, this);
 
         osxRegistered = macOSXRegistration();
     }

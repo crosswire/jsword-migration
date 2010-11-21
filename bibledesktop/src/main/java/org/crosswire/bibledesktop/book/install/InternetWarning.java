@@ -56,7 +56,7 @@ public class InternetWarning extends JPanel {
      * Create a WebWarningDialog.
      */
     public InternetWarning() {
-        actions = new ActionFactory(InternetWarning.class, this);
+        actions = new ActionFactory(Msg.class, this);
 
         ItemListener changer = new ItemListener() {
             public void itemStateChanged(ItemEvent ev) {

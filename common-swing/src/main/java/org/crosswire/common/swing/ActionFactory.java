@@ -22,10 +22,8 @@
 package org.crosswire.common.swing;
 
 import java.awt.Insets;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
@@ -36,10 +34,8 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import javax.swing.Action;
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.KeyStroke;
 
 import org.crosswire.common.util.CWClassLoader;
 import org.crosswire.common.util.Logger;
@@ -136,17 +132,33 @@ import org.crosswire.common.util.StringUtil;
  */
 public class ActionFactory implements ActionListener, Actionable {
     /**
-     * Constructor that distinguishes between the object to call and the type to
-     * look up resources against. This is useful for when you are writing a
-     * class with subclasses but wish to keep the resources registered in the
+     * Creates an ActionFactory that looks up properties according to pattern
+     * and calls methods on the provided bean. By separating these two, it
+     * distinguishes between the object to call and the type to look up
+     * resources against. This is useful for when you are writing a class
+     * with subclasses but wish to keep the resources registered in the
      * name of the superclass.
+     * 
+     * @param type the class against which properties are looked up.
+     * @param bean the object to which the actions belong
      */
     public ActionFactory(Class type, Object bean) {
-        actions = new HashMap();
-
-        buildActionMap(type);
-
         this.bean = bean;
+        actions = new HashMap();
+        if (type != null) {
+            buildActionMap(type);
+        }
+    }
+
+    /**
+     * Creates an ActionFactory that merely arranges for actions to be called against a bean.
+     * It does not lookup properties to construct an action. Constructing an action is the
+     * responsibility of the calling class.
+     * 
+     * @param bean
+     */
+    public ActionFactory(Object bean) {
+        this(null, bean);
     }
 
     /*
@@ -242,29 +254,6 @@ public class ActionFactory implements ActionListener, Actionable {
         getOutOfJailFreeAction.addActionListener(this);
 
         return getOutOfJailFreeAction;
-    }
-
-    /**
-     * Construct a JLabel from the Action. Only Action.NAME and
-     * Action.MNEMONIC_KEY are used.
-     * 
-     * @param key
-     *            the internal name of the CWAction
-     * @return A label, asserting if missing resources or with default values
-     *         otherwise
-     */
-    public JLabel createJLabel(String key) {
-        Action action = getAction(key);
-
-        JLabel label = new JLabel();
-        label.setText(action.getValue(Action.NAME).toString());
-
-        Integer mnemonic = (Integer) action.getValue(Action.MNEMONIC_KEY);
-        if (mnemonic != null) {
-            label.setDisplayedMnemonic(mnemonic.intValue());
-        }
-
-        return label;
     }
 
     /**
@@ -385,6 +374,10 @@ public class ActionFactory implements ActionListener, Actionable {
         return addAction(key, name, null, null, null, null, null);
     }
 
+    public CWAction addAction(String key, String name, String tooltip) {
+        return addAction(key, name, tooltip, null, null, null, null);
+    }
+
     private CWAction buildAction(String key, String name, String tooltip, String smallIconPath, String largeIconPath, String acceleratorSpec, String enabled) {
         if (key == null || key.length() == 0) {
             log.warn("Acronymn is missing for CWAction");
@@ -399,20 +392,25 @@ public class ActionFactory implements ActionListener, Actionable {
         cwAction = new CWAction();
         cwAction.putValue(Action.ACTION_COMMAND_KEY, key);
 
-        CWLabel cwLabel = new CWLabel(name);
-        cwAction.putValue(Action.NAME, cwLabel.getLabel());
+        JLabel cwLabel = CWLabel.createJLabel(name);
+        cwAction.putValue(Action.NAME, cwLabel.getText());
 
-        // Mac's don't have mnemonics
+        // Mac's don't have mnemonics.
+        // Otherwise, dig out the mnemonic.
         if (!OSType.MAC.equals(OSType.getOSType())) {
-            cwAction.putValue(Action.MNEMONIC_KEY, cwLabel.getMnemonic());
+            cwAction.putValue(Action.MNEMONIC_KEY, new Integer(cwLabel.getDisplayedMnemonic()));
         }
 
         cwAction.putValue(Action.SHORT_DESCRIPTION, tooltip);
 
-        cwAction.putValue(CWAction.LARGE_ICON, getIcon(largeIconPath));
-        cwAction.putValue(Action.SMALL_ICON, getIcon(smallIconPath));
+        cwAction.addLargeIcon(largeIconPath);
+        cwAction.addSmallIcon(smallIconPath);
 
-        cwAction.putValue(Action.ACCELERATOR_KEY, getAccelerator(key, acceleratorSpec));
+        try {
+            cwAction.addAccelerator(acceleratorSpec);            
+        } catch (NumberFormatException nfe) {
+            log.warn("Could not parse integer for accelerator of action " + key, nfe);
+        }
 
         boolean flag = enabled == null ? true : Boolean.valueOf(enabled).booleanValue();
         cwAction.setEnabled(flag);
@@ -444,9 +442,9 @@ public class ActionFactory implements ActionListener, Actionable {
                     String actionName = key.substring(0, key.length() - TEST.length());
 
                     String label = getActionString(resources, null, actionName, Action.NAME);
-                    String smallIconStr = getActionString(controls, null, actionName, Action.SMALL_ICON);
-                    String largeIconStr = getActionString(controls, null, actionName, CWAction.LARGE_ICON);
-                    String enabledStr = getActionString(controls, null, actionName, "Enabled");
+                    String smallIconStr = getActionString(controls, resources, actionName, Action.SMALL_ICON);
+                    String largeIconStr = getActionString(controls, resources, actionName, CWAction.LARGE_ICON);
+                    String enabledStr = getActionString(controls, resources, actionName, "Enabled");
 
                     // We know this should never happen because we are merely rebuilding the key.
                     if (label == null) {
@@ -509,58 +507,6 @@ public class ActionFactory implements ActionListener, Actionable {
 
         return result;
     }
-
-    /**
-     * Get an icon for the string
-     */
-    private Icon getIcon(String iconStr) {
-        Icon icon = null;
-        if (iconStr != null && iconStr.length() > 0) {
-            icon = GuiUtil.getIcon(iconStr);
-        }
-        return icon;
-    }
-
-    /**
-     * Convert the string to a valid Accelerator (that is a KeyStroke)
-     */
-    private KeyStroke getAccelerator(String actionName, String acceleratorSpec) {
-        KeyStroke accelerator = null;
-        if (acceleratorSpec != null && acceleratorSpec.length() > 0) {
-            try {
-                accelerator = getKeyStroke(acceleratorSpec);
-            } catch (NumberFormatException nfe) {
-                log.warn("Could not parse integer for accelerator of action " + actionName, nfe);
-            }
-        }
-        return accelerator;
-    }
-
-   /**
-    *
-    */
-  private KeyStroke getKeyStroke(String acceleratorSpec) throws NumberFormatException {
-      int keyModifier = 0;
-      int key = 0;
-      String[] parts = StringUtil.split(acceleratorSpec, ',');
-      for (int j = 0; j < parts.length; j++) {
-          String part = parts[j].trim();
-          if ("ctrl".equalsIgnoreCase(part)) {
-              // use this so MacOS users are happy
-              // It will map to the CMD key on Mac; CTRL otherwise.
-              keyModifier |= Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
-          } else if ("shift".equalsIgnoreCase(part)) {
-              keyModifier |= InputEvent.SHIFT_MASK;
-          } else if ("alt".equalsIgnoreCase(part)) {
-              keyModifier |= InputEvent.ALT_MASK;
-          } else if (part.startsWith("0x")) {
-              key = Integer.parseInt(part.substring(2), 16);
-          } else if (part.length() == 1) {
-              key = part.charAt(0);
-          }
-      }
-      return KeyStroke.getKeyStroke(key, keyModifier);
-  }
 
     /**
      * The tooltip for actions that we generate to paper around missing

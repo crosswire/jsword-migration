@@ -72,7 +72,7 @@ public class ParallelBookPicker extends JPanel implements BookProvider {
     private void initialize() {
         setLayout(new FlowLayout(FlowLayout.LEADING, 1, 1));
         listeners = new EventListenerList();
-        actions = new ActionFactory(ParallelBookPicker.class, this);
+        actions = new ActionFactory(Msg.class, this);
 
         JPanel buttonBox = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
         buttonBox.add(actions.createActionIcon("RemovePicker"));

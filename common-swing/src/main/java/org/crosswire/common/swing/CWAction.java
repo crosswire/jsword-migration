@@ -21,12 +21,18 @@
  */
 package org.crosswire.common.swing;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.Icon;
+import javax.swing.KeyStroke;
 import javax.swing.event.EventListenerList;
+
+import org.crosswire.common.util.StringUtil;
 
 /**
  * A CrossWire Action is a generic extension of AbstractAction, that adds
@@ -50,6 +56,18 @@ public class CWAction extends AbstractAction {
      * SHORT_DESCRIPTION.
      */
     public static final String TOOL_TIP = "ToolTip";
+
+    public void addLargeIcon(String iconPath) {
+        addIcon(LARGE_ICON, iconPath);
+    }
+
+    public void addSmallIcon(String iconPath) {
+        addIcon(SMALL_ICON, iconPath);
+    }
+
+    public void addAccelerator(String acceleratorSpec) throws NumberFormatException {
+        putValue(Action.ACCELERATOR_KEY, getAccelerator(acceleratorSpec));
+    }
 
     /**
      * Forwards the ActionEvent to the registered listener.
@@ -133,6 +151,53 @@ public class CWAction extends AbstractAction {
         }
         return action;
     }
+
+    private void addIcon(String key, String iconPath) {
+        Icon icon = null;
+        if (iconPath != null && iconPath.length() > 0) {
+            icon = GuiUtil.getIcon(iconPath);
+        }
+        if (icon != null) {
+            putValue(key, icon);
+        }
+    }
+
+    /**
+     * Convert the string to a valid Accelerator (that is a KeyStroke)
+     */
+    private KeyStroke getAccelerator(String acceleratorSpec) throws NumberFormatException {
+        KeyStroke accelerator = null;
+        if (acceleratorSpec != null && acceleratorSpec.length() > 0) {
+            accelerator = getKeyStroke(acceleratorSpec);
+        }
+        return accelerator;
+    }
+
+   /**
+    *
+    */
+  private KeyStroke getKeyStroke(String acceleratorSpec) throws NumberFormatException {
+      int keyModifier = 0;
+      int key = 0;
+      String[] parts = StringUtil.split(acceleratorSpec, ',');
+      for (int j = 0; j < parts.length; j++) {
+          String part = parts[j].trim();
+          if ("ctrl".equalsIgnoreCase(part)) {
+              // use this so MacOS users are happy
+              // It will map to the CMD key on Mac; CTRL otherwise.
+              keyModifier |= Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+          } else if ("shift".equalsIgnoreCase(part)) {
+              keyModifier |= InputEvent.SHIFT_MASK;
+          } else if ("alt".equalsIgnoreCase(part)) {
+              keyModifier |= InputEvent.ALT_MASK;
+          } else if (part.startsWith("0x")) {
+              key = Integer.parseInt(part.substring(2), 16);
+          } else if (part.length() == 1) {
+              key = part.charAt(0);
+          }
+      }
+      return KeyStroke.getKeyStroke(key, keyModifier);
+  }
 
     private EventListenerList listeners;
 

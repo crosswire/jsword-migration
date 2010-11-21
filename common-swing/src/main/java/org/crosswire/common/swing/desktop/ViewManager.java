@@ -38,7 +38,6 @@ import org.crosswire.common.swing.desktop.event.TitleChangedEvent;
 import org.crosswire.common.swing.desktop.event.TitleChangedListener;
 import org.crosswire.common.swing.desktop.event.ViewEvent;
 import org.crosswire.common.swing.desktop.event.ViewEventListener;
-import org.crosswire.common.util.CallContext;
 
 /**
  * 
@@ -54,8 +53,10 @@ import org.crosswire.common.util.CallContext;
 public class ViewManager implements Viewable, TitleChangedListener, ViewEventListener {
     /**
      * Construct a ViewManager.
+     * @param generator a ViewGenerator that this ViewManager manages.
+     * @param msg the class for which i18n properties are defined
      */
-    public ViewManager(ViewGenerator generator) {
+    public ViewManager(ViewGenerator generator, Class msg) {
         this.generator = generator;
         panel = new JPanel(new GridBagLayout());
 
@@ -67,7 +68,7 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
         panel.add(getViewLayout().getPanel(), getConstraint());
 
         // Get the action definitions from the calling class
-        contextActions = new ActionFactory(CallContext.getCallingClass(), this);
+        contextActions = new ActionFactory(msg, this);
 
         tdiView = new JRadioButtonMenuItem(contextActions.getAction(TAB_MODE));
         mdiView = new JRadioButtonMenuItem(contextActions.getAction(WINDOW_MODE));

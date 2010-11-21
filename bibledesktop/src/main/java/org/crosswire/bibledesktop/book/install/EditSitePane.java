@@ -57,6 +57,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWLabel;
 import org.crosswire.common.swing.CWOptionPane;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.FixedSplitPane;
@@ -90,7 +91,7 @@ public class EditSitePane extends JPanel {
      * GUI init
      */
     private void init() {
-        actions = new ActionFactory(EditSitePane.class, this);
+        actions = new ActionFactory(Msg.class, this);
 
         lstSite = new JList(new InstallManagerComboBoxModel(imanager));
         JScrollPane scrSite = new CWScrollPane(lstSite);
@@ -136,7 +137,7 @@ public class EditSitePane extends JPanel {
             }
         });
 
-        JLabel lblName = actions.createJLabel(NAME);
+        JLabel lblName = CWLabel.createJLabel(Msg.gettext("Site Name:"));
         lblName.setLabelFor(txtName);
 
         cboType = new JComboBox(new InstallerFactoryComboBoxModel(imanager));
@@ -148,7 +149,7 @@ public class EditSitePane extends JPanel {
             }
         });
 
-        JLabel lblType = actions.createJLabel(TYPE);
+        JLabel lblType = CWLabel.createJLabel(Msg.gettext("Site Type"));
         lblType.setLabelFor(cboType);
 
         lblMesg = new JLabel();
@@ -522,8 +523,6 @@ public class EditSitePane extends JPanel {
     private static final String ADD = "Add";
     private static final String EDIT = "Edit";
     private static final String DELETE = "Delete";
-    private static final String NAME = "Name";
-    private static final String TYPE = "Type";
     private static final String RESET = "Reset";
     private static final String SAVE = "Save";
     private static final String CLOSE = "Close";

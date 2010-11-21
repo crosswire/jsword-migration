@@ -23,12 +23,11 @@ package org.crosswire.common.swing;
 
 import javax.swing.JLabel;
 
-import org.crosswire.common.util.Logger;
+import org.crosswire.common.util.OSType;
 
 /**
- * A CWLabel consists of a label and a mnemonic constructed from a string having
- * an optional mnemonic indicator. The indicator, '_', precedes the mnemonic
- * letter.
+ * CWLabel is a utility class to create JLabels from text with an optional
+ * mnemonic indicator. A preceding '_' indicates a mnemonic.
  * 
  * @see gnu.lgpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
@@ -37,16 +36,24 @@ import org.crosswire.common.util.Logger;
 public class CWLabel {
 
     /**
-     * Construct a CWLabel from a string. The string is assumed to have at most
-     * one underscore, '_', and the letter that it precedes is taken as the
-     * mnemonic.
+     * Utility class. Prevent instantiation.
+     */
+    private CWLabel() {
+    }
+
+    /**
+     * Construct a JLabel from text. A preceding '_' indicates a mnemonic.
+     * Mnemonics are ignored on MacOS X.
      * 
      * @param text
+     *            the text of the label, with an optional mnemonic indicator
+     * @return a JLabel
      */
-    public CWLabel(String text) {
-        label = text;
+    static public JLabel createJLabel(String text) {
+        String label = text;
 
         // A Mnemonic can be specified by a preceding _ in the name
+        char mnemonic = '\0';
         int pos = label.indexOf('_');
         int len = label.length();
         if (pos == len - 1) {
@@ -63,46 +70,21 @@ public class CWLabel {
             label = buffer.toString();
 
             // the mnemonic is now at the position that the _ was.
-            mnemonic = new Integer(label.charAt(pos));
+            mnemonic = label.charAt(pos);
         }
 
         if (label.length() == 0) {
-            log.warn("text is missing for CWLabel");
             label = "?";
         }
-    }
 
-    public JLabel createJLabel() {
         JLabel theLabel = new JLabel();
         theLabel.setText(label);
 
-        if (mnemonic != null) {
-            theLabel.setDisplayedMnemonic(mnemonic.intValue());
+        // Mac's don't have mnemonics
+        if (mnemonic != '\0' && !OSType.MAC.equals(OSType.getOSType())) {
+            theLabel.setDisplayedMnemonic(mnemonic);
         }
 
         return theLabel;
     }
-
-    /**
-     * @return the label
-     */
-    public String getLabel() {
-        return label;
-    }
-
-    /**
-     * @return the mnemonic
-     */
-    public Integer getMnemonic() {
-        return mnemonic;
-    }
-
-    private String label;
-    private Integer mnemonic;
-
-    /**
-     * The log stream
-     */
-    private static final Logger log = Logger.getLogger(CWLabel.class);
-
 }

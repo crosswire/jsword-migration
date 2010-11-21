@@ -101,7 +101,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         // TRANSLATOR: The end of the passage list for the division of the Bible
         presetEnd = Msg.gettext(")");
 
-        actions = new ActionFactory(AdvancedSearchPane.class, this);
+        actions = new ActionFactory(this);
 
         // SystemColor.controlShadow
         JLabel temp = new JLabel();
@@ -110,7 +110,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         Font headFont = temp.getFont().deriveFont(Font.BOLD);
 
         // TRANSLATOR: Heading for the first, most useful several search options.
-        lblHeading = new CWLabel(Msg.gettext("Search for verses with the following details")).createJLabel();
+        lblHeading = CWLabel.createJLabel(Msg.gettext("Search for verses with the following details"));
         lblHeading.setBorder(BorderFactory.createLineBorder(headBG, 3));
         lblHeading.setBackground(headBG);
         lblHeading.setForeground(headFG);
@@ -118,32 +118,32 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         lblHeading.setOpaque(true);
 
         // TRANSLATOR: Label for an input box for searching of phrases.
-        lblPhrase = new CWLabel(Msg.gettext("Includes this phrase:")).createJLabel();
+        lblPhrase = CWLabel.createJLabel(Msg.gettext("Includes this phrase:"));
         txtPhrase = new JTextField();
         txtPhrase.getDocument().addDocumentListener(this);
 
         txtIncludes = new JTextField();
         txtIncludes.getDocument().addDocumentListener(this);
         // TRANSLATOR: Label for an input box for searching of all of the given words.
-        lblIncludes = new CWLabel(Msg.gettext("Includes these words:")).createJLabel();
+        lblIncludes = CWLabel.createJLabel(Msg.gettext("Includes these words:"));
         lblIncludes.setLabelFor(txtIncludes);
 
         txtExcludes = new JTextField();
         txtExcludes.getDocument().addDocumentListener(this);
         // TRANSLATOR: Label for an input box for searching of verses not containing the given words.
-        lblExcludes = new CWLabel(Msg.gettext("Excludes all these words:")).createJLabel();
+        lblExcludes = CWLabel.createJLabel(Msg.gettext("Excludes all these words:"));
         lblExcludes.setLabelFor(txtExcludes);
 
         txtSpell = new JTextField();
         txtSpell.getDocument().addDocumentListener(this);
         // TRANSLATOR: Label for an input box for searching of words whose spelling is unknown or varies.
-        lblSpell = new CWLabel(Msg.gettext("Something like this spelling:")).createJLabel();
+        lblSpell = CWLabel.createJLabel(Msg.gettext("Something like this spelling:"));
         lblSpell.setLabelFor(txtSpell);
 
         txtStartsWith = new JTextField();
         txtStartsWith.getDocument().addDocumentListener(this);
         // TRANSLATOR: Label for an input box for searching of words by their prefix
-        lblStartsWith = new CWLabel(Msg.gettext("Includes words starting with:")).createJLabel();
+        lblStartsWith = CWLabel.createJLabel(Msg.gettext("Includes words starting with:"));
         lblStartsWith.setLabelFor(txtStartsWith);
 
         // TRANSLATOR: Heading for section to perform a search for the best verse match
@@ -152,7 +152,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         chkRank.setForeground(headFG);
         chkRank.setFont(headFont);
         // TRANSLATOR: Label for a slider how many of the best verses to show.
-        lblRank = new CWLabel(Msg.gettext("Show")).createJLabel();
+        lblRank = CWLabel.createJLabel(Msg.gettext("Show"));
         setLabelRank(DisplaySelectPane.getNumRankedVerses());
         lblRank.setVisible(false);
         sliderRank = new JSlider(SwingConstants.HORIZONTAL, 0, DisplaySelectPane.getMaxNumRankedVerses(), DisplaySelectPane.getNumRankedVerses());
@@ -181,7 +181,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         chkRestrict.setFont(headFont);
 
         // TRANSLATOR: Label for a dropdown with preset verse ranges for searching.
-        lblPresets = new CWLabel(Msg.gettext("Preset Ranges:")).createJLabel();
+        lblPresets = CWLabel.createJLabel(Msg.gettext("Preset Ranges:"));
         lblPresets.setVisible(false);
         cboPresets = new JComboBox(presets);
         cboPresets.setVisible(false);
@@ -194,7 +194,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         // TRANSLATOR: Label for an input box for searching only in the specified verses
         // This is filled in when the user enters input or picks an entry from the Preset Ranges dropdown.
         // When the user enters input the dropdown is adjusted to show the last entry.
-        lblRestrict = new CWLabel(Msg.gettext("Include these verses:")).createJLabel();
+        lblRestrict = CWLabel.createJLabel(Msg.gettext("Include these verses:"));
         lblRestrict.setVisible(false);
         txtRestrict = new JTextField();
         txtRestrict.setVisible(false);
@@ -212,7 +212,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
 
         // TRANSLATOR: Label for an input box for searching for verses containing Hebrew Strong's Numbers.
         // Not currently implemented.
-        lblHebInc = new CWLabel(Msg.gettext("Includes Hebrew Numbers:")).createJLabel();
+        lblHebInc = CWLabel.createJLabel(Msg.gettext("Includes Hebrew Numbers:"));
         lblHebInc.setVisible(false);
         txtHebInc = new JTextField();
         txtHebInc.setVisible(false);
@@ -220,7 +220,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
 
         // TRANSLATOR: Label for an input box for searching for verses not containing Hebrew Strong's Numbers.
         // Not currently implemented.
-        lblHebExc = new CWLabel(Msg.gettext("Excludes Hebrew Numbers:")).createJLabel();
+        lblHebExc = CWLabel.createJLabel(Msg.gettext("Excludes Hebrew Numbers:"));
         lblHebExc.setVisible(false);
         txtHebExc = new JTextField();
         txtHebExc.setVisible(false);
@@ -228,7 +228,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
 
         // TRANSLATOR: Label for an input box for searching for verses containing Greek Strong's Numbers.
         // Not currently implemented.
-        lblGrkInc = new CWLabel(Msg.gettext("Includes Greek Numbers:")).createJLabel();
+        lblGrkInc = CWLabel.createJLabel(Msg.gettext("Includes Greek Numbers:"));
         lblGrkInc.setVisible(false);
         txtGrkInc = new JTextField();
         txtGrkInc.setVisible(false);
@@ -236,7 +236,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
 
         // TRANSLATOR: Label for an input box for searching for verses not containing Greek Strong's Numbers.
         // Not currently implemented.
-        lblGrkExc = new CWLabel(Msg.gettext("Excludes Greek Numbers:")).createJLabel();
+        lblGrkExc = CWLabel.createJLabel(Msg.gettext("Excludes Greek Numbers:"));
         lblGrkExc.setVisible(false);
         txtGrkExc = new JTextField();
         txtGrkExc.setVisible(false);
@@ -251,7 +251,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
 
         // TRANSLATOR: Label for an input box for a timeline search for verses written after the ones given. 
         // Not currently implemented. Not sure it ever will be.
-        lblAfter = new CWLabel(Msg.gettext("Restrict to verses written after:")).createJLabel();
+        lblAfter = CWLabel.createJLabel(Msg.gettext("Restrict to verses written after:"));
         lblAfter.setVisible(false);
         txtAfter = new JTextField();
         txtAfter.setVisible(false);
@@ -259,7 +259,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
 
         // TRANSLATOR: Label for an input box for a timeline search for verses written before the ones given.
         // Not currently implemented. Not sure it ever will be.
-        lblBefore = new CWLabel(Msg.gettext("Restrict to verses written before:")).createJLabel();
+        lblBefore = CWLabel.createJLabel(Msg.gettext("Restrict to verses written before:"));
         lblBefore.setVisible(false);
         txtBefore = new JTextField();
         txtBefore.setVisible(false);
@@ -271,7 +271,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         chkSummary.setForeground(headFG);
         chkSummary.setFont(headFont);
         // TRANSLATOR: Label for a text box that shows, dynamically, the search syntax as the other boxes are filled in.
-        lblSummary = new CWLabel(Msg.gettext("Quick search syntax:")).createJLabel();
+        lblSummary = CWLabel.createJLabel(Msg.gettext("Quick search syntax:"));
         lblSummary.setVisible(false);
         txtSummary = new JTextArea();
         txtSummary.setBackground(SystemColor.control);

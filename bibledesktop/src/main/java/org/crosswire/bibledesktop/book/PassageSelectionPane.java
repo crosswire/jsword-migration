@@ -58,6 +58,7 @@ import org.crosswire.bibledesktop.passage.RangeListModel;
 import org.crosswire.bibledesktop.passage.WholeBibleTreeModel;
 import org.crosswire.bibledesktop.passage.WholeBibleTreeNode;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWLabel;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.passage.KeyFactory;
@@ -91,10 +92,10 @@ public class PassageSelectionPane extends JPanel {
      * GUI init
      */
     private void init() {
-        actions = new ActionFactory(PassageSelectionPane.class, this);
+        actions = new ActionFactory(Msg.class, this);
 
-        JLabel lblAll = actions.createJLabel(BIBLE_TREE);
-        JLabel lblSel = actions.createJLabel(SELECTED_VERSES);
+        JLabel lblAll = CWLabel.createJLabel(Msg.gettext("All Verses"));
+        JLabel lblSel = CWLabel.createJLabel(Msg.gettext("Selected Verses"));
 
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         this.setLayout(new GridBagLayout());
@@ -155,7 +156,7 @@ public class PassageSelectionPane extends JPanel {
         txtDisplay = new JTextField();
         txtDisplay.getDocument().addDocumentListener(new CustomDocumentEvent());
 
-        JLabel lblDisplay = actions.createJLabel(VERSES);
+        JLabel lblDisplay = CWLabel.createJLabel(Msg.gettext("Verses"));
         lblDisplay.setLabelFor(txtDisplay);
 
         JPanel panel = new JPanel();
@@ -383,11 +384,8 @@ public class PassageSelectionPane extends JPanel {
         is.defaultReadObject();
     }
 
-    private static final String BIBLE_TREE = "BibleTree";
     private static final String ADD = "AddVerse";
     private static final String DELETE = "DeleteVerse";
-    private static final String SELECTED_VERSES = "SelectedVerses";
-    private static final String VERSES = "Verses";
     private static final String DONE = "Done";
     private static final String GOOD_ICON = "toolbarButtonGraphics/general/About24.gif";
     private static final String BAD_ICON = "toolbarButtonGraphics/general/Stop24.gif";

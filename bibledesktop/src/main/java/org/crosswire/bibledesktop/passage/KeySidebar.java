@@ -87,7 +87,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
 
         JScrollPane scroll = new CWScrollPane(list);
 
-        ActionFactory actions = new ActionFactory(KeySidebar.class, this);
+        ActionFactory actions = new ActionFactory(Msg.class, this);
 
         actDelete = actions.getAction(DELETE_SELECTED);
         actBlur1 = actions.getAction(BLUR1);

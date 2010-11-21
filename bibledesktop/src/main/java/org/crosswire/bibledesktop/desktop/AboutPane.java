@@ -89,7 +89,7 @@ public class AboutPane {
         lblInfo.setHorizontalAlignment(SwingConstants.TRAILING);
         lblInfo.setText(Msg.getVersionInfo());
 
-        ActionFactory actions = new ActionFactory(AboutPane.class, this);
+        ActionFactory actions = new ActionFactory(Msg.class, this);
         JButton btnOk = new JButton(actions.getAction(ABOUT_OK));
 
         JPanel pnlButtons = new JPanel();

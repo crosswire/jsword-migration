@@ -149,7 +149,7 @@ public class ViewSourcePane extends JPanel {
      * Actually create the GUI
      */
     private void init(String orig, String osis, String html) {
-        actions = new ActionFactory(ViewSourcePane.class, this);
+        actions = new ActionFactory(Msg.class, this);
 
         Font userRequestedFont = ConfigurableSwingConverter.toFont();
 

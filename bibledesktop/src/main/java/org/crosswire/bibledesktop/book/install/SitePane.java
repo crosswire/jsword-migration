@@ -47,6 +47,7 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWLabel;
 import org.crosswire.common.swing.CWOptionPane;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.FixedSplitPane;
@@ -82,14 +83,14 @@ public class SitePane extends JPanel {
      * For local installations
      */
     public SitePane() {
-        this(null, INSTALLED_BOOKS_LABEL);
+        this(null, Msg.gettext("Installed Books:"));
     }
 
     /**
      * For remote installations
      */
     public SitePane(Installer bookListInstaller) {
-        this(bookListInstaller, AVAILABLE_BOOKS_LABEL);
+        this(bookListInstaller, Msg.gettext("Available Books:"));
     }
 
     /**
@@ -98,7 +99,7 @@ public class SitePane extends JPanel {
     private SitePane(Installer bookListInstaller, String labelAcronymn) {
         installer = bookListInstaller;
 
-        actions = new ActionFactory(SitePane.class, this);
+        actions = new ActionFactory(Msg.class, this);
 
         BookList bl = installer;
         if (bl == null) {
@@ -144,7 +145,7 @@ public class SitePane extends JPanel {
                 // Change the text between <html><b> and </b>.
                 desc = Msg.gettext("<html><b>Click 'Update Available Books' to download an up to date book list.</b>");
             } else {
-                // TRANSLATOR: This label give the number of books available at a download site. {0} is a placeholder for the number.
+                // TRANSLATOR: This label gives the number of books available at a download site. {0} is a placeholder for the number.
                 desc = Msg.gettext("{0} books available for download.", new Object[] {
                     new Integer(bookCount)
                 });
@@ -173,7 +174,7 @@ public class SitePane extends JPanel {
      *
      */
     private Component createAvailablePanel(String labelAcronymn, BookList books) {
-        JLabel lblAvailable = actions.createJLabel(labelAcronymn);
+        JLabel lblAvailable = CWLabel.createJLabel(labelAcronymn);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -192,7 +193,7 @@ public class SitePane extends JPanel {
      */
     private Component createSelectedPanel() {
 
-        JLabel lblSelected = actions.createJLabel(SELECTED_BOOK_LABEL);
+        JLabel lblSelected = CWLabel.createJLabel(Msg.gettext("Selected Book:"));
         display = new TextPaneBookMetaDataDisplay();
         lblSelected.setLabelFor(display.getComponent());
 
@@ -579,9 +580,6 @@ public class SitePane extends JPanel {
         is.defaultReadObject();
     }
 
-    private static final String INSTALLED_BOOKS_LABEL = "InstalledBooksLabel";
-    private static final String AVAILABLE_BOOKS_LABEL = "AvailableBooksLabel";
-    private static final String SELECTED_BOOK_LABEL = "SelectedBookLabel";
     private static final String REFRESH = "Refresh";
     private static final String INSTALL = "Install";
     private static final String INSTALL_SEARCH = "InstallSearch";

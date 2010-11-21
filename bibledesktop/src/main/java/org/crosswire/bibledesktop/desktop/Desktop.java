@@ -241,7 +241,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         // blogPanel = BlogClientFrame.getInstance();
 
         changeSupport = new SwingPropertyChangeSupport(this);
-        views = new ViewManager(this);
+        views = new ViewManager(this, Msg.class);
         views.addViewEventListener(this);
         history = new History();
     }
@@ -1010,7 +1010,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         config = null;
         history = null;
         actions = new DesktopActions(this);
-        views = new ViewManager(this);
+        views = new ViewManager(this, Msg.class);
         views.addViewEventListener(this);
         is.defaultReadObject();
     }
