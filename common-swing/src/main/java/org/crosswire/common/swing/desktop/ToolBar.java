@@ -61,7 +61,7 @@ public class ToolBar extends JToolBar {
      */
     public ToolBar(JFrame frame) {
         this.frame = frame;
-        actions = new ActionFactory(ToolBar.class, this);
+        actions = new ActionFactory(UserMsg.class, this);
 
         setRollover(true);
 
