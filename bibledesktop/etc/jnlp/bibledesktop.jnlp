@@ -35,7 +35,8 @@
     <jar href="javatar-2.5.jar"/>
     <jar href="jdom-1.1.1.jar"/>
     <jar href="commons-codec-1.4.jar"/>
-    <jar href="commons-httpclient-3.1.jar"/>
+    <jar href="httpcore-4.1.jar"/>
+    <jar href="httpclient-4.1-beta1.jar"/>
     <jar href="commons-logging-1.1.1.jar"/>
     <jar href="commons-net-2.2.jar"/>
     <jar href="lucene-core-2.9.1.jar"/>

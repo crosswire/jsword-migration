@@ -61,7 +61,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller {
      * org.crosswire.jsword.book.install.Installer#getSize(org.crosswire.jsword
      * .book.Book)
      */
-    public int getSize(Book book) {
+    public long getSize(Book book) {
         // not implemented
         return 0;
     }

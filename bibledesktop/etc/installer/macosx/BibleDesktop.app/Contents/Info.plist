@@ -46,7 +46,8 @@
             <string>$JAVAROOT/lucene-smartcn-2.9.1.jar</string>
 			<string>$JAVAROOT/jdom-1.1.1.jar</string>
 			<string>$JAVAROOT/commons-codec-1.4.jar</string>
-			<string>$JAVAROOT/commons-httpclient-3.1.jar</string>
+			<string>$JAVAROOT/httpcore-4.1.jar</string>
+			<string>$JAVAROOT/httpclient-4.1-beta1.jar</string>
 			<string>$JAVAROOT/commons-logging-1.1.1.jar</string>
 			<string>$JAVAROOT/commons-net-2.2.jar</string>
 			<string>$JAVAROOT/javatar-2.5.jar</string>
