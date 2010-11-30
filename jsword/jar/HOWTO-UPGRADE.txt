@@ -24,3 +24,22 @@ Change the references to the old directory to the new directory in the build pat
 In SVN remove the old Lucene directory.
 
 If installing a x.9 release, look for deprecations and replace them.
+
+==================================================================================
+How to upgrade jdom
+
+Obtain the most recent version from
+http://jdom.org
+
+Uncompress the binary file into the jar directory.
+Rename it from jdom to jdom-1.1.1 (or whatever the version is)
+mv jdom-1.1.1/build/jdom.jar jdom-1.1.1/jdom-1.1.1.jar
+Create the src zip file (or jar file, if you like)
+cd jdom-1.1.1/src/java
+zip -r ../../jdom-1.1.1-src.zip org
+
+Delete everything but these two files, the license file and the readme.
+
+Change the references to the old directory to the new directory in the build path.
+
+
