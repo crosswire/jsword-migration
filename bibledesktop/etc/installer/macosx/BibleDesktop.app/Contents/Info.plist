@@ -48,7 +48,7 @@
 			<string>$JAVAROOT/commons-codec-1.4.jar</string>
 			<string>$JAVAROOT/commons-httpclient-3.1.jar</string>
 			<string>$JAVAROOT/commons-logging-1.1.1.jar</string>
-			<string>$JAVAROOT/commons-net-1.4.1.jar</string>
+			<string>$JAVAROOT/commons-net-2.2.jar</string>
 			<string>$JAVAROOT/javatar-2.5.jar</string>
 			<string>$JAVAROOT/jlfgr-1_0.jar</string>
 			</array>

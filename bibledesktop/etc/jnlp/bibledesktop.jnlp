@@ -37,7 +37,7 @@
     <jar href="commons-codec-1.4.jar"/>
     <jar href="commons-httpclient-3.1.jar"/>
     <jar href="commons-logging-1.1.1.jar"/>
-    <jar href="commons-net-1.4.1.jar"/>
+    <jar href="commons-net-2.2.jar"/>
     <jar href="lucene-core-2.9.1.jar"/>
     <jar href="lucene-snowball-2.9.1.jar"/>
     <jar href="lucene-analyzers-2.9.1.jar"/>
