@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE import-control PUBLIC
-    "-//Puppy Crawl//DTD Import Control 1.0//EN"
-    "http://www.puppycrawl.com/dtds/import_control_1_0.dtd">
+    "-//Puppy Crawl//DTD Import Control 1.1//EN"
+    "http://www.puppycrawl.com/dtds/import_control_1_1.dtd">
 
 <import-control pkg="com.puppycrawl.tools.checkstyle">
 
@@ -11,6 +11,7 @@
   <allow pkg="com.puppycrawl.tools.checkstyle.api"/>
   <allow pkg="java.io"/>
   <allow pkg="java.net"/>
+  <allow pkg="java.nio"/>
   <allow pkg="java.util"/>
   <allow pkg="javax.xml.parsers"/>
   <allow pkg="org.apache.commons.beanutils"/>
@@ -18,7 +19,6 @@
   <allow pkg="org.xml.sax"/>
 
   <!-- The local ones -->
-  <allow class="java.nio.charset.Charset" local-only="true"/>
   <allow class="java.security.MessageDigest" local-only="true"/>
   <allow pkg="com.puppycrawl.tools.checkstyle.grammars" local-only="true"/>
   <allow pkg="org.apache.commons.cli" local-only="true"/>

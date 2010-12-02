@@ -7,6 +7,7 @@
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="src" path="src/main/i18n"/>
 	<classpathentry kind="lib" path="jar/jsword-common-aqua-1.0.6/jsword-common-aqua-1.0.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

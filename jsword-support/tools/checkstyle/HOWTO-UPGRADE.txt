@@ -10,7 +10,7 @@ In the new directory, remove the following:
    contrib/examples
    contrib/hooks
    contrib/usage
-   docs
+   site
    build.xml
    all jars but checkstyle-all-*.jar
 
