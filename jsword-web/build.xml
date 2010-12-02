@@ -68,10 +68,10 @@
         use="true"
         splitindex="true"
         version="true"
-        source="1.4"
+        source="1.5"
         failonerror="false">
       <footer>Copyright &#168; 2003-2007</footer>
-      <link offline="true" href="http://java.sun.com/j2se/1.4/docs/api/" packagelistLoc="${source.etc}/javadoc"/>
+      <link offline="true" href="http://download.oracle.com/javase/1.5.0/docs/api/" packagelistLoc="${source.etc}/javadoc"/>
     </javadoc>
   </target>
 
