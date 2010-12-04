@@ -381,7 +381,7 @@ public class ActionFactory implements ActionListener, Actionable {
     private CWAction buildAction(String key, String name, String tooltip, String smallIconPath, String largeIconPath, String acceleratorSpec, String enabled) {
         if (key == null || key.length() == 0) {
             log.warn("Acronymn is missing for CWAction");
-        } 
+        }
 
         CWAction cwAction = (CWAction) actions.get(key);
 
@@ -407,7 +407,7 @@ public class ActionFactory implements ActionListener, Actionable {
         cwAction.addSmallIcon(smallIconPath);
 
         try {
-            cwAction.addAccelerator(acceleratorSpec);            
+            cwAction.addAccelerator(acceleratorSpec);
         } catch (NumberFormatException nfe) {
             log.warn("Could not parse integer for accelerator of action " + key, nfe);
         }
