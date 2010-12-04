@@ -157,9 +157,14 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         // The first thing that has to be done is to set the locale.
         Translations.instance().setLocale();
 
+        URI predictURI = PROJECT.getWritableURI(SPLASH_PROPS, FileUtil.EXTENSION_PROPERTIES);
+        Progress startJob = JobManager.createJob("Startup");
+        // TRANSLATOR: Progress label shown on BibleDesktop startup.
+        startJob.beginJob(Msg.gettext("Startup"), predictURI);
+        // startJob.setProgress(Msg.STARTUP_CONFIG.toString());
+
         // Load the configuration. And create the lists of installed books.
         // This has to be done before any GUI components are created
-        // (Including the splash).
         // This includes code that is invoked by it.
         // This has to be done after setting the locale.
         generateConfig();
@@ -169,12 +174,6 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
 
         // Grab errors
         Reporter.grabAWTExecptions(true);
-
-        // Splash screen
-        URI predictURI = PROJECT.getWritableURI(SPLASH_PROPS, FileUtil.EXTENSION_PROPERTIES);
-        // TRANSLATOR: Progress label shown on BibleDesktop startup.
-        Progress startJob = JobManager.createJob(Msg.gettext("Startup"), predictURI, true);
-        // startJob.setProgress(Msg.STARTUP_CONFIG.toString());
 
         // Create the Desktop Actions
         actions = new DesktopActions(this);
@@ -1038,7 +1037,6 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
                 System.setProperty("com.apple.mrj.application.live-resize", "true");
             }
 
-            // new BusStart();
             ExceptionPane.setHelpDeskListener(true);
             LookAndFeelUtil.initialize();
 

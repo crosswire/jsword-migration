@@ -153,15 +153,15 @@ public class DebugPane extends JPanel {
      * Create some test jobs
      */
     public void createTestJobs() {
-        createTestJob(30000, "test1", 20, false);
-        createTestJob(30000, "test2", 3, false);
-        createTestJob(30000, "test3", 3, true);
+        createTestJob(30000, "test1", 20);
+        createTestJob(30000, "test2", 3);
+        createTestJob(30000, "test3", 3);
     }
 
     /**
      * Create a test job
      */
-    public static void createTestJob(final long millis, final String predictbase, final int steps, final boolean fake) {
+    public static void createTestJob(final long millis, final String predictbase, final int steps) {
         final URI predicturl = CWProject.instance().getWritableURI(predictbase, FileUtil.EXTENSION_PROPERTIES);
         final Thread test = new Thread() {
             /*
@@ -171,7 +171,8 @@ public class DebugPane extends JPanel {
              */
             /* @Override */
             public synchronized void run() {
-                Progress job = JobManager.createJob(predictbase, predicturl, Thread.currentThread(), fake);
+                Progress job = JobManager.createJob(predictbase, Thread.currentThread());
+                job.beginJob(predictbase, predicturl);
 
                 job.setSectionName(LimboMsg.DEBUG_STEPS.toString(new Object[] {
                         new Integer(0), new Integer(steps)

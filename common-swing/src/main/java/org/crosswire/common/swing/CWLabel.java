@@ -49,7 +49,7 @@ public class CWLabel {
      *            the text of the label, with an optional mnemonic indicator
      * @return a JLabel
      */
-    static public JLabel createJLabel(String text) {
+     public static JLabel createJLabel(String text) {
         String label = text;
 
         // A Mnemonic can be specified by a preceding _ in the name

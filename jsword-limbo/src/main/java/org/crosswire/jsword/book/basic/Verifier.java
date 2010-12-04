@@ -99,7 +99,8 @@ public class Verifier {
      * Read from the given source version to generate ourselves
      */
     public void checkText(Key key, PrintWriter out) {
-        Progress job = JobManager.createJob(VerifierMsg.VERIFY_START.toString(), Thread.currentThread(), false);
+        Progress job = JobManager.createJob(VerifierMsg.VERIFY_START.toString(), Thread.currentThread());
+        job.beginJob(VerifierMsg.VERIFY_START.toString());
 
         if (key == null) {
             key = book1.getGlobalKeyList();
@@ -153,7 +154,8 @@ public class Verifier {
      * Read from the given source version to generate ourselves
      */
     public void checkPassage(PrintWriter out) throws BookException {
-        Progress job = JobManager.createJob(VerifierMsg.VERIFY_PASSAGES.toString(), Thread.currentThread(), false);
+        Progress job = JobManager.createJob(VerifierMsg.VERIFY_PASSAGES.toString(), Thread.currentThread());
+        job.beginJob(VerifierMsg.VERIFY_PASSAGES.toString());
         int count = 0;
         int percent = -1;
 

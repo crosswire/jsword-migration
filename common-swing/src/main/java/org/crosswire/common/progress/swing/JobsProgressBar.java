@@ -44,6 +44,7 @@ import org.crosswire.common.icu.NumberShaper;
 import org.crosswire.common.progress.Job;
 import org.crosswire.common.progress.JobManager;
 import org.crosswire.common.progress.Progress;
+import org.crosswire.common.progress.ProgressMode;
 import org.crosswire.common.progress.WorkEvent;
 import org.crosswire.common.progress.WorkListener;
 import org.crosswire.common.swing.ActionFactory;
@@ -146,6 +147,9 @@ public class JobsProgressBar extends JPanel implements WorkListener {
         log.debug("adding job to panel at " + i + ": " + job.getJobName());
 
         JProgressBar progress = new JProgressBar();
+//        if (job.getProgressMode() == ProgressMode.UNKNOWN) {
+//            progress.setIndeterminate(true);
+//        }
         progress.setStringPainted(true);
         progress.setToolTipText(job.getJobName());
         progress.setBorder(null);
@@ -179,11 +183,15 @@ public class JobsProgressBar extends JPanel implements WorkListener {
     protected synchronized void updateJob(Progress job) {
         JobData jobdata = (JobData) jobs.get(job);
 
-        int percent = job.getWork();
+        // At 99% the progress bar animates nicely.
+        int percent = 99;
         StringBuffer buf = new StringBuffer(job.getSectionName());
-        buf.append(": ");
-        buf.append(shaper.shape(Integer.toString(percent)));
-        buf.append('%');
+        if (job.getProgressMode() != ProgressMode.UNKNOWN) {
+            percent = job.getWork();
+            buf.append(": ");
+            buf.append(shaper.shape(Integer.toString(percent)));
+            buf.append('%');
+        }
         jobdata.getProgress().setString(buf.toString());
         jobdata.getProgress().setValue(percent);
     }

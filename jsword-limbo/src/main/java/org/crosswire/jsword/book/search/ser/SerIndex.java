@@ -90,7 +90,8 @@ public class SerIndex extends AbstractIndex implements Activatable, Thesaurus {
         this.book = book;
         this.uri = storage;
 
-        Progress job = JobManager.createJob(Msg.INDEX_START.toString(), Thread.currentThread(), false);
+        Progress job = JobManager.createJob(Msg.INDEX_START.toString(), Thread.currentThread());
+        job.beginJob(Msg.INDEX_START.toString());
 
         try {
             synchronized (creating) {
