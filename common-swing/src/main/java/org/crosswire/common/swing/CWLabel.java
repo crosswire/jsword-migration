@@ -61,7 +61,7 @@ public class CWLabel {
             label = label.substring(0, len - 1);
         } else if (pos >= 0 && pos < len - 1) {
             // Remove the _
-            StringBuffer buffer = new StringBuffer(label.length() - 1);
+            StringBuilder buffer = new StringBuilder(label.length() - 1);
             if (pos > 0) {
                 buffer.append(label.substring(0, pos));
             }

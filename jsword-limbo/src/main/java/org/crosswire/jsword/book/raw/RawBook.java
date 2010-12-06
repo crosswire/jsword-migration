@@ -218,7 +218,7 @@ public class RawBook extends AbstractPassageBook {
 
             // We can still produce text without these though so they
             // should not except if the load fails.
-            StringBuffer messages = new StringBuffer();
+            StringBuilder messages = new StringBuilder();
 
             if (memory) {
                 puncInsts = new PuncInstsMem(this, create, messages);
@@ -267,7 +267,7 @@ public class RawBook extends AbstractPassageBook {
      * .jsword.passage.Key)
      */
     public String getRawText(Key key) {
-        StringBuffer retcode = new StringBuffer();
+        StringBuilder retcode = new StringBuilder();
         Verse verse = KeyUtil.getVerse(key);
 
         int[] wordIdxs = wordInsts.getIndexes(verse);

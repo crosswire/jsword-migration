@@ -61,7 +61,7 @@ public abstract class InstsMem extends Mem implements Insts {
      * @param messages
      *            We append stuff here if something went wrong
      */
-    public InstsMem(RawBook raw, String leafname, boolean create, StringBuffer messages) {
+    public InstsMem(RawBook raw, String leafname, boolean create, StringBuilder messages) {
         super(raw, leafname, create, messages);
     }
 

@@ -88,7 +88,7 @@ public class ExtensionFileFilter extends FileFilter {
             return desc;
         }
 
-        StringBuffer buff = new StringBuffer("(");
+        StringBuilder buff = new StringBuilder("(");
         for (int i = 0; i < extensions.length; i++) {
             if (i != 0) {
                 buff.append(", ");

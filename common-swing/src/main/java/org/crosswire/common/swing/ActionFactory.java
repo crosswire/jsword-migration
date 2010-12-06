@@ -423,7 +423,7 @@ public class ActionFactory implements ActionListener, Actionable {
      */
     private void buildActionMap(Class basis) {
         try {
-            StringBuffer basisName = new StringBuffer(basis.getName());
+            StringBuilder basisName = new StringBuilder(basis.getName());
             ResourceBundle resources = ResourceBundle.getBundle(basisName.toString(), Locale.getDefault(), CWClassLoader.instance(basis));
             ResourceBundle controls = null;
             try {

@@ -83,7 +83,7 @@ public class HttpRemoter implements Remoter {
      * get a complete URL which will get us the required XML document.
      */
     public static String methodToParam(RemoteMethod method) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
         buffer.append("?method=");
         buffer.append(method.getMethodName());

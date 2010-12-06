@@ -57,7 +57,7 @@ public abstract class InstsDisk extends Disk implements Insts {
      * @param messages
      *            We append stuff here if something went wrong
      */
-    public InstsDisk(RawBook raw, String leafname, boolean create, StringBuffer messages) {
+    public InstsDisk(RawBook raw, String leafname, boolean create, StringBuilder messages) {
         try {
             ctor(raw, leafname, create);
         } catch (Exception ex) {
@@ -66,7 +66,7 @@ public abstract class InstsDisk extends Disk implements Insts {
     }
 
     /**
-     * This really should be a constructor, however the StringBuffer ctor wants
+     * This really should be a constructor, however the StringBuilder ctor wants
      * to trap and muffle exceptions. |I can't do this:
      * <code>try { this(...) } ...</code>
      * 

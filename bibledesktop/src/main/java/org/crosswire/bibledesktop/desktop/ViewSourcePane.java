@@ -77,7 +77,7 @@ import org.xml.sax.SAXException;
 public class ViewSourcePane extends JPanel {
     public ViewSourcePane(Book[] books, Key key) {
         try {
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
 
             Iterator iter = key.iterator();
             while (iter.hasNext()) {

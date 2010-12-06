@@ -64,7 +64,7 @@ public abstract class ItemsMem extends Mem implements Items {
      * @param messages
      *            We append stuff here if something went wrong
      */
-    public ItemsMem(RawBook raw, String leafname, boolean create, StringBuffer messages) {
+    public ItemsMem(RawBook raw, String leafname, boolean create, StringBuilder messages) {
         super(raw, leafname, create, messages);
     }
 

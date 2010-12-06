@@ -28,7 +28,7 @@ public class MoneyDocument extends PlainDocument {
         boolean has_dot = current.indexOf('.') == -1 ? false : true;
 
         char[] addition = str.toCharArray();
-        StringBuffer clear = new StringBuffer();
+        StringBuilder clear = new StringBuilder();
 
         for (int i = 0; i < addition.length; i++) {
             if (Character.isDigit(addition[i]))

@@ -48,7 +48,7 @@ public class NumericDocument extends PlainDocument {
         }
 
         char[] upper = str.toCharArray();
-        StringBuffer clear = new StringBuffer();
+        StringBuilder clear = new StringBuilder();
 
         for (int i = 0; i < upper.length; i++) {
             if (Character.isDigit(upper[i])) {

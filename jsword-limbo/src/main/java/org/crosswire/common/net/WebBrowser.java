@@ -115,7 +115,7 @@ public class WebBrowser {
         }
 
         // Create the cookies header
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         for (Enumeration en = cookies.elements(); en.hasMoreElements();) {
             Cookie cookie = (Cookie) en.nextElement();
             buffer.append(cookie.getName() + "=" + cookie.getValue());

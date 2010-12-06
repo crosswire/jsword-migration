@@ -86,7 +86,7 @@ public class StubDictionary extends AbstractBook {
      * .Key)
      */
     public String getRawText(Key key) throws BookException {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         return buffer.toString();
     }
 

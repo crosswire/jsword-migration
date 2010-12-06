@@ -61,7 +61,7 @@ public class PuncInstsMem extends InstsMem {
      * @param messages
      *            We append stuff here if something went wrong
      */
-    public PuncInstsMem(RawBook raw, boolean create, StringBuffer messages) {
+    public PuncInstsMem(RawBook raw, boolean create, StringBuilder messages) {
         super(raw, RawConstants.FILE_PUNC_INST, create, messages);
     }
 

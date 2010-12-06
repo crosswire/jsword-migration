@@ -68,7 +68,7 @@ public abstract class Mem {
      * @param messages
      *            We append stuff here if something went wrong
      */
-    public Mem(RawBook raw, String leafname, boolean create, StringBuffer messages) {
+    public Mem(RawBook raw, String leafname, boolean create, StringBuilder messages) {
         try {
             ctor(raw, leafname, create);
         } catch (Exception ex) {
@@ -77,7 +77,7 @@ public abstract class Mem {
     }
 
     /**
-     * This really should be a constructor, however the StringBuffer ctor wants
+     * This really should be a constructor, however the StringBuilder ctor wants
      * to trap and muffle exceptions. I can't do this:
      * <code>try { this(...) } ...</code>
      * 

@@ -60,7 +60,7 @@ public class PuncItemsMem extends ItemsMem {
      * @param messages
      *            We append stuff here if something went wrong
      */
-    public PuncItemsMem(RawBook raw, boolean create, StringBuffer messages) {
+    public PuncItemsMem(RawBook raw, boolean create, StringBuilder messages) {
         super(raw, RawConstants.FILE_PUNC_ITEM, create, messages);
     }
 

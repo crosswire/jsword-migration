@@ -142,8 +142,8 @@ public class DOMDefaultHandler extends DefaultHandler {
     /*
      * Normalizes the given string
      * 
-     * private String normalize(String s) { StringBuffer str = new
-     * StringBuffer();
+     * private String normalize(String s) { StringBuilder str = new
+     * StringBuilder();
      * 
      * int len = (s != null) ? s.length() : 0; for (int i = 0; i < len; i++) {
      * char ch = s.charAt(i); switch (ch) { case '<': str.append("&lt;"); break;

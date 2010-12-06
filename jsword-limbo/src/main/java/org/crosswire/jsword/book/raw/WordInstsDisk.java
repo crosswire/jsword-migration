@@ -61,7 +61,7 @@ public class WordInstsDisk extends InstsDisk {
      * @param messages
      *            We append stuff here if something went wrong
      */
-    public WordInstsDisk(RawBook raw, boolean create, StringBuffer messages) {
+    public WordInstsDisk(RawBook raw, boolean create, StringBuilder messages) {
         super(raw, RawConstants.FILE_WORD_INST, create, messages);
     }
 

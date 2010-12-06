@@ -178,7 +178,7 @@ public class CustomTokenizer {
      */
     private static String getSingleCharWords(Map commands) {
         Iterator it = commands.keySet().iterator();
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
 
         while (it.hasNext()) {
             String cmd = (String) it.next();

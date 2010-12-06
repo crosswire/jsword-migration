@@ -133,7 +133,7 @@ public class FontStore {
             return;
         }
         load();
-        fontMap.setProperty(new StringBuffer(LANG_KEY_PREFIX).append(lang.getCode()).toString(), GuiConvert.font2String(font));
+        fontMap.setProperty(new StringBuilder(LANG_KEY_PREFIX).append(lang.getCode()).toString(), GuiConvert.font2String(font));
         store();
     }
 
@@ -181,7 +181,7 @@ public class FontStore {
         }
 
         if (lang != null) {
-            fontSpec = fontMap.getProperty(new StringBuffer(LANG_KEY_PREFIX).append(lang.getCode()).toString());
+            fontSpec = fontMap.getProperty(new StringBuilder(LANG_KEY_PREFIX).append(lang.getCode()).toString());
         }
 
         if (fontSpec != null) {

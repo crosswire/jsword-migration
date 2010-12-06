@@ -134,7 +134,7 @@ public class TarOutputStream extends FilterOutputStream
      */
     public void putNextEntry(TarEntry entry) throws IOException
     {
-        StringBuffer name = entry.getHeader().name;
+        StringBuilder name = entry.getHeader().name;
 
         // NOTE
         // This check is not adequate, because the maximum file length that

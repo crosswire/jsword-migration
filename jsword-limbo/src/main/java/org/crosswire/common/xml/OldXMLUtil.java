@@ -81,7 +81,7 @@ public class OldXMLUtil {
      *            How far down have we gone?
      */
     private static void recurseNodes(Node node, PrintWriter out, int depth) {
-        StringBuffer buff = new StringBuffer();
+        StringBuilder buff = new StringBuilder();
 
         switch (node.getNodeType()) {
         case Node.TEXT_NODE:

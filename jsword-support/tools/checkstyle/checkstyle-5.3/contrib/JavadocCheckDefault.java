@@ -36,7 +36,7 @@ public class JavadocCheckDefault
             final Check check = (Check) clazz.newInstance();            
             final int[] defaultTokens = check.getDefaultTokens();
             if (defaultTokens.length > 0) {
-                final StringBuffer buf = new StringBuffer();
+                final StringBuilder buf = new StringBuilder();
                 buf.append(header);
                 final ArrayList tokenNames = new ArrayList();
                 for (int i = 0; i < defaultTokens.length; i++) {

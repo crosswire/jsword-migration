@@ -288,7 +288,7 @@ public class LinkArray implements Serializable {
      * Debug for an array of Links
      */
     public static String debug(Link[] set) {
-        StringBuffer buff = new StringBuffer();
+        StringBuilder buff = new StringBuilder();
 
         for (int i = 0; i < set.length; i++) {
             if (i != 0) {

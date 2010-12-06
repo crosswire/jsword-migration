@@ -221,8 +221,8 @@ public class Map implements Serializable {
                          * if (log.isDebugEnabled()) {
                          * log.debug("Rule: "+j+" ("+
                          * rules[j].getClass().getName(
-                         * )+") scale="+rules[j].getScale()); StringBuffer out =
-                         * new StringBuffer(" "); for (int i=0; i<dar[j].length;
+                         * )+") scale="+rules[j].getScale()); StringBuilder out =
+                         * new StringBuilder(" "); for (int i=0; i<dar[j].length;
                          * i++) {
                          * out.append(" ("+i+"="+dar[j][i].pos[0]+","+dar[
                          * j][i].pos[1]+")"); } log.debug(out); }

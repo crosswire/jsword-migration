@@ -131,7 +131,7 @@ public class DebugPane extends JPanel {
      * Some debug action that we can configure
      */
     public String showViews() {
-        StringBuffer reply = new StringBuffer();
+        StringBuilder reply = new StringBuilder();
 
         reply.append('\n');
         reply.append(LimboMsg.DEBUG_VIEWS.toString());

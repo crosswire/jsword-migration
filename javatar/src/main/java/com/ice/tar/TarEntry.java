@@ -343,7 +343,7 @@ public class TarEntry extends Object implements Cloneable
      */
     public void setName(String name)
     {
-        this.header.name = new StringBuffer(name);
+        this.header.name = new StringBuilder(name);
     }
 
     /**
@@ -403,7 +403,7 @@ public class TarEntry extends Object implements Cloneable
      */
     public void setUserName(String userName)
     {
-        this.header.userName = new StringBuffer(userName);
+        this.header.userName = new StringBuilder(userName);
     }
 
     /**
@@ -423,7 +423,7 @@ public class TarEntry extends Object implements Cloneable
      */
     public void setGroupName(String groupName)
     {
-        this.header.groupName = new StringBuffer(groupName);
+        this.header.groupName = new StringBuilder(groupName);
     }
 
     /**
@@ -580,9 +580,9 @@ public class TarEntry extends Object implements Cloneable
         for (; name.startsWith("/");)
             name = name.substring(1);
 
-        hdr.linkName = new StringBuffer("");
+        hdr.linkName = new StringBuilder("");
 
-        hdr.name = new StringBuffer(name);
+        hdr.name = new StringBuilder(name);
 
         if (newFile.isDirectory())
         {
@@ -752,7 +752,7 @@ public class TarEntry extends Object implements Cloneable
         }
         else
         {
-            StringBuffer buf = new StringBuffer(128);
+            StringBuilder buf = new StringBuilder(128);
 
             buf.append("header magic is not 'ustar' or unix-style zeros, it is '");
             buf.append(headerBuf[257]);
@@ -838,9 +838,9 @@ public class TarEntry extends Object implements Cloneable
         {
             hdr.devMajor = 0;
             hdr.devMinor = 0;
-            hdr.magic = new StringBuffer("");
-            hdr.userName = new StringBuffer("");
-            hdr.groupName = new StringBuffer("");
+            hdr.magic = new StringBuilder("");
+            hdr.userName = new StringBuilder("");
+            hdr.groupName = new StringBuilder("");
         }
     }
 
@@ -862,7 +862,7 @@ public class TarEntry extends Object implements Cloneable
         hdr.devMajor = 0;
         hdr.devMinor = 0;
 
-        hdr.name = new StringBuffer(name);
+        hdr.name = new StringBuilder(name);
         hdr.mode = isDir ? 040755 : 0100644;
         hdr.userId = 0;
         hdr.groupId = 0;
@@ -873,9 +873,9 @@ public class TarEntry extends Object implements Cloneable
 
         hdr.linkFlag = isDir ? TarHeader.LF_DIR : TarHeader.LF_NORMAL;
 
-        hdr.linkName = new StringBuffer("");
-        hdr.userName = new StringBuffer("");
-        hdr.groupName = new StringBuffer("");
+        hdr.linkName = new StringBuilder("");
+        hdr.userName = new StringBuilder("");
+        hdr.groupName = new StringBuilder("");
 
         hdr.devMajor = 0;
         hdr.devMinor = 0;
@@ -884,7 +884,7 @@ public class TarEntry extends Object implements Cloneable
     /* @Override */
     public String toString()
     {
-        StringBuffer result = new StringBuffer(128);
+        StringBuilder result = new StringBuilder(128);
         return result.append("[TarEntry name=").append(this.getName()).append(", isDir=").append(this.isDirectory()).append(", size=").append(this.getSize())
                         .append(", userId=").append(this.getUserId()).append(", user=").append(this.getUserName()).append(", groupId=").append(
                                         this.getGroupId()).append(", group=").append(this.getGroupName()).append("]").toString();

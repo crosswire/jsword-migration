@@ -524,7 +524,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
      * Regenerate the search string from the input boxes
      */
     private void updateSearchString() {
-        StringBuffer search = new StringBuffer();
+        StringBuilder search = new StringBuilder();
 
         String restrict = txtRestrict.getText();
         if (restrict != null && restrict.trim().length() > 0) {

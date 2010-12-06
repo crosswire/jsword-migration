@@ -193,7 +193,7 @@ public class FastTarStream
             int nameWidth = 56;
             int sizeWidth = 9;
             int userWidth = 8;
-            StringBuffer padBuf = new StringBuffer(128);
+            StringBuilder padBuf = new StringBuilder(128);
             for (;;)
             {
                 TarEntry entry = fts.getNextEntry();

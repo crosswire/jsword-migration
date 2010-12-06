@@ -304,7 +304,7 @@ public final class ExceptionPane extends JPanel {
      * Gets a short HTML description of an Exception for display in a window
      */
     public static String getHTMLDescription(Throwable ex) {
-        StringBuffer retcode = new StringBuffer();
+        StringBuilder retcode = new StringBuilder();
 
         // The message in the exception
         String msg = ex.getMessage();
@@ -459,7 +459,7 @@ public final class ExceptionPane extends JPanel {
                 File file = new File(srcs[i], name);
                 if (file.isFile() && file.canRead()) {
                     // Found the file, load it into the window
-                    StringBuffer data = new StringBuffer();
+                    StringBuilder data = new StringBuilder();
 
                     // Attempt to note the line to highlight
                     int selection_start = 0;
@@ -515,7 +515,7 @@ public final class ExceptionPane extends JPanel {
             // TRANSLATOR: When an error dialog is presented to the user, this indicates that the Java source could not be found.
             // {1} is a placeholder for the line number on which the error occurred.
             // {0} is a placeholder for the Java file.
-            StringBuffer error = new StringBuffer(UserMsg.gettext("Cannot open source for: {0}, line: {1}\n", new Object[] {
+            StringBuilder error = new StringBuilder(UserMsg.gettext("Cannot open source for: {0}, line: {1}\n", new Object[] {
                     st.getClassName(level), errorLine
             }));
             for (int i = 0; i < srcs.length; i++) {

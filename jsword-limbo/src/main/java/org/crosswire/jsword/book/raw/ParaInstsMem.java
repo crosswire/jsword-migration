@@ -60,7 +60,7 @@ public class ParaInstsMem extends InstsMem {
      * @param create
      *            Should we start all over again
      */
-    public ParaInstsMem(RawBook raw, boolean create, StringBuffer messages) {
+    public ParaInstsMem(RawBook raw, boolean create, StringBuilder messages) {
         super(raw, RawConstants.FILE_PARA_INST, create, messages);
     }
 

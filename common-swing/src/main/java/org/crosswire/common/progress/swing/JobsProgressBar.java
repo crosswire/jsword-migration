@@ -185,7 +185,7 @@ public class JobsProgressBar extends JPanel implements WorkListener {
 
         // At 99% the progress bar animates nicely.
         int percent = 99;
-        StringBuffer buf = new StringBuffer(job.getSectionName());
+        StringBuilder buf = new StringBuilder(job.getSectionName());
         if (job.getProgressMode() != ProgressMode.UNKNOWN) {
             percent = job.getWork();
             buf.append(": ");

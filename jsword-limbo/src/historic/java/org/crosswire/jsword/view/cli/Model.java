@@ -53,7 +53,7 @@ public class Model
 
         KeyList set = dict.getGlobalKeyList();
 
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         for (Iterator it = set.iterator(); it.hasNext();)
         {
             Key key = (Key) it.next();
@@ -120,7 +120,7 @@ public class Model
     
     private String display(BookFilter filter)
     {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
         List list = Books.installed().getBooks(filter);
         for (Iterator it = list.iterator(); it.hasNext();)
@@ -139,7 +139,7 @@ public class Model
     
     public String config()
     {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         
         for (Iterator it = config.getNames(); it.hasNext();)
         {

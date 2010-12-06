@@ -61,7 +61,7 @@ public class PhraseParamWord implements ParamWord {
      */
     public Key getKeyList(IndexSearcher engine) throws BookException {
         Iterator it = engine.iterator();
-        StringBuffer buff = new StringBuffer();
+        StringBuilder buff = new StringBuilder();
 
         while (true) {
             if (!it.hasNext()) {

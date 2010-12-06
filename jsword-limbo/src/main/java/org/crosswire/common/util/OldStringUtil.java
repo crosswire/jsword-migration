@@ -18,7 +18,7 @@ public class OldStringUtil {
      * @return The capital letters in the given words.
      */
     public static String getCapitals(String words) {
-        StringBuffer retcode = new StringBuffer();
+        StringBuilder retcode = new StringBuilder();
 
         for (int i = 0; i < words.length(); i++) {
             char c = words.charAt(i);
@@ -35,7 +35,7 @@ public class OldStringUtil {
      * StringUtil.createTitle("oneTwo") = "OneTwo"
      */
     public static String createJavaName(String variable) {
-        StringBuffer retcode = new StringBuffer();
+        StringBuilder retcode = new StringBuilder();
         boolean newword = true;
 
         for (int i = 0; i < variable.length(); i++) {

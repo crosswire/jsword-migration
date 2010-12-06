@@ -51,7 +51,7 @@ public class JDBCBibleUtil {
      * @return The string with the char replaced
      */
     protected static String swapChar(String orig, char x, char y) {
-        StringBuffer retcode = new StringBuffer(orig);
+        StringBuilder retcode = new StringBuilder(orig);
         int start = 0;
 
         while (true) {

@@ -155,12 +155,12 @@ public final class Validator {
     }
 
     /**
-     * Take a string (for example "£2,000.00") and chop out any of the chars
+     * Take a string (for example "ï¿½2,000.00") and chop out any of the chars
      * that make it fail to parse (giving 2000.00) All we do is chop out any
      * chars that are not one of "+", "-", "." or a number
      */
     public static String trimToNumberic(String orig) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
         for (int i = 0; i < orig.length(); i++) {
             char c = orig.charAt(i);

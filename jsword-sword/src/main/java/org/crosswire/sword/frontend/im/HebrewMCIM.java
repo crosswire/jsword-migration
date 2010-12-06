@@ -9,7 +9,7 @@ package org.crosswire.sword.frontend.im;
  * @version 1.0
  */
 
-import java.util.*;
+import java.util.Hashtable;
 
 public class HebrewMCIM extends SWInputMethod {
 
@@ -26,7 +26,7 @@ public class HebrewMCIM extends SWInputMethod {
     public String translate(char in) {
 
         char retVal = 0;
-        StringBuffer retString = new StringBuffer();
+        StringBuilder retString = new StringBuilder();
         if (getState() > 1) {
             if (getState() >= subst2.length) { // serious issue with internal
                                                // structure

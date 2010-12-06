@@ -132,7 +132,7 @@ public class TarHeader extends Object implements Cloneable
     /**
      * The entry's name.
      */
-    public StringBuffer name;
+    public StringBuilder name;
     /**
      * The entry's permission mode.
      */
@@ -164,19 +164,19 @@ public class TarHeader extends Object implements Cloneable
     /**
      * The entry's link name.
      */
-    public StringBuffer linkName;
+    public StringBuilder linkName;
     /**
      * The entry's magic tag.
      */
-    public StringBuffer magic;
+    public StringBuilder magic;
     /**
      * The entry's user name.
      */
-    public StringBuffer userName;
+    public StringBuilder userName;
     /**
      * The entry's group name.
      */
-    public StringBuffer groupName;
+    public StringBuilder groupName;
     /**
      * The entry's major device number.
      */
@@ -188,10 +188,10 @@ public class TarHeader extends Object implements Cloneable
 
     public TarHeader()
     {
-        this.magic = new StringBuffer(TarHeader.TMAGIC);
+        this.magic = new StringBuilder(TarHeader.TMAGIC);
 
-        this.name = new StringBuffer();
-        this.linkName = new StringBuffer();
+        this.name = new StringBuilder();
+        this.linkName = new StringBuilder();
 
         String user = System.getProperty("user.name", "");
 
@@ -200,8 +200,8 @@ public class TarHeader extends Object implements Cloneable
 
         this.userId = 0;
         this.groupId = 0;
-        this.userName = new StringBuffer(user);
-        this.groupName = new StringBuffer("");
+        this.userName = new StringBuilder(user);
+        this.groupName = new StringBuilder("");
     }
 
     /**
@@ -216,7 +216,7 @@ public class TarHeader extends Object implements Cloneable
         {
             hdr = (TarHeader) super.clone();
 
-            hdr.name = (this.name == null) ? null : new StringBuffer(this.name.toString());
+            hdr.name = (this.name == null) ? null : new StringBuilder(this.name.toString());
             hdr.mode = this.mode;
             hdr.userId = this.userId;
             hdr.groupId = this.groupId;
@@ -224,10 +224,10 @@ public class TarHeader extends Object implements Cloneable
             hdr.modTime = this.modTime;
             hdr.checkSum = this.checkSum;
             hdr.linkFlag = this.linkFlag;
-            hdr.linkName = (this.linkName == null) ? null : new StringBuffer(this.linkName.toString());
-            hdr.magic = (this.magic == null) ? null : new StringBuffer(this.magic.toString());
-            hdr.userName = (this.userName == null) ? null : new StringBuffer(this.userName.toString());
-            hdr.groupName = (this.groupName == null) ? null : new StringBuffer(this.groupName.toString());
+            hdr.linkName = (this.linkName == null) ? null : new StringBuilder(this.linkName.toString());
+            hdr.magic = (this.magic == null) ? null : new StringBuilder(this.magic.toString());
+            hdr.userName = (this.userName == null) ? null : new StringBuilder(this.userName.toString());
+            hdr.groupName = (this.groupName == null) ? null : new StringBuilder(this.groupName.toString());
             hdr.devMajor = this.devMajor;
             hdr.devMinor = this.devMinor;
         }
@@ -296,9 +296,9 @@ public class TarHeader extends Object implements Cloneable
      * @param header The header buffer from which to parse.
      * @return The header's entry name.
      */
-    public static StringBuffer parseFileName(byte[] header)
+    public static StringBuilder parseFileName(byte[] header)
     {
-        StringBuffer result = new StringBuffer(256);
+        StringBuilder result = new StringBuilder(256);
 
         // If header[345] is not equal to zero, then it is the "prefix"
         // that 'ustar' defines. It must be prepended to the "normal"
@@ -330,9 +330,9 @@ public class TarHeader extends Object implements Cloneable
      * @param length The number of header bytes to parse.
      * @return The header's entry name.
      */
-    public static StringBuffer parseName(byte[] header, int offset, int length)
+    public static StringBuilder parseName(byte[] header, int offset, int length)
     {
-        StringBuffer result = new StringBuffer(length);
+        StringBuilder result = new StringBuilder(length);
 
         int end = offset + length;
         for (int i = offset; i < end; ++i)
@@ -376,13 +376,13 @@ public class TarHeader extends Object implements Cloneable
             if (prefix.length() > TarHeader.PREFIXLEN)
                 throw new InvalidHeaderException("file prefix is greater than 155 characters");
 
-            TarHeader.getNameBytes(new StringBuffer(name), outbuf, TarHeader.NAMEOFFSET, TarHeader.NAMELEN);
+            TarHeader.getNameBytes(new StringBuilder(name), outbuf, TarHeader.NAMEOFFSET, TarHeader.NAMELEN);
 
-            TarHeader.getNameBytes(new StringBuffer(prefix), outbuf, TarHeader.PREFIXOFFSET, TarHeader.PREFIXLEN);
+            TarHeader.getNameBytes(new StringBuilder(prefix), outbuf, TarHeader.PREFIXOFFSET, TarHeader.PREFIXLEN);
         }
         else
         {
-            TarHeader.getNameBytes(new StringBuffer(newName), outbuf, TarHeader.NAMEOFFSET, TarHeader.NAMELEN);
+            TarHeader.getNameBytes(new StringBuilder(newName), outbuf, TarHeader.NAMEOFFSET, TarHeader.NAMELEN);
         }
 
         // The offset, regardless of the format, is now the end of the
@@ -392,13 +392,13 @@ public class TarHeader extends Object implements Cloneable
     }
 
     /**
-     * Move the bytes from the name StringBuffer into the header's buffer.
+     * Move the bytes from the name StringBuilder into the header's buffer.
      * @param buf The header buffer into which to copy the name.
      * @param offset The offset into the buffer at which to store.
      * @param length The number of header bytes to store.
      * @return The new offset (offset + length).
      */
-    public static int getNameBytes(StringBuffer name, byte[] buf, int offset, int length)
+    public static int getNameBytes(StringBuilder name, byte[] buf, int offset, int length)
     {
         int i;
 

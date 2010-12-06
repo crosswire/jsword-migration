@@ -61,7 +61,7 @@ public class PuncInstsDisk extends InstsDisk {
      * @param messages
      *            We append stuff here if something went wrong
      */
-    public PuncInstsDisk(RawBook raw, boolean create, StringBuffer messages) {
+    public PuncInstsDisk(RawBook raw, boolean create, StringBuilder messages) {
         super(raw, RawConstants.FILE_PUNC_INST, create, messages);
     }
 

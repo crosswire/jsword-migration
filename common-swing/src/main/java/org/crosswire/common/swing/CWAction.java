@@ -120,7 +120,7 @@ public class CWAction extends AbstractAction {
      */
     /* @Override */
     public String toString() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         sb.append("Name:");
         sb.append((String) getValue(Action.NAME));

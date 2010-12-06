@@ -105,7 +105,7 @@ public class BookFont extends FontStore {
             return getFontMap().getProperty(book.getInitials()) != null;
         }
         if (lang != null) {
-            return getFontMap().getProperty(new StringBuffer(LANG_KEY_PREFIX).append(lang.getCode()).toString()) != null;
+            return getFontMap().getProperty(new StringBuilder(LANG_KEY_PREFIX).append(lang.getCode()).toString()) != null;
         }
         return false;
     }
@@ -119,7 +119,7 @@ public class BookFont extends FontStore {
             resetFont(book.getInitials());
         }
         if (lang != null) {
-            resetFont(new StringBuffer(LANG_KEY_PREFIX).append(lang.getCode()).toString());
+            resetFont(new StringBuilder(LANG_KEY_PREFIX).append(lang.getCode()).toString());
         }
     }
 

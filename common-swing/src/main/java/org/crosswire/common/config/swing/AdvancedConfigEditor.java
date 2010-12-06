@@ -148,7 +148,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
 
         // Get the name of the current deck
         Object[] list = tree.getSelectionPath().getPath();
-        StringBuffer path = new StringBuffer();
+        StringBuilder path = new StringBuilder();
 
         for (int i = 1; i < list.length; i++) {
             if (i > 1) {

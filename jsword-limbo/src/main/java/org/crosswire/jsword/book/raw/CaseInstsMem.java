@@ -67,7 +67,7 @@ public class CaseInstsMem extends InstsMem {
      * @param messages
      *            We append stuff here if something went wrong
      */
-    public CaseInstsMem(RawBook raw, boolean create, StringBuffer messages) {
+    public CaseInstsMem(RawBook raw, boolean create, StringBuilder messages) {
         super(raw, RawConstants.FILE_CASE_INST, create, messages);
     }
 
