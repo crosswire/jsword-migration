@@ -58,11 +58,11 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
             break;
 
         case LEVEL_CHAPTER:
-            selected = new Integer(set.getVerse().getChapter());
+            selected = Integer.valueOf(set.getVerse().getChapter());
             break;
 
         case LEVEL_VERSE:
-            selected = new Integer(set.getVerse().getVerse());
+            selected = Integer.valueOf(set.getVerse().getVerse());
             break;
 
         default:
@@ -151,7 +151,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
                 return BibleInfo.getBookName(index + 1);
 
             default:
-                return new Integer(index + 1);
+                return Integer.valueOf(index + 1);
 
             }
         } catch (NoSuchVerseException ex) {

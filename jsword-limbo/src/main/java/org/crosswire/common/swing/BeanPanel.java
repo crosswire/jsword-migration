@@ -186,7 +186,7 @@ public class BeanPanel extends JPanel {
                     Integer i = null;
                     if (data != null && data.length() > 0) {
                         try {
-                            i = new Integer(data);
+                            i = Integer.valueOf(data);
                         } catch (NumberFormatException e) {
                             i = null;
                         }

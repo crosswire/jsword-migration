@@ -147,7 +147,7 @@ public class WizardConfigEditor extends AbstractConfigEditor {
         }
 
         title.setText(names.get(1) + LimboMsg.PROPERTIES_POSN.toString(new Object[] {
-                new Integer(1), new Integer(wcards)
+                Integer.valueOf(1), Integer.valueOf(wcards)
         }));
 
         SwingUtilities.updateComponentTreeUI(this);
@@ -227,7 +227,7 @@ public class WizardConfigEditor extends AbstractConfigEditor {
         }
 
         title.setText(names.get(posn) + LimboMsg.PROPERTIES_POSN.toString(new Object[] {
-                new Integer(posn + 1), new Integer(wcards)
+                Integer.valueOf(posn + 1), Integer.valueOf(wcards)
         }));
 
         actions.getAction(BACK).setEnabled(posn != 0);

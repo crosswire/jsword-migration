@@ -448,7 +448,7 @@ public final class ExceptionPane extends JPanel {
 
             int line_num = st.getLineNumber(level);
             String orig = name;
-            Integer errorLine = new Integer(line_num);
+            Integer errorLine = Integer.valueOf(line_num);
             // TRANSLATOR: When an error dialog is presented to the user, this indicates that the Java source is unavailable.
             mylabel.setText(UserMsg.gettext("No File"));
 

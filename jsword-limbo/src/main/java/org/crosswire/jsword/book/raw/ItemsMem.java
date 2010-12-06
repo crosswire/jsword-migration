@@ -156,7 +156,7 @@ public abstract class ItemsMem extends Mem implements Items {
         if (create) {
             // So we have to add the word in
             array[count] = data;
-            hash.put(data, new Integer(count));
+            hash.put(data, Integer.valueOf(count));
 
             return count++;
         }

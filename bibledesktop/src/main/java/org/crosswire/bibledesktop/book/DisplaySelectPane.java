@@ -97,7 +97,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         advanced = new AdvancedSearchPane();
 
         // TRANSLATOR: This is the initial title of a Bible View. {0} is a placeholder for a number that uniquely identifies the Bible View.
-        title = Msg.gettext("Untitled {0}", new Integer(base++));
+        title = Msg.gettext("Untitled {0}", Integer.valueOf(base++));
 
         actions = new ActionFactory(Msg.class, this);
 
@@ -347,7 +347,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
                     // {1} is a placeholder for the number of verses that satisfied the search request.
                     // I18N(DMS): This needs support for singular/plural and to show internationalized numbers.
                     Reporter.informUser(this, Msg.gettext("There are {1} verses with: {0}", new Object[] {
-                            param, new Integer(total)
+                            param, Integer.valueOf(total)
                     }));
                 } else {
                     // TRANSLATOR: The user has done a prioritized search and there are more hits that the user has requested.
@@ -520,7 +520,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         switch (mode) {
         case CLEAR:
             // TRANSLATOR: This is the initial title of a Bible View. {0} is a placeholder for a number that uniquely identifies the Bible View.
-            title = Msg.gettext("Untitled {0}", new Integer(base++));
+            title = Msg.gettext("Untitled {0}", Integer.valueOf(base++));
             break;
         case PASSAGE:
             title = key.getName();

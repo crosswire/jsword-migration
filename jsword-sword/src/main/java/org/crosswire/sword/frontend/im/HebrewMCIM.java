@@ -34,7 +34,7 @@ public class HebrewMCIM extends SWInputMethod {
                 retString.append(in);
                 return retString.toString();
             }
-            Integer find = (Integer) subst2[getState()].get(new Integer(in));
+            Integer find = (Integer) subst2[getState()].get(Integer.valueOf(in));
             if (find != null)
                 retVal = (char) find.intValue();
             else
@@ -64,7 +64,7 @@ public class HebrewMCIM extends SWInputMethod {
         }
         if (retVal == 50) { // multiChar
             setState(1);
-            Integer[] chars = (Integer[]) multiChars.get(new Integer(in));
+            Integer[] chars = (Integer[]) multiChars.get(Integer.valueOf(in));
             if (chars != null) {
                 for (int i = 0; i < chars.length; i++)
                     retString.append((char) chars[i].intValue());
@@ -112,11 +112,11 @@ public class HebrewMCIM extends SWInputMethod {
         subst['&'] = 50;
         subst['$'] = 50;
 
-        multiChars.put(new Integer('&'), new Integer[] {
-                new Integer(1513), new Integer(1474)
+        multiChars.put(Integer.valueOf('&'), new Integer[] {
+                Integer.valueOf(1513), Integer.valueOf(1474)
         });
-        multiChars.put(new Integer('$'), new Integer[] {
-                new Integer(1513), new Integer(1473)
+        multiChars.put(Integer.valueOf('$'), new Integer[] {
+                Integer.valueOf(1513), Integer.valueOf(1473)
         });
 
         subst['T'] = 1514;
@@ -142,9 +142,9 @@ public class HebrewMCIM extends SWInputMethod {
         // CANTILLATION
 
         subst[':'] = 2;
-        subst2[2].put(new Integer('A'), new Integer(1458));
-        subst2[2].put(new Integer('E'), new Integer(1457));
-        subst2[2].put(new Integer('F'), new Integer(1459));
+        subst2[2].put(Integer.valueOf('A'), Integer.valueOf(1458));
+        subst2[2].put(Integer.valueOf('E'), Integer.valueOf(1457));
+        subst2[2].put(Integer.valueOf('F'), Integer.valueOf(1459));
 
         /*
          * Telisha qetana is postpositive as in '04' above. However, Michigan #
@@ -152,7 +152,7 @@ public class HebrewMCIM extends SWInputMethod {
          * difference.
          */
         subst['2'] = 5;
-        subst2[5].put(new Integer('4'), new Integer(1449));
+        subst2[5].put(Integer.valueOf('4'), Integer.valueOf(1449));
 
         /*
          * Note Michigan encoding distinguishes between medial metheg '35'
@@ -160,22 +160,22 @@ public class HebrewMCIM extends SWInputMethod {
          * (occuring on the # right of the vowel). It is also used for silluq.
          */
         subst['3'] = 6;
-        subst2[6].put(new Integer('3'), new Integer(1433));
-        subst2[6].put(new Integer('5'), new Integer(1469));
+        subst2[6].put(Integer.valueOf('3'), Integer.valueOf(1433));
+        subst2[6].put(Integer.valueOf('5'), Integer.valueOf(1469));
 
         /*
          * The Michigan code of telisha gedola in medial position. Graphically,
          * # there is no difference.
          */
         subst['4'] = 7;
-        subst2[7].put(new Integer('4'), new Integer(1440));
+        subst2[7].put(Integer.valueOf('4'), Integer.valueOf(1440));
 
         subst['6'] = 8;
-        subst2[8].put(new Integer('0'), new Integer(1451));
-        subst2[8].put(new Integer('1'), new Integer(1436));
+        subst2[8].put(Integer.valueOf('0'), Integer.valueOf(1451));
+        subst2[8].put(Integer.valueOf('1'), Integer.valueOf(1436));
 
         subst['1'] = 4;
-        subst2[4].put(new Integer('0'), new Integer(1434));
+        subst2[4].put(Integer.valueOf('0'), Integer.valueOf(1434));
 
         /*
          * In the poetic books, prepositive dehi occurs; it's unclear whether #
@@ -184,18 +184,18 @@ public class HebrewMCIM extends SWInputMethod {
          * code for each.
          */
 
-        subst2[4].put(new Integer('3'), new Integer(1430));
+        subst2[4].put(Integer.valueOf('3'), Integer.valueOf(1430));
 
         /*
          * This is the poetic accent mugrash, which also includes rebia, but is
          * # encoded separately as '81' in the Michigan text.
          */
-        subst2[4].put(new Integer('1'), new Integer(1437));
-        subst2[4].put(new Integer('4'), new Integer(1440));
+        subst2[4].put(Integer.valueOf('1'), Integer.valueOf(1437));
+        subst2[4].put(Integer.valueOf('4'), Integer.valueOf(1440));
 
         subst['0'] = 3;
-        subst2[3].put(new Integer('0'), new Integer(1475));
-        subst2[3].put(new Integer('1'), new Integer(1426));
+        subst2[3].put(Integer.valueOf('0'), Integer.valueOf(1475));
+        subst2[3].put(Integer.valueOf('1'), Integer.valueOf(1426));
 
         /*
          * According to BHS, zarqa and sinnor are both postpositive. However, #
@@ -206,7 +206,7 @@ public class HebrewMCIM extends SWInputMethod {
          * and use the postpositive Unicode zinor or both accents.
          */
 
-        subst2[3].put(new Integer('2'), new Integer(1454));
+        subst2[3].put(Integer.valueOf('2'), Integer.valueOf(1454));
 
         /*
          * Pashta is postpositive, and the Unicode equivalent reflects # this.
@@ -216,9 +216,9 @@ public class HebrewMCIM extends SWInputMethod {
          * although it could be algorithmically determined.
          */
 
-        subst2[3].put(new Integer('3'), new Integer(1433));
-        subst2[3].put(new Integer('4'), new Integer(1449));
-        subst2[3].put(new Integer('5'), new Integer(1472));
+        subst2[3].put(Integer.valueOf('3'), Integer.valueOf(1433));
+        subst2[3].put(Integer.valueOf('4'), Integer.valueOf(1449));
+        subst2[3].put(Integer.valueOf('5'), Integer.valueOf(1472));
 
         /*
          * This is the Unicode Hebrew *accent*; there is also another Hebrew #
@@ -227,16 +227,16 @@ public class HebrewMCIM extends SWInputMethod {
          * marks.
          */
 
-        subst2[8].put(new Integer('2'), new Integer(1438));
+        subst2[8].put(Integer.valueOf('2'), Integer.valueOf(1438));
 
         // Also known as azla
-        subst2[8].put(new Integer('3'), new Integer(1448));
-        subst2[8].put(new Integer('4'), new Integer(1452));
-        subst2[8].put(new Integer('5'), new Integer(1427));
+        subst2[8].put(Integer.valueOf('3'), Integer.valueOf(1448));
+        subst2[8].put(Integer.valueOf('4'), Integer.valueOf(1452));
+        subst2[8].put(Integer.valueOf('5'), Integer.valueOf(1427));
 
         subst['8'] = 9;
-        subst2[9].put(new Integer('0'), new Integer(1428));
-        subst2[9].put(new Integer('1'), new Integer(1431));
+        subst2[9].put(Integer.valueOf('0'), Integer.valueOf(1428));
+        subst2[9].put(Integer.valueOf('1'), Integer.valueOf(1431));
 
         /*
          * Note, this accent is actually sinnorit, but it does not exist as a #
@@ -244,35 +244,35 @@ public class HebrewMCIM extends SWInputMethod {
          * is postpositive, while sinnorit is not. ZARQA is as close as I can #
          * get to this.
          */
-        subst2[9].put(new Integer('2'), new Integer(1432));
+        subst2[9].put(Integer.valueOf('2'), Integer.valueOf(1432));
 
         /*
          * The Unicode form does not match the form used by BHS, but the names #
          * are the same.
          */
-        subst2[9].put(new Integer('3'), new Integer(1441));
-        subst2[9].put(new Integer('4'), new Integer(1439));
-        subst2[9].put(new Integer('5'), new Integer(1429));
+        subst2[9].put(Integer.valueOf('3'), Integer.valueOf(1441));
+        subst2[9].put(Integer.valueOf('4'), Integer.valueOf(1439));
+        subst2[9].put(Integer.valueOf('5'), Integer.valueOf(1429));
 
         subst['7'] = 10;
-        subst2[10].put(new Integer('0'), new Integer(1444));
-        subst2[10].put(new Integer('1'), new Integer(1445));
-        subst2[10].put(new Integer('2'), new Integer(1446));
-        subst2[10].put(new Integer('3'), new Integer(1430)); // also '13', '73'
+        subst2[10].put(Integer.valueOf('0'), Integer.valueOf(1444));
+        subst2[10].put(Integer.valueOf('1'), Integer.valueOf(1445));
+        subst2[10].put(Integer.valueOf('2'), Integer.valueOf(1446));
+        subst2[10].put(Integer.valueOf('3'), Integer.valueOf(1430)); // also '13', '73'
                                                              // also is used for
                                                              // majela
-        subst2[10].put(new Integer('4'), new Integer(1443));
-        subst2[10].put(new Integer('5'), new Integer(1469)); // this is silluq;
+        subst2[10].put(Integer.valueOf('4'), Integer.valueOf(1443));
+        subst2[10].put(Integer.valueOf('5'), Integer.valueOf(1469)); // this is silluq;
                                                              // should appear to
                                                              // the left of the
                                                              // vowel
 
         subst['9'] = 11;
-        subst2[11].put(new Integer('1'), new Integer(1435));
-        subst2[11].put(new Integer('2'), new Integer(1425));
-        subst2[11].put(new Integer('3'), new Integer(1450));
-        subst2[11].put(new Integer('4'), new Integer(1447));
-        subst2[11].put(new Integer('5'), new Integer(1469)); // should appear to
+        subst2[11].put(Integer.valueOf('1'), Integer.valueOf(1435));
+        subst2[11].put(Integer.valueOf('2'), Integer.valueOf(1425));
+        subst2[11].put(Integer.valueOf('3'), Integer.valueOf(1450));
+        subst2[11].put(Integer.valueOf('4'), Integer.valueOf(1447));
+        subst2[11].put(Integer.valueOf('5'), Integer.valueOf(1469)); // should appear to
                                                              // the right of the
                                                              // vowel
 

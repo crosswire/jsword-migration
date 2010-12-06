@@ -97,7 +97,7 @@ public class SwordSiteEditor extends JPanel implements SiteEditor {
         installer.setProxyHost(proxyHost.getText());
         Integer pport = null;
         try {
-            pport = new Integer(proxyPort.getText());
+            pport = Integer.valueOf(proxyPort.getText());
         } catch (NumberFormatException e) {
             pport = null; // or -1
         }

@@ -236,7 +236,7 @@ public abstract class AbstractViewLayout implements Viewable {
     private String generateTitle() {
         // TRANSLATOR: This is the label on a Bible View tab when it is cleared.
         // {0} is a number to make the label unique.
-        return UserMsg.gettext("Untitled {0}", new Integer(base++));
+        return UserMsg.gettext("Untitled {0}", Integer.valueOf(base++));
     }
 
     /**

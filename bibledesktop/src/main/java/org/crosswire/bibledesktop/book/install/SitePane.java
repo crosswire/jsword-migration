@@ -136,7 +136,7 @@ public class SitePane extends JPanel {
             int bookCount = Books.installed().getBooks().size();
             // TRANSLATOR: This label give the number of books that are installed. {0} is a placeholder for the number.
             desc = Msg.gettext("{0} books installed.", new Object[] {
-                new Integer(bookCount)
+                Integer.valueOf(bookCount)
             });
         } else {
             int bookCount = installer.getBooks().size();
@@ -147,7 +147,7 @@ public class SitePane extends JPanel {
             } else {
                 // TRANSLATOR: This label gives the number of books available at a download site. {0} is a placeholder for the number.
                 desc = Msg.gettext("{0} books available for download.", new Object[] {
-                    new Integer(bookCount)
+                    Integer.valueOf(bookCount)
                 });
             }
         }
@@ -441,7 +441,7 @@ public class SitePane extends JPanel {
                 // The pattern ###,###,###.# says to separate the number at every third digit and
                 //    to show one digit of fractional part.
                 // The , and . will automatically be converted into the user's proper separators.
-                formattedMsg = Msg.gettext("{0} is {1,number,###,###,###.#}MB. Continue?", new Object[] {name.getName(), new Float(size)});
+                formattedMsg = Msg.gettext("{0} is {1,number,###,###,###.#}MB. Continue?", new Object[] {name.getName(), Float.valueOf(size)});
             } else {
                 // TRANSLATOR: The size of the book is provided so that the user can decide whether to continue a download.
                 // {0} is a placeholder for the name of the book.
@@ -449,7 +449,7 @@ public class SitePane extends JPanel {
                 // The pattern ###,###,###.# says to separate the number at every third digit and
                 //    to show one digit of fractional part.
                 // The , and . will automatically be converted into the user's proper separators.
-                formattedMsg = Msg.gettext("{0} is {1,number,###,###,###.#}KB. Continue?", new Object[] {name.getName(), new Float(size)});
+                formattedMsg = Msg.gettext("{0} is {1,number,###,###,###.#}KB. Continue?", new Object[] {name.getName(), Float.valueOf(size)});
             }
 
             // TRANSLATOR: Title to a dialog asking whether the user should download the book based on it's size.

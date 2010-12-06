@@ -242,7 +242,7 @@ public class Strongs {
         case HEBREW:
             if (number > HEBREW_MAX || number < 1) {
                 throw new BookException(LimboMsg.STRONGS_ERROR_HEBREW, new Object[] {
-                        new Integer(HEBREW_MAX), new Integer(number)
+                        Integer.valueOf(HEBREW_MAX), Integer.valueOf(number)
                 });
             }
             break;
@@ -250,7 +250,7 @@ public class Strongs {
         case GREEK:
             if (number > GREEK_MAX || number < 1) {
                 throw new BookException(LimboMsg.STRONGS_ERROR_GREEK, new Object[] {
-                        new Integer(GREEK_MAX), new Integer(number)
+                        Integer.valueOf(GREEK_MAX), Integer.valueOf(number)
                 });
             }
             // We have not checked for 1418, 2717, 3203-3302, 4452 which do not
@@ -261,7 +261,7 @@ public class Strongs {
         case PARSING:
             if (number < 1) {
                 throw new BookException(LimboMsg.STRONGS_ERROR_PARSING, new Object[] {
-                    new Integer(number)
+                    Integer.valueOf(number)
                 });
             }
             // The correct range seems to be: 0, 5625-5773, 8675-8809, but not
@@ -272,7 +272,7 @@ public class Strongs {
 
         default:
             throw new BookException(LimboMsg.STRONGS_ERROR_TYPE, new Object[] {
-                new Integer(number)
+                Integer.valueOf(number)
             });
         }
     }

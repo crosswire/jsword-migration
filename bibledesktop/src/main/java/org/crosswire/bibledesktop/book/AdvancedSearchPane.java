@@ -389,7 +389,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         } else {
             // TRANSLATOR: Dynamic label for prioritization slider on Advanced Search.
             // The user has chosen a number other than 0 or 1. 
-            lblRank.setText(shaper.shape(Msg.gettext("Show {0} verses:", new Integer(val))));
+            lblRank.setText(shaper.shape(Msg.gettext("Show {0} verses:", Integer.valueOf(val))));
         }
     }
 
@@ -654,7 +654,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         Dictionary labels = new Hashtable();
         int max = DisplaySelectPane.getMaxNumRankedVerses();
         for (int i = 0; i <= max; i += 20) {
-            Integer label = new Integer(i);
+            Integer label = Integer.valueOf(i);
             labels.put(label, new JLabel(shaper.shape(label.toString()), SwingConstants.CENTER));
         }
         return labels;

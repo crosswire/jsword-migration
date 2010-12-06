@@ -122,7 +122,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller {
             if (!FTPReply.isPositiveCompletion(reply1)) {
                 String text1 = ftp.getReplyString();
                 throw new InstallException(FTPMsg.CONNECT_REFUSED, new Object[] {
-                        host, new Integer(reply1), text1
+                        host, Integer.valueOf(reply1), text1
                 });
             }
 
@@ -135,7 +135,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller {
             if (!FTPReply.isPositiveCompletion(reply1)) {
                 String text2 = ftp.getReplyString();
                 throw new InstallException(FTPMsg.AUTH_REFUSED, new Object[] {
-                        username, new Integer(reply1), text2
+                        username, Integer.valueOf(reply1), text2
                 });
             }
 
@@ -148,7 +148,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller {
             if (!FTPReply.isPositiveCompletion(reply1)) {
                 String text3 = ftp.getReplyString();
                 throw new InstallException(FTPMsg.CWD_REFUSED, new Object[] {
-                        dir, new Integer(reply1), text3
+                        dir, Integer.valueOf(reply1), text3
                 });
             }
 
@@ -167,7 +167,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller {
             if (!FTPReply.isPositiveCompletion(reply)) {
                 String text = ftp.getReplyString();
                 throw new InstallException(FTPMsg.DOWNLOAD_REFUSED, new Object[] {
-                        FILE_LIST_GZ, new Integer(reply), text
+                        FILE_LIST_GZ, Integer.valueOf(reply), text
                 });
             }
             out.close();

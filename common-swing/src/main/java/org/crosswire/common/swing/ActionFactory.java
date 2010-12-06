@@ -398,7 +398,7 @@ public class ActionFactory implements ActionListener, Actionable {
         // Mac's don't have mnemonics.
         // Otherwise, dig out the mnemonic.
         if (!OSType.MAC.equals(OSType.getOSType())) {
-            cwAction.putValue(Action.MNEMONIC_KEY, new Integer(cwLabel.getDisplayedMnemonic()));
+            cwAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(cwLabel.getDisplayedMnemonic()));
         }
 
         cwAction.putValue(Action.SHORT_DESCRIPTION, tooltip);

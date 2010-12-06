@@ -203,12 +203,12 @@ public class MapTableModel extends AbstractTableModel {
                 VerseRange vr = new VerseRange(new Verse(b, c, 1), new Verse(b, c, BibleInfo.versesInChapter(b, c)));
                 return vr;
             case 1:
-                return new Integer(b);
+                return Integer.valueOf(b);
             case 2:
-                return new Integer(c);
+                return Integer.valueOf(c);
             default:
                 float f = map.getPositionDimension(b, c, col - 3);
-                return new Float(f);
+                return Float.valueOf(f);
             }
         } catch (NoSuchVerseException ex) {
             Reporter.informUser(this, ex);
@@ -217,11 +217,11 @@ public class MapTableModel extends AbstractTableModel {
             case 0:
                 return new VerseRange();
             case 1:
-                return new Integer(0);
+                return Integer.valueOf(0);
             case 2:
-                return new Integer(0);
+                return Integer.valueOf(0);
             default:
-                return new Float(0.0f);
+                return Float.valueOf(0.0f);
             }
         }
     }

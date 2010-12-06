@@ -81,8 +81,8 @@ public class BlogEntriesPanel extends JPanel implements BlogClientTab {
                         null, null, null, null
                 }
         }, new String[] {
-                Msg.ENTRY_TITLE.toString(new Integer(1)), Msg.ENTRY_TITLE.toString(new Integer(2)), Msg.ENTRY_TITLE.toString(new Integer(3)),
-                Msg.ENTRY_TITLE.toString(new Integer(4)),
+                Msg.ENTRY_TITLE.toString(Integer.valueOf(1)), Msg.ENTRY_TITLE.toString(Integer.valueOf(2)), Msg.ENTRY_TITLE.toString(Integer.valueOf(3)),
+                Msg.ENTRY_TITLE.toString(Integer.valueOf(4)),
         }));
         mScrollPane.setViewportView(mBlogEntries);
 

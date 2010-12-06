@@ -99,7 +99,7 @@ public class PuncItemsMem extends ItemsMem {
             din.readFully(aword);
             String word = new String(aword);
 
-            hash.put(word, new Integer(i));
+            hash.put(word, Integer.valueOf(i));
             array[i] = word;
         }
 

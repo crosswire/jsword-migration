@@ -175,7 +175,7 @@ public class DebugPane extends JPanel {
                 job.beginJob(predictbase, predicturl);
 
                 job.setSectionName(LimboMsg.DEBUG_STEPS.toString(new Object[] {
-                        new Integer(0), new Integer(steps)
+                        Integer.valueOf(0), Integer.valueOf(steps)
                 }));
                 log.debug("starting test job:");
 
@@ -188,7 +188,7 @@ public class DebugPane extends JPanel {
 
                     job.setWork((i * 100) / steps);
                     job.setSectionName(LimboMsg.DEBUG_STEPS.toString(new Object[] {
-                            new Integer(i), new Integer(steps)
+                            Integer.valueOf(i), Integer.valueOf(steps)
                     }));
                 }
 

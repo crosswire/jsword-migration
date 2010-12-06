@@ -52,7 +52,7 @@ public class MetalLFCustoms extends AbstractLFCustoms {
 
         Object[] metalUIDefaults = new Object[] {
                 "BibleViewPane.TabbedPaneUI", MetalBorderlessTabbedPaneUI.createUI(null),
-                "SplitPane.dividerSize", new Integer(5),
+                "SplitPane.dividerSize", Integer.valueOf(5),
                 "SelectPanel.border", panelSelectBorder
         };
 

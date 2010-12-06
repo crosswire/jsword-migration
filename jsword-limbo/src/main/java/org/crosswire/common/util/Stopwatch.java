@@ -25,7 +25,7 @@ public class Stopwatch {
         if (local.get() != null)
             throw new IllegalStateException("Already started");
 
-        Long start = new Long(System.currentTimeMillis());
+        Long start = Long.valueOf(System.currentTimeMillis());
         origin.set(start);
 
         Map times = new HashMap();
@@ -42,7 +42,7 @@ public class Stopwatch {
         if (times == null)
             throw new IllegalStateException("Not started");
 
-        times.put(name, new Long(System.currentTimeMillis() - start));
+        times.put(name, Long.valueOf(System.currentTimeMillis() - start));
     }
 
     /**
@@ -55,7 +55,7 @@ public class Stopwatch {
         if (times == null)
             throw new IllegalStateException("Not started");
 
-        times.put("STOP", new Long(System.currentTimeMillis() - start));
+        times.put("STOP", Long.valueOf(System.currentTimeMillis() - start));
 
         local.set(null);
         origin.set(null);

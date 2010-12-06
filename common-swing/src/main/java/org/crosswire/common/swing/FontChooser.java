@@ -75,10 +75,10 @@ public class FontChooser extends JPanel {
         size = new JComboBox();
         size.setRenderer(new NumberCellRenderer());
         for (int i = MIN_FONT_SIZE; i <= MAX_FONT_SIZE; i++) {
-            size.addItem(new Integer(i));
+            size.addItem(Integer.valueOf(i));
         }
 
-        size.setSelectedItem(new Integer(RENDERED_FONT_SIZE));
+        size.setSelectedItem(Integer.valueOf(RENDERED_FONT_SIZE));
         size.addItemListener(changer);
 
         // TRANSLATOR: This is an option for a bold font.
@@ -114,7 +114,7 @@ public class FontChooser extends JPanel {
         fontc.name.setSelectedItem(font);
         fontc.bold.setSelected(font.isBold());
         fontc.italic.setSelected(font.isItalic());
-        fontc.size.setSelectedItem(new Integer(font.getSize()));
+        fontc.size.setSelectedItem(Integer.valueOf(font.getSize()));
 
         final ActionFactory actions = new ActionFactory(FontChooser.class, fontc);
 
@@ -174,7 +174,7 @@ public class FontChooser extends JPanel {
 
         bold.setSelected(newFont.isBold());
         italic.setSelected(newFont.isItalic());
-        size.setSelectedItem(new Integer(newFont.getSize()));
+        size.setSelectedItem(Integer.valueOf(newFont.getSize()));
 
         suppressEvents = false;
         fireStateChange();

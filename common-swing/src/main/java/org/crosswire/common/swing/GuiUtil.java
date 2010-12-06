@@ -296,8 +296,8 @@ public final class GuiUtil {
         Toolkit tk = win.getToolkit();
         Dimension screenSize = tk.getScreenSize();
 
-        int width = new Float(screenSize.width * percentOfScreen).intValue();
-        int height = new Float(screenSize.height * percentOfScreen).intValue();
+        int width = Float.valueOf(screenSize.width * percentOfScreen).intValue();
+        int height = Float.valueOf(screenSize.height * percentOfScreen).intValue();
         Dimension winSize = new Dimension(width, height);
 
         win.setSize(winSize);

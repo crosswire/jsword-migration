@@ -88,7 +88,7 @@ public class BibleComboBoxModelSet implements Serializable {
 
         cboChapter.setModel(mdlChapter);
         // There are over 100 chapters in some books
-        cboChapter.setPrototypeDisplayValue(new Integer(999));
+        cboChapter.setPrototypeDisplayValue(Integer.valueOf(999));
         cboChapter.addItemListener(cil);
         cboChapter.setRenderer(new NumberCellRenderer());
     }
@@ -101,7 +101,7 @@ public class BibleComboBoxModelSet implements Serializable {
 
         cboVerse.setModel(mdlVerse);
         // There are over 100 verses in some chapters
-        cboVerse.setPrototypeDisplayValue(new Integer(999));
+        cboVerse.setPrototypeDisplayValue(Integer.valueOf(999));
         cboVerse.addItemListener(cil);
         cboVerse.setRenderer(new NumberCellRenderer());
     }
@@ -132,14 +132,14 @@ public class BibleComboBoxModelSet implements Serializable {
             }
 
             int chapterval = newverse.getChapter();
-            Integer chapternum = new Integer(chapterval);
+            Integer chapternum = Integer.valueOf(chapterval);
             if (oldverse.getChapter() != chapterval || !cboChapter.getSelectedItem().equals(chapternum)) {
                 cboChapter.setSelectedItem(chapternum);
             }
 
             if (cboVerse != null) {
                 int verseval = newverse.getVerse();
-                Integer versenum = new Integer(verseval);
+                Integer versenum = Integer.valueOf(verseval);
                 if (oldverse.getVerse() != verseval || !cboVerse.getSelectedItem().equals(versenum)) {
                     cboVerse.setSelectedItem(versenum);
                 }
