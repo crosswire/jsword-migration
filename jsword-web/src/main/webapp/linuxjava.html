@@ -10,22 +10,20 @@
     <h1>Obtain and Install Java for Linux</h1>
 <p>
   The situation regarding Java is changing fast. Sun has opened sourced Java, but not all of it,
-  nor all versions of it (Sun's Java 1.4.2 and 1.5.0 are still proprietary and not open source).
+  nor all versions of it (Sun's Java 1.5.0 is still proprietary and not open source).
   Some Linux distributions now have a version of Sun's java that will run BibleDesktop. Please note
-  that the gcj version of Java is not able to run BibleDesktop as it does not implement all of Java 1.4.2.
+  that the gcj version of Java is not able to run BibleDesktop as it does not implement all of Java 1.5.0.
   Even this is anticipated to change.
 </p>
 <p>
   If your distribution does not provide Java then get Sun's Java. If you are just running BibleDesktop,
   then get the most recent release. If you are going to help develop BibleDesktop or JSword, we target
-  Java 1.4.2. If you are careful not to use features added after 1.4.2 you can use a more
+  Java 1.5.0. If you are careful not to use features added after 1.5.0 you can use a more
   recent version. Once you obtain Sun's Java you need to install it. However, Sun's Java RPM
   does not install correctly. To install it correctly you will need to use JPackage's Java Package.
 </p>
 <p>
-  The following steps will allow you to install Sun's Java correctly. Below is how to install Java 1.5
-  but the same can be done for Java 1.4.2. At this time, if you need to install Java 1.4.2, you may need
-  to install 1.5 first.
+  The following steps will allow you to install Sun's Java correctly. Below is how to install Java 1.5.
 </p>
 <ol>
   <li>With these steps you will be building a RPM. So, if you have not already done so, install rpm-build.

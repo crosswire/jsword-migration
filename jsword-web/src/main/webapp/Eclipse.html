@@ -20,35 +20,12 @@
   or once you have Eclipse set up, make the changes and send us a patch.
 </p>
 
-<h2>Obtain and install Sun's Java 1.4.2_x</h2>
-<p>
-  To develop JSword and BibleDesktop Java code with Eclipse, you will need to tell it to use
-  Sun's Java 1.4.2. You will need to get the J2SE SDK.
-  We recommend using the most recent point release
-  which at the time of this writing was <q>J2SE v1.4.2_15 SDK</q>.
-  You can get Sun's Java 1.4.2
-  <a href="http://java.sun.com/j2se/1.4.2/download.html">here</a>.
-  You can find instructions on installing Sun's Java for Linux under
-  <a href="linuxjava.html">Installing Java for Linux</a>.
-</p>
-<p>
-  If possible set an environment variable, <code>JAVA_HOME</code> to point to 
-  the directory you just created. This might be something like <code>C:\Java\j2sdk1.4.2_15</code>.
-</p>
 
 <h2>Obtain and install Sun's Java 1.5 (aka Java 5)</h2>
 <p>
-  We develop under Java 1.4.2, but routinely test against Java 5. We will move to Java 5
-  when it is well supported on all the platforms to which we deploy. Currently
-  these are Windows, Mac and Linux. At this time MacOS 10.3 does not support Java 5
-  and probably will not. (Soon enough we will start testing with Java 6)
-</p>
-<p>
   <strong>NOTE:</strong>BibleDesktop looks best in Java 5 or later and for
-  <em>right-to-left</em> languages it is a necessity. For this reason,
-  it is strongly recommended that the builds are done with Java 1.4.2,
-  but that running is done with Java 1.5 or better. If you are not changing
-  java code, but only working on translations, you only need to install Java 1.5.0 SDK.
+  <em>right-to-left</em> languages it is a necessity. If you are not changing
+  java code, but only working on translations, you only need to install Java 1.5.0 SDK or later.
 </p>
 <p>
   We recommend using the most recent point release
@@ -57,6 +34,10 @@
   <a href="http://java.sun.com/javase/downloads/index_jdk5.jsp">here</a>.
   Again, you can find instructions on installing Sun's Java for Linux under
   <a href="linuxjava.html">Installing Java for Linux</a>.
+</p>
+<p>
+  If possible set an environment variable, <code>JAVA_HOME</code> to point to 
+  the directory you just created. This might be something like <code>C:\Java\j2sdk1.5.0_b22</code>.
 </p>
 
 <h2>Obtain and install Eclipse 3.3</h2>
@@ -165,9 +146,8 @@
 <p>
   Under Windows -> Preferences (on the Mac it is Eclipse -> Preferences), 
   expand <q>Java</q> and then select <q>Installed JRE</q>. <a href="images/eclipse/javasetup.png">[Image]</a>
-  Here click on the <q>Add</q> button and add entries labelled,
-  jdk-1.4.2 <a href="images/eclipse/jdk142setup.png">[Image]</a> and jdk-1.5.0 <a href="images/eclipse/jdk150setup.png">[Image]</a>. Under Linux, installed according to the instructions above,
-  Java 1.4.2 would have a path something like <code>/usr/lib/jvm/java-1.4.2-sun-1.4.2.12</code>.
+  Here click on the <q>Add</q> button and add an entry labelled jdk-1.5.0 <a href="images/eclipse/jdk150setup.png">[Image]</a>. Under Linux, installed according to the instructions above,
+  Java 1.5.0 would have a path something like <code>/usr/lib/jvm/java-1.5.0-sun-1.5.0.12</code>.
   You can use the search button to find them and re-label them afterwards.
   Make sure that you have <q>assertions</q> turned on for development by adding <q>-ea</q> for the <q>Default VM Args</q>.
   When you are all done it should look like this. <a href="images/eclipse/javafinalsetup.png">[Image]</a>

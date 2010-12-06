@@ -18,18 +18,22 @@
 </p>
 <p>We have broken up JSword into subprojects. These are:</p>
 <ol>
-  <li><strong>common</strong> - A set of base, general purpose, common utilities.</li>
-  <li><strong>jsword</strong> - This is the core Sword api. The basic provisions of this project are:
-    <ul>
-      <li>Read Sword modules, extracting passages as requested.</li>
-      <li>Convert passages in Sword Modules into OSIS.</li>
-      <li>Run xslt on OSIS.</li>
-      <li>Build Lucene indexes for a Sword Modules.</li>
-      <li>and ....</li>
-    </ul>
+  <li><strong>jsword</strong> - Consists of two parts:
+  <ul>
+    <li><em>org.crosswire.common</em> - This is a base, general purpose set of common utilities</li>
+    <li><em>org.crosswire.jsword</em> - the core Sword api. Its basic provisions are:
+      <ul>
+        <li>Read Sword modules, extracting passages as requested.</li>
+        <li>Convert passages in Sword Modules into OSIS.</li>
+        <li>Run xslt on OSIS.</li>
+        <li>Build Lucene indexes for a Sword Modules.</li>
+        <li>and ....</li>
+      </ul>
+    </li>
+  </ul>
   </li>
-  <li><strong>common-swing</strong> - Like common but specific to swing.</li>
-  <li><strong>bibledesktop</strong> - The GUI that exposes JSword functionality.</li>
+  <li><strong>common-swing</strong> - Like org.crosswire.common but specific to swing.</li>
+  <li><strong>bibledesktop</strong> - A GUI that exposes JSword functionality.</li>
   <li><strong>jsword-web</strong> - The code and html for the <a href="/jsword">JSword website</a>. This project also contains the ant build.xml file that is used for nightly builds.</li>
   <li><strong>bibledesktop-web</strong> - The code and html for the <a href="/bibledesktop">BibleDesktop website</a>.</li>
   <li><strong>jsword-support</strong> - Quality Assurance tools that we use before checking in code and that we run nightly.</li>
@@ -37,7 +41,7 @@
   <li><strong>biblemapper</strong> - Provides an analytical view of a Bible. Currently this is not used.</li>
   <li><strong>javatar</strong> - 3rd party code that we could not use directly via Java WebStart. It is here only to build a jar that works with WebStart</li>
 </ol>
-<p>To get started you will need the first two projects, and to do BibleDesktop development you also need the next two projects.
+<p>To get started you will need the first project, and to do BibleDesktop development you also need the next two projects.
    For each of the projects you wish to use, cd to the directory you wish to check out and then do a SVN checkout following this form:<br/> 
    The project to checkout is <code>jsword</code>, so if you are using the command line you would
    <code>svn checkout https://crosswire.org/svn/jsword/trunk/jsword jsword</code>.<br />
