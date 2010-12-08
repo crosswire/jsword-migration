@@ -94,7 +94,9 @@ public class PassageSelectionPane extends JPanel {
     private void init() {
         actions = new ActionFactory(Msg.class, this);
 
+        // I18N(DMS)
         JLabel lblAll = CWLabel.createJLabel(Msg.gettext("All Verses"));
+        // I18N(DMS)
         JLabel lblSel = CWLabel.createJLabel(Msg.gettext("Selected Verses"));
 
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -156,6 +158,7 @@ public class PassageSelectionPane extends JPanel {
         txtDisplay = new JTextField();
         txtDisplay.getDocument().addDocumentListener(new CustomDocumentEvent());
 
+        // I18N(DMS)
         JLabel lblDisplay = CWLabel.createJLabel(Msg.gettext("Verses"));
         lblDisplay.setLabelFor(txtDisplay);
 

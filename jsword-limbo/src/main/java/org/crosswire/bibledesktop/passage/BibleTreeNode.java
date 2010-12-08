@@ -145,13 +145,15 @@ public class BibleTreeNode implements TreeNode {
     }
 
     /**
-     * Returns the children of the reciever as an Enumeration.
+     * Returns the children of the receiver as an Enumeration.
      */
     public String toString() {
         if (ref == null) {
+            // I18N(DMS)
             return Msg.gettext("The Whole Bible");
         }
 
+        // I18N(DMS)
         return Msg.gettext("Search ({0})", ref.getOverview());
     }
 

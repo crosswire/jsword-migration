@@ -90,6 +90,7 @@ public class PassageListCellRenderer implements ListCellRenderer, Serializable {
                 label.setText(text);
             } catch (Exception ex) {
                 Reporter.informUser(this, ex);
+                // TRANSLATOR: Unexpected error condition.
                 label.setText(Msg.gettext("Error"));
             }
         } else {

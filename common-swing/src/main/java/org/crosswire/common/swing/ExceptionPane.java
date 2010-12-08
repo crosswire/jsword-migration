@@ -309,6 +309,7 @@ public final class ExceptionPane extends JPanel {
         // The message in the exception
         String msg = ex.getMessage();
         if (msg == null || msg.equals("")) {
+            // I18N(DMS)
             msg = UserMsg.gettext("No description available.");
         }
         String orig = XMLUtil.escape(msg);

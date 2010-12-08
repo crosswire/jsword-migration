@@ -77,7 +77,7 @@ public final class Msg extends MsgBase {
     }
 
     private static String getVersion() {
-        // TRANSLATOR the current version of the application.
+        // TRANSLATOR: the current version of the application.
         // When translating use digits 0-9. They will be shaped appropriately.
         return Msg.gettext("1.6");
     }

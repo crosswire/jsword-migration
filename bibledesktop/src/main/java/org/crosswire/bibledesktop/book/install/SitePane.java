@@ -83,6 +83,7 @@ public class SitePane extends JPanel {
      * For local installations
      */
     public SitePane() {
+        // I18N(DMS)
         this(null, Msg.gettext("Installed Books:"));
     }
 
@@ -90,6 +91,7 @@ public class SitePane extends JPanel {
      * For remote installations
      */
     public SitePane(Installer bookListInstaller) {
+        // I18N(DMS)
         this(bookListInstaller, Msg.gettext("Available Books:"));
     }
 
@@ -193,6 +195,7 @@ public class SitePane extends JPanel {
      */
     private Component createSelectedPanel() {
 
+        // I18N(DMS)
         JLabel lblSelected = CWLabel.createJLabel(Msg.gettext("Selected Book:"));
         display = new TextPaneBookMetaDataDisplay();
         lblSelected.setLabelFor(display.getComponent());

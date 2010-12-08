@@ -75,8 +75,11 @@ public class CommentaryPane extends JPanel implements BookDataDisplay {
         set.setChapterComboBox(cboChaps);
         set.setVerseComboBox(cboVerse);
 
+        // I18N(DMS)
         cboBooks.setToolTipText(Msg.gettext("Select a book"));
+        // I18N(DMS)
         cboChaps.setToolTipText(Msg.gettext("Select a chapter"));
+        // I18N(DMS)
         cboVerse.setToolTipText(Msg.gettext("Select a verse"));
 
         pnlSelect.setLayout(new FlowLayout());

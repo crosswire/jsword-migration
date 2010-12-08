@@ -147,9 +147,11 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         quickPicker.add(cboBooks);
         quickPicker.add(cboChaps);
 
+        // I18N(DMS)
         JLabel lblBible = CWLabel.createJLabel(Msg.gettext("Bible:"));
         lblBible.setLabelFor(biblePicker);
 
+        // I18N(DMS)
         JLabel lblKey = CWLabel.createJLabel(Msg.gettext("Show Passage:"));
         txtKey = new JTextField();
         txtKey.setAction(actions.getAction(PASSAGE_FIELD));
@@ -169,6 +171,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
 
         txtSearch = new JTextField();
         txtSearch.setAction(actions.getAction(SEARCH_FIELD));
+        // I18N(DMS)
         JLabel lblSearch = CWLabel.createJLabel(Msg.gettext("Search:"));
         lblSearch.setLabelFor(txtSearch);
         btnSearch = new JButton(actions.getAction(GO_SEARCH));

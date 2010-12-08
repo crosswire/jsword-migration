@@ -137,6 +137,7 @@ public class EditSitePane extends JPanel {
             }
         });
 
+        // I18N(DMS)
         JLabel lblName = CWLabel.createJLabel(Msg.gettext("Site Name:"));
         lblName.setLabelFor(txtName);
 
@@ -149,6 +150,7 @@ public class EditSitePane extends JPanel {
             }
         });
 
+        // I18N(DMS)
         JLabel lblType = CWLabel.createJLabel(Msg.gettext("Site Type"));
         lblType.setLabelFor(cboType);
 
