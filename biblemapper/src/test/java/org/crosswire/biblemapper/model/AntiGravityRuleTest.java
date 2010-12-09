@@ -49,7 +49,7 @@ public class AntiGravityRuleTest extends TestCase {
     /**
      * @see TestCase#setUp()
      */
-    /* @Override */
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
     }
@@ -57,7 +57,7 @@ public class AntiGravityRuleTest extends TestCase {
     /**
      * @see TestCase#tearDown()
      */
-    /* @Override */
+    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
     }

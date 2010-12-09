@@ -191,7 +191,7 @@ public class AboutPane {
             /* (non-Javadoc)
              * @see java.awt.event.WindowListener#windowClosed(java.awt.event.WindowEvent)
              */
-            /* @Override */
+            @Override
             public void windowClosed(WindowEvent ev) {
                 doAboutOK();
             }

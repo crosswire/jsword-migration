@@ -128,7 +128,7 @@ public final class WholeBibleTreeNode implements TreeNode {
     /**
      * How we appear in the Tree
      */
-    /* @Override */
+    @Override
     public String toString() {
         try {
             switch (level) {

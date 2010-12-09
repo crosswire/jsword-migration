@@ -67,6 +67,7 @@ public class CWScrollPane extends JScrollPane {
      * 
      * @see javax.swing.JScrollPane#createHorizontalScrollBar()
      */
+    @Override
     public JScrollBar createHorizontalScrollBar() {
         JScrollBar scroller = super.createHorizontalScrollBar();
         GuiUtil.applyDefaultOrientation(this);
@@ -78,6 +79,7 @@ public class CWScrollPane extends JScrollPane {
      * 
      * @see javax.swing.JScrollPane#createVerticalScrollBar()
      */
+    @Override
     public JScrollBar createVerticalScrollBar() {
         JScrollBar scroller = super.createVerticalScrollBar();
         GuiUtil.applyDefaultOrientation(this);

@@ -310,7 +310,7 @@ public class FontChooser extends JPanel {
          * javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing
          * .JList, java.lang.Object, int, boolean, boolean)
          */
-        /* @Override */
+        @Override
         public Component getListCellRendererComponent(JList listbox, Object value, int index, boolean selected, boolean focus) {
             Font defaultFont = DEFAULT_FONT.getFont();
             if (value == null) {
@@ -337,6 +337,7 @@ public class FontChooser extends JPanel {
      * name, not object equivalence.
      */
     static class FontNameComboBox extends JComboBox {
+        @Override
         public void setSelectedItem(Object anObject) {
             if ((selectedItemReminder == null || !selectedItemReminder.equals(anObject)) && (anObject instanceof Font)) {
                 String fontName = ((Font) anObject).getName();

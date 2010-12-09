@@ -44,7 +44,7 @@ public class MetalBorderlessTabbedPaneUI extends MetalTabbedPaneUI {
      *            ignored
      * @return a new Insets(0, 0, 0, 0)
      */
-    /* @Override */
+    @Override
     protected Insets getContentBorderInsets(int tabPlacement) {
         return new Insets(0, 0, 0, 0);
     }

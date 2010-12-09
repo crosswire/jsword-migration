@@ -117,7 +117,7 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
                  * java.awt.event.WindowListener#windowClosed(java.awt.event
                  * .WindowEvent)
                  */
-                /* @Override */
+                @Override
                 public void windowClosed(WindowEvent ev) {
                     hideDialog();
                 }

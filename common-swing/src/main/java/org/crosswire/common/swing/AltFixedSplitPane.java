@@ -122,6 +122,7 @@ public class AltFixedSplitPane extends JSplitPane {
      * @see
      * java.awt.Component#setComponentOrientation(java.awt.ComponentOrientation)
      */
+    @Override
     public void setComponentOrientation(ComponentOrientation o) {
         // Turns out that this is currently ignored by JSplitPane
         // So we are handling it here.
@@ -158,7 +159,7 @@ public class AltFixedSplitPane extends JSplitPane {
      * @see java.awt.Container#addImpl(java.awt.Component, java.lang.Object,
      * int)
      */
-    /* @Override */
+    @Override
     protected void addImpl(Component comp, Object constraints, int index) {
         if (comp instanceof JComponent) {
             ((JComponent) comp).setPreferredSize(DOT);
@@ -178,7 +179,7 @@ public class AltFixedSplitPane extends JSplitPane {
      * 
      * @see javax.swing.JSplitPane#setBottomComponent(java.awt.Component)
      */
-    /* @Override */
+    @Override
     public void setBottomComponent(Component comp) {
         if (comp instanceof JComponent) {
             ((JComponent) comp).setPreferredSize(DOT);
@@ -191,7 +192,7 @@ public class AltFixedSplitPane extends JSplitPane {
      * 
      * @see javax.swing.JSplitPane#setLeftComponent(java.awt.Component)
      */
-    /* @Override */
+    @Override
     public void setLeftComponent(Component comp) {
         if (comp instanceof JComponent) {
             ((JComponent) comp).setPreferredSize(DOT);
@@ -209,7 +210,7 @@ public class AltFixedSplitPane extends JSplitPane {
      * 
      * @see javax.swing.JSplitPane#setRightComponent(java.awt.Component)
      */
-    /* @Override */
+    @Override
     public void setRightComponent(Component comp) {
         if (comp instanceof JComponent) {
             ((JComponent) comp).setPreferredSize(DOT);
@@ -227,7 +228,7 @@ public class AltFixedSplitPane extends JSplitPane {
      * 
      * @see javax.swing.JSplitPane#setTopComponent(java.awt.Component)
      */
-    /* @Override */
+    @Override
     public void setTopComponent(Component comp) {
         if (comp instanceof JComponent) {
             ((JComponent) comp).setPreferredSize(DOT);
@@ -239,7 +240,7 @@ public class AltFixedSplitPane extends JSplitPane {
      * Validates this container and all of its subcomponents. The first time
      * this method is called, the initial divider position is set.
      */
-    /* @Override */
+    @Override
     public void validate() {
         if (firstValidate) {
             firstValidate = false;
@@ -253,7 +254,7 @@ public class AltFixedSplitPane extends JSplitPane {
     /**
      * Sets the divider location as a percentage of the JSplitPane's size.
      */
-    /* @Override */
+    @Override
     public void setDividerLocation(double newProportionalLoc) {
         double realProportionalLoc = newProportionalLoc;
 
@@ -273,7 +274,7 @@ public class AltFixedSplitPane extends JSplitPane {
     /**
      * Sets the divider location as a percentage of the JSplitPane's size.
      */
-    /* @Override */
+    @Override
     public void setResizeWeight(double newResizeWeight) {
         double realResizeWeight = newResizeWeight;
 
@@ -314,7 +315,7 @@ public class AltFixedSplitPane extends JSplitPane {
      * 
      * @see javax.swing.JComponent#updateUI()
      */
-    /* @Override */
+    @Override
     public void updateUI() {
         super.updateUI();
         if (!visibleDividerBorder) {

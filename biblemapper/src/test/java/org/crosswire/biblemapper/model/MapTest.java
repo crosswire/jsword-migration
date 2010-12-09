@@ -68,12 +68,12 @@ public class MapTest extends TestCase {
     };
     Position[] ar = null;
 
-    /* @Override */
+    @Override
     protected void setUp() throws Exception {
         ar = Map.cat(dar);
     }
 
-    /* @Override */
+    @Override
     protected void tearDown() throws Exception {
     }
 

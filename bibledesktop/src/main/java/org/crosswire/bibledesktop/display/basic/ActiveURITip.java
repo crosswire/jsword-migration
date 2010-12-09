@@ -275,6 +275,7 @@ public class ActiveURITip extends MouseAdapter implements URIEventListener {
         this.hideTip();
     }
 
+    @Override
     public void mousePressed(MouseEvent e) {
         // System.out.println(e);
         // hideTip();

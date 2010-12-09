@@ -133,7 +133,7 @@ public class BookChooser extends JPanel {
         dialog.pack();
         dialog.setLocationRelativeTo(parent);
         dialog.addWindowListener(new WindowAdapter() {
-            /* @Override */
+            @Override
             public void windowClosed(WindowEvent ev) {
                 cancelPressed();
             }
@@ -224,7 +224,6 @@ public class BookChooser extends JPanel {
     /**
      * The title of the dialog
      */
-    // I18N(DMS)
     private String title = Msg.gettext("Select a Bible");
 
     /**

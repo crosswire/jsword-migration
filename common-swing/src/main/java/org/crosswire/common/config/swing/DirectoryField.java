@@ -41,7 +41,7 @@ public class DirectoryField extends FileField {
      * 
      * @see org.crosswire.common.config.swing.FileField#doBrowse()
      */
-    /* @Override */
+    @Override
     public void doBrowse() {
         if (OSType.MAC.equals(OSType.getOSType())) {
             FileDialog chooser = new FileDialog(GuiUtil.getFrame(getParent()), text.getText());

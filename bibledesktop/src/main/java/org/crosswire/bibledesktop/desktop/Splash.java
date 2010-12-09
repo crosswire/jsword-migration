@@ -142,7 +142,7 @@ public class Splash extends JWindow {
             /* (non-Javadoc)
              * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
              */
-            /* @Override */
+            @Override
             public void mousePressed(MouseEvent ev) {
                 close();
             }

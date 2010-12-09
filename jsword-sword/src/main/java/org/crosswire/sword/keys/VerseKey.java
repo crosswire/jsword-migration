@@ -54,7 +54,7 @@ public class VerseKey extends SWKey {
     char[] BMAX;
     Canon.Book[][] books;
 
-    /* @Override */
+    @Override
     public void setText(String ikey) {
         super.setText(ikey);
         parse();
@@ -145,7 +145,7 @@ public class VerseKey extends SWKey {
         this.position(TOP);
     }
 
-    /* @Override */
+    @Override
     public Object clone() {
         return new VerseKey(this);
     }

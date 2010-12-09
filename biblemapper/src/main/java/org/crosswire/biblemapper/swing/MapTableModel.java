@@ -116,7 +116,7 @@ public class MapTableModel extends AbstractTableModel {
      *            The index of column
      * @return the name of the column
      */
-    /* @Override */
+    @Override
     public String getColumnName(int col) {
         switch (col) {
         case 0:
@@ -142,7 +142,7 @@ public class MapTableModel extends AbstractTableModel {
      * 
      * @return the common ancestor class of the object values in the model.
      */
-    /* @Override */
+    @Override
     public Class getColumnClass(int col) {
         switch (col) {
         case 0:
@@ -167,7 +167,7 @@ public class MapTableModel extends AbstractTableModel {
      * @return rue if the cell is editable.
      * @see #setValueAt(Object, int, int)
      */
-    /* @Override */
+    @Override
     public boolean isCellEditable(int row, int col) {
         return col > 2;
     }
@@ -239,7 +239,7 @@ public class MapTableModel extends AbstractTableModel {
      * @see #getValueAt(int, int)
      * @see #isCellEditable(int, int)
      */
-    /* @Override */
+    @Override
     public void setValueAt(Object val, int row, int col) {
         try {
             float f = Float.valueOf(val.toString()).floatValue();

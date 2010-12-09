@@ -39,7 +39,7 @@ public class FrictionRule extends AbstractRule {
     /**
      * @see org.crosswire.biblemapper.model.AbstractRule#setScale(int)
      */
-    /* @Override */
+    @Override
     public void setScale(int scale) {
         if (scale == 0) {
             super.setScale(1);

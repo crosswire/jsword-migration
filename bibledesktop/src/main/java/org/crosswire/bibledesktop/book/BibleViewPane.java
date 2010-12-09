@@ -384,7 +384,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
         /* (non-Javadoc)
          * @see javax.swing.filechooser.FileFilter#accept(java.io.File)
          */
-        /* @Override */
+        @Override
         public boolean accept(File file) {
             return file.getName().endsWith(EXTENSION);
         }
@@ -392,7 +392,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
         /* (non-Javadoc)
          * @see javax.swing.filechooser.FileFilter#getDescription()
          */
-        /* @Override */
+        @Override
         public String getDescription() {
             // TRANSLATOR: This is the label for the verse list extension. {0} is a placeholder for that extension, which must be ".lst".
             return Msg.gettext("Verse Lists ({0})", EXTENSION);

@@ -47,7 +47,7 @@ public class WindowsBorderlessTabbedPaneUI extends WindowsTabbedPaneUI {
      *            tab placement of the tabbed pane
      * @return an Inset instance based on <CODE>tabPlacement</CODE>
      */
-    /* @Override */
+    @Override
     protected Insets getContentBorderInsets(int tabPlacement) {
         if (tabPlacement == SwingConstants.TOP) {
             return new Insets(1, 0, 0, 0);

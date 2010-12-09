@@ -687,10 +687,12 @@ public class CWOptionPane extends JOptionPane {
         dialog.addWindowListener(new WindowAdapter() {
             private boolean gotFocus;
 
+            @Override
             public void windowClosing(WindowEvent we) {
                 setValue(null);
             }
 
+            @Override
             public void windowGainedFocus(WindowEvent we) {
                 // Once window gets focus, set initial focus
                 if (!gotFocus) {
@@ -701,6 +703,7 @@ public class CWOptionPane extends JOptionPane {
         });
 
         dialog.addComponentListener(new ComponentAdapter() {
+            @Override
             public void componentShown(ComponentEvent ce) {
                 // reset value to ensure closing works properly
                 setValue(JOptionPane.UNINITIALIZED_VALUE);

@@ -20,7 +20,7 @@ import org.crosswire.common.util.Logger;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class DownloadSet implements Comparable {
+public class DownloadSet implements Comparable<DownloadSet> {
     public static final String BIN_ZIP = "-bin.zip";
     public static final String BIN_TGZ = "-bin.tar.gz";
     public static final String SRC_ZIP = "-src.zip";
@@ -46,7 +46,7 @@ public class DownloadSet implements Comparable {
             }
         });
 
-        SortedSet reply = new TreeSet();
+        SortedSet<DownloadSet> reply = new TreeSet<DownloadSet>();
         for (int i = 0; i < files.length; i++) {
             String name = files[i].getName();
             log.debug("adding " + name);
@@ -54,7 +54,7 @@ public class DownloadSet implements Comparable {
             reply.add(new DownloadSet(localprefix, webprefix, sets, datesort));
         }
 
-        return (DownloadSet[]) reply.toArray(new DownloadSet[reply.size()]);
+        return reply.toArray(new DownloadSet[reply.size()]);
     }
 
     /**
@@ -74,13 +74,7 @@ public class DownloadSet implements Comparable {
      * 
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public int compareTo(Object obj) {
-        if (!(obj instanceof DownloadSet)) {
-            log.error("Asked to compare to non DownloadSet");
-            return 0;
-        }
-
-        DownloadSet that = (DownloadSet) obj;
+    public int compareTo(DownloadSet that) {
         if (datesort) {
             try {
                 // The setname may either be a VERSION_DATE or

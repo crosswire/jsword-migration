@@ -418,7 +418,7 @@ public class Mapper extends JFrame {
         pnl_tools.add(pnl_color, BorderLayout.SOUTH);
 
         this.addWindowListener(new WindowAdapter() {
-            /* @Override */
+            @Override
             public void windowClosed(WindowEvent ev) {
                 exit();
             }

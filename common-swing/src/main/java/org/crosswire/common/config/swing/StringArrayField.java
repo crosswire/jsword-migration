@@ -139,7 +139,7 @@ public class StringArrayField extends JPanel implements Field {
      *            The new text
      */
     public void setArray(String[] value) {
-        list_model = new DefaultComboBoxModel((String[]) value.clone());
+        list_model = new DefaultComboBoxModel(value.clone());
         list.setModel(list_model);
     }
 

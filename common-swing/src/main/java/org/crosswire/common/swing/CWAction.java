@@ -118,7 +118,7 @@ public class CWAction extends AbstractAction {
      * String representation of this object suitable for debugging
      * 
      */
-    /* @Override */
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
@@ -141,6 +141,7 @@ public class CWAction extends AbstractAction {
      * Create a clone that does not copy the listeners. These CWActions need to
      * have listeners added to be meaningful.
      */
+    @Override
     public Object clone() {
         CWAction action = null;
         try {

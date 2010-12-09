@@ -285,6 +285,7 @@ class FullHTMLTip extends JToolTip {
         this.add(txtView, "HTMLTip");
     }
 
+    @Override
     public Dimension getPreferredSize() {
         Insets ist = getBorder().getBorderInsets(txtView);
         Dimension d = txtView.getPreferredSize();
@@ -293,6 +294,7 @@ class FullHTMLTip extends JToolTip {
         return d;
     }
 
+    @Override
     public void setTipText(String tipText) {
         txtView.setText(tipText);
     }

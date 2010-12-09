@@ -159,7 +159,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
             /* (non-Javadoc)
              * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
              */
-            /* @Override */
+            @Override
             public void keyTyped(KeyEvent ev) {
                 if (ev.getKeyChar() == '\n' && ev.getModifiers() == Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()) {
                     showSelectDialog();
@@ -241,7 +241,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
      * What are the currently selected Books?
      */
     public Book[] getBooks() {
-        return (Book[]) selected.clone();
+        return selected.clone();
     }
 
     /**

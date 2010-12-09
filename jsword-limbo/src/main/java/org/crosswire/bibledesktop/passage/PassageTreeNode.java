@@ -148,7 +148,7 @@ public class PassageTreeNode implements TreeNode, PassageListener {
     /**
      * Returns the children of the reciever as an Enumeration.
      */
-    /* @Override */
+    @Override
     public String toString() {
         return ref.getOverview();
     }

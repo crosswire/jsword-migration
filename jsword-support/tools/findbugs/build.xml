@@ -29,7 +29,10 @@
       </sourcePath>
       <auxClasspath>
       	<fileset dir="${target.jar}">
-          <patternset refid="external.runtime.jars"/>
+      	  <patternset>
+            <exclude name="*-sources.jar"/>
+      	    <include name="*.jar"/>
+      	  </patternset>
         </fileset>
       </auxClasspath>
     </findbugs>

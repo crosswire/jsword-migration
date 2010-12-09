@@ -75,7 +75,7 @@ public class Link implements Serializable {
     /**
      * Simple bit of debug
      */
-    /* @Override */
+    @Override
     public String toString() {
         try {
             return "" + new VerseRange(new Verse(book, chapter, 1), new Verse(book, chapter, BibleInfo.versesInChapter(book, chapter))) + "(" + strength + ")";

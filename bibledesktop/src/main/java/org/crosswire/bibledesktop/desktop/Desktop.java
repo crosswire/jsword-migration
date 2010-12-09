@@ -34,7 +34,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -253,7 +252,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
             /* (non-Javadoc)
              * @see java.awt.event.WindowListener#windowClosed(java.awt.event.WindowEvent)
              */
-            /* @Override */
+            @Override
             public void windowClosed(WindowEvent ev) {
                 actions.getAction(DesktopActions.EXIT).actionPerformed(new ActionEvent(this, 0, EMPTY_STRING));
             }
@@ -616,9 +615,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
             if (protocol.equals(BIBLE_PROTOCOL)) {
                 // Does a view contain the passage already?
                 BibleViewPane clearView = null;
-                Iterator iter = views.iterator();
-                while (iter.hasNext()) {
-                    Component comp = (Component) iter.next();
+                for (Component comp : views) {
                     BibleViewPane view = (BibleViewPane) comp;
                     if (view.isClear()) {
                         clearView = view;
@@ -1025,7 +1022,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         /* (non-Javadoc)
          * @see java.lang.Runnable#run()
          */
-        /* @Override */
+        @Override
         public void run() {
             // The first thing that has to be done is to set the locale.
             Translations.instance().setLocale();

@@ -136,10 +136,10 @@ public final class IndexResolver {
         Map installers = insman.getInstallers();
         Installer installer = null;
         if (installers.size() == 1) {
-            Iterator it = installers.values().iterator();
+            Iterator<Installer> it = installers.values().iterator();
             boolean hasNext = it.hasNext();
             assert hasNext;
-            installer = (Installer) it.next();
+            installer = it.next();
         } else {
             JComboBox choice = new JComboBox(new InstallManagerComboBoxModel(insman));
             // TRANSLATOR: Label for a list of index download sites.

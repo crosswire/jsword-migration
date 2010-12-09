@@ -43,7 +43,7 @@ public class OtherLFCustoms extends AbstractLFCustoms {
     /**
      * Install other platform specific UI defaults that we're not aware of.
      */
-    /* @Override */
+    @Override
     protected void initPlatformUIDefaults() {
         Border tabbedPanePanelBorder = BorderFactory.createEtchedBorder();
         Border panelSelectBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);

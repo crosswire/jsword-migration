@@ -118,7 +118,7 @@ public class MainFrame extends JFrame {
         jTextArea1.setText("");
         jTextArea1.setLineWrap(true);
         jTextArea1.addKeyListener(new java.awt.event.KeyAdapter() {
-            /* @Override */
+            @Override
             public void keyTyped(KeyEvent e) {
                 jTextArea1_keyTyped(e);
             }
@@ -201,7 +201,7 @@ public class MainFrame extends JFrame {
     }
 
     /** Overridden so we can exit when window is closed */
-    /* @Override */
+    @Override
     protected void processWindowEvent(WindowEvent e) {
         super.processWindowEvent(e);
         if (e.getID() == WindowEvent.WINDOW_CLOSING) {

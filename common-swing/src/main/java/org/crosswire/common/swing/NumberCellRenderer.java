@@ -51,6 +51,7 @@ public class NumberCellRenderer extends DefaultListCellRenderer {
      * javax.swing.DefaultListCellRenderer#getListCellRendererComponent(javax
      * .swing.JList, java.lang.Object, int, boolean, boolean)
      */
+    @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean selected, boolean focus) {
         // Do the default rendering
         Component comp = super.getListCellRendererComponent(list, value, index, selected, focus);

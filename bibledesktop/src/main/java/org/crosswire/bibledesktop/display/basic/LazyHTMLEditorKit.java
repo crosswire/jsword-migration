@@ -41,7 +41,8 @@ public class LazyHTMLEditorKit extends HTMLEditorKit {
       *
       * @param c the JEditorPane
       */
-     public void install(JEditorPane c) {
+     @Override
+    public void install(JEditorPane c) {
         super.install(c);
         MouseListener[] mls = c.getMouseListeners();
         for (int i = 0; i < mls.length; i++) {
@@ -63,6 +64,7 @@ public class LazyHTMLEditorKit extends HTMLEditorKit {
         *
         * @param c the JEditorPane
         */
+        @Override
         public void deinstall(JEditorPane c) {
             c.addMouseMotionListener(linkCtrl);
             super.deinstall(c);

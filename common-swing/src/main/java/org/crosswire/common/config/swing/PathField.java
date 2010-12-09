@@ -130,7 +130,7 @@ public class PathField extends JPanel implements Field {
      *            The new text
      */
     public void setArray(String[] value) {
-        model = new DefaultComboBoxModel((String[]) value.clone());
+        model = new DefaultComboBoxModel(value.clone());
         list.setModel(model);
     }
 

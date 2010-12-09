@@ -32,7 +32,7 @@ public class SWKey implements Cloneable, Comparable {
         error = k.error;
     }
 
-    /* @Override */
+    @Override
     public Object clone() {
         return new SWKey(this);
     }
@@ -92,7 +92,7 @@ public class SWKey implements Cloneable, Comparable {
     /**
      * SWKey::operator char * - returns text key if (char *) cast is requested
      */
-    /* @Override */
+    @Override
     public String toString() {
         return getText();
     }

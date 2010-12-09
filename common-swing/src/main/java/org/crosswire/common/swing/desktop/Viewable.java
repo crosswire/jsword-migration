@@ -25,7 +25,6 @@ import java.awt.Component;
 import java.util.Collection;
 
 import org.crosswire.common.swing.desktop.event.ViewEventListener;
-import org.crosswire.common.util.Iterable;
 
 /**
  * Interface defining what is Viewable.
@@ -34,7 +33,7 @@ import org.crosswire.common.util.Iterable;
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at yahoo dot com]
  */
-public interface Viewable extends Iterable {
+public interface Viewable extends Iterable<Component> {
     /**
      * Add a view to the set.
      */
@@ -50,7 +49,7 @@ public interface Viewable extends Iterable {
      * 
      * @return the views
      */
-    Collection getViews();
+    Collection<Component> getViews();
 
     /**
      * Copies all the views from the one layout to the other

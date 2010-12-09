@@ -82,8 +82,8 @@ public abstract class AbstractViewLayout implements Viewable {
      * 
      * @return the views
      */
-    public Collection getViews() {
-        return new ArrayList(views);
+    public Collection<Component> getViews() {
+        return new ArrayList<Component>(views);
     }
 
     /**
@@ -91,7 +91,7 @@ public abstract class AbstractViewLayout implements Viewable {
      * 
      * @return an iterator over the views.
      */
-    public Iterator iterator() {
+    public Iterator<Component> iterator() {
         return getViews().iterator();
     }
 
@@ -108,9 +108,7 @@ public abstract class AbstractViewLayout implements Viewable {
         }
         // Go through the views removing them from the layout
         // and adding them to the other
-        Iterator it = iterator();
-        while (it.hasNext()) {
-            Component view = (Component) it.next();
+        for (Component view : this) {
             forceRemoveView(view);
             other.addView(view);
         }
@@ -121,9 +119,7 @@ public abstract class AbstractViewLayout implements Viewable {
      * This will keep the last one added.
      */
     public void closeAll() {
-        Iterator it = iterator();
-        while (it.hasNext()) {
-            Component view = (Component) it.next();
+        for (Component view : this) {
             removeView(view);
         }
     }
@@ -135,9 +131,7 @@ public abstract class AbstractViewLayout implements Viewable {
      *            the view that is to remain open.
      */
     public void closeOthers(Component component) {
-        Iterator it = iterator();
-        while (it.hasNext()) {
-            Component view = (Component) it.next();
+        for (Component view : this) {
             if (view != component) {
                 removeView(view);
             }
@@ -151,9 +145,7 @@ public abstract class AbstractViewLayout implements Viewable {
      *            The visitor for the view
      */
     public void visit(ViewVisitor visitor) {
-        Iterator it = iterator();
-        while (it.hasNext()) {
-            Component view = (Component) it.next();
+        for (Component view : this) {
             visitor.visitView(view);
         }
     }
@@ -251,7 +243,7 @@ public abstract class AbstractViewLayout implements Viewable {
 
     /**
      * A constraint that allows the panel to be filled up, stretching
-     * horizonally and vertically.
+     * horizontally and vertically.
      * 
      * @return the constraint
      */

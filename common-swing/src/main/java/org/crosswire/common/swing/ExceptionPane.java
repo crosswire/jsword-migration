@@ -272,7 +272,7 @@ public final class ExceptionPane extends JPanel {
      *            A string array of the source directories
      */
     public static void setSourcePath(File[] sourcePath) {
-        ExceptionPane.sources = (File[]) sourcePath.clone();
+        ExceptionPane.sources = sourcePath.clone();
     }
 
     /**
@@ -281,7 +281,7 @@ public final class ExceptionPane extends JPanel {
      * @return A string array of the source directories
      */
     public static File[] getSourcePath() {
-        return (File[]) sources.clone();
+        return sources.clone();
     }
 
     /**

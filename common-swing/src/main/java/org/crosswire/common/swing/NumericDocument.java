@@ -41,7 +41,7 @@ public class NumericDocument extends PlainDocument {
      * @see javax.swing.text.Document#insertString(int, java.lang.String,
      * javax.swing.text.AttributeSet)
      */
-    /* @Override */
+    @Override
     public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
         if (str == null) {
             return;

@@ -136,7 +136,7 @@ public class MapperPane extends JPanel implements Scrollable {
      * @param g
      *            The graphics instance to paint with
      */
-    /* @Override */
+    @Override
     public void paintComponent(Graphics g) {
         g.setColor(versecolor.getBackground());
         g.fillRect(translateX(0), translateY(0), translateX(getWidth()), translateY(getHeight()));
@@ -234,7 +234,7 @@ public class MapperPane extends JPanel implements Scrollable {
     /**
      * The size of this map public void reshape(int x, int y, int w, int h)
      */
-    /* @Override */
+    @Override
     public void setSize(Dimension x) {
         if (lock_aspect) {
             int max = Math.max(x.width, x.height);

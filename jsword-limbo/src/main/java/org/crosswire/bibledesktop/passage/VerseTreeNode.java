@@ -45,7 +45,7 @@ public class VerseTreeNode extends ChapterTreeNode {
     /**
      * This constructor is for when we are really a BookTreeNode
      */
-    /* @Override */
+    @Override
     public void setPassage(Passage ref, boolean filter) {
         this.ref = ref;
     }
@@ -53,7 +53,7 @@ public class VerseTreeNode extends ChapterTreeNode {
     /**
      * Returns the child <code>TreeNode</code> at index i
      */
-    /* @Override */
+    @Override
     public TreeNode getChildAt(int i) {
         return null; // VerseDisplay thing
     }
@@ -62,7 +62,7 @@ public class VerseTreeNode extends ChapterTreeNode {
      * Returns the number of children <code>TreeNode</code>s the receiver
      * contains.
      */
-    /* @Override */
+    @Override
     public int getChildCount() {
         return 0;
     }
@@ -71,7 +71,7 @@ public class VerseTreeNode extends ChapterTreeNode {
      * Returns the index of <code>node</code> in the receivers children. If the
      * receiver does not contain <code>node</code>, -1 will be returned.
      */
-    /* @Override */
+    @Override
     public int getIndex(TreeNode node) {
         return -1;
     }
@@ -79,7 +79,7 @@ public class VerseTreeNode extends ChapterTreeNode {
     /**
      * How we appear in the Tree
      */
-    /* @Override */
+    @Override
     public String toString() {
         return Integer.toString(verse);
     }

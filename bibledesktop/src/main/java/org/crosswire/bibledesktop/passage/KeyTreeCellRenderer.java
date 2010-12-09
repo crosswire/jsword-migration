@@ -41,7 +41,7 @@ public class KeyTreeCellRenderer extends DefaultTreeCellRenderer {
     /* (non-Javadoc)
      * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int, boolean)
      */
-    /* @Override */
+    @Override
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean isselected, boolean expanded, boolean leaf, int row, boolean focus) {
         super.getTreeCellRendererComponent(tree, value, isselected, expanded, leaf, row, focus);
 

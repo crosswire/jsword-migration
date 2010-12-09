@@ -74,7 +74,7 @@ public class QuickHelpDialog extends JDialog {
              * 
              * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
              */
-            /* @Override */
+            @Override
             public void keyTyped(KeyEvent ev) {
                 close();
             }
@@ -107,7 +107,7 @@ public class QuickHelpDialog extends JDialog {
              * @seejava.awt.event.WindowListener#windowClosing(java.awt.event.
              * WindowEvent)
              */
-            /* @Override */
+            @Override
             public void windowClosing(WindowEvent ev) {
                 close();
             }
@@ -119,7 +119,7 @@ public class QuickHelpDialog extends JDialog {
      * 
      * @see java.awt.Component#setVisible(boolean)
      */
-    /* @Override */
+    @Override
     public void setVisible(boolean visible) {
         if (visible) {
             GuiUtil.centerOnScreen(this);

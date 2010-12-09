@@ -88,6 +88,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
     /**
      * Updates to the tree that we need to do on any change
      */
+    @Override
     protected void updateTree() {
         // expand the tree
         /*
@@ -101,6 +102,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
     /**
      * Add a Choice to our set of panels
      */
+    @Override
     protected void addChoice(Choice model) {
         String key = model.getKey();
         Field field = FieldMap.getField(model);
@@ -119,6 +121,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
     /**
      * Add a Choice to our set of panels
      */
+    @Override
     protected void removeChoice(Choice choice) {
         String key = choice.getKey();
         Field field = (Field) fields.get(key);
@@ -136,6 +139,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
      * Used to update the configuration panel whenever someone selects a
      * different item form the tree on the LHS of the configuration dialog.
      */
+    @Override
     public void selectCard() {
         Object obj = tree.getLastSelectedPathComponent();
         if (obj == null) {
@@ -191,6 +195,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
          * org.crosswire.common.config.swing.TreeConfigEditor.ConfigureTreeModel
          * #getChildren(java.lang.String)
          */
+        @Override
         protected List getChildren(String path) {
             List retcode = new ArrayList();
 
@@ -231,6 +236,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
          * 
          * @see javax.swing.tree.TreeModel#getChild(java.lang.Object, int)
          */
+        @Override
         public Object getChild(Object parent, int index) {
             if (parent instanceof CompNode) {
                 return null;
@@ -252,6 +258,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
          * 
          * @see javax.swing.tree.TreeModel#getChildCount(java.lang.Object)
          */
+        @Override
         public int getChildCount(Object parent) {
             if (parent instanceof CompNode) {
                 return 0;
@@ -271,6 +278,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
          * 
          * @see javax.swing.tree.TreeModel#isLeaf(java.lang.Object)
          */
+        @Override
         public boolean isLeaf(Object node) {
             return node instanceof CompNode;
         }
@@ -292,6 +300,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
          * 
          * @see java.lang.Object#toString()
          */
+        @Override
         public String toString() {
             return path;
         }
@@ -321,6 +330,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
          * .swing.JTree, java.lang.Object, boolean, boolean, boolean, int,
          * boolean)
          */
+        @Override
         public Component getTreeCellRendererComponent(JTree jtree, Object value, boolean isselected, boolean expanded, boolean leaf, int row, boolean focus) {
             if (!(value instanceof CompNode)) {
                 return super.getTreeCellRendererComponent(jtree, value, isselected, expanded, leaf, row, focus);

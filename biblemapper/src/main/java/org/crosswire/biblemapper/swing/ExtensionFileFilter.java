@@ -62,7 +62,7 @@ public class ExtensionFileFilter extends FileFilter {
      * @param file
      *            The object to test
      */
-    /* @Override */
+    @Override
     public boolean accept(File file) {
         if (file.isDirectory()) {
             return true;
@@ -82,7 +82,7 @@ public class ExtensionFileFilter extends FileFilter {
     /**
      *
      */
-    /* @Override */
+    @Override
     public String getDescription() {
         if (desc != null) {
             return desc;

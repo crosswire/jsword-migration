@@ -96,9 +96,9 @@ public class SitesPane extends JPanel {
      */
     protected final void addAllInstallers() {
         // Now add panels for book installation sites
-        Iterator iter = installers.keySet().iterator();
+        Iterator<String> iter = installers.keySet().iterator();
         while (iter.hasNext()) {
-            String name = (String) iter.next();
+            String name = iter.next();
             Installer installer = (Installer) installers.get(name);
 
             SitePane site = new SitePane(installer);
@@ -153,7 +153,7 @@ public class SitesPane extends JPanel {
             /* (non-Javadoc)
              * @see java.awt.event.WindowListener#windowClosed(java.awt.event.WindowEvent)
              */
-            /* @Override */
+            @Override
             public void windowClosed(WindowEvent ev) {
                 doSitesClose();
             }

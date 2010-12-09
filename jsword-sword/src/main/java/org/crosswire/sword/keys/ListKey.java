@@ -29,7 +29,7 @@ public class ListKey extends SWKey {
         ClearList();
     }
 
-    /* @Override */
+    @Override
     public boolean traversable() {
         return true;
     }
@@ -42,7 +42,7 @@ public class ListKey extends SWKey {
             array.add(((SWKey) k.array.get(i)).clone());
     }
 
-    /* @Override */
+    @Override
     public Object clone() {
         return new ListKey(this);
     }
@@ -85,7 +85,7 @@ public class ListKey extends SWKey {
      * RET: *this
      */
 
-    /* @Override */
+    @Override
     public void position(int p) {
         switch (p) {
         case TOP:

@@ -335,6 +335,7 @@ public class URITipMgr extends MouseAdapter implements ActionListener, URIEventL
     /* (non-Javadoc)
      * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
      */
+    @Override
     public void mouseDragged(MouseEvent e) {
         // TODO Auto-generated method stub
     }
@@ -342,11 +343,13 @@ public class URITipMgr extends MouseAdapter implements ActionListener, URIEventL
     /* (non-Javadoc)
      * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
      */
+    @Override
     public void mouseMoved(MouseEvent e) {
         lastx = e.getX();
         lasty = e.getY();
     }
 
+    @Override
     public void mouseClicked(MouseEvent e) {
         // System.out.println(e);
         if (e.getSource() == txtView && e.getClickCount() == 1) {
@@ -356,6 +359,7 @@ public class URITipMgr extends MouseAdapter implements ActionListener, URIEventL
         }
     }
 
+    @Override
     public void mouseExited(MouseEvent e) {
         // this is really a 'bug' for HTMLEditorKit:
         // when the component having the URI is exited,

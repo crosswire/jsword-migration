@@ -78,6 +78,7 @@ public class ToolBar extends JToolBar {
      * 
      * @see javax.swing.JToolBar#add(javax.swing.Action)
      */
+    @Override
     public JButton add(Action a) {
         JButton button = super.add(a);
         button.setIcon((Icon) a.getValue(CWAction.LARGE_ICON));

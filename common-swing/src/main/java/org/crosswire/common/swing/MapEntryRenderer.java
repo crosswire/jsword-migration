@@ -42,6 +42,7 @@ public class MapEntryRenderer extends DefaultListCellRenderer {
      * javax.swing.DefaultListCellRenderer#getListCellRendererComponent(javax
      * .swing.JList, java.lang.Object, int, boolean, boolean)
      */
+    @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean selected, boolean focus) {
         Object displayObject = value;
         if (value instanceof Map.Entry) {

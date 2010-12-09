@@ -41,7 +41,7 @@ public class AntiAliasedTextPane extends JTextPane {
      * 
      * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
      */
-    /* @Override */
+    @Override
     public void paintComponent(Graphics g) {
         if (g instanceof Graphics2D) {
             Graphics2D g2 = (Graphics2D) g;

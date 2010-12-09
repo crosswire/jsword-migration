@@ -22,7 +22,7 @@ public class HebrewMCIM extends SWInputMethod {
         init();
     }
 
-    /* @Override */
+    @Override
     public String translate(char in) {
 
         char retVal = 0;

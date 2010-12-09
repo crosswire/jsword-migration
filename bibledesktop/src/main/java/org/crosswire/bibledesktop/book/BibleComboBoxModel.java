@@ -220,7 +220,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
      * @see javax.swing.AbstractListModel#fireContentsChanged(java.lang.Object,
      * int, int)
      */
-    /* @Override */
+    @Override
     protected void fireContentsChanged(Object source, int index0, int index1) {
         super.fireContentsChanged(source, index0, index1);
     }

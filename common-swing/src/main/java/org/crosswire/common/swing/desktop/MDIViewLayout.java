@@ -63,6 +63,7 @@ public class MDIViewLayout extends AbstractViewLayout {
      * org.crosswire.common.swing.desktop.AbstractViewLayout#addView(java.awt
      * .Component)
      */
+    @Override
     public void addView(Component view) {
         super.addView(view);
 
@@ -89,6 +90,7 @@ public class MDIViewLayout extends AbstractViewLayout {
      * org.crosswire.common.swing.desktop.AbstractViewLayout#removeView(java
      * .awt.Component)
      */
+    @Override
     public void removeView(Component view) {
         Component comp = SwingUtilities.getAncestorOfClass(JInternalFrame.class, view);
         if (comp instanceof JInternalFrame) {
@@ -120,6 +122,7 @@ public class MDIViewLayout extends AbstractViewLayout {
      * org.crosswire.common.swing.desktop.AbstractViewLayout#forceRemoveView
      * (java.awt.Component)
      */
+    @Override
     protected void forceRemoveView(Component component) {
         Component comp = SwingUtilities.getAncestorOfClass(JInternalFrame.class, component);
         if (comp instanceof JInternalFrame) {
@@ -141,6 +144,7 @@ public class MDIViewLayout extends AbstractViewLayout {
      * org.crosswire.common.swing.desktop.AbstractViewLayout#updateTitle(java
      * .awt.Component)
      */
+    @Override
     public void updateTitle(Component view) {
         Component comp = SwingUtilities.getAncestorOfClass(JInternalFrame.class, view);
         if (comp instanceof JInternalFrame) {
@@ -154,6 +158,7 @@ public class MDIViewLayout extends AbstractViewLayout {
      * 
      * @see org.crosswire.common.swing.desktop.AbstractViewLayout#getSelected()
      */
+    @Override
     public Component getSelected() {
         JInternalFrame frame = desk.getSelectedFrame();
 
@@ -188,6 +193,7 @@ public class MDIViewLayout extends AbstractViewLayout {
      * org.crosswire.common.swing.desktop.AbstractViewLayout#select(java.awt
      * .Component)
      */
+    @Override
     public void select(Component component) {
         JInternalFrame frame = desk.getSelectedFrame();
 
@@ -235,6 +241,7 @@ public class MDIViewLayout extends AbstractViewLayout {
          * javax.swing.event.InternalFrameListener#internalFrameClosed(javax
          * .swing.event.InternalFrameEvent)
          */
+        @Override
         public void internalFrameClosed(InternalFrameEvent ev) {
             JInternalFrame iframe = ev.getInternalFrame();
             Component view = iframe.getContentPane().getComponent(0);

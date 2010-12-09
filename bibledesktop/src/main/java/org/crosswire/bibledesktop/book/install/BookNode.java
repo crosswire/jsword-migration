@@ -51,9 +51,7 @@ public class BookNode extends DefaultMutableTreeNode {
                 add(new BookNode(value, subBooks, level + 1, grouping));
             }
         } else if (books != null) {
-            Iterator iter = books.iterator();
-            while (iter.hasNext()) {
-                Book book = (Book) iter.next();
+            for (Book book : books) {
                 add(new BookNode(book, null, level + 1, grouping));
             }
         }

@@ -39,10 +39,12 @@ public enum LayoutType {
      * Tabbed View
      */
     TDI {
+        @Override
         public AbstractViewLayout createLayout() {
             return new TDIViewLayout();
         }
 
+        @Override
         public String toString() {
             // TRANSLATOR: This is the name of one of two different ways to present Bible Views.
             // These show up in Options/Preferences.
@@ -54,10 +56,12 @@ public enum LayoutType {
      * Multiple Document View
      */
     MDI {
+        @Override
         public AbstractViewLayout createLayout() {
             return new MDIViewLayout();
         }
 
+        @Override
         public String toString() {
             // TRANSLATOR: This is the name of one of two different ways to present Bible Views.
             // These show up in Options/Preferences.
