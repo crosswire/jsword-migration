@@ -30,6 +30,7 @@ import org.crosswire.common.util.FileUtil;
 import org.crosswire.common.util.Language;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
+import org.crosswire.common.util.PropertyMap;
 import org.crosswire.common.util.ResourceUtil;
 
 /**
@@ -80,7 +81,7 @@ public class FontStore {
         }
         this.storeName = storeName;
         this.fontStore = NetUtil.lengthenURI(fontDir, this.storeName + FileUtil.EXTENSION_PROPERTIES);
-        this.fontMap = new Properties();
+        this.fontMap = new PropertyMap();
     }
 
     /**
@@ -88,7 +89,7 @@ public class FontStore {
      */
     public String getDefaultFont() {
         load();
-        defaultFont = fontMap.getProperty(DEFAULT_KEY, DEFAULT_FONT);
+        defaultFont = fontMap.get(DEFAULT_KEY, DEFAULT_FONT);
         return defaultFont;
     }
 
@@ -99,7 +100,7 @@ public class FontStore {
     public void setDefaultFont(String defaultFont) {
         load();
         this.defaultFont = defaultFont;
-        fontMap.setProperty(DEFAULT_KEY, defaultFont);
+        fontMap.put(DEFAULT_KEY, defaultFont);
         store();
     }
 
@@ -116,7 +117,7 @@ public class FontStore {
             return;
         }
         load();
-        fontMap.setProperty(resource, GuiConvert.font2String(font));
+        fontMap.put(resource, GuiConvert.font2String(font));
         store();
     }
 
@@ -133,7 +134,7 @@ public class FontStore {
             return;
         }
         load();
-        fontMap.setProperty(new StringBuilder(LANG_KEY_PREFIX).append(lang.getCode()).toString(), GuiConvert.font2String(font));
+        fontMap.put(new StringBuilder(LANG_KEY_PREFIX).append(lang.getCode()).toString(), GuiConvert.font2String(font));
         store();
     }
 
@@ -169,7 +170,7 @@ public class FontStore {
 
         String fontSpec = null;
         if (resource != null) {
-            fontSpec = fontMap.getProperty(resource);
+            fontSpec = fontMap.get(resource);
         }
 
         if (fontSpec != null) {
@@ -181,7 +182,7 @@ public class FontStore {
         }
 
         if (lang != null) {
-            fontSpec = fontMap.getProperty(new StringBuilder(LANG_KEY_PREFIX).append(lang.getCode()).toString());
+            fontSpec = fontMap.get(new StringBuilder(LANG_KEY_PREFIX).append(lang.getCode()).toString());
         }
 
         if (fontSpec != null) {
@@ -250,7 +251,7 @@ public class FontStore {
     /**
      * @return the fontMap
      */
-    protected Properties getFontMap() {
+    protected PropertyMap getFontMap() {
         return fontMap;
     }
 
@@ -258,7 +259,7 @@ public class FontStore {
      * @param fontMap
      *            the fontMap to set
      */
-    protected void setFontMap(Properties fontMap) {
+    protected void setFontMap(PropertyMap fontMap) {
         this.fontMap = fontMap;
     }
 
@@ -275,7 +276,7 @@ public class FontStore {
             loaded = true;
         } catch (IOException e) {
             log.error("Unable to load the font store: " + fontStore);
-            fontMap = new Properties();
+            fontMap = new PropertyMap();
         }
     }
 
@@ -314,7 +315,7 @@ public class FontStore {
     private String defaultFont;
     private URI fontStore;
     private boolean loaded;
-    private Properties fontMap;
+    private PropertyMap fontMap;
 
     private static final Logger log = Logger.getLogger(FontStore.class);
 }

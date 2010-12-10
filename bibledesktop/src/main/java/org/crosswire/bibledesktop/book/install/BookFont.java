@@ -102,10 +102,10 @@ public class BookFont extends FontStore {
      */
     public boolean isSet(Book book, Language lang) {
         if (book != null) {
-            return getFontMap().getProperty(book.getInitials()) != null;
+            return getFontMap().get(book.getInitials()) != null;
         }
         if (lang != null) {
-            return getFontMap().getProperty(new StringBuilder(LANG_KEY_PREFIX).append(lang.getCode()).toString()) != null;
+            return getFontMap().get(new StringBuilder(LANG_KEY_PREFIX).append(lang.getCode()).toString()) != null;
         }
         return false;
     }

@@ -102,7 +102,7 @@ public class SplitBookDataDisplay extends JPanel implements BookProvider {
         }
 
         if (bookChanged) {
-            log.debug("new book(s) chosen: " + StringUtil.toString(books));
+            log.debug("new book(s) chosen: " + Arrays.toString(books));
         }
 
         if (bookChanged || keyChanged) {

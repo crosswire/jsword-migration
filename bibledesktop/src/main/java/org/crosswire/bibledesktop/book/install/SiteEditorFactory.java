@@ -23,8 +23,8 @@ package org.crosswire.bibledesktop.book.install;
 
 import java.io.IOException;
 import java.util.MissingResourceException;
-import java.util.Properties;
 
+import org.crosswire.common.util.PropertyMap;
 import org.crosswire.common.util.ReflectionUtil;
 import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.jsword.book.install.Installer;
@@ -48,8 +48,8 @@ public final class SiteEditorFactory {
      */
     public static SiteEditor createSiteEditor(Installer installer) {
         try {
-            Properties properties = ResourceUtil.getProperties(SiteEditorFactory.class);
-            String className = properties.getProperty(installer.getType());
+            PropertyMap properties = ResourceUtil.getProperties(SiteEditorFactory.class);
+            String className = properties.get(installer.getType());
             SiteEditor editor = (SiteEditor) ReflectionUtil.construct(className);
             editor.setInstaller(installer);
             return editor;

@@ -28,12 +28,12 @@ import java.awt.Point;
 import java.awt.Window;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Properties;
 
 import org.crosswire.common.util.CWProject;
 import org.crosswire.common.util.FileUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
+import org.crosswire.common.util.PropertyMap;
 import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.common.util.StringUtil;
 
@@ -56,7 +56,7 @@ public class LayoutPersistence {
         try {
             settings = ResourceUtil.getProperties(getClass());
         } catch (IOException e) {
-            settings = new Properties();
+            settings = new PropertyMap();
         }
     }
 
@@ -95,7 +95,7 @@ public class LayoutPersistence {
             state = frame.getExtendedState();
         }
 
-        settings.setProperty(window.getName(), StringUtil.join(new String[] {
+        settings.put(window.getName(), StringUtil.join(new String[] {
                 Integer.toString(state), Integer.toString(window.getWidth()), Integer.toString(window.getHeight()), Integer.toString(window.getX()),
                 Integer.toString(window.getY())
         }, "_")
@@ -117,7 +117,7 @@ public class LayoutPersistence {
      *            the window to persist
      */
     public synchronized void restoreLayout(Window window) {
-        String[] parts = StringUtil.split(settings.getProperty(window.getName()), '_');
+        String[] parts = StringUtil.split(settings.get(window.getName()), '_');
 
         // If our window did not have saved settings do nothing.
         if (parts == null || parts.length == 0) {
@@ -141,7 +141,7 @@ public class LayoutPersistence {
     /**
      * The persistence storage and retrieval object
      */
-    private Properties settings;
+    private PropertyMap settings;
 
     /**
      * Suffix for window state key

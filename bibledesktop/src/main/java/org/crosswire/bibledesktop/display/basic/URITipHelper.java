@@ -158,18 +158,6 @@ public class URITipHelper implements URIEventListener {
             htmlsep.setParameter(XSLTProperty.FONT.getName(), fontSpec);
 
             txt = XMLUtil.writeToString(htmlsep);
-            /* BUG_PARADE(DMS): 4775730
-             * This bug shows up before Java 5 in GenBook Practice "/Part 1/THE THIRD STAGE" and elsewhere.
-             * It appears that it is a line too long issue.
-             */
-            /* Apply the fix if the text is too long and we are not Java 1.5 or greater */
-            if (txt.length() > 32768 && BookCategory.GENERAL_BOOK.equals(book.getBookCategory())) {
-                String javaVersion = System.getProperty("java.specification.version");
-                if (javaVersion == null || "1.5".compareTo(javaVersion) > 0) {
-                    txt = txt.substring(0, 32760) + "...";
-                }
-            }
-
         } catch (SAXException e) {
             Reporter.informUser(this, e);
             e.printStackTrace();
