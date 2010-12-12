@@ -25,7 +25,6 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Iterator;
 
 import javax.swing.Action;
 import javax.swing.JCheckBoxMenuItem;
@@ -182,9 +181,7 @@ public class DesktopActions implements Actionable {
     public void doSaveAll() {
         boolean ok = false;
 
-        Iterator iter = getDesktop().getViews().iterator();
-        while (iter.hasNext()) {
-            Component comp = (Component) iter.next();
+        for (Component comp : getDesktop().getViews()) {
             BibleViewPane view = (BibleViewPane) comp;
             if (view.maySave()) {
                 ok = true;
@@ -198,9 +195,7 @@ public class DesktopActions implements Actionable {
             return;
         }
 
-        iter = getDesktop().getViews().iterator();
-        while (iter.hasNext()) {
-            Component comp = (Component) iter.next();
+        for (Component comp : getDesktop().getViews()) {
             try {
                 BibleViewPane view = (BibleViewPane) comp;
                 view.save();
@@ -456,7 +451,7 @@ public class DesktopActions implements Actionable {
     public boolean macOSXRegistration() {
         if (OSType.MAC.equals(OSType.getOSType())) {
             try {
-                Class osxAdapter = ClassUtil.forName("org.crosswire.common.aqua.OSXAdapter");
+                Class<?> osxAdapter = ClassUtil.forName("org.crosswire.common.aqua.OSXAdapter");
                 Object[] registerOSXArgs = {
                         actions, DesktopActions.ABOUT, DesktopActions.OPTIONS, DesktopActions.EXIT
                 };
@@ -464,7 +459,7 @@ public class DesktopActions implements Actionable {
 
                 // To call a method taking a type of boolean, the type has to
                 // match but the object has to be wrapped
-                Class[] enablePrefTypes = {
+                Class<?>[] enablePrefTypes = {
                     boolean.class
                 };
                 Object[] enablePrefArgs = {

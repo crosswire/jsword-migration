@@ -89,11 +89,8 @@ public class FormPane extends JPanel {
      *            The name for the field
      */
     public void removeEntry(String prompt) {
-        JLabel label = (JLabel) comps.get(prompt + SUFFIX_LABEL);
-        Component comp = (Component) comps.get(prompt + SUFFIX_COMP);
-
-        inner.remove(label);
-        inner.remove(comp);
+        inner.remove(comps.get(prompt + SUFFIX_LABEL));
+        inner.remove(comps.get(prompt + SUFFIX_COMP));
 
         comps.remove(prompt + SUFFIX_LABEL);
         comps.remove(prompt + SUFFIX_COMP);
@@ -149,5 +146,5 @@ public class FormPane extends JPanel {
     /**
      * A store of the available components
      */
-    protected Hashtable comps = new Hashtable();
+    protected Hashtable<String,Component> comps = new Hashtable<String,Component>();
 }

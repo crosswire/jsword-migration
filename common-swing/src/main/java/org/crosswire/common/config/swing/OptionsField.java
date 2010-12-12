@@ -88,8 +88,8 @@ public class OptionsField implements Field {
     public String getValue() {
         Object reply = combo.getSelectedItem();
 
-        if (reply instanceof Map.Entry) {
-            return ((Map.Entry) reply).getKey().toString();
+        if (reply instanceof Map.Entry<?,?>) {
+            return ((Map.Entry<?,?>) reply).getKey().toString();
         }
         return reply == null ? "" : reply.toString();
     }

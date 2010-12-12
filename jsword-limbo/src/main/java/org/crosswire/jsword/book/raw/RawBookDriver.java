@@ -26,10 +26,10 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
+import org.crosswire.common.util.PropertyMap;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.basic.AbstractBookDriver;
 import org.crosswire.jsword.book.basic.BookRoot;
@@ -76,7 +76,7 @@ public class RawBookDriver extends AbstractBookDriver {
                 URI uri = NetUtil.lengthenURI(dir, names[i]);
                 URI propURI = NetUtil.lengthenURI(uri, RawConstants.FILE_BIBLE_PROPERTIES);
 
-                Properties prop = NetUtil.loadProperties(propURI);
+                PropertyMap prop = NetUtil.loadProperties(propURI);
 
                 Book book = new RawBook(this, prop, uri);
 

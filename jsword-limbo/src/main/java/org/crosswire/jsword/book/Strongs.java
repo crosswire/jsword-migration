@@ -178,7 +178,7 @@ public class Strongs {
      * 
      * @return A descriptive String
      */
-    /* @Override */
+    @Override
     public String toString() {
         return getOLBName();
     }

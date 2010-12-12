@@ -256,9 +256,8 @@ public class MultiBookPane extends JSplitPane implements BookDataDisplay {
 
     /*
         // Code to search for a word
-        for (Iterator it = Books.getBooks(filter).iterator(); it.hasNext();)
-        {
-            DictionaryMetaData dmd = (DictionaryMetaData) it.next();
+        for (BookMetaData bmd : Books.getBooks(filter)) {
+            DictionaryMetaData dmd = (DictionaryMetaData) bmd;
             Dictionary tempdict = dmd.getDictionary();
             try
             {

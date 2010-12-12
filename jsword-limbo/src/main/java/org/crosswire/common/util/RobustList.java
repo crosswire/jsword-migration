@@ -40,7 +40,7 @@ public class RobustList extends AbstractList {
      *            element whose presence in this list is to be tested.
      * @return true if this list contains the specified element.
      */
-    /* @Override */
+    @Override
     public boolean contains(Object o) {
         return indexOf(o) != -1;
     }
@@ -50,7 +50,7 @@ public class RobustList extends AbstractList {
      * 
      * @return the number of elements in this list.
      */
-    /* @Override */
+    @Override
     public int size() {
         return size;
     }
@@ -61,7 +61,7 @@ public class RobustList extends AbstractList {
      * @param o
      *            element to be appended to this list.
      */
-    /* @Override */
+    @Override
     public boolean add(Object o) {
         // debug("pre-add "+o);
         new Entry(o);
@@ -78,7 +78,7 @@ public class RobustList extends AbstractList {
      *            the index of the element to removed.
      * @return the element previously at the specified position.
      */
-    /* @Override */
+    @Override
     public Object remove(int index) {
         // debug("pre-remove "+index);
         Entry e = findEntry(index);
@@ -96,7 +96,7 @@ public class RobustList extends AbstractList {
      *            element to be removed from this list, if present.
      * @return true if the list contained the specified element.
      */
-    /* @Override */
+    @Override
     public boolean remove(Object o) {
         // debug("pre-remove "+o);
         if (o == null) {
@@ -130,7 +130,7 @@ public class RobustList extends AbstractList {
     /**
      * Removes all of the elements from this list.
      */
-    /* @Override */
+    @Override
     public void clear() {
         debug("pre-clear");
         head = null;
@@ -146,7 +146,7 @@ public class RobustList extends AbstractList {
      *            index of element to return.
      * @return the element at the specified position in this list.
      */
-    /* @Override */
+    @Override
     public Object get(int index) {
         return findEntry(index).object;
     }
@@ -183,7 +183,7 @@ public class RobustList extends AbstractList {
      *            element to search for.
      * @return the index of the first occurrence or -1
      */
-    /* @Override */
+    @Override
     public int indexOf(Object o) {
         int index = 0;
         if (o == null) {

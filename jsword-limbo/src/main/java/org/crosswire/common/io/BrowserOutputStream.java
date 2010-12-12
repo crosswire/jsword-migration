@@ -26,7 +26,7 @@ public class BrowserOutputStream extends OutputStream {
      * @param b
      *            The byte to be written, as normal.
      */
-    /* @Override */
+    @Override
     public void write(int b) {
         char ch = (char) b;
 

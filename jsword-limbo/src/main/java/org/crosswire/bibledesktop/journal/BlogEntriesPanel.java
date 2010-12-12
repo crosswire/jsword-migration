@@ -46,7 +46,7 @@ public class BlogEntriesPanel extends JPanel implements BlogClientTab {
     public BlogEntriesPanel() {
         initComponents();
         mBlogEntries.addMouseListener(new MouseAdapter() {
-            /* @Override */
+            @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
                     int row = mBlogEntries.rowAtPoint(e.getPoint());

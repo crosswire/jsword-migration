@@ -35,7 +35,7 @@ public class RemoterServlet extends HttpServlet {
      * 
      * @see javax.servlet.Servlet#init(javax.servlet.ServletConfig)
      */
-    /* @Override */
+    @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
@@ -49,7 +49,7 @@ public class RemoterServlet extends HttpServlet {
      * javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest
      * , javax.servlet.http.HttpServletResponse)
      */
-    /* @Override */
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         XMLOutputter output = new XMLOutputter();
 

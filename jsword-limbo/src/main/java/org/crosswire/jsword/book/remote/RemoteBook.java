@@ -156,7 +156,7 @@ public class RemoteBook extends AbstractBook {
      * org.crosswire.jsword.book.Bible#findPassage(org.crosswire.jsword.book
      * .Search)
      */
-    /* @Override */
+    @Override
     public Key find(String search) throws BookException {
         try {
             RemoteMethod method = new RemoteMethod(MethodName.FINDPASSAGE);

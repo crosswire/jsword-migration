@@ -74,7 +74,7 @@ public class JDTBURLConnection extends URLConnection {
      * 
      * @see java.net.URLConnection#connect()
      */
-    /* @Override */
+    @Override
     public void connect() throws IOException {
         try {
             BookData data = new BookData(book, key);
@@ -98,7 +98,7 @@ public class JDTBURLConnection extends URLConnection {
      * 
      * @see java.net.URLConnection#getInputStream()
      */
-    /* @Override */
+    @Override
     public InputStream getInputStream() throws IOException {
         if (!connected) {
             connect();

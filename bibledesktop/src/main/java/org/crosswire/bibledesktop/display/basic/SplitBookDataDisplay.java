@@ -36,7 +36,6 @@ import org.crosswire.bibledesktop.passage.KeyChangeListener;
 import org.crosswire.bibledesktop.passage.KeySidebar;
 import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.util.Logger;
-import org.crosswire.common.util.StringUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookProvider;
 import org.crosswire.jsword.passage.Key;

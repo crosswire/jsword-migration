@@ -142,9 +142,9 @@ public class ActionFactory implements ActionListener, Actionable {
      * @param type the class against which properties are looked up.
      * @param bean the object to which the actions belong
      */
-    public ActionFactory(Class type, Object bean) {
+    public ActionFactory(Class<?> type, Object bean) {
         this.bean = bean;
-        actions = new HashMap();
+        actions = new HashMap<String,CWAction>();
         if (type != null) {
             buildActionMap(type);
         }
@@ -234,7 +234,7 @@ public class ActionFactory implements ActionListener, Actionable {
      * @return CWAction null if it does not exist
      */
     public Action getAction(String key, ActionListener listener) {
-        CWAction action = (CWAction) actions.get(key);
+        CWAction action = actions.get(key);
 
         if (action != null) {
             if (listener != null) {
@@ -383,7 +383,7 @@ public class ActionFactory implements ActionListener, Actionable {
             log.warn("Acronymn is missing for CWAction");
         }
 
-        CWAction cwAction = (CWAction) actions.get(key);
+        CWAction cwAction = actions.get(key);
 
         if (cwAction != null) {
             return cwAction;
@@ -421,7 +421,7 @@ public class ActionFactory implements ActionListener, Actionable {
     /**
      * Build the map of actions from resources
      */
-    private void buildActionMap(Class basis) {
+    private void buildActionMap(Class<?> basis) {
         try {
             StringBuilder basisName = new StringBuilder(basis.getName());
             ResourceBundle resources = ResourceBundle.getBundle(basisName.toString(), Locale.getDefault(), CWClassLoader.instance(basis));
@@ -435,9 +435,9 @@ public class ActionFactory implements ActionListener, Actionable {
             }
 
             // Get all the keys but we only need those that end with .Name
-            Enumeration en = resources.getKeys();
+            Enumeration<String> en = resources.getKeys();
             while (en.hasMoreElements()) {
-                String key = (String) en.nextElement();
+                String key = en.nextElement();
                 if (key.endsWith(TEST)) {
                     String actionName = key.substring(0, key.length() - TEST.length());
 
@@ -559,5 +559,5 @@ public class ActionFactory implements ActionListener, Actionable {
     /**
      * The map of known CWActions
      */
-    private Map actions;
+    private Map<String,CWAction> actions;
 }

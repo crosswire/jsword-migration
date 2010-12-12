@@ -97,7 +97,7 @@ public class BeanPanel extends JPanel {
 
                     try {
                         Method reader = property.getReadMethod();
-                        Object reply = reader.invoke(bean, null);
+                        Object reply = reader.invoke(bean, (Object[]) null);
                         if (reply == null) {
                             text.setText("");
                         } else {

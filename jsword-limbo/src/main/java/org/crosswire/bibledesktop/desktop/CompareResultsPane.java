@@ -125,7 +125,7 @@ public class CompareResultsPane extends JPanel implements Runnable {
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
 
         frame.addWindowListener(new WindowAdapter() {
-            /* @Override */
+            @Override
             public void windowClosed(WindowEvent ev) {
                 if (work != null)
                     startStop();

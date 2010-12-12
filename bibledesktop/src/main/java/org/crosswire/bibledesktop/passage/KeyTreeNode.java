@@ -69,11 +69,11 @@ public class KeyTreeNode implements TreeNode {
     /* (non-Javadoc)
      * @see javax.swing.tree.TreeNode#children()
      */
-    public Enumeration children() {
+    public Enumeration<Key> children() {
         if (key != null) {
-            return new IteratorEnumeration(key.iterator());
+            return new IteratorEnumeration<Key>(key.iterator());
         }
-        return new IteratorEnumeration(new EmptyIterator());
+        return new IteratorEnumeration<Key>(new EmptyIterator<Key>());
     }
 
     /* (non-Javadoc)

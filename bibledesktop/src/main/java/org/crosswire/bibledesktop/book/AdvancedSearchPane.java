@@ -650,8 +650,8 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
      * 
      * @return the labels
      */
-    private Dictionary createSliderLabels() {
-        Dictionary labels = new Hashtable();
+    private Dictionary<Integer,JLabel> createSliderLabels() {
+        Dictionary<Integer,JLabel> labels = new Hashtable<Integer,JLabel>();
         int max = DisplaySelectPane.getMaxNumRankedVerses();
         for (int i = 0; i <= max; i += 20) {
             Integer label = Integer.valueOf(i);

@@ -55,7 +55,7 @@ public class ReferenceKeyTreeNode implements TreeNode {
      * 
      * @see java.lang.Object#toString()
      */
-    /* @Override */
+    @Override
     public String toString() {
         return key.getName();
     }

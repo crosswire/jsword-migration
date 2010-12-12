@@ -56,7 +56,7 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
      * @param generator a ViewGenerator that this ViewManager manages.
      * @param msg the class for which i18n properties are defined
      */
-    public ViewManager(ViewGenerator generator, Class msg) {
+    public ViewManager(ViewGenerator generator, Class<?> msg) {
         this.generator = generator;
         panel = new JPanel(new GridBagLayout());
 

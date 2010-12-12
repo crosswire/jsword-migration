@@ -51,7 +51,7 @@ public abstract class AbstractViewLayout implements Viewable {
     protected AbstractViewLayout() {
         panel = new JPanel(new BorderLayout());
         GuiUtil.applyDefaultOrientation(panel);
-        views = new ArrayList();
+        views = new ArrayList<Component>();
         listenerList = new EventListenerList();
     }
 
@@ -191,7 +191,7 @@ public abstract class AbstractViewLayout implements Viewable {
      * @return the requested view.
      */
     public Component getView(int i) {
-        return (Component) views.get(i);
+        return views.get(i);
     }
 
     /**
@@ -293,7 +293,7 @@ public abstract class AbstractViewLayout implements Viewable {
     /**
      * The list of views.
      */
-    private List views;
+    private List<Component> views;
 
     /**
      * The listeners for handling ViewEvent Listeners

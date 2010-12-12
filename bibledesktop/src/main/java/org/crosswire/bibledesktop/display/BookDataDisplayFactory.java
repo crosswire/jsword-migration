@@ -45,7 +45,7 @@ public final class BookDataDisplayFactory {
     public static BookDataDisplay createBookDataDisplay() {
         Exception ex = null;
         try {
-            return (BookDataDisplay) PluginUtil.getImplementation(BookDataDisplay.class);
+            return PluginUtil.getImplementation(BookDataDisplay.class);
         } catch (ClassCastException e) {
             ex = e;
         } catch (IOException e) {

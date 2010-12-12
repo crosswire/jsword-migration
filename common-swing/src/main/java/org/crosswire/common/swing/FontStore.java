@@ -24,7 +24,6 @@ package org.crosswire.common.swing;
 import java.awt.Font;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Properties;
 
 import org.crosswire.common.util.FileUtil;
 import org.crosswire.common.util.Language;

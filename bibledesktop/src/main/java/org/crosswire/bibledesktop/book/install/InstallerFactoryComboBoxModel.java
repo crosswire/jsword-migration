@@ -43,8 +43,8 @@ public class InstallerFactoryComboBoxModel extends AbstractListModel implements 
      * Simple ctor
      */
     public InstallerFactoryComboBoxModel(InstallManager imanager) {
-        Set nameset = imanager.getInstallerFactoryNames();
-        names = new ArrayList();
+        Set<String> nameset = imanager.getInstallerFactoryNames();
+        names = new ArrayList<String>();
         names.addAll(nameset);
         Collections.sort(names);
     }
@@ -80,7 +80,7 @@ public class InstallerFactoryComboBoxModel extends AbstractListModel implements 
     /**
      * The list of installer names
      */
-    private List names;
+    private List<String> names;
 
     /**
      * The currently selected object

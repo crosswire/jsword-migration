@@ -26,7 +26,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
 
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
@@ -76,7 +76,7 @@ public class JDBCBookDriver extends AbstractBookDriver {
             URI url = NetUtil.lengthenURI(dir, names[i]);
             URI propUri = NetUtil.lengthenURI(url, "bible.properties");
             try {
-                Properties prop = NetUtil.loadProperties(propUri);
+                Map prop = NetUtil.loadProperties(propUri);
 
                 Book book = new JDBCBook(this, prop);
 

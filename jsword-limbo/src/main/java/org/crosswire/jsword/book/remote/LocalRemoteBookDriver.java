@@ -44,7 +44,7 @@ public class LocalRemoteBookDriver extends RemoteBookDriver {
      * @return The remoter or null if none is available.
      * @see org.crosswire.jsword.book.remote.RemoteBookDriver#getRemoter()
      */
-    /* @Override */
+    @Override
     protected Remoter getRemoter() {
         return remoter;
     }

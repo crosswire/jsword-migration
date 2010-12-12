@@ -31,7 +31,6 @@ import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URI;
-import java.util.Iterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -79,9 +78,7 @@ public class ViewSourcePane extends JPanel {
         try {
             StringBuilder buf = new StringBuilder();
 
-            Iterator iter = key.iterator();
-            while (iter.hasNext()) {
-                Key currentKey = (Key) iter.next();
+            for (Key currentKey : key) {
                 String osisID = currentKey.getOsisID();
                 for (int i = 0; i < books.length; i++) {
                     Book book = books[i];

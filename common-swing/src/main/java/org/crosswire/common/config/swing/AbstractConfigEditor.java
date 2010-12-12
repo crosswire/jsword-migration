@@ -27,7 +27,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
@@ -79,10 +78,7 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
         });
 
         // For each of the Fields put it in a FieldPanel
-        Iterator it = config.iterator();
-        while (it.hasNext()) {
-            Choice model = (Choice) it.next();
-
+        for (Choice model : config) {
             addChoice(model);
         }
 
@@ -208,7 +204,7 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
         fields.put(key, field);
 
         // Get or create a FieldPanel
-        FormPane card = (FormPane) decks.get(path);
+        FormPane card = decks.get(path);
 
         if (card == null) {
             card = new FormPane();
@@ -234,10 +230,10 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
         String key = model.getKey();
         String path = Config.getPath(model.getFullPath());
 
-        Field field = (Field) fields.get(key);
+        Field field = fields.get(key);
         if (field != null) {
             fields.remove(field);
-            FormPane card = (FormPane) decks.get(path);
+            FormPane card = decks.get(path);
 
             // Remove field from card.
             String name = Config.getLeaf(model.getFullPath()) + ':';
@@ -263,15 +259,13 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
      * Take the data displayed on screen an copy it to the local storage area.
      */
     protected void screenToLocal() {
-        Iterator it = config.iterator();
-        while (it.hasNext()) {
-            Choice choice = (Choice) it.next();
+        for (Choice choice : config) {
             if (choice.isHidden()) {
                 continue;
             }
 
             String key = choice.getKey();
-            Field field = (Field) fields.get(key);
+            Field field = fields.get(key);
             String value = field.getValue();
 
             if (value == null) {
@@ -286,16 +280,14 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
      * Take the data in the local storage area and copy it on screen.
      */
     protected void localToScreen() {
-        Iterator it = config.iterator();
-        while (it.hasNext()) {
-            Choice choice = (Choice) it.next();
+        for (Choice choice : config) {
             if (choice.isHidden()) {
                 continue;
             }
 
             String key = choice.getKey();
 
-            Field field = (Field) fields.get(key);
+            Field field = fields.get(key);
             String value = config.getLocal(key);
 
             if (field == null) {
@@ -335,12 +327,12 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
     /**
      * A fast way to get at the configuration panels
      */
-    protected Map decks = new HashMap();
+    protected Map<String,FormPane> decks = new HashMap<String,FormPane>();
 
     /**
      * The set of fields that we are displaying
      */
-    protected Map fields = new HashMap();
+    protected Map<String,Field> fields = new HashMap<String,Field>();
 
     /**
      * The large task icon

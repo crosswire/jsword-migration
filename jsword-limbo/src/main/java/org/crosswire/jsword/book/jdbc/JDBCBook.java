@@ -30,8 +30,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Properties;
 
 import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.book.BookDriver;
@@ -56,7 +56,7 @@ public class JDBCBook extends AbstractPassageBook {
     /**
      * Simple ctor
      */
-    public JDBCBook(BookDriver driver, Properties prop) throws BookException {
+    public JDBCBook(BookDriver driver, Map<String,Object> prop) throws BookException {
         super(null); // set BookMetaData later
 
         setBookMetaData(new DefaultBookMetaData(driver, this, prop));

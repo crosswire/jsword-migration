@@ -63,9 +63,9 @@ public final class FieldMap {
             if (type instanceof MultipleChoice) {
                 field = new OptionsField();
             } else {
-                Class clazz = (Class) map.get(type.getType());
+                Class<Field> clazz = map.get(type.getType());
                 if (clazz != null) {
-                    field = (Field) clazz.newInstance();
+                    field = clazz.newInstance();
                 } else {
                     log.warn("field type (" + type + ") unregistered.");
                     field = new TextField();
@@ -93,7 +93,7 @@ public final class FieldMap {
     /**
      * The configuration table
      */
-    private static Map map;
+    private static Map<String,Class<Field>> map;
 
     /**
      * Default map configuration

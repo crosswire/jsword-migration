@@ -30,7 +30,6 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 import org.crosswire.common.progress.Progress;
-import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookMetaData;
@@ -71,7 +70,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller {
      * 
      * @see org.crosswire.jsword.book.install.Installer#getURL()
      */
-    /* @Override */
+    @Override
     public String getInstallerDefinition() {
         return PROTOCOL_SWORD + "://" + username + ":" + password + "@" + host + packageDirectory;
     }
@@ -106,7 +105,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller {
      * org.crosswire.jsword.book.install.sword.AbstractSwordInstaller#download
      * (java.lang.String, java.lang.String, java.net.URI)
      */
-    /* @Override */
+    @Override
     protected void download(Progress job, String dir, String file, URI dest) throws InstallException {
         FTPClient ftp = new FTPClient();
 
@@ -220,7 +219,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller {
      * @see FtpSwordInstaller#getInstallerDefinition()
      * @see java.lang.Object#toString()
      */
-    /* @Override */
+    @Override
     public String toString() {
         return getInstallerDefinition();
     }
@@ -230,7 +229,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller {
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    /* @Override */
+    @Override
     public boolean equals(Object object) {
         if (!(object instanceof FtpSwordInstaller)) {
             return false;
@@ -257,7 +256,7 @@ public class FtpSwordInstaller extends AbstractSwordInstaller {
      * 
      * @see java.lang.Object#hashCode()
      */
-    /* @Override */
+    @Override
     public int hashCode() {
         return super.hashCode() + username.hashCode() + password.hashCode();
     }
@@ -277,8 +276,4 @@ public class FtpSwordInstaller extends AbstractSwordInstaller {
      */
     private static final String PROTOCOL_SWORD = "sword-ftp";
 
-    /**
-     * The log stream
-     */
-    private static final Logger log = Logger.getLogger(FtpSwordInstaller.class);
 }

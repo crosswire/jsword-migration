@@ -37,11 +37,11 @@ public class ThreadUtilTest extends TestCase {
 
     String NEWLINE = System.getProperty("line.separator", "\r\n");
 
-    /* @Override */
+    @Override
     protected void setUp() throws Exception {
     }
 
-    /* @Override */
+    @Override
     protected void tearDown() throws Exception {
     }
 

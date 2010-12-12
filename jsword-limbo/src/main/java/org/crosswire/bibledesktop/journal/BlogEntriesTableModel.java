@@ -28,7 +28,7 @@ public class BlogEntriesTableModel extends DefaultTableModel {
         }
     }
 
-    /* @Override */
+    @Override
     public Object getValueAt(int row, int col) {
         if (entries != null) {
             BlogEntry entry = (BlogEntry) entries.get(row);
@@ -47,17 +47,17 @@ public class BlogEntriesTableModel extends DefaultTableModel {
         return "ERROR";
     }
 
-    /* @Override */
+    @Override
     public int getColumnCount() {
         return BlogEntriesPanel.COLUMN_COUNT;
     }
 
-    /* @Override */
+    @Override
     public int getRowCount() {
         return (entries != null) ? entries.size() : 0;
     }
 
-    /* @Override */
+    @Override
     public String getColumnName(int column) {
         switch (column) {
         case BlogEntriesPanel.TITLE_COLUMN:
@@ -73,7 +73,7 @@ public class BlogEntriesTableModel extends DefaultTableModel {
         return "ERROR: Invalid column index";
     }
 
-    /* @Override */
+    @Override
     public boolean isCellEditable(int row, int col) {
         return false;
     }

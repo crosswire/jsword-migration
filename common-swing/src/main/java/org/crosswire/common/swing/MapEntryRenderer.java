@@ -23,6 +23,7 @@ package org.crosswire.common.swing;
 
 import java.awt.Component;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
@@ -45,8 +46,8 @@ public class MapEntryRenderer extends DefaultListCellRenderer {
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean selected, boolean focus) {
         Object displayObject = value;
-        if (value instanceof Map.Entry) {
-            Map.Entry mapEntry = (Map.Entry) value;
+        if (value instanceof Map.Entry<?,?>) {
+            Map.Entry<?,?> mapEntry = (Entry<?,?>) value;
             displayObject = mapEntry.getValue();
         }
 

@@ -94,6 +94,7 @@ import org.crosswire.common.util.OSType;
 import org.crosswire.common.util.Reporter;
 import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.common.util.Translations;
+import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
@@ -830,7 +831,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     public void checkForBooks() {
         // News users probably wont have any Bibles installed so we give them a
         // hand getting to the installation dialog.
-        List bibles = Books.installed().getBooks(BookFilters.getBibles());
+        List<Book> bibles = Books.installed().getBooks(BookFilters.getBibles());
         if (bibles.isEmpty()) {
             // TRANSLATOR: Title of dialog asking the user to install at least one Bible.
             String title = Msg.gettext("Install Bibles?");
@@ -948,9 +949,9 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         Translations.instance().register();
 
         // And the array of allowed osis>html converters
-        Map converters = ConverterFactory.getKnownConverters();
-        Set keys = converters.keySet();
-        String[] names = (String[]) keys.toArray(new String[keys.size()]);
+        Map<String, Class<Converter>> converters = ConverterFactory.getKnownConverters();
+        Set<String> keys = converters.keySet();
+        String[] names = keys.toArray(new String[keys.size()]);
         ChoiceFactory.getDataMap().put(CONV_KEY, names);
 
         // The choice of configurable XSL stylesheets

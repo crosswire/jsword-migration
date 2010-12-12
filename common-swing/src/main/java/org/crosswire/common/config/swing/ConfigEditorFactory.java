@@ -61,7 +61,7 @@ public final class ConfigEditorFactory {
     public static void showDialog(Config config, Component parent, ActionListener al) {
         Exception ex = null;
         try {
-            ConfigEditor base = (ConfigEditor) PluginUtil.getImplementation(ConfigEditor.class);
+            ConfigEditor base = PluginUtil.getImplementation(ConfigEditor.class);
             base.construct(config);
             base.showDialog(parent, al);
         } catch (ClassCastException e) {

@@ -60,7 +60,7 @@ public class ParallelBookPicker extends JPanel implements BookProvider {
      * @param comparator
      *            the order to put the books in
      */
-    public ParallelBookPicker(BookFilter filter, Comparator comparator) {
+    public ParallelBookPicker(BookFilter filter, Comparator<Book> comparator) {
         this.filter = filter;
         this.comparator = comparator;
         initialize();
@@ -126,19 +126,19 @@ public class ParallelBookPicker extends JPanel implements BookProvider {
      * @see org.crosswire.jsword.book.BookProvider#getBooks()
      */
     public Book[] getBooks() {
-        List books = new ArrayList();
+        List<Book> books = new ArrayList<Book>();
         int count = getComponentCount();
         for (int i = 1; i < count; i++) {
             Component comp = getComponent(i);
             if (comp instanceof JComboBox) {
                 JComboBox combo = (JComboBox) comp;
-                Object book = combo.getSelectedItem();
+                Book book = (Book) combo.getSelectedItem();
                 if (book != null) {
                     books.add(book);
                 }
             }
         }
-        return (Book[]) books.toArray(new Book[books.size()]);
+        return books.toArray(new Book[books.size()]);
     }
 
     /* (non-Javadoc)
@@ -287,7 +287,7 @@ public class ParallelBookPicker extends JPanel implements BookProvider {
     /**
      * The comparator to order the books.
      */
-    private transient Comparator comparator;
+    private transient Comparator<Book> comparator;
 
     /**
      * Allow for adding and removing pickers.

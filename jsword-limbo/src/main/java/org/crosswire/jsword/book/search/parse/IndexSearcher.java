@@ -26,9 +26,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import org.crosswire.common.util.Logger;
+import org.crosswire.common.util.PropertyMap;
 import org.crosswire.common.util.ReflectionUtil;
 import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.jsword.book.BookException;
@@ -261,14 +261,14 @@ public class IndexSearcher implements Searcher {
     public static Map getWordMap() {
         if (wordMap == null) {
             try {
-                Properties prop = ResourceUtil.getProperties(Word.class);
+                PropertyMap prop = ResourceUtil.getProperties(Word.class);
 
                 wordMap = new HashMap();
                 preferredMap = new HashMap();
 
                 for (Iterator it = prop.keySet().iterator(); it.hasNext();) {
                     String key = (String) it.next();
-                    String value = prop.getProperty(key);
+                    String value = prop.get(key);
 
                     if (key.startsWith(PACKAGE_NAME)) {
                         try {

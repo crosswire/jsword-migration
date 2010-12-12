@@ -50,7 +50,7 @@ public class StubBook extends AbstractPassageBook {
      * 
      * @see org.crosswire.jsword.book.basic.AbstractPassageBook#getFilter()
      */
-    /* @Override */
+    @Override
     protected Filter getFilter() {
         return FilterFactory.getDefaultFilter();
     }
@@ -72,7 +72,6 @@ public class StubBook extends AbstractPassageBook {
      * org.crosswire.jsword.book.basic.AbstractPassageBook#getRawText(org.crosswire
      * .jsword.passage.Key)
      */
-    /* @Override */
     public String getRawText(Key key) {
         return "stub implementation";
     }

@@ -26,7 +26,6 @@ import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -64,8 +63,8 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
      * Simple Constructor
      */
     public TabbedBookDataDisplay() {
-        views = new HashMap();
-        displays = new ArrayList();
+        views = new HashMap<JScrollPane, BookDataDisplay>();
+        displays = new ArrayList<BookDataDisplay>();
         pnlMore = new JPanel();
         pnlMain = new JPanel();
 
@@ -170,9 +169,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
      */
     public void setCompareBooks(boolean compare) {
         // Now go through all the known tabs and refresh each
-        Iterator iter = displays.iterator();
-        while (iter.hasNext()) {
-            BookDataDisplay bdd = (BookDataDisplay) iter.next();
+        for (BookDataDisplay bdd : displays) {
             bdd.setCompareBooks(compare);
         }
     }
@@ -182,9 +179,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
      */
     public void refresh() {
         // Now go through all the known tabs and refresh each
-        Iterator iter = displays.iterator();
-        while (iter.hasNext()) {
-            BookDataDisplay bdd = (BookDataDisplay) iter.next();
+        for (BookDataDisplay bdd : displays) {
             bdd.refresh();
         }
     }
@@ -223,7 +218,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
     public void addKeyChangeListener(KeyChangeListener listener) {
         // First add to our list of listeners so when we add a new tab
         // we can add this new listener to the new tab
-        List temp = new ArrayList();
+        List<KeyChangeListener> temp = new ArrayList<KeyChangeListener>();
         if (keyEventListeners == null) {
             temp.add(listener);
             keyEventListeners = temp;
@@ -236,9 +231,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
             }
         }
 
-        Iterator iter = displays.iterator();
-        while (iter.hasNext()) {
-            BookDataDisplay bdd = (BookDataDisplay) iter.next();
+        for (BookDataDisplay bdd : displays) {
             bdd.addKeyChangeListener(listener);
         }
     }
@@ -249,15 +242,13 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
     public void removeKeyChangeListener(KeyChangeListener listener) {
         // First remove from the list of listeners
         if (keyEventListeners != null && keyEventListeners.contains(listener)) {
-            List temp = new ArrayList();
+            List<KeyChangeListener> temp = new ArrayList<KeyChangeListener>();
             temp.addAll(keyEventListeners);
             temp.remove(listener);
             keyEventListeners = temp;
         }
 
-        Iterator iter = displays.iterator();
-        while (iter.hasNext()) {
-            BookDataDisplay bdd = (BookDataDisplay) iter.next();
+        for (BookDataDisplay bdd : displays) {
             bdd.removeKeyChangeListener(listener);
         }
     }
@@ -267,9 +258,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
      */
     public void propertyChange(PropertyChangeEvent evt) {
         // Now go through all the known syncs and add this one in
-        Iterator iter = displays.iterator();
-        while (iter.hasNext()) {
-            BookDataDisplay bdd = (BookDataDisplay) iter.next();
+        for (BookDataDisplay bdd : displays) {
             bdd.propertyChange(evt);
         }
     }
@@ -280,7 +269,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
     public synchronized void addURIEventListener(URIEventListener listener) {
         // First add to our list of listeners so when we add a new tab
         // we can add this new listener to the new tab
-        List temp = new ArrayList();
+        List<URIEventListener> temp = new ArrayList<URIEventListener>();
         if (uriEventListeners == null) {
             temp.add(listener);
             uriEventListeners = temp;
@@ -294,9 +283,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
         }
 
         // Now go through all the known syncs and add this one in
-        Iterator iter = displays.iterator();
-        while (iter.hasNext()) {
-            BookDataDisplay bdd = (BookDataDisplay) iter.next();
+        for (BookDataDisplay bdd : displays) {
             bdd.addURIEventListener(listener);
         }
     }
@@ -307,16 +294,14 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
     public synchronized void removeURIEventListener(URIEventListener listener) {
         // First remove from the list of listeners
         if (uriEventListeners != null && uriEventListeners.contains(listener)) {
-            List temp = new ArrayList();
+            List<URIEventListener> temp = new ArrayList<URIEventListener>();
             temp.addAll(uriEventListeners);
             temp.remove(listener);
             uriEventListeners = temp;
         }
 
         // Now remove from all the known syncs
-        Iterator iter = displays.iterator();
-        while (iter.hasNext()) {
-            BookDataDisplay bdd = (BookDataDisplay) iter.next();
+        for (BookDataDisplay bdd : displays) {
             bdd.removeURIEventListener(listener);
         }
     }
@@ -391,7 +376,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
         if (tabs) {
             Object o = tabMain.getSelectedComponent();
             JScrollPane sp = (JScrollPane) o;
-            return (BookDataDisplay) views.get(sp);
+            return views.get(sp);
         }
         return bookDataDisplay;
     }
@@ -405,18 +390,14 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
 
         // Add all the known listeners to this new BookDataDisplay
         if (uriEventListeners != null) {
-            Iterator iter = uriEventListeners.iterator();
-            while (iter.hasNext()) {
-                URIEventListener li = (URIEventListener) iter.next();
+            for (URIEventListener li : uriEventListeners) {
                 display.addURIEventListener(li);
             }
         }
 
         // Add all the known listeners to this new BookDataDisplay
         if (keyEventListeners != null) {
-            Iterator iter = keyEventListeners.iterator();
-            while (iter.hasNext()) {
-                KeyChangeListener li = (KeyChangeListener) iter.next();
+            for (KeyChangeListener li : keyEventListeners) {
                 display.addKeyChangeListener(li);
             }
         }
@@ -468,12 +449,12 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
     /**
      * A list of all the URIEventListeners
      */
-    private List uriEventListeners;
+    private List<URIEventListener> uriEventListeners;
 
     /**
      * A list of all the keyEventListeners
      */
-    private List keyEventListeners;
+    private List<KeyChangeListener> keyEventListeners;
 
     /**
      * The passage that we are displaying (in one or more tabs)
@@ -508,12 +489,12 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
     /**
      * An map of components to their views
      */
-    private Map views;
+    private Map<JScrollPane, BookDataDisplay> views;
 
     /**
      * A list of all the InnerDisplayPanes so we can control listeners
      */
-    private List displays;
+    private List<BookDataDisplay> displays;
 
     /**
      * Pointer to whichever of the above is currently in use

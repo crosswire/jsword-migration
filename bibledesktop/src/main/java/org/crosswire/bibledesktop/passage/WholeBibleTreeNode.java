@@ -228,23 +228,27 @@ public final class WholeBibleTreeNode implements TreeNode {
     /**
      * @see javax.swing.tree.TreeNode#children()
      */
-    public Enumeration children() {
-        return new WholeBibleEnumeration();
+    public Enumeration<TreeNode> children() {
+        return new WholeBibleEnumeration(this);
     }
 
     /**
      * Iterate over the Books
      */
-    public class WholeBibleEnumeration implements Enumeration {
+    private class WholeBibleEnumeration implements Enumeration<TreeNode> {
+        public WholeBibleEnumeration(WholeBibleTreeNode treeNode) {
+            this.treeNode = treeNode;
+        }
         public boolean hasMoreElements() {
-            return count < getChildCount();
+            return count < treeNode.getChildCount();
         }
 
-        public Object nextElement() {
+        public TreeNode nextElement() {
             count++;
-            return getChildAt(count);
+            return treeNode.getChildAt(count);
         }
 
+        private WholeBibleTreeNode treeNode;
         private int count;
     }
 

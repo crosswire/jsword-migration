@@ -58,7 +58,7 @@ public class AppletFrame extends JFrame {
      */
     public AppletFrame(String name, Applet app, int width, int height) {
         addWindowListener(new WindowAdapter() {
-            /* @Override */
+            @Override
             public void windowClosing(WindowEvent e) {
                 close();
             }

@@ -69,7 +69,7 @@ public class ParaInstsMem extends InstsMem {
      * 
      * @see org.crosswire.jsword.book.raw.Mem#init()
      */
-    /* @Override */
+    @Override
     public void init() {
         key = raw.createEmptyKeyList();
     }
@@ -79,7 +79,7 @@ public class ParaInstsMem extends InstsMem {
      * 
      * @see org.crosswire.jsword.book.raw.Mem#load(java.io.InputStream)
      */
-    /* @Override */
+    @Override
     public void load(InputStream in) throws IOException {
         ObjectInputStream oin = new ObjectInputStream(in);
 
@@ -103,7 +103,7 @@ public class ParaInstsMem extends InstsMem {
      * 
      * @see org.crosswire.jsword.book.raw.Mem#save(java.io.OutputStream)
      */
-    /* @Override */
+    @Override
     public void save(OutputStream out) throws IOException {
         ObjectOutputStream oout = new ObjectOutputStream(out);
 

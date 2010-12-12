@@ -22,7 +22,7 @@ public class TextViewPanelBeanInfo extends SimpleBeanInfo {
      * 
      * @return an array of property descriptors
      */
-    /* @Override */
+    @Override
     public PropertyDescriptor[] getPropertyDescriptors() {
         try {
             // The header property
@@ -49,7 +49,7 @@ public class TextViewPanelBeanInfo extends SimpleBeanInfo {
     /**
      * Get additional information from the superclass, in this case JPanel
      */
-    /* @Override */
+    @Override
     public BeanInfo[] getAdditionalBeanInfo() {
         Class superclass = TextViewPanel.class.getSuperclass();
         try {

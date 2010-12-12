@@ -47,7 +47,7 @@ public class TimeoutReader extends Reader implements Runnable {
     /**
      * @return The byte to be read, as normal.
      */
-    /* @Override */
+    @Override
     public int read(char[] cbuf, int off, int len) throws IOException {
         calling = Thread.currentThread();
 
@@ -65,7 +65,7 @@ public class TimeoutReader extends Reader implements Runnable {
         } catch (Exception ex) {
             // I would like to catch InterruptedException however the stupid
             // compiler thinks that InterruptedException can never be
-            // thrown in the preceeding block. Dumb compiler in my opinion.
+            // thrown in the preceding block. Dumb compiler in my opinion.
 
             if (ex instanceof IOException)
                 throw (IOException) ex;
@@ -78,7 +78,7 @@ public class TimeoutReader extends Reader implements Runnable {
      * If someone closes the TimeoutReader then we close the original, but leave
      * the others, as they might not have finished yet.
      */
-    /* @Override */
+    @Override
     public void close() throws IOException {
         if (work == null) {
             // Kill Thread

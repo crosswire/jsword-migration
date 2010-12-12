@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -64,8 +63,8 @@ public class JobsProgressBar extends JPanel implements WorkListener {
      * Simple ctor
      */
     public JobsProgressBar(boolean small) {
-        jobs = new HashMap();
-        positions = new ArrayList();
+        jobs = new HashMap<Progress,JobData>();
+        positions = new ArrayList<JobData>();
         shaper = new NumberShaper();
         actions = new ActionFactory(JobsProgressBar.class, this);
 
@@ -76,10 +75,8 @@ public class JobsProgressBar extends JPanel implements WorkListener {
 
         JobManager.addWorkListener(this);
 
-        Set current = JobManager.getJobs();
-        Iterator it = current.iterator();
-        while (it.hasNext()) {
-            Progress job = (Job) it.next();
+        Set<Progress> current = JobManager.getJobs();
+        for (Progress job : current) {
             addJob(job);
         }
 
@@ -133,7 +130,7 @@ public class JobsProgressBar extends JPanel implements WorkListener {
      */
     public void workStateChanged(WorkEvent ev) {
         Progress job = (Job) ev.getSource();
-        JobData jobdata = (JobData) jobs.get(job);
+        JobData jobdata = jobs.get(job);
         jobdata.workStateChanged(ev);
     }
 
@@ -181,7 +178,7 @@ public class JobsProgressBar extends JPanel implements WorkListener {
      * Update the job details because it has just progressed
      */
     protected synchronized void updateJob(Progress job) {
-        JobData jobdata = (JobData) jobs.get(job);
+        JobData jobdata = jobs.get(job);
 
         // At 99% the progress bar animates nicely.
         int percent = 99;
@@ -202,7 +199,7 @@ public class JobsProgressBar extends JPanel implements WorkListener {
     protected synchronized void removeJob(Progress job) {
         ((Job) job).removeWorkListener(this);
 
-        JobData jobdata = (JobData) jobs.get(job);
+        JobData jobdata = jobs.get(job);
 
         positions.set(jobdata.getIndex(), null);
         jobs.remove(job);
@@ -248,12 +245,12 @@ public class JobsProgressBar extends JPanel implements WorkListener {
     /**
      * Where we store the currently displayed jobs
      */
-    protected Map jobs;
+    protected Map<Progress,JobData> jobs;
 
     /**
      * Array telling us what y position the jobs have in the window
      */
-    private List positions;
+    private List<JobData> positions;
 
     /**
      * The font for the progress-bars

@@ -57,7 +57,7 @@ public class BooksComboBoxModel extends BooksListModel implements ComboBoxModel 
     /**
      * Basic Constructor
      */
-    public BooksComboBoxModel(BookFilter filter, Comparator comparator) {
+    public BooksComboBoxModel(BookFilter filter, Comparator<Book> comparator) {
         super(filter, comparator);
 
         postCacheData();

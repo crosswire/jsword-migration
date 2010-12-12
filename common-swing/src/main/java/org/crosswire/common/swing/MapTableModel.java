@@ -56,7 +56,7 @@ public class MapTableModel extends AbstractTableModel {
      *            The table to model
      */
     public MapTableModel(Map map) {
-        list = new ArrayList();
+        list = new ArrayList<StringPair>();
         setMap(map);
     }
 
@@ -70,9 +70,9 @@ public class MapTableModel extends AbstractTableModel {
         this.map = map;
         list.clear();
         if (map != null) {
-            Iterator iter = map.entrySet().iterator();
+            Iterator<Map.Entry<Object,Object>> iter = map.entrySet().iterator();
             while (iter.hasNext()) {
-                Map.Entry me = (Map.Entry) iter.next();
+                Map.Entry<Object,Object> me = iter.next();
                 Object k = me.getKey();
                 Object v = me.getValue();
                 if (k == null || v == null) {
@@ -185,7 +185,7 @@ public class MapTableModel extends AbstractTableModel {
             return null;
         }
 
-        StringPair entry = (StringPair) list.get(row);
+        StringPair entry = list.get(row);
         if (col == 0) {
             return entry.getKey();
         }
@@ -200,7 +200,7 @@ public class MapTableModel extends AbstractTableModel {
      * @return String.class
      */
     @Override
-    public Class getColumnClass(int col) {
+    public Class<String> getColumnClass(int col) {
         return String.class;
     }
 
@@ -232,7 +232,7 @@ public class MapTableModel extends AbstractTableModel {
      * The List that is a copy of the list. A list is used for direct access
      * performance.
      */
-    private List list;
+    private List<StringPair> list;
 
     /**
      * The backing map

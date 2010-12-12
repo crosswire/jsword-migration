@@ -124,13 +124,13 @@ public final class ExceptionPane extends JPanel {
         upper.add(banner, BorderLayout.NORTH);
         upper.add(buttons, BorderLayout.CENTER);
 
-        List causes = new ArrayList();
+        List<Throwable> causes = new ArrayList<Throwable>();
         Throwable throwable = ex;
         while (throwable != null) {
             causes.add(throwable);
             throwable = throwable.getCause();
         }
-        Throwable[] exs = (Throwable[]) causes.toArray(new Throwable[causes.size()]);
+        Throwable[] exs = causes.toArray(new Throwable[causes.size()]);
 
         JComboBox traces = new JComboBox();
         traces.setModel(new DefaultComboBoxModel(exs));

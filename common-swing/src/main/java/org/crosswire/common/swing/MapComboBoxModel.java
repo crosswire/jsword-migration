@@ -39,8 +39,8 @@ public class MapComboBoxModel extends AbstractListModel implements ComboBoxModel
     /**
      * Simple ctor for an entry from a map.
      */
-    public MapComboBoxModel(Map map) {
-        list = new ArrayList(map.entrySet());
+    public MapComboBoxModel(Map<?,?> map) {
+        list = new ArrayList<Object>(map.entrySet());
     }
 
     /*
@@ -80,7 +80,7 @@ public class MapComboBoxModel extends AbstractListModel implements ComboBoxModel
         return list.get(index);
     }
 
-    private List list;
+    private List<?> list;
 
     /**
      * What is currently selected?

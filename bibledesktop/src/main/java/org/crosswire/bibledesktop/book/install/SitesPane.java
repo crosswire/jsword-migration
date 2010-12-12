@@ -29,7 +29,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
@@ -96,10 +95,8 @@ public class SitesPane extends JPanel {
      */
     protected final void addAllInstallers() {
         // Now add panels for book installation sites
-        Iterator<String> iter = installers.keySet().iterator();
-        while (iter.hasNext()) {
-            String name = iter.next();
-            Installer installer = (Installer) installers.get(name);
+        for (String name : installers.keySet()) {
+            Installer installer = installers.get(name);
 
             SitePane site = new SitePane(installer);
             tabMain.add(name, site);
@@ -249,7 +246,7 @@ public class SitesPane extends JPanel {
     /**
      * The known installers fetched from InstallManager
      */
-    private transient Map installers;
+    private transient Map<String, Installer> installers;
 
     /**
      * The current installer

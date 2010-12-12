@@ -32,6 +32,7 @@ import javax.swing.AbstractListModel;
 import javax.swing.event.ListDataListener;
 
 import org.crosswire.common.util.Logger;
+import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookList;
 import org.crosswire.jsword.book.Books;
@@ -67,14 +68,14 @@ public class BooksListModel extends AbstractListModel {
     /**
      * Basic constructor, redefining ordering.
      */
-    public BooksListModel(BookFilter filter, Comparator comp) {
+    public BooksListModel(BookFilter filter, Comparator<Book> comp) {
         this(filter, Books.installed(), comp);
     }
 
     /**
      * Basic constructor for a filtered list of books, ordered as requested.
      */
-    public BooksListModel(BookFilter filter, BookList bookList, Comparator comparator) {
+    public BooksListModel(BookFilter filter, BookList bookList, Comparator<Book> comparator) {
         this.filter = filter;
         this.bookList = bookList;
         this.comparator = comparator;
@@ -154,7 +155,7 @@ public class BooksListModel extends AbstractListModel {
      * Setup the data-stores of the current Bibles and drivers
      */
     protected final synchronized void cacheData() {
-        books = new ArrayList();
+        books = new ArrayList<Book>();
         books.addAll(bookList.getBooks(filter));
         Collections.sort(books, comparator);
     }
@@ -228,12 +229,12 @@ public class BooksListModel extends AbstractListModel {
      * marked synchronized to ensure that one thread can't update the list of
      * books while another is trying to create a JList based on this class.
      */
-    protected List books;
+    protected List<Book> books;
 
     /**
      * The sort algorithm to use.
      */
-    protected transient Comparator comparator;
+    protected transient Comparator<Book> comparator;
 
     /**
      * The log stream

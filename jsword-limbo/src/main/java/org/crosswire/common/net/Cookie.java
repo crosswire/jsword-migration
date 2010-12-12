@@ -361,7 +361,7 @@ public class Cookie implements Cloneable {
     /**
      * Returns a text version of this cookie
      */
-    /* @Override */
+    @Override
     public String toString() {
         return name + ": " + value; 
     }
@@ -393,7 +393,7 @@ public class Cookie implements Cloneable {
      * 
      * @see java.lang.Object#clone()
      */
-    /* @Override */
+    @Override
     public Object clone() {
         Object clone = null;
         try {

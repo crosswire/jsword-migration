@@ -60,7 +60,7 @@ public class DefaultWord implements ParamWord, CommandWord {
      * 
      * @see java.lang.Object#toString()
      */
-    /* @Override */
+    @Override
     public String toString() {
         return text;
     }

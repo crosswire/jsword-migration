@@ -86,7 +86,7 @@ public class DocumentWriter extends Writer {
      * 
      * @see java.io.Writer#write(char[], int, int)
      */
-    /* @Override */
+    @Override
     public void write(char[] cbuf, int off, int len) {
         synchronized (lock) {
             queue = queue + new String(cbuf, off, len);
@@ -99,7 +99,7 @@ public class DocumentWriter extends Writer {
      * 
      * @see java.io.Writer#write(int)
      */
-    /* @Override */
+    @Override
     public void write(int c) {
         synchronized (lock) {
             queue = queue + (char) c;
@@ -112,7 +112,7 @@ public class DocumentWriter extends Writer {
      * 
      * @see java.io.Writer#write(char[])
      */
-    /* @Override */
+    @Override
     public void write(char[] cbuf) {
         synchronized (lock) {
             queue = queue + new String(cbuf);
@@ -125,7 +125,7 @@ public class DocumentWriter extends Writer {
      * 
      * @see java.io.Writer#write(java.lang.String)
      */
-    /* @Override */
+    @Override
     public void write(String str) {
         synchronized (lock) {
             queue = queue + str;
@@ -138,7 +138,7 @@ public class DocumentWriter extends Writer {
      * 
      * @see java.io.Writer#write(java.lang.String, int, int)
      */
-    /* @Override */
+    @Override
     public void write(String str, int off, int len) {
         synchronized (lock) {
             queue = queue + str.substring(off, off + len);
@@ -162,7 +162,7 @@ public class DocumentWriter extends Writer {
      * 
      * @see java.io.Writer#flush()
      */
-    /* @Override */
+    @Override
     public void flush() throws IOException {
         if (updater != null) {
             // Changes are outstanding. It is OK to force an update using
@@ -185,7 +185,7 @@ public class DocumentWriter extends Writer {
      * 
      * @see java.io.Writer#close()
      */
-    /* @Override */
+    @Override
     public void close() {
         closed = true;
     }

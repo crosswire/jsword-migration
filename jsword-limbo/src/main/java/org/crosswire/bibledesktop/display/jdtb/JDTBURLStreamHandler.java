@@ -39,7 +39,7 @@ public class JDTBURLStreamHandler extends URLStreamHandler {
      * 
      * @see java.net.URLStreamHandler#openConnection(java.net.URL)
      */
-    /* @Override */
+    @Override
     protected URLConnection openConnection(URL url) throws IOException {
         return new JDTBURLConnection(url);
     }

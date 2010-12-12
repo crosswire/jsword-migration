@@ -70,7 +70,7 @@ public class WordInstsDisk extends InstsDisk {
      * 
      * @see org.crosswire.jsword.book.raw.InstsDisk#load()
      */
-    /* @Override */
+    @Override
     public void load() throws IOException {
         URI uri = NetUtil.lengthenURI(raw.getURI(), leafname);
         raf = new RandomAccessFile(uri.getPath(), FileUtil.MODE_READ);

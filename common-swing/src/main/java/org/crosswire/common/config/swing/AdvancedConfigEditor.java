@@ -27,7 +27,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -59,7 +58,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
         scroll.setPreferredSize(new Dimension(150, 150));
 
         CustomTreeCellRenderer render = new CustomTreeCellRenderer();
-        comps = new HashMap();
+        comps = new HashMap<String,Component>();
 
         // Hack: tree depends on it being a Color not a sub of it.
         Color orig = UIManager.getColor("control");
@@ -124,12 +123,12 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
     @Override
     protected void removeChoice(Choice choice) {
         String key = choice.getKey();
-        Field field = (Field) fields.get(key);
+        Field field = fields.get(key);
         if (field != null) {
             fields.remove(field);
         }
 
-        Component comp = (Component) comps.get(key);
+        Component comp = comps.get(key);
         if (comp != null) {
             comps.remove(key);
         }
@@ -175,7 +174,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
     /**
      * A hash of components
      */
-    protected Map comps;
+    protected Map<String,Component> comps;
 
     /**
      * Serialization ID
@@ -196,12 +195,10 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
          * #getChildren(java.lang.String)
          */
         @Override
-        protected List getChildren(String path) {
-            List retcode = new ArrayList();
+        protected List<String> getChildren(String path) {
+            List<String> retcode = new ArrayList<String>();
 
-            Iterator it = config.iterator();
-            while (it.hasNext()) {
-                Choice choice = (Choice) it.next();
+            for (Choice choice : config) {
                 if (choice.isHidden()) {
                     continue;
                 }
@@ -243,13 +240,13 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
             }
 
             String path = ((Node) parent).getFullName();
-            List children = getChildren(path);
+            List<String> children = getChildren(path);
 
             if (children.isEmpty()) {
                 return new CompNode(path);
             }
 
-            String name = (String) children.get(index);
+            String name = children.get(index);
             return new Node(path, name);
         }
 

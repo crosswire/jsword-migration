@@ -33,7 +33,7 @@ public class DemoServlet extends HttpServlet {
     /**
      * @see javax.servlet.Servlet#init(ServletConfig)
      */
-    /* @Override */
+    @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
@@ -52,7 +52,7 @@ public class DemoServlet extends HttpServlet {
      * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest
      * , javax.servlet.http.HttpServletResponse)
      */
-    /* @Override */
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Key key = null;
@@ -118,7 +118,7 @@ public class DemoServlet extends HttpServlet {
      * javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest
      * , javax.servlet.http.HttpServletResponse)
      */
-    /* @Override */
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request, response);
     }

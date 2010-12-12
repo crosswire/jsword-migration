@@ -159,7 +159,7 @@ public class TreeConfigEditor extends AbstractConfigEditor {
 
         // Sort the tree out
         String path = Config.getPath(model.getFullPath());
-        FormPane card = (FormPane) decks.get(path);
+        FormPane card = decks.get(path);
         if (card != null && card.getParent() == null) {
             JScrollPane scroll = new CWScrollPane(card);
             scroll.setBorder(BorderFactory.createEmptyBorder());
@@ -176,7 +176,7 @@ public class TreeConfigEditor extends AbstractConfigEditor {
 
         // Sort the tree out
         String path = Config.getPath(model.getFullPath());
-        FormPane card = (FormPane) decks.get(path);
+        FormPane card = decks.get(path);
         if (card != null && card.isEmpty()) {
             deck.remove(card.getParent());
         }
@@ -273,12 +273,12 @@ public class TreeConfigEditor extends AbstractConfigEditor {
         /**
          * Get a List of the children rooted at path
          */
-        protected List getChildren(String path) {
-            List retcode = new ArrayList();
+        protected List<String> getChildren(String path) {
+            List<String> retcode = new ArrayList<String>();
 
-            Iterator it = config.iterator();
+            Iterator<Choice> it = config.iterator();
             while (it.hasNext()) {
-                Choice choice = (Choice) it.next();
+                Choice choice = it.next();
                 if (choice.isHidden()) {
                     continue;
                 }
@@ -316,7 +316,7 @@ public class TreeConfigEditor extends AbstractConfigEditor {
          */
         public Object getChild(Object parent, int index) {
             String path = ((Node) parent).getFullName();
-            String name = (String) getChildren(path).get(index);
+            String name = getChildren(path).get(index);
             return new Node(path, name);
         }
 
@@ -358,7 +358,7 @@ public class TreeConfigEditor extends AbstractConfigEditor {
          */
         public int getIndexOfChild(Object parent, Object child) {
             String path = ((Node) parent).getFullName();
-            List children = getChildren(path);
+            List<String> children = getChildren(path);
             return children.indexOf(child);
         }
 

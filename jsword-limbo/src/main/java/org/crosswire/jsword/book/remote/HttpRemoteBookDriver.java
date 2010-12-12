@@ -53,7 +53,7 @@ public class HttpRemoteBookDriver extends RemoteBookDriver {
      * 
      * @see org.crosswire.jsword.book.remote.RemoteBookDriver#getRemoter()
      */
-    /* @Override */
+    @Override
     protected Remoter getRemoter() {
         return remoter;
     }

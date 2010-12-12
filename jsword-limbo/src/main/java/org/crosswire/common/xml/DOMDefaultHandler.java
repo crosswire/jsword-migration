@@ -42,7 +42,7 @@ public class DOMDefaultHandler extends DefaultHandler {
     /**
      * Processing instruction
      */
-    /* @Override */
+    @Override
     public void processingInstruction(String target, String data) {
         if (base == null) {
             doc.createProcessingInstruction(target, data);
@@ -52,7 +52,7 @@ public class DOMDefaultHandler extends DefaultHandler {
     /**
      * Start document.
      */
-    /* @Override */
+    @Override
     public void startDocument() {
         // TODO(joe): what should I do here?
         // out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -64,7 +64,7 @@ public class DOMDefaultHandler extends DefaultHandler {
      * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String,
      * java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
-    /* @Override */
+    @Override
     public void startElement(String uri, String name, String qName, Attributes attrs) throws SAXException {
         Element ele = doc.createElement(name);
         current.appendChild(ele);
@@ -83,7 +83,7 @@ public class DOMDefaultHandler extends DefaultHandler {
     /**
      * Some text data
      */
-    /* @Override */
+    @Override
     public void characters(char[] ch, int start, int length) {
         current.appendChild(doc.createTextNode(new String(ch, start, length)));
     }
@@ -91,7 +91,7 @@ public class DOMDefaultHandler extends DefaultHandler {
     /**
      * Ignorable whitespace
      */
-    /* @Override */
+    @Override
     public void ignorableWhitespace(char[] ch, int start, int length) {
         current.appendChild(doc.createTextNode(new String(ch, start, length)));
     }
@@ -102,7 +102,7 @@ public class DOMDefaultHandler extends DefaultHandler {
      * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String,
      * java.lang.String, java.lang.String)
      */
-    /* @Override */
+    @Override
     public void endElement(String uri, String localName, String qName) {
         current = (Node) stack.pop();
     }
@@ -110,14 +110,14 @@ public class DOMDefaultHandler extends DefaultHandler {
     /**
      * End document
      */
-    /* @Override */
+    @Override
     public void endDocument() {
     }
 
     /**
      * Warning
      */
-    /* @Override */
+    @Override
     public void warning(SAXParseException ex) {
         Reporter.informUser(this, ex);
     }
@@ -125,7 +125,7 @@ public class DOMDefaultHandler extends DefaultHandler {
     /**
      * Error
      */
-    /* @Override */
+    @Override
     public void error(SAXParseException ex) {
         Reporter.informUser(this, ex);
     }
@@ -133,7 +133,7 @@ public class DOMDefaultHandler extends DefaultHandler {
     /**
      * Fatal error
      */
-    /* @Override */
+    @Override
     public void fatalError(SAXParseException ex) throws SAXException {
         Reporter.informUser(this, ex);
         throw ex;

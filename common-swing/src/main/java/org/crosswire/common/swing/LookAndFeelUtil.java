@@ -63,7 +63,7 @@ public final class LookAndFeelUtil {
     /**
      * The Options customization
      */
-    public static Class getLookAndFeel() {
+    public static Class<?> getLookAndFeel() {
         if (currentLAF == null) {
             return defaultLAF;
         }
@@ -73,8 +73,8 @@ public final class LookAndFeelUtil {
     /**
      * Set the look and feel to a new class.
      */
-    public static void setLookAndFeel(Class newLaFClass) throws InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-        LookAndFeel laf = (LookAndFeel) newLaFClass.newInstance();
+    public static void setLookAndFeel(Class<LookAndFeel> newLaFClass) throws InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+        LookAndFeel laf = newLaFClass.newInstance();
 
         // newLaFClass is null if the user enters a bogus value
         if (currentLAF != null && !currentLAF.equals(newLaFClass)) {
@@ -118,7 +118,7 @@ public final class LookAndFeelUtil {
      *            the font to use
      */
     public static void setUIFont(FontUIResource f) {
-        Enumeration keys = UIManager.getDefaults().keys();
+        Enumeration<Object> keys = UIManager.getDefaults().keys();
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
             Object value = UIManager.get(key);
@@ -133,12 +133,12 @@ public final class LookAndFeelUtil {
     /**
      * The current PLAF
      */
-    private static Class currentLAF;
+    private static Class<LookAndFeel> currentLAF;
 
     /**
      * The default PLAF (and the default value)
      */
-    private static Class defaultLAF;
+    private static Class<?> defaultLAF;
 
     /**
      * The font to be used for the application

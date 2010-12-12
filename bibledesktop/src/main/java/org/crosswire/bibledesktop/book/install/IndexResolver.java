@@ -24,7 +24,6 @@ package org.crosswire.bibledesktop.book.install;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.swing.JComboBox;
@@ -133,13 +132,14 @@ public final class IndexResolver {
     private static Installer selectInstaller(Component parent) {
         // Pick an installer
         InstallManager insman = new InstallManager();
-        Map installers = insman.getInstallers();
+        Map<String,Installer> installers = insman.getInstallers();
         Installer installer = null;
         if (installers.size() == 1) {
-            Iterator<Installer> it = installers.values().iterator();
-            boolean hasNext = it.hasNext();
-            assert hasNext;
-            installer = it.next();
+            for (Installer anInstaller : installers.values()) {
+                installer = anInstaller;
+                break;
+            }
+            assert installer != null;
         } else {
             JComboBox choice = new JComboBox(new InstallManagerComboBoxModel(insman));
             // TRANSLATOR: Label for a list of index download sites.

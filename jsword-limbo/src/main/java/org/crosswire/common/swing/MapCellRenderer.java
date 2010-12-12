@@ -60,7 +60,7 @@ public class MapCellRenderer extends JTextArea implements TableCellRenderer {
      * @param c
      *            set the foreground color to this value
      */
-    /* @Override */
+    @Override
     public void setForeground(Color c) {
         super.setForeground(c);
         unselectedForeground = c;
@@ -73,7 +73,7 @@ public class MapCellRenderer extends JTextArea implements TableCellRenderer {
      * @param c
      *            set the background color to this value
      */
-    /* @Override */
+    @Override
     public void setBackground(Color c) {
         super.setBackground(c);
         unselectedBackground = c;
@@ -86,7 +86,7 @@ public class MapCellRenderer extends JTextArea implements TableCellRenderer {
      * 
      * @see javax.swing.JComponent#updateUI()
      */
-    /* @Override */
+    @Override
     public void updateUI() {
         super.updateUI();
         setForeground(null);
