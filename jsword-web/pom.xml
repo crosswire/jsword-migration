@@ -10,17 +10,19 @@
   <groupId>org.crosswire.cv_accounting</groupId>
   <artifactId>jsword-web</artifactId>
   <packaging>war</packaging>
-  <version>${parent.version}</version>
+  <version>1.6.1-SNAPSHOT</version>
   <name>jsword-web</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
     </dependency>
-    
+	<dependency>
+		<groupId>org.crosswire</groupId>
+		<artifactId>jsword</artifactId>
+		<version>${project.version}</version>
+	</dependency>	
   </dependencies>
   <properties>
     <context.path>${project.artifactId}</context.path>
