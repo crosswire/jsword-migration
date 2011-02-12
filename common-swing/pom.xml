@@ -30,24 +30,5 @@
 			<version>${project.version}</version>
 		</dependency>	
 	</dependencies>
-	
-	
-	<build>
-		<resources>
-			<resource>
-				<directory>${basedir}/src/main/java</directory>
-				<includes>
-					<include>**/*.properties</include>
-					<include>**/*.plugin</include>
-					<include>**/*.png</include>
-					<include>**/*.gif</include>
-					<include>**/*.txt</include>
-					<include>**/*.xml</include>
-					<include>**/*.xsl</include>
-				</includes>
-			</resource>
-		</resources>
-
-	</build>
 </project>
 
