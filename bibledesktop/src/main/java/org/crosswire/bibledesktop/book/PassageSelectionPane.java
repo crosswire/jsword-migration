@@ -54,10 +54,12 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
 
+import org.crosswire.bibledesktop.BibleDesktopMsg;
 import org.crosswire.bibledesktop.passage.RangeListModel;
 import org.crosswire.bibledesktop.passage.WholeBibleTreeModel;
 import org.crosswire.bibledesktop.passage.WholeBibleTreeNode;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWAction;
 import org.crosswire.common.swing.CWLabel;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiUtil;
@@ -92,20 +94,27 @@ public class PassageSelectionPane extends JPanel {
      * GUI init
      */
     private void init() {
-        actions = new ActionFactory(Msg.class, this);
+        actions = new ActionFactory(this);
+        CWAction action;
 
         // I18N(DMS)
-        JLabel lblAll = CWLabel.createJLabel(Msg.gettext("All Verses"));
+        JLabel lblAll = CWLabel.createJLabel(BibleDesktopMsg.gettext("All Verses"));
         // I18N(DMS)
-        JLabel lblSel = CWLabel.createJLabel(Msg.gettext("Selected Verses"));
+        JLabel lblSel = CWLabel.createJLabel(BibleDesktopMsg.gettext("Selected Verses"));
+        action = actions.addAction("DeleteVerse", BibleDesktopMsg.gettext("Remove <"));
+        action.setTooltip(BibleDesktopMsg.gettext("Delete verses from the list selected."));
+        JButton deleteButton = new JButton(action);
+        action = actions.addAction("AddVerse", BibleDesktopMsg.gettext("Add >"));
+        action.setTooltip(BibleDesktopMsg.gettext("Add verses to list selected."));
+        JButton addButton = new JButton(action);
 
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         this.setLayout(new GridBagLayout());
         this.add(lblAll, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(5, 10, 5, 5), 0, 0));
         this.add(createScrolledTree(lblAll), new GridBagConstraints(0, 1, 1, 4, 0.5, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 10, 10, 2), 0, 0));
         this.add(new JPanel(), new GridBagConstraints(1, 1, 1, 1, 0.0, 0.5, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(new JButton(actions.getAction(DELETE)), new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
-        this.add(new JButton(actions.getAction(ADD)), new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
+        this.add(deleteButton, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
+        this.add(addButton, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
         this.add(new JPanel(), new GridBagConstraints(1, 4, 1, 1, 0.0, 0.5, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         this.add(lblSel, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(5, 5, 5, 10), 0, 0));
         this.add(createScrolledList(lblSel), new GridBagConstraints(2, 1, 1, 4, 0.5, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 2, 10, 10), 0, 0));
@@ -159,7 +168,7 @@ public class PassageSelectionPane extends JPanel {
         txtDisplay.getDocument().addDocumentListener(new CustomDocumentEvent());
 
         // I18N(DMS)
-        JLabel lblDisplay = CWLabel.createJLabel(Msg.gettext("Verses"));
+        JLabel lblDisplay = CWLabel.createJLabel(BibleDesktopMsg.gettext("Verses"));
         lblDisplay.setLabelFor(txtDisplay);
 
         JPanel panel = new JPanel();
@@ -226,8 +235,8 @@ public class PassageSelectionPane extends JPanel {
     private void setValidPassage(boolean valid) {
         lstSel.setEnabled(valid);
         treAll.setEnabled(valid);
-        actions.getAction(ADD).setEnabled(valid);
-        actions.getAction(DELETE).setEnabled(valid);
+        actions.findAction("AddVerse").setEnabled(valid);
+        actions.findAction("DeleteVerse").setEnabled(valid);
     }
 
     /**
@@ -238,7 +247,7 @@ public class PassageSelectionPane extends JPanel {
     private void updateMessage(NoSuchKeyException ex) {
         // TRANSLATOR: Error condition: An unexpected unknown error occurred.
         // Tell the user about it. {0} is a placeholder for the error that occurred.
-        lblMessage.setText(Msg.gettext("Error: {0}", ex.getMessage()));
+        lblMessage.setText(BibleDesktopMsg.gettext("Error: {0}", ex.getMessage()));
         lblMessage.setIcon(icoBad);
     }
 
@@ -249,7 +258,7 @@ public class PassageSelectionPane extends JPanel {
         // TRANSLATOR: Output the Summary label followed by the passage
         // that the user has built using the Select Passage Wizard.
         // {0} is the placeholder for the passage reference.
-        lblMessage.setText(Msg.gettext("Summary: {0}", ref.getOverview()));
+        lblMessage.setText(BibleDesktopMsg.gettext("Summary: {0}", ref.getOverview()));
         lblMessage.setIcon(icoGood);
     }
 
@@ -286,7 +295,9 @@ public class PassageSelectionPane extends JPanel {
         KeyStroke esc = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
         bailout = true;
 
-        JButton btnGo = new JButton(actions.getAction(DONE));
+        CWAction action = actions.addAction("Done", BibleDesktopMsg.gettext("OK"));
+        action.setTooltip(BibleDesktopMsg.gettext("Close this window."));
+        JButton btnGo = new JButton(action);
 
         pnlAction.setLayout(new BorderLayout());
         pnlAction.setBorder(BorderFactory.createEmptyBorder(5, 5, 15, 20));
@@ -360,7 +371,7 @@ public class PassageSelectionPane extends JPanel {
      */
     /*private*/final void treeSelected() {
         TreePath[] selected = treAll.getSelectionPaths();
-        actions.getAction(ADD).setEnabled(selected != null && selected.length > 0);
+        actions.findAction("AddVerse").setEnabled(selected != null && selected.length > 0);
     }
 
     /**
@@ -368,7 +379,7 @@ public class PassageSelectionPane extends JPanel {
      */
     /*private*/final void listSelected() {
         Object[] selected = lstSel.getSelectedValues();
-        actions.getAction(DELETE).setEnabled(selected != null && selected.length > 0);
+        actions.findAction("DeleteVerse").setEnabled(selected != null && selected.length > 0);
     }
 
     /**
@@ -383,13 +394,10 @@ public class PassageSelectionPane extends JPanel {
         icoGood = GuiUtil.getIcon(GOOD_ICON);
         icoBad = GuiUtil.getIcon(BAD_ICON);
         keyf = PassageKeyFactory.instance();
-        actions = new ActionFactory(PassageSelectionPane.class, this);
+        actions = new ActionFactory(this);
         is.defaultReadObject();
     }
 
-    private static final String ADD = "AddVerse";
-    private static final String DELETE = "DeleteVerse";
-    private static final String DONE = "Done";
     private static final String GOOD_ICON = "toolbarButtonGraphics/general/About24.gif";
     private static final String BAD_ICON = "toolbarButtonGraphics/general/Stop24.gif";
 

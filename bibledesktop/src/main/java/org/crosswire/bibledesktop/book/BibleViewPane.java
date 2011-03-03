@@ -36,6 +36,7 @@ import javax.swing.UIManager;
 import javax.swing.event.EventListenerList;
 import javax.swing.filechooser.FileFilter;
 
+import org.crosswire.bibledesktop.BibleDesktopMsg;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.basic.SplitBookDataDisplay;
 import org.crosswire.bibledesktop.display.basic.TabbedBookDataDisplay;
@@ -239,7 +240,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
             saved = chooser.getSelectedFile();
             if (saved.length() == 0) {
                 // TRANSLATOR: Let the user know that the file is empty. {0} is a placeholder for the filename.
-                Reporter.informUser(getRootPane(), Msg.gettext("File {0} is empty", saved.getName()));
+                Reporter.informUser(getRootPane(), BibleDesktopMsg.gettext("File {0} is empty", saved.getName()));
                 return;
             }
 
@@ -395,7 +396,7 @@ public class BibleViewPane extends TabbedPanePanel implements Titleable, Clearab
         @Override
         public String getDescription() {
             // TRANSLATOR: This is the label for the verse list extension. {0} is a placeholder for that extension, which must be ".lst".
-            return Msg.gettext("Verse Lists ({0})", EXTENSION);
+            return BibleDesktopMsg.gettext("Verse Lists ({0})", EXTENSION);
         }
     }
 }

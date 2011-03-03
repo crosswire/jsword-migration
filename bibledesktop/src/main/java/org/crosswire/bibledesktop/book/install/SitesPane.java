@@ -38,6 +38,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import org.crosswire.bibledesktop.BibleDesktopMsg;
 import org.crosswire.common.progress.swing.JobsProgressBar;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
@@ -81,7 +82,7 @@ public class SitesPane extends JPanel {
      * Build the GUI components
      */
     private void init() {
-        actions = new ActionFactory(Msg.class, this);
+        actions = new ActionFactory(this);
 
         tabMain = new JTabbedPane();
         this.setLayout(new BorderLayout());
@@ -103,7 +104,7 @@ public class SitesPane extends JPanel {
         }
 
         // TRANSLATOR: Label for the tab showing the installed books.
-        tabMain.add(Msg.gettext("Installed Books"), new SitePane());
+        tabMain.add(BibleDesktopMsg.gettext("Installed Books"), new SitePane());
     }
 
     /**
@@ -141,7 +142,7 @@ public class SitesPane extends JPanel {
         dlgMain.getContentPane().add(this, BorderLayout.CENTER);
         dlgMain.getContentPane().add(createButtons(), BorderLayout.SOUTH);
         // TRANSLATOR: Title to the window that allows the management of books. 
-        dlgMain.setTitle(Msg.gettext("Available Books"));
+        dlgMain.setTitle(BibleDesktopMsg.gettext("Available Books"));
         dlgMain.setResizable(true);
         // dlgMain.setModal(true);
         // Set the name for Persistent Layout
@@ -177,9 +178,9 @@ public class SitesPane extends JPanel {
      */
     private Component createButtons() {
         if (pnlButtons == null) {
-            JButton btnOK = new JButton(actions.getAction(CLOSE));
+            JButton btnOK = new JButton(actions.addAction("SitesClose", BibleDesktopMsg.gettext("OK")));
 
-            JButton btnAdd = new JButton(actions.getAction(EDIT_SITE));
+            JButton btnAdd = new JButton(actions.addAction("ManageSites", BibleDesktopMsg.gettext("Edit Sites ...")));
 
             pnlButtons = new JPanel();
             pnlButtons.setLayout(new FlowLayout(FlowLayout.TRAILING));
@@ -198,7 +199,7 @@ public class SitesPane extends JPanel {
      * @throws ClassNotFoundException
      */
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
-        actions = new ActionFactory(SitesPane.class, this);
+        actions = new ActionFactory(this);
         imanager = new InstallManager();
         installers = imanager.getInstallers();
 
@@ -239,9 +240,6 @@ public class SitesPane extends JPanel {
             addAllInstallers();
         }
     }
-
-    private static final String CLOSE = "SitesClose";
-    private static final String EDIT_SITE = "ManageSites";
 
     /**
      * The known installers fetched from InstallManager

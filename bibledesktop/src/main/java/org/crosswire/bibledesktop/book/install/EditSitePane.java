@@ -56,7 +56,9 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.crosswire.bibledesktop.BibleDesktopMsg;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWAction;
 import org.crosswire.common.swing.CWLabel;
 import org.crosswire.common.swing.CWOptionPane;
 import org.crosswire.common.swing.CWScrollPane;
@@ -91,7 +93,7 @@ public class EditSitePane extends JPanel {
      * GUI init
      */
     private void init() {
-        actions = new ActionFactory(Msg.class, this);
+        actions = new ActionFactory(this);
 
         lstSite = new JList(new InstallManagerComboBoxModel(imanager));
         JScrollPane scrSite = new CWScrollPane(lstSite);
@@ -107,9 +109,17 @@ public class EditSitePane extends JPanel {
             }
         });
 
-        JButton btnAdd = new JButton(actions.getAction(ADD));
-        JButton btnEdit = new JButton(actions.getAction(EDIT));
-        JButton btnDelete = new JButton(actions.getAction(DELETE));
+        CWAction action = actions.addAction("Add", BibleDesktopMsg.gettext("Add"));
+        action.setTooltip(BibleDesktopMsg.gettext("Add a new installation site."));
+        JButton btnAdd = new JButton(action);
+
+        action = actions.addAction("Edit", BibleDesktopMsg.gettext("Edit"));
+        action.setTooltip(BibleDesktopMsg.gettext("Edit the current installation site."));
+        JButton btnEdit = new JButton(action);
+
+        action = actions.addAction("Delete", BibleDesktopMsg.gettext("Delete"));
+        action.setTooltip(BibleDesktopMsg.gettext("Delete Site?"));
+        JButton btnDelete = new JButton(action);
 
         JPanel pnlBtn1 = new JPanel();
         pnlBtn1.add(btnAdd, null);
@@ -138,7 +148,7 @@ public class EditSitePane extends JPanel {
         });
 
         // I18N(DMS)
-        JLabel lblName = CWLabel.createJLabel(Msg.gettext("Site Name:"));
+        JLabel lblName = CWLabel.createJLabel(BibleDesktopMsg.gettext("Site Name:"));
         lblName.setLabelFor(txtName);
 
         cboType = new JComboBox(new InstallerFactoryComboBoxModel(imanager));
@@ -151,15 +161,19 @@ public class EditSitePane extends JPanel {
         });
 
         // I18N(DMS)
-        JLabel lblType = CWLabel.createJLabel(Msg.gettext("Site Type"));
+        JLabel lblType = CWLabel.createJLabel(BibleDesktopMsg.gettext("Site Type"));
         lblType.setLabelFor(cboType);
 
         lblMesg = new JLabel();
-        lblMesg.setText(BLANK_STRING);
+        lblMesg.setText(" ");
 
-        JButton btnReset = new JButton(actions.getAction(RESET));
+        action = actions.addAction("Reset", BibleDesktopMsg.gettext("Reset"));
+        action.setTooltip(BibleDesktopMsg.gettext("Reset the details."));
+        JButton btnReset = new JButton(action);
 
-        JButton btnSave = new JButton(actions.getAction(SAVE));
+        action = actions.addAction("Save", BibleDesktopMsg.gettext("Save"));
+        action.setTooltip(BibleDesktopMsg.gettext("Save the current changes."));
+        JButton btnSave = new JButton(action);
 
         JPanel pnlBtn2 = new JPanel();
         pnlBtn2.add(btnSave, null);
@@ -170,22 +184,16 @@ public class EditSitePane extends JPanel {
         JPanel pnlMain = new JPanel();
         pnlMain.setPreferredSize(new Dimension(300, 300));
         pnlMain.setLayout(new GridBagLayout());
-        pnlMain.add(lblMesg, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10,
-                10), 0, 0));
+        pnlMain.add(lblMesg, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
         pnlMain.add(lblName, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
-        pnlMain.add(txtName, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0,
-                0));
+        pnlMain.add(txtName, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
         // If there is only one type, then don't give the user a choice
         if (imanager.getInstallerFactoryNames().size() > 1) {
-            pnlMain.add(lblType, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0,
-                    0));
-            pnlMain.add(cboType, new GridBagConstraints(1, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
-                    new Insets(2, 2, 2, 10), 0, 0));
+            pnlMain.add(lblType, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));
+            pnlMain.add(cboType, new GridBagConstraints(1, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 10), 0, 0));
         }
-        pnlMain.add(new JSeparator(), new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL, new Insets(10,
-                10, 10, 10), 0, 0));
-        pnlMain.add(siteEditorPane, new GridBagConstraints(0, 4, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0,
-                0));
+        pnlMain.add(new JSeparator(), new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
+        pnlMain.add(siteEditorPane, new GridBagConstraints(0, 4, 2, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         pnlMain.add(pnlBtn2, new GridBagConstraints(0, 5, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         JSplitPane sptMain = new FixedSplitPane();
@@ -198,7 +206,7 @@ public class EditSitePane extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(sptMain, BorderLayout.CENTER);
 
-        btnClose = new JButton(actions.getAction(CLOSE));
+        btnClose = new JButton(actions.addAction("Close", BibleDesktopMsg.gettext("Close")));
 
         pnlAction = new JPanel();
         pnlAction.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -235,7 +243,7 @@ public class EditSitePane extends JPanel {
         dlgMain.getRootPane().registerKeyboardAction(closer, esc, JComponent.WHEN_IN_FOCUSED_WINDOW);
         dlgMain.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         // TRANSLATOR: Title for the dialog allowing the editing of SWORD download sites.
-        dlgMain.setTitle(Msg.gettext("Edit Update Sites"));
+        dlgMain.setTitle(BibleDesktopMsg.gettext("Edit Update Sites"));
         dlgMain.setResizable(true);
         dlgMain.setModal(true);
 
@@ -263,17 +271,17 @@ public class EditSitePane extends JPanel {
 
             if (name.length() == 0) {
                 // TRANSLATOR: Indicate to the user that they did not supply a download site name.
-                setState(STATE_EDIT_ERROR, Msg.gettext("Missing site name"));
+                setState(STATE_EDIT_ERROR, BibleDesktopMsg.gettext("Missing site name"));
                 return;
             }
 
             if (imanager.getInstaller(name) != null) {
                 // TRANSLATOR: Indicate that the user supplied a name that matched a download site that they already have.
-                setState(STATE_EDIT_ERROR, Msg.gettext("Duplicate site name"));
+                setState(STATE_EDIT_ERROR, BibleDesktopMsg.gettext("Duplicate site name"));
                 return;
             }
 
-            setState(STATE_EDIT_OK, EMPTY_STRING);
+            setState(STATE_EDIT_OK, "");
         }
     }
 
@@ -296,10 +304,10 @@ public class EditSitePane extends JPanel {
     protected final void select() {
         String name = (String) lstSite.getSelectedValue();
         if (name == null) {
-            actions.getAction(EDIT).setEnabled(false);
+            actions.findAction("Edit").setEnabled(false);
             clear();
         } else {
-            actions.getAction(EDIT).setEnabled(true);
+            actions.findAction("Edit").setEnabled(true);
 
             Installer installer = imanager.getInstaller(name);
             display(name, installer);
@@ -317,6 +325,7 @@ public class EditSitePane extends JPanel {
      * Add a new installer to the list
      */
     public void doAdd() {
+       
         newType();
 
         editName = null;
@@ -337,9 +346,9 @@ public class EditSitePane extends JPanel {
         String name = (String) lstSite.getSelectedValue();
         if (name == null) {
             // TRANSLATOR: Dialog title letting the user know that they they have not selected a download site to edit.
-            String title = Msg.gettext("No Site");
+            String title = BibleDesktopMsg.gettext("No Site");
             // TRANSLATOR: Let the user know that they have not selected a download site to edit.
-            String msg = Msg.gettext("No selected site to edit");
+            String msg = BibleDesktopMsg.gettext("No selected site to edit");
             CWOptionPane.showMessageDialog(this, msg, title, JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -364,9 +373,9 @@ public class EditSitePane extends JPanel {
             return;
         }
         // TRANSLATOR: Dialog title asking the user to confirm the delete of a download site.
-        String title = Msg.gettext("Delete Site?");
+        String title = BibleDesktopMsg.gettext("Delete Site?");
         // TRANSLATOR: Message asking the user to confirm the delete of a download site. {0} is a placeholder for the name of the download site.
-        String msg = Msg.gettext("Are you sure you want to delete {0}?", name);
+        String msg = BibleDesktopMsg.gettext("Are you sure you want to delete {0}?", name);
         if (CWOptionPane.showConfirmDialog(this, msg, title, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             imanager.removeInstaller(name);
         }
@@ -387,7 +396,7 @@ public class EditSitePane extends JPanel {
         editName = null;
         editInstaller = null;
 
-        setState(STATE_DISPLAY, EMPTY_STRING);
+        setState(STATE_DISPLAY, "");
         select();
     }
 
@@ -404,7 +413,7 @@ public class EditSitePane extends JPanel {
         editName = null;
         editInstaller = null;
 
-        setState(STATE_DISPLAY, EMPTY_STRING);
+        setState(STATE_DISPLAY, "");
         select();
     }
 
@@ -414,15 +423,15 @@ public class EditSitePane extends JPanel {
     private void setState(int state, String message) {
         switch (state) {
         case STATE_DISPLAY:
-            actions.getAction(ADD).setEnabled(true);
-            actions.getAction(DELETE).setEnabled(true);
-            actions.getAction(EDIT).setEnabled(true);
+            actions.findAction("Add").setEnabled(true);
+            actions.findAction("Delete").setEnabled(true);
+            actions.findAction("Edit").setEnabled(true);
             lstSite.setEnabled(true);
 
-            actions.getAction(RESET).setEnabled(false);
-            actions.getAction(SAVE).setEnabled(false);
+            actions.findAction("Reset").setEnabled(false);
+            actions.findAction("Save").setEnabled(false);
 
-            actions.getAction(CLOSE).setEnabled(true);
+            actions.findAction("Close").setEnabled(true);
 
             txtName.setEditable(false);
             cboType.setEnabled(false);
@@ -435,15 +444,15 @@ public class EditSitePane extends JPanel {
 
         case STATE_EDIT_OK:
         case STATE_EDIT_ERROR:
-            actions.getAction(ADD).setEnabled(false);
-            actions.getAction(DELETE).setEnabled(false);
-            actions.getAction(EDIT).setEnabled(false);
+            actions.findAction("Add").setEnabled(false);
+            actions.findAction("Delete").setEnabled(false);
+            actions.findAction("Edit").setEnabled(false);
             lstSite.setEnabled(false);
 
-            actions.getAction(RESET).setEnabled(true);
-            actions.getAction(SAVE).setEnabled(state == STATE_EDIT_OK);
+            actions.findAction("Reset").setEnabled(true);
+            actions.findAction("Save").setEnabled(state == STATE_EDIT_OK);
 
-            actions.getAction(CLOSE).setEnabled(false);
+            actions.findAction("Close").setEnabled(false);
 
             txtName.setEditable(true);
             cboType.setEnabled(true);
@@ -459,7 +468,7 @@ public class EditSitePane extends JPanel {
         }
 
         if (message == null || message.trim().length() == 0) {
-            lblMesg.setText(BLANK_STRING);
+            lblMesg.setText(" ");
         } else {
             lblMesg.setText(message);
         }
@@ -483,7 +492,7 @@ public class EditSitePane extends JPanel {
      * Clear the display in the RHS of any installers
      */
     private void clear() {
-        txtName.setText(EMPTY_STRING);
+        txtName.setText("");
         setInstaller(null);
     }
 
@@ -518,18 +527,10 @@ public class EditSitePane extends JPanel {
         // Broken but we don't serialize views
         imanager = null;
         editInstaller = null;
-        actions = new ActionFactory(EditSitePane.class, this);
+        actions = new ActionFactory(this);
         is.defaultReadObject();
     }
 
-    private static final String ADD = "Add";
-    private static final String EDIT = "Edit";
-    private static final String DELETE = "Delete";
-    private static final String RESET = "Reset";
-    private static final String SAVE = "Save";
-    private static final String CLOSE = "Close";
-    private static final String EMPTY_STRING = "";
-    private static final String BLANK_STRING = " ";
 
     /**
      * The state is viewing a site

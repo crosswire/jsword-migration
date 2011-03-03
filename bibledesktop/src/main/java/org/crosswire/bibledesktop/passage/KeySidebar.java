@@ -26,6 +26,9 @@ import java.awt.FlowLayout;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.Action;
@@ -36,6 +39,7 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.crosswire.bibledesktop.BibleDesktopMsg;
 import org.crosswire.bibledesktop.book.DisplaySelectEvent;
 import org.crosswire.bibledesktop.book.DisplaySelectListener;
 import org.crosswire.common.swing.ActionFactory;
@@ -85,11 +89,15 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
 
         JScrollPane scroll = new CWScrollPane(list);
 
-        ActionFactory actions = new ActionFactory(Msg.class, this);
+        ActionFactory actions = new ActionFactory(this);
 
-        actDelete = actions.getAction(DELETE_SELECTED);
-        actBlur1 = actions.getAction(BLUR1);
-        actBlur5 = actions.getAction(BLUR5);
+        actDelete = actions.addAction("DeleteSelected").setTooltip(BibleDesktopMsg.gettext("Remove the selected passages in the current passage list."))
+                           .setSmallIcon("toolbarButtonGraphics/general/Remove16.gif")
+                           .setLargeIcon("toolbarButtonGraphics/general/Remove24.gif");
+        actBlur1 = actions.addAction("Blur1").setTooltip(BibleDesktopMsg.gettext("Expand all or the selected passage by 1 verse."))
+                          .setSmallIcon("images/Blur1_16.gif");
+        actBlur5 = actions.addAction("Blur5").setTooltip(BibleDesktopMsg.gettext("Expand all or the selected passage by 5 verses."))
+                          .setSmallIcon("images/Blur5_16.gif");
 
         JButton delete = new JButton(actDelete);
         // delete.setBorder(BorderFactory.createEmptyBorder(2, 5, 2, 5));
@@ -135,16 +143,18 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
      */
     private void doBlur(int amount) {
         // Remember what was selected
-        Key[] selected = (Key[]) list.getSelectedValues();
+        List<Key> selected = new ArrayList<Key>((Collection<? extends Key>) Arrays.asList(list.getSelectedValues()));
 
         // Make sure that key changes are not visible until blur is done.
         Key copy = (Key) key.clone();
 
         // Either blur the entire unselected list or just the selected elements.
-        if (selected.length == 0) {
+        if (selected.isEmpty()) {
             copy.blur(amount, RestrictionType.getDefaultBlurRestriction());
         } else {
-            for (Key k : selected) {
+            Iterator<Key> iter = selected.iterator();
+            while (iter.hasNext()) {
+                Key k = iter.next();
                 // Create a copy so the selection can be restored
                 Key keyCopy = (Key) k.clone();
                 keyCopy.blur(amount, RestrictionType.getDefaultBlurRestriction());
@@ -155,20 +165,21 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
 
         // Restore the selection
         int total = model.getSize();
-        int selectionSize = selected.length;
         for (int i = 0; i < total; i++) {
             Key listedKey = (Key) model.getElementAt(i);
 
             // As keys are found, remove them
-            for (Key selectedKey : selected) {
+            Iterator<Key> iter = selected.iterator();
+            while (iter.hasNext()) {
+                Key selectedKey = iter.next();
                 if (listedKey.contains(selectedKey)) {
                     list.addSelectionInterval(i, i);
-                    --selectionSize;
+                    iter.remove();
                 }
             }
 
             // If the list is empty then we are done.
-            if (selectionSize == 0) {
+            if (selected.isEmpty()) {
                 break;
             }
         }
@@ -336,10 +347,6 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
         keyChangeListeners = null;
         is.defaultReadObject();
     }
-
-    private static final String BLUR1 = "Blur1";
-    private static final String BLUR5 = "Blur5";
-    private static final String DELETE_SELECTED = "DeleteSelected";
 
     /**
      * The whole key that we are viewing

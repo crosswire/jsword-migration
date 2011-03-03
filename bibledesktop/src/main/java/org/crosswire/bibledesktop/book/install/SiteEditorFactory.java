@@ -21,12 +21,12 @@
  */
 package org.crosswire.bibledesktop.book.install;
 
-import java.io.IOException;
+import java.util.Map;
 import java.util.MissingResourceException;
 
-import org.crosswire.common.util.PropertyMap;
-import org.crosswire.common.util.ReflectionUtil;
-import org.crosswire.common.util.ResourceUtil;
+import org.crosswire.common.config.swing.FieldMap;
+import org.crosswire.common.util.Logger;
+import org.crosswire.common.util.PluginUtil;
 import org.crosswire.jsword.book.install.Installer;
 
 /**
@@ -48,16 +48,16 @@ public final class SiteEditorFactory {
      */
     public static SiteEditor createSiteEditor(Installer installer) {
         try {
-            PropertyMap properties = ResourceUtil.getProperties(SiteEditorFactory.class);
-            String className = properties.get(installer.getType());
-            SiteEditor editor = (SiteEditor) ReflectionUtil.construct(className);
-            editor.setInstaller(installer);
+            Class<SiteEditor> clazz = map.get(installer.getType());
+            SiteEditor editor = null;
+            if (clazz != null) {
+                editor = clazz.newInstance();
+                editor.setInstaller(installer);
+            } else {
+                log.warn("SiteEditor type (" + installer.getType() + ") unregistered.");
+            }
             return editor;
         } catch (MissingResourceException e) {
-            assert false : e;
-        } catch (IOException e) {
-            assert false : e;
-        } catch (ClassNotFoundException e) {
             assert false : e;
         } catch (InstantiationException e) {
             assert false : e;
@@ -66,4 +66,20 @@ public final class SiteEditorFactory {
         }
         return null;
     }
+    /**
+     * The configuration table
+     */
+    private static Map<String,Class<SiteEditor>> map;
+
+    /**
+     * Default map configuration
+     */
+    static {
+        map = PluginUtil.getImplementorsMap(SiteEditor.class);
+    }
+
+    /**
+     * The log stream
+     */
+    private static final Logger log = Logger.getLogger(FieldMap.class);
 }

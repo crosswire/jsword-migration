@@ -36,6 +36,7 @@ import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+import org.crosswire.bibledesktop.BibleDesktopMsg;
 import org.crosswire.bibledesktop.display.URIEvent;
 import org.crosswire.bibledesktop.display.URIEventListener;
 import org.crosswire.common.progress.swing.JobsProgressBar;
@@ -70,7 +71,7 @@ public class StatusBar extends JComponent implements MouseListener, URIEventList
      */
     private void initialize() {
         // TRANSLATOR: This is the text in the status bar when there is nothing else to say.
-        labelMessage.setText(Msg.gettext("Ready ..."));
+        labelMessage.setText(BibleDesktopMsg.gettext("Ready ..."));
 
         Font font = panelProgress.getFont();
         panelProgress.setFont(font.deriveFont(6.0F));
@@ -128,7 +129,7 @@ public class StatusBar extends JComponent implements MouseListener, URIEventList
      */
     public void leaveURI(URIEvent ev) {
         // TRANSLATOR: This is the text in the status bar when there is nothing else to say.
-        labelMessage.setText(Msg.gettext("Ready ..."));
+        labelMessage.setText(BibleDesktopMsg.gettext("Ready ..."));
     }
 
     /**
@@ -140,7 +141,7 @@ public class StatusBar extends JComponent implements MouseListener, URIEventList
     public void setText(String txt) {
         if (txt == null) {
             // TRANSLATOR: This is the text in the status bar when there is nothing else to say.
-            labelMessage.setText(Msg.gettext("Ready ..."));
+            labelMessage.setText(BibleDesktopMsg.gettext("Ready ..."));
         } else {
             labelMessage.setText(txt);
         }
@@ -190,7 +191,7 @@ public class StatusBar extends JComponent implements MouseListener, URIEventList
      */
     public void mouseExited(MouseEvent ev) {
         // TRANSLATOR: This is the text in the status bar when there is nothing else to say.
-        labelMessage.setText(Msg.gettext("Ready ..."));
+        labelMessage.setText(BibleDesktopMsg.gettext("Ready ..."));
     }
 
     /**

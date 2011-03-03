@@ -38,6 +38,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import org.crosswire.bibledesktop.BibleDesktopMsg;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.util.WebWarning;
@@ -56,7 +57,7 @@ public class InternetWarning extends JPanel {
      * Create a WebWarningDialog.
      */
     public InternetWarning() {
-        actions = new ActionFactory(Msg.class, this);
+        actions = new ActionFactory(this);
 
         ItemListener changer = new ItemListener() {
             public void itemStateChanged(ItemEvent ev) {
@@ -83,8 +84,8 @@ public class InternetWarning extends JPanel {
         final InternetWarning webWarning = new InternetWarning();
 
         JPanel buttons = new JPanel();
-        JButton yesButton = new JButton(webWarning.actions.getAction("Yes"));
-        JButton noButton = new JButton(webWarning.actions.getAction("No"));
+        JButton yesButton = new JButton(webWarning.actions.addAction("Yes", BibleDesktopMsg.gettext("Yes")));
+        JButton noButton = new JButton(webWarning.actions.addAction("No", BibleDesktopMsg.gettext("No")));
         buttons.add(yesButton);
         buttons.add(noButton);
 
@@ -136,7 +137,7 @@ public class InternetWarning extends JPanel {
      * @throws ClassNotFoundException
      */
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
-        actions = new ActionFactory(InternetWarning.class, this);
+        actions = new ActionFactory(this);
         is.defaultReadObject();
     }
 

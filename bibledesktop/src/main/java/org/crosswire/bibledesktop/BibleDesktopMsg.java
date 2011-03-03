@@ -14,31 +14,31 @@
  *      59 Temple Place - Suite 330
  *      Boston, MA 02111-1307, USA
  *
- * Copyright: 2005
+ * Copyright: 2007
  *     The copyright to this program is held by it's authors.
  *
- * ID: $Id$
+ * ID: $Id: org.eclipse.jdt.ui.prefs 1178 2006-11-06 12:48:02Z dmsmith $
  */
-package org.crosswire.bibledesktop.desktop;
+
+package org.crosswire.bibledesktop;
 
 import org.crosswire.common.util.MsgBase;
 
 /**
- * Compile safe Msg resource settings.
- * 
- * @see gnu.gpl.License for license details.<br>
+ * BibleDesktop API for all the messages in the BibleDesktop jar.
+ *
+ * @see gnu.gpl.License for license details.
  *      The copyright to this program is held by it's authors.
- * @author Joe Walker [joe at eireneh dot com]
+ * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public final class Msg extends MsgBase {
-
+final public class BibleDesktopMsg extends MsgBase {
     /**
      * get the title of the application
      * @return the title of the application
      */
     public static String getApplicationTitle() {
         // TRANSLATOR: The name of the program.
-        return Msg.gettext("Bible Desktop");
+        return BibleDesktopMsg.gettext("Bible Desktop");
     }
 
     /**
@@ -49,7 +49,7 @@ public final class Msg extends MsgBase {
     public static String getVersionInfo() {
         // TRANSLATOR: Gets a version string in the form "Version 1.0"
         // {0} is a placeholder for the version
-        return Msg.gettext("Version {0}", getVersion());
+        return BibleDesktopMsg.gettext("Version {0}", getVersion());
     }
 
     /**
@@ -61,7 +61,7 @@ public final class Msg extends MsgBase {
         // TRANSLATOR: Gets a version string in the form "Bible Desktop v1.0"
         // {0} is a placeholder for the application name
         // {1} is a placeholder for the version
-        return Msg.gettext("{0} v{1}", new Object[] {
+        return BibleDesktopMsg.gettext("{0} v{1}", new Object[] {
                 getApplicationTitle(), getVersion()
         });
     }
@@ -73,14 +73,15 @@ public final class Msg extends MsgBase {
      */
     public static String getAboutInfo() {
         // TRANSLATOR: An "About" string in the form "About Bible Desktop"
-        return Msg.gettext("About {0}", getApplicationTitle());
+        return BibleDesktopMsg.gettext("About {0}", getApplicationTitle());
     }
 
     private static String getVersion() {
         // TRANSLATOR: the current version of the application.
         // When translating use digits 0-9. They will be shaped appropriately.
-        return Msg.gettext("1.6");
+        return BibleDesktopMsg.gettext("1.6");
     }
+
     /**
      * Get the internationalized text, but return key if key is unknown.
      * 
@@ -115,5 +116,5 @@ public final class Msg extends MsgBase {
         return msg.toString(key, params);
     }
 
-    private static MsgBase msg = new Msg();
+    private static MsgBase msg = new BibleDesktopMsg();
 }

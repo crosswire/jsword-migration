@@ -26,10 +26,10 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URI;
 
-import javax.swing.Action;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.ToolTipManager;
 
+import org.crosswire.bibledesktop.BibleDesktopMsg;
 import org.crosswire.bibledesktop.book.BibleViewPane;
 import org.crosswire.bibledesktop.book.install.InternetWarning;
 import org.crosswire.bibledesktop.book.install.SitesPane;
@@ -38,7 +38,6 @@ import org.crosswire.bibledesktop.display.basic.SplitBookDataDisplay;
 import org.crosswire.bibledesktop.display.basic.TabbedBookDataDisplay;
 import org.crosswire.common.config.swing.ConfigEditorFactory;
 import org.crosswire.common.swing.ActionFactory;
-import org.crosswire.common.swing.Actionable;
 import org.crosswire.common.swing.CWOptionPane;
 import org.crosswire.common.swing.desktop.LayoutPersistence;
 import org.crosswire.common.swing.desktop.ViewVisitor;
@@ -65,7 +64,7 @@ import org.crosswire.jsword.util.WebWarning;
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public class DesktopActions implements Actionable {
+public class DesktopActions {
     /**
      * Create the actions for the desktop
      * 
@@ -74,27 +73,9 @@ public class DesktopActions implements Actionable {
      */
     public DesktopActions(Desktop desktop) {
         this.desktop = desktop;
-        actions = new ActionFactory(Msg.class, this);
+        actions = new ActionFactory(this);
 
         osxRegistered = macOSXRegistration();
-    }
-
-    /**
-     * Get a particular action by internal name
-     * 
-     * @param key
-     *            the internal name for the action
-     * @return the action requested or null if it does not exist
-     */
-    public Action getAction(String key) {
-        return actions.getAction(key);
-    }
-
-    /* (non-Javadoc)
-     * @see org.crosswire.common.swing.Actionable#actionPerformed(java.lang.String)
-     */
-    public void actionPerformed(String action) {
-        actions.actionPerformed(action);
     }
 
     /**
@@ -102,6 +83,52 @@ public class DesktopActions implements Actionable {
      */
     public Desktop getDesktop() {
         return desktop;
+    }
+
+    /**
+     * @return the action factory
+     */
+    public ActionFactory getActions() {
+        return actions;
+    }
+
+    /**
+     * Register the application with Apple EAWT, which provides support for the
+     * Application Menu, with About, Preferences (Options) and Quit (Exit).
+     * 
+     * @return true on success
+     */
+    public boolean macOSXRegistration() {
+        if (OSType.MAC.equals(OSType.getOSType())) {
+            try {
+                Class<?> osxAdapter = ClassUtil.forName("org.crosswire.common.aqua.OSXAdapter");
+                Object[] registerOSXArgs = {
+                        actions, "About", "Options", "Exit"
+                };
+                ReflectionUtil.invoke(osxAdapter, osxAdapter, "registerMacOSXApplication", registerOSXArgs);
+
+                // To call a method taking a type of boolean, the type has to
+                // match but the object has to be wrapped
+                Class<?>[] enablePrefTypes = {
+                    boolean.class
+                };
+                Object[] enablePrefArgs = {
+                    Boolean.TRUE
+                };
+                ReflectionUtil.invoke(osxAdapter, osxAdapter, "enablePrefs", enablePrefArgs, enablePrefTypes);
+                return true;
+            } catch (NoClassDefFoundError e) {
+                // This is thrown when EAWT or MacOSXadapter is not present.
+                log.error("This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled (" + e + ")");
+            } catch (ClassNotFoundException e) {
+                // Should not happen
+                log.error("This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled (" + e + ")");
+            } catch (Exception e) {
+                // Everything else.
+                log.error("Exception while loading the OSXAdapter:", e);
+            }
+        }
+        return false;
     }
 
     /**
@@ -146,7 +173,7 @@ public class DesktopActions implements Actionable {
             if (!view.maySave()) {
                 // TRANSLATOR: The user is trying to save the passage in the visible
                 // Bible View pane, but it is empty.
-                Reporter.informUser(getDesktop(), Msg.gettext("No Passage to Save"));
+                Reporter.informUser(getDesktop(), BibleDesktopMsg.gettext("No Passage to Save"));
                 return;
             }
 
@@ -165,7 +192,7 @@ public class DesktopActions implements Actionable {
             if (!view.maySave()) {
                 // TRANSLATOR: The user is trying to save the passage in the visible
                 // Bible View pane, but it is empty.
-                Reporter.informUser(getDesktop(), Msg.gettext("No Passage to Save"));
+                Reporter.informUser(getDesktop(), BibleDesktopMsg.gettext("No Passage to Save"));
                 return;
             }
 
@@ -191,7 +218,7 @@ public class DesktopActions implements Actionable {
         if (!ok) {
             // TRANSLATOR: The user is trying to save the passage in all the
             // Bible View panes, but they are all empty.
-            Reporter.informUser(getDesktop(), Msg.gettext("No Passage to Save"));
+            Reporter.informUser(getDesktop(), BibleDesktopMsg.gettext("No Passage to Save"));
             return;
         }
 
@@ -360,7 +387,7 @@ public class DesktopActions implements Actionable {
         if (key == null) {
             // TRANSLATOR: The user is trying to view the source of the passage in the visible
             // Bible View pane, but it is empty.
-            Reporter.informUser(getDesktop(), Msg.gettext("No current passage to view"));
+            Reporter.informUser(getDesktop(), BibleDesktopMsg.gettext("No current passage to view"));
             return;
         }
 
@@ -395,7 +422,7 @@ public class DesktopActions implements Actionable {
      */
     public void doContents() {
         // TRANSLATOR: Someday we'll have real help but for now this points them to the Bible Desktop web site.
-        CWOptionPane.showMessageDialog(getDesktop(), Msg.gettext("Currently on-line help is only available via the Bible Desktop's website:\nhttp://www.crosswire.org/bibledesktop"));
+        CWOptionPane.showMessageDialog(getDesktop(), BibleDesktopMsg.gettext("Currently on-line help is only available via the Bible Desktop's website:\nhttp://www.crosswire.org/bibledesktop"));
     }
 
     /**
@@ -435,53 +462,6 @@ public class DesktopActions implements Actionable {
     }
 
     /**
-     * Show web journal or not.
-     */
-    public void doJournalToggle(ActionEvent ev) {
-        JCheckBoxMenuItem toggle = (JCheckBoxMenuItem) ev.getSource();
-        desktop.showWebJournal(toggle.isSelected());
-    }
-
-    /**
-     * Register the application with Apple EAWT, which provides support for the
-     * Application Menu, with About, Preferences (Options) and Quit (Exit).
-     * 
-     * @return true on success
-     */
-    public boolean macOSXRegistration() {
-        if (OSType.MAC.equals(OSType.getOSType())) {
-            try {
-                Class<?> osxAdapter = ClassUtil.forName("org.crosswire.common.aqua.OSXAdapter");
-                Object[] registerOSXArgs = {
-                        actions, DesktopActions.ABOUT, DesktopActions.OPTIONS, DesktopActions.EXIT
-                };
-                ReflectionUtil.invoke(osxAdapter, osxAdapter, "registerMacOSXApplication", registerOSXArgs);
-
-                // To call a method taking a type of boolean, the type has to
-                // match but the object has to be wrapped
-                Class<?>[] enablePrefTypes = {
-                    boolean.class
-                };
-                Object[] enablePrefArgs = {
-                    Boolean.TRUE
-                };
-                ReflectionUtil.invoke(osxAdapter, osxAdapter, "enablePrefs", enablePrefArgs, enablePrefTypes);
-                return true;
-            } catch (NoClassDefFoundError e) {
-                // This is thrown when EAWT or MacOSXadapter is not present.
-                log.error("This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled (" + e + ")");
-            } catch (ClassNotFoundException e) {
-                // Should not happen
-                log.error("This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled (" + e + ")");
-            } catch (Exception e) {
-                // Everything else.
-                log.error("Exception while loading the OSXAdapter:", e);
-            }
-        }
-        return false;
-    }
-
-    /**
      *
      */
     private static final class ShowSideBarVisitor implements ViewVisitor {
@@ -507,31 +487,30 @@ public class DesktopActions implements Actionable {
     }
 
     // Enumeration of all the keys to known actions
-    static final String FILE = "File";
-    static final String EDIT = "Edit";
-    static final String GO = "Go";
-    static final String VIEW = "View";
-    static final String TOOLS = "Tools";
-    static final String HELP = "Help";
-    static final String OPEN = "Open";
-    static final String SAVE = "Save";
-    static final String SAVE_AS = "SaveAs";
-    static final String SAVE_ALL = "SaveAll";
-    static final String EXIT = "Exit";
-    static final String COPY = "Copy";
-    static final String BACK = "Back";
-    static final String FORWARD = "Forward";
-    static final String COMPARE_TOGGLE = "CompareToggle";
-    static final String TOOLTIP_TOGGLE = "ToolTipToggle";
-    static final String STATUS_TOGGLE = "StatusToggle";
-    static final String SIDEBAR_TOGGLE = "SidebarToggle";
-    static final String JOURNAL_TOGGLE = "JournalToggle";
-    static final String VERSE = "Verse";
-    static final String VIEW_SOURCE = "ViewSource";
-    static final String BOOKS = "Books";
-    static final String OPTIONS = "Options";
-    static final String CONTENTS = "Contents";
-    static final String ABOUT = "About";
+//    static final String FILE = "File";
+//    static final String EDIT = "Edit";
+//    static final String GO = "Go";
+//    static final String VIEW = "View";
+//    static final String TOOLS = "Tools";
+//    static final String HELP = "Help";
+//    static final String OPEN = "Open";
+//    static final String SAVE = "Save";
+//    static final String SAVE_AS = "SaveAs";
+//    static final String SAVE_ALL = "SaveAll";
+//    static final String EXIT = "Exit";
+//    static final String COPY = "Copy";
+//    static final String BACK = "Back";
+//    static final String FORWARD = "Forward";
+//    static final String COMPARE_TOGGLE = "CompareToggle";
+//    static final String TOOLTIP_TOGGLE = "ToolTipToggle";
+//    static final String STATUS_TOGGLE = "StatusToggle";
+//    static final String SIDEBAR_TOGGLE = "SidebarToggle";
+//    static final String VERSE = "Verse";
+//    static final String VIEW_SOURCE = "ViewSource";
+//    static final String BOOKS = "Books";
+//    static final String OPTIONS = "Options";
+//    static final String CONTENTS = "Contents";
+//    static final String ABOUT = "About";
 
     /**
      * The desktop on which these actions work

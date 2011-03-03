@@ -33,11 +33,14 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
+import org.crosswire.bibledesktop.BibleDesktopMsg;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWAction;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
@@ -72,11 +75,19 @@ public class ParallelBookPicker extends JPanel implements BookProvider {
     private void initialize() {
         setLayout(new FlowLayout(FlowLayout.LEADING, 1, 1));
         listeners = new EventListenerList();
-        actions = new ActionFactory(Msg.class, this);
+        actions = new ActionFactory(this);
 
         JPanel buttonBox = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
-        buttonBox.add(actions.createActionIcon("RemovePicker"));
-        buttonBox.add(actions.createActionIcon("AddPicker"));
+
+        CWAction action = actions.addAction("RemovePicker");
+        action.setTooltip(BibleDesktopMsg.gettext("Remove a parallel Bible"));
+        action.setSmallIcon("images/subtract-13.png");
+        buttonBox.add(actions.flatten(new JButton(action)));
+
+        action = actions.addAction("AddPicker");
+        action.setTooltip(BibleDesktopMsg.gettext("Add a parallel Bible"));
+        action.setSmallIcon("images/add-13.png");
+        buttonBox.add(actions.flatten(new JButton(action)));
         add(buttonBox);
 
         // Add the first picker
@@ -203,8 +214,8 @@ public class ParallelBookPicker extends JPanel implements BookProvider {
 
     public void enableButtons() {
         int count = getComponentCount() - 1;
-        actions.getAction("RemovePicker").setEnabled(count > 1);
-        actions.getAction("AddPicker").setEnabled(count < maxPickers);
+        actions.findAction("RemovePicker").setEnabled(count > 1);
+        actions.findAction("AddPicker").setEnabled(count < maxPickers);
         getComponent(0).setVisible(maxPickers >= 2 || count > maxPickers);
     }
 
@@ -219,7 +230,7 @@ public class ParallelBookPicker extends JPanel implements BookProvider {
         filter = null;
         comparator = null;
         listeners = new EventListenerList();
-        actions = new ActionFactory(ParallelBookPicker.class, this);
+        actions = new ActionFactory(this);
 
         is.defaultReadObject();
     }

@@ -45,8 +45,10 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.text.html.HTMLEditorKit;
 
+import org.crosswire.bibledesktop.BibleDesktopMsg;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.AntiAliasedTextPane;
+import org.crosswire.common.swing.CWAction;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.swing.MapTableModel;
@@ -74,7 +76,7 @@ public class AboutPane {
         // TRANSLATOR: This image is of an English Bible. It can be replaced with a localized one.
         // It should be named splash_ll.png where ll is the 2 letter language code and put in the
         // images directory. Then point this to it.
-        Icon icon = GuiUtil.getIcon(Msg.gettext("/images/splash.png"));
+        Icon icon = GuiUtil.getIcon(BibleDesktopMsg.gettext("/images/splash.png"));
 
         JLabel lblPicture = new JLabel();
         lblPicture.setIcon(icon);
@@ -87,10 +89,12 @@ public class AboutPane {
         lblInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
         lblInfo.setOpaque(true);
         lblInfo.setHorizontalAlignment(SwingConstants.TRAILING);
-        lblInfo.setText(Msg.getVersionInfo());
+        lblInfo.setText(BibleDesktopMsg.getVersionInfo());
 
-        ActionFactory actions = new ActionFactory(Msg.class, this);
-        JButton btnOk = new JButton(actions.getAction(ABOUT_OK));
+        ActionFactory actions = new ActionFactory(this);
+        CWAction action = actions.addAction("AboutOK", BibleDesktopMsg.gettext("OK"));
+        action.setTooltip(BibleDesktopMsg.gettext("Close this window"));
+        JButton btnOk = new JButton(action);
 
         JPanel pnlButtons = new JPanel();
         pnlButtons.add(btnOk);
@@ -110,7 +114,7 @@ public class AboutPane {
         pnlMain.add(tabMain, BorderLayout.CENTER);
 
         // Add the splash
-        String appName = Msg.getApplicationTitle();
+        String appName = BibleDesktopMsg.getApplicationTitle();
         tabMain.add(pnlSplash, appName);
 
         License license = new License(appName);
@@ -127,7 +131,7 @@ public class AboutPane {
         warrantyPnl.add(warrantyScr, BorderLayout.CENTER);
         warrantyPnl.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         // TRANSLATOR: The label for the tab that shows BibleDesktop's GPL Non-Warranty
-        tabMain.add(warrantyPnl, Msg.gettext("Warranty"));
+        tabMain.add(warrantyPnl, BibleDesktopMsg.gettext("Warranty"));
 
         JTextPane details = new AntiAliasedTextPane();
         // details.setFont(fixedFont);
@@ -141,7 +145,7 @@ public class AboutPane {
         detailsPnl.add(detailScr, BorderLayout.CENTER);
         detailsPnl.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         // TRANSLATOR: The label for the tab that shows BibleDesktop's GPL License
-        tabMain.add(detailsPnl, Msg.gettext("License"));
+        tabMain.add(detailsPnl, BibleDesktopMsg.gettext("License"));
 
         // Put in tabs if advanced
         if (advanced) {
@@ -159,7 +163,7 @@ public class AboutPane {
             pnlProps.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
             // TRANSLATOR: The label for the tab that shows Java's System Properties.
             // This is an advanced option not intended for end users.
-            tabMain.add(pnlProps, Msg.gettext("System Properties"));
+            tabMain.add(pnlProps, BibleDesktopMsg.gettext("System Properties"));
         }
         GuiUtil.applyDefaultOrientation(pnlMain);
     }
@@ -185,7 +189,7 @@ public class AboutPane {
         dlgMain = new JDialog(root);
 
         dlgMain.getContentPane().add(pnlMain);
-        dlgMain.setTitle(Msg.getAboutInfo());
+        dlgMain.setTitle(BibleDesktopMsg.getAboutInfo());
         dlgMain.setModal(true);
         dlgMain.addWindowListener(new WindowAdapter() {
             /* (non-Javadoc)
@@ -218,8 +222,6 @@ public class AboutPane {
     }
 
     private static final String SPLASH_FONT = "SanSerif";
-
-    private static final String ABOUT_OK = "AboutOK";
 
     private static boolean advanced;
     private JDialog dlgMain;

@@ -27,8 +27,8 @@ import java.net.URI;
 import java.util.Locale;
 
 import javax.swing.JTextPane;
-import javax.swing.ToolTipManager;
 import javax.swing.JToolTip;
+import javax.swing.ToolTipManager;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.xml.transform.TransformerException;
 

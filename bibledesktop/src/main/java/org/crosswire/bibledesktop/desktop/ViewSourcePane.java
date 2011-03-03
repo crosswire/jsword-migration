@@ -42,6 +42,7 @@ import javax.swing.WindowConstants;
 import javax.swing.text.JTextComponent;
 import javax.xml.transform.TransformerException;
 
+import org.crosswire.bibledesktop.BibleDesktopMsg;
 import org.crosswire.bibledesktop.book.install.BookFont;
 import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.swing.ActionFactory;
@@ -146,7 +147,7 @@ public class ViewSourcePane extends JPanel {
      * Actually create the GUI
      */
     private void init(String orig, String osis, String html) {
-        actions = new ActionFactory(Msg.class, this);
+        actions = new ActionFactory(this);
 
         Font userRequestedFont = ConfigurableSwingConverter.toFont();
 
@@ -199,18 +200,18 @@ public class ViewSourcePane extends JPanel {
         };
 
         pnlButtons = new JPanel(new FlowLayout(FlowLayout.TRAILING));
-        pnlButtons.add(new JButton(actions.getAction("SourceClip")), null);
+        pnlButtons.add(new JButton(actions.addAction("SourceClip", BibleDesktopMsg.gettext("Copy")).setTooltip(BibleDesktopMsg.gettext("Copy the source to the clipboard."))), null);
 
         tabMain = new JTabbedPane();
         // TRANSLATOR: Label for the View Source tab holding the raw content
         // of the passage in the active Bible View.
-        tabMain.add(pnlOrig, Msg.gettext("Original"));
+        tabMain.add(pnlOrig, BibleDesktopMsg.gettext("Original"));
         // TRANSLATOR: Label for the View Source tab holding the OSIS transformation
         // of the raw content in the prior tab for the passage in the active Bible View.
-        tabMain.add(pnlOsis, Msg.gettext("OSIS"));
+        tabMain.add(pnlOsis, BibleDesktopMsg.gettext("OSIS"));
         // TRANSLATOR: Label for the View Source tab holding the HTML transformation
         // of the OSIS in the prior tab for the passage in the active Bible View.
-        tabMain.add(pnlHtml, Msg.gettext("HTML"));
+        tabMain.add(pnlHtml, BibleDesktopMsg.gettext("HTML"));
 
         this.setLayout(new BorderLayout());
         this.add(tabMain, BorderLayout.CENTER);
@@ -223,9 +224,9 @@ public class ViewSourcePane extends JPanel {
      */
     public void showInFrame(Frame parent) {
         // TRANSLATOR: title for the Source View dialog
-        frame = new JDialog(parent, Msg.gettext("Source Viewer"));
+        frame = new JDialog(parent, BibleDesktopMsg.gettext("Source Viewer"));
 
-        pnlButtons.add(new JButton(actions.getAction("SourceOK")), null);
+        pnlButtons.add(new JButton(actions.addAction("SourceOK", BibleDesktopMsg.gettext("OK")).setTooltip(BibleDesktopMsg.gettext("Close this window"))), null);
 
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
 
@@ -264,7 +265,7 @@ public class ViewSourcePane extends JPanel {
      * @throws ClassNotFoundException
      */
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
-        actions = new ActionFactory(ViewSourcePane.class, this);
+        actions = new ActionFactory(this);
         is.defaultReadObject();
     }
 

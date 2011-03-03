@@ -31,6 +31,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.crosswire.bibledesktop.BibleDesktopMsg;
 import org.crosswire.jsword.book.install.Installer;
 import org.crosswire.jsword.book.install.sword.AbstractSwordInstaller;
 
@@ -46,27 +47,27 @@ public class SwordSiteEditor extends JPanel implements SiteEditor {
         host = new JTextField();
         // TRANSLATOR: Label for the host field.
         // This is something like www.crosswire.org.
-        JLabel hostLabel = getLabelForText(Msg.gettext("Host:"), host);
+        JLabel hostLabel = getLabelForText(BibleDesktopMsg.gettext("Host:"), host);
 
         catalogDir = new JTextField();
         // TRANSLATOR: Label for the catalog directory field.
         // This is the folder that contains mods.d.tar.gz.
-        JLabel catalogDirLabel = getLabelForText(Msg.gettext("Catalog Directory:"), catalogDir);
+        JLabel catalogDirLabel = getLabelForText(BibleDesktopMsg.gettext("Catalog Directory:"), catalogDir);
 
         packageDir = new JTextField();
         // TRANSLATOR: Label for the zip directory field.
         // SWORD modules are cached as zip files in this directory.
-        JLabel packageDirLabel = getLabelForText(Msg.gettext("Zip Directory:"), packageDir);
+        JLabel packageDirLabel = getLabelForText(BibleDesktopMsg.gettext("Zip Directory:"), packageDir);
 
         proxyHost = new JTextField();
         // TRANSLATOR: Label for the proxy host field.
         // Sometimes users have their internet access proxied. This field allows the user to enter the proxy host.
-        JLabel proxyHostLabel = getLabelForText(Msg.gettext("Proxy Host:"), proxyHost);
+        JLabel proxyHostLabel = getLabelForText(BibleDesktopMsg.gettext("Proxy Host:"), proxyHost);
 
         proxyPort = new JTextField();
         // TRANSLATOR: Label for the proxy port field.
         // Sometimes users have their internet access proxied. This field allows the user to enter the proxy port, if not 80.
-        JLabel proxyPortLabel = getLabelForText(Msg.gettext("Proxy Port:"), proxyPort);
+        JLabel proxyPortLabel = getLabelForText(BibleDesktopMsg.gettext("Proxy Port:"), proxyPort);
 
         setLayout(new GridBagLayout());
         add(hostLabel,       new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(2, 10, 2, 2), 0, 0));

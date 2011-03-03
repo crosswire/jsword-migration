@@ -31,7 +31,6 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Locale;
 
-
 import javax.swing.JTextPane;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.HyperlinkEvent;
@@ -41,6 +40,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import javax.xml.transform.TransformerException;
 
+import org.crosswire.bibledesktop.BibleDesktopMsg;
 import org.crosswire.bibledesktop.book.install.BookFont;
 import org.crosswire.bibledesktop.desktop.XSLTProperty;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
@@ -267,7 +267,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             if (data.charAt(0) != '#') {
                 // TRANSLATOR: Unexpected error condition: the cross reference was bad.
                 // {0} is a placeholder for the bad URL.
-                throw new MalformedURLException(Msg.gettext("Missing : in {0}", data));
+                throw new MalformedURLException(BibleDesktopMsg.gettext("Missing : in {0}", data));
             }
         } else {
             protocol = data.substring(0, match);

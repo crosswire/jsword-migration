@@ -41,6 +41,7 @@ import javax.swing.JPanel;
 import javax.swing.JWindow;
 import javax.swing.SwingConstants;
 
+import org.crosswire.bibledesktop.BibleDesktopMsg;
 import org.crosswire.common.progress.JobManager;
 import org.crosswire.common.progress.WorkEvent;
 import org.crosswire.common.progress.WorkListener;
@@ -79,7 +80,7 @@ public class Splash extends JWindow {
         // TRANSLATOR: This image is of an English Bible. It can be replaced with a localized one.
         // It should be named splash_ll.png where ll is the 2 letter language code and put in the
         // images directory. Then point this to it.
-        Icon icon = GuiUtil.getIcon(Msg.gettext("/images/splash.png"));
+        Icon icon = GuiUtil.getIcon(BibleDesktopMsg.gettext("/images/splash.png"));
 
         JLabel lblPicture = new JLabel();
         lblPicture.setBackground(Color.WHITE);
@@ -113,7 +114,7 @@ public class Splash extends JWindow {
         lblInfo.setBackground(Color.BLACK);
         // lblInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
         lblInfo.setHorizontalAlignment(SwingConstants.TRAILING);
-        lblInfo.setText(Msg.getVersionInfo() + ' ');
+        lblInfo.setText(BibleDesktopMsg.getVersionInfo() + ' ');
         lblInfo.setOpaque(true);
 
         JobsProgressBar pnlJobs = new JobsProgressBar(false);

@@ -57,6 +57,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.event.SwingPropertyChangeSupport;
 
+import org.crosswire.bibledesktop.BibleDesktopMsg;
 import org.crosswire.bibledesktop.book.BibleViewPane;
 import org.crosswire.bibledesktop.book.DisplaySelectEvent;
 import org.crosswire.bibledesktop.book.DisplaySelectListener;
@@ -72,6 +73,8 @@ import org.crosswire.common.config.Config;
 import org.crosswire.common.history.History;
 import org.crosswire.common.progress.JobManager;
 import org.crosswire.common.progress.Progress;
+import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWAction;
 import org.crosswire.common.swing.CWOptionPane;
 import org.crosswire.common.swing.CatchingThreadGroup;
 import org.crosswire.common.swing.ExceptionPane;
@@ -160,8 +163,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         URI predictURI = PROJECT.getWritableURI(SPLASH_PROPS, FileUtil.EXTENSION_PROPERTIES);
         Progress startJob = JobManager.createJob("Startup");
         // TRANSLATOR: Progress label shown on BibleDesktop startup.
-        startJob.beginJob(Msg.gettext("Startup"), predictURI);
-        // startJob.setProgress(Msg.STARTUP_CONFIG.toString());
+        startJob.beginJob(BibleDesktopMsg.gettext("Startup"), predictURI);
 
         // Load the configuration. And create the lists of installed books.
         // This has to be done before any GUI components are created
@@ -176,11 +178,13 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         Reporter.grabAWTExecptions(true);
 
         // Create the Desktop Actions
-        actions = new DesktopActions(this);
+        desktopActions = new DesktopActions(this);
+        actions = desktopActions.getActions();
 
         // TRANSLATOR: Progress label shown while BibleDesktop
         // creates the GUI components
-        startJob.setSectionName(Msg.gettext("Generating Components"));
+        startJob.setSectionName(BibleDesktopMsg.gettext("Generating Components"));
+        buildActionMap();
         createComponents();
 
         // If necessary, make changes to the UI to help with debugging
@@ -189,10 +193,8 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         // TRANSLATOR: Progress label shown while BibleDesktop
         // creates the GUI layout with panes and panels,
         // and creates a few other GUI things
-        startJob.setSectionName(Msg.gettext("General configuration"));
+        startJob.setSectionName(BibleDesktopMsg.gettext("General configuration"));
         createLayout();
-
-        // ReflectionBus.plug(this);
 
         // Listen for book changes so that the Options can be kept current
         BooksListener cbl = new BooksListener() {
@@ -221,8 +223,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         // DebugContainerListener());
 
         // javax.swing.RepaintManager.currentManager(this).setDoubleBufferingEnabled(false);
-        // ((javax.swing.JComponent)
-        // getContentPane()).setDebugGraphicsOptions(javax.swing.DebugGraphics.LOG_OPTION);
+        // ((javax.swing.JComponent) getContentPane()).setDebugGraphicsOptions(javax.swing.DebugGraphics.LOG_OPTION);
     }
 
     /**
@@ -230,19 +231,43 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
      */
     private void createComponents() {
         barStatus = new StatusBar();
-        // ReflectionBus.plug(barStatus);
-
-        // barSide = new SidebarPane();
-        // barBook = new ReferencedPane();
         reference = new MultiBookPane();
         sptBooks = new FixedSplitPane(false);
-        sptBlog = new FixedSplitPane(false);
-        // blogPanel = BlogClientFrame.getInstance();
 
         changeSupport = new SwingPropertyChangeSupport(this);
-        views = new ViewManager(this, Msg.class);
+        views = new ViewManager(this);
+        views.setActionFactory(getViewActions(views));
         views.addViewEventListener(this);
         history = new History();
+    }
+
+    private ActionFactory getViewActions(ViewManager viewMgr) {
+        ActionFactory viewActions = new ActionFactory(viewMgr);
+
+        CWAction cwAction = viewActions.addAction(ViewManager.TAB_MODE, BibleDesktopMsg.gettext("Tabbed Mode"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("View passages using tabs"));
+
+        cwAction = viewActions.addAction(ViewManager.WINDOW_MODE, BibleDesktopMsg.gettext("Sub-Window Mode"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("View passages using sub-windows"));
+
+        cwAction = viewActions.addAction(ViewManager.NEW_TAB, BibleDesktopMsg.gettext("New Bible View"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Open a new Bible View"));
+        cwAction.setSmallIcon("toolbarButtonGraphics/general/New16.gif");
+        cwAction.setLargeIcon("toolbarButtonGraphics/general/New24.gif");
+        cwAction.setAccelerator("N,ctrl");
+
+        cwAction = viewActions.addAction(ViewManager.CLOSE_VIEW, BibleDesktopMsg.gettext("Close the Current View"));
+        cwAction.setAccelerator("0x73,ctrl");
+
+        cwAction = viewActions.addAction(ViewManager.CLEAR_VIEW, BibleDesktopMsg.gettext("Clear the Current View"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Clear the current view's passages"));
+
+        cwAction = viewActions.addAction(ViewManager.CLOSE_ALL_VIEWS, BibleDesktopMsg.gettext("Close All Views"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Close all passages"));
+
+        cwAction = viewActions.addAction(ViewManager.CLOSE_OTHER_VIEWS, BibleDesktopMsg.gettext("Close Other Views"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Close all the other passages."));
+        return viewActions;
     }
 
     /**
@@ -255,7 +280,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
              */
             @Override
             public void windowClosed(WindowEvent ev) {
-                actions.getAction(DesktopActions.EXIT).actionPerformed(new ActionEvent(this, 0, EMPTY_STRING));
+                actions.findAction("Exit").actionPerformed(new ActionEvent(this, 0, EMPTY_STRING));
             }
         });
 
@@ -264,8 +289,6 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         TDIViewLayout tdi = (TDIViewLayout) LayoutType.TDI.getLayout();
         tdi.addPopup(createPopupMenu());
 
-        // barBook.addURIEventListener(this);
-        // barSide.addURIEventListener(this);
         reference.addURIEventListener(this);
 
         sptBooks.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
@@ -274,13 +297,6 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         sptBooks.setResizeWeight(0.8D);
         sptBooks.setOpaque(true);
         sptBooks.setBorder(null);
-
-        // sptBlog.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        // sptBlog.setTopComponent(sptBooks);
-        // sptBlog.setBottomComponent(blogPanel);
-        // sptBlog.setResizeWeight(0.8D);
-        // sptBlog.setOpaque(true);
-        // sptBlog.setBorder(null);
 
         // The toolbar needs to be in the outermost container, on the border
         // And the only other item in that container can be CENTER
@@ -291,14 +307,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
 
         mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(1, 5, 1, 5));
-        // if (webJournalShowing)
-        // {
-        // mainPanel.add(sptBlog, BorderLayout.CENTER);
-        // }
-        // else
-        // {
         mainPanel.add(sptBooks, BorderLayout.CENTER);
-        // }
 
         // Put everything else in its own panel
         corePanel = new JPanel(new BorderLayout());
@@ -309,69 +318,152 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
 
         setIconImage(ICON_APP.getImage());
         setEnabled(true);
-        setTitle(Msg.getApplicationTitle());
+        setTitle(BibleDesktopMsg.getApplicationTitle());
     }
 
-    /**
-     * Cause the Journal to reset itself to preferred size
-     */
-    // public void channel(ResizeJournalSignal signal)
-    // {
-    // sptBlog.resetToPreferredSizes();
-    // }
     private JMenuBar createMenuBar(ToolBar toolbar) {
         JMenuBar barMenu = new JMenuBar();
         barMenu.add(createFileMenu());
         barMenu.add(createEditMenu());
         barMenu.add(createViewMenu(toolbar));
-        barMenu.add(createGoMenu());
+        barMenu.add(createNavigateMenu());
         barMenu.add(createToolsMenu());
         barMenu.add(createHelpMenu());
         return barMenu;
     }
 
-    private JPopupMenu createPopupMenu() {
-        JPopupMenu popup = new JPopupMenu();
-        popup.add(views.getContextAction(ViewManager.NEW_TAB)).addMouseListener(barStatus);
-        popup.add(views.getContextAction(ViewManager.CLOSE_VIEW)).addMouseListener(barStatus);
-        popup.add(views.getContextAction(ViewManager.CLEAR_VIEW)).addMouseListener(barStatus);
-        popup.add(views.getContextAction(ViewManager.CLOSE_OTHER_VIEWS)).addMouseListener(barStatus);
-        popup.add(views.getContextAction(ViewManager.CLOSE_ALL_VIEWS)).addMouseListener(barStatus);
-        popup.addSeparator();
-        popup.add(actions.getAction(DesktopActions.OPEN)).addMouseListener(barStatus);
-        popup.add(actions.getAction(DesktopActions.SAVE)).addMouseListener(barStatus);
-        popup.add(actions.getAction(DesktopActions.SAVE_AS)).addMouseListener(barStatus);
-        popup.add(actions.getAction(DesktopActions.SAVE_ALL)).addMouseListener(barStatus);
-        return popup;
-    }
+    private void buildActionMap() {
+        // File menu and it's items
+        CWAction cwAction = actions.addAction("File", BibleDesktopMsg.gettext("File"));
 
-    private ToolBar createToolBar() {
-        ToolBar toolbar = new ToolBar(this);
+        cwAction = actions.addAction("Open", BibleDesktopMsg.gettext("Open"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Open a saved passage."));
+        cwAction.setSmallIcon("toolbarButtonGraphics/general/Open16.gif");
+        cwAction.setLargeIcon("toolbarButtonGraphics/general/Open24.gif");
+        cwAction.setAccelerator("O,ctrl");
 
-        toolbar.add(views.getContextAction(ViewManager.NEW_TAB)).addMouseListener(barStatus);
-        toolbar.add(actions.getAction(DesktopActions.OPEN)).addMouseListener(barStatus);
-        toolbar.add(actions.getAction(DesktopActions.SAVE)).addMouseListener(barStatus);
-        toolbar.addSeparator();
-        // toolbar.add(actions.getAction(DesktopActions.CUT)).addMouseListener(barStatus);
-        toolbar.add(actions.getAction(DesktopActions.COPY)).addMouseListener(barStatus);
-        // toolbar.add(actions.getAction(DesktopActions.PASTE)).addMouseListener(barStatus);
-        toolbar.addSeparator();
-        toolbar.add(actions.getAction(DesktopActions.BACK)).addMouseListener(barStatus);
-        toolbar.add(actions.getAction(DesktopActions.FORWARD)).addMouseListener(barStatus);
-        toolbar.addSeparator();
-        // toolbar.add(actions.getAction("Generate")).addMouseListener(barStatus);
-        // toolbar.add(actions.getAction("Diff")).addMouseListener(barStatus);
-        // toolbar.addSeparator();
-        toolbar.add(actions.getAction(DesktopActions.CONTENTS)).addMouseListener(barStatus);
-        toolbar.setRollover(true);
+        cwAction = actions.addAction("Save", BibleDesktopMsg.gettext("Save"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Save the current passage."));
+        cwAction.setSmallIcon("toolbarButtonGraphics/general/Save16.gif");
+        cwAction.setLargeIcon("toolbarButtonGraphics/general/Save24.gif");
+        cwAction.setAccelerator("S,ctrl");
 
-        // Floating is not appropriate on a Mac
-        // It is the default on all others
-        if (!actions.isOSXRegistered()) {
-            toolbar.add(actions.getAction(DesktopActions.ABOUT)).addMouseListener(barStatus);
-        }
+        cwAction = actions.addAction("SaveAs", BibleDesktopMsg.gettext("Save As"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Save the current passage under a different name."));
+        cwAction.setSmallIcon("toolbarButtonGraphics/general/SaveAs16.gif");
+        cwAction.setLargeIcon("toolbarButtonGraphics/general/SaveAs24.gif");
+        cwAction.setAccelerator("A,ctrl,shift");
 
-        return toolbar;
+        cwAction = actions.addAction("SaveAll", BibleDesktopMsg.gettext("Save All"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Save all passages."));
+        cwAction.setSmallIcon("toolbarButtonGraphics/general/SaveAll16.gif");
+        cwAction.setLargeIcon("toolbarButtonGraphics/general/SaveAll24.gif");
+        cwAction.setAccelerator("S,ctrl,shift");
+
+
+        cwAction = actions.addAction("Exit", BibleDesktopMsg.gettext("Exit"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Exit the Desktop application."));
+        cwAction.setAccelerator("0x73,alt");
+
+        // Edit menu and it's items
+        cwAction = actions.addAction("Edit",  BibleDesktopMsg.gettext("Edit"));
+
+//      cwAction = actions.addAction("Cut", UserMsg.gettext("Cut"));
+//      cwAction.setTooltip(UserMsg.gettext("Cut the selection."));
+//      cwAction.setSmallIcon("toolbarButtonGraphics/general/Cut16.gif");
+//      cwAction.setLargeIcon("toolbarButtonGraphics/general/Cut24.gif");
+//      cwAction.setAccelerator("X,ctrl");
+
+        cwAction = actions.addAction("Copy", BibleDesktopMsg.gettext("Copy"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Copy the selection."));
+        cwAction.setSmallIcon("toolbarButtonGraphics/general/Copy16.gif");
+        cwAction.setLargeIcon("toolbarButtonGraphics/general/Copy24.gif");
+        cwAction.setAccelerator("C,ctrl");
+
+//      cwAction = actions.addAction("Paste", UserMsg.gettext("Paste"));
+//      cwAction.setTooltip(UserMsg.gettext("Paste the selection."));
+//      cwAction.setSmallIcon("toolbarButtonGraphics/general/Paste16.gif");
+//      cwAction.setLargeIcon("toolbarButtonGraphics/general/Paste24.gif");
+//      cwAction.setAccelerator("V,ctrl");
+
+        // Navigate menu and it's items
+        cwAction = actions.addAction("Navigate", BibleDesktopMsg.gettext("Navigate"));
+
+        cwAction = actions.addAction("Back", BibleDesktopMsg.gettext("Back"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Go back to previous passage."));
+        cwAction.setSmallIcon("toolbarButtonGraphics/navigation/Back16.gif");
+        cwAction.setLargeIcon("toolbarButtonGraphics/navigation/Back24.gif");
+
+        cwAction = actions.addAction("Forward", BibleDesktopMsg.gettext("Forward"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Go forward to next passage."));
+        cwAction.setSmallIcon("toolbarButtonGraphics/navigation/Forward16.gif");
+        cwAction.setLargeIcon("toolbarButtonGraphics/navigation/Forward24.gif");
+
+        // Verse sub-menu and it's items
+        cwAction = actions.addAction("Verse", BibleDesktopMsg.gettext("Verse Numbers"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Set the style for verse numbers"));
+        cwAction = actions.addAction(XSLTProperty.VERSE_NUMBERS.getName(), BibleDesktopMsg.gettext("Show Verse Numbers"));
+        cwAction = actions.addAction(XSLTProperty.CV.getName(), BibleDesktopMsg.gettext("Show Chapter and Verse Numbers"));
+        cwAction = actions.addAction(XSLTProperty.BCV.getName(), BibleDesktopMsg.gettext("Show Book, Chapter and Verse Numbers"));
+        cwAction = actions.addAction(XSLTProperty.NO_VERSE_NUMBERS.getName(), BibleDesktopMsg.gettext("Hide Verse Numbers"));
+
+        // View menu and it's items
+        cwAction = actions.addAction("View", BibleDesktopMsg.gettext("View"));
+        cwAction = actions.addAction(XSLTProperty.TINY_VERSE_NUMBERS.getName(), BibleDesktopMsg.gettext("Use Small Verse Numbers"));
+
+        cwAction = actions.addAction(XSLTProperty.START_VERSE_ON_NEWLINE.getName(), BibleDesktopMsg.gettext("Start Verses on Separate Lines"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Start each verses on a new line"));
+
+        cwAction = actions.addAction("CompareToggle", BibleDesktopMsg.gettext("Show Differences"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Toggle display of differences between different Bibles"));
+
+        cwAction = actions.addAction(XSLTProperty.HEADINGS.getName(), BibleDesktopMsg.gettext("Show Headings"));
+        cwAction = actions.addAction(XSLTProperty.NOTES.getName(), BibleDesktopMsg.gettext("Show Study Notes"));
+        cwAction = actions.addAction(XSLTProperty.XREF.getName(), BibleDesktopMsg.gettext("Use Cross Reference Linkings"));
+        cwAction = actions.addAction(XSLTProperty.STRONGS_NUMBERS.getName(), BibleDesktopMsg.gettext("Show Strong's Numbers"));
+        cwAction = actions.addAction(XSLTProperty.MORPH.getName(), BibleDesktopMsg.gettext("Show Word Morphology"));
+
+        cwAction = actions.addAction("ToolTipToggle", BibleDesktopMsg.gettext("Show Tool Tips"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Toggle display of tool tips"));
+        cwAction.setAccelerator("T,ctrl");
+
+        cwAction = actions.addAction("StatusToggle", BibleDesktopMsg.gettext("Show the Status Area"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Toggle display of the status area"));
+
+        cwAction = actions.addAction("SidebarToggle", BibleDesktopMsg.gettext("Show the Passage Sidebar"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Toggle display of the Passage Sidebar"));
+        cwAction.setAccelerator("B,ctrl");
+
+        cwAction = actions.addAction("ViewSource", BibleDesktopMsg.gettext("View Source"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("View the HTML and OSIS source to the current window"));
+        cwAction.setAccelerator("U,ctrl");
+
+        // Tools menu and it's items
+        cwAction = actions.addAction("Tools", BibleDesktopMsg.gettext("Tools"));
+
+        cwAction = actions.addAction("Books", BibleDesktopMsg.gettext("Books"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Display/Install Books"));
+        cwAction.setSmallIcon("toolbarButtonGraphics/general/Import16.gif");
+        cwAction.setLargeIcon("toolbarButtonGraphics/general/Import24.gif");
+
+        cwAction = actions.addAction("Options", BibleDesktopMsg.gettext("Options"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Alter system settings."));
+        cwAction.setSmallIcon("toolbarButtonGraphics/general/Properties16.gif");
+        cwAction.setLargeIcon("toolbarButtonGraphics/general/Properties24.gif");
+
+        // Help menu and it's items
+        cwAction = actions.addAction("Help", BibleDesktopMsg.gettext("Help"));
+
+        cwAction = actions.addAction("Contents", BibleDesktopMsg.gettext("Contents"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Help file contents."));
+        cwAction.setSmallIcon("toolbarButtonGraphics/general/Help16.gif");
+        cwAction.setLargeIcon("toolbarButtonGraphics/general/Help24.gif");
+        cwAction.setAccelerator("0x70");
+
+        cwAction = actions.addAction("About", BibleDesktopMsg.gettext("About"));
+        cwAction.setTooltip(BibleDesktopMsg.gettext("Information about Bible Desktop"));
+        cwAction.setSmallIcon("toolbarButtonGraphics/general/About16.gif");
+        cwAction.setLargeIcon("toolbarButtonGraphics/general/About24.gif");
     }
 
     /**
@@ -380,45 +472,74 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
      * @return the file menu
      */
     private JMenu createFileMenu() {
-        JMenu menuFile = new JMenu(actions.getAction(DesktopActions.FILE));
-        menuFile.add(views.getContextAction(ViewManager.NEW_TAB)).addMouseListener(barStatus);
-        menuFile.add(actions.getAction(DesktopActions.OPEN)).addMouseListener(barStatus);
-        menuFile.addSeparator();
-        menuFile.add(views.getContextAction(ViewManager.CLOSE_VIEW)).addMouseListener(barStatus);
-        menuFile.add(views.getContextAction(ViewManager.CLEAR_VIEW)).addMouseListener(barStatus);
-        menuFile.add(views.getContextAction(ViewManager.CLOSE_OTHER_VIEWS)).addMouseListener(barStatus);
-        menuFile.add(views.getContextAction(ViewManager.CLOSE_ALL_VIEWS)).addMouseListener(barStatus);
-        menuFile.addSeparator();
-        // menuFile.add(actFilePrint).addMouseListener(barStatus);
-        // menuFile.addSeparator();
-        menuFile.add(actions.getAction(DesktopActions.SAVE)).addMouseListener(barStatus);
-        menuFile.add(actions.getAction(DesktopActions.SAVE_AS)).addMouseListener(barStatus);
-        menuFile.add(actions.getAction(DesktopActions.SAVE_ALL)).addMouseListener(barStatus);
+        JMenu menu = new JMenu(actions.findAction("File"));
+        menu.setToolTipText(null);
+
+        menu.add(views.getContextAction(ViewManager.NEW_TAB)).addMouseListener(barStatus);
+        menu.add(actions.findAction("Open")).addMouseListener(barStatus);
+
+        menu.addSeparator();
+
+        menu.add(views.getContextAction(ViewManager.CLOSE_VIEW)).addMouseListener(barStatus);
+        menu.add(views.getContextAction(ViewManager.CLEAR_VIEW)).addMouseListener(barStatus);
+        menu.add(views.getContextAction(ViewManager.CLOSE_OTHER_VIEWS)).addMouseListener(barStatus);
+        menu.add(views.getContextAction(ViewManager.CLOSE_ALL_VIEWS)).addMouseListener(barStatus);
+
+        menu.addSeparator();
+        menu.add(actions.findAction("Save")).addMouseListener(barStatus);
+        menu.add(actions.findAction("SaveAs")).addMouseListener(barStatus);
+        menu.add(actions.findAction("SaveAll")).addMouseListener(barStatus);
 
         // Mac OSX provides "Quit" on the Program menu
-        if (!actions.isOSXRegistered()) {
-            menuFile.addSeparator();
-            menuFile.add(actions.getAction(DesktopActions.EXIT)).addMouseListener(barStatus);
+        if (!desktopActions.isOSXRegistered()) {
+            menu.addSeparator();
+            menu.add(actions.findAction("Exit")).addMouseListener(barStatus);
         }
 
-        menuFile.setToolTipText(null);
-        return menuFile;
+        return menu;
     }
 
     private JMenu createEditMenu() {
-        JMenu menuEdit = new JMenu(actions.getAction(DesktopActions.EDIT));
-        // menuEdit.add(actions.getAction(DesktopActions.CUT)).addMouseListener(barStatus);
-        menuEdit.add(actions.getAction(DesktopActions.COPY)).addMouseListener(barStatus);
-        // menuEdit.add(actions.getAction(DesktopActions.PASTE)).addMouseListener(barStatus);
-        menuEdit.setToolTipText(null);
-        return menuEdit;
+        JMenu menu = new JMenu(actions.findAction("Edit"));
+        menu.setToolTipText(null);
+//      menuEdit.add(actions.findAction("Cut")).addMouseListener(barStatus);
+        menu.add(actions.findAction("Copy")).addMouseListener(barStatus);
+//      menuEdit.add(actions.findAction("Paste")).addMouseListener(barStatus);
+
+        return menu;
     }
 
-    private JMenu createGoMenu() {
-        JMenu menuGo = new JMenu(actions.getAction(DesktopActions.GO));
-        menuGo.add(actions.getAction(DesktopActions.BACK)).addMouseListener(barStatus);
-        menuGo.add(actions.getAction(DesktopActions.FORWARD)).addMouseListener(barStatus);
-        return menuGo;
+    private JMenu createNavigateMenu() {
+        JMenu menu = new JMenu(actions.findAction("Navigate"));
+        menu.setToolTipText(null);
+
+        menu.add(actions.findAction("Back")).addMouseListener(barStatus);
+        menu.add(actions.findAction("Forward")).addMouseListener(barStatus);
+
+        return menu;
+    }
+
+    private JRadioButtonMenuItem createRadioButton(ButtonGroup group, XSLTProperty prop) {
+        JRadioButtonMenuItem radio = new JRadioButtonMenuItem(actions.findAction(prop.getName()));
+        group.add(radio);
+        radio.setSelected(prop.getDefaultState());    
+        return radio;
+    }
+
+    private JCheckBoxMenuItem createCheckbox(XSLTProperty prop) {
+        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.findAction(prop.getName()));
+        toggle.setSelected(prop.getDefaultState());
+        return toggle;
+    }
+
+    private JMenu createVerseMenu() {
+        JMenu menu = new JMenu(actions.findAction("Verse"));
+        ButtonGroup group = new ButtonGroup();
+        menu.add(createRadioButton(group, XSLTProperty.VERSE_NUMBERS)).addMouseListener(barStatus);
+        menu.add(createRadioButton(group, XSLTProperty.CV)).addMouseListener(barStatus);
+        menu.add(createRadioButton(group, XSLTProperty.BCV)).addMouseListener(barStatus);
+        menu.add(createRadioButton(group, XSLTProperty.NO_VERSE_NUMBERS)).addMouseListener(barStatus);
+        return menu;
     }
 
     /**
@@ -427,112 +548,123 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
      * @return the view menu.
      */
     private JMenu createViewMenu(ToolBar toolbar) {
-        JMenu menuView = new JMenu(actions.getAction(DesktopActions.VIEW));
-        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.TINY_VERSE_NUMBERS.getName()));
-        toggle.setSelected(XSLTProperty.TINY_VERSE_NUMBERS.getDefaultState());
-        menuView.add(toggle).addMouseListener(barStatus);
-        toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.START_VERSE_ON_NEWLINE.getName()));
-        toggle.setSelected(XSLTProperty.START_VERSE_ON_NEWLINE.getDefaultState());
-        menuView.add(toggle).addMouseListener(barStatus);
-        JMenu verseMenu = new JMenu(actions.getAction(DesktopActions.VERSE));
-        menuView.add(verseMenu);
-        ButtonGroup grpNumbering = new ButtonGroup();
-        JRadioButtonMenuItem radio = new JRadioButtonMenuItem(actions.getAction(XSLTProperty.VERSE_NUMBERS.getName()));
-        grpNumbering.add(radio);
-        radio.setSelected(XSLTProperty.VERSE_NUMBERS.getDefaultState());
-        verseMenu.add(radio).addMouseListener(barStatus);
-        radio = new JRadioButtonMenuItem(actions.getAction(XSLTProperty.CV.getName()));
-        grpNumbering.add(radio);
-        radio.setSelected(XSLTProperty.CV.getDefaultState());
-        verseMenu.add(radio).addMouseListener(barStatus);
-        radio = new JRadioButtonMenuItem(actions.getAction(XSLTProperty.BCV.getName()));
-        grpNumbering.add(radio);
-        radio.setSelected(XSLTProperty.BCV.getDefaultState());
-        verseMenu.add(radio).addMouseListener(barStatus);
-        radio = new JRadioButtonMenuItem(actions.getAction(XSLTProperty.NO_VERSE_NUMBERS.getName()));
-        grpNumbering.add(radio);
-        radio.setSelected(XSLTProperty.NO_VERSE_NUMBERS.getDefaultState());
-        verseMenu.add(radio).addMouseListener(barStatus);
+        JMenu menu = new JMenu(actions.findAction("View"));
+        menu.add(createCheckbox(XSLTProperty.TINY_VERSE_NUMBERS)).addMouseListener(barStatus);
+        menu.add(createCheckbox(XSLTProperty.START_VERSE_ON_NEWLINE)).addMouseListener(barStatus);
+        menu.add(createVerseMenu());
 
-        menuView.addSeparator();
-        toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.COMPARE_TOGGLE));
-        menuView.add(toggle).addMouseListener(barStatus);
-        toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.HEADINGS.getName()));
-        toggle.setSelected(XSLTProperty.HEADINGS.getDefaultState());
-        menuView.add(toggle).addMouseListener(barStatus);
-        toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.NOTES.getName()));
-        toggle.setSelected(XSLTProperty.NOTES.getDefaultState());
-        menuView.add(toggle).addMouseListener(barStatus);
-        toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.XREF.getName()));
-        toggle.setSelected(XSLTProperty.XREF.getDefaultState());
-        menuView.add(toggle).addMouseListener(barStatus);
-        toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.STRONGS_NUMBERS.getName()));
-        toggle.setSelected(XSLTProperty.STRONGS_NUMBERS.getDefaultState());
-        menuView.add(toggle).addMouseListener(barStatus);
-        toggle = new JCheckBoxMenuItem(actions.getAction(XSLTProperty.MORPH.getName()));
-        toggle.setSelected(XSLTProperty.MORPH.getDefaultState());
-        menuView.add(toggle).addMouseListener(barStatus);
-        menuView.addSeparator();
-        menuView.add(views.getTdiView()).addMouseListener(barStatus);
-        menuView.add(views.getMdiView()).addMouseListener(barStatus);
-        // menuView.add(chkViewTbar);
-        menuView.addSeparator();
-        menuView.add(toolbar.getShowToggle()).addMouseListener(barStatus);
-        menuView.add(toolbar.getTextToggle()).addMouseListener(barStatus);
-        menuView.add(toolbar.getIconSizeToggle()).addMouseListener(barStatus);
-        toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.TOOLTIP_TOGGLE));
+        menu.addSeparator();
+
+        menu.add(new JCheckBoxMenuItem(actions.findAction("CompareToggle"))).addMouseListener(barStatus);
+        menu.add(createCheckbox(XSLTProperty.HEADINGS)).addMouseListener(barStatus);
+        menu.add(createCheckbox(XSLTProperty.NOTES)).addMouseListener(barStatus);
+        menu.add(createCheckbox(XSLTProperty.XREF)).addMouseListener(barStatus);
+        menu.add(createCheckbox(XSLTProperty.STRONGS_NUMBERS)).addMouseListener(barStatus);
+        menu.add(createCheckbox(XSLTProperty.MORPH)).addMouseListener(barStatus);
+
+        menu.addSeparator();
+
+        menu.add(views.getTdiView()).addMouseListener(barStatus);
+        menu.add(views.getMdiView()).addMouseListener(barStatus);
+
+        menu.addSeparator();
+
+        menu.add(toolbar.getShowToggle()).addMouseListener(barStatus);
+        menu.add(toolbar.getTextToggle()).addMouseListener(barStatus);
+        menu.add(toolbar.getIconSizeToggle()).addMouseListener(barStatus);
+
+        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.findAction("ToolTipToggle"));
         toggle.setSelected(true);
-        menuView.add(toggle).addMouseListener(barStatus);
-        toggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.STATUS_TOGGLE));
+        menu.add(toggle).addMouseListener(barStatus);
+
+        toggle = new JCheckBoxMenuItem(actions.findAction("StatusToggle"));
         toggle.setSelected(true);
-        menuView.add(toggle).addMouseListener(barStatus);
+        menu.add(toggle).addMouseListener(barStatus);
 
-        // The Journal is turned off for now
-        // toggle = new
-        // JCheckBoxMenuItem(actions.getAction(DesktopActions.JOURNAL_TOGGLE));
-        // toggle.setSelected(isWebJournalShowing());
-        // menuView.add(toggle).addMouseListener(barStatus);
-
-        sidebarToggle = new JCheckBoxMenuItem(actions.getAction(DesktopActions.SIDEBAR_TOGGLE));
+        sidebarToggle = new JCheckBoxMenuItem(actions.findAction("SidebarToggle"));
         sidebarToggle.setSelected(isSidebarShowing());
-        menuView.add(sidebarToggle).addMouseListener(barStatus);
+        menu.add(sidebarToggle).addMouseListener(barStatus);
 
         if (viewSourceShowing) {
-            menuView.addSeparator();
-            menuView.add(actions.getAction(DesktopActions.VIEW_SOURCE)).addMouseListener(barStatus);
-            menuView.setToolTipText(null);
+            menu.addSeparator();
+
+            menu.add(actions.findAction("ViewSource")).addMouseListener(barStatus);
+            menu.setToolTipText(null);
         }
 
-        return menuView;
+        return menu;
     }
 
     private JMenu createToolsMenu() {
-        JMenu menuTools = new JMenu(actions.getAction(DesktopActions.TOOLS));
-        // menuTools.add(actions.getAction(DesktopActions.GENERATE)).addMouseListener(barStatus);
-        // menuTools.add(actions.getAction(DesktopActions.DIFF)).addMouseListener(barStatus);
-        // menuTools.addSeparator();
-        menuTools.add(actions.getAction(DesktopActions.BOOKS)).addMouseListener(barStatus);
+        JMenu menu = new JMenu(actions.findAction("Tools"));
+        menu.setToolTipText(null);
 
-        if (!actions.isOSXRegistered()) {
-            menuTools.add(actions.getAction(DesktopActions.OPTIONS)).addMouseListener(barStatus);
+        menu.add(actions.findAction("Books")).addMouseListener(barStatus);
+
+        // Mac OSX provides "Preferences" on the Program menu
+        if (!desktopActions.isOSXRegistered()) {
+            menu.add(actions.findAction("Options")).addMouseListener(barStatus);
         }
 
-        menuTools.setToolTipText(null);
-        return menuTools;
+        return menu;
     }
 
     private JMenu createHelpMenu() {
-        JMenu menuHelp = new JMenu(actions.getAction(DesktopActions.HELP));
-        menuHelp.add(actions.getAction(DesktopActions.CONTENTS)).addMouseListener(barStatus);
+        JMenu menu = new JMenu(actions.findAction("Help"));
+        menu.setToolTipText(null);
+        menu.add(actions.findAction("Contents")).addMouseListener(barStatus);
 
         // Mac provides the About action on the Program menu.
-        if (!actions.isOSXRegistered()) {
-            menuHelp.addSeparator();
-            menuHelp.add(actions.getAction(DesktopActions.ABOUT)).addMouseListener(barStatus);
+        if (!desktopActions.isOSXRegistered()) {
+            menu.addSeparator();
+            menu.add(actions.findAction("About")).addMouseListener(barStatus);
         }
 
-        menuHelp.setToolTipText(null);
-        return menuHelp;
+        return menu;
+    }
+
+    private JPopupMenu createPopupMenu() {
+        JPopupMenu menu = new JPopupMenu();
+        menu.add(views.getContextAction(ViewManager.NEW_TAB)).addMouseListener(barStatus);
+        menu.add(views.getContextAction(ViewManager.CLOSE_VIEW)).addMouseListener(barStatus);
+        menu.add(views.getContextAction(ViewManager.CLEAR_VIEW)).addMouseListener(barStatus);
+        menu.add(views.getContextAction(ViewManager.CLOSE_OTHER_VIEWS)).addMouseListener(barStatus);
+        menu.add(views.getContextAction(ViewManager.CLOSE_ALL_VIEWS)).addMouseListener(barStatus);
+
+        menu.addSeparator();
+
+        menu.add(actions.findAction("Open")).addMouseListener(barStatus);
+        menu.add(actions.findAction("Save")).addMouseListener(barStatus);
+        menu.add(actions.findAction("SaveAs")).addMouseListener(barStatus);
+        menu.add(actions.findAction("SaveAll")).addMouseListener(barStatus);
+
+        return menu;
+    }
+
+    private ToolBar createToolBar() {
+        ToolBar menu = new ToolBar(this);
+
+        menu.add(views.getContextAction(ViewManager.NEW_TAB)).addMouseListener(barStatus);
+        menu.add(actions.findAction("Open")).addMouseListener(barStatus);
+        menu.add(actions.findAction("Save")).addMouseListener(barStatus);
+        menu.addSeparator();
+//      toolbar.add(actions.findAction("Cut").addMouseListener(barStatus);
+        menu.add(actions.findAction("Copy")).addMouseListener(barStatus);
+//      toolbar.add(actions.findAction("Paste")).addMouseListener(barStatus);
+        menu.addSeparator();
+        menu.add(actions.findAction("Back")).addMouseListener(barStatus);
+        menu.add(actions.findAction("Forward")).addMouseListener(barStatus);
+        menu.addSeparator();
+        menu.add(actions.findAction("Contents")).addMouseListener(barStatus);
+
+        // Mac OSX provides "About" on the Program menu
+        if (!desktopActions.isOSXRegistered()) {
+            menu.add(actions.findAction("About")).addMouseListener(barStatus);
+        }
+
+        menu.setRollover(true);
+
+        return menu;
     }
 
     /**
@@ -685,7 +817,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
                 jump(Defaults.getDictionary(), data);
             } else {
                 // TRANSLATOR: Uncommon error condition: JSword has provided a link that is not handled.
-                Reporter.informUser(this, new MalformedURLException(Msg.gettext("Unknown protocol {0}", protocol)));
+                Reporter.informUser(this, new MalformedURLException(BibleDesktopMsg.gettext("Unknown protocol {0}", protocol)));
             }
         } catch (NoSuchKeyException ex) {
             Reporter.informUser(this, ex);
@@ -738,24 +870,6 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     }
 
     /**
-     * Show or hide the web journal.
-     * 
-     * @param show
-     *            boolean
-     */
-    public void showWebJournal(boolean show) {
-        if (show) {
-            mainPanel.remove(sptBooks);
-            sptBlog.setTopComponent(sptBooks);
-            mainPanel.add(sptBlog, BorderLayout.CENTER);
-        } else {
-            mainPanel.remove(sptBlog);
-            mainPanel.add(sptBooks, BorderLayout.CENTER);
-        }
-        validate();
-    }
-
-    /**
      * Are the close buttons enabled?
      * 
      * @param enabled
@@ -774,7 +888,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         fillChoiceFactory();
 
         // TRANSLATOR: The window title of BibleDesktop's preference/option dialog.
-        config = new Config(Msg.gettext("Desktop Options"));
+        config = new Config(BibleDesktopMsg.gettext("Desktop Options"));
         try {
             Document xmlconfig = XMLUtil.getDocument(CONFIG_KEY);
 
@@ -834,14 +948,14 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         List<Book> bibles = Books.installed().getBooks(BookFilters.getBibles());
         if (bibles.isEmpty()) {
             // TRANSLATOR: Title of dialog asking the user to install at least one Bible.
-            String title = Msg.gettext("Install Bibles?");
+            String title = BibleDesktopMsg.gettext("Install Bibles?");
             // TRANSLATOR: HTML formatted message, telling the user that they have no Bibles installed,
             // giving them the option to do it now and instructions on how to do it later.
-            String msg = Msg.gettext("<html>You have no Bibles installed. Do you wish to install some now?<br>(This is also available from <b>Books</b> in the <b>Tools</b> menu)");
+            String msg = BibleDesktopMsg.gettext("<html>You have no Bibles installed. Do you wish to install some now?<br>(This is also available from <b>Books</b> in the <b>Tools</b> menu)");
             int reply = CWOptionPane.showConfirmDialog(this, msg, title, JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.QUESTION_MESSAGE);
             if (reply == JOptionPane.OK_OPTION) {
-                actions.doBooks();
+                desktopActions.doBooks();
             }
         }
     }
@@ -891,21 +1005,6 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
      */
     public boolean isCompareShowing() {
         return compareShowing;
-    }
-
-    /**
-     * @param show
-     *            Whether to show the web journal at start up.
-     */
-    public static void setWebJournalShowing(boolean show) {
-        webJournalShowing = show;
-    }
-
-    /**
-     * @return Whether to show the web journal at start up.
-     */
-    public static boolean isWebJournalShowing() {
-        return webJournalShowing;
     }
 
     /**
@@ -1006,8 +1105,10 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         config = null;
         history = null;
-        actions = new DesktopActions(this);
-        views = new ViewManager(this, Msg.class);
+        desktopActions = new DesktopActions(this);
+        actions = new ActionFactory(desktopActions);
+        buildActionMap();
+        views = new ViewManager(this);
         views.addViewEventListener(this);
         is.defaultReadObject();
     }
@@ -1031,7 +1132,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
             // These Mac properties give the application a Mac behavior
             if (OSType.MAC.equals(OSType.getOSType())) {
                 System.setProperty("apple.laf.useScreenMenuBar", "true");
-                System.setProperty("com.apple.mrj.application.apple.menu.about.name", Msg.getApplicationTitle());
+                System.setProperty("com.apple.mrj.application.apple.menu.about.name", BibleDesktopMsg.getApplicationTitle());
                 System.setProperty("com.apple.mrj.application.live-resize", "true");
             }
 
@@ -1129,11 +1230,6 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     private static boolean compareShowing;
 
     /**
-     * Whether to show the web journal at startup
-     */
-    private static boolean webJournalShowing = true;
-
-    /**
      * Whether to current BibleView should be used for links
      */
     private static boolean reuseBibleView = true;
@@ -1143,7 +1239,14 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
      */
     protected static final Logger log = Logger.getLogger(Desktop.class);
 
-    protected transient DesktopActions actions;
+    /**
+     * The factory for actions that this class works with
+     */
+    private ActionFactory actions;
+    /**
+     * The DesktopActions is the holder for the actions, merely to keep the size of this file smaller.
+     */
+    protected transient DesktopActions desktopActions;
 
     /**
      * The application icon
@@ -1152,8 +1255,6 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
 
     private transient ViewManager views;
     private JPanel corePanel;
-    // private BlogClientFrame blogPanel;
-    private JSplitPane sptBlog;
     private JCheckBoxMenuItem sidebarToggle;
     private StatusBar barStatus;
     protected MultiBookPane reference;
