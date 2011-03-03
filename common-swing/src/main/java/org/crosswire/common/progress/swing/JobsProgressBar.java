@@ -47,6 +47,7 @@ import org.crosswire.common.progress.ProgressMode;
 import org.crosswire.common.progress.WorkEvent;
 import org.crosswire.common.progress.WorkListener;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWAction;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Logger;
 
@@ -66,7 +67,7 @@ public class JobsProgressBar extends JPanel implements WorkListener {
         jobs = new HashMap<Progress,JobData>();
         positions = new ArrayList<JobData>();
         shaper = new NumberShaper();
-        actions = new ActionFactory(JobsProgressBar.class, this);
+        actions = new ActionFactory(this);
 
         if (small) {
             // They start off at 15pt (on Windows at least)
@@ -92,8 +93,10 @@ public class JobsProgressBar extends JPanel implements WorkListener {
      * @return a custom cancel button
      */
     public synchronized JButton createCancelButton(Progress job) {
-        JButton cancelButton = actions.createActionIcon(STOP, new JobCancelListener(job));
-        return cancelButton;
+        CWAction action = actions.addAction("Stop");
+        action.setSmallIcon("toolbarButtonGraphics/general/Stop16.gif");
+        action.setListener(new JobCancelListener(job));
+        return actions.flatten(new JButton(action));
     }
 
     /*
@@ -238,7 +241,7 @@ public class JobsProgressBar extends JPanel implements WorkListener {
      * @throws ClassNotFoundException
      */
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
-        actions = new ActionFactory(JobsProgressBar.class, this);
+        actions = new ActionFactory(this);
         is.defaultReadObject();
     }
 
@@ -266,11 +269,6 @@ public class JobsProgressBar extends JPanel implements WorkListener {
      * The home of the stop action.
      */
     private transient ActionFactory actions;
-
-    /**
-     * The key for the Stop action.
-     */
-    private static final String STOP = "Stop";
 
     /**
      * The log stream

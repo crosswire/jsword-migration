@@ -116,22 +116,20 @@ public class FontChooser extends JPanel {
         fontc.italic.setSelected(font.isItalic());
         fontc.size.setSelectedItem(Integer.valueOf(font.getSize()));
 
-        final ActionFactory actions = new ActionFactory(FontChooser.class, fontc);
+        final ActionFactory actions = new ActionFactory(fontc);
 
-        JButton ok = actions.createJButton("OK", new ActionListener()
-                {
-                    public void actionPerformed(ActionEvent ex) {
-                        fontc.dialog.setVisible(false);
-                    }
-                });
+        JButton ok = actions.createJButton(actions.addAction("OK", UserMsg.gettext("OK")), new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                fontc.dialog.dispose();
+            }
+        });
 
-        JButton cancel = actions.createJButton("Cancel", new ActionListener()
-                {
-                    public void actionPerformed(ActionEvent ex) {
-                        fontc.dialog.setVisible(false);
-                        fontc.font = null;
-                    }
-                });
+        JButton cancel = actions.createJButton(actions.addAction("Cancel", UserMsg.gettext("Cancel")), new ActionListener() {
+            public void actionPerformed(ActionEvent ex) {
+                fontc.dialog.setVisible(false);
+                fontc.font = null;
+            }
+        });
 
         JPanel buttons = new JPanel();
         buttons.setLayout(new FlowLayout());

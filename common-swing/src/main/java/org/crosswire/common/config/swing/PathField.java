@@ -41,6 +41,7 @@ import javax.swing.ListSelectionModel;
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWScrollPane;
+import org.crosswire.common.swing.UserMsg;
 import org.crosswire.common.util.Convert;
 
 /**
@@ -60,7 +61,7 @@ public class PathField extends JPanel implements Field {
         model = new DefaultComboBoxModel();
         list = new JList(model);
 
-        actions = new ActionFactory(PathField.class, this);
+        actions = new ActionFactory(this);
 
         JPanel buttons = new JPanel(new FlowLayout());
 
@@ -70,9 +71,9 @@ public class PathField extends JPanel implements Field {
 
         JScrollPane scroll = new CWScrollPane(list);
 
-        buttons.add(new JButton(actions.getAction(ADD)));
-        buttons.add(new JButton(actions.getAction(REMOVE)));
-        buttons.add(new JButton(actions.getAction(UPDATE)));
+        buttons.add(new JButton(actions.addAction("Add", UserMsg.gettext("Add"))));
+        buttons.add(new JButton(actions.addAction("Remove", UserMsg.gettext("Remove"))));
+        buttons.add(new JButton(actions.addAction("Update", UserMsg.gettext("Update (path)"))));
 
         setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
@@ -193,13 +194,9 @@ public class PathField extends JPanel implements Field {
      * @throws ClassNotFoundException
      */
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
-        actions = new ActionFactory(PathField.class, this);
+        actions = new ActionFactory(this);
         is.defaultReadObject();
     }
-
-    private static final String ADD = "AddPathEntry";
-    private static final String REMOVE = "RemovePathEntry";
-    private static final String UPDATE = "UpdatePathEntry";
 
     private transient ActionFactory actions;
 

@@ -24,6 +24,7 @@ package org.crosswire.common.swing.desktop;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.MouseListener;
+
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;

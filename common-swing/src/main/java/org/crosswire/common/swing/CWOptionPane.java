@@ -744,7 +744,7 @@ public class CWOptionPane extends JOptionPane {
     }
 
     private static String getActionName(String key) {
-        return actions.getAction(key).getValue(Action.NAME).toString();
+        return actions.findAction(key).getValue(Action.NAME).toString();
     }
 
     private static Object[] fixOptions(Object[] options, int optionType, int messageType) {
@@ -778,7 +778,13 @@ public class CWOptionPane extends JOptionPane {
     /**
      * The actions for this dialog.
      */
-    private static ActionFactory actions = new ActionFactory(CWOptionPane.class, null);
+    private static ActionFactory actions = new ActionFactory(null);
+    static {
+        actions.addAction("Yes", UserMsg.gettext("Yes"));
+        actions.addAction("No", UserMsg.gettext("No"));
+        actions.addAction("OK", UserMsg.gettext("OK"));
+        actions.addAction("Cancel", UserMsg.gettext("Cancel"));
+    }
 
     /**
      * Serialization ID

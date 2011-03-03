@@ -31,6 +31,7 @@ import javax.swing.JTextField;
 
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.UserMsg;
 
 /**
  * A Filename selection.
@@ -44,13 +45,13 @@ public class FileField extends JPanel implements Field {
      * Create a new FileField
      */
     public FileField() {
-        ActionFactory actions = new ActionFactory(FileField.class, this);
+        ActionFactory actions = new ActionFactory(this);
 
         text = new JTextField();
 
         setLayout(new BorderLayout(10, 0));
         add(text, BorderLayout.CENTER);
-        add(new JButton(actions.getAction(BROWSE)), BorderLayout.LINE_END);
+        add(new JButton(actions.addAction("Browse", UserMsg.gettext("Browse")).setTooltip(UserMsg.gettext("Browse for a directory to select."))), BorderLayout.LINE_END);
     }
 
     /**
@@ -100,8 +101,6 @@ public class FileField extends JPanel implements Field {
     public JComponent getComponent() {
         return this;
     }
-
-    private static final String BROWSE = "Browse";
 
     /**
      * The text field

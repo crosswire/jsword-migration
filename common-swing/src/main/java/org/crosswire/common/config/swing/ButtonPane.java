@@ -32,6 +32,7 @@ import javax.swing.SwingConstants;
 
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.EdgeBorder;
+import org.crosswire.common.swing.UserMsg;
 
 /**
  * A pane that contains ok, cancel and apply buttons.
@@ -41,9 +42,6 @@ import org.crosswire.common.swing.EdgeBorder;
  * @author Joe Walker [joe at eireneh dot com]
  */
 public class ButtonPane extends JPanel {
-    private static final String OK = "OK";
-    private static final String CANCEL = "Cancel";
-    private static final String APPLY = "Apply";
 
     /**
      * Simple ctor
@@ -57,7 +55,7 @@ public class ButtonPane extends JPanel {
      * GUI init.
      */
     private void init() {
-        actions = new ActionFactory(ButtonPane.class, this);
+        actions = new ActionFactory(this);
 
         // PENDING: find some way to do default buttons
         // dialog.getRootPane().setDefaultButton(ok);
@@ -67,9 +65,9 @@ public class ButtonPane extends JPanel {
 
         buttons.setLayout(new GridLayout(1, 2, 10, 10));
         buttons.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        buttons.add(new JButton(actions.getAction(OK)));
-        buttons.add(new JButton(actions.getAction(CANCEL)));
-        buttons.add(new JButton(actions.getAction(APPLY)));
+        buttons.add(new JButton(actions.addAction("OK", UserMsg.gettext("OK"))));
+        buttons.add(new JButton(actions.addAction("Cancel", UserMsg.gettext("Cancel"))));
+        buttons.add(new JButton(actions.addAction("Apply", UserMsg.gettext("Apply"))));
 
         this.setBorder(new EdgeBorder(SwingConstants.NORTH));
         this.setLayout(new BorderLayout(10, 10));

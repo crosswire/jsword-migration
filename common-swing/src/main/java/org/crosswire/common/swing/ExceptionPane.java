@@ -226,14 +226,13 @@ public final class ExceptionPane extends JPanel {
         dialog.getRootPane().setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, pane.upper.getBackground()));
         dialog.getRootPane().add(pane, BorderLayout.CENTER);
 
-        final ActionFactory actions = new ActionFactory(ExceptionPane.class, pane);
+        final ActionFactory actions = new ActionFactory(pane);
 
-        JButton ok = actions.createJButton("OK", new ActionListener()
-                {
-                    public void actionPerformed(ActionEvent e) {
-                        dialog.dispose();
-                    }
-                });
+        JButton ok = actions.createJButton(actions.addAction("OK", UserMsg.gettext("OK")), new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dialog.dispose();
+            }
+        });
 
         pane.okBox.add(ok);
         dialog.getRootPane().setDefaultButton(ok);

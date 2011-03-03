@@ -30,6 +30,7 @@ import javax.swing.JRadioButton;
 
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.UserMsg;
 import org.crosswire.common.util.Convert;
 
 /**
@@ -44,10 +45,10 @@ public class BooleanField extends JPanel implements Field {
      * Give the values list (true/false) to the ComboBox
      */
     public BooleanField() {
-        ActionFactory actions = new ActionFactory(BooleanField.class, this);
+        ActionFactory actions = new ActionFactory(this);
 
-        on = new JRadioButton(actions.getAction(YES));
-        off = new JRadioButton(actions.getAction(NO));
+        on = new JRadioButton(actions.addAction("Yes", UserMsg.gettext("Yes")));
+        off = new JRadioButton(actions.addAction("No", UserMsg.gettext("No")));
 
         ButtonGroup group = new ButtonGroup();
         group.add(on);
@@ -104,9 +105,6 @@ public class BooleanField extends JPanel implements Field {
     public JComponent getComponent() {
         return this;
     }
-
-    private static final String YES = "Yes";
-    private static final String NO = "No";
 
     /**
      * The 'on' button

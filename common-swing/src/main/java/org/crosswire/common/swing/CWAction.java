@@ -32,6 +32,7 @@ import javax.swing.Icon;
 import javax.swing.KeyStroke;
 import javax.swing.event.EventListenerList;
 
+import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.StringUtil;
 
 /**
@@ -57,16 +58,73 @@ public class CWAction extends AbstractAction {
      */
     public static final String TOOL_TIP = "ToolTip";
 
-    public void addLargeIcon(String iconPath) {
-        addIcon(LARGE_ICON, iconPath);
+    /**
+     * Set or clear, using null, the icon on this action.
+     * @param icon the small icon to set
+     * @return this action
+     */
+    public CWAction setLargeIcon(Icon icon) {
+        putValue(LARGE_ICON, icon);
+        return this;
     }
 
-    public void addSmallIcon(String iconPath) {
-        addIcon(SMALL_ICON, iconPath);
+    public CWAction setLargeIcon(String iconPath) {
+        return setLargeIcon(GuiUtil.getIcon(iconPath));
     }
 
-    public void addAccelerator(String acceleratorSpec) throws NumberFormatException {
+    public CWAction setTooltip(String tooltip) {
+        putValue(Action.SHORT_DESCRIPTION, tooltip);
+        return this;
+    }
+    /**
+     * Set or clear, using null, the icon on this action.
+     * @param icon the small icon to set
+     * @return this action
+     */
+    public CWAction setSmallIcon(Icon icon) {
+        putValue(SMALL_ICON, icon);
+        return this;
+    }
+
+    public CWAction setSmallIcon(String iconPath) {
+        return setSmallIcon(GuiUtil.getIcon(iconPath));
+    }
+
+    /**
+     * Set the accelerator key from spec. If the spec is invalid it is logged and ignored.
+     * @param acceleratorSpec
+     * @return this action
+     */
+    public CWAction setAccelerator(String acceleratorSpec) {
         putValue(Action.ACCELERATOR_KEY, getAccelerator(acceleratorSpec));
+        return this;
+    }
+
+    /**
+     * Set enabled either true or false on this action.
+     * 
+     * @param newEnabled the desired state
+     * @return this action
+     */
+    public CWAction enable(boolean newEnabled) {
+        setEnabled(newEnabled);
+        return this;
+    }
+
+    /**
+     * Create a clone of this action and attache the listener. If
+     * no listener is supplied, the action is not cloned.
+     * 
+     * @param listener the listener for the action
+     * @return a cloned action with the listener attached or the current action
+     */
+    public CWAction setListener(ActionListener listener) {
+        CWAction action = this;
+        if (listener != null) {
+            action = (CWAction) action.clone();
+            action.addActionListener(listener);
+        }
+        return action;
     }
 
     /**
@@ -153,23 +211,17 @@ public class CWAction extends AbstractAction {
         return action;
     }
 
-    private void addIcon(String key, String iconPath) {
-        Icon icon = null;
-        if (iconPath != null && iconPath.length() > 0) {
-            icon = GuiUtil.getIcon(iconPath);
-        }
-        if (icon != null) {
-            putValue(key, icon);
-        }
-    }
-
     /**
      * Convert the string to a valid Accelerator (that is a KeyStroke)
      */
-    private KeyStroke getAccelerator(String acceleratorSpec) throws NumberFormatException {
+    private KeyStroke getAccelerator(String acceleratorSpec) {
         KeyStroke accelerator = null;
         if (acceleratorSpec != null && acceleratorSpec.length() > 0) {
-            accelerator = getKeyStroke(acceleratorSpec);
+            try {
+                accelerator = getKeyStroke(acceleratorSpec);
+            } catch (NumberFormatException nfe) {
+                log.warn("Could not parse integer for accelerator of action", nfe);
+            }
         }
         return accelerator;
     }
@@ -177,30 +229,35 @@ public class CWAction extends AbstractAction {
    /**
     *
     */
-  private KeyStroke getKeyStroke(String acceleratorSpec) throws NumberFormatException {
-      int keyModifier = 0;
-      int key = 0;
-      String[] parts = StringUtil.split(acceleratorSpec, ',');
-      for (int j = 0; j < parts.length; j++) {
-          String part = parts[j].trim();
-          if ("ctrl".equalsIgnoreCase(part)) {
-              // use this so MacOS users are happy
-              // It will map to the CMD key on Mac; CTRL otherwise.
-              keyModifier |= Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
-          } else if ("shift".equalsIgnoreCase(part)) {
-              keyModifier |= InputEvent.SHIFT_MASK;
-          } else if ("alt".equalsIgnoreCase(part)) {
-              keyModifier |= InputEvent.ALT_MASK;
-          } else if (part.startsWith("0x")) {
-              key = Integer.parseInt(part.substring(2), 16);
-          } else if (part.length() == 1) {
-              key = part.charAt(0);
-          }
-      }
-      return KeyStroke.getKeyStroke(key, keyModifier);
-  }
+    private KeyStroke getKeyStroke(String acceleratorSpec) throws NumberFormatException {
+        int keyModifier = 0;
+        int key = 0;
+        String[] parts = StringUtil.split(acceleratorSpec, ',');
+        for (int j = 0; j < parts.length; j++) {
+            String part = parts[j].trim();
+            if ("ctrl".equalsIgnoreCase(part)) {
+                // use this so MacOS users are happy
+                // It will map to the CMD key on Mac; CTRL otherwise.
+                keyModifier |= Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+            } else if ("shift".equalsIgnoreCase(part)) {
+                keyModifier |= InputEvent.SHIFT_MASK;
+            } else if ("alt".equalsIgnoreCase(part)) {
+                keyModifier |= InputEvent.ALT_MASK;
+            } else if (part.startsWith("0x")) {
+                key = Integer.parseInt(part.substring(2), 16);
+            } else if (part.length() == 1) {
+                key = part.charAt(0);
+            }
+        }
+        return KeyStroke.getKeyStroke(key, keyModifier);
+    }
 
     private EventListenerList listeners;
+
+    /**
+     * The log stream
+     */
+    private static final Logger log = Logger.getLogger(CWAction.class);
 
     /**
      * Serialization ID

@@ -52,6 +52,7 @@ import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.swing.FormPane;
 import org.crosswire.common.swing.GuiUtil;
+import org.crosswire.common.swing.UserMsg;
 
 /**
  * A Configuration Editor that provides a tree for navigating to options.

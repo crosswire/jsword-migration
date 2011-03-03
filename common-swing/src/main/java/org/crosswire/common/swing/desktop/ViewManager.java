@@ -21,6 +21,7 @@
  */
 package org.crosswire.common.swing.desktop;
 
+
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -34,6 +35,7 @@ import javax.swing.JRadioButtonMenuItem;
 
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
+import org.crosswire.common.swing.UserMsg;
 import org.crosswire.common.swing.desktop.event.TitleChangedEvent;
 import org.crosswire.common.swing.desktop.event.TitleChangedListener;
 import org.crosswire.common.swing.desktop.event.ViewEvent;
@@ -52,12 +54,41 @@ import org.crosswire.common.swing.desktop.event.ViewEventListener;
  */
 public class ViewManager implements Viewable, TitleChangedListener, ViewEventListener {
     /**
-     * Construct a ViewManager.
+     * Construct a ViewManager. The supplied action factory has this as it's bean and
+     * has actions for the following keys:
+     * <ul>
+     * <li>ViewManager.TAB_MODE</li>
+     * <li>ViewManager.WINDOW_MODE</li>
+     * <li>ViewManager.NEW_TAB</li>
+     * <li>ViewManager.CLOSE_VIEW</li>
+     * <li>ViewManager.CLEAR_VIEW</li>
+     * <li>ViewManager.CLEAR_ALL_VIEWS</li>
+     * <li>ViewManager.CLOSE_OTHER_VIEWS</li>
+     * </ul> 
+     * 
      * @param generator a ViewGenerator that this ViewManager manages.
-     * @param msg the class for which i18n properties are defined
      */
-    public ViewManager(ViewGenerator generator, Class<?> msg) {
+    public ViewManager(ViewGenerator generator) {
         this.generator = generator;
+    }
+
+    /**
+     * Before first use, the ViewGenerator must supply an action factory.
+     * The supplied action factory has this as it's bean and
+     * has actions for the following keys:
+     * <ul>
+     * <li>ViewManager.TAB_MODE</li>
+     * <li>ViewManager.WINDOW_MODE</li>
+     * <li>ViewManager.NEW_TAB</li>
+     * <li>ViewManager.CLEAR_VIEW</li>
+     * <li>ViewManager.CLOSE_VIEW</li>
+     * <li>ViewManager.CLOSE_ALL_VIEWS</li>
+     * <li>ViewManager.CLOSE_OTHER_VIEWS</li>
+     * </ul> 
+     * 
+     * @param actions the class for which i18n properties are defined
+     */
+    public void setActionFactory(ActionFactory actions) {
         panel = new JPanel(new GridBagLayout());
 
         gbc = new GridBagConstraints();
@@ -68,10 +99,10 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
         panel.add(getViewLayout().getPanel(), getConstraint());
 
         // Get the action definitions from the calling class
-        contextActions = new ActionFactory(msg, this);
+        contextActions = actions;
 
-        tdiView = new JRadioButtonMenuItem(contextActions.getAction(TAB_MODE));
-        mdiView = new JRadioButtonMenuItem(contextActions.getAction(WINDOW_MODE));
+        tdiView = new JRadioButtonMenuItem(contextActions.addAction(TAB_MODE, UserMsg.gettext("Tabbed Document Interface")));
+        mdiView = new JRadioButtonMenuItem(contextActions.addAction(WINDOW_MODE, UserMsg.gettext("Multiple Document Interface")));
 
         ButtonGroup grpViews = new ButtonGroup();
         grpViews.add(mdiView);
@@ -401,7 +432,7 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
      * @return the action requested or null if it does not exist
      */
     public Action getContextAction(String key) {
-        return contextActions.getAction(key);
+        return contextActions.findAction(key);
     }
 
     /* private */final Object getConstraint() {
@@ -460,14 +491,10 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
     public static final String TAB_MODE = "TabMode";
     public static final String WINDOW_MODE = "WindowMode";
     public static final String NEW_TAB = "NewTab";
-    public static final String CLOSE_VIEW = "CloseView";
     public static final String CLEAR_VIEW = "ClearView";
+    public static final String CLOSE_VIEW = "CloseView";
     public static final String CLOSE_ALL_VIEWS = "CloseAllViews";
     public static final String CLOSE_OTHER_VIEWS = "CloseOtherViews";
-    public static final String OPEN = "Open";
-    public static final String SAVE = "Save";
-    public static final String SAVE_AS = "SaveAs";
-    public static final String SAVE_ALL = "SaveAll";
 
     /**
      * The initial layout state

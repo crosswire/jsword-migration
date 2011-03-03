@@ -62,7 +62,7 @@ public class QuickHelpDialog extends JDialog {
      * This method initializes the GUI
      */
     private void initialize() {
-        actions = new ActionFactory(QuickHelpDialog.class, this);
+        actions = new ActionFactory(this);
 
         txtHelp = new JEditorPane();
         txtHelp.setEditable(false);
@@ -83,7 +83,7 @@ public class QuickHelpDialog extends JDialog {
         JScrollPane scrHelp = new CWScrollPane(txtHelp);
         scrHelp.setBorder(null);
 
-        JButton btnOK = new JButton(actions.getAction(OK));
+        JButton btnOK = new JButton(actions.addAction("Add", UserMsg.gettext("Add")));
         JPanel pnlOK = new JPanel();
         pnlOK.setLayout(new FlowLayout(FlowLayout.TRAILING));
         pnlOK.add(btnOK, null);
@@ -141,8 +141,6 @@ public class QuickHelpDialog extends JDialog {
     public final void close() {
         setVisible(false);
     }
-
-    private static final String OK = "OK";
 
     private transient ActionFactory actions;
 

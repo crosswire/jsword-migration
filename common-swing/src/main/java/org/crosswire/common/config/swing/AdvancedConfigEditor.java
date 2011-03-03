@@ -39,6 +39,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.CWScrollPane;
+import org.crosswire.common.swing.UserMsg;
 
 /**
  * A further refinement of a Tree Configuration Editor

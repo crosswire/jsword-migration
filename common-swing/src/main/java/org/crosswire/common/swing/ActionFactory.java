@@ -43,6 +43,8 @@ import org.crosswire.common.util.OSType;
 import org.crosswire.common.util.StringUtil;
 
 /**
+ * The ActionFactory is being radically updated. Take the following with a grain of salt.
+ * 
  * The ActionFactory is responsible for creating CWActions and making them
  * available to the program. Each Action is constructed from resources of the
  * form: ActionName.field=value where ActionName is the ACTION_COMMAND_KEY value
@@ -132,22 +134,13 @@ import org.crosswire.common.util.StringUtil;
  */
 public class ActionFactory implements ActionListener, Actionable {
     /**
-     * Creates an ActionFactory that looks up properties according to pattern
-     * and calls methods on the provided bean. By separating these two, it
-     * distinguishes between the object to call and the type to look up
-     * resources against. This is useful for when you are writing a class
-     * with subclasses but wish to keep the resources registered in the
-     * name of the superclass.
+     * Creates an ActionFactory that merely holds actions.
+     * It does not lookup properties to construct an action. Constructing an action is the
+     * responsibility of the calling class. It does not arrange for actions to perform actions.
      * 
-     * @param type the class against which properties are looked up.
-     * @param bean the object to which the actions belong
      */
-    public ActionFactory(Class<?> type, Object bean) {
-        this.bean = bean;
+    public ActionFactory() {
         actions = new HashMap<String,CWAction>();
-        if (type != null) {
-            buildActionMap(type);
-        }
     }
 
     /**
@@ -158,31 +151,47 @@ public class ActionFactory implements ActionListener, Actionable {
      * @param bean
      */
     public ActionFactory(Object bean) {
-        this(null, bean);
+        this();
+        this.bean = bean;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Creates an ActionFactory that looks up properties according to pattern
+     * and calls methods on the provided bean. By separating these two, it
+     * distinguishes between the object to call and the type to look up
+     * resources against. This is useful for when you are writing a class
+     * with subclasses but wish to keep the resources registered in the
+     * name of the superclass.
      * 
-     * @see
-     * org.crosswire.common.swing.Actionable#performAction(java.lang.String)
+     * @param type the class against which properties are looked up.
+     * @param bean the object to which the actions belong
+     * @deprecated
+     */
+    @Deprecated
+    public ActionFactory(Class<?> type, Object bean) {
+        this(bean);
+        buildActionMap(type);
+    }
+
+    /* (non-Javadoc)
+     * @see org.crosswire.common.swing.Actionable#actionPerformed(java.lang.String)
      */
     public void actionPerformed(String action) {
-        Action act = getAction(action);
+        Action act = findAction(action);
         act.actionPerformed(new ActionEvent(this, 0, action));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent ev) {
         String action = ev.getActionCommand();
 
-        assert action != null;
-        assert action.length() != 0;
+        if (action == null || action.length() == 0) {
+            // There's nothing to do.
+            log.error("No action available for: " + bean.getClass().getName());
+            return;
+        }
 
         // Instead of cascading if/then/else
         // use reflection to do a direct lookup and call
@@ -221,8 +230,21 @@ public class ActionFactory implements ActionListener, Actionable {
      * @param key
      *            the internal name of the CWAction
      * @return CWAction null if it does not exist
+     * @deprecated
      */
+    @Deprecated
     public Action getAction(String key) {
+        return getAction(key, null);
+    }
+
+    /**
+     * Get the Action for the given actionName.
+     * 
+     * @param key
+     *            the internal name of the CWAction
+     * @return CWAction null if it does not exist
+     */
+    public Action findAction(String key) {
         return getAction(key, null);
     }
 
@@ -244,67 +266,31 @@ public class ActionFactory implements ActionListener, Actionable {
             return action;
         }
         log.info("Missing key: '" + key + "'. Known keys are: " + StringUtil.join(actions.keySet().toArray(), ", "));
-        assert false;
+//        assert false;
+        return bogusAction(key);
+    }
 
+    private CWAction bogusAction(String key) {
         CWAction getOutOfJailFreeAction = new CWAction();
-
         getOutOfJailFreeAction.putValue(Action.NAME, key);
         getOutOfJailFreeAction.putValue(Action.SHORT_DESCRIPTION, MISSING_RESOURCE);
         getOutOfJailFreeAction.setEnabled(true);
         getOutOfJailFreeAction.addActionListener(this);
-
         return getOutOfJailFreeAction;
     }
 
     /**
-     * Build a button from an action that consist solely of the icon.
-     * 
-     * @param key
-     *            the action to use
-     * @return the button
-     */
-    public JButton createActionIcon(String key) {
-        return createActionIcon(key, null);
-    }
-
-    /**
-     * Build a button from an action that consist solely of the icon.
-     * 
-     * @param key
-     *            the action to use
-     * @return the button
-     */
-    public JButton createActionIcon(String key, ActionListener listener) {
-        Action action = getAction(key, listener);
-
-        JButton button = new JButton(action);
-        button.setBorderPainted(false);
-        button.setContentAreaFilled(false);
-        button.setText(null);
-        button.setMargin(new Insets(0, 0, 0, 0));
-        return button;
-    }
-
-    /**
      * Build a button from an action.
      * 
-     * @param key
+     * @param action
      *            the action to use
      * @return the button
      */
-    public JButton createJButton(String key) {
-        return createJButton(key, null);
-    }
-
-    /**
-     * Build a button from an action.
-     * 
-     * @param key
-     *            the action to use
-     * @return the button
-     */
-    public JButton createJButton(String key, ActionListener listener) {
-        return new JButton(getAction(key, listener));
+    public JButton createJButton(Action action, ActionListener listener) {
+        CWAction act = (CWAction) action;
+        act = (CWAction) act.clone();
+        act.addActionListener(listener);
+        return new JButton(act);
     }
 
     /**
@@ -361,26 +347,37 @@ public class ActionFactory implements ActionListener, Actionable {
      *            to initialize widgets tied to actions to disabled. Once the
      *            action is created, it's state can be changed and the tied
      *            widgets will behave appropriately.
+     * @param listener
+     *            A listener for the action. When present the action is not shared, but cloned.
      * @return the stored or newly constructed action
      */
-    public CWAction addAction(String key, String name, String tooltip, String smallIconPath, String largeIconPath, String acceleratorSpec, String enabled) {
-        CWAction cwAction = buildAction(key, name, tooltip, smallIconPath, largeIconPath, acceleratorSpec, enabled);
-        cwAction.addActionListener(this);
-        actions.put(key, cwAction);
+    public CWAction addAction(String key, String name) {
+        CWAction cwAction = actions.get(key);
+
+        if (cwAction == null) {
+            cwAction = buildAction(key, name);
+            cwAction.addActionListener(this);
+            actions.put(key, cwAction);
+        }
+
         return cwAction;
     }
 
-    public CWAction addAction(String key, String name) {
-        return addAction(key, name, null, null, null, null, null);
+    public CWAction addAction(String key) {
+        return addAction(key, null);
     }
 
-    public CWAction addAction(String key, String name, String tooltip) {
-        return addAction(key, name, tooltip, null, null, null, null);
+    public JButton flatten(JButton button) {
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+        button.setText(null);
+        button.setMargin(new Insets(0, 0, 0, 0));
+        return button;        
     }
 
-    private CWAction buildAction(String key, String name, String tooltip, String smallIconPath, String largeIconPath, String acceleratorSpec, String enabled) {
+    private CWAction buildAction(String key, String name) {
         if (key == null || key.length() == 0) {
-            log.warn("Acronymn is missing for CWAction");
+            log.warn("Key is missing for CWAction");
         }
 
         CWAction cwAction = actions.get(key);
@@ -392,36 +389,28 @@ public class ActionFactory implements ActionListener, Actionable {
         cwAction = new CWAction();
         cwAction.putValue(Action.ACTION_COMMAND_KEY, key);
 
-        JLabel cwLabel = CWLabel.createJLabel(name);
-        cwAction.putValue(Action.NAME, cwLabel.getText());
+        // For buttons that are just icons, there may not be a "name" field.
+        if (name != null) {
+            JLabel cwLabel = CWLabel.createJLabel(name);
+            cwAction.putValue(Action.NAME, cwLabel.getText());
 
-        // Mac's don't have mnemonics.
-        // Otherwise, dig out the mnemonic.
-        if (!OSType.MAC.equals(OSType.getOSType())) {
-            cwAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(cwLabel.getDisplayedMnemonic()));
+            // Mac's don't have mnemonics.
+            // Otherwise, dig out the mnemonic.
+            if (!OSType.MAC.equals(OSType.getOSType())) {
+                cwAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(cwLabel.getDisplayedMnemonic()));
+            }
         }
 
-        cwAction.putValue(Action.SHORT_DESCRIPTION, tooltip);
-
-        cwAction.addLargeIcon(largeIconPath);
-        cwAction.addSmallIcon(smallIconPath);
-
-        try {
-            cwAction.addAccelerator(acceleratorSpec);
-        } catch (NumberFormatException nfe) {
-            log.warn("Could not parse integer for accelerator of action " + key, nfe);
-        }
-
-        boolean flag = enabled == null ? true : Boolean.valueOf(enabled).booleanValue();
-        cwAction.setEnabled(flag);
-
-        return cwAction;
+        return cwAction;    
     }
 
     /**
      * Build the map of actions from resources
      */
     private void buildActionMap(Class<?> basis) {
+        if (basis == null) {
+            return;
+        }
         try {
             StringBuilder basisName = new StringBuilder(basis.getName());
             ResourceBundle resources = ResourceBundle.getBundle(basisName.toString(), Locale.getDefault(), CWClassLoader.instance(basis));
@@ -469,7 +458,14 @@ public class ActionFactory implements ActionListener, Actionable {
                     String tooltip = getActionString(resources, nickname, actionName, CWAction.TOOL_TIP);
                     String acceleratorSpec = getActionString(resources, nickname, actionName, Action.ACCELERATOR_KEY);
 
-                    CWAction cwAction = buildAction(actionName, label, tooltip, smallIconStr, largeIconStr, acceleratorSpec, enabledStr);
+                    boolean enabled = enabledStr == null ? true : Boolean.valueOf(enabledStr).booleanValue();
+
+                    CWAction cwAction = buildAction(actionName, label);
+                    cwAction.setTooltip(tooltip);
+                    cwAction.setSmallIcon(smallIconStr);
+                    cwAction.setSmallIcon(largeIconStr);
+                    cwAction.setAccelerator(acceleratorSpec);
+                    cwAction.enable(enabled);
                     cwAction.addActionListener(this);
                     actions.put(actionName, cwAction);
                 }

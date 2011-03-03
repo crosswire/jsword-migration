@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.net.URI;
 
 import org.crosswire.common.config.Config;
+import org.crosswire.common.swing.UserMsg;
 import org.crosswire.common.util.LucidRuntimeException;
 import org.crosswire.common.util.PluginUtil;
 import org.crosswire.common.util.Reporter;

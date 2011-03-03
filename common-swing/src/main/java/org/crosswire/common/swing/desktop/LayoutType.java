@@ -21,6 +21,8 @@
  */
 package org.crosswire.common.swing.desktop;
 
+import org.crosswire.common.swing.UserMsg;
+
 
 /**
  * Types of ViewLayouts. Currently there are two types of desktop layouts:

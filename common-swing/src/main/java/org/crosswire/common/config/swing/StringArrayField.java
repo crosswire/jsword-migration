@@ -48,6 +48,7 @@ import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWOptionPane;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiUtil;
+import org.crosswire.common.swing.UserMsg;
 import org.crosswire.common.util.Convert;
 
 /**
@@ -64,7 +65,7 @@ public class StringArrayField extends JPanel implements Field {
      * Create a PropertyHashtableField for editing String arrays.
      */
     public StringArrayField() {
-        actions = new ActionFactory(StringArrayField.class, this);
+        actions = new ActionFactory(this);
 
         list_model = new DefaultComboBoxModel();
         list = new JList(list_model);
@@ -76,9 +77,9 @@ public class StringArrayField extends JPanel implements Field {
 
         JScrollPane scroll = new CWScrollPane(list);
 
-        buttons.add(new JButton(actions.getAction(ADD)));
-        buttons.add(new JButton(actions.getAction(REMOVE)));
-        buttons.add(new JButton(actions.getAction(UPDATE)));
+        buttons.add(new JButton(actions.addAction("Add", UserMsg.gettext("Add"))));
+        buttons.add(new JButton(actions.addAction("Remove", UserMsg.gettext("Remove"))));
+        buttons.add(new JButton(actions.addAction("Update", UserMsg.gettext("Update"))));
 
         Border title = BorderFactory.createTitledBorder(Msg.COMPONENT_EDITOR.toString());
         Border pad = BorderFactory.createEmptyBorder(5, 5, 5, 5);
@@ -204,7 +205,7 @@ public class StringArrayField extends JPanel implements Field {
      * @throws ClassNotFoundException
      */
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
-        actions = new ActionFactory(StringArrayField.class, this);
+        actions = new ActionFactory(this);
         is.defaultReadObject();
     }
 
@@ -245,10 +246,6 @@ public class StringArrayField extends JPanel implements Field {
          */
         private static final long serialVersionUID = 3256444715753878326L;
     }
-
-    private static final String ADD = "AddStringEntry";
-    private static final String REMOVE = "RemoveStringEntry";
-    private static final String UPDATE = "UpdateStringEntry";
 
     /**
      * What character do we use to separate strings?

@@ -74,6 +74,12 @@ public final class GuiUtil {
      * @return the image or null if the icon is not found.
      */
     public static ImageIcon getIcon(String name) {
+        // It is expected that there is a 3 char extension
+        // So the minimum file name length is 5
+        if (name == null || name.length() < 5) {
+            return null;
+        }
+
         try {
             URL url = ResourceUtil.getResource(name);
             return new ImageIcon(url);

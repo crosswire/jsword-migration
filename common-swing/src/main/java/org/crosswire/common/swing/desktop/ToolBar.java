@@ -40,6 +40,7 @@ import javax.swing.SwingConstants;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWAction;
 import org.crosswire.common.swing.GuiUtil;
+import org.crosswire.common.swing.UserMsg;
 import org.crosswire.common.util.OSType;
 
 /**
@@ -61,7 +62,7 @@ public class ToolBar extends JToolBar {
      */
     public ToolBar(JFrame frame) {
         this.frame = frame;
-        actions = new ActionFactory(UserMsg.class, this);
+        actions = new ActionFactory(this);
 
         setRollover(true);
 
@@ -169,7 +170,7 @@ public class ToolBar extends JToolBar {
      *         toolbar
      */
     public JMenuItem getShowToggle() {
-        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.getAction(TOOLBAR_TOGGLE));
+        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.addAction("ToolBarToggle", UserMsg.gettext("Show Tool Bar")).setTooltip(UserMsg.gettext("Toggle the display of the tool bar")).setAccelerator("B,ctrl"));
         toggle.setSelected(true);
         return toggle;
     }
@@ -180,7 +181,7 @@ public class ToolBar extends JToolBar {
      * @return a check box that can be used to toggle the text
      */
     public JMenuItem getTextToggle() {
-        return new JCheckBoxMenuItem(actions.getAction(TOOLBAR_TEXT));
+        return new JCheckBoxMenuItem(actions.addAction("ToolBarText", UserMsg.gettext("Show Tool Bar Text")).setTooltip(UserMsg.gettext("Toggle the display of the tool bar text")));
     }
 
     /**
@@ -190,7 +191,7 @@ public class ToolBar extends JToolBar {
      * @return a check box that can be used to toggle the size of the icons
      */
     public JMenuItem getIconSizeToggle() {
-        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.getAction(TOOLBAR_LARGE));
+        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.addAction("ToolBarText", UserMsg.gettext("Large Tool Bar")).setTooltip(UserMsg.gettext("Toggle size of the tool bar icons")));
         toggle.setSelected(true);
         return toggle;
     }
@@ -227,13 +228,9 @@ public class ToolBar extends JToolBar {
      * @throws ClassNotFoundException
      */
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
-        actions = new ActionFactory(ToolBar.class, this);
+        actions = new ActionFactory(this);
         is.defaultReadObject();
     }
-
-    private static final String TOOLBAR_TOGGLE = "ToolBarToggle";
-    private static final String TOOLBAR_TEXT = "ToolBarText";
-    private static final String TOOLBAR_LARGE = "ToolBarLarge";
 
     /**
      * The frame in which the toolbar is shown. It must be border layout with

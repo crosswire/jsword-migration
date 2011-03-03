@@ -32,6 +32,7 @@ import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
 import org.crosswire.common.swing.GuiUtil;
+import org.crosswire.common.swing.UserMsg;
 import org.crosswire.common.swing.desktop.event.ViewEvent;
 import org.crosswire.common.swing.desktop.event.ViewEventListener;
 
