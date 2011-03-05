@@ -82,12 +82,12 @@ public class FontChooser extends JPanel {
         size.addItemListener(changer);
 
         // TRANSLATOR: This is an option for a bold font.
-        bold = new JCheckBox(UserMsg.gettext("Bold"));
+        bold = new JCheckBox(CWMsg.gettext("Bold"));
         bold.setSelected(font.isBold());
         bold.addItemListener(changer);
 
         // TRANSLATOR: This is an option for an italic font.
-        italic = new JCheckBox(UserMsg.gettext("Italic"));
+        italic = new JCheckBox(CWMsg.gettext("Italic"));
         italic.setSelected(font.isItalic());
         italic.addItemListener(changer);
 
@@ -118,13 +118,13 @@ public class FontChooser extends JPanel {
 
         final ActionFactory actions = new ActionFactory(fontc);
 
-        JButton ok = actions.createJButton(actions.addAction("OK", UserMsg.gettext("OK")), new ActionListener() {
+        JButton ok = actions.createJButton(actions.addAction("OK", CWMsg.gettext("OK")), new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 fontc.dialog.dispose();
             }
         });
 
-        JButton cancel = actions.createJButton(actions.addAction("Cancel", UserMsg.gettext("Cancel")), new ActionListener() {
+        JButton cancel = actions.createJButton(actions.addAction("Cancel", CWMsg.gettext("Cancel")), new ActionListener() {
             public void actionPerformed(ActionEvent ex) {
                 fontc.dialog.setVisible(false);
                 fontc.font = null;
@@ -137,7 +137,7 @@ public class FontChooser extends JPanel {
         buttons.add(cancel);
 
         // TRANSLATOR: Label indicating that the user should select a font.
-        fontc.setBorder(BorderFactory.createTitledBorder(UserMsg.gettext("Select Font")));
+        fontc.setBorder(BorderFactory.createTitledBorder(CWMsg.gettext("Select Font")));
 
         fontc.dialog.getRootPane().setDefaultButton(ok);
         fontc.dialog.getContentPane().setLayout(new BorderLayout());

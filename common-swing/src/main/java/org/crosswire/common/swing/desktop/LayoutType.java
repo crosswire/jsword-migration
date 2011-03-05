@@ -21,7 +21,7 @@
  */
 package org.crosswire.common.swing.desktop;
 
-import org.crosswire.common.swing.UserMsg;
+import org.crosswire.common.swing.CWMsg;
 
 
 /**
@@ -50,7 +50,7 @@ public enum LayoutType {
         public String toString() {
             // TRANSLATOR: This is the name of one of two different ways to present Bible Views.
             // These show up in Options/Preferences.
-            return UserMsg.gettext("Tabbed Document Interface");
+            return CWMsg.gettext("Tabbed Document Interface");
         }
     },
 
@@ -67,7 +67,7 @@ public enum LayoutType {
         public String toString() {
             // TRANSLATOR: This is the name of one of two different ways to present Bible Views.
             // These show up in Options/Preferences.
-            return UserMsg.gettext("Multiple Document Interface");
+            return CWMsg.gettext("Multiple Document Interface");
         }
     };
 

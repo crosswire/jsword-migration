@@ -30,7 +30,7 @@ import javax.swing.JRadioButton;
 
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.ActionFactory;
-import org.crosswire.common.swing.UserMsg;
+import org.crosswire.common.swing.CWMsg;
 import org.crosswire.common.util.Convert;
 
 /**
@@ -47,8 +47,8 @@ public class BooleanField extends JPanel implements Field {
     public BooleanField() {
         ActionFactory actions = new ActionFactory(this);
 
-        on = new JRadioButton(actions.addAction("Yes", UserMsg.gettext("Yes")));
-        off = new JRadioButton(actions.addAction("No", UserMsg.gettext("No")));
+        on = new JRadioButton(actions.addAction("Yes", CWMsg.gettext("Yes")));
+        off = new JRadioButton(actions.addAction("No", CWMsg.gettext("No")));
 
         ButtonGroup group = new ButtonGroup();
         group.add(on);

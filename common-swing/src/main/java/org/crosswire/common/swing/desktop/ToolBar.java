@@ -40,7 +40,7 @@ import javax.swing.SwingConstants;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWAction;
 import org.crosswire.common.swing.GuiUtil;
-import org.crosswire.common.swing.UserMsg;
+import org.crosswire.common.swing.CWMsg;
 import org.crosswire.common.util.OSType;
 
 /**
@@ -170,7 +170,7 @@ public class ToolBar extends JToolBar {
      *         toolbar
      */
     public JMenuItem getShowToggle() {
-        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.addAction("ToolBarToggle", UserMsg.gettext("Show Tool Bar")).setTooltip(UserMsg.gettext("Toggle the display of the tool bar")).setAccelerator("B,ctrl"));
+        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.addAction("ToolBarToggle", CWMsg.gettext("Show Tool Bar")).setTooltip(CWMsg.gettext("Toggle the display of the tool bar")).setAccelerator("B,ctrl"));
         toggle.setSelected(true);
         return toggle;
     }
@@ -181,7 +181,7 @@ public class ToolBar extends JToolBar {
      * @return a check box that can be used to toggle the text
      */
     public JMenuItem getTextToggle() {
-        return new JCheckBoxMenuItem(actions.addAction("ToolBarText", UserMsg.gettext("Show Tool Bar Text")).setTooltip(UserMsg.gettext("Toggle the display of the tool bar text")));
+        return new JCheckBoxMenuItem(actions.addAction("ToolBarText", CWMsg.gettext("Show Tool Bar Text")).setTooltip(CWMsg.gettext("Toggle the display of the tool bar text")));
     }
 
     /**
@@ -191,7 +191,7 @@ public class ToolBar extends JToolBar {
      * @return a check box that can be used to toggle the size of the icons
      */
     public JMenuItem getIconSizeToggle() {
-        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.addAction("ToolBarText", UserMsg.gettext("Large Tool Bar")).setTooltip(UserMsg.gettext("Toggle size of the tool bar icons")));
+        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.addAction("ToolBarText", CWMsg.gettext("Large Tool Bar")).setTooltip(CWMsg.gettext("Toggle size of the tool bar icons")));
         toggle.setSelected(true);
         return toggle;
     }

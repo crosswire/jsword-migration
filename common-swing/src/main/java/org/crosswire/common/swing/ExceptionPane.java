@@ -88,7 +88,7 @@ public final class ExceptionPane extends JPanel {
         MessageFormat msgFormat = new MessageFormat("<html><font size=\"-1\">{0}</font> {1}");
         String exmsg = msgFormat.format(new Object[] {
                 // TRANSLATOR: When an error dialog is presented to the user, this labels the error.
-                UserMsg.gettext("An error has occurred:"), ExceptionPane.getHTMLDescription(ex)
+                CWMsg.gettext("An error has occurred:"), ExceptionPane.getHTMLDescription(ex)
         });
 
         // The upper pane
@@ -115,7 +115,7 @@ public final class ExceptionPane extends JPanel {
         detail = new JCheckBox();
         detail.addItemListener(new SelectedItemListener(this));
         // TRANSLATOR: When an error dialog is presented to the user, this labels the details of the error.
-        detail.setText(UserMsg.gettext("Details"));
+        detail.setText(CWMsg.gettext("Details"));
         if (detailShown) {
             buttons.add(detail, BorderLayout.LINE_START);
         }
@@ -152,7 +152,7 @@ public final class ExceptionPane extends JPanel {
             label.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
             label.setFont(courier);
             // TRANSLATOR: When an error dialog is presented to the user, this indicates that the Java source is unavailable.
-            label.setText(UserMsg.gettext("No File"));
+            label.setText(CWMsg.gettext("No File"));
             text = new JTextArea();
             text.setEditable(false);
             text.setFont(courier);
@@ -215,7 +215,7 @@ public final class ExceptionPane extends JPanel {
         Frame root = GuiUtil.getFrame(parent);
 
         // TRANSLATOR: When an error dialog is presented to the user, this is the title of the dialog.
-        String error = UserMsg.gettext("Error");
+        String error = CWMsg.gettext("Error");
 
         // If this dialog is not modal then if we display an exception dialog
         // where there is a modal dialog displayed then although this dialog
@@ -228,7 +228,7 @@ public final class ExceptionPane extends JPanel {
 
         final ActionFactory actions = new ActionFactory(pane);
 
-        JButton ok = actions.createJButton(actions.addAction("OK", UserMsg.gettext("OK")), new ActionListener() {
+        JButton ok = actions.createJButton(actions.addAction("OK", CWMsg.gettext("OK")), new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dialog.dispose();
             }
@@ -309,7 +309,7 @@ public final class ExceptionPane extends JPanel {
         String msg = ex.getMessage();
         if (msg == null || msg.equals("")) {
             // I18N(DMS)
-            msg = UserMsg.gettext("No description available.");
+            msg = CWMsg.gettext("No description available.");
         }
         String orig = XMLUtil.escape(msg);
         msg = orig.replaceAll("\n", "<br>");
@@ -338,7 +338,7 @@ public final class ExceptionPane extends JPanel {
         if (nex != null) {
             retcode.append("<p><br><font size=\"-1\">");
             // TRANSLATOR: When an error dialog is presented to the user, this labels the cause of the error.
-            retcode.append(UserMsg.gettext("This was caused by:"));
+            retcode.append(CWMsg.gettext("This was caused by:"));
             retcode.append("</font>");
             retcode.append(getHTMLDescription(nex));
         }
@@ -450,7 +450,7 @@ public final class ExceptionPane extends JPanel {
             String orig = name;
             Integer errorLine = Integer.valueOf(line_num);
             // TRANSLATOR: When an error dialog is presented to the user, this indicates that the Java source is unavailable.
-            mylabel.setText(UserMsg.gettext("No File"));
+            mylabel.setText(CWMsg.gettext("No File"));
 
             // Find a file
             name = File.separator + orig.replace('.', File.separatorChar) + FileUtil.EXTENSION_JAVA;
@@ -470,7 +470,7 @@ public final class ExceptionPane extends JPanel {
                         // TRANSLATOR: When an error dialog is presented to the user, this indicates that the location of the error in the Java source.
                         // {0} is a placeholder for the line number on which the error occurred.
                         // {1} is a placeholder for the Java file.
-                        String found = UserMsg.gettext("Error on line {0} in file {1}", new Object[] {
+                        String found = CWMsg.gettext("Error on line {0} in file {1}", new Object[] {
                                 errorLine, file.getCanonicalPath()
                         });
                         mylabel.setText(found);
@@ -515,14 +515,14 @@ public final class ExceptionPane extends JPanel {
             // TRANSLATOR: When an error dialog is presented to the user, this indicates that the Java source could not be found.
             // {1} is a placeholder for the line number on which the error occurred.
             // {0} is a placeholder for the Java file.
-            StringBuilder error = new StringBuilder(UserMsg.gettext("Cannot open source for: {0}, line: {1}\n", new Object[] {
+            StringBuilder error = new StringBuilder(CWMsg.gettext("Cannot open source for: {0}, line: {1}\n", new Object[] {
                     st.getClassName(level), errorLine
             }));
             for (int i = 0; i < srcs.length; i++) {
                 // TRANSLATOR: When an error dialog is presented to the user, and the Java source could not be found
                 // this indicates what locations were tried.
                 // {0} is a placeholder for the location.
-                error.append(UserMsg.gettext("Tried: {0}\n", new Object[] {
+                error.append(CWMsg.gettext("Tried: {0}\n", new Object[] {
                     srcs[i].getAbsolutePath() + name
                 }));
             }

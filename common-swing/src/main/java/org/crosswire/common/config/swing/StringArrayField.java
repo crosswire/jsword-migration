@@ -48,7 +48,7 @@ import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWOptionPane;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiUtil;
-import org.crosswire.common.swing.UserMsg;
+import org.crosswire.common.swing.CWMsg;
 import org.crosswire.common.util.Convert;
 
 /**
@@ -77,9 +77,9 @@ public class StringArrayField extends JPanel implements Field {
 
         JScrollPane scroll = new CWScrollPane(list);
 
-        buttons.add(new JButton(actions.addAction("Add", UserMsg.gettext("Add"))));
-        buttons.add(new JButton(actions.addAction("Remove", UserMsg.gettext("Remove"))));
-        buttons.add(new JButton(actions.addAction("Update", UserMsg.gettext("Update"))));
+        buttons.add(new JButton(actions.addAction("Add", CWMsg.gettext("Add"))));
+        buttons.add(new JButton(actions.addAction("Remove", CWMsg.gettext("Remove"))));
+        buttons.add(new JButton(actions.addAction("Update", CWMsg.gettext("Update"))));
 
         Border title = BorderFactory.createTitledBorder(Msg.COMPONENT_EDITOR.toString());
         Border pad = BorderFactory.createEmptyBorder(5, 5, 5, 5);

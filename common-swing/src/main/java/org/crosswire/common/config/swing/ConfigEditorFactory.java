@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.net.URI;
 
 import org.crosswire.common.config.Config;
-import org.crosswire.common.swing.UserMsg;
+import org.crosswire.common.swing.CWMsg;
 import org.crosswire.common.util.LucidRuntimeException;
 import org.crosswire.common.util.PluginUtil;
 import org.crosswire.common.util.Reporter;
@@ -117,7 +117,7 @@ public final class ConfigEditorFactory {
                 config.localToPermanent(uri);
             } catch (IOException ex) {
                 // TRANSLATOR: Common error condition: Preferences could not be saved. {0} is a placeholder for the preference file.
-                throw new LucidRuntimeException(UserMsg.gettext("Could not save preferences: {0}", new Object[] { uri }), ex);
+                throw new LucidRuntimeException(CWMsg.gettext("Could not save preferences: {0}", new Object[] { uri }), ex);
             }
         }
 

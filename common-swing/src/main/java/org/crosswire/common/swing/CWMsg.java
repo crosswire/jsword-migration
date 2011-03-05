@@ -30,7 +30,7 @@ import org.crosswire.common.util.MsgBase;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-final public class UserMsg extends MsgBase {
+final public class CWMsg extends MsgBase {
 
     /**
      * Get the internationalized text, but return key if key is unknown.
@@ -66,5 +66,5 @@ final public class UserMsg extends MsgBase {
         return msg.toString(key, params);
     }
 
-    private static MsgBase msg = new UserMsg();
+    private static MsgBase msg = new CWMsg();
 }

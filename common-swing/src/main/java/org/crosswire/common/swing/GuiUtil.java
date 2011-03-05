@@ -28,6 +28,7 @@ import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Insets;
 import java.awt.Label;
 import java.awt.TextComponent;
 import java.awt.Toolkit;
@@ -38,6 +39,7 @@ import java.util.MissingResourceException;
 
 import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -567,6 +569,14 @@ public final class GuiUtil {
                 applyOrientation(container.getComponent(i), orientation);
             }
         }
+    }
+
+    public static JButton flatten(JButton button) {
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+        button.setText(null);
+        button.setMargin(new Insets(0, 0, 0, 0));
+        return button;        
     }
 
     /**

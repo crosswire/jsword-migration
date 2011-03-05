@@ -52,7 +52,7 @@ import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.FixedSplitPane;
 import org.crosswire.common.swing.FormPane;
 import org.crosswire.common.swing.GuiUtil;
-import org.crosswire.common.swing.UserMsg;
+import org.crosswire.common.swing.CWMsg;
 
 /**
  * A Configuration Editor that provides a tree for navigating to options.
@@ -83,7 +83,7 @@ public class TreeConfigEditor extends AbstractConfigEditor {
         layout = new CardLayout();
 
         // TRANSLATOR: Label indicating that the user should select a preference category.
-        blank.add(new JLabel(UserMsg.gettext("Select a preference category")));
+        blank.add(new JLabel(CWMsg.gettext("Select a preference category")));
 
         deck.setLayout(layout);
         deck.add(blank, BLANK);
@@ -110,7 +110,7 @@ public class TreeConfigEditor extends AbstractConfigEditor {
         title.setForeground(Color.white);
         title.setOpaque(true);
         // TRANSLATOR: This is the label for the banner when one opens Options/Preferences.
-        title.setText(UserMsg.gettext("Preferences"));
+        title.setText(CWMsg.gettext("Preferences"));
         title.setAlignmentX(SwingConstants.LEADING);
 
         panel.setLayout(new BorderLayout());
@@ -195,7 +195,7 @@ public class TreeConfigEditor extends AbstractConfigEditor {
 
         // TRANSLATOR: This is the label for the banner when one opens a type of Options/Preferences.
         // {0} is the type of preference, e.g. Bible Display
-        title.setText(UserMsg.gettext("{0} Preferences", obj));
+        title.setText(CWMsg.gettext("{0} Preferences", obj));
 
         // Get the name of the current deck
         Object[] list = tree.getSelectionPath().getPath();

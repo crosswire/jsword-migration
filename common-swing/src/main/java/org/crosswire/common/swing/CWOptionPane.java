@@ -780,10 +780,10 @@ public class CWOptionPane extends JOptionPane {
      */
     private static ActionFactory actions = new ActionFactory(null);
     static {
-        actions.addAction("Yes", UserMsg.gettext("Yes"));
-        actions.addAction("No", UserMsg.gettext("No"));
-        actions.addAction("OK", UserMsg.gettext("OK"));
-        actions.addAction("Cancel", UserMsg.gettext("Cancel"));
+        actions.addAction("Yes", CWMsg.gettext("Yes"));
+        actions.addAction("No", CWMsg.gettext("No"));
+        actions.addAction("OK", CWMsg.gettext("OK"));
+        actions.addAction("Cancel", CWMsg.gettext("Cancel"));
     }
 
     /**

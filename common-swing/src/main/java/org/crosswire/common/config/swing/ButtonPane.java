@@ -32,7 +32,7 @@ import javax.swing.SwingConstants;
 
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.EdgeBorder;
-import org.crosswire.common.swing.UserMsg;
+import org.crosswire.common.swing.CWMsg;
 
 /**
  * A pane that contains ok, cancel and apply buttons.
@@ -65,9 +65,9 @@ public class ButtonPane extends JPanel {
 
         buttons.setLayout(new GridLayout(1, 2, 10, 10));
         buttons.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        buttons.add(new JButton(actions.addAction("OK", UserMsg.gettext("OK"))));
-        buttons.add(new JButton(actions.addAction("Cancel", UserMsg.gettext("Cancel"))));
-        buttons.add(new JButton(actions.addAction("Apply", UserMsg.gettext("Apply"))));
+        buttons.add(new JButton(actions.addAction("OK", CWMsg.gettext("OK"))));
+        buttons.add(new JButton(actions.addAction("Cancel", CWMsg.gettext("Cancel"))));
+        buttons.add(new JButton(actions.addAction("Apply", CWMsg.gettext("Apply"))));
 
         this.setBorder(new EdgeBorder(SwingConstants.NORTH));
         this.setLayout(new BorderLayout(10, 10));

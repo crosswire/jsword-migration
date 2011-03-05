@@ -96,7 +96,7 @@ public class JobsProgressBar extends JPanel implements WorkListener {
         CWAction action = actions.addAction("Stop");
         action.setSmallIcon("toolbarButtonGraphics/general/Stop16.gif");
         action.setListener(new JobCancelListener(job));
-        return actions.flatten(new JButton(action));
+        return GuiUtil.flatten(new JButton(action));
     }
 
     /*

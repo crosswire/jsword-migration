@@ -195,7 +195,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         action = actions.addAction("HelpAction");
         action.setTooltip(BibleDesktopMsg.gettext("Quick Search Help"));
         action.setSmallIcon("toolbarButtonGraphics/general/ContextualHelp16.gif");
-        JButton btnHelp = actions.flatten(new JButton(action));
+        JButton btnHelp = GuiUtil.flatten(new JButton(action));
         // TRANSLATOR: Title to the dialog that shows search tips.
         String dialogTitle = BibleDesktopMsg.gettext("Search Quick Help");
 

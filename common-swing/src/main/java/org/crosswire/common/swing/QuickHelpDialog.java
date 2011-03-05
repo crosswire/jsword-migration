@@ -83,7 +83,7 @@ public class QuickHelpDialog extends JDialog {
         JScrollPane scrHelp = new CWScrollPane(txtHelp);
         scrHelp.setBorder(null);
 
-        JButton btnOK = new JButton(actions.addAction("Add", UserMsg.gettext("Add")));
+        JButton btnOK = new JButton(actions.addAction("Add", CWMsg.gettext("Add")));
         JPanel pnlOK = new JPanel();
         pnlOK.setLayout(new FlowLayout(FlowLayout.TRAILING));
         pnlOK.add(btnOK, null);

@@ -39,7 +39,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.CWScrollPane;
-import org.crosswire.common.swing.UserMsg;
+import org.crosswire.common.swing.CWMsg;
 
 /**
  * A further refinement of a Tree Configuration Editor
@@ -148,7 +148,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
 
         // TRANSLATOR: This is the label for the banner when one opens a type of Options/Preferences.
         // {0} is the type of preference, e.g. Bible Display
-        title.setText(UserMsg.gettext("{0} Preferences", obj));
+        title.setText(CWMsg.gettext("{0} Preferences", obj));
 
         // Get the name of the current deck
         Object[] list = tree.getSelectionPath().getPath();

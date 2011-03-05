@@ -82,12 +82,12 @@ public class ParallelBookPicker extends JPanel implements BookProvider {
         CWAction action = actions.addAction("RemovePicker");
         action.setTooltip(BibleDesktopMsg.gettext("Remove a parallel Bible"));
         action.setSmallIcon("images/subtract-13.png");
-        buttonBox.add(actions.flatten(new JButton(action)));
+        buttonBox.add(GuiUtil.flatten(new JButton(action)));
 
         action = actions.addAction("AddPicker");
         action.setTooltip(BibleDesktopMsg.gettext("Add a parallel Bible"));
         action.setSmallIcon("images/add-13.png");
-        buttonBox.add(actions.flatten(new JButton(action)));
+        buttonBox.add(GuiUtil.flatten(new JButton(action)));
         add(buttonBox);
 
         // Add the first picker

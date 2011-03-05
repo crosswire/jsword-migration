@@ -41,7 +41,7 @@ import javax.swing.ListSelectionModel;
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWScrollPane;
-import org.crosswire.common.swing.UserMsg;
+import org.crosswire.common.swing.CWMsg;
 import org.crosswire.common.util.Convert;
 
 /**
@@ -71,9 +71,9 @@ public class PathField extends JPanel implements Field {
 
         JScrollPane scroll = new CWScrollPane(list);
 
-        buttons.add(new JButton(actions.addAction("Add", UserMsg.gettext("Add"))));
-        buttons.add(new JButton(actions.addAction("Remove", UserMsg.gettext("Remove"))));
-        buttons.add(new JButton(actions.addAction("Update", UserMsg.gettext("Update (path)"))));
+        buttons.add(new JButton(actions.addAction("Add", CWMsg.gettext("Add"))));
+        buttons.add(new JButton(actions.addAction("Remove", CWMsg.gettext("Remove"))));
+        buttons.add(new JButton(actions.addAction("Update", CWMsg.gettext("Update (path)"))));
 
         setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 

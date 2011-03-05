@@ -21,23 +21,17 @@
  */
 package org.crosswire.common.swing;
 
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import org.crosswire.common.util.CWClassLoader;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.OSType;
 import org.crosswire.common.util.StringUtil;
@@ -155,24 +149,6 @@ public class ActionFactory implements ActionListener, Actionable {
         this.bean = bean;
     }
 
-    /**
-     * Creates an ActionFactory that looks up properties according to pattern
-     * and calls methods on the provided bean. By separating these two, it
-     * distinguishes between the object to call and the type to look up
-     * resources against. This is useful for when you are writing a class
-     * with subclasses but wish to keep the resources registered in the
-     * name of the superclass.
-     * 
-     * @param type the class against which properties are looked up.
-     * @param bean the object to which the actions belong
-     * @deprecated
-     */
-    @Deprecated
-    public ActionFactory(Class<?> type, Object bean) {
-        this(bean);
-        buildActionMap(type);
-    }
-
     /* (non-Javadoc)
      * @see org.crosswire.common.swing.Actionable#actionPerformed(java.lang.String)
      */
@@ -230,53 +206,32 @@ public class ActionFactory implements ActionListener, Actionable {
      * @param key
      *            the internal name of the CWAction
      * @return CWAction null if it does not exist
+     */
+    public Action findAction(String key) {
+        CWAction action = actions.get(key);
+
+        if (action == null) {
+            log.info("Missing key: '" + key + "'. Known keys are: " + StringUtil.join(actions.keySet().toArray(), ", "));
+            action = new CWAction();
+            action.putValue(Action.NAME, key);
+            action.putValue(Action.SHORT_DESCRIPTION, MISSING_RESOURCE);
+            action.setEnabled(true);
+            action.addActionListener(this);
+        }
+        return action;
+    }
+
+    /**
+     * Get the Action for the given actionName.
+     * 
+     * @param key
+     *            the internal name of the CWAction
+     * @return CWAction null if it does not exist
      * @deprecated
      */
     @Deprecated
     public Action getAction(String key) {
-        return getAction(key, null);
-    }
-
-    /**
-     * Get the Action for the given actionName.
-     * 
-     * @param key
-     *            the internal name of the CWAction
-     * @return CWAction null if it does not exist
-     */
-    public Action findAction(String key) {
-        return getAction(key, null);
-    }
-
-    /**
-     * Get the Action for the given actionName.
-     * 
-     * @param key
-     *            the internal name of the CWAction
-     * @return CWAction null if it does not exist
-     */
-    public Action getAction(String key, ActionListener listener) {
-        CWAction action = actions.get(key);
-
-        if (action != null) {
-            if (listener != null) {
-                action = (CWAction) action.clone();
-                action.addActionListener(listener);
-            }
-            return action;
-        }
-        log.info("Missing key: '" + key + "'. Known keys are: " + StringUtil.join(actions.keySet().toArray(), ", "));
-//        assert false;
-        return bogusAction(key);
-    }
-
-    private CWAction bogusAction(String key) {
-        CWAction getOutOfJailFreeAction = new CWAction();
-        getOutOfJailFreeAction.putValue(Action.NAME, key);
-        getOutOfJailFreeAction.putValue(Action.SHORT_DESCRIPTION, MISSING_RESOURCE);
-        getOutOfJailFreeAction.setEnabled(true);
-        getOutOfJailFreeAction.addActionListener(this);
-        return getOutOfJailFreeAction;
+        return findAction(key);
     }
 
     /**
@@ -367,14 +322,6 @@ public class ActionFactory implements ActionListener, Actionable {
         return addAction(key, null);
     }
 
-    public JButton flatten(JButton button) {
-        button.setBorderPainted(false);
-        button.setContentAreaFilled(false);
-        button.setText(null);
-        button.setMargin(new Insets(0, 0, 0, 0));
-        return button;        
-    }
-
     private CWAction buildAction(String key, String name) {
         if (key == null || key.length() == 0) {
             log.warn("Key is missing for CWAction");
@@ -405,106 +352,6 @@ public class ActionFactory implements ActionListener, Actionable {
     }
 
     /**
-     * Build the map of actions from resources
-     */
-    private void buildActionMap(Class<?> basis) {
-        if (basis == null) {
-            return;
-        }
-        try {
-            StringBuilder basisName = new StringBuilder(basis.getName());
-            ResourceBundle resources = ResourceBundle.getBundle(basisName.toString(), Locale.getDefault(), CWClassLoader.instance(basis));
-            ResourceBundle controls = null;
-            try {
-                basisName.append("_control");
-                controls = ResourceBundle.getBundle(basisName.toString(), Locale.getDefault(), CWClassLoader.instance(basis));
-            } catch (MissingResourceException ex) {
-                // It is OK for this to not exist. This just means that the
-                // defaults are used
-            }
-
-            // Get all the keys but we only need those that end with .Name
-            Enumeration<String> en = resources.getKeys();
-            while (en.hasMoreElements()) {
-                String key = en.nextElement();
-                if (key.endsWith(TEST)) {
-                    String actionName = key.substring(0, key.length() - TEST.length());
-
-                    String label = getActionString(resources, null, actionName, Action.NAME);
-                    String smallIconStr = getActionString(controls, resources, actionName, Action.SMALL_ICON);
-                    String largeIconStr = getActionString(controls, resources, actionName, CWAction.LARGE_ICON);
-                    String enabledStr = getActionString(controls, resources, actionName, "Enabled");
-
-                    // We know this should never happen because we are merely rebuilding the key.
-                    if (label == null) {
-                        log.warn("Missing original key for " + actionName + '.' + Action.NAME);
-                        continue;
-                    }
-
-                    // If the value starts with alias, we have to dig the actual name out of the aliases
-                    ResourceBundle nickname = null;
-                    if (label.startsWith(ActionFactory.ALIAS)) {
-                        String newActionName = label.substring(ActionFactory.ALIAS.length());
-                        String newLabel = getActionString(aliases, null, newActionName, Action.NAME);
-                        // We had a clear request for an Alias. So newNameValue should never be null here.
-                        if (newLabel == null) {
-                            log.warn("Missing alias key for " + actionName + '.' + Action.NAME);
-                            continue;
-                        }
-                        label = newLabel;
-                        nickname = aliases;
-                    }
-
-                    String tooltip = getActionString(resources, nickname, actionName, CWAction.TOOL_TIP);
-                    String acceleratorSpec = getActionString(resources, nickname, actionName, Action.ACCELERATOR_KEY);
-
-                    boolean enabled = enabledStr == null ? true : Boolean.valueOf(enabledStr).booleanValue();
-
-                    CWAction cwAction = buildAction(actionName, label);
-                    cwAction.setTooltip(tooltip);
-                    cwAction.setSmallIcon(smallIconStr);
-                    cwAction.setSmallIcon(largeIconStr);
-                    cwAction.setAccelerator(acceleratorSpec);
-                    cwAction.enable(enabled);
-                    cwAction.addActionListener(this);
-                    actions.put(actionName, cwAction);
-                }
-            }
-        } catch (MissingResourceException ex) {
-            log.error("Missing resource for class: " + basis.getName());
-            throw ex;
-        }
-    }
-
-    /**
-     * Lookup an action/field combination, returning null for missing resources.
-     * If aliases are present use them, with values in resources over-riding.
-     */
-    private String getActionString(ResourceBundle resources, ResourceBundle nicknames, String actionName, String field) {
-        String result = null;
-        try {
-            // The normal case is not to have aliases so look for the resource as not aliased
-            // The control resource file does not have to exist.
-            if (resources != null) {
-                result = resources.getString(actionName + '.' + field);
-            }
-        } catch (MissingResourceException ex) {
-            // do something later, if not optional
-        }
-
-        try {
-            // If there were no result and we are aliasing then look for the alias
-            if (result == null && nicknames != null) {
-                result = nicknames.getString(actionName + '.' + field);
-            }
-        } catch (MissingResourceException ex) {
-            // do something later, if not optional
-        }
-
-        return result;
-    }
-
-    /**
      * The tooltip for actions that we generate to paper around missing
      * resources Normally we would assert, but in live we might want to limp on.
      */
@@ -516,41 +363,14 @@ public class ActionFactory implements ActionListener, Actionable {
     private static final String METHOD_PREFIX = "do";
 
     /**
-     * What we lookup
-     */
-    private static final String SEPARATOR = ".";
-
-    /**
-     * The test string to find actions
-     */
-    private static final String TEST = SEPARATOR + Action.NAME;
-
-    /**
      * The object to which we forward events
      */
     private Object bean;
-
-    private static final String ALIASES = "Aliases";
-
-    private static final String ALIAS = "Alias" + SEPARATOR;
 
     /**
      * The log stream
      */
     private static final Logger log = Logger.getLogger(ActionFactory.class);
-
-    /**
-     * The aliases known by this system.
-     */
-    private static ResourceBundle aliases;
-
-    static {
-        try {
-            aliases = ResourceBundle.getBundle(ALIASES, Locale.getDefault(), CWClassLoader.instance(ActionFactory.class));
-        } catch (MissingResourceException ex) {
-            log.error("Tell me it isn't so. The Aliases.properties does exist!", ex);
-        }
-    }
 
     /**
      * The map of known CWActions

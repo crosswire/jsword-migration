@@ -32,7 +32,7 @@ import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
 import org.crosswire.common.swing.GuiUtil;
-import org.crosswire.common.swing.UserMsg;
+import org.crosswire.common.swing.CWMsg;
 import org.crosswire.common.swing.desktop.event.ViewEvent;
 import org.crosswire.common.swing.desktop.event.ViewEventListener;
 
@@ -229,7 +229,7 @@ public abstract class AbstractViewLayout implements Viewable {
     private String generateTitle() {
         // TRANSLATOR: This is the label on a Bible View tab when it is cleared.
         // {0} is a number to make the label unique.
-        return UserMsg.gettext("Untitled {0}", Integer.valueOf(base++));
+        return CWMsg.gettext("Untitled {0}", Integer.valueOf(base++));
     }
 
     /**
