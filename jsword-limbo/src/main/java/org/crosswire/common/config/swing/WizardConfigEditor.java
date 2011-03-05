@@ -52,6 +52,7 @@ import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.EdgeBorder;
 import org.crosswire.common.swing.FormPane;
 import org.crosswire.common.swing.GuiUtil;
+import org.crosswire.common.swing.CWMsg;
 import org.crosswire.common.util.Logger;
 
 /**
@@ -76,14 +77,14 @@ public class WizardConfigEditor extends AbstractConfigEditor {
      * 
      */
     public WizardConfigEditor() {
-        actions = new ActionFactory(WizardConfigEditor.class, this);
+        actions = new ActionFactory(this);
 
         names = new ArrayList();
         layout = new CardLayout();
         deck = new JPanel(layout);
 
         // I18N(DMS)
-        title = new JLabel(UserMsg.gettext("Preferences"), SwingConstants.LEADING);
+        title = new JLabel(CWMsg.gettext("Preferences"), SwingConstants.LEADING);
         title.setIcon(TASK_ICON_LARGE);
         title.setFont(getFont().deriveFont(Font.PLAIN, 16));
         title.setPreferredSize(new Dimension(30, 30));
@@ -168,21 +169,26 @@ public class WizardConfigEditor extends AbstractConfigEditor {
      */
     private JComponent getButtonPane() {
 
-        finish = new JButton(actions.getAction(FINISH));
-        next = new JButton(actions.getAction(NEXT));
+        // FIXME(DMS)
+        finish = new JButton(actions.addAction(FINISH));
+        // FIXME(DMS)
+        next = new JButton(actions.addAction(NEXT));
 
         JPanel buttons = new JPanel();
 
         buttons.setLayout(new GridLayout(1, 2, 10, 10));
         buttons.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        buttons.add(new JButton(actions.getAction(HELP)));
-        buttons.add(new JButton(actions.getAction(CANCEL)));
-        buttons.add(new JButton(actions.getAction(BACK)));
+        // FIXME(DMS)
+        buttons.add(new JButton(actions.addAction(HELP)));
+        // FIXME(DMS)
+        buttons.add(new JButton(actions.addAction(CANCEL)));
+        // FIXME(DMS)
+        buttons.add(new JButton(actions.addAction(BACK)));
         buttons.add(next);
         buttons.add(finish);
 
-        actions.getAction(HELP).setEnabled(false);
-        actions.getAction(BACK).setEnabled(false);
+        actions.findAction(HELP).setEnabled(false);
+        actions.findAction(BACK).setEnabled(false);
 
         JPanel retcode = new JPanel(new BorderLayout(10, 10));
 
@@ -231,8 +237,8 @@ public class WizardConfigEditor extends AbstractConfigEditor {
                 Integer.valueOf(posn + 1), Integer.valueOf(wcards)
         }));
 
-        actions.getAction(BACK).setEnabled(posn != 0);
-        actions.getAction(NEXT).setEnabled(posn != (wcards - 1));
+        actions.findAction(BACK).setEnabled(posn != 0);
+        actions.findAction(NEXT).setEnabled(posn != (wcards - 1));
 
         if (posn == wcards - 1) {
             dialog.getRootPane().setDefaultButton(finish);
@@ -279,7 +285,7 @@ public class WizardConfigEditor extends AbstractConfigEditor {
      * @throws ClassNotFoundException
      */
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
-        actions = new ActionFactory(WizardConfigEditor.class, this);
+        actions = new ActionFactory(this);
         is.defaultReadObject();
     }
 

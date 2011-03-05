@@ -76,7 +76,7 @@ public class DocumentWriter extends Writer {
             // exception whilst not ideal seems like the best option.
         }
 
-        synchronized (lock) {
+        synchronized (lck) {
             this.doc = doc;
         }
     }
@@ -88,7 +88,7 @@ public class DocumentWriter extends Writer {
      */
     @Override
     public void write(char[] cbuf, int off, int len) {
-        synchronized (lock) {
+        synchronized (lck) {
             queue = queue + new String(cbuf, off, len);
             update();
         }
@@ -101,7 +101,7 @@ public class DocumentWriter extends Writer {
      */
     @Override
     public void write(int c) {
-        synchronized (lock) {
+        synchronized (lck) {
             queue = queue + (char) c;
             update();
         }
@@ -114,7 +114,7 @@ public class DocumentWriter extends Writer {
      */
     @Override
     public void write(char[] cbuf) {
-        synchronized (lock) {
+        synchronized (lck) {
             queue = queue + new String(cbuf);
             update();
         }
@@ -127,7 +127,7 @@ public class DocumentWriter extends Writer {
      */
     @Override
     public void write(String str) {
-        synchronized (lock) {
+        synchronized (lck) {
             queue = queue + str;
             update();
         }
@@ -140,7 +140,7 @@ public class DocumentWriter extends Writer {
      */
     @Override
     public void write(String str, int off, int len) {
-        synchronized (lock) {
+        synchronized (lck) {
             queue = queue + str.substring(off, off + len);
             update();
         }
@@ -193,7 +193,7 @@ public class DocumentWriter extends Writer {
     /**
      * The object to lock on to read or write the queue or the updater
      */
-    protected Object lock = new Object();
+    protected Object lck = new Object();
 
     /**
      * The queue of strings to be added to the GUI
@@ -220,7 +220,7 @@ public class DocumentWriter extends Writer {
      */
     class Updater implements Runnable {
         public void run() {
-            synchronized (lock) {
+            synchronized (lck) {
                 try {
                     doc.insertString(doc.getLength(), queue, null);
 

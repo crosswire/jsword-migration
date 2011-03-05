@@ -44,6 +44,7 @@ import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.ExceptionPane;
 import org.crosswire.common.swing.FieldLayout;
 import org.crosswire.common.swing.MapTableModel;
+import org.crosswire.common.swing.CWMsg;
 import org.crosswire.common.util.Convert;
 
 /**
@@ -62,7 +63,7 @@ public class MapField extends JPanel implements Field {
         tableModel = new NamedMapTableModel();
         table = new JTable(tableModel);
 
-        actions = new ActionFactory(MapField.class, this);
+        actions = new ActionFactory(this);
 
         JPanel buttons = new JPanel(new FlowLayout());
 
@@ -73,9 +74,9 @@ public class MapField extends JPanel implements Field {
         JScrollPane scroll = new JScrollPane();
         scroll.setViewportView(table);
 
-        buttons.add(new JButton(actions.getAction(ADD)));
-        buttons.add(new JButton(actions.getAction(REMOVE)));
-        buttons.add(new JButton(actions.getAction(UPDATE)));
+        buttons.add(new JButton(actions.addAction("Add", CWMsg.gettext("Add"))));
+        buttons.add(new JButton(actions.addAction("Remove", CWMsg.gettext("Remove"))));
+        buttons.add(new JButton(actions.addAction("Update", CWMsg.gettext("Update"))));
 
         Border title = BorderFactory.createTitledBorder(LimboMsg.COMPONENT_EDITOR.toString());
         Border pad = BorderFactory.createEmptyBorder(5, 5, 5, 5);

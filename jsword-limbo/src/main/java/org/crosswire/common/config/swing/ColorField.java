@@ -51,9 +51,10 @@ public class ColorField extends JPanel implements Field {
      * Create a new FileField
      */
     public ColorField() {
-        actions = new ActionFactory(ColorField.class, this);
+        actions = new ActionFactory(this);
 
-        JButton edit = new JButton(actions.getAction(EDIT));
+        // FIXME(DMS)
+        JButton edit = new JButton(actions.addAction(EDIT));
         edit.setIcon(new CustomIcon());
         edit.setMargin(new Insets(1, 2, 1, 1));
 
@@ -114,7 +115,7 @@ public class ColorField extends JPanel implements Field {
      * @throws ClassNotFoundException
      */
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
-        actions = new ActionFactory(ColorField.class, this);
+        actions = new ActionFactory(this);
         is.defaultReadObject();
     }
 
