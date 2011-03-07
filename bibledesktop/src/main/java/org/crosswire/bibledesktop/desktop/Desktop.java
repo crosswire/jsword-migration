@@ -244,28 +244,39 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     private ActionFactory getViewActions(ViewManager viewMgr) {
         ActionFactory viewActions = new ActionFactory(viewMgr);
 
+        // TRANSLATOR: This is the label for the view option to show multiple tabs
         CWAction cwAction = viewActions.addAction(ViewManager.TAB_MODE, BDMsg.gettext("Tabbed Mode"));
+        // TRANSLATOR: This is the tooltip for the view option to show multiple tabs
         cwAction.setTooltip(BDMsg.gettext("View passages using tabs"));
 
+        // TRANSLATOR: This is the label for the view option to show multiple windows
         cwAction = viewActions.addAction(ViewManager.WINDOW_MODE, BDMsg.gettext("Sub-Window Mode"));
+        // TRANSLATOR: This is the tooltip for the view option to show multiple windows
         cwAction.setTooltip(BDMsg.gettext("View passages using sub-windows"));
 
+        // TRANSLATOR: This is the label for the menu and/or button to open a new Bible view
         cwAction = viewActions.addAction(ViewManager.NEW_TAB, BDMsg.gettext("New Bible View"));
+        // TRANSLATOR: This is the tooltip for the view option to open a new Bible view
         cwAction.setTooltip(BDMsg.gettext("Open a new Bible View"));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/New16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/New24.gif");
         cwAction.setAccelerator("N,ctrl");
 
+        // TRANSLATOR: This is the label for the menu and/or button to close the current Bible view.
         cwAction = viewActions.addAction(ViewManager.CLOSE_VIEW, BDMsg.gettext("Close the Current View"));
         cwAction.setAccelerator("0x73,ctrl");
 
+        // TRANSLATOR: This is the label for the menu and/or button to clear the contents of the current Bible view
         cwAction = viewActions.addAction(ViewManager.CLEAR_VIEW, BDMsg.gettext("Clear the Current View"));
         cwAction.setTooltip(BDMsg.gettext("Clear the current view's passages"));
 
+        // TRANSLATOR: This is the label for the menu and/or button to close all Bible views.
         cwAction = viewActions.addAction(ViewManager.CLOSE_ALL_VIEWS, BDMsg.gettext("Close All Views"));
         cwAction.setTooltip(BDMsg.gettext("Close all passages"));
 
+        // TRANSLATOR: This is the label for the menu and/or button to close Bible views other than the current one.
         cwAction = viewActions.addAction(ViewManager.CLOSE_OTHER_VIEWS, BDMsg.gettext("Close Other Views"));
+        // TRANSLATOR: This is the tooltip for the menu and/or button to close Bible views other than the current one.
         cwAction.setTooltip(BDMsg.gettext("Close all the other passages."));
         return viewActions;
     }
@@ -334,133 +345,195 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
 
     private void buildActionMap() {
         // File menu and it's items
+        // TRANSLATOR: This is the label of the top level "File" menu
         CWAction cwAction = actions.addAction("File", BDMsg.gettext("File"));
 
+        // TRANSLATOR: This is the label for the menu and/or button to open a save passage list.
         cwAction = actions.addAction("Open", BDMsg.gettext("Open"));
+        // TRANSLATOR: This is the tooltip for the menu and/or button to open a save passage list.
         cwAction.setTooltip(BDMsg.gettext("Open a saved passage."));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/Open16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/Open24.gif");
         cwAction.setAccelerator("O,ctrl");
 
+        // TRANSLATOR: This is the label for the menu and/or button to save a passage list for the current Bible view.
         cwAction = actions.addAction("Save", BDMsg.gettext("Save"));
+        // TRANSLATOR: This is the tooltip for the menu and/or button to save a passage list for the current Bible view.
         cwAction.setTooltip(BDMsg.gettext("Save the current passage."));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/Save16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/Save24.gif");
         cwAction.setAccelerator("S,ctrl");
 
+        // TRANSLATOR: This is the label for the menu and/or button to save a passage list under a different name.
         cwAction = actions.addAction("SaveAs", BDMsg.gettext("Save As"));
+        // TRANSLATOR: This is the tooltip for the menu and/or button to save a passage list under a different name.
         cwAction.setTooltip(BDMsg.gettext("Save the current passage under a different name."));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/SaveAs16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/SaveAs24.gif");
         cwAction.setAccelerator("A,ctrl,shift");
 
+        // TRANSLATOR: This is the label for the menu and/or button to save a passage list for each Bible view.
         cwAction = actions.addAction("SaveAll", BDMsg.gettext("Save All"));
+        // TRANSLATOR: This is the tooltip for the menu and/or button to save a passage list for each Bible view.
         cwAction.setTooltip(BDMsg.gettext("Save all passages."));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/SaveAll16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/SaveAll24.gif");
         cwAction.setAccelerator("S,ctrl,shift");
 
-
+        // TRANSLATOR: This is the label for the menu and/or button to exit Bible Desktop.
         cwAction = actions.addAction("Exit", BDMsg.gettext("Exit"));
+        // TRANSLATOR: This is the tooltip for the menu and/or button to exit Bible Desktop.
         cwAction.setTooltip(BDMsg.gettext("Exit the Desktop application."));
         cwAction.setAccelerator("0x73,alt");
 
         // Edit menu and it's items
+        // TRANSLATOR: This is the label of the top level "Edit" menu
         cwAction = actions.addAction("Edit",  BDMsg.gettext("Edit"));
 
+        // TRANSLATOR: This is the label for the standard Cut menu and/or button item
 //      cwAction = actions.addAction("Cut", UserMsg.gettext("Cut"));
+//      // TRANSLATOR: This is the tooltip for the standard Cut menu and/or button item
 //      cwAction.setTooltip(UserMsg.gettext("Cut the selection."));
 //      cwAction.setSmallIcon("toolbarButtonGraphics/general/Cut16.gif");
 //      cwAction.setLargeIcon("toolbarButtonGraphics/general/Cut24.gif");
 //      cwAction.setAccelerator("X,ctrl");
 
+        // TRANSLATOR: This is the label for the standard Copy menu and/or button item
         cwAction = actions.addAction("Copy", BDMsg.gettext("Copy"));
+        // TRANSLATOR: This is the tooltip for the standard Copy menu and/or button item
         cwAction.setTooltip(BDMsg.gettext("Copy the selection."));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/Copy16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/Copy24.gif");
         cwAction.setAccelerator("C,ctrl");
 
+        // TRANSLATOR: This is the label for the standard Paste menu and/or button item
 //      cwAction = actions.addAction("Paste", UserMsg.gettext("Paste"));
+//      // TRANSLATOR: This is the tooltip for the standard Paste menu and/or button item
 //      cwAction.setTooltip(UserMsg.gettext("Paste the selection."));
 //      cwAction.setSmallIcon("toolbarButtonGraphics/general/Paste16.gif");
 //      cwAction.setLargeIcon("toolbarButtonGraphics/general/Paste24.gif");
 //      cwAction.setAccelerator("V,ctrl");
 
         // Navigate menu and it's items
+        // TRANSLATOR: This is the label of the top level "Navigate" menu
         cwAction = actions.addAction("Navigate", BDMsg.gettext("Navigate"));
 
+        // TRANSLATOR: This is the label for the menu and/or button to navigate to a prior Bible View content
         cwAction = actions.addAction("Back", BDMsg.gettext("Back"));
+        // TRANSLATOR: This is the tooltip for the menu and/or button to navigate to a prior Bible View content
         cwAction.setTooltip(BDMsg.gettext("Go back to previous passage."));
         cwAction.setSmallIcon("toolbarButtonGraphics/navigation/Back16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/navigation/Back24.gif");
 
+        // TRANSLATOR: This is the label for the menu and/or button to navigate to a next Bible View content
         cwAction = actions.addAction("Forward", BDMsg.gettext("Forward"));
+        // TRANSLATOR: This is the tooltip for the menu and/or button to navigate to a next Bible View content
         cwAction.setTooltip(BDMsg.gettext("Go forward to next passage."));
         cwAction.setSmallIcon("toolbarButtonGraphics/navigation/Forward16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/navigation/Forward24.gif");
 
         // Verse sub-menu and it's items
+        // TRANSLATOR: This is the label of the "Verse Numbers" sub-menu
         cwAction = actions.addAction("Verse", BDMsg.gettext("Verse Numbers"));
+        // TRANSLATOR: This is the tooltip of the "Verse Numbers" sub-menu
         cwAction.setTooltip(BDMsg.gettext("Set the style for verse numbers"));
+        // TRANSLATOR: This is the label for the radio button to show verse numbers
         cwAction = actions.addAction(XSLTProperty.VERSE_NUMBERS.getName(), BDMsg.gettext("Show Verse Numbers"));
+        // TRANSLATOR: This is the label for the radio button to show chapter and verse numbers
         cwAction = actions.addAction(XSLTProperty.CV.getName(), BDMsg.gettext("Show Chapter and Verse Numbers"));
+        // TRANSLATOR: This is the label for the radio button to show book name with chapter and verse numbers
         cwAction = actions.addAction(XSLTProperty.BCV.getName(), BDMsg.gettext("Show Book, Chapter and Verse Numbers"));
+        // TRANSLATOR: This is the label for the radio button to hide verse numbers 
         cwAction = actions.addAction(XSLTProperty.NO_VERSE_NUMBERS.getName(), BDMsg.gettext("Hide Verse Numbers"));
 
         // View menu and it's items
+        // TRANSLATOR: This is the label of the top level "View" menu
         cwAction = actions.addAction("View", BDMsg.gettext("View"));
+        // TRANSLATOR: This is the label for the checkbox to toggle between showing tiny and large verse numbers.
         cwAction = actions.addAction(XSLTProperty.TINY_VERSE_NUMBERS.getName(), BDMsg.gettext("Use Small Verse Numbers"));
 
+        // TRANSLATOR: This is the label for the checkbox to start each verse on a new line
         cwAction = actions.addAction(XSLTProperty.START_VERSE_ON_NEWLINE.getName(), BDMsg.gettext("Start Verses on Separate Lines"));
+        // TRANSLATOR: This is the tooltip for the checkbox to start each verse on a new line
         cwAction.setTooltip(BDMsg.gettext("Start each verses on a new line"));
 
+        // TRANSLATOR: This is the label for the checkbox to show/hide differences between parallel Bibles
         cwAction = actions.addAction("CompareToggle", BDMsg.gettext("Show Differences"));
+        // TRANSLATOR: This is the tooltip for the checkbox to show/hide differences between parallel Bibles
         cwAction.setTooltip(BDMsg.gettext("Toggle display of differences between different Bibles"));
 
+        // TRANSLATOR: This is the label for the checkbox to show/hide headings
         cwAction = actions.addAction(XSLTProperty.HEADINGS.getName(), BDMsg.gettext("Show Headings"));
+        // TRANSLATOR: This is the label for the checkbox to show/hide notes
         cwAction = actions.addAction(XSLTProperty.NOTES.getName(), BDMsg.gettext("Show Study Notes"));
+        // TRANSLATOR: This is the label for the checkbox to show/hide cross references
         cwAction = actions.addAction(XSLTProperty.XREF.getName(), BDMsg.gettext("Use Cross Reference Linkings"));
+        // TRANSLATOR: This is the label for the checkbox to show/hide Strong's Numbers
         cwAction = actions.addAction(XSLTProperty.STRONGS_NUMBERS.getName(), BDMsg.gettext("Show Strong's Numbers"));
+        // TRANSLATOR: This is the label for the checkbox to show/hide word morphology
         cwAction = actions.addAction(XSLTProperty.MORPH.getName(), BDMsg.gettext("Show Word Morphology"));
 
+        // TRANSLATOR: This is the label for the checkbox to show/hide tooltips
         cwAction = actions.addAction("ToolTipToggle", BDMsg.gettext("Show Tool Tips"));
+        // TRANSLATOR: This is the tooltip for the checkbox to show/hide tooltips
+        // which, of course, only shows when tooltips are showing :)
         cwAction.setTooltip(BDMsg.gettext("Toggle display of tool tips"));
         cwAction.setAccelerator("T,ctrl");
 
+        // TRANSLATOR: This is the label for the checkbox to show/hide the status area
         cwAction = actions.addAction("StatusToggle", BDMsg.gettext("Show the Status Area"));
+        // TRANSLATOR: This is the tooltip for the checkbox to show/hide the status area
         cwAction.setTooltip(BDMsg.gettext("Toggle display of the status area"));
 
+        // TRANSLATOR: This is the label for the checkbox to show/hide the passage side bar
         cwAction = actions.addAction("SidebarToggle", BDMsg.gettext("Show the Passage Sidebar"));
+        // TRANSLATOR: This is the tooltip for the checkbox to show/hide the passage side bar
         cwAction.setTooltip(BDMsg.gettext("Toggle display of the Passage Sidebar"));
         cwAction.setAccelerator("B,ctrl");
 
+        // TRANSLATOR: This is the label for the menu and/or button to show the view source dialog
         cwAction = actions.addAction("ViewSource", BDMsg.gettext("View Source"));
+        // TRANSLATOR: This is the tooltip for the menu and/or button to show the view source dialog
         cwAction.setTooltip(BDMsg.gettext("View the HTML and OSIS source to the current window"));
         cwAction.setAccelerator("U,ctrl");
 
         // Tools menu and it's items
+        // TRANSLATOR: This is the label of the top level "Tools" menu
         cwAction = actions.addAction("Tools", BDMsg.gettext("Tools"));
 
+        // TRANSLATOR: This is the label for the menu and/or button to show the book installer dialog
         cwAction = actions.addAction("Books", BDMsg.gettext("Books"));
+        // TRANSLATOR: This is the tooltip for the menu and/or button to show the book installer dialog
         cwAction.setTooltip(BDMsg.gettext("Display/Install Books"));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/Import16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/Import24.gif");
 
+        // TRANSLATOR: This is the label for the menu and/or button to show the Options/Preferences dialog
+        // Note: on a Mac, it is called Preferences located on the "Bible Desktop" menu
+        // and the operating system provides the translation.
         cwAction = actions.addAction("Options", BDMsg.gettext("Options"));
+        // TRANSLATOR: This is the tooltip for the menu and/or button to show the Options/Preferences dialog
         cwAction.setTooltip(BDMsg.gettext("Alter system settings."));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/Properties16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/Properties24.gif");
 
         // Help menu and it's items
+        // TRANSLATOR: This is the label of the top level "Help" menu
         cwAction = actions.addAction("Help", BDMsg.gettext("Help"));
 
+        // TRANSLATOR: This is the label for the menu and/or button to show the Help dialog
         cwAction = actions.addAction("Contents", BDMsg.gettext("Contents"));
+        // TRANSLATOR: This is the tooltip for the menu and/or button to show the Help dialog
         cwAction.setTooltip(BDMsg.gettext("Help file contents."));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/Help16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/Help24.gif");
         cwAction.setAccelerator("0x70");
 
+        // TRANSLATOR: This is the label for the menu and/or button to show the About dialog
+        // Note: on a Mac, it is located on the "Bible Desktop" menu
+        // and the operating system provides the translation.
         cwAction = actions.addAction("About", BDMsg.gettext("About"));
+        // TRANSLATOR: This is the tooltip for the menu and/or button to show the About dialog
         cwAction.setTooltip(BDMsg.gettext("Information about Bible Desktop"));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/About16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/About24.gif");
@@ -476,16 +549,13 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         menu.setToolTipText(null);
 
         menu.add(views.getContextAction(ViewManager.NEW_TAB)).addMouseListener(barStatus);
-        menu.add(actions.findAction("Open")).addMouseListener(barStatus);
-
-        menu.addSeparator();
-
         menu.add(views.getContextAction(ViewManager.CLOSE_VIEW)).addMouseListener(barStatus);
         menu.add(views.getContextAction(ViewManager.CLEAR_VIEW)).addMouseListener(barStatus);
         menu.add(views.getContextAction(ViewManager.CLOSE_OTHER_VIEWS)).addMouseListener(barStatus);
         menu.add(views.getContextAction(ViewManager.CLOSE_ALL_VIEWS)).addMouseListener(barStatus);
 
         menu.addSeparator();
+        menu.add(actions.findAction("Open")).addMouseListener(barStatus);
         menu.add(actions.findAction("Save")).addMouseListener(barStatus);
         menu.add(actions.findAction("SaveAs")).addMouseListener(barStatus);
         menu.add(actions.findAction("SaveAll")).addMouseListener(barStatus);

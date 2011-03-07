@@ -46,6 +46,7 @@ import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.bibledesktop.book.install.BookFont;
 import org.crosswire.bibledesktop.util.ConfigurableSwingConverter;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWAction;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiConvert;
 import org.crosswire.common.swing.GuiUtil;
@@ -226,7 +227,11 @@ public class ViewSourcePane extends JPanel {
         // TRANSLATOR: title for the Source View dialog
         frame = new JDialog(parent, BDMsg.gettext("Source Viewer"));
 
-        pnlButtons.add(new JButton(actions.addAction("SourceOK", BDMsg.gettext("OK")).setTooltip(BDMsg.gettext("Close this window"))), null);
+        // TRANSLATOR: This is the text of an "OK" button that dismisses the dialog
+        CWAction action = actions.addAction("SourceOK", BDMsg.gettext("OK"));
+        // TRANSLATOR: This is the tooltip for an "OK" button that dismisses the dialog
+        action.setTooltip(BDMsg.gettext("Close this window"));
+        pnlButtons.add(new JButton(action), null);
 
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
 

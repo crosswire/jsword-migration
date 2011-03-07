@@ -85,7 +85,7 @@ public class SitePane extends JPanel {
      * For local installations
      */
     public SitePane() {
-        // I18N(DMS)
+        // TRANSLATOR: This is the label for a list of installed books
         this(null, BDMsg.gettext("Installed Books:"));
     }
 
@@ -93,7 +93,7 @@ public class SitePane extends JPanel {
      * For remote installations
      */
     public SitePane(Installer bookListInstaller) {
-        // I18N(DMS)
+        // TRANSLATOR: This is the label for a list of available books
         this(bookListInstaller, BDMsg.gettext("Available Books:"));
     }
 
@@ -193,7 +193,7 @@ public class SitePane extends JPanel {
      */
     private Component createSelectedPanel() {
 
-        // I18N(DMS)
+        // TRANSLATOR: This is the label for the display of information about the selected book
         JLabel lblSelected = CWLabel.createJLabel(BDMsg.gettext("Selected Book:"));
         display = new TextPaneBookMetaDataDisplay();
         lblSelected.setLabelFor(display.getComponent());
@@ -270,7 +270,9 @@ public class SitePane extends JPanel {
         if (installer != null) {
             panel.setLayout(new GridLayout(1, 2, 3, 3));
 
+            // TRANSLATOR: This is the text on an "Install" button.
             action = actions.addAction("Install", BDMsg.gettext("Install"));
+            // TRANSLATOR: This is the tooltip for an "Install" button.
             action.setTooltip(BDMsg.gettext("Install the selected book"));
             action.enable(false);
             panel.add(new JButton(action));
@@ -281,33 +283,46 @@ public class SitePane extends JPanel {
             // action.enable(false);
             // panel.add(new JButton(action));
 
+            // TRANSLATOR: This is the text on a button that will refresh the list of available books
+            // from a download site
             action = actions.addAction("Refresh", BDMsg.gettext("Update Available Books"));
             action.setTooltip(BDMsg.gettext("Download a current listing of books."));
             panel.add(new JButton(action));
         } else {
             panel.setLayout(new GridLayout(3, 2, 3, 3));
 
+            // TRANSLATOR: This is the text on a "Delete Book" button.
             action = actions.addAction("Delete", BDMsg.gettext("Delete Book"));
+            // TRANSLATOR: This is the tooltip for a "Delete Book" button.
             action.setTooltip(BDMsg.gettext("Delete the selected book"));
             action.enable(false);
             panel.add(new JButton(action));
 
+            // TRANSLATOR: This is the text on a "Remove Search Index" button.
             action = actions.addAction("Unindex", BDMsg.gettext("Remove Search Index"));
+            // TRANSLATOR: This is the tooltip for a "Remove Search Index" button.
             action.setTooltip(BDMsg.gettext("Remove the search index of the selected book"));
             action.enable(false);
             panel.add(new JButton(action));
 
+            // TRANSLATOR: This is the text on a "Font..." button that brings up a font selection dialog.
             action = actions.addAction("ChooseFont", BDMsg.gettext("Font..."));
+            // TRANSLATOR: This is the tooltip for a "Font..." button that brings up a font selection dialog.
             action.setTooltip(BDMsg.gettext("Choose a font for the language or book"));
             action.enable(false);
             panel.add(new JButton(action));
 
+            // TRANSLATOR: This is the text on an "Unlock" button that brings up a dialog box to enter an unlock key.
             action = actions.addAction("Unlock", BDMsg.gettext("Unlock"));
+            // TRANSLATOR: This is the tooltip for an "Unlock" button that brings up a dialog box to enter an unlock key.
             action.setTooltip(BDMsg.gettext("Unlock the selected book"));
             action.enable(false);
             panel.add(new JButton(action));
 
+            // TRANSLATOR: This is the text on a "Reset Font" button.
+            // Clicking on this button will restore the original font for the language or book
             action = actions.addAction("ResetFont", BDMsg.gettext("Reset Font"));
+            // TRANSLATOR: This is the tooltip for a "Reset Font" button.
             action.setTooltip(BDMsg.gettext("Reset the custom font set for this language or book"));
             action.enable(false);
             panel.add(new JButton(action));

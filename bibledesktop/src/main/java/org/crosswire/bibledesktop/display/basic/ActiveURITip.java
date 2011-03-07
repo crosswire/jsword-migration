@@ -241,14 +241,12 @@ public class ActiveURITip extends MouseAdapter implements URIEventListener {
      * @see org.crosswire.bibledesktop.display.URIEventListener#activateURI(org.crosswire.bibledesktop.display.URIEvent)
      */
     public void activateURI(URIEvent ev) {
-        // TODO Auto-generated method stub
     }
 
     /* (non-Javadoc)
      * @see org.crosswire.bibledesktop.display.URIEventListener#enterURI(org.crosswire.bibledesktop.display.URIEvent)
      */
     public void enterURI(URIEvent ev) {
-        // TODO Auto-generated method stub
         System.out.println(ev);
         if (interested(ev) && lastb == MouseEvent.BUTTON3) {
             updateText(ev);
@@ -260,7 +258,6 @@ public class ActiveURITip extends MouseAdapter implements URIEventListener {
      * @see org.crosswire.bibledesktop.display.URIEventListener#leaveURI(org.crosswire.bibledesktop.display.URIEvent)
      */
     public void leaveURI(URIEvent ev) {
-        // TODO Auto-generated method stub
         this.hideTip();
     }
 

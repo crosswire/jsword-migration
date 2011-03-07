@@ -92,7 +92,9 @@ public class AboutPane {
         lblInfo.setText(BDMsg.getVersionInfo());
 
         ActionFactory actions = new ActionFactory(this);
+        // TRANSLATOR: This is the text of an "OK" button that dismisses the dialog
         CWAction action = actions.addAction("AboutOK", BDMsg.gettext("OK"));
+        // TRANSLATOR: This is the tooltip for an "OK" button that dismisses the dialog
         action.setTooltip(BDMsg.gettext("Close this window"));
         JButton btnOk = new JButton(action);
 

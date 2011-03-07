@@ -282,7 +282,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         scrSummary = new CWScrollPane(txtSummary);
         scrSummary.setVisible(false);
 
-        // TRANSLATOR: Button to initiate the close the window and initiate search.
+        // TRANSLATOR: Button to initiate closing the window and initiating search.
         btnGo = new JButton(actions.addAction("Done", BDMsg.gettext("Search")));
 
         this.setBorder(BorderFactory.createLineBorder(SystemColor.control, 5));

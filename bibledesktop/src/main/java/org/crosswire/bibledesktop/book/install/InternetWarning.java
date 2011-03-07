@@ -84,7 +84,9 @@ public class InternetWarning extends JPanel {
         final InternetWarning webWarning = new InternetWarning();
 
         JPanel buttons = new JPanel();
+        // TRANSLATOR: This is the text on a "Yes" button.
         JButton yesButton = new JButton(webWarning.actions.addAction("Yes", BDMsg.gettext("Yes")));
+        // TRANSLATOR: This is the text on a "No" button.
         JButton noButton = new JButton(webWarning.actions.addAction("No", BDMsg.gettext("No")));
         buttons.add(yesButton);
         buttons.add(noButton);

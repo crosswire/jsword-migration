@@ -30,7 +30,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -42,6 +41,7 @@ import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.bibledesktop.book.DisplaySelectEvent;
 import org.crosswire.bibledesktop.book.DisplaySelectListener;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWAction;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.book.Book;
@@ -90,13 +90,21 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
 
         ActionFactory actions = new ActionFactory(this);
 
-        actDelete = actions.addAction("DeleteSelected").setTooltip(BDMsg.gettext("Remove the selected passages in the current passage list."))
-                           .setSmallIcon("toolbarButtonGraphics/general/Remove16.gif")
-                           .setLargeIcon("toolbarButtonGraphics/general/Remove24.gif");
-        actBlur1 = actions.addAction("Blur1").setTooltip(BDMsg.gettext("Expand all or the selected passage by 1 verse."))
-                          .setSmallIcon("images/Blur1_16.gif");
-        actBlur5 = actions.addAction("Blur5").setTooltip(BDMsg.gettext("Expand all or the selected passage by 5 verses."))
-                          .setSmallIcon("images/Blur5_16.gif");
+        actDelete = actions.addAction("DeleteSelected");
+        // TRANSLATOR: This is the tooltip for the delete selected icon button in the Passage Sidebar
+        actDelete.setTooltip(BDMsg.gettext("Remove the selected passages in the current passage list."));
+        actDelete.setSmallIcon("toolbarButtonGraphics/general/Remove16.gif");
+        actDelete.setLargeIcon("toolbarButtonGraphics/general/Remove24.gif");
+
+        actBlur1 = actions.addAction("Blur1");
+        // TRANSLATOR: This is the tooltip for the blur by 1 icon button in the Passage Sidebar
+        actBlur1.setTooltip(BDMsg.gettext("Expand all or the selected passage by 1 verse."));
+        actBlur1.setSmallIcon("images/Blur1_16.gif");
+
+        actBlur5 = actions.addAction("Blur5");
+        // TRANSLATOR: This is the tooltip for the blur by 5 icon button in the Passage Sidebar
+        actBlur5.setTooltip(BDMsg.gettext("Expand all or the selected passage by 5 verses."));
+        actBlur5.setSmallIcon("images/Blur5_16.gif");
 
         JButton delete = new JButton(actDelete);
         // delete.setBorder(BorderFactory.createEmptyBorder(2, 5, 2, 5));
@@ -372,9 +380,9 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
      */
     private JList list;
     private RangeListModel model;
-    private Action actDelete;
-    private Action actBlur1;
-    private Action actBlur5;
+    private CWAction actDelete;
+    private CWAction actBlur1;
+    private CWAction actBlur5;
 
     /**
      * Serialization ID

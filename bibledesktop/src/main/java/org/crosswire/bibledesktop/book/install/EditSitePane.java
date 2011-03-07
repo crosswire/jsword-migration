@@ -109,15 +109,21 @@ public class EditSitePane extends JPanel {
             }
         });
 
+        // TRANSLATOR: This is the label for the button that allows the user to add a new download site
         CWAction action = actions.addAction("Add", BDMsg.gettext("Add"));
+        // TRANSLATOR: This is the tooltip for the button that allows the user to add a new download site
         action.setTooltip(BDMsg.gettext("Add a new installation site."));
         JButton btnAdd = new JButton(action);
 
+        // TRANSLATOR: This is the label for the button that allows the user to edit an existing download site
         action = actions.addAction("Edit", BDMsg.gettext("Edit"));
+        // TRANSLATOR: This is the tooltip for the button that allows the user to edit an existing download site
         action.setTooltip(BDMsg.gettext("Edit the current installation site."));
         JButton btnEdit = new JButton(action);
 
+        // TRANSLATOR: This is the label for the button that allows the user to remove an existing download site
         action = actions.addAction("Delete", BDMsg.gettext("Delete"));
+        // TRANSLATOR: This is the tooltip for the button that allows the user to remove an existing download site
         action.setTooltip(BDMsg.gettext("Delete Site?"));
         JButton btnDelete = new JButton(action);
 
@@ -147,7 +153,7 @@ public class EditSitePane extends JPanel {
             }
         });
 
-        // I18N(DMS)
+        // TRANSLATOR: This is the label for a Site Name text box
         JLabel lblName = CWLabel.createJLabel(BDMsg.gettext("Site Name:"));
         lblName.setLabelFor(txtName);
 
@@ -160,18 +166,26 @@ public class EditSitePane extends JPanel {
             }
         });
 
-        // I18N(DMS)
+        // TRANSLATOR: This is the label for the dropdown giving the type of the site
+        // either FTP or HTTP
+        // This is currently unused, as we only do HTTP, but will be present soon.
         JLabel lblType = CWLabel.createJLabel(BDMsg.gettext("Site Type"));
         lblType.setLabelFor(cboType);
 
         lblMesg = new JLabel();
         lblMesg.setText(" ");
 
+        // TRANSLATOR: This is the label for a button that resets the details for a download site
+        // to what was last saved.
         action = actions.addAction("Reset", BDMsg.gettext("Reset"));
+        // TRANSLATOR: This is the tooltip for a button that resets the details for a download site
+        // to what was last saved.
         action.setTooltip(BDMsg.gettext("Reset the details."));
         JButton btnReset = new JButton(action);
 
+        // TRANSLATOR: This is the label for a button that saves the details for a download site
         action = actions.addAction("Save", BDMsg.gettext("Save"));
+        // TRANSLATOR: This is the tooltip for a button that saves the details for a download site
         action.setTooltip(BDMsg.gettext("Save the current changes."));
         JButton btnSave = new JButton(action);
 
@@ -206,6 +220,7 @@ public class EditSitePane extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(sptMain, BorderLayout.CENTER);
 
+        // TRANSLATOR: This is the label for a button that closes the dialog
         btnClose = new JButton(actions.addAction("Close", BDMsg.gettext("Close")));
 
         pnlAction = new JPanel();

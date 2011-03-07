@@ -178,8 +178,10 @@ public class SitesPane extends JPanel {
      */
     private Component createButtons() {
         if (pnlButtons == null) {
+            // TRANSLATOR: This is the text of an "OK" button that dismisses the dialog
             JButton btnOK = new JButton(actions.addAction("SitesClose", BDMsg.gettext("OK")));
 
+            // TRANSLATOR: This is the text of an "Edit Sites ..." button brings up a download site editor
             JButton btnAdd = new JButton(actions.addAction("ManageSites", BDMsg.gettext("Edit Sites ...")));
 
             pnlButtons = new JPanel();

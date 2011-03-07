@@ -149,14 +149,15 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         quickPicker.add(cboBooks);
         quickPicker.add(cboChaps);
 
-        // I18N(DMS)
+        // TRANSLATOR: This is the label for the Bible pickers
         JLabel lblBible = CWLabel.createJLabel(BDMsg.gettext("Bible:"));
         lblBible.setLabelFor(biblePicker);
 
-        // I18N(DMS)
+        // TRANSLATOR: This is the label for the text box that show the passage
         JLabel lblKey = CWLabel.createJLabel(BDMsg.gettext("Show Passage:"));
 
-        CWAction action = actions.addAction("PassageAction", BDMsg.gettext("Passage"));
+        CWAction action = actions.addAction("PassageAction");
+        // TRANSLATOR: This is the tooltip for the Show Passage text box
         action.setTooltip(BDMsg.gettext("Enter a passage to display. Press CTRL+ENTER or press the ... button for a Passage selection window."));
         txtKey = new JTextField();
         txtKey.setAction(action);
@@ -171,28 +172,39 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
                 }
             }
         });
+        // TRANSLATOR: This labels a button that brings up a dialog box
+        // to select Bible book, chapter and verses
         action = actions.addAction("More", BDMsg.gettext("Select"));
         action.setTooltip(BDMsg.gettext("Pick a passage to display"));
         btnKey = new JButton(action);
 
+        // TRANSLATOR: The label of the button tied to the Show Passage text box
+        // Note: The " (passage)" is not to be translated.
+        // It is here because some languages translate "Go" differently depending on context.
         action = actions.addAction("GoPassage", BDMsg.gettext("Go (passage)"));
         action.setTooltip(BDMsg.gettext("Display the passage"));
         btnKeyGo = new JButton(action);
 
-        action = actions.addAction("SearchAction", BDMsg.gettext("Search (text)"));
+        // FIXME(DMS): remove "Search (text)" from translations
+        action = actions.addAction("SearchAction"); // , BDMsg.gettext("Search (text)"));
+        // TRANSLATOR: The tooltip for the Search text box.
         action.setTooltip(BDMsg.gettext("Search for a passage."));
         txtSearch = new JTextField();
         txtSearch.setAction(action);
 
-        // I18N(DMS)
+        // TRANSLATOR: The label for the Search text box.
         JLabel lblSearch = CWLabel.createJLabel(BDMsg.gettext("Search:"));
         lblSearch.setLabelFor(txtSearch);
 
+        // TRANSLATOR: The label of the button tied to the Search text box
+        // Note: The " (search)" is not to be translated.
+        // It is here because some languages translate "Go" differently depending on context.
         action = actions.addAction("GoSearch", BDMsg.gettext("Go (search)"));
         action.setTooltip(BDMsg.gettext("Search for a passage."));
         btnSearch = new JButton(action);
 
         action = actions.addAction("HelpAction");
+        // TRANSLATOR: The tooltip for the help button that brings up Quick Search Tips
         action.setTooltip(BDMsg.gettext("Quick Search Help"));
         action.setSmallIcon("toolbarButtonGraphics/general/ContextualHelp16.gif");
         JButton btnHelp = GuiUtil.flatten(new JButton(action));
@@ -204,11 +216,15 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         String msg = BDMsg.gettext("<html><b>Search Tips.</b><br>You can use || to join phrases, for example \"<code>balaam || balak</code>\" finds passages containing Balak OR Balaam<br>Using && requires both words, e.g. \"<code>aaron && moses</code>\" finds passages containing both Aaron AND Moses<br>Using a ! removes words from the result e.g. \"<code>lord ! jesus</code>\" is passages containing Lord BUT NOT Jesus<br>Using ~2 widens the passage by 2 verses either side on any match. So \"<code>amminadab ~1 perez</code>\" finds<br>verses containting Amminadab within 1 verse of mention of Perez.<br>Using +[Gen-Exo] at the beginning will restrict a search to that range of verses.");
         dlgHelp = new QuickHelpDialog(GuiUtil.getFrame(this), dialogTitle, msg);
 
+        // TRANSLATOR: The label for the button that brings up the Advanced Search dialog
         action = actions.addAction("Advanced", BDMsg.gettext("Advanced"));
+        // TRANSLATOR: The tooltip for the button that brings up the Advanced Search dialog
         action.setTooltip(BDMsg.gettext("Advanced Search"));
         btnAdvanced = new JButton(action);
 
+        // TRANSLATOR: The label for the button that creates a search index for the selected book.
         action = actions.addAction("Index", BDMsg.gettext("Enable Search"));
+        // TRANSLATOR: The tooltip for the button that creates a search index for the selected book.
         action.setTooltip(BDMsg.gettext("Create a search index"));
         btnIndex = new JButton(action);
 

@@ -325,7 +325,6 @@ public class URITipMgr extends MouseAdapter implements ActionListener, URIEventL
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        // TODO Auto-generated method stub
     }
 
     /* (non-Javadoc)

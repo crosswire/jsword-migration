@@ -97,14 +97,18 @@ public class PassageSelectionPane extends JPanel {
         actions = new ActionFactory(this);
         CWAction action;
 
-        // I18N(DMS)
+        // TRANSLATOR: This is the label of the Book/Chapter/Verse tree of the entire Bible
         JLabel lblAll = CWLabel.createJLabel(BDMsg.gettext("All Verses"));
-        // I18N(DMS)
+        // TRANSLATOR: This is the label of the Book/Chapter/Verse tree of the chosen verses
         JLabel lblSel = CWLabel.createJLabel(BDMsg.gettext("Selected Verses"));
+        // TRANSLATOR: This is the label for the button that moves Books/Chapter/Verses from the Selected Verses tree
         action = actions.addAction("DeleteVerse", BDMsg.gettext("Remove <"));
+        // TRANSLATOR: This is the tooltip for the button that moves Books/Chapter/Verses from the Selected Verses tree
         action.setTooltip(BDMsg.gettext("Delete verses from the list selected."));
         JButton deleteButton = new JButton(action);
+        // TRANSLATOR: This is the label for the button that moves Books/Chapter/Verses to the Selected Verses tree
         action = actions.addAction("AddVerse", BDMsg.gettext("Add >"));
+        // TRANSLATOR: This is the tooltip for the button that moves Books/Chapter/Verses to the Selected Verses tree
         action.setTooltip(BDMsg.gettext("Add verses to list selected."));
         JButton addButton = new JButton(action);
 
@@ -167,7 +171,8 @@ public class PassageSelectionPane extends JPanel {
         txtDisplay = new JTextField();
         txtDisplay.getDocument().addDocumentListener(new CustomDocumentEvent());
 
-        // I18N(DMS)
+        // TRANSLATOR: This is the label for the text box showing a compact representation
+        // of the verses in the Selected Verses tree
         JLabel lblDisplay = CWLabel.createJLabel(BDMsg.gettext("Verses"));
         lblDisplay.setLabelFor(txtDisplay);
 
@@ -295,7 +300,9 @@ public class PassageSelectionPane extends JPanel {
         KeyStroke esc = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
         bailout = true;
 
+        // TRANSLATOR: This is the label for the button that closes the window and returns the selected verses
         CWAction action = actions.addAction("Done", BDMsg.gettext("OK"));
+        // TRANSLATOR: This is the tooltip for the button that closes the window and returns the selected verses
         action.setTooltip(BDMsg.gettext("Close this window."));
         JButton btnGo = new JButton(action);
 

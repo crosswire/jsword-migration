@@ -80,11 +80,15 @@ public class ParallelBookPicker extends JPanel implements BookProvider {
         JPanel buttonBox = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
 
         CWAction action = actions.addAction("RemovePicker");
+        // TRANSLATOR: This is a tooltip for an icon that allows one to
+        // remove a Bible from the parallel Bible view
         action.setTooltip(BDMsg.gettext("Remove a parallel Bible"));
         action.setSmallIcon("images/subtract-13.png");
         buttonBox.add(GuiUtil.flatten(new JButton(action)));
 
         action = actions.addAction("AddPicker");
+        // TRANSLATOR: This is a tooltip for an icon that allows one to
+        // add a Bible from the parallel Bible view
         action.setTooltip(BDMsg.gettext("Add a parallel Bible"));
         action.setSmallIcon("images/add-13.png");
         buttonBox.add(GuiUtil.flatten(new JButton(action)));
