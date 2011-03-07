@@ -47,7 +47,9 @@ public class BooleanField extends JPanel implements Field {
     public BooleanField() {
         ActionFactory actions = new ActionFactory(this);
 
+        // TRANSLATOR: This is the text on a "Yes" button
         on = new JRadioButton(actions.addAction("Yes", CWMsg.gettext("Yes")));
+        // TRANSLATOR: This is the text on a "No" button
         off = new JRadioButton(actions.addAction("No", CWMsg.gettext("No")));
 
         ButtonGroup group = new ButtonGroup();

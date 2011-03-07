@@ -101,7 +101,11 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
         // Get the action definitions from the calling class
         contextActions = actions;
 
+        // TRANSLATOR: This is the name of one of two different ways to present Bible Views.
+        // These show up in Options/Preferences.
         tdiView = new JRadioButtonMenuItem(contextActions.addAction(TAB_MODE, CWMsg.gettext("Tabbed Document Interface")));
+        // TRANSLATOR: This is the name of one of two different ways to present Bible Views.
+        // These show up in Options/Preferences.
         mdiView = new JRadioButtonMenuItem(contextActions.addAction(WINDOW_MODE, CWMsg.gettext("Multiple Document Interface")));
 
         ButtonGroup grpViews = new ButtonGroup();

@@ -71,8 +71,13 @@ public class PathField extends JPanel implements Field {
 
         JScrollPane scroll = new CWScrollPane(list);
 
+        // TRANSLATOR: This is the text on an "Add" button.
         buttons.add(new JButton(actions.addAction("Add", CWMsg.gettext("Add"))));
+        // TRANSLATOR: This is the text on a "Remove" button.
         buttons.add(new JButton(actions.addAction("Remove", CWMsg.gettext("Remove"))));
+        // TRANSLATOR: This is the text on an "Update" button for a path
+        // Note: The " (path)" is not to be translated.
+        // It is here because some languages translate "Update" differently depending on context.
         buttons.add(new JButton(actions.addAction("Update", CWMsg.gettext("Update (path)"))));
 
         setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));

@@ -78,8 +78,11 @@ public class StringArrayField extends JPanel implements Field {
 
         JScrollPane scroll = new CWScrollPane(list);
 
+        // TRANSLATOR: This is the text on an "Add" button.
         buttons.add(new JButton(actions.addAction("Add", CWMsg.gettext("Add"))));
+        // TRANSLATOR: This is the text on a "Remove" button.
         buttons.add(new JButton(actions.addAction("Remove", CWMsg.gettext("Remove"))));
+        // TRANSLATOR: This is the text on an "Update" button.
         buttons.add(new JButton(actions.addAction("Update", CWMsg.gettext("Update"))));
 
         Border title = BorderFactory.createTitledBorder(CWOtherMsg.lookupText("Component Editor"));

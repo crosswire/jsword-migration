@@ -780,9 +780,13 @@ public class CWOptionPane extends JOptionPane {
      */
     private static ActionFactory actions = new ActionFactory(null);
     static {
+        // TRANSLATOR: This is the text on a "Yes" button.
         actions.addAction("Yes", CWMsg.gettext("Yes"));
+        // TRANSLATOR: This is the text on a "No" button.
         actions.addAction("No", CWMsg.gettext("No"));
+        // TRANSLATOR: This is the text on an "OK" button.
         actions.addAction("OK", CWMsg.gettext("OK"));
+        // TRANSLATOR: This is the text on a "Cancel" button.
         actions.addAction("Cancel", CWMsg.gettext("Cancel"));
     }
 

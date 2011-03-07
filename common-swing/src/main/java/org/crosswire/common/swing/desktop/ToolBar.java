@@ -170,7 +170,12 @@ public class ToolBar extends JToolBar {
      *         toolbar
      */
     public JMenuItem getShowToggle() {
-        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.addAction("ToolBarToggle", CWMsg.gettext("Show Tool Bar")).setTooltip(CWMsg.gettext("Toggle the display of the tool bar")).setAccelerator("B,ctrl"));
+        // TRANSLATOR: This is the label of a view option allowing a user to show/hide the tool bar
+        CWAction action = actions.addAction("ToolBarToggle", CWMsg.gettext("Show Tool Bar"));
+        // TRANSLATOR: This is the tooltip for a view option allowing a user to show/hide the tool bar
+        action.setTooltip(CWMsg.gettext("Toggle the display of the tool bar"));
+        action.setAccelerator("B,ctrl");
+        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(action);
         toggle.setSelected(true);
         return toggle;
     }
@@ -181,7 +186,11 @@ public class ToolBar extends JToolBar {
      * @return a check box that can be used to toggle the text
      */
     public JMenuItem getTextToggle() {
-        return new JCheckBoxMenuItem(actions.addAction("ToolBarText", CWMsg.gettext("Show Tool Bar Text")).setTooltip(CWMsg.gettext("Toggle the display of the tool bar text")));
+        // TRANSLATOR: This is the label of a view option allowing a user to show/hide the text for icons on the tool bar
+        CWAction action = actions.addAction("ToolBarText", CWMsg.gettext("Show Tool Bar Text"));
+        // TRANSLATOR: This is the tooltip for a view option allowing a user to show/hide the text for icons on the tool bar
+        action.setTooltip(CWMsg.gettext("Toggle the display of the tool bar text"));
+        return new JCheckBoxMenuItem(action);
     }
 
     /**
@@ -191,7 +200,11 @@ public class ToolBar extends JToolBar {
      * @return a check box that can be used to toggle the size of the icons
      */
     public JMenuItem getIconSizeToggle() {
-        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(actions.addAction("ToolBarText", CWMsg.gettext("Large Tool Bar")).setTooltip(CWMsg.gettext("Toggle size of the tool bar icons")));
+        // TRANSLATOR: This is the label of a view option allowing a user to toggle between large and small icons on the tool bar
+        CWAction action = actions.addAction("ToolBarSize", CWMsg.gettext("Large Tool Bar"));
+        // TRANSLATOR: This is the tooltip for a view option allowing a user to toggle between large and small icons on the tool bar
+        action.setTooltip(CWMsg.gettext("Toggle size of the tool bar icons"));
+        JCheckBoxMenuItem toggle = new JCheckBoxMenuItem(action);
         toggle.setSelected(true);
         return toggle;
     }

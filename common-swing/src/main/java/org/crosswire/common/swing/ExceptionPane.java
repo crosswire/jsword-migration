@@ -227,6 +227,7 @@ public final class ExceptionPane extends JPanel {
 
         final ActionFactory actions = new ActionFactory(pane);
 
+        // TRANSLATOR: This is the text on an "OK" button.
         JButton ok = actions.createJButton(actions.addAction("OK", CWMsg.gettext("OK")), new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dialog.dispose();
@@ -307,28 +308,13 @@ public final class ExceptionPane extends JPanel {
         // The message in the exception
         String msg = ex.getMessage();
         if (msg == null || msg.equals("")) {
-            // I18N(DMS)
+            // TRANSLATOR: When an error dialog is presented to the user, this is shown when
+            // there is no other message available
             msg = CWMsg.gettext("No description available.");
         }
         String orig = XMLUtil.escape(msg);
         msg = orig.replaceAll("\n", "<br>");
 
-        // The name of the exception
-        /*
-         * String classname = ex.getClass().getName(); int lastdot =
-         * classname.lastIndexOf('.'); if (lastdot != -1) classname =
-         * classname.substring(lastdot+1); if (classname.endsWith("Exception")
-         * && classname.length() > "Exception".length()) classname =
-         * classname.substring(0, classname.length() - "Exception".length()); if
-         * (classname.endsWith("Error") && classname.length() >
-         * "Error".length()) classname = classname.substring(0,
-         * classname.length() - "Error".length()); classname =
-         * StringUtil.createTitle(classname); if (classname.equals("IO"))
-         * classname = "Input / Output";
-         * 
-         * retcode.append("<font size=\"-1\"><strong>");
-         * retcode.append(classname); retcode.append("</strong></font>");
-         */
         retcode.append("<br>");
         retcode.append(msg);
 
@@ -356,12 +342,8 @@ public final class ExceptionPane extends JPanel {
             pane = ep;
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see
-         * java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent
-         * )
+        /* (non-Javadoc)
+         * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
          */
         public void itemStateChanged(ItemEvent ev) {
             pane.changeDetail();
@@ -383,12 +365,8 @@ public final class ExceptionPane extends JPanel {
             traces = cb;
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see
-         * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
-         * )
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         public void actionPerformed(ActionEvent ev) {
             Throwable th = (Throwable) traces.getSelectedItem();
@@ -421,12 +399,8 @@ public final class ExceptionPane extends JPanel {
             this.mylabel = label;
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see
-         * javax.swing.event.ListSelectionListener#valueChanged(javax.swing.
-         * event.ListSelectionEvent)
+        /* (non-Javadoc)
+         * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
          */
         public void valueChanged(ListSelectionEvent ev) {
             if (ev.getValueIsAdjusting()) {
@@ -551,7 +525,7 @@ public final class ExceptionPane extends JPanel {
          *            The event describing the Exception
          */
         public void reportException(ReporterEvent ev) {
-            // This faf is to ensure that we don't break any SwingThread rules
+            // This is to ensure that we don't break any SwingThread rules
             SwingUtilities.invokeLater(new ExceptionRunner(ev));
         }
 
@@ -562,7 +536,7 @@ public final class ExceptionPane extends JPanel {
          *            The event describing the message
          */
         public void reportMessage(ReporterEvent ev) {
-            // This faf is to ensure that we don't break any SwingThread rules
+            // This is to ensure that we don't break any SwingThread rules
             SwingUtilities.invokeLater(new MessageRunner(ev));
         }
     }
@@ -605,9 +579,7 @@ public final class ExceptionPane extends JPanel {
             event = ev;
         }
 
-        /*
-         * (non-Javadoc)
-         * 
+        /* (non-Javadoc)
          * @see java.lang.Runnable#run()
          */
         public void run() {

@@ -65,8 +65,11 @@ public class ButtonPane extends JPanel {
 
         buttons.setLayout(new GridLayout(1, 2, 10, 10));
         buttons.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        // TRANSLATOR: This is the text on an "OK" button
         buttons.add(new JButton(actions.addAction("OK", CWMsg.gettext("OK"))));
+        // TRANSLATOR: This is the text on a "Cancel" button
         buttons.add(new JButton(actions.addAction("Cancel", CWMsg.gettext("Cancel"))));
+        // TRANSLATOR: This is the text on an "Apply" button
         buttons.add(new JButton(actions.addAction("Apply", CWMsg.gettext("Apply"))));
 
         this.setBorder(new EdgeBorder(SwingConstants.NORTH));

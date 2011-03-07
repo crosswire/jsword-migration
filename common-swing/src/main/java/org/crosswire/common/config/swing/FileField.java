@@ -31,6 +31,7 @@ import javax.swing.JTextField;
 
 import org.crosswire.common.config.Choice;
 import org.crosswire.common.swing.ActionFactory;
+import org.crosswire.common.swing.CWAction;
 import org.crosswire.common.swing.CWMsg;
 
 /**
@@ -51,7 +52,11 @@ public class FileField extends JPanel implements Field {
 
         setLayout(new BorderLayout(10, 0));
         add(text, BorderLayout.CENTER);
-        add(new JButton(actions.addAction("Browse", CWMsg.gettext("Browse")).setTooltip(CWMsg.gettext("Browse for a directory to select."))), BorderLayout.LINE_END);
+        // TRANSLATOR: This is the text on a "Browse" button, that brings up a file selection dialog.
+        CWAction action = actions.addAction("Browse", CWMsg.gettext("Browse"));
+        // TRANSLATOR: This is the tooltip for a "Browse" button, that brings up a file selection dialog.
+        action.setTooltip(CWMsg.gettext("Browse for a directory to select."));
+        add(new JButton(action), BorderLayout.LINE_END);
     }
 
     /**

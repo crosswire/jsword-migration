@@ -118,12 +118,14 @@ public class FontChooser extends JPanel {
 
         final ActionFactory actions = new ActionFactory(fontc);
 
+        // TRANSLATOR: This is the text on an "OK" button.
         JButton ok = actions.createJButton(actions.addAction("OK", CWMsg.gettext("OK")), new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 fontc.dialog.dispose();
             }
         });
 
+        // TRANSLATOR: This is the text on a "Cancel" button.
         JButton cancel = actions.createJButton(actions.addAction("Cancel", CWMsg.gettext("Cancel")), new ActionListener() {
             public void actionPerformed(ActionEvent ex) {
                 fontc.dialog.setVisible(false);
