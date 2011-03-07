@@ -34,7 +34,7 @@ public class DownloadSet implements Comparable<DownloadSet> {
     public static DownloadSet[] getDownloadSets(String localprefix, String webprefix, boolean datesort) throws IOException {
         File dir = new File(localprefix);
         if (!dir.isDirectory()) {
-            throw new IOException(Msg.NON_DIR.toString(localprefix));
+            throw new IOException(Msg.lookupText("{0} is not a directory", localprefix));
         }
 
         log.debug("dig " + localprefix);
@@ -107,7 +107,7 @@ public class DownloadSet implements Comparable<DownloadSet> {
      * What is the version number (using the file name string)
      */
     public String getVersionString() {
-        return Msg.VERSION.toString(setname);
+        return Msg.lookupText("Version {0}", setname);
     }
 
     /**
