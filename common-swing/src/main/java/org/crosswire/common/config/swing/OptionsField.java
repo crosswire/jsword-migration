@@ -48,7 +48,7 @@ public class OptionsField implements Field {
      */
     public OptionsField() {
         combo = new JComboBox(new String[] {
-            Msg.NO_OPTIONS.toString()
+                Msg.lookupText("No Options Set")
         });
         // Set the preferred width. Note, the actual combo box will resize to
         // the width of it's container
@@ -75,7 +75,7 @@ public class OptionsField implements Field {
             combo.setModel(new DefaultComboBoxModel(list));
         } else {
             list = new String[] {
-                Msg.ERROR.toString()
+                    Msg.lookupText("Error")
             };
         }
     }
@@ -88,8 +88,8 @@ public class OptionsField implements Field {
     public String getValue() {
         Object reply = combo.getSelectedItem();
 
-        if (reply instanceof Map.Entry<?,?>) {
-            return ((Map.Entry<?,?>) reply).getKey().toString();
+        if (reply instanceof Map.Entry<?, ?>) {
+            return ((Map.Entry<?, ?>) reply).getKey().toString();
         }
         return reply == null ? "" : reply.toString();
     }

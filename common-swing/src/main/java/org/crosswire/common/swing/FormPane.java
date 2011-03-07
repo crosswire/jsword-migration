@@ -146,5 +146,5 @@ public class FormPane extends JPanel {
     /**
      * A store of the available components
      */
-    protected Hashtable<String,Component> comps = new Hashtable<String,Component>();
+    protected Hashtable<String, Component> comps = new Hashtable<String, Component>();
 }

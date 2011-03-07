@@ -59,7 +59,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
         scroll.setPreferredSize(new Dimension(150, 150));
 
         CustomTreeCellRenderer render = new CustomTreeCellRenderer();
-        comps = new HashMap<String,Component>();
+        comps = new HashMap<String, Component>();
 
         // Hack: tree depends on it being a Color not a sub of it.
         Color orig = UIManager.getColor("control");
@@ -126,7 +126,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
         String key = choice.getKey();
         Field field = fields.get(key);
         if (field != null) {
-            fields.remove(field);
+            fields.remove(key);
         }
 
         Component comp = comps.get(key);
@@ -175,7 +175,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
     /**
      * A hash of components
      */
-    protected Map<String,Component> comps;
+    protected Map<String, Component> comps;
 
     /**
      * Serialization ID

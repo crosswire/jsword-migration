@@ -48,7 +48,7 @@ public class MappedOptionsField implements Field {
      */
     public MappedOptionsField() {
         combo = new JComboBox(new String[] {
-            Msg.NO_OPTIONS.toString()
+                Msg.lookupText("No Options Set")
         });
         // Set the preferred width. Note, the actual combo box will resize to
         // the width of it's container
@@ -65,11 +65,11 @@ public class MappedOptionsField implements Field {
      *            The options provided by the Choice
      */
     public void setChoice(Choice param) {
-        if (!(param instanceof MappedChoice<?,?>)) {
+        if (!(param instanceof MappedChoice<?, ?>)) {
             throw new IllegalArgumentException("Illegal type for Choice. Not a MappedChoice. " + param.getKey());
         }
-        MappedChoice<?,?> mc = (MappedChoice<?,?>) param;
-        Map<?,?> map = mc.getOptions();
+        MappedChoice<?, ?> mc = (MappedChoice<?, ?>) param;
+        Map<?, ?> map = mc.getOptions();
         if (map == null) {
             throw new IllegalArgumentException("getOptions() returns null for option: " + param.getKey());
         }
@@ -85,8 +85,8 @@ public class MappedOptionsField implements Field {
     public String getValue() {
         Object reply = combo.getSelectedItem();
 
-        if (reply instanceof Map.Entry<?,?>) {
-            return ((Map.Entry<?,?>) reply).getKey().toString();
+        if (reply instanceof Map.Entry<?, ?>) {
+            return ((Map.Entry<?, ?>) reply).getKey().toString();
         }
         return reply == null ? "" : reply.toString();
     }
@@ -102,8 +102,8 @@ public class MappedOptionsField implements Field {
         int size = model.getSize();
         for (int i = 0; i < size; i++) {
             Object match = model.getElementAt(i);
-            if (match instanceof Map.Entry<?,?>) {
-                Map.Entry<?,?> mapEntry = (Map.Entry<?,?>) match;
+            if (match instanceof Map.Entry<?, ?>) {
+                Map.Entry<?, ?> mapEntry = (Map.Entry<?, ?>) match;
                 if (mapEntry.getKey().toString().equals(value) || mapEntry.getValue().toString().equals(value)) {
                     combo.setSelectedItem(mapEntry);
                     return;

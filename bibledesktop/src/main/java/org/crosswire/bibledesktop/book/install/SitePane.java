@@ -46,7 +46,7 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import org.crosswire.bibledesktop.BibleDesktopMsg;
+import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWAction;
 import org.crosswire.common.swing.CWLabel;
@@ -86,7 +86,7 @@ public class SitePane extends JPanel {
      */
     public SitePane() {
         // I18N(DMS)
-        this(null, BibleDesktopMsg.gettext("Installed Books:"));
+        this(null, BDMsg.gettext("Installed Books:"));
     }
 
     /**
@@ -94,7 +94,7 @@ public class SitePane extends JPanel {
      */
     public SitePane(Installer bookListInstaller) {
         // I18N(DMS)
-        this(bookListInstaller, BibleDesktopMsg.gettext("Available Books:"));
+        this(bookListInstaller, BDMsg.gettext("Available Books:"));
     }
 
     /**
@@ -139,20 +139,16 @@ public class SitePane extends JPanel {
         if (installer == null) {
             int bookCount = Books.installed().getBooks().size();
             // TRANSLATOR: This label give the number of books that are installed. {0} is a placeholder for the number.
-            desc = BibleDesktopMsg.gettext("{0} books installed.", new Object[] {
-                Integer.valueOf(bookCount)
-            });
+            desc = BDMsg.gettext("{0} books installed.", Integer.valueOf(bookCount));
         } else {
             int bookCount = installer.getBooks().size();
             if (bookCount == 0) {
                 // TRANSLATOR: This label shows up when the list of available books for a download site is missing.
                 // Change the text between <html><b> and </b>.
-                desc = BibleDesktopMsg.gettext("<html><b>Click 'Update Available Books' to download an up to date book list.</b>");
+                desc = BDMsg.gettext("<html><b>Click 'Update Available Books' to download an up to date book list.</b>");
             } else {
                 // TRANSLATOR: This label gives the number of books available at a download site. {0} is a placeholder for the number.
-                desc = BibleDesktopMsg.gettext("{0} books available for download.", new Object[] {
-                    Integer.valueOf(bookCount)
-                });
+                desc = BDMsg.gettext("{0} books available for download.", Integer.valueOf(bookCount));
             }
         }
 
@@ -198,7 +194,7 @@ public class SitePane extends JPanel {
     private Component createSelectedPanel() {
 
         // I18N(DMS)
-        JLabel lblSelected = CWLabel.createJLabel(BibleDesktopMsg.gettext("Selected Book:"));
+        JLabel lblSelected = CWLabel.createJLabel(BDMsg.gettext("Selected Book:"));
         display = new TextPaneBookMetaDataDisplay();
         lblSelected.setLabelFor(display.getComponent());
 
@@ -239,7 +235,7 @@ public class SitePane extends JPanel {
     private TreeModel createTreeModel(BookList books) {
         // return new BooksTreeModel(books);
         BookSet bmds = new BookSet(books.getBooks());
-        TreeNode bookRoot = new BookNode("root", bmds, 0, new Object[] { BookMetaData.KEY_CATEGORY, BookMetaData.KEY_XML_LANG});
+        TreeNode bookRoot = new BookNode("root", bmds, 0, BookMetaData.KEY_CATEGORY, BookMetaData.KEY_XML_LANG);
         return new DefaultTreeModel(bookRoot);
     }
 
@@ -274,8 +270,8 @@ public class SitePane extends JPanel {
         if (installer != null) {
             panel.setLayout(new GridLayout(1, 2, 3, 3));
 
-            action = actions.addAction("Install", BibleDesktopMsg.gettext("Install"));
-            action.setTooltip(BibleDesktopMsg.gettext("Install the selected book"));
+            action = actions.addAction("Install", BDMsg.gettext("Install"));
+            action.setTooltip(BDMsg.gettext("Install the selected book"));
             action.enable(false);
             panel.add(new JButton(action));
 
@@ -285,34 +281,34 @@ public class SitePane extends JPanel {
             // action.enable(false);
             // panel.add(new JButton(action));
 
-            action = actions.addAction("Refresh", BibleDesktopMsg.gettext("Update Available Books"));
-            action.setTooltip(BibleDesktopMsg.gettext("Download a current listing of books."));
+            action = actions.addAction("Refresh", BDMsg.gettext("Update Available Books"));
+            action.setTooltip(BDMsg.gettext("Download a current listing of books."));
             panel.add(new JButton(action));
         } else {
             panel.setLayout(new GridLayout(3, 2, 3, 3));
 
-            action = actions.addAction("Delete", BibleDesktopMsg.gettext("Delete Book"));
-            action.setTooltip(BibleDesktopMsg.gettext("Delete the selected book"));
+            action = actions.addAction("Delete", BDMsg.gettext("Delete Book"));
+            action.setTooltip(BDMsg.gettext("Delete the selected book"));
             action.enable(false);
             panel.add(new JButton(action));
 
-            action = actions.addAction("Unindex", BibleDesktopMsg.gettext("Remove Search Index"));
-            action.setTooltip(BibleDesktopMsg.gettext("Remove the search index of the selected book"));
+            action = actions.addAction("Unindex", BDMsg.gettext("Remove Search Index"));
+            action.setTooltip(BDMsg.gettext("Remove the search index of the selected book"));
             action.enable(false);
             panel.add(new JButton(action));
 
-            action = actions.addAction("ChooseFont", BibleDesktopMsg.gettext("Font..."));
-            action.setTooltip(BibleDesktopMsg.gettext("Choose a font for the language or book"));
+            action = actions.addAction("ChooseFont", BDMsg.gettext("Font..."));
+            action.setTooltip(BDMsg.gettext("Choose a font for the language or book"));
             action.enable(false);
             panel.add(new JButton(action));
 
-            action = actions.addAction("Unlock", BibleDesktopMsg.gettext("Unlock"));
-            action.setTooltip(BibleDesktopMsg.gettext("Unlock the selected book"));
+            action = actions.addAction("Unlock", BDMsg.gettext("Unlock"));
+            action.setTooltip(BDMsg.gettext("Unlock the selected book"));
             action.enable(false);
             panel.add(new JButton(action));
 
-            action = actions.addAction("ResetFont", BibleDesktopMsg.gettext("Reset Font"));
-            action.setTooltip(BibleDesktopMsg.gettext("Reset the custom font set for this language or book"));
+            action = actions.addAction("ResetFont", BDMsg.gettext("Reset Font"));
+            action.setTooltip(BDMsg.gettext("Reset the custom font set for this language or book"));
             action.enable(false);
             panel.add(new JButton(action));
 
@@ -334,11 +330,9 @@ public class SitePane extends JPanel {
 
         try {
             // TRANSLATOR: Message asking for confirmation of a delete of a book.
-            String msg = BibleDesktopMsg.gettext("Are you sure you want to delete {0}?", new Object[] {
-                book.getName()
-            });
+            String msg = BDMsg.gettext("Are you sure you want to delete {0}?", book.getName());
             // TRANSLATOR: Title of a dialog that asks whether the book should be deleted.
-            if (CWOptionPane.showConfirmDialog(this, msg, BibleDesktopMsg.gettext("Delete Book"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if (CWOptionPane.showConfirmDialog(this, msg, BDMsg.gettext("Delete Book"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 book.getDriver().delete(book);
 
                 IndexManager imanager = IndexManagerFactory.getIndexManager();
@@ -364,14 +358,12 @@ public class SitePane extends JPanel {
         Book book = getBook(last);
 
         // TRANSLATOR: Title to a dialog asking the user to provide an unlock key.
-        String title = BibleDesktopMsg.gettext("Unlock Book");
+        String title = BDMsg.gettext("Unlock Book");
         // TRANSLATOR: Message asking the user to provide an unlock key.
         // The unlock key is typically a string like AbCd8364efGH8472.
         // {0} is a placeholder for the books name.
         // In order to have long titles on the next line we use <html> and <br> to provide this.
-        String msg = BibleDesktopMsg.gettext("<html>Please enter the unlock key for:<br> {0}?", new Object[] {
-            book.getName()
-        });
+        String msg = BDMsg.gettext("<html>Please enter the unlock key for:<br> {0}?", book.getName());
         String unlockKey = (String) CWOptionPane.showInputDialog(this, msg, title, JOptionPane.QUESTION_MESSAGE, null, null, book.getUnlockKey());
 
         if (unlockKey != null && unlockKey.length() > 0) {
@@ -397,12 +389,10 @@ public class SitePane extends JPanel {
             if (imanager.isIndexed(book)) {
                 // TRANSLATOR: Message asking the user to confirm the delete of a search index for a book.
                 // {0} is a placeholder for the name of the book.
-                String formattedMsg = BibleDesktopMsg.gettext("Are you sure you want to remove the index for {0}?", new Object[] {
-                    book.getName()
-                });
+                String formattedMsg = BDMsg.gettext("Are you sure you want to remove the index for {0}?", book.getName());
                 // TRANSLATOR: Title to the dialog that asks for confirmation of the deletion 
                 // of a book's search index.
-                if (CWOptionPane.showConfirmDialog(this, formattedMsg, BibleDesktopMsg.gettext("Remove Index for Book"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                if (CWOptionPane.showConfirmDialog(this, formattedMsg, BDMsg.gettext("Remove Index for Book"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     imanager.deleteIndex(book);
                 }
             }
@@ -464,7 +454,7 @@ public class SitePane extends JPanel {
             if (book != null && !installer.isNewer(name)) {
                 // TRANSLATOR: Popup message indicating that the book is already installed.
                 // {0} is a placeholder for the name of the book.
-                Reporter.informUser(this, BibleDesktopMsg.gettext("Book already installed: {0}", name.getName()));
+                Reporter.informUser(this, BDMsg.gettext("Book already installed: {0}", name.getName()));
                 return;
             }
 
@@ -479,7 +469,7 @@ public class SitePane extends JPanel {
                 // The pattern ###,###,###.# says to separate the number at every third digit and
                 //    to show one digit of fractional part.
                 // The , and . will automatically be converted into the user's proper separators.
-                formattedMsg = BibleDesktopMsg.gettext("{0} is {1,number,###,###,###.#}MB. Continue?", new Object[] {name.getName(), Float.valueOf(size)});
+                formattedMsg = BDMsg.gettext("{0} is {1,number,###,###,###.#}MB. Continue?", name.getName(), Float.valueOf(size));
             } else {
                 // TRANSLATOR: The size of the book is provided so that the user can decide whether to continue a download.
                 // {0} is a placeholder for the name of the book.
@@ -487,11 +477,11 @@ public class SitePane extends JPanel {
                 // The pattern ###,###,###.# says to separate the number at every third digit and
                 //    to show one digit of fractional part.
                 // The , and . will automatically be converted into the user's proper separators.
-                formattedMsg = BibleDesktopMsg.gettext("{0} is {1,number,###,###,###.#}KB. Continue?", new Object[] {name.getName(), Float.valueOf(size)});
+                formattedMsg = BDMsg.gettext("{0} is {1,number,###,###,###.#}KB. Continue?", name.getName(), Float.valueOf(size));
             }
 
             // TRANSLATOR: Title to a dialog asking whether the user should download the book based on it's size.
-            if (CWOptionPane.showConfirmDialog(this, formattedMsg, BibleDesktopMsg.gettext("Download Book"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if (CWOptionPane.showConfirmDialog(this, formattedMsg, BDMsg.gettext("Download Book"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 installer.install(name);
             }
         } catch (InstallException ex) {
@@ -526,14 +516,14 @@ public class SitePane extends JPanel {
         Book book = getBook(last);
         if (book != null) {
             // TRANSLATOR: Title to a dialog allowing the user to choose a font face, size and style.
-            Font picked = FontChooser.showDialog(this, BibleDesktopMsg.gettext("Choose Font"), BookFont.instance().getFont(book));
+            Font picked = FontChooser.showDialog(this, BDMsg.gettext("Choose Font"), BookFont.instance().getFont(book));
             BookFont.instance().setFont(book, picked);
         }
 
         Language language = getLanguage(last);
         if (language != null) {
             // TRANSLATOR: Title to a dialog allowing the user to choose a font face, size and style.
-            Font picked = FontChooser.showDialog(this, BibleDesktopMsg.gettext("Choose Font"), BookFont.instance().getFont(language));
+            Font picked = FontChooser.showDialog(this, BDMsg.gettext("Choose Font"), BookFont.instance().getFont(language));
             BookFont.instance().setFont(language, picked);
         }
         actions.findAction("ResetFont").setEnabled(BookFont.instance().isSet(book, language));

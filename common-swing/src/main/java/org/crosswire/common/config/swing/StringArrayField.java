@@ -81,7 +81,7 @@ public class StringArrayField extends JPanel implements Field {
         buttons.add(new JButton(actions.addAction("Remove", CWMsg.gettext("Remove"))));
         buttons.add(new JButton(actions.addAction("Update", CWMsg.gettext("Update"))));
 
-        Border title = BorderFactory.createTitledBorder(Msg.COMPONENT_EDITOR.toString());
+        Border title = BorderFactory.createTitledBorder(Msg.lookupText("Component Editor"));
         Border pad = BorderFactory.createEmptyBorder(5, 5, 5, 5);
         setBorder(BorderFactory.createCompoundBorder(title, pad));
 
@@ -159,7 +159,7 @@ public class StringArrayField extends JPanel implements Field {
     public void doAddEntry() {
         InputPane input = new InputPane();
 
-        if (CWOptionPane.showConfirmDialog(this, input, Msg.NEW_CLASS.toString(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+        if (CWOptionPane.showConfirmDialog(this, input, Msg.lookupText("New Class"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
             String new_name = input.name_field.getText();
 
             list_model.addElement(new_name);
@@ -173,7 +173,7 @@ public class StringArrayField extends JPanel implements Field {
         InputPane input = new InputPane();
         input.name_field.setText(currentValue());
 
-        if (CWOptionPane.showConfirmDialog(this, input, Msg.EDIT_CLASS.toString(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+        if (CWOptionPane.showConfirmDialog(this, input, Msg.lookupText("Edit Class"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
             String new_name = input.name_field.getText();
 
             list_model.removeElement(currentValue());
@@ -226,7 +226,7 @@ public class StringArrayField extends JPanel implements Field {
             c.gridwidth = GridBagConstraints.RELATIVE; // next-to-last
             c.fill = GridBagConstraints.NONE; // reset to default
             c.weightx = 0.0; // reset to default
-            add(new JLabel(Msg.NAME.toString() + ':'), c);
+            add(new JLabel(Msg.lookupText("Name") + ':'), c);
 
             c.gridwidth = GridBagConstraints.REMAINDER; // end row
             c.fill = GridBagConstraints.HORIZONTAL;

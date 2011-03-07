@@ -42,7 +42,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.EventListenerList;
 
-import org.crosswire.bibledesktop.BibleDesktopMsg;
+import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.bibledesktop.book.install.IndexResolver;
 import org.crosswire.bibledesktop.passage.KeyChangeEvent;
 import org.crosswire.bibledesktop.passage.KeyChangeListener;
@@ -99,7 +99,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         advanced = new AdvancedSearchPane();
 
         // TRANSLATOR: This is the initial title of a Bible View. {0} is a placeholder for a number that uniquely identifies the Bible View.
-        title = BibleDesktopMsg.gettext("Untitled {0}", Integer.valueOf(base++));
+        title = BDMsg.gettext("Untitled {0}", Integer.valueOf(base++));
 
         actions = new ActionFactory(this);
 
@@ -150,14 +150,14 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         quickPicker.add(cboChaps);
 
         // I18N(DMS)
-        JLabel lblBible = CWLabel.createJLabel(BibleDesktopMsg.gettext("Bible:"));
+        JLabel lblBible = CWLabel.createJLabel(BDMsg.gettext("Bible:"));
         lblBible.setLabelFor(biblePicker);
 
         // I18N(DMS)
-        JLabel lblKey = CWLabel.createJLabel(BibleDesktopMsg.gettext("Show Passage:"));
+        JLabel lblKey = CWLabel.createJLabel(BDMsg.gettext("Show Passage:"));
 
-        CWAction action = actions.addAction("PassageAction", BibleDesktopMsg.gettext("Passage"));
-        action.setTooltip(BibleDesktopMsg.gettext("Enter a passage to display. Press CTRL+ENTER or press the ... button for a Passage selection window."));
+        CWAction action = actions.addAction("PassageAction", BDMsg.gettext("Passage"));
+        action.setTooltip(BDMsg.gettext("Enter a passage to display. Press CTRL+ENTER or press the ... button for a Passage selection window."));
         txtKey = new JTextField();
         txtKey.setAction(action);
         txtKey.addKeyListener(new KeyAdapter() {
@@ -171,45 +171,45 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
                 }
             }
         });
-        action = actions.addAction("More", BibleDesktopMsg.gettext("Select"));
-        action.setTooltip(BibleDesktopMsg.gettext("Pick a passage to display"));
+        action = actions.addAction("More", BDMsg.gettext("Select"));
+        action.setTooltip(BDMsg.gettext("Pick a passage to display"));
         btnKey = new JButton(action);
 
-        action = actions.addAction("GoPassage", BibleDesktopMsg.gettext("Go (passage)"));
-        action.setTooltip(BibleDesktopMsg.gettext("Display the passage"));
+        action = actions.addAction("GoPassage", BDMsg.gettext("Go (passage)"));
+        action.setTooltip(BDMsg.gettext("Display the passage"));
         btnKeyGo = new JButton(action);
 
-        action = actions.addAction("SearchAction", BibleDesktopMsg.gettext("Search (text)"));
-        action.setTooltip(BibleDesktopMsg.gettext("Search for a passage."));
+        action = actions.addAction("SearchAction", BDMsg.gettext("Search (text)"));
+        action.setTooltip(BDMsg.gettext("Search for a passage."));
         txtSearch = new JTextField();
         txtSearch.setAction(action);
 
         // I18N(DMS)
-        JLabel lblSearch = CWLabel.createJLabel(BibleDesktopMsg.gettext("Search:"));
+        JLabel lblSearch = CWLabel.createJLabel(BDMsg.gettext("Search:"));
         lblSearch.setLabelFor(txtSearch);
 
-        action = actions.addAction("GoSearch", BibleDesktopMsg.gettext("Go (search)"));
-        action.setTooltip(BibleDesktopMsg.gettext("Search for a passage."));
+        action = actions.addAction("GoSearch", BDMsg.gettext("Go (search)"));
+        action.setTooltip(BDMsg.gettext("Search for a passage."));
         btnSearch = new JButton(action);
 
         action = actions.addAction("HelpAction");
-        action.setTooltip(BibleDesktopMsg.gettext("Quick Search Help"));
+        action.setTooltip(BDMsg.gettext("Quick Search Help"));
         action.setSmallIcon("toolbarButtonGraphics/general/ContextualHelp16.gif");
         JButton btnHelp = GuiUtil.flatten(new JButton(action));
         // TRANSLATOR: Title to the dialog that shows search tips.
-        String dialogTitle = BibleDesktopMsg.gettext("Search Quick Help");
+        String dialogTitle = BDMsg.gettext("Search Quick Help");
 
         // TRANSLATOR: This is html formatted examples of how to use search.
         // TODO(DMS): Split this into individual examples and bring in each separately.
-        String msg = BibleDesktopMsg.gettext("<html><b>Search Tips.</b><br>You can use || to join phrases, for example \"<code>balaam || balak</code>\" finds passages containing Balak OR Balaam<br>Using && requires both words, e.g. \"<code>aaron && moses</code>\" finds passages containing both Aaron AND Moses<br>Using a ! removes words from the result e.g. \"<code>lord ! jesus</code>\" is passages containing Lord BUT NOT Jesus<br>Using ~2 widens the passage by 2 verses either side on any match. So \"<code>amminadab ~1 perez</code>\" finds<br>verses containting Amminadab within 1 verse of mention of Perez.<br>Using +[Gen-Exo] at the beginning will restrict a search to that range of verses.");
+        String msg = BDMsg.gettext("<html><b>Search Tips.</b><br>You can use || to join phrases, for example \"<code>balaam || balak</code>\" finds passages containing Balak OR Balaam<br>Using && requires both words, e.g. \"<code>aaron && moses</code>\" finds passages containing both Aaron AND Moses<br>Using a ! removes words from the result e.g. \"<code>lord ! jesus</code>\" is passages containing Lord BUT NOT Jesus<br>Using ~2 widens the passage by 2 verses either side on any match. So \"<code>amminadab ~1 perez</code>\" finds<br>verses containting Amminadab within 1 verse of mention of Perez.<br>Using +[Gen-Exo] at the beginning will restrict a search to that range of verses.");
         dlgHelp = new QuickHelpDialog(GuiUtil.getFrame(this), dialogTitle, msg);
 
-        action = actions.addAction("Advanced", BibleDesktopMsg.gettext("Advanced"));
-        action.setTooltip(BibleDesktopMsg.gettext("Advanced Search"));
+        action = actions.addAction("Advanced", BDMsg.gettext("Advanced"));
+        action.setTooltip(BDMsg.gettext("Advanced Search"));
         btnAdvanced = new JButton(action);
 
-        action = actions.addAction("Index", BibleDesktopMsg.gettext("Enable Search"));
-        action.setTooltip(BibleDesktopMsg.gettext("Create a search index"));
+        action = actions.addAction("Index", BDMsg.gettext("Enable Search"));
+        action.setTooltip(BDMsg.gettext("Create a search index"));
         btnIndex = new JButton(action);
 
         this.setLayout(new GridBagLayout());
@@ -280,7 +280,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     public boolean isClear() {
         // TRANSLATOR: This must match the word that is used for "Untitled {0}".
         // This is used to determine whether a tab is unused or not.
-        return title.indexOf(BibleDesktopMsg.gettext("Untitled")) != -1;
+        return title.indexOf(BDMsg.gettext("Untitled")) != -1;
     }
 
     /**
@@ -349,33 +349,27 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
             if (results instanceof PassageTally) {
                 PassageTally tally = (PassageTally) results;
                 total = tally.getTotal();
-                tally.setOrdering(PassageTally.ORDER_TALLY);
+                tally.setOrdering(PassageTally.Order.TALLY);
             }
 
             if (total == 0) {
                 // TRANSLATOR: There were no verses that satisfied the search request.
                 // {0} is a placeholder for the search request.
-                Reporter.informUser(this, BibleDesktopMsg.gettext("Could not find verses with: {0}", new Object[] {
-                    param
-                }));
+                Reporter.informUser(this, BDMsg.gettext("Could not find verses with: {0}", param));
             } else {
                 if (total == partial) {
                     // TRANSLATOR: There were verses that satisfied the search request. This tells the user how many.
                     // {0} is a placeholder for the search request.
                     // {1} is a placeholder for the number of verses that satisfied the search request.
                     // I18N(DMS): This needs support for singular/plural and to show internationalized numbers.
-                    Reporter.informUser(this, BibleDesktopMsg.gettext("There are {1} verses with: {0}", new Object[] {
-                            param, Integer.valueOf(total)
-                    }));
+                    Reporter.informUser(this, BDMsg.gettext("There are {1} verses with: {0}", param, Integer.valueOf(total)));
                 } else {
                     // TRANSLATOR: The user has done a prioritized search and there are more hits that the user has requested.
                     // {0} is a placeholder for the search request.
                     // {1} is a placeholder for the number of verses that is being given back to the user. This is the number of prioritized verses that the user requested.
                     // {2} is a placeholder for the number of verses that satisfied the search request.
                     // I18N(DMS): This needs support for singular/plural and to show internationalized numbers.
-                    Reporter.informUser(this, BibleDesktopMsg.gettext("Showing {1} of {2} verses with: {0}", new Object[] {
-                            param, Integer.toString(partial), Integer.toString(total)
-                    }));
+                    Reporter.informUser(this, BDMsg.gettext("Showing {1} of {2} verses with: {0}", param, Integer.toString(partial), Integer.toString(total)));
                 }
                 setTitle(SEARCH);
                 setKey(results);
@@ -390,7 +384,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
      */
     public void doAdvanced() {
         // TRANSLATOR: This is the title for the Advanced Search dialog.
-        String reply = advanced.showInDialog(this, BibleDesktopMsg.gettext("Advanced Search"), true, txtSearch.getText());
+        String reply = advanced.showInDialog(this, BDMsg.gettext("Advanced Search"), true, txtSearch.getText());
         if (reply != null) {
             txtSearch.setText(reply);
             doSearchAction();
@@ -538,7 +532,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         switch (mode) {
         case CLEAR:
             // TRANSLATOR: This is the initial title of a Bible View. {0} is a placeholder for a number that uniquely identifies the Bible View.
-            title = BibleDesktopMsg.gettext("Untitled {0}", Integer.valueOf(base++));
+            title = BDMsg.gettext("Untitled {0}", Integer.valueOf(base++));
             break;
         case PASSAGE:
             title = key.getName();
@@ -566,7 +560,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         //     The user has never installed a Bible.
         //     The user has deleted the last installed Bible.
         //     The books are on a CD, USB or someother removeable media and are not available.
-        String noBible = BibleDesktopMsg.gettext("No Bible is installed");
+        String noBible = BDMsg.gettext("No Bible is installed");
         CWOptionPane.showMessageDialog(this, noBible, noBible, JOptionPane.WARNING_MESSAGE);
     }
 
@@ -600,7 +594,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         }
 
         // TRANSLATOR: The title to the "Select Passage" dialog.
-        String passg = dlgSelect.showInDialog(this, BibleDesktopMsg.gettext("Select Passage"), true, txtKey.getText());
+        String passg = dlgSelect.showInDialog(this, BDMsg.gettext("Select Passage"), true, txtKey.getText());
         if (passg != null) {
             txtKey.setText(passg);
             doPassageAction();

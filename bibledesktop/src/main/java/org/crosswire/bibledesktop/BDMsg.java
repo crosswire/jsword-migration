@@ -31,14 +31,14 @@ import org.crosswire.common.util.MsgBase;
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-final public class BibleDesktopMsg extends MsgBase {
+ public final class BDMsg extends MsgBase {
     /**
      * get the title of the application
      * @return the title of the application
      */
     public static String getApplicationTitle() {
         // TRANSLATOR: The name of the program.
-        return BibleDesktopMsg.gettext("Bible Desktop");
+        return BDMsg.gettext("Bible Desktop");
     }
 
     /**
@@ -49,7 +49,7 @@ final public class BibleDesktopMsg extends MsgBase {
     public static String getVersionInfo() {
         // TRANSLATOR: Gets a version string in the form "Version 1.0"
         // {0} is a placeholder for the version
-        return BibleDesktopMsg.gettext("Version {0}", getVersion());
+        return BDMsg.gettext("Version {0}", getVersion());
     }
 
     /**
@@ -61,9 +61,7 @@ final public class BibleDesktopMsg extends MsgBase {
         // TRANSLATOR: Gets a version string in the form "Bible Desktop v1.0"
         // {0} is a placeholder for the application name
         // {1} is a placeholder for the version
-        return BibleDesktopMsg.gettext("{0} v{1}", new Object[] {
-                getApplicationTitle(), getVersion()
-        });
+        return BDMsg.gettext("{0} v{1}", getApplicationTitle(), getVersion());
     }
 
     /**
@@ -73,48 +71,26 @@ final public class BibleDesktopMsg extends MsgBase {
      */
     public static String getAboutInfo() {
         // TRANSLATOR: An "About" string in the form "About Bible Desktop"
-        return BibleDesktopMsg.gettext("About {0}", getApplicationTitle());
+        return BDMsg.gettext("About {0}", getApplicationTitle());
     }
 
     private static String getVersion() {
         // TRANSLATOR: the current version of the application.
         // When translating use digits 0-9. They will be shaped appropriately.
-        return BibleDesktopMsg.gettext("1.6");
+        return BDMsg.gettext("1.6");
     }
 
     /**
      * Get the internationalized text, but return key if key is unknown.
-     * 
-     * @param key
-     * @return the internationalized text
-     */
-    public static String gettext(String key) {
-        return msg.lookup(key);
-    }
-
-    /**
-     * Get the internationalized text, but return key if key is unknown.
-     * The text requires one parameter to be passed.
-     * 
-     * @param key
-     * @param param
-     * @return the formatted, internationalized text
-     */
-    public static String gettext(String key, Object param) {
-        return msg.toString(key, param);
-    }
-
-    /**
-     * Get the internationalized text, but return key if key is unknown.
-     * The text requires one parameter to be passed.
+     * The text requires one or more parameters to be passed.
      * 
      * @param key
      * @param params
      * @return the formatted, internationalized text
      */
-    public static String gettext(String key, Object[] params) {
-        return msg.toString(key, params);
+    public static String gettext(String key, Object... params) {
+        return msg.lookup(key, params);
     }
 
-    private static MsgBase msg = new BibleDesktopMsg();
+    private static MsgBase msg = new BDMsg();
 }

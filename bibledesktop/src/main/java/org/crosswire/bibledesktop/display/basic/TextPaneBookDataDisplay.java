@@ -40,7 +40,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import javax.xml.transform.TransformerException;
 
-import org.crosswire.bibledesktop.BibleDesktopMsg;
+import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.bibledesktop.book.install.BookFont;
 import org.crosswire.bibledesktop.desktop.XSLTProperty;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
@@ -198,9 +198,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
                 // There are some errors which make an empty url
                 if (parts[1].length() > 0) {
                     if (parts[1].charAt(0) == '#') {
-                        log.debug(MessageFormat.format(SCROLL_TO_URI, new Object[] {
-                            uri
-                        }));
+                        log.debug(MessageFormat.format(SCROLL_TO_URI, uri));
                         // This must be relative to the current document
                         // in which case we assume that it is an in page
                         // reference.
@@ -267,7 +265,7 @@ public class TextPaneBookDataDisplay implements BookDataDisplay, HyperlinkListen
             if (data.charAt(0) != '#') {
                 // TRANSLATOR: Unexpected error condition: the cross reference was bad.
                 // {0} is a placeholder for the bad URL.
-                throw new MalformedURLException(BibleDesktopMsg.gettext("Missing : in {0}", data));
+                throw new MalformedURLException(BDMsg.gettext("Missing : in {0}", data));
             }
         } else {
             protocol = data.substring(0, match);

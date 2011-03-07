@@ -31,7 +31,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import org.crosswire.bibledesktop.BibleDesktopMsg;
+import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.common.swing.CWOptionPane;
 import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.book.Book;
@@ -57,28 +57,11 @@ public final class IndexResolver {
     private IndexResolver() {
     }
 
-    // /**
-    // * The options that we show to the user for how to get a search index
-    // */
-    // private static Object[] options = new Object[]
-    // {
-    // Msg.OPTION_DOWNLOAD,
-    // Msg.OPTION_GENERATE,
-    // Msg.OPTION_CANCEL,
-    // };
-
     /**
      * @param parent
      * 
      */
     public static void scheduleIndex(Book book, Component parent) {
-        // LATER(DMS): Enable this when we have indexes to download
-        // String title = Msg.HOW_MESSAGE_TITLE.toString();
-        // Msg msg = Msg.HOW_MESSAGE;
-        // int choice = CWOptionPane.showOptionDialog(parent, msg, title,
-        // JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-        // options, options[0]);
-
         int choice = 1;
 
         switch (choice) {
@@ -101,10 +84,10 @@ public final class IndexResolver {
                     log.error("index download failed: ", ex);
                     // TRANSLATOR: Title to a dialog that asks whether the user wants to generate an index.
                     // Currently unused.
-                    String gtitle = BibleDesktopMsg.gettext("Download or generate?");
+                    String gtitle = BDMsg.gettext("Download or generate?");
                     // TRANSLATOR: The download failed for one reason or another. So now the user is asked whether the index should be generated.
                     // Currently unused.
-                    String gmsg = BibleDesktopMsg.gettext("Downloading failed.\nDo you wish to generate an index anyway?");
+                    String gmsg = BDMsg.gettext("Downloading failed.\nDo you wish to generate an index anyway?");
                     int yn = CWOptionPane.showConfirmDialog(parent, gmsg, gtitle, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
                     if (yn == JOptionPane.YES_OPTION) {
@@ -133,7 +116,7 @@ public final class IndexResolver {
     private static Installer selectInstaller(Component parent) {
         // Pick an installer
         InstallManager insman = new InstallManager();
-        Map<String,Installer> installers = insman.getInstallers();
+        Map<String, Installer> installers = insman.getInstallers();
         Installer installer = null;
         if (installers.size() == 1) {
             for (Installer anInstaller : installers.values()) {
@@ -145,14 +128,14 @@ public final class IndexResolver {
             JComboBox choice = new JComboBox(new InstallManagerComboBoxModel(insman));
             // TRANSLATOR: Label for a list of index download sites.
             // Currently unused.
-            JLabel label = new JLabel(BibleDesktopMsg.gettext("Which download site do you wish to use?"));
+            JLabel label = new JLabel(BDMsg.gettext("Which download site do you wish to use?"));
             JPanel panel = new JPanel(new BorderLayout());
             panel.add(label, BorderLayout.NORTH);
             panel.add(choice, BorderLayout.CENTER);
 
             // TRANSLATOR: Title for a dialog that asks whether the user should download the index.
             // Currently unused.
-            String title = BibleDesktopMsg.gettext("Download an index?");
+            String title = BDMsg.gettext("Download an index?");
 
             int yn = CWOptionPane.showConfirmDialog(parent, panel, title, JOptionPane.YES_OPTION);
             if (yn == JOptionPane.YES_OPTION) {

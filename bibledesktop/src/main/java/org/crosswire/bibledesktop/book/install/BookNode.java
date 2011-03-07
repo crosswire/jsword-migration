@@ -38,7 +38,7 @@ import org.crosswire.jsword.book.BookSet;
  */
 public class BookNode extends DefaultMutableTreeNode {
 
-    public BookNode(Object node, BookSet books, int level, Object[] grouping) {
+    public BookNode(Object node, BookSet books, int level, Object... grouping) {
         setUserObject(node);
         if (level < grouping.length) {
             String key = (String) grouping[level];

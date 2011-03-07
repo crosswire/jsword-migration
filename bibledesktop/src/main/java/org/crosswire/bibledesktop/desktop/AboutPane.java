@@ -45,7 +45,7 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.text.html.HTMLEditorKit;
 
-import org.crosswire.bibledesktop.BibleDesktopMsg;
+import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.AntiAliasedTextPane;
 import org.crosswire.common.swing.CWAction;
@@ -76,7 +76,7 @@ public class AboutPane {
         // TRANSLATOR: This image is of an English Bible. It can be replaced with a localized one.
         // It should be named splash_ll.png where ll is the 2 letter language code and put in the
         // images directory. Then point this to it.
-        Icon icon = GuiUtil.getIcon(BibleDesktopMsg.gettext("/images/splash.png"));
+        Icon icon = GuiUtil.getIcon(BDMsg.gettext("/images/splash.png"));
 
         JLabel lblPicture = new JLabel();
         lblPicture.setIcon(icon);
@@ -89,11 +89,11 @@ public class AboutPane {
         lblInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
         lblInfo.setOpaque(true);
         lblInfo.setHorizontalAlignment(SwingConstants.TRAILING);
-        lblInfo.setText(BibleDesktopMsg.getVersionInfo());
+        lblInfo.setText(BDMsg.getVersionInfo());
 
         ActionFactory actions = new ActionFactory(this);
-        CWAction action = actions.addAction("AboutOK", BibleDesktopMsg.gettext("OK"));
-        action.setTooltip(BibleDesktopMsg.gettext("Close this window"));
+        CWAction action = actions.addAction("AboutOK", BDMsg.gettext("OK"));
+        action.setTooltip(BDMsg.gettext("Close this window"));
         JButton btnOk = new JButton(action);
 
         JPanel pnlButtons = new JPanel();
@@ -114,7 +114,7 @@ public class AboutPane {
         pnlMain.add(tabMain, BorderLayout.CENTER);
 
         // Add the splash
-        String appName = BibleDesktopMsg.getApplicationTitle();
+        String appName = BDMsg.getApplicationTitle();
         tabMain.add(pnlSplash, appName);
 
         License license = new License(appName);
@@ -131,7 +131,7 @@ public class AboutPane {
         warrantyPnl.add(warrantyScr, BorderLayout.CENTER);
         warrantyPnl.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         // TRANSLATOR: The label for the tab that shows BibleDesktop's GPL Non-Warranty
-        tabMain.add(warrantyPnl, BibleDesktopMsg.gettext("Warranty"));
+        tabMain.add(warrantyPnl, BDMsg.gettext("Warranty"));
 
         JTextPane details = new AntiAliasedTextPane();
         // details.setFont(fixedFont);
@@ -145,7 +145,7 @@ public class AboutPane {
         detailsPnl.add(detailScr, BorderLayout.CENTER);
         detailsPnl.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         // TRANSLATOR: The label for the tab that shows BibleDesktop's GPL License
-        tabMain.add(detailsPnl, BibleDesktopMsg.gettext("License"));
+        tabMain.add(detailsPnl, BDMsg.gettext("License"));
 
         // Put in tabs if advanced
         if (advanced) {
@@ -163,7 +163,7 @@ public class AboutPane {
             pnlProps.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
             // TRANSLATOR: The label for the tab that shows Java's System Properties.
             // This is an advanced option not intended for end users.
-            tabMain.add(pnlProps, BibleDesktopMsg.gettext("System Properties"));
+            tabMain.add(pnlProps, BDMsg.gettext("System Properties"));
         }
         GuiUtil.applyDefaultOrientation(pnlMain);
     }
@@ -189,7 +189,7 @@ public class AboutPane {
         dlgMain = new JDialog(root);
 
         dlgMain.getContentPane().add(pnlMain);
-        dlgMain.setTitle(BibleDesktopMsg.getAboutInfo());
+        dlgMain.setTitle(BDMsg.getAboutInfo());
         dlgMain.setModal(true);
         dlgMain.addWindowListener(new WindowAdapter() {
             /* (non-Javadoc)

@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -39,7 +38,7 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.crosswire.bibledesktop.BibleDesktopMsg;
+import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.bibledesktop.book.DisplaySelectEvent;
 import org.crosswire.bibledesktop.book.DisplaySelectListener;
 import org.crosswire.common.swing.ActionFactory;
@@ -91,12 +90,12 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
 
         ActionFactory actions = new ActionFactory(this);
 
-        actDelete = actions.addAction("DeleteSelected").setTooltip(BibleDesktopMsg.gettext("Remove the selected passages in the current passage list."))
+        actDelete = actions.addAction("DeleteSelected").setTooltip(BDMsg.gettext("Remove the selected passages in the current passage list."))
                            .setSmallIcon("toolbarButtonGraphics/general/Remove16.gif")
                            .setLargeIcon("toolbarButtonGraphics/general/Remove24.gif");
-        actBlur1 = actions.addAction("Blur1").setTooltip(BibleDesktopMsg.gettext("Expand all or the selected passage by 1 verse."))
+        actBlur1 = actions.addAction("Blur1").setTooltip(BDMsg.gettext("Expand all or the selected passage by 1 verse."))
                           .setSmallIcon("images/Blur1_16.gif");
-        actBlur5 = actions.addAction("Blur5").setTooltip(BibleDesktopMsg.gettext("Expand all or the selected passage by 5 verses."))
+        actBlur5 = actions.addAction("Blur5").setTooltip(BDMsg.gettext("Expand all or the selected passage by 5 verses."))
                           .setSmallIcon("images/Blur5_16.gif");
 
         JButton delete = new JButton(actDelete);
@@ -143,7 +142,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
      */
     private void doBlur(int amount) {
         // Remember what was selected
-        List<Key> selected = new ArrayList<Key>((Collection<? extends Key>) Arrays.asList(list.getSelectedValues()));
+        List<Key> selected = new ArrayList(Arrays.asList(list.getSelectedValues()));
 
         // Make sure that key changes are not visible until blur is done.
         Key copy = (Key) key.clone();

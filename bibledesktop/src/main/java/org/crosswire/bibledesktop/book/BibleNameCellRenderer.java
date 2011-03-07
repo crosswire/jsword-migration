@@ -26,7 +26,7 @@ import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
-import org.crosswire.bibledesktop.BibleDesktopMsg;
+import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.versification.BookName;
 
@@ -87,7 +87,7 @@ public class BibleNameCellRenderer extends DefaultListCellRenderer {
 
         if (value == null) {
             // TRANSLATOR: This is the replacement text for a blank book name in a list.
-            setText(BibleDesktopMsg.gettext("None"));
+            setText(BDMsg.gettext("None"));
             setEnabled(false);
         }
 

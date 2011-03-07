@@ -576,7 +576,7 @@ public final class GuiUtil {
         button.setContentAreaFilled(false);
         button.setText(null);
         button.setMargin(new Insets(0, 0, 0, 0));
-        return button;        
+        return button;
     }
 
     /**

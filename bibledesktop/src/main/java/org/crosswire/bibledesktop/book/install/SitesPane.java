@@ -38,7 +38,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import org.crosswire.bibledesktop.BibleDesktopMsg;
+import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.common.progress.swing.JobsProgressBar;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
@@ -104,7 +104,7 @@ public class SitesPane extends JPanel {
         }
 
         // TRANSLATOR: Label for the tab showing the installed books.
-        tabMain.add(BibleDesktopMsg.gettext("Installed Books"), new SitePane());
+        tabMain.add(BDMsg.gettext("Installed Books"), new SitePane());
     }
 
     /**
@@ -142,7 +142,7 @@ public class SitesPane extends JPanel {
         dlgMain.getContentPane().add(this, BorderLayout.CENTER);
         dlgMain.getContentPane().add(createButtons(), BorderLayout.SOUTH);
         // TRANSLATOR: Title to the window that allows the management of books. 
-        dlgMain.setTitle(BibleDesktopMsg.gettext("Available Books"));
+        dlgMain.setTitle(BDMsg.gettext("Available Books"));
         dlgMain.setResizable(true);
         // dlgMain.setModal(true);
         // Set the name for Persistent Layout
@@ -178,9 +178,9 @@ public class SitesPane extends JPanel {
      */
     private Component createButtons() {
         if (pnlButtons == null) {
-            JButton btnOK = new JButton(actions.addAction("SitesClose", BibleDesktopMsg.gettext("OK")));
+            JButton btnOK = new JButton(actions.addAction("SitesClose", BDMsg.gettext("OK")));
 
-            JButton btnAdd = new JButton(actions.addAction("ManageSites", BibleDesktopMsg.gettext("Edit Sites ...")));
+            JButton btnAdd = new JButton(actions.addAction("ManageSites", BDMsg.gettext("Edit Sites ...")));
 
             pnlButtons = new JPanel();
             pnlButtons.setLayout(new FlowLayout(FlowLayout.TRAILING));

@@ -36,7 +36,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.crosswire.bibledesktop.BibleDesktopMsg;
+import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.bibledesktop.display.BookDataDisplay;
 import org.crosswire.bibledesktop.display.BookDataDisplayFactory;
 import org.crosswire.bibledesktop.display.URIEventListener;
@@ -151,7 +151,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
             // Rather than figuring out how many tabs there should be, we label one "More..."
             // When the user clicks on it, it is filled with what remains. And if it is filled
             // to overflowing, another "More..." tab is created.
-            tabMain.add(BibleDesktopMsg.gettext("More ..."), pnlMore);
+            tabMain.add(BDMsg.gettext("More ..."), pnlMore);
 
             setCenterComponent(tabMain);
         } else {
@@ -363,7 +363,7 @@ public class TabbedBookDataDisplay implements BookDataDisplay {
             // Rather than figuring out how many tabs there should be, we label one "More..."
             // When the user clicks on it, it is filled with what remains. And if it is filled
             // to overflowing, another "More..." tab is created.
-            tabMain.add(BibleDesktopMsg.gettext("More ..."), pnlMore);
+            tabMain.add(BDMsg.gettext("More ..."), pnlMore);
         }
 
         // Select the real new tab in place of any more tabs

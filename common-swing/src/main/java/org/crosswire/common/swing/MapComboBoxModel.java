@@ -39,7 +39,7 @@ public class MapComboBoxModel extends AbstractListModel implements ComboBoxModel
     /**
      * Simple ctor for an entry from a map.
      */
-    public MapComboBoxModel(Map<?,?> map) {
+    public MapComboBoxModel(Map<?, ?> map) {
         list = new ArrayList<Object>(map.entrySet());
     }
 

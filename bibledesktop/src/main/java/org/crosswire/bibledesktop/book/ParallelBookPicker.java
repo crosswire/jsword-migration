@@ -38,7 +38,7 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
-import org.crosswire.bibledesktop.BibleDesktopMsg;
+import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWAction;
 import org.crosswire.common.swing.GuiUtil;
@@ -80,12 +80,12 @@ public class ParallelBookPicker extends JPanel implements BookProvider {
         JPanel buttonBox = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
 
         CWAction action = actions.addAction("RemovePicker");
-        action.setTooltip(BibleDesktopMsg.gettext("Remove a parallel Bible"));
+        action.setTooltip(BDMsg.gettext("Remove a parallel Bible"));
         action.setSmallIcon("images/subtract-13.png");
         buttonBox.add(GuiUtil.flatten(new JButton(action)));
 
         action = actions.addAction("AddPicker");
-        action.setTooltip(BibleDesktopMsg.gettext("Add a parallel Bible"));
+        action.setTooltip(BDMsg.gettext("Add a parallel Bible"));
         action.setSmallIcon("images/add-13.png");
         buttonBox.add(GuiUtil.flatten(new JButton(action)));
         add(buttonBox);

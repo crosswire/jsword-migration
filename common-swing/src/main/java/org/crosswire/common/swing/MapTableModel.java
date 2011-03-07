@@ -70,9 +70,9 @@ public class MapTableModel extends AbstractTableModel {
         this.map = map;
         list.clear();
         if (map != null) {
-            Iterator<Map.Entry<Object,Object>> iter = map.entrySet().iterator();
+            Iterator<Map.Entry<Object, Object>> iter = map.entrySet().iterator();
             while (iter.hasNext()) {
-                Map.Entry<Object,Object> me = iter.next();
+                Map.Entry<Object, Object> me = iter.next();
                 Object k = me.getKey();
                 Object v = me.getValue();
                 if (k == null || v == null) {
@@ -243,7 +243,7 @@ public class MapTableModel extends AbstractTableModel {
      * The default column names
      */
     private String[] colNames = new String[] {
-            Msg.KEYS.toString(), Msg.VALUES.toString(),
+            Msg.lookupText("Keys"), Msg.lookupText("Values"),
     };
 
     /**

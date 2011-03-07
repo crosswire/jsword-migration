@@ -29,7 +29,7 @@ import java.net.URI;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.ToolTipManager;
 
-import org.crosswire.bibledesktop.BibleDesktopMsg;
+import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.bibledesktop.book.BibleViewPane;
 import org.crosswire.bibledesktop.book.install.InternetWarning;
 import org.crosswire.bibledesktop.book.install.SitesPane;
@@ -173,7 +173,7 @@ public class DesktopActions {
             if (!view.maySave()) {
                 // TRANSLATOR: The user is trying to save the passage in the visible
                 // Bible View pane, but it is empty.
-                Reporter.informUser(getDesktop(), BibleDesktopMsg.gettext("No Passage to Save"));
+                Reporter.informUser(getDesktop(), BDMsg.gettext("No Passage to Save"));
                 return;
             }
 
@@ -192,7 +192,7 @@ public class DesktopActions {
             if (!view.maySave()) {
                 // TRANSLATOR: The user is trying to save the passage in the visible
                 // Bible View pane, but it is empty.
-                Reporter.informUser(getDesktop(), BibleDesktopMsg.gettext("No Passage to Save"));
+                Reporter.informUser(getDesktop(), BDMsg.gettext("No Passage to Save"));
                 return;
             }
 
@@ -218,7 +218,7 @@ public class DesktopActions {
         if (!ok) {
             // TRANSLATOR: The user is trying to save the passage in all the
             // Bible View panes, but they are all empty.
-            Reporter.informUser(getDesktop(), BibleDesktopMsg.gettext("No Passage to Save"));
+            Reporter.informUser(getDesktop(), BDMsg.gettext("No Passage to Save"));
             return;
         }
 
@@ -387,7 +387,7 @@ public class DesktopActions {
         if (key == null) {
             // TRANSLATOR: The user is trying to view the source of the passage in the visible
             // Bible View pane, but it is empty.
-            Reporter.informUser(getDesktop(), BibleDesktopMsg.gettext("No current passage to view"));
+            Reporter.informUser(getDesktop(), BDMsg.gettext("No current passage to view"));
             return;
         }
 
@@ -422,7 +422,7 @@ public class DesktopActions {
      */
     public void doContents() {
         // TRANSLATOR: Someday we'll have real help but for now this points them to the Bible Desktop web site.
-        CWOptionPane.showMessageDialog(getDesktop(), BibleDesktopMsg.gettext("Currently on-line help is only available via the Bible Desktop's website:\nhttp://www.crosswire.org/bibledesktop"));
+        CWOptionPane.showMessageDialog(getDesktop(), BDMsg.gettext("Currently on-line help is only available via the Bible Desktop's website:\nhttp://www.crosswire.org/bibledesktop"));
     }
 
     /**

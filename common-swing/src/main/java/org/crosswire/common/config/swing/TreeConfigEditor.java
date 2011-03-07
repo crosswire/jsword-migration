@@ -393,9 +393,7 @@ public class TreeConfigEditor extends AbstractConfigEditor {
          * @see EventListenerList
          */
         protected void fireTreeStructureChanged(Object source) {
-            fireTreeStructureChanged(source, new Object[] {
-                root
-            });
+            fireTreeStructureChanged(source, root);
         }
 
         /**
@@ -405,7 +403,7 @@ public class TreeConfigEditor extends AbstractConfigEditor {
          * 
          * @see EventListenerList
          */
-        protected void fireTreeStructureChanged(Object source, Object[] path) {
+        protected void fireTreeStructureChanged(Object source, Object... path) {
             // Guaranteed to return a non-null array
             Object[] array = listeners.getListenerList();
             TreeModelEvent ev = null;

@@ -56,7 +56,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.crosswire.bibledesktop.BibleDesktopMsg;
+import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWAction;
 import org.crosswire.common.swing.CWLabel;
@@ -109,16 +109,16 @@ public class EditSitePane extends JPanel {
             }
         });
 
-        CWAction action = actions.addAction("Add", BibleDesktopMsg.gettext("Add"));
-        action.setTooltip(BibleDesktopMsg.gettext("Add a new installation site."));
+        CWAction action = actions.addAction("Add", BDMsg.gettext("Add"));
+        action.setTooltip(BDMsg.gettext("Add a new installation site."));
         JButton btnAdd = new JButton(action);
 
-        action = actions.addAction("Edit", BibleDesktopMsg.gettext("Edit"));
-        action.setTooltip(BibleDesktopMsg.gettext("Edit the current installation site."));
+        action = actions.addAction("Edit", BDMsg.gettext("Edit"));
+        action.setTooltip(BDMsg.gettext("Edit the current installation site."));
         JButton btnEdit = new JButton(action);
 
-        action = actions.addAction("Delete", BibleDesktopMsg.gettext("Delete"));
-        action.setTooltip(BibleDesktopMsg.gettext("Delete Site?"));
+        action = actions.addAction("Delete", BDMsg.gettext("Delete"));
+        action.setTooltip(BDMsg.gettext("Delete Site?"));
         JButton btnDelete = new JButton(action);
 
         JPanel pnlBtn1 = new JPanel();
@@ -148,7 +148,7 @@ public class EditSitePane extends JPanel {
         });
 
         // I18N(DMS)
-        JLabel lblName = CWLabel.createJLabel(BibleDesktopMsg.gettext("Site Name:"));
+        JLabel lblName = CWLabel.createJLabel(BDMsg.gettext("Site Name:"));
         lblName.setLabelFor(txtName);
 
         cboType = new JComboBox(new InstallerFactoryComboBoxModel(imanager));
@@ -161,18 +161,18 @@ public class EditSitePane extends JPanel {
         });
 
         // I18N(DMS)
-        JLabel lblType = CWLabel.createJLabel(BibleDesktopMsg.gettext("Site Type"));
+        JLabel lblType = CWLabel.createJLabel(BDMsg.gettext("Site Type"));
         lblType.setLabelFor(cboType);
 
         lblMesg = new JLabel();
         lblMesg.setText(" ");
 
-        action = actions.addAction("Reset", BibleDesktopMsg.gettext("Reset"));
-        action.setTooltip(BibleDesktopMsg.gettext("Reset the details."));
+        action = actions.addAction("Reset", BDMsg.gettext("Reset"));
+        action.setTooltip(BDMsg.gettext("Reset the details."));
         JButton btnReset = new JButton(action);
 
-        action = actions.addAction("Save", BibleDesktopMsg.gettext("Save"));
-        action.setTooltip(BibleDesktopMsg.gettext("Save the current changes."));
+        action = actions.addAction("Save", BDMsg.gettext("Save"));
+        action.setTooltip(BDMsg.gettext("Save the current changes."));
         JButton btnSave = new JButton(action);
 
         JPanel pnlBtn2 = new JPanel();
@@ -206,7 +206,7 @@ public class EditSitePane extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(sptMain, BorderLayout.CENTER);
 
-        btnClose = new JButton(actions.addAction("Close", BibleDesktopMsg.gettext("Close")));
+        btnClose = new JButton(actions.addAction("Close", BDMsg.gettext("Close")));
 
         pnlAction = new JPanel();
         pnlAction.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -243,7 +243,7 @@ public class EditSitePane extends JPanel {
         dlgMain.getRootPane().registerKeyboardAction(closer, esc, JComponent.WHEN_IN_FOCUSED_WINDOW);
         dlgMain.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         // TRANSLATOR: Title for the dialog allowing the editing of SWORD download sites.
-        dlgMain.setTitle(BibleDesktopMsg.gettext("Edit Update Sites"));
+        dlgMain.setTitle(BDMsg.gettext("Edit Update Sites"));
         dlgMain.setResizable(true);
         dlgMain.setModal(true);
 
@@ -271,13 +271,13 @@ public class EditSitePane extends JPanel {
 
             if (name.length() == 0) {
                 // TRANSLATOR: Indicate to the user that they did not supply a download site name.
-                setState(STATE_EDIT_ERROR, BibleDesktopMsg.gettext("Missing site name"));
+                setState(STATE_EDIT_ERROR, BDMsg.gettext("Missing site name"));
                 return;
             }
 
             if (imanager.getInstaller(name) != null) {
                 // TRANSLATOR: Indicate that the user supplied a name that matched a download site that they already have.
-                setState(STATE_EDIT_ERROR, BibleDesktopMsg.gettext("Duplicate site name"));
+                setState(STATE_EDIT_ERROR, BDMsg.gettext("Duplicate site name"));
                 return;
             }
 
@@ -325,7 +325,6 @@ public class EditSitePane extends JPanel {
      * Add a new installer to the list
      */
     public void doAdd() {
-       
         newType();
 
         editName = null;
@@ -346,9 +345,9 @@ public class EditSitePane extends JPanel {
         String name = (String) lstSite.getSelectedValue();
         if (name == null) {
             // TRANSLATOR: Dialog title letting the user know that they they have not selected a download site to edit.
-            String title = BibleDesktopMsg.gettext("No Site");
+            String title = BDMsg.gettext("No Site");
             // TRANSLATOR: Let the user know that they have not selected a download site to edit.
-            String msg = BibleDesktopMsg.gettext("No selected site to edit");
+            String msg = BDMsg.gettext("No selected site to edit");
             CWOptionPane.showMessageDialog(this, msg, title, JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -373,9 +372,9 @@ public class EditSitePane extends JPanel {
             return;
         }
         // TRANSLATOR: Dialog title asking the user to confirm the delete of a download site.
-        String title = BibleDesktopMsg.gettext("Delete Site?");
+        String title = BDMsg.gettext("Delete Site?");
         // TRANSLATOR: Message asking the user to confirm the delete of a download site. {0} is a placeholder for the name of the download site.
-        String msg = BibleDesktopMsg.gettext("Are you sure you want to delete {0}?", name);
+        String msg = BDMsg.gettext("Are you sure you want to delete {0}?", name);
         if (CWOptionPane.showConfirmDialog(this, msg, title, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             imanager.removeInstaller(name);
         }

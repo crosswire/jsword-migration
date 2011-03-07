@@ -60,7 +60,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import org.crosswire.bibledesktop.BibleDesktopMsg;
+import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.common.icu.NumberShaper;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.CWLabel;
@@ -87,7 +87,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         //    even the same character (other than '|') this can be done.
         // The book names should be given as something that JSword can understand. Chapter and verse numbers should be 1-9 and not localized.
         // The last choice should not have a division marker and is used when the user types something other than what is in the list.
-        presets = BibleDesktopMsg.gettext("The Whole Bible|All Prophecy (Deu 28, Isa-Mal, Rev)|Old Testament (Gen-Mal)|New Testament (Mat-Rev)|The Pentateuch (Gen-Deu)|History (Josh-Est)|Poetry (Job-Song)|Major Prophets (Isa-Dan)|Minor Prophets (Hos-Mal)|Gospels and Acts (Mat-Act)|Letters to People (Rom-Heb)|Letters from People (Jam-Jude)|Custom").split("\\|");
+        presets = BDMsg.gettext("The Whole Bible|All Prophecy (Deu 28, Isa-Mal, Rev)|Old Testament (Gen-Mal)|New Testament (Mat-Rev)|The Pentateuch (Gen-Deu)|History (Josh-Est)|Poetry (Job-Song)|Major Prophets (Isa-Dan)|Minor Prophets (Hos-Mal)|Gospels and Acts (Mat-Act)|Letters to People (Rom-Heb)|Letters from People (Jam-Jude)|Custom").split("\\|");
 
         initialize();
     }
@@ -98,9 +98,9 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
     private void initialize() {
         shaper = new NumberShaper();
         // TRANSLATOR: The start of the passage list for the division of the Bible
-        presetStart = BibleDesktopMsg.gettext("(");
+        presetStart = BDMsg.gettext("(");
         // TRANSLATOR: The end of the passage list for the division of the Bible
-        presetEnd = BibleDesktopMsg.gettext(")");
+        presetEnd = BDMsg.gettext(")");
 
         actions = new ActionFactory(this);
 
@@ -111,7 +111,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         Font headFont = temp.getFont().deriveFont(Font.BOLD);
 
         // TRANSLATOR: Heading for the first, most useful several search options.
-        lblHeading = CWLabel.createJLabel(BibleDesktopMsg.gettext("Search for verses with the following details"));
+        lblHeading = CWLabel.createJLabel(BDMsg.gettext("Search for verses with the following details"));
         lblHeading.setBorder(BorderFactory.createLineBorder(headBG, 3));
         lblHeading.setBackground(headBG);
         lblHeading.setForeground(headFG);
@@ -119,41 +119,41 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         lblHeading.setOpaque(true);
 
         // TRANSLATOR: Label for an input box for searching of phrases.
-        lblPhrase = CWLabel.createJLabel(BibleDesktopMsg.gettext("Includes this phrase:"));
+        lblPhrase = CWLabel.createJLabel(BDMsg.gettext("Includes this phrase:"));
         txtPhrase = new JTextField();
         txtPhrase.getDocument().addDocumentListener(this);
 
         txtIncludes = new JTextField();
         txtIncludes.getDocument().addDocumentListener(this);
         // TRANSLATOR: Label for an input box for searching of all of the given words.
-        lblIncludes = CWLabel.createJLabel(BibleDesktopMsg.gettext("Includes these words:"));
+        lblIncludes = CWLabel.createJLabel(BDMsg.gettext("Includes these words:"));
         lblIncludes.setLabelFor(txtIncludes);
 
         txtExcludes = new JTextField();
         txtExcludes.getDocument().addDocumentListener(this);
         // TRANSLATOR: Label for an input box for searching of verses not containing the given words.
-        lblExcludes = CWLabel.createJLabel(BibleDesktopMsg.gettext("Excludes all these words:"));
+        lblExcludes = CWLabel.createJLabel(BDMsg.gettext("Excludes all these words:"));
         lblExcludes.setLabelFor(txtExcludes);
 
         txtSpell = new JTextField();
         txtSpell.getDocument().addDocumentListener(this);
         // TRANSLATOR: Label for an input box for searching of words whose spelling is unknown or varies.
-        lblSpell = CWLabel.createJLabel(BibleDesktopMsg.gettext("Something like this spelling:"));
+        lblSpell = CWLabel.createJLabel(BDMsg.gettext("Something like this spelling:"));
         lblSpell.setLabelFor(txtSpell);
 
         txtStartsWith = new JTextField();
         txtStartsWith.getDocument().addDocumentListener(this);
         // TRANSLATOR: Label for an input box for searching of words by their prefix
-        lblStartsWith = CWLabel.createJLabel(BibleDesktopMsg.gettext("Includes words starting with:"));
+        lblStartsWith = CWLabel.createJLabel(BDMsg.gettext("Includes words starting with:"));
         lblStartsWith.setLabelFor(txtStartsWith);
 
         // TRANSLATOR: Heading for section to perform a search for the best verse match
-        chkRank = new JCheckBox(actions.addAction("HeadRank", BibleDesktopMsg.gettext("Prioritize the found verses")));
+        chkRank = new JCheckBox(actions.addAction("HeadRank", BDMsg.gettext("Prioritize the found verses")));
         chkRank.setBackground(headBG);
         chkRank.setForeground(headFG);
         chkRank.setFont(headFont);
         // TRANSLATOR: Label for a slider how many of the best verses to show.
-        lblRank = CWLabel.createJLabel(BibleDesktopMsg.gettext("Show"));
+        lblRank = CWLabel.createJLabel(BDMsg.gettext("Show"));
         setLabelRank(DisplaySelectPane.getNumRankedVerses());
         lblRank.setVisible(false);
         sliderRank = new JSlider(SwingConstants.HORIZONTAL, 0, DisplaySelectPane.getMaxNumRankedVerses(), DisplaySelectPane.getNumRankedVerses());
@@ -176,13 +176,13 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         });
 
         // TRANSLATOR: Heading for section allowing user to restrict search to parts of the Bible.
-        chkRestrict = new JCheckBox(actions.addAction("HeadRestrict", BibleDesktopMsg.gettext("Restrict search to parts of the Bible")));
+        chkRestrict = new JCheckBox(actions.addAction("HeadRestrict", BDMsg.gettext("Restrict search to parts of the Bible")));
         chkRestrict.setBackground(headBG);
         chkRestrict.setForeground(headFG);
         chkRestrict.setFont(headFont);
 
         // TRANSLATOR: Label for a dropdown with preset verse ranges for searching.
-        lblPresets = CWLabel.createJLabel(BibleDesktopMsg.gettext("Preset Ranges:"));
+        lblPresets = CWLabel.createJLabel(BDMsg.gettext("Preset Ranges:"));
         lblPresets.setVisible(false);
         cboPresets = new JComboBox(presets);
         cboPresets.setVisible(false);
@@ -195,25 +195,25 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         // TRANSLATOR: Label for an input box for searching only in the specified verses
         // This is filled in when the user enters input or picks an entry from the Preset Ranges dropdown.
         // When the user enters input the dropdown is adjusted to show the last entry.
-        lblRestrict = CWLabel.createJLabel(BibleDesktopMsg.gettext("Include these verses:"));
+        lblRestrict = CWLabel.createJLabel(BDMsg.gettext("Include these verses:"));
         lblRestrict.setVisible(false);
         txtRestrict = new JTextField();
         txtRestrict.setVisible(false);
         txtRestrict.getDocument().addDocumentListener(this);
         // TRANSLATOR: Button to bring up the verse selection dialog
-        btnRestrict = new JButton(actions.addAction("RestrictSelect", BibleDesktopMsg.gettext("Select")));
+        btnRestrict = new JButton(actions.addAction("RestrictSelect", BDMsg.gettext("Select")));
         btnRestrict.setVisible(false);
 
         // TRANSLATOR: Heading for section allowing user to specify Hebrew and Greek Strong's Numbers to include or exclude from search
         // Not currently implemented.
-        chkHebGrk = new JCheckBox(actions.addAction("HeadOriginal", BibleDesktopMsg.gettext("Contains Strong's Hebrew and Greek")));
+        chkHebGrk = new JCheckBox(actions.addAction("HeadOriginal", BDMsg.gettext("Contains Strong's Hebrew and Greek")));
         chkHebGrk.setBackground(headBG);
         chkHebGrk.setForeground(headFG);
         chkHebGrk.setFont(headFont);
 
         // TRANSLATOR: Label for an input box for searching for verses containing Hebrew Strong's Numbers.
         // Not currently implemented.
-        lblHebInc = CWLabel.createJLabel(BibleDesktopMsg.gettext("Includes Hebrew Numbers:"));
+        lblHebInc = CWLabel.createJLabel(BDMsg.gettext("Includes Hebrew Numbers:"));
         lblHebInc.setVisible(false);
         txtHebInc = new JTextField();
         txtHebInc.setVisible(false);
@@ -221,7 +221,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
 
         // TRANSLATOR: Label for an input box for searching for verses not containing Hebrew Strong's Numbers.
         // Not currently implemented.
-        lblHebExc = CWLabel.createJLabel(BibleDesktopMsg.gettext("Excludes Hebrew Numbers:"));
+        lblHebExc = CWLabel.createJLabel(BDMsg.gettext("Excludes Hebrew Numbers:"));
         lblHebExc.setVisible(false);
         txtHebExc = new JTextField();
         txtHebExc.setVisible(false);
@@ -229,7 +229,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
 
         // TRANSLATOR: Label for an input box for searching for verses containing Greek Strong's Numbers.
         // Not currently implemented.
-        lblGrkInc = CWLabel.createJLabel(BibleDesktopMsg.gettext("Includes Greek Numbers:"));
+        lblGrkInc = CWLabel.createJLabel(BDMsg.gettext("Includes Greek Numbers:"));
         lblGrkInc.setVisible(false);
         txtGrkInc = new JTextField();
         txtGrkInc.setVisible(false);
@@ -237,7 +237,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
 
         // TRANSLATOR: Label for an input box for searching for verses not containing Greek Strong's Numbers.
         // Not currently implemented.
-        lblGrkExc = CWLabel.createJLabel(BibleDesktopMsg.gettext("Excludes Greek Numbers:"));
+        lblGrkExc = CWLabel.createJLabel(BDMsg.gettext("Excludes Greek Numbers:"));
         lblGrkExc.setVisible(false);
         txtGrkExc = new JTextField();
         txtGrkExc.setVisible(false);
@@ -245,14 +245,14 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
 
         // TRANSLATOR: Heading for section allowing user to specify time boundaries on search.
         // Not currently implemented. Not sure it ever will be.
-        chkTime = new JCheckBox(actions.addAction("HeadTime", BibleDesktopMsg.gettext("Narrow search by time period")));
+        chkTime = new JCheckBox(actions.addAction("HeadTime", BDMsg.gettext("Narrow search by time period")));
         chkTime.setBackground(headBG);
         chkTime.setForeground(headFG);
         chkTime.setFont(headFont);
 
         // TRANSLATOR: Label for an input box for a timeline search for verses written after the ones given. 
         // Not currently implemented. Not sure it ever will be.
-        lblAfter = CWLabel.createJLabel(BibleDesktopMsg.gettext("Restrict to verses written after:"));
+        lblAfter = CWLabel.createJLabel(BDMsg.gettext("Restrict to verses written after:"));
         lblAfter.setVisible(false);
         txtAfter = new JTextField();
         txtAfter.setVisible(false);
@@ -260,19 +260,19 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
 
         // TRANSLATOR: Label for an input box for a timeline search for verses written before the ones given.
         // Not currently implemented. Not sure it ever will be.
-        lblBefore = CWLabel.createJLabel(BibleDesktopMsg.gettext("Restrict to verses written before:"));
+        lblBefore = CWLabel.createJLabel(BDMsg.gettext("Restrict to verses written before:"));
         lblBefore.setVisible(false);
         txtBefore = new JTextField();
         txtBefore.setVisible(false);
         txtBefore.getDocument().addDocumentListener(this);
 
         // TRANSLATOR: Label for section showing user's search.
-        chkSummary = new JCheckBox(actions.addAction("HeadSummary", BibleDesktopMsg.gettext("Show quick search syntax")));
+        chkSummary = new JCheckBox(actions.addAction("HeadSummary", BDMsg.gettext("Show quick search syntax")));
         chkSummary.setBackground(headBG);
         chkSummary.setForeground(headFG);
         chkSummary.setFont(headFont);
         // TRANSLATOR: Label for a text box that shows, dynamically, the search syntax as the other boxes are filled in.
-        lblSummary = CWLabel.createJLabel(BibleDesktopMsg.gettext("Quick search syntax:"));
+        lblSummary = CWLabel.createJLabel(BDMsg.gettext("Quick search syntax:"));
         lblSummary.setVisible(false);
         txtSummary = new JTextArea();
         txtSummary.setBackground(SystemColor.control);
@@ -283,7 +283,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         scrSummary.setVisible(false);
 
         // TRANSLATOR: Button to initiate the close the window and initiate search.
-        btnGo = new JButton(actions.addAction("Done", BibleDesktopMsg.gettext("Search")));
+        btnGo = new JButton(actions.addAction("Done", BDMsg.gettext("Search")));
 
         this.setBorder(BorderFactory.createLineBorder(SystemColor.control, 5));
         this.setLayout(new GridBagLayout());
@@ -382,15 +382,15 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
             // TRANSLATOR: Dynamic label for prioritization slider on Advanced Search.
             // The user has chosen 0, which means to show all verses.
             // This used to be "Show {0} verses:" and {0} was a placeholder for the English word "All".
-            lblRank.setText(shaper.shape(BibleDesktopMsg.gettext("Show all verses:", "All")));
+            lblRank.setText(shaper.shape(BDMsg.gettext("Show all verses:", "All")));
         } else if (val == 1) {
             // TRANSLATOR: Dynamic label for prioritization slider on Advanced Search.
             // The user has chosen 1, which means to show one verse, presumably the one that best satisfies the search.
-            lblRank.setText(shaper.shape(BibleDesktopMsg.gettext("Show best verse:")));
+            lblRank.setText(shaper.shape(BDMsg.gettext("Show best verse:")));
         } else {
             // TRANSLATOR: Dynamic label for prioritization slider on Advanced Search.
             // The user has chosen a number other than 0 or 1. 
-            lblRank.setText(shaper.shape(BibleDesktopMsg.gettext("Show {0} verses:", Integer.valueOf(val))));
+            lblRank.setText(shaper.shape(BDMsg.gettext("Show {0} verses:", Integer.valueOf(val))));
         }
     }
 
@@ -484,7 +484,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         }
 
         // TRANSLATOR: This is the title to the dialog allowing a user to select passages for a restricted search.
-        String passg = dlgSelect.showInDialog(this, BibleDesktopMsg.gettext("Select Passages to Restrict Search to"), true, txtRestrict.getText());
+        String passg = dlgSelect.showInDialog(this, BDMsg.gettext("Select Passages to Restrict Search to"), true, txtRestrict.getText());
         if (passg != null) {
             cboPresets.setSelectedItem(presets[presets.length - 1]);
             txtRestrict.setText(passg);
@@ -651,8 +651,8 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
      * 
      * @return the labels
      */
-    private Dictionary<Integer,JLabel> createSliderLabels() {
-        Dictionary<Integer,JLabel> labels = new Hashtable<Integer,JLabel>();
+    private Dictionary<Integer, JLabel> createSliderLabels() {
+        Dictionary<Integer, JLabel> labels = new Hashtable<Integer, JLabel>();
         int max = DisplaySelectPane.getMaxNumRankedVerses();
         for (int i = 0; i <= max; i += 20) {
             Integer label = Integer.valueOf(i);

@@ -69,7 +69,7 @@ public final class SiteEditorFactory {
     /**
      * The configuration table
      */
-    private static Map<String,Class<SiteEditor>> map;
+    private static Map<String, Class<SiteEditor>> map;
 
     /**
      * Default map configuration

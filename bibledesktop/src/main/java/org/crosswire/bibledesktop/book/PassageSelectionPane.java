@@ -54,7 +54,7 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
 
-import org.crosswire.bibledesktop.BibleDesktopMsg;
+import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.bibledesktop.passage.RangeListModel;
 import org.crosswire.bibledesktop.passage.WholeBibleTreeModel;
 import org.crosswire.bibledesktop.passage.WholeBibleTreeNode;
@@ -98,14 +98,14 @@ public class PassageSelectionPane extends JPanel {
         CWAction action;
 
         // I18N(DMS)
-        JLabel lblAll = CWLabel.createJLabel(BibleDesktopMsg.gettext("All Verses"));
+        JLabel lblAll = CWLabel.createJLabel(BDMsg.gettext("All Verses"));
         // I18N(DMS)
-        JLabel lblSel = CWLabel.createJLabel(BibleDesktopMsg.gettext("Selected Verses"));
-        action = actions.addAction("DeleteVerse", BibleDesktopMsg.gettext("Remove <"));
-        action.setTooltip(BibleDesktopMsg.gettext("Delete verses from the list selected."));
+        JLabel lblSel = CWLabel.createJLabel(BDMsg.gettext("Selected Verses"));
+        action = actions.addAction("DeleteVerse", BDMsg.gettext("Remove <"));
+        action.setTooltip(BDMsg.gettext("Delete verses from the list selected."));
         JButton deleteButton = new JButton(action);
-        action = actions.addAction("AddVerse", BibleDesktopMsg.gettext("Add >"));
-        action.setTooltip(BibleDesktopMsg.gettext("Add verses to list selected."));
+        action = actions.addAction("AddVerse", BDMsg.gettext("Add >"));
+        action.setTooltip(BDMsg.gettext("Add verses to list selected."));
         JButton addButton = new JButton(action);
 
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -168,7 +168,7 @@ public class PassageSelectionPane extends JPanel {
         txtDisplay.getDocument().addDocumentListener(new CustomDocumentEvent());
 
         // I18N(DMS)
-        JLabel lblDisplay = CWLabel.createJLabel(BibleDesktopMsg.gettext("Verses"));
+        JLabel lblDisplay = CWLabel.createJLabel(BDMsg.gettext("Verses"));
         lblDisplay.setLabelFor(txtDisplay);
 
         JPanel panel = new JPanel();
@@ -247,7 +247,7 @@ public class PassageSelectionPane extends JPanel {
     private void updateMessage(NoSuchKeyException ex) {
         // TRANSLATOR: Error condition: An unexpected unknown error occurred.
         // Tell the user about it. {0} is a placeholder for the error that occurred.
-        lblMessage.setText(BibleDesktopMsg.gettext("Error: {0}", ex.getMessage()));
+        lblMessage.setText(BDMsg.gettext("Error: {0}", ex.getMessage()));
         lblMessage.setIcon(icoBad);
     }
 
@@ -258,7 +258,7 @@ public class PassageSelectionPane extends JPanel {
         // TRANSLATOR: Output the Summary label followed by the passage
         // that the user has built using the Select Passage Wizard.
         // {0} is the placeholder for the passage reference.
-        lblMessage.setText(BibleDesktopMsg.gettext("Summary: {0}", ref.getOverview()));
+        lblMessage.setText(BDMsg.gettext("Summary: {0}", ref.getOverview()));
         lblMessage.setIcon(icoGood);
     }
 
@@ -295,8 +295,8 @@ public class PassageSelectionPane extends JPanel {
         KeyStroke esc = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
         bailout = true;
 
-        CWAction action = actions.addAction("Done", BibleDesktopMsg.gettext("OK"));
-        action.setTooltip(BibleDesktopMsg.gettext("Close this window."));
+        CWAction action = actions.addAction("Done", BDMsg.gettext("OK"));
+        action.setTooltip(BDMsg.gettext("Close this window."));
         JButton btnGo = new JButton(action);
 
         pnlAction.setLayout(new BorderLayout());

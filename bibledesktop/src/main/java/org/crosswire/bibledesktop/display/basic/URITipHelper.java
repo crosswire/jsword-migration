@@ -264,6 +264,13 @@ public class URITipHelper implements URIEventListener {
     private String txt;
 }
 
+/**
+ * A specialization of a JToolTip
+ * 
+ * @see gnu.gpl.License for license details.<br>
+ *      The copyright to this program is held by it's authors.
+ * @author Yingjie Lan [lanyjie at yahoo dot com]
+ */
 class FullHTMLTip extends JToolTip {
     public FullHTMLTip() {
         this.setLayout(new java.awt.CardLayout());

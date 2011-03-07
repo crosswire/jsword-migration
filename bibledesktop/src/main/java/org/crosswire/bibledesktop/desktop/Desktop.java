@@ -57,7 +57,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.event.SwingPropertyChangeSupport;
 
-import org.crosswire.bibledesktop.BibleDesktopMsg;
+import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.bibledesktop.book.BibleViewPane;
 import org.crosswire.bibledesktop.book.DisplaySelectEvent;
 import org.crosswire.bibledesktop.book.DisplaySelectListener;
@@ -163,7 +163,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         URI predictURI = PROJECT.getWritableURI(SPLASH_PROPS, FileUtil.EXTENSION_PROPERTIES);
         Progress startJob = JobManager.createJob("Startup");
         // TRANSLATOR: Progress label shown on BibleDesktop startup.
-        startJob.beginJob(BibleDesktopMsg.gettext("Startup"), predictURI);
+        startJob.beginJob(BDMsg.gettext("Startup"), predictURI);
 
         // Load the configuration. And create the lists of installed books.
         // This has to be done before any GUI components are created
@@ -183,7 +183,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
 
         // TRANSLATOR: Progress label shown while BibleDesktop
         // creates the GUI components
-        startJob.setSectionName(BibleDesktopMsg.gettext("Generating Components"));
+        startJob.setSectionName(BDMsg.gettext("Generating Components"));
         buildActionMap();
         createComponents();
 
@@ -193,7 +193,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         // TRANSLATOR: Progress label shown while BibleDesktop
         // creates the GUI layout with panes and panels,
         // and creates a few other GUI things
-        startJob.setSectionName(BibleDesktopMsg.gettext("General configuration"));
+        startJob.setSectionName(BDMsg.gettext("General configuration"));
         createLayout();
 
         // Listen for book changes so that the Options can be kept current
@@ -244,29 +244,29 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     private ActionFactory getViewActions(ViewManager viewMgr) {
         ActionFactory viewActions = new ActionFactory(viewMgr);
 
-        CWAction cwAction = viewActions.addAction(ViewManager.TAB_MODE, BibleDesktopMsg.gettext("Tabbed Mode"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("View passages using tabs"));
+        CWAction cwAction = viewActions.addAction(ViewManager.TAB_MODE, BDMsg.gettext("Tabbed Mode"));
+        cwAction.setTooltip(BDMsg.gettext("View passages using tabs"));
 
-        cwAction = viewActions.addAction(ViewManager.WINDOW_MODE, BibleDesktopMsg.gettext("Sub-Window Mode"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("View passages using sub-windows"));
+        cwAction = viewActions.addAction(ViewManager.WINDOW_MODE, BDMsg.gettext("Sub-Window Mode"));
+        cwAction.setTooltip(BDMsg.gettext("View passages using sub-windows"));
 
-        cwAction = viewActions.addAction(ViewManager.NEW_TAB, BibleDesktopMsg.gettext("New Bible View"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Open a new Bible View"));
+        cwAction = viewActions.addAction(ViewManager.NEW_TAB, BDMsg.gettext("New Bible View"));
+        cwAction.setTooltip(BDMsg.gettext("Open a new Bible View"));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/New16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/New24.gif");
         cwAction.setAccelerator("N,ctrl");
 
-        cwAction = viewActions.addAction(ViewManager.CLOSE_VIEW, BibleDesktopMsg.gettext("Close the Current View"));
+        cwAction = viewActions.addAction(ViewManager.CLOSE_VIEW, BDMsg.gettext("Close the Current View"));
         cwAction.setAccelerator("0x73,ctrl");
 
-        cwAction = viewActions.addAction(ViewManager.CLEAR_VIEW, BibleDesktopMsg.gettext("Clear the Current View"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Clear the current view's passages"));
+        cwAction = viewActions.addAction(ViewManager.CLEAR_VIEW, BDMsg.gettext("Clear the Current View"));
+        cwAction.setTooltip(BDMsg.gettext("Clear the current view's passages"));
 
-        cwAction = viewActions.addAction(ViewManager.CLOSE_ALL_VIEWS, BibleDesktopMsg.gettext("Close All Views"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Close all passages"));
+        cwAction = viewActions.addAction(ViewManager.CLOSE_ALL_VIEWS, BDMsg.gettext("Close All Views"));
+        cwAction.setTooltip(BDMsg.gettext("Close all passages"));
 
-        cwAction = viewActions.addAction(ViewManager.CLOSE_OTHER_VIEWS, BibleDesktopMsg.gettext("Close Other Views"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Close all the other passages."));
+        cwAction = viewActions.addAction(ViewManager.CLOSE_OTHER_VIEWS, BDMsg.gettext("Close Other Views"));
+        cwAction.setTooltip(BDMsg.gettext("Close all the other passages."));
         return viewActions;
     }
 
@@ -318,7 +318,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
 
         setIconImage(ICON_APP.getImage());
         setEnabled(true);
-        setTitle(BibleDesktopMsg.getApplicationTitle());
+        setTitle(BDMsg.getApplicationTitle());
     }
 
     private JMenuBar createMenuBar(ToolBar toolbar) {
@@ -334,39 +334,39 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
 
     private void buildActionMap() {
         // File menu and it's items
-        CWAction cwAction = actions.addAction("File", BibleDesktopMsg.gettext("File"));
+        CWAction cwAction = actions.addAction("File", BDMsg.gettext("File"));
 
-        cwAction = actions.addAction("Open", BibleDesktopMsg.gettext("Open"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Open a saved passage."));
+        cwAction = actions.addAction("Open", BDMsg.gettext("Open"));
+        cwAction.setTooltip(BDMsg.gettext("Open a saved passage."));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/Open16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/Open24.gif");
         cwAction.setAccelerator("O,ctrl");
 
-        cwAction = actions.addAction("Save", BibleDesktopMsg.gettext("Save"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Save the current passage."));
+        cwAction = actions.addAction("Save", BDMsg.gettext("Save"));
+        cwAction.setTooltip(BDMsg.gettext("Save the current passage."));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/Save16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/Save24.gif");
         cwAction.setAccelerator("S,ctrl");
 
-        cwAction = actions.addAction("SaveAs", BibleDesktopMsg.gettext("Save As"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Save the current passage under a different name."));
+        cwAction = actions.addAction("SaveAs", BDMsg.gettext("Save As"));
+        cwAction.setTooltip(BDMsg.gettext("Save the current passage under a different name."));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/SaveAs16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/SaveAs24.gif");
         cwAction.setAccelerator("A,ctrl,shift");
 
-        cwAction = actions.addAction("SaveAll", BibleDesktopMsg.gettext("Save All"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Save all passages."));
+        cwAction = actions.addAction("SaveAll", BDMsg.gettext("Save All"));
+        cwAction.setTooltip(BDMsg.gettext("Save all passages."));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/SaveAll16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/SaveAll24.gif");
         cwAction.setAccelerator("S,ctrl,shift");
 
 
-        cwAction = actions.addAction("Exit", BibleDesktopMsg.gettext("Exit"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Exit the Desktop application."));
+        cwAction = actions.addAction("Exit", BDMsg.gettext("Exit"));
+        cwAction.setTooltip(BDMsg.gettext("Exit the Desktop application."));
         cwAction.setAccelerator("0x73,alt");
 
         // Edit menu and it's items
-        cwAction = actions.addAction("Edit",  BibleDesktopMsg.gettext("Edit"));
+        cwAction = actions.addAction("Edit",  BDMsg.gettext("Edit"));
 
 //      cwAction = actions.addAction("Cut", UserMsg.gettext("Cut"));
 //      cwAction.setTooltip(UserMsg.gettext("Cut the selection."));
@@ -374,8 +374,8 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
 //      cwAction.setLargeIcon("toolbarButtonGraphics/general/Cut24.gif");
 //      cwAction.setAccelerator("X,ctrl");
 
-        cwAction = actions.addAction("Copy", BibleDesktopMsg.gettext("Copy"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Copy the selection."));
+        cwAction = actions.addAction("Copy", BDMsg.gettext("Copy"));
+        cwAction.setTooltip(BDMsg.gettext("Copy the selection."));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/Copy16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/Copy24.gif");
         cwAction.setAccelerator("C,ctrl");
@@ -387,81 +387,81 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
 //      cwAction.setAccelerator("V,ctrl");
 
         // Navigate menu and it's items
-        cwAction = actions.addAction("Navigate", BibleDesktopMsg.gettext("Navigate"));
+        cwAction = actions.addAction("Navigate", BDMsg.gettext("Navigate"));
 
-        cwAction = actions.addAction("Back", BibleDesktopMsg.gettext("Back"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Go back to previous passage."));
+        cwAction = actions.addAction("Back", BDMsg.gettext("Back"));
+        cwAction.setTooltip(BDMsg.gettext("Go back to previous passage."));
         cwAction.setSmallIcon("toolbarButtonGraphics/navigation/Back16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/navigation/Back24.gif");
 
-        cwAction = actions.addAction("Forward", BibleDesktopMsg.gettext("Forward"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Go forward to next passage."));
+        cwAction = actions.addAction("Forward", BDMsg.gettext("Forward"));
+        cwAction.setTooltip(BDMsg.gettext("Go forward to next passage."));
         cwAction.setSmallIcon("toolbarButtonGraphics/navigation/Forward16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/navigation/Forward24.gif");
 
         // Verse sub-menu and it's items
-        cwAction = actions.addAction("Verse", BibleDesktopMsg.gettext("Verse Numbers"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Set the style for verse numbers"));
-        cwAction = actions.addAction(XSLTProperty.VERSE_NUMBERS.getName(), BibleDesktopMsg.gettext("Show Verse Numbers"));
-        cwAction = actions.addAction(XSLTProperty.CV.getName(), BibleDesktopMsg.gettext("Show Chapter and Verse Numbers"));
-        cwAction = actions.addAction(XSLTProperty.BCV.getName(), BibleDesktopMsg.gettext("Show Book, Chapter and Verse Numbers"));
-        cwAction = actions.addAction(XSLTProperty.NO_VERSE_NUMBERS.getName(), BibleDesktopMsg.gettext("Hide Verse Numbers"));
+        cwAction = actions.addAction("Verse", BDMsg.gettext("Verse Numbers"));
+        cwAction.setTooltip(BDMsg.gettext("Set the style for verse numbers"));
+        cwAction = actions.addAction(XSLTProperty.VERSE_NUMBERS.getName(), BDMsg.gettext("Show Verse Numbers"));
+        cwAction = actions.addAction(XSLTProperty.CV.getName(), BDMsg.gettext("Show Chapter and Verse Numbers"));
+        cwAction = actions.addAction(XSLTProperty.BCV.getName(), BDMsg.gettext("Show Book, Chapter and Verse Numbers"));
+        cwAction = actions.addAction(XSLTProperty.NO_VERSE_NUMBERS.getName(), BDMsg.gettext("Hide Verse Numbers"));
 
         // View menu and it's items
-        cwAction = actions.addAction("View", BibleDesktopMsg.gettext("View"));
-        cwAction = actions.addAction(XSLTProperty.TINY_VERSE_NUMBERS.getName(), BibleDesktopMsg.gettext("Use Small Verse Numbers"));
+        cwAction = actions.addAction("View", BDMsg.gettext("View"));
+        cwAction = actions.addAction(XSLTProperty.TINY_VERSE_NUMBERS.getName(), BDMsg.gettext("Use Small Verse Numbers"));
 
-        cwAction = actions.addAction(XSLTProperty.START_VERSE_ON_NEWLINE.getName(), BibleDesktopMsg.gettext("Start Verses on Separate Lines"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Start each verses on a new line"));
+        cwAction = actions.addAction(XSLTProperty.START_VERSE_ON_NEWLINE.getName(), BDMsg.gettext("Start Verses on Separate Lines"));
+        cwAction.setTooltip(BDMsg.gettext("Start each verses on a new line"));
 
-        cwAction = actions.addAction("CompareToggle", BibleDesktopMsg.gettext("Show Differences"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Toggle display of differences between different Bibles"));
+        cwAction = actions.addAction("CompareToggle", BDMsg.gettext("Show Differences"));
+        cwAction.setTooltip(BDMsg.gettext("Toggle display of differences between different Bibles"));
 
-        cwAction = actions.addAction(XSLTProperty.HEADINGS.getName(), BibleDesktopMsg.gettext("Show Headings"));
-        cwAction = actions.addAction(XSLTProperty.NOTES.getName(), BibleDesktopMsg.gettext("Show Study Notes"));
-        cwAction = actions.addAction(XSLTProperty.XREF.getName(), BibleDesktopMsg.gettext("Use Cross Reference Linkings"));
-        cwAction = actions.addAction(XSLTProperty.STRONGS_NUMBERS.getName(), BibleDesktopMsg.gettext("Show Strong's Numbers"));
-        cwAction = actions.addAction(XSLTProperty.MORPH.getName(), BibleDesktopMsg.gettext("Show Word Morphology"));
+        cwAction = actions.addAction(XSLTProperty.HEADINGS.getName(), BDMsg.gettext("Show Headings"));
+        cwAction = actions.addAction(XSLTProperty.NOTES.getName(), BDMsg.gettext("Show Study Notes"));
+        cwAction = actions.addAction(XSLTProperty.XREF.getName(), BDMsg.gettext("Use Cross Reference Linkings"));
+        cwAction = actions.addAction(XSLTProperty.STRONGS_NUMBERS.getName(), BDMsg.gettext("Show Strong's Numbers"));
+        cwAction = actions.addAction(XSLTProperty.MORPH.getName(), BDMsg.gettext("Show Word Morphology"));
 
-        cwAction = actions.addAction("ToolTipToggle", BibleDesktopMsg.gettext("Show Tool Tips"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Toggle display of tool tips"));
+        cwAction = actions.addAction("ToolTipToggle", BDMsg.gettext("Show Tool Tips"));
+        cwAction.setTooltip(BDMsg.gettext("Toggle display of tool tips"));
         cwAction.setAccelerator("T,ctrl");
 
-        cwAction = actions.addAction("StatusToggle", BibleDesktopMsg.gettext("Show the Status Area"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Toggle display of the status area"));
+        cwAction = actions.addAction("StatusToggle", BDMsg.gettext("Show the Status Area"));
+        cwAction.setTooltip(BDMsg.gettext("Toggle display of the status area"));
 
-        cwAction = actions.addAction("SidebarToggle", BibleDesktopMsg.gettext("Show the Passage Sidebar"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Toggle display of the Passage Sidebar"));
+        cwAction = actions.addAction("SidebarToggle", BDMsg.gettext("Show the Passage Sidebar"));
+        cwAction.setTooltip(BDMsg.gettext("Toggle display of the Passage Sidebar"));
         cwAction.setAccelerator("B,ctrl");
 
-        cwAction = actions.addAction("ViewSource", BibleDesktopMsg.gettext("View Source"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("View the HTML and OSIS source to the current window"));
+        cwAction = actions.addAction("ViewSource", BDMsg.gettext("View Source"));
+        cwAction.setTooltip(BDMsg.gettext("View the HTML and OSIS source to the current window"));
         cwAction.setAccelerator("U,ctrl");
 
         // Tools menu and it's items
-        cwAction = actions.addAction("Tools", BibleDesktopMsg.gettext("Tools"));
+        cwAction = actions.addAction("Tools", BDMsg.gettext("Tools"));
 
-        cwAction = actions.addAction("Books", BibleDesktopMsg.gettext("Books"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Display/Install Books"));
+        cwAction = actions.addAction("Books", BDMsg.gettext("Books"));
+        cwAction.setTooltip(BDMsg.gettext("Display/Install Books"));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/Import16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/Import24.gif");
 
-        cwAction = actions.addAction("Options", BibleDesktopMsg.gettext("Options"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Alter system settings."));
+        cwAction = actions.addAction("Options", BDMsg.gettext("Options"));
+        cwAction.setTooltip(BDMsg.gettext("Alter system settings."));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/Properties16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/Properties24.gif");
 
         // Help menu and it's items
-        cwAction = actions.addAction("Help", BibleDesktopMsg.gettext("Help"));
+        cwAction = actions.addAction("Help", BDMsg.gettext("Help"));
 
-        cwAction = actions.addAction("Contents", BibleDesktopMsg.gettext("Contents"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Help file contents."));
+        cwAction = actions.addAction("Contents", BDMsg.gettext("Contents"));
+        cwAction.setTooltip(BDMsg.gettext("Help file contents."));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/Help16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/Help24.gif");
         cwAction.setAccelerator("0x70");
 
-        cwAction = actions.addAction("About", BibleDesktopMsg.gettext("About"));
-        cwAction.setTooltip(BibleDesktopMsg.gettext("Information about Bible Desktop"));
+        cwAction = actions.addAction("About", BDMsg.gettext("About"));
+        cwAction.setTooltip(BDMsg.gettext("Information about Bible Desktop"));
         cwAction.setSmallIcon("toolbarButtonGraphics/general/About16.gif");
         cwAction.setLargeIcon("toolbarButtonGraphics/general/About24.gif");
     }
@@ -522,7 +522,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     private JRadioButtonMenuItem createRadioButton(ButtonGroup group, XSLTProperty prop) {
         JRadioButtonMenuItem radio = new JRadioButtonMenuItem(actions.findAction(prop.getName()));
         group.add(radio);
-        radio.setSelected(prop.getDefaultState());    
+        radio.setSelected(prop.getDefaultState());
         return radio;
     }
 
@@ -817,7 +817,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
                 jump(Defaults.getDictionary(), data);
             } else {
                 // TRANSLATOR: Uncommon error condition: JSword has provided a link that is not handled.
-                Reporter.informUser(this, new MalformedURLException(BibleDesktopMsg.gettext("Unknown protocol {0}", protocol)));
+                Reporter.informUser(this, new MalformedURLException(BDMsg.gettext("Unknown protocol {0}", protocol)));
             }
         } catch (NoSuchKeyException ex) {
             Reporter.informUser(this, ex);
@@ -888,7 +888,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         fillChoiceFactory();
 
         // TRANSLATOR: The window title of BibleDesktop's preference/option dialog.
-        config = new Config(BibleDesktopMsg.gettext("Desktop Options"));
+        config = new Config(BDMsg.gettext("Desktop Options"));
         try {
             Document xmlconfig = XMLUtil.getDocument(CONFIG_KEY);
 
@@ -948,10 +948,10 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         List<Book> bibles = Books.installed().getBooks(BookFilters.getBibles());
         if (bibles.isEmpty()) {
             // TRANSLATOR: Title of dialog asking the user to install at least one Bible.
-            String title = BibleDesktopMsg.gettext("Install Bibles?");
+            String title = BDMsg.gettext("Install Bibles?");
             // TRANSLATOR: HTML formatted message, telling the user that they have no Bibles installed,
             // giving them the option to do it now and instructions on how to do it later.
-            String msg = BibleDesktopMsg.gettext("<html>You have no Bibles installed. Do you wish to install some now?<br>(This is also available from <b>Books</b> in the <b>Tools</b> menu)");
+            String msg = BDMsg.gettext("<html>You have no Bibles installed. Do you wish to install some now?<br>(This is also available from <b>Books</b> in the <b>Tools</b> menu)");
             int reply = CWOptionPane.showConfirmDialog(this, msg, title, JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.QUESTION_MESSAGE);
             if (reply == JOptionPane.OK_OPTION) {
@@ -1132,7 +1132,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
             // These Mac properties give the application a Mac behavior
             if (OSType.MAC.equals(OSType.getOSType())) {
                 System.setProperty("apple.laf.useScreenMenuBar", "true");
-                System.setProperty("com.apple.mrj.application.apple.menu.about.name", BibleDesktopMsg.getApplicationTitle());
+                System.setProperty("com.apple.mrj.application.apple.menu.about.name", BDMsg.getApplicationTitle());
                 System.setProperty("com.apple.mrj.application.live-resize", "true");
             }
 
@@ -1242,7 +1242,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     /**
      * The factory for actions that this class works with
      */
-    private ActionFactory actions;
+    private volatile ActionFactory actions;
     /**
      * The DesktopActions is the holder for the actions, merely to keep the size of this file smaller.
      */

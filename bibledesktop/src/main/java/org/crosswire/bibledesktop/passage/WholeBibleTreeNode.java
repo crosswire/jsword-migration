@@ -25,7 +25,7 @@ import java.util.Enumeration;
 
 import javax.swing.tree.TreeNode;
 
-import org.crosswire.bibledesktop.BibleDesktopMsg;
+import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.common.icu.NumberShaper;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
@@ -135,7 +135,7 @@ public final class WholeBibleTreeNode implements TreeNode {
             switch (level) {
             case LEVEL_BIBLE:
                 // TRANSLATOR: The top level of the tree of Bible books, chapters and verses.
-                return BibleDesktopMsg.gettext("The Bible");
+                return BDMsg.gettext("The Bible");
 
             case LEVEL_BOOK:
                 return BibleInfo.getPreferredBookName(range.getStart().getBook());
@@ -148,7 +148,7 @@ public final class WholeBibleTreeNode implements TreeNode {
 
             default:
                 // TRANSLATOR: Unexpected error condition.
-                return BibleDesktopMsg.gettext("Error");
+                return BDMsg.gettext("Error");
             }
         } catch (NoSuchVerseException ex) {
             assert false : ex;

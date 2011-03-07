@@ -46,8 +46,8 @@ public class MapEntryRenderer extends DefaultListCellRenderer {
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean selected, boolean focus) {
         Object displayObject = value;
-        if (value instanceof Map.Entry<?,?>) {
-            Map.Entry<?,?> mapEntry = (Entry<?,?>) value;
+        if (value instanceof Map.Entry<?, ?>) {
+            Map.Entry<?, ?> mapEntry = (Entry<?, ?>) value;
             displayObject = mapEntry.getValue();
         }
 

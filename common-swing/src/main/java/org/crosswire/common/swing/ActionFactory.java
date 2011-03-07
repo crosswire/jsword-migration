@@ -134,7 +134,7 @@ public class ActionFactory implements ActionListener, Actionable {
      * 
      */
     public ActionFactory() {
-        actions = new HashMap<String,CWAction>();
+        actions = new HashMap<String, CWAction>();
     }
 
     /**
@@ -175,12 +175,8 @@ public class ActionFactory implements ActionListener, Actionable {
         Exception ex = null;
         try {
             try {
-                Method doMethod = bean.getClass().getDeclaredMethod(methodName, new Class[] {
-                    ActionEvent.class
-                });
-                doMethod.invoke(bean, new Object[] {
-                    ev
-                });
+                Method doMethod = bean.getClass().getDeclaredMethod(methodName, ActionEvent.class);
+                doMethod.invoke(bean, ev);
             } catch (NoSuchMethodException e) {
                 Method doMethod = bean.getClass().getDeclaredMethod(methodName, new Class[0]);
                 doMethod.invoke(bean, new Object[0]);
@@ -241,9 +237,8 @@ public class ActionFactory implements ActionListener, Actionable {
      *            the action to use
      * @return the button
      */
-    public JButton createJButton(Action action, ActionListener listener) {
-        CWAction act = (CWAction) action;
-        act = (CWAction) act.clone();
+    public JButton createJButton(CWAction action, ActionListener listener) {
+        CWAction act = (CWAction) action.clone();
         act.addActionListener(listener);
         return new JButton(act);
     }
@@ -266,44 +261,6 @@ public class ActionFactory implements ActionListener, Actionable {
      *            For this reason, it is important to ensure that two visible,
      *            active elements do not have the same mnemonic.<br/>
      *            Note: Mnemonics are suppressed on MacOSX.
-     * @param tooltip
-     *            A tip to show when the mouse is over an element. If not
-     *            present, Name is used. This is likely to change. It is
-     *            redundant to show a tooltip that is identical to the shown
-     *            text.
-     * @param smallIconPath
-     *            An optional specification of a 16x16 pixel image to be shown
-     *            for the item. The value for this is a path which can be found
-     *            as a resource.<br/>
-     *            Note: the small icon will be used when actions are tied to
-     *            menu items and buttons.
-     * @param largeIconPath
-     *            An optional specification of a 24x24 pixel image to be shown
-     *            for the item when large items are shown. Currently, these are
-     *            only used for the ToolBar, when a large toolbar is requested.
-     *            The value is a resource path to the image.
-     * @param acceleratorSpec
-     *            A key on the keyboard, which may be specified with 0x25 kind
-     *            of notation.<br/>
-     *            Accelerators are global key combinations that work within an
-     *            application to fire the action. When the action is shown as a
-     *            menu item the accelerator will be listed with the name. Note:
-     *            The accelerator key and it's modifiers are converted into a
-     *            <code>KeyStroke</code> with
-     *            <code>KeyStroke.getKeyStroke(key, modifierMask);</code><br/>
-     *            The modifiers are specified with comma separated list of ctrl,
-     *            alt, and shift, indicating what modifiers are necessary for
-     *            the accelerator.<br/>
-     *            Note: ctrl will use a platform's command key. On MacOSX this
-     *            is the Apple/Command key. Other platforms use Ctrl.
-     * @param enabled
-     *            Defaults to true when not present. It is disabled when the
-     *            value does not match "true" regardless of case. This is used
-     *            to initialize widgets tied to actions to disabled. Once the
-     *            action is created, it's state can be changed and the tied
-     *            widgets will behave appropriately.
-     * @param listener
-     *            A listener for the action. When present the action is not shared, but cloned.
      * @return the stored or newly constructed action
      */
     public CWAction addAction(String key, String name) {
@@ -348,7 +305,7 @@ public class ActionFactory implements ActionListener, Actionable {
             }
         }
 
-        return cwAction;    
+        return cwAction;
     }
 
     /**
@@ -375,5 +332,5 @@ public class ActionFactory implements ActionListener, Actionable {
     /**
      * The map of known CWActions
      */
-    private Map<String,CWAction> actions;
+    private Map<String, CWAction> actions;
 }

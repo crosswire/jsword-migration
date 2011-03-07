@@ -106,12 +106,8 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
             // set the name for Layout Persistence
             dialog.setName("Config");
             dialog.addWindowListener(new WindowAdapter() {
-                /*
-                 * (non-Javadoc)
-                 * 
-                 * @see
-                 * java.awt.event.WindowListener#windowClosed(java.awt.event
-                 * .WindowEvent)
+                /* (non-Javadoc)
+                 * @see java.awt.event.WindowAdapter#windowClosed(java.awt.event.WindowEvent)
                  */
                 @Override
                 public void windowClosed(WindowEvent ev) {
@@ -232,7 +228,7 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
 
         Field field = fields.get(key);
         if (field != null) {
-            fields.remove(field);
+            fields.remove(key);
             FormPane card = decks.get(path);
 
             // Remove field from card.
@@ -240,7 +236,7 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
             card.removeEntry(name);
 
             if (card.isEmpty()) {
-                decks.remove(card);
+                decks.remove(path);
             }
         }
     }
@@ -327,12 +323,12 @@ public abstract class AbstractConfigEditor extends JPanel implements ConfigEdito
     /**
      * A fast way to get at the configuration panels
      */
-    protected Map<String,FormPane> decks = new HashMap<String,FormPane>();
+    protected Map<String, FormPane> decks = new HashMap<String, FormPane>();
 
     /**
      * The set of fields that we are displaying
      */
-    protected Map<String,Field> fields = new HashMap<String,Field>();
+    protected Map<String, Field> fields = new HashMap<String, Field>();
 
     /**
      * The large task icon

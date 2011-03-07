@@ -38,7 +38,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import org.crosswire.bibledesktop.BibleDesktopMsg;
+import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.common.swing.ActionFactory;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.util.WebWarning;
@@ -84,8 +84,8 @@ public class InternetWarning extends JPanel {
         final InternetWarning webWarning = new InternetWarning();
 
         JPanel buttons = new JPanel();
-        JButton yesButton = new JButton(webWarning.actions.addAction("Yes", BibleDesktopMsg.gettext("Yes")));
-        JButton noButton = new JButton(webWarning.actions.addAction("No", BibleDesktopMsg.gettext("No")));
+        JButton yesButton = new JButton(webWarning.actions.addAction("Yes", BDMsg.gettext("Yes")));
+        JButton noButton = new JButton(webWarning.actions.addAction("No", BDMsg.gettext("No")));
         buttons.add(yesButton);
         buttons.add(noButton);
 

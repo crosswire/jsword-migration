@@ -24,7 +24,7 @@ import java.awt.Component;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-import org.crosswire.bibledesktop.BibleDesktopMsg;
+import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.jsword.book.Book;
 
 /**
@@ -50,15 +50,15 @@ public class BookTreeCellRenderer extends DefaultTreeCellRenderer {
 
                 if (book.isQuestionable()) {
                     // TRANSLATOR: The book is categorized as either the work of a cult, or it is unorthodox or it is otherwise questionable.
-                    tooltip = BibleDesktopMsg.gettext("Cult / Unorthodox / Questionable");
+                    tooltip = BDMsg.gettext("Cult / Unorthodox / Questionable");
                 }
 
                 if (!book.isSupported()) {
                     // TRANSLATOR: The book is not supported by JSword
-                    tooltip = BibleDesktopMsg.gettext("Unsupported");
+                    tooltip = BDMsg.gettext("Unsupported");
                 } else if (book.isLocked()) {
                     // TRANSLATOR: The book is enciphered and needs to be unlocked
-                    tooltip = BibleDesktopMsg.gettext("Locked");
+                    tooltip = BDMsg.gettext("Locked");
                 }
             }
         }

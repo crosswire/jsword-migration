@@ -85,11 +85,10 @@ public final class ExceptionPane extends JPanel {
      * Setup the GUI
      */
     private void initialise() {
-        MessageFormat msgFormat = new MessageFormat("<html><font size=\"-1\">{0}</font> {1}");
-        String exmsg = msgFormat.format(new Object[] {
+        String exmsg = MessageFormat.format("<html><font size=\"-1\">{0}</font> {1}",
                 // TRANSLATOR: When an error dialog is presented to the user, this labels the error.
                 CWMsg.gettext("An error has occurred:"), ExceptionPane.getHTMLDescription(ex)
-        });
+        );
 
         // The upper pane
         JLabel message = new JLabel();
@@ -470,9 +469,7 @@ public final class ExceptionPane extends JPanel {
                         // TRANSLATOR: When an error dialog is presented to the user, this indicates that the location of the error in the Java source.
                         // {0} is a placeholder for the line number on which the error occurred.
                         // {1} is a placeholder for the Java file.
-                        String found = CWMsg.gettext("Error on line {0} in file {1}", new Object[] {
-                                errorLine, file.getCanonicalPath()
-                        });
+                        String found = CWMsg.gettext("Error on line {0} in file {1}", errorLine, file.getCanonicalPath());
                         mylabel.setText(found);
                         in = new LineNumberReader(new FileReader(file));
                         while (true) {
@@ -515,16 +512,12 @@ public final class ExceptionPane extends JPanel {
             // TRANSLATOR: When an error dialog is presented to the user, this indicates that the Java source could not be found.
             // {1} is a placeholder for the line number on which the error occurred.
             // {0} is a placeholder for the Java file.
-            StringBuilder error = new StringBuilder(CWMsg.gettext("Cannot open source for: {0}, line: {1}\n", new Object[] {
-                    st.getClassName(level), errorLine
-            }));
+            StringBuilder error = new StringBuilder(CWMsg.gettext("Cannot open source for: {0}, line: {1}\n", st.getClassName(level), errorLine));
             for (int i = 0; i < srcs.length; i++) {
                 // TRANSLATOR: When an error dialog is presented to the user, and the Java source could not be found
                 // this indicates what locations were tried.
                 // {0} is a placeholder for the location.
-                error.append(CWMsg.gettext("Tried: {0}\n", new Object[] {
-                    srcs[i].getAbsolutePath() + name
-                }));
+                error.append(CWMsg.gettext("Tried: {0}\n", srcs[i].getAbsolutePath() + name));
             }
 
             mytext.setText(error.toString());

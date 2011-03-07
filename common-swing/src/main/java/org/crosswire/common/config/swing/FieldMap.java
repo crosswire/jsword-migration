@@ -93,7 +93,7 @@ public final class FieldMap {
     /**
      * The configuration table
      */
-    private static Map<String,Class<Field>> map;
+    private static Map<String, Class<Field>> map;
 
     /**
      * Default map configuration
