@@ -19,7 +19,7 @@
  *
  * ID: $Id$
  */
-package org.crosswire.common.config.swing;
+package org.crosswire.common.swing;
 
 import org.crosswire.common.util.MsgBase;
 
@@ -30,7 +30,7 @@ import org.crosswire.common.util.MsgBase;
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-final class Msg extends MsgBase {
+public final class CWOtherMsg extends MsgBase {
     /**
      * Get the internationalized text, but return key if key is unknown.
      * The text requires one or more parameters to be passed.
@@ -43,5 +43,5 @@ final class Msg extends MsgBase {
         return msg.lookup(key, params);
     }
 
-    private static MsgBase msg = new Msg();
+    private static MsgBase msg = new CWOtherMsg();
 }

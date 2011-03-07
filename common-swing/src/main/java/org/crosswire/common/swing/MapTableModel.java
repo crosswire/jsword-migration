@@ -243,7 +243,7 @@ public class MapTableModel extends AbstractTableModel {
      * The default column names
      */
     private String[] colNames = new String[] {
-            Msg.lookupText("Keys"), Msg.lookupText("Values"),
+            CWOtherMsg.lookupText("Keys"), CWOtherMsg.lookupText("Values"),
     };
 
     /**

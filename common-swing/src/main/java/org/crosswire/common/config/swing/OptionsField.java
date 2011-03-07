@@ -32,6 +32,7 @@ import org.crosswire.common.config.Choice;
 import org.crosswire.common.config.MultipleChoice;
 import org.crosswire.common.diff.Distance;
 import org.crosswire.common.swing.GuiUtil;
+import org.crosswire.common.swing.CWOtherMsg;
 import org.crosswire.common.util.Logger;
 
 /**
@@ -48,7 +49,7 @@ public class OptionsField implements Field {
      */
     public OptionsField() {
         combo = new JComboBox(new String[] {
-                Msg.lookupText("No Options Set")
+                CWOtherMsg.lookupText("No Options Set")
         });
         // Set the preferred width. Note, the actual combo box will resize to
         // the width of it's container
@@ -75,7 +76,7 @@ public class OptionsField implements Field {
             combo.setModel(new DefaultComboBoxModel(list));
         } else {
             list = new String[] {
-                    Msg.lookupText("Error")
+                    CWOtherMsg.lookupText("Error")
             };
         }
     }

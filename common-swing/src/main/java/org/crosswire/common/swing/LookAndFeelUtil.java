@@ -78,7 +78,7 @@ public final class LookAndFeelUtil {
 
         // newLaFClass is null if the user enters a bogus value
         if (currentLAF != null && !currentLAF.equals(newLaFClass)) {
-            CWOptionPane.showMessageDialog(null, Msg.lookupText("The Look and Feel will change on the next startup."));
+            CWOptionPane.showMessageDialog(null, CWOtherMsg.lookupText("The Look and Feel will change on the next startup."));
         } else {
             UIManager.setLookAndFeel(laf);
         }
