@@ -238,7 +238,7 @@ public class ActionFactory implements ActionListener, Actionable {
      * @return the button
      */
     public JButton createJButton(CWAction action, ActionListener listener) {
-        CWAction act = (CWAction) action.clone();
+        CWAction act = action.clone();
         act.addActionListener(listener);
         return new JButton(act);
     }

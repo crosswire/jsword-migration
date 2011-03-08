@@ -47,7 +47,7 @@ import org.crosswire.common.util.StringUtil;
 public class CWAction extends AbstractAction {
     /**
      * The icon to display when a large one is needed. This is still not part of
-     * Java as of 1.5
+     * Java as of 1.5. Now it is with Java 1.6!
      */
     public static final String LARGE_ICON = "LargeIcon";
 
@@ -76,6 +76,7 @@ public class CWAction extends AbstractAction {
         putValue(Action.SHORT_DESCRIPTION, tooltip);
         return this;
     }
+
     /**
      * Set or clear, using null, the icon on this action.
      * @param icon the small icon to set
@@ -121,7 +122,7 @@ public class CWAction extends AbstractAction {
     public CWAction setListener(ActionListener listener) {
         CWAction action = this;
         if (listener != null) {
-            action = (CWAction) action.clone();
+            action = action.clone();
             action.addActionListener(listener);
         }
         return action;
@@ -198,9 +199,11 @@ public class CWAction extends AbstractAction {
     /**
      * Create a clone that does not copy the listeners. These CWActions need to
      * have listeners added to be meaningful.
+     * 
+     * @see javax.swing.AbstractAction#clone()
      */
     @Override
-    public Object clone() {
+    public CWAction clone() {
         CWAction action = null;
         try {
             action = (CWAction) super.clone();
