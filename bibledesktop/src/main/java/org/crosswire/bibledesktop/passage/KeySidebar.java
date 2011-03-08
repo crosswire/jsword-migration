@@ -150,20 +150,17 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
      */
     private void doBlur(int amount) {
         // Remember what was selected
-        List<Key> selected = new ArrayList(Arrays.asList(list.getSelectedValues()));
-
+        Object[] objs = list.getSelectedValues();
+        
         // Make sure that key changes are not visible until blur is done.
-        Key copy = (Key) key.clone();
+        Key copy = key.clone();
 
         // Either blur the entire unselected list or just the selected elements.
-        if (selected.isEmpty()) {
+        if (objs.length == 0) {
             copy.blur(amount, RestrictionType.getDefaultBlurRestriction());
         } else {
-            Iterator<Key> iter = selected.iterator();
-            while (iter.hasNext()) {
-                Key k = iter.next();
-                // Create a copy so the selection can be restored
-                Key keyCopy = (Key) k.clone();
+            for (Object obj : objs) {
+                Key keyCopy = ((VerseRange) obj).clone();
                 keyCopy.blur(amount, RestrictionType.getDefaultBlurRestriction());
                 copy.addAll(keyCopy);
             }
@@ -172,21 +169,21 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
 
         // Restore the selection
         int total = model.getSize();
+        int count = objs.length;
         for (int i = 0; i < total; i++) {
             Key listedKey = (Key) model.getElementAt(i);
 
             // As keys are found, remove them
-            Iterator<Key> iter = selected.iterator();
-            while (iter.hasNext()) {
-                Key selectedKey = iter.next();
+            for (Object obj : objs) {
+                Key selectedKey = (VerseRange) obj;
                 if (listedKey.contains(selectedKey)) {
                     list.addSelectionInterval(i, i);
-                    iter.remove();
+                    --count;
                 }
             }
 
             // If the list is empty then we are done.
-            if (selected.isEmpty()) {
+            if (count <= 0) {
                 break;
             }
         }
@@ -236,7 +233,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
             key = null;
         } else {
             if (key != newKey) {
-                key = (Key) newKey.clone();
+                key = newKey.clone();
             }
         }
         partial = null;
