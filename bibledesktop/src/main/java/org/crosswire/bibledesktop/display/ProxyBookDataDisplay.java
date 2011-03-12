@@ -32,7 +32,7 @@ import org.crosswire.jsword.passage.Key;
  * An implementation of BookDataDisplay that simply proxies all requests to an
  * underlying BookDataDisplay.
  * <p>
- * Useful for chaining a few BookDataDisplays together to add functionallity
+ * Useful for chaining a few BookDataDisplays together to add functionality
  * component by component.
  * </p>
  * 

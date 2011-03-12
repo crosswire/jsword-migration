@@ -45,9 +45,6 @@ public class ScrolledBookDataDisplay extends ProxyBookDataDisplay {
         scrView.getViewport().setPreferredSize(new Dimension(500, 400));
     }
 
-    /* (non-Javadoc)
-     * @see org.crosswire.bibledesktop.display.BookDataDisplay#getComponent()
-     */
     @Override
     public Component getComponent() {
         return scrView;
