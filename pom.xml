@@ -116,12 +116,26 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<distributionManagement>
+	<repositories>
 		<repository>
-			<id>crosswire-repo</id>
-			<name>Cross Wire Maven Repository</name>
-			<url>scp://maven.crosswire.org/var/www/maven.crosswire.org/htdocs/</url>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+			<id>crosswire.public</id>
+			<name>Codehaus Public Repo</name>
+			<url>http://crosswire.org/mvn/content/groups/public/</url>
+			<layout>default</layout>
 		</repository>
+	</repositories>
+  
+	<distributionManagement>
+		<snapshotRepository>
+			<id>crosswire.mvn</id>
+			<url>http://crosswire.org/mvn/content/repositories/snapshots/</url>
+			<uniqueVersion>true</uniqueVersion>
+		</snapshotRepository>
 	</distributionManagement>
 
 
