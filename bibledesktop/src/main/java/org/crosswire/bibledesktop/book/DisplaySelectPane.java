@@ -158,7 +158,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
 
         CWAction action = actions.addAction("PassageAction");
         // TRANSLATOR: This is the tooltip for the Show Passage text box
-        action.setTooltip(BDMsg.gettext("Enter a passage to display. Press CTRL+ENTER or press the ... button for a Passage selection window."));
+        action.setTooltip(BDMsg.gettext("Enter a passage to display."));
         txtKey = new JTextField();
         txtKey.setAction(action);
         txtKey.addKeyListener(new KeyAdapter() {
@@ -211,10 +211,31 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         // TRANSLATOR: Title to the dialog that shows search tips.
         String dialogTitle = BDMsg.gettext("Search Quick Help");
 
-        // TRANSLATOR: This is html formatted examples of how to use search.
-        // TODO(DMS): Split this into individual examples and bring in each separately.
-        String msg = BDMsg.gettext("<html><b>Search Tips.</b><br>You can use || to join phrases, for example \"<code>balaam || balak</code>\" finds passages containing Balak OR Balaam<br>Using && requires both words, e.g. \"<code>aaron && moses</code>\" finds passages containing both Aaron AND Moses<br>Using a ! removes words from the result e.g. \"<code>lord ! jesus</code>\" is passages containing Lord BUT NOT Jesus<br>Using ~2 widens the passage by 2 verses either side on any match. So \"<code>amminadab ~1 perez</code>\" finds<br>verses containting Amminadab within 1 verse of mention of Perez.<br>Using +[Gen-Exo] at the beginning will restrict a search to that range of verses.");
-        dlgHelp = new QuickHelpDialog(GuiUtil.getFrame(this), dialogTitle, msg);
+        StringBuilder buf = new StringBuilder(200);
+        buf.append("<html><b>");
+        // TRANSLATOR: Label for search tips.
+        buf.append(BDMsg.gettext("Search Tips"));
+        buf.append("</b><br>");
+        // TRANSLATOR: Tip for using search keywords ||, OR. You can use any example you want.
+        // You may use balanced HTML markup.
+        buf.append(BDMsg.gettext("You can use || to join phrases, for example \"<code>balaam || balak</code>\" finds passages containing Balak OR Balaam"));
+        buf.append("<br>");
+        // TRANSLATOR: Tip for using search keywords &&, AND. You can use any example you want. 
+        // You may use balanced HTML markup.
+        buf.append(BDMsg.gettext("Using && requires both words, e.g. \"<code>aaron && moses</code>\" finds passages containing both Aaron AND Moses"));
+        buf.append("<br>");
+        // TRANSLATOR: Tip for using search keywords !, BUT NOT. You can use any example you want. 
+        // You may use balanced HTML markup.
+        buf.append(BDMsg.gettext("Using a ! removes words from the result e.g. \"<code>lord ! jesus</code>\" is passages containing Lord BUT NOT Jesus"));
+        buf.append("<br>");
+        // TRANSLATOR: Tip for using search keyword ~n. You can use any example you want. 
+        // You may use balanced HTML markup.
+        buf.append(BDMsg.gettext("Using ~2 widens the passage by 2 verses either side on any match. So \"<code>amminadab ~1 perez</code>\" finds verses containting Amminadab within 1 verse of mention of Perez."));
+        buf.append("<br>");
+        // TRANSLATOR: Tip for using search keyword +[...]. You can use any example you want. 
+        // You may use balanced HTML markup.
+        buf.append(BDMsg.gettext("Using +[Gen-Exo] at the beginning will restrict a search to that range of verses."));
+        dlgHelp = new QuickHelpDialog(GuiUtil.getFrame(this), dialogTitle, buf.toString());
 
         // TRANSLATOR: The label for the button that brings up the Advanced Search dialog
         action = actions.addAction("Advanced", BDMsg.gettext("Advanced"));

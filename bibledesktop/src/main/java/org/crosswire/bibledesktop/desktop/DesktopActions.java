@@ -421,8 +421,11 @@ public class DesktopActions {
      * For opening a help file.
      */
     public void doContents() {
+        StringBuilder buf = new StringBuilder(200);
         // TRANSLATOR: Someday we'll have real help but for now this points them to the Bible Desktop web site.
-        CWOptionPane.showMessageDialog(getDesktop(), BDMsg.gettext("Currently on-line help is only available via the Bible Desktop's website:\nhttp://www.crosswire.org/bibledesktop"));
+        buf.append(BDMsg.gettext("Currently on-line help is only available via the Bible Desktop's website"));
+        buf.append("\nhttp://www.crosswire.org/bibledesktop");
+        CWOptionPane.showMessageDialog(getDesktop(), buf.toString());
     }
 
     /**

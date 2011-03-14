@@ -143,9 +143,12 @@ public class SitePane extends JPanel {
         } else {
             int bookCount = installer.getBooks().size();
             if (bookCount == 0) {
+                StringBuilder buf = new StringBuilder(200);
+                buf.append("<html><b>");
                 // TRANSLATOR: This label shows up when the list of available books for a download site is missing.
-                // Change the text between <html><b> and </b>.
-                desc = BDMsg.gettext("<html><b>Click 'Update Available Books' to download an up to date book list.</b>");
+                buf.append(BDMsg.gettext("Click 'Update Available Books' to download an up to date book list."));
+                buf.append("</b>");
+                desc = buf.toString();
             } else {
                 // TRANSLATOR: This label gives the number of books available at a download site. {0} is a placeholder for the number.
                 desc = BDMsg.gettext("{0} books available for download.", Integer.valueOf(bookCount));
@@ -374,12 +377,14 @@ public class SitePane extends JPanel {
 
         // TRANSLATOR: Title to a dialog asking the user to provide an unlock key.
         String title = BDMsg.gettext("Unlock Book");
+        StringBuilder msg = new StringBuilder(200);
         // TRANSLATOR: Message asking the user to provide an unlock key.
         // The unlock key is typically a string like AbCd8364efGH8472.
-        // {0} is a placeholder for the books name.
-        // In order to have long titles on the next line we use <html> and <br> to provide this.
-        String msg = BDMsg.gettext("<html>Please enter the unlock key for:<br> {0}?", book.getName());
-        String unlockKey = (String) CWOptionPane.showInputDialog(this, msg, title, JOptionPane.QUESTION_MESSAGE, null, null, book.getUnlockKey());
+        msg.append(BDMsg.gettext("Please enter the unlock key for:"));
+        // To allow for long book names, put the name on the next line.
+        msg.append('\n');
+        msg.append(book.getName());
+        String unlockKey = (String) CWOptionPane.showInputDialog(this, msg.toString(), title, JOptionPane.QUESTION_MESSAGE, null, null, book.getUnlockKey());
 
         if (unlockKey != null && unlockKey.length() > 0) {
             book.unlock(unlockKey);

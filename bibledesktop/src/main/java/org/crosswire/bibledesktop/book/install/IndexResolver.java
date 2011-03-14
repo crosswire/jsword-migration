@@ -85,10 +85,15 @@ public final class IndexResolver {
                     // TRANSLATOR: Title to a dialog that asks whether the user wants to generate an index.
                     // Currently unused.
                     String gtitle = BDMsg.gettext("Download or generate?");
-                    // TRANSLATOR: The download failed for one reason or another. So now the user is asked whether the index should be generated.
+                    StringBuffer gmsg = new StringBuffer(200);
+                    // TRANSLATOR: The download failed for one reason or another.
                     // Currently unused.
-                    String gmsg = BDMsg.gettext("Downloading failed.\nDo you wish to generate an index anyway?");
-                    int yn = CWOptionPane.showConfirmDialog(parent, gmsg, gtitle, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    gmsg.append(BDMsg.gettext("Downloading failed."));
+                    gmsg.append("\n");
+                    // TRANSLATOR: Since the download failed, ask the user whether the index should be generated.
+                    // Currently unused.
+                    gmsg.append(BDMsg.gettext("Do you wish to generate an index anyway?"));
+                    int yn = CWOptionPane.showConfirmDialog(parent, gmsg.toString(), gtitle, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
                     if (yn == JOptionPane.YES_OPTION) {
                         IndexManagerFactory.getIndexManager().scheduleIndexCreation(book);

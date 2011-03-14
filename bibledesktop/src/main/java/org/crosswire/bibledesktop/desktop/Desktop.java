@@ -1019,9 +1019,13 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
         if (bibles.isEmpty()) {
             // TRANSLATOR: Title of dialog asking the user to install at least one Bible.
             String title = BDMsg.gettext("Install Bibles?");
-            // TRANSLATOR: HTML formatted message, telling the user that they have no Bibles installed,
-            // giving them the option to do it now and instructions on how to do it later.
-            String msg = BDMsg.gettext("<html>You have no Bibles installed. Do you wish to install some now?<br>(This is also available from <b>Books</b> in the <b>Tools</b> menu)");
+            StringBuilder msg = new StringBuilder(200);
+            // TRANSLATOR: Tell the user that they have no Bibles installed and 
+            // give them the option to do it now.
+            msg.append(BDMsg.gettext("You have no Bibles installed. Do you wish to install some now?"));
+            msg.append("\n");
+            // TRANSLATOR: Since they have no Bibles installed, give instructions on how to do it later.
+            msg.append("(This is also available from Books in the Tools menu)");
             int reply = CWOptionPane.showConfirmDialog(this, msg, title, JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.QUESTION_MESSAGE);
             if (reply == JOptionPane.OK_OPTION) {
