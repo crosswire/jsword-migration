@@ -1,11 +1,7 @@
-<html>
-<body>
-
-<p>
+/**
 This package contains the BookDataDisplay interface which is designed to
 allow GUI components to choose between the methods they use to display BookData
 objects.
-</p>
 
 <br/>
 There are several implementation of this interface in sub-packages.
@@ -83,6 +79,6 @@ There are plenty of XML-&gt;Swing converters. JDK 1.4 even includes one.
 Maybe we could write a OSIS-&gt;SwingXML converter in XSL and then render OSIS
 text in swing components. Could be very fancy. XSL could be complex.
 </p>
-
-</body>
-</html>
+ * 
+ */
+package org.crosswire.bibledesktop.display;
