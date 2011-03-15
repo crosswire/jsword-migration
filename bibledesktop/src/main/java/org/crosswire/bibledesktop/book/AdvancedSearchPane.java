@@ -86,25 +86,25 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
                 BDMsg.gettext("The Whole Bible"),
                 // TRANSLATOR: A Label representing the range of the prophecy in the Bible
                 BDMsg.gettext("All Prophecy (Deu 28, Isa-Mal, Rev)"),
-                // TRANSLATOR: A Label representing the range of the entire Bible
-                BDMsg.gettext("Old Testament (Gen-Mal)"),
                 // TRANSLATOR: A Label representing the range of the New Testament
-                BDMsg.gettext("New Testament (Mat-Rev)"),
+                BDMsg.gettext("Old Testament (Gen-Mal)"),
                 // TRANSLATOR: A Label representing the range of the Old Testament
-                BDMsg.gettext("The Pentateuch (Gen-Deu)"),
+                BDMsg.gettext("New Testament (Mat-Rev)"),
                 // TRANSLATOR: A Label representing the range of the books of Moses
-                BDMsg.gettext("History (Josh-Est)"),
+                BDMsg.gettext("The Pentateuch (Gen-Deu)"),
                 // TRANSLATOR: A Label representing the range of the history books of the Bible
-                BDMsg.gettext("Poetry (Job-Song)"),
+                BDMsg.gettext("History (Josh-Est)"),
                 // TRANSLATOR: A Label representing the range of the poetic books of the Bible
-                BDMsg.gettext("Major Prophets (Isa-Dan)"),
+                BDMsg.gettext("Poetry (Job-Song)"),
                 // TRANSLATOR: A Label representing the range of the major prophets of the Bible
-                BDMsg.gettext("Minor Prophets (Hos-Mal)"),
+                BDMsg.gettext("Major Prophets (Isa-Dan)"),
                 // TRANSLATOR: A Label representing the range of the minor prophets of the Bible
-                BDMsg.gettext("Gospels and Acts (Mat-Act)"),
+                BDMsg.gettext("Minor Prophets (Hos-Mal)"),
                 // TRANSLATOR: A Label representing the range of the Gospels and Acts of the Bible
+                BDMsg.gettext("Gospels and Acts (Mat-Act)"),
+                // TRANSLATOR: A Label representing the range of the NT letters to the church
                 BDMsg.gettext("Letters to People (Rom-Heb)"),
-                // TRANSLATOR: A Label representing the range of the NT letters the church
+                // TRANSLATOR: A Label representing the range of the NT letters within the church
                 BDMsg.gettext("Letters from People (Jam-Jude)"),
                 // TRANSLATOR: A Label representing a range of the Bible of the user's own choosing
                 // The user chooses by filling in a text box.
