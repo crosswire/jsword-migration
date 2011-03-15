@@ -80,14 +80,36 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
      * This is the default constructor
      */
     public AdvancedSearchPane() {
-        // TRANSLATOR: This pattern allows one to specify different, potentially overlapping divisions of the Bible.
-        // Each division is separated by a '|', which will not be shown to the user.
-        // If the division represents a part of the Bible, that part is shown after the division name.
-        // If it is not appropriate for the part to be shown in ( ), but rather some other pair of characters,
-        //    even the same character (other than '|') this can be done.
-        // The book names should be given as something that JSword can understand. Chapter and verse numbers should be 1-9 and not localized.
-        // The last choice should not have a division marker and is used when the user types something other than what is in the list.
-        presets = BDMsg.gettext("The Whole Bible|All Prophecy (Deu 28, Isa-Mal, Rev)|Old Testament (Gen-Mal)|New Testament (Mat-Rev)|The Pentateuch (Gen-Deu)|History (Josh-Est)|Poetry (Job-Song)|Major Prophets (Isa-Dan)|Minor Prophets (Hos-Mal)|Gospels and Acts (Mat-Act)|Letters to People (Rom-Heb)|Letters from People (Jam-Jude)|Custom").split("\\|");
+        // TODO(DMS): Migrate these to Versification.SectionNames
+        presets = new String[] {
+                // TRANSLATOR: A Label representing the range of the entire Bible 
+                BDMsg.gettext("The Whole Bible"),
+                // TRANSLATOR: A Label representing the range of the prophecy in the Bible
+                BDMsg.gettext("All Prophecy (Deu 28, Isa-Mal, Rev)"),
+                // TRANSLATOR: A Label representing the range of the entire Bible
+                BDMsg.gettext("Old Testament (Gen-Mal)"),
+                // TRANSLATOR: A Label representing the range of the New Testament
+                BDMsg.gettext("New Testament (Mat-Rev)"),
+                // TRANSLATOR: A Label representing the range of the Old Testament
+                BDMsg.gettext("The Pentateuch (Gen-Deu)"),
+                // TRANSLATOR: A Label representing the range of the books of Moses
+                BDMsg.gettext("History (Josh-Est)"),
+                // TRANSLATOR: A Label representing the range of the history books of the Bible
+                BDMsg.gettext("Poetry (Job-Song)"),
+                // TRANSLATOR: A Label representing the range of the poetic books of the Bible
+                BDMsg.gettext("Major Prophets (Isa-Dan)"),
+                // TRANSLATOR: A Label representing the range of the major prophets of the Bible
+                BDMsg.gettext("Minor Prophets (Hos-Mal)"),
+                // TRANSLATOR: A Label representing the range of the minor prophets of the Bible
+                BDMsg.gettext("Gospels and Acts (Mat-Act)"),
+                // TRANSLATOR: A Label representing the range of the Gospels and Acts of the Bible
+                BDMsg.gettext("Letters to People (Rom-Heb)"),
+                // TRANSLATOR: A Label representing the range of the NT letters the church
+                BDMsg.gettext("Letters from People (Jam-Jude)"),
+                // TRANSLATOR: A Label representing a range of the Bible of the user's own choosing
+                // The user chooses by filling in a text box.
+                BDMsg.gettext("Custom")
+        };
 
         initialize();
     }
