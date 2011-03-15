@@ -26,8 +26,15 @@
 
     <property name="cacheFile" value="@target.checkstyle@/cachefile.dat"/>
 
+    <!-- Checks for Annotations -->
+    <module name="AnnotationUseStyle"/>
+    <module name="MissingDeprecated"/>
+    <module name="MissingOverride"/>
+    <module name="SuppressWarnings"/>
+    
     <!-- Checks for Javadoc Comments -->
     <module name="JavadocType">
+      <property name="allowMissingParamTags" value="true"/>
       <property name="authorFormat" value="\S"/>
     </module>
     <!-- This would be a big change
@@ -48,7 +55,7 @@
 
     <!-- Checks for Naming Conventions -->
     <module name="AbstractClassName">
-      <property name="format" value="^Abstract.*$|^.*Factory$|^.*Type$|^.*Category$"/>
+      <property name="format" value="^Abstract.*$"/>
     </module>
     <!-- Allow "log" and "instance" otherwise only upper case valid variables with _ -->
     <module name="ConstantName">
@@ -77,6 +84,7 @@
 
     <!-- Checks for imports -->
     <module name="AvoidStarImport"/>
+    <module name="AvoidStaticImport"/>
     <module name="IllegalImport"/>
     <module name="RedundantImport"/>
     <module name="UnusedImports"/>
@@ -89,7 +97,7 @@
     <!--
     <module name="ExecutableStatementCount">
       <property name="max" value="20"/>
-      <property name="tokens" value="CTOR_DEF,METHOD_DEF"/>
+      <property name="tokens" value="CTOR_DEF,METHOD_DEF,INSTANCE_INIT,STATIC_INIT"/>
     </module>
     -->
     <!--
@@ -113,9 +121,21 @@
       <property name="max" value="60"/>
     </module>
     -->
-    <module name="ParameterNumber"/>
+    <module name="ParameterNumber">
+      <property name="max" value="7"/>
+      <property name="tokens" value="CTOR_DEF,METHOD_DEF"/>
+    </module>
+    <module name="OuterTypeNumber"/>
+    <module name="MethodCount">
+      <property name="maxTotal" value="100"/>
+      <property name="maxPrivate" value="20"/>
+      <property name="maxPackage" value="10"/>
+      <property name="maxProtected" value="20"/>
+      <property name="maxPublic" value="50"/>
+    </module>
 
     <!-- Checks for Whitespace -->
+    <module name="GenericWhitespace"/>
     <module name="EmptyForInitializerPad">
       <property name="option" value="space"/>
     </module>
@@ -124,11 +144,11 @@
     </module>
     <module name="MethodParamPad"/>
     <module name="NoWhitespaceAfter">
-      <property name="tokens" value="BNOT, DEC, DOT, INC, LNOT, UNARY_MINUS, UNARY_PLUS, GENERIC_START, GENERIC_END"/><!-- ARRAY_INIT, -->
+      <property name="tokens" value="BNOT, DEC, DOT, INC, LNOT, UNARY_MINUS, UNARY_PLUS"/><!-- ARRAY_INIT, -->
       <property name="allowLineBreaks" value="false"/>
     </module>
     <module name="NoWhitespaceBefore">
-      <property name="tokens" value="SEMI, POST_DEC, POST_INC, GENERIC_START, GENERIC_END"/>
+      <property name="tokens" value="SEMI, POST_DEC, POST_INC"/>
       <property name="allowLineBreaks" value="false"/>
     </module>
     <module name="OperatorWrap"/>
@@ -139,19 +159,12 @@
       <property name="option" value="nospace"/>
     </module>
     <module name="WhitespaceAfter"/>
-    <module name="WhitespaceAround">
-      <!-- All but: GENERIC_START, GENERIC_END, WILDCARD_TYPE, -->
-      <property name="tokens" value="ASSIGN, BAND, BAND_ASSIGN, BOR, BOR_ASSIGN, BSR, BSR_ASSIGN, BXOR, BXOR_ASSIGN, COLON, DIV, DIV_ASSIGN, EQUAL, GE, GT, LAND, LCURLY, LE, LITERAL_ASSERT, LITERAL_CATCH, LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY, LITERAL_FOR, LITERAL_IF, LITERAL_RETURN, LITERAL_SYNCHRONIZED, LITERAL_TRY, LITERAL_WHILE, LOR, LT, MINUS, MINUS_ASSIGN, MOD, MOD_ASSIGN, NOT_EQUAL, PLUS, PLUS_ASSIGN, QUESTION, RCURLY, SL, SLIST, SL_ASSIGN, SR, SR_ASSIGN, STAR, STAR_ASSIGN, TYPE_EXTENSION_AND"/>
-    </module>
+    <module name="WhitespaceAround"/>
     <!-- End of whitespace rules -->
 
     <!-- Modifier Checks -->
     <module name="ModifierOrder"/>
-    <!--
-    <module name="RedundantModifier">
-      <property name="tokens" value="VARIABLE_DEF"/>
-    </module>
-    -->
+    <module name="RedundantModifier"/>
 
     <!-- Checks for blocks -->
     <module name="EmptyBlock">
@@ -160,15 +173,11 @@
     <module name="LeftCurly">
       <property name="option" value="nlow"/>
     </module>
-    <module name="NeedBraces">
-      <property name="tokens" value="LITERAL_DO, LITERAL_ELSE, LITERAL_FOR, LITERAL_WHILE"/> <!-- LITERAL_IF, -->
-    </module>
+    <module name="NeedBraces"/>
     <module name="RightCurly">
       <property name="option" value="same"/>
     </module>
-    <module name="AvoidNestedBlocks">
-      <property name="allowInSwitchCase" value="false"/>
-    </module>
+    <module name="AvoidNestedBlocks"/>
 
     <!-- Checks for Coding problems -->
     <!-- JSword does not require trailing comma on arrays
@@ -180,6 +189,7 @@
     <module name="CovariantEquals"/> 
     <module name="DoubleCheckedLocking"/>
     <module name="EmptyStatement"/>
+    <module name="EqualsAvoidNull"/>
     <module name="EqualsHashCode"/>
     <!-- We are not ready for this
     <module name="FinalLocalVariable">
@@ -219,12 +229,19 @@
     <module name="SimplifyBooleanExpression"/>
     <module name="SimplifyBooleanReturn"/>
     <module name="StringLiteralEquality"/>
+    <module name="NestedForDepth">
+      <property name="max" value="3"/>
+    </module>
     <module name="NestedIfDepth">
       <property name="max" value="3"/>
     </module>
     <module name="NestedTryDepth">
       <property name="max" value="3"/>
     </module>
+    <!-- Are there any features of Java that are not allowed? Not for JSword.
+    <module name="NoClone"/>
+    <module name="NoFinalizer"/>
+    -->
     <module name="SuperClone"/>
     <module name="SuperFinalize"/>
     <!-- We are not ready for this
@@ -244,9 +261,7 @@
     <!-- JSword has its own conventions for declaration order 
     <module name="DeclarationOrder"/>
     -->
-    <!-- We are not ready for this
     <module name="ParameterAssignment"/>
-    -->
     <module name="ExplicitInitialization"/>
     <module name="DefaultComesLast"/>
     <!-- We are not ready for this
@@ -261,6 +276,7 @@
     <module name="RequireThis"/>  
     -->
     <module name="UnnecessaryParentheses"/>
+    <module name="OneStatementPerLine"/>
 
     <!-- Class Design Checks -->  
     <module name="VisibilityModifier">
@@ -279,6 +295,9 @@
     <module name="ThrowsCount">
       <property name="max" value="2"/>
     </module>
+    -->
+    <!-- This would be a big change
+    <module name="InnerTypeLast"/>
     -->
     <!-- The ant task cpd does this
     <module name="StrictDuplicateCode"/>
@@ -329,11 +348,8 @@
     <!-- This would be a big change
     <module name="Indentation"/>
     -->
-    <!-- This would be a big change and we use endline comments in Eclipse
-         to note that the string literal does not need to be internationalized
-    <module name="TrailingComment">
-      <property name="format" value="^\\s*$"/>
-    </module>
+    <!-- This would be a big change.
+    <module name="TrailingComment"/>
     -->
 
     <!-- Perhaps we should check for the GPL license @author, @id, ...
