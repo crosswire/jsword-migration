@@ -26,6 +26,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 
 import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookCategory;
 
 /**
  * Provides appropriate icons for books.
@@ -49,8 +50,7 @@ public class BookTreeCellRenderer extends DefaultTreeCellRenderer {
                 setLeafIcon(BookIcon.getIcon(book));
 
                 if (book.isQuestionable()) {
-                    // TRANSLATOR: The book is categorized as either the work of a cult, or it is unorthodox or it is otherwise questionable.
-                    tooltip = BDMsg.gettext("Cult / Unorthodox / Questionable");
+                    tooltip = BookCategory.QUESTIONABLE.toString();
                 }
 
                 if (!book.isSupported()) {

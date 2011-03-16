@@ -67,6 +67,7 @@ import org.crosswire.common.swing.CWLabel;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.jsword.index.search.SearchType;
+import org.crosswire.jsword.versification.DivisionName;
 
 /**
  * An advanced search dialog.
@@ -80,35 +81,21 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
      * This is the default constructor
      */
     public AdvancedSearchPane() {
-        // TODO(DMS): Migrate these to Versification.SectionNames
-        presets = new String[] {
-                // TRANSLATOR: A Label representing the range of the entire Bible 
-                BDMsg.gettext("The Whole Bible"),
-                // TRANSLATOR: A Label representing the range of the prophecy in the Bible
-                BDMsg.gettext("All Prophecy (Deu 28, Isa-Mal, Rev)"),
-                // TRANSLATOR: A Label representing the range of the New Testament
-                BDMsg.gettext("Old Testament (Gen-Mal)"),
-                // TRANSLATOR: A Label representing the range of the Old Testament
-                BDMsg.gettext("New Testament (Mat-Rev)"),
-                // TRANSLATOR: A Label representing the range of the books of Moses
-                BDMsg.gettext("The Pentateuch (Gen-Deu)"),
-                // TRANSLATOR: A Label representing the range of the history books of the Bible
-                BDMsg.gettext("History (Josh-Est)"),
-                // TRANSLATOR: A Label representing the range of the poetic books of the Bible
-                BDMsg.gettext("Poetry (Job-Song)"),
-                // TRANSLATOR: A Label representing the range of the major prophets of the Bible
-                BDMsg.gettext("Major Prophets (Isa-Dan)"),
-                // TRANSLATOR: A Label representing the range of the minor prophets of the Bible
-                BDMsg.gettext("Minor Prophets (Hos-Mal)"),
-                // TRANSLATOR: A Label representing the range of the Gospels and Acts of the Bible
-                BDMsg.gettext("Gospels and Acts (Mat-Act)"),
-                // TRANSLATOR: A Label representing the range of the NT letters to the church
-                BDMsg.gettext("Letters to People (Rom-Heb)"),
-                // TRANSLATOR: A Label representing the range of the NT letters within the church
-                BDMsg.gettext("Letters from People (Jam-Jude)"),
-                // TRANSLATOR: A Label representing a range of the Bible of the user's own choosing
-                // The user chooses by filling in a text box.
-                BDMsg.gettext("Custom")
+        // First entry is for nothing selected.
+        presets = new Object[] {
+                CUSTOM,
+                DivisionName.BIBLE,
+                DivisionName.PROPHECY,
+                DivisionName.OLD_TESTAMENT,
+                DivisionName.NEW_TESTAMENT,
+                DivisionName.PENTATEUCH,
+                DivisionName.HISTORY,
+                DivisionName.POETRY,
+                DivisionName.MAJOR_PROPHETS,
+                DivisionName.MINOR_PROPHETS,
+                DivisionName.GOSPELS_AND_ACTS,
+                DivisionName.PAULINE_LETTERS,
+                DivisionName.GENERAL_LETTERS,
         };
 
         initialize();
@@ -119,11 +106,6 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
      */
     private void initialize() {
         shaper = new NumberShaper();
-        // TRANSLATOR: The start of the passage list for the division of the Bible
-        presetStart = BDMsg.gettext("(");
-        // TRANSLATOR: The end of the passage list for the division of the Bible
-        presetEnd = BDMsg.gettext(")");
-
         actions = new ActionFactory(this);
 
         // SystemColor.controlShadow
@@ -401,18 +383,17 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
 
     public final void setLabelRank(int val) {
         if (val == 0) {
-            // TRANSLATOR: Dynamic label for prioritization slider on Advanced Search.
+            // TRANSLATOR: Dynamic label for priority slider on Advanced Search.
             // The user has chosen 0, which means to show all verses.
-            // This used to be "Show {0} verses:" and {0} was a placeholder for the English word "All".
-            lblRank.setText(shaper.shape(BDMsg.gettext("Show all verses:", "All")));
+            lblRank.setText(BDMsg.gettext("Show all verses:"));
         } else if (val == 1) {
-            // TRANSLATOR: Dynamic label for prioritization slider on Advanced Search.
+            // TRANSLATOR: Dynamic label for priority slider on Advanced Search.
             // The user has chosen 1, which means to show one verse, presumably the one that best satisfies the search.
-            lblRank.setText(shaper.shape(BDMsg.gettext("Show best verse:")));
+            lblRank.setText(BDMsg.gettext("Show best verse:"));
         } else {
-            // TRANSLATOR: Dynamic label for prioritization slider on Advanced Search.
+            // TRANSLATOR: Dynamic label for priority slider on Advanced Search.
             // The user has chosen a number other than 0 or 1. 
-            lblRank.setText(shaper.shape(BDMsg.gettext("Show {0} verses:", Integer.valueOf(val))));
+            lblRank.setText(BDMsg.gettext("Show {0} verses:", Integer.valueOf(val)));
         }
     }
 
@@ -508,7 +489,7 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         // TRANSLATOR: This is the title to the dialog allowing a user to select passages for a restricted search.
         String passg = dlgSelect.showInDialog(this, BDMsg.gettext("Select Passages to Restrict Search to"), true, txtRestrict.getText());
         if (passg != null) {
-            cboPresets.setSelectedItem(presets[presets.length - 1]);
+            cboPresets.setSelectedItem(CUSTOM);
             txtRestrict.setText(passg);
         }
     }
@@ -529,17 +510,12 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
             return;
         }
 
-        String include = "";
-        String preset = (String) cboPresets.getSelectedItem();
-        if (preset != null) {
-            int open = preset.indexOf(presetStart);
-            int close = preset.indexOf(presetEnd, open + 1);
-
-            if (open != -1 && close != -1) {
-                include = preset.substring(open + 1, close);
-            }
+        String include = CUSTOM;
+        Object obj = cboPresets.getSelectedItem();
+        if (obj instanceof DivisionName) {
+            DivisionName preset = (DivisionName) obj;
+            include = preset.getRange();
         }
-
         txtRestrict.setText(include);
     }
 
@@ -609,64 +585,44 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
         editingRestrict = true;
         boolean match = false;
         ComboBoxModel model = cboPresets.getModel();
-        String find = presetStart + restrict + presetEnd;
         for (int i = 0; !match && i < model.getSize(); i++) {
-            String element = (String) model.getElementAt(i);
-            if (element.indexOf(find) != -1) {
-                cboPresets.setSelectedIndex(i);
-                match = true;
+            Object obj = model.getElementAt(i);
+            if (obj instanceof DivisionName) {
+                DivisionName element = (DivisionName) obj;
+                if (element.getRange().equalsIgnoreCase(restrict)) {
+                    cboPresets.setSelectedIndex(i);
+                    match = true;
+                }
             }
         }
 
         if (!match) {
-            cboPresets.setSelectedItem(presets[presets.length - 1]);
+            cboPresets.setSelectedItem(CUSTOM);
         }
 
         editingRestrict = false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @seejavax.swing.event.DocumentListener#changedUpdate(javax.swing.event.
-     * DocumentEvent)
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
      */
     public void changedUpdate(DocumentEvent ev) {
         updateSearchString();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @seejavax.swing.event.DocumentListener#insertUpdate(javax.swing.event.
-     * DocumentEvent)
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
      */
     public void insertUpdate(DocumentEvent ev) {
         updateSearchString();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @seejavax.swing.event.DocumentListener#removeUpdate(javax.swing.event.
-     * DocumentEvent)
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
      */
     public void removeUpdate(DocumentEvent ev) {
         updateSearchString();
     }
-
-    // /**
-    // * Temporary driver.
-    // * @param args The command line arguments
-    // */
-    // public static void main(String[] args)
-    // {
-    // LookAndFeelUtil.initialize();
-    // AdvancedSearchPane adv = new AdvancedSearchPane();
-    //        String reply = adv.showInDialog(null, "Advanced Search", true, "test");
-    // log.debug(reply);
-    // System.exit(0);
-    // }
 
     /**
      * Create the internationalized labels for the slider.
@@ -700,9 +656,10 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
      */
     private static final String SPACE = " ";
 
-    private String presetEnd;
-
-    private String presetStart;
+    /**
+     * The first entry means that the user has either no selection or a custom one.
+     */
+    private static final String CUSTOM = "";
 
     /**
      * If escape was pressed we don't want to update the parent
@@ -720,9 +677,9 @@ public class AdvancedSearchPane extends JPanel implements DocumentListener {
     private NumberShaper shaper;
 
     /**
-     * The entries in the restrictions preset
+     * The entries in the restrictions preset. It is object so that a blank entry can be in the list.
      */
-    private String[] presets;
+    private Object[] presets;
 
     /**
      * If we are editing the restrict text box, ignore preset updates

@@ -22,6 +22,7 @@
 
 package org.crosswire.bibledesktop;
 
+import org.crosswire.common.icu.NumberShaper;
 import org.crosswire.common.util.MsgBase;
 
 /**
@@ -32,6 +33,7 @@ import org.crosswire.common.util.MsgBase;
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
  public final class BDMsg extends MsgBase {
+
     /**
      * get the title of the application
      * @return the title of the application
@@ -75,9 +77,7 @@ import org.crosswire.common.util.MsgBase;
     }
 
     private static String getVersion() {
-        // TRANSLATOR: the current version of the application.
-        // When translating use digits 0-9. They will be shaped appropriately.
-        return BDMsg.gettext("1.6");
+        return VERSION;
     }
 
     /**
@@ -91,6 +91,15 @@ import org.crosswire.common.util.MsgBase;
     public static String gettext(String key, Object... params) {
         return msg.lookup(key, params);
     }
+
+    // The shaper for the version number
+    private static NumberShaper shaper = new NumberShaper();
+
+    /**
+     * The current version of Bible Desktop. Adjust for each release.
+     * And increment after each release and append alpha, beta, ... to it.
+     */
+    private static String VERSION = shaper.shape("1.6.1beta");
 
     private static MsgBase msg = new BDMsg();
 }

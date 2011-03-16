@@ -218,19 +218,19 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         buf.append("</b><br>");
         // TRANSLATOR: Tip for using search keywords ||, OR. You can use any example you want.
         // You may use balanced HTML markup.
-        buf.append(BDMsg.gettext("You can use || to join phrases, for example \"<code>balaam || balak</code>\" finds passages containing Balak OR Balaam"));
+        buf.append(BDMsg.gettext("You can use || to join phrases, for example <code>balaam || balak</code> finds passages containing Balak OR Balaam"));
         buf.append("<br>");
         // TRANSLATOR: Tip for using search keywords &&, AND. You can use any example you want. 
         // You may use balanced HTML markup.
-        buf.append(BDMsg.gettext("Using && requires both words, e.g. \"<code>aaron && moses</code>\" finds passages containing both Aaron AND Moses"));
+        buf.append(BDMsg.gettext("Using && requires both words, e.g. <code>aaron && moses</code> finds passages containing both Aaron AND Moses"));
         buf.append("<br>");
         // TRANSLATOR: Tip for using search keywords !, BUT NOT. You can use any example you want. 
         // You may use balanced HTML markup.
-        buf.append(BDMsg.gettext("Using a ! removes words from the result e.g. \"<code>lord ! jesus</code>\" is passages containing Lord BUT NOT Jesus"));
+        buf.append(BDMsg.gettext("Using a ! removes words from the result e.g. <code>lord ! jesus</code> is passages containing Lord BUT NOT Jesus"));
         buf.append("<br>");
         // TRANSLATOR: Tip for using search keyword ~n. You can use any example you want. 
         // You may use balanced HTML markup.
-        buf.append(BDMsg.gettext("Using ~2 widens the passage by 2 verses either side on any match. So \"<code>amminadab ~1 perez</code>\" finds verses containting Amminadab within 1 verse of mention of Perez."));
+        buf.append(BDMsg.gettext("Using ~2 widens the passage by 2 verses either side on any match. So <code>amminadab ~1 perez</code> finds verses containting Amminadab within 1 verse of mention of Perez."));
         buf.append("<br>");
         // TRANSLATOR: Tip for using search keyword +[...]. You can use any example you want. 
         // You may use balanced HTML markup.
