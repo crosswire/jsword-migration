@@ -70,7 +70,7 @@
         version="true"
         source="1.5"
         failonerror="false">
-      <footer>Copyright &#168; 2003-2007</footer>
+      <footer>Copyright &#168; 2003-2011</footer>
       <link offline="true" href="http://download.oracle.com/javase/1.5.0/docs/api/" packagelistLoc="${source.etc}/javadoc"/>
     </javadoc>
   </target>
