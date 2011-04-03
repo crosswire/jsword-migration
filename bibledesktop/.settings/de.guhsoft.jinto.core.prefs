@@ -1,3 +1,3 @@
-#Tue Nov 30 21:26:33 EST 2010
-de.guhsoft.jinto.core.accessorConfiguration=<?xml version\="1.0" encoding\="UTF-8"?>\n<root/>
+#Mon Mar 14 14:24:41 EDT 2011
+de.guhsoft.jinto.core.accessorConfiguration=<?xml version\="1.0" encoding\="UTF-8"?>\n<root>\n<resourceBundleReference resourceBundleName\="BDMsg">\n<accessor typeName\="org.crosswire.bibledesktop.BDMsg">\n<methodReference methodName\="gettext">\n<parameter index\="0" isSelected\="true" parameterName\="key" parameterType\="java.lang.String"/>\n<parameter index\="1" isSelected\="false" parameterName\="params" parameterType\="java.lang.Object[]"/>\n</methodReference>\n</accessor>\n</resourceBundleReference>\n</root>
 eclipse.preferences.version=1

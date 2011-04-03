@@ -72,6 +72,7 @@ import org.crosswire.jsword.passage.PassageTally;
 import org.crosswire.jsword.passage.RocketPassage;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.passage.VerseRange;
+import org.crosswire.jsword.versification.BibleBook;
 import org.crosswire.jsword.versification.BibleInfo;
 
 /**
@@ -131,7 +132,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
             public void actionPerformed(ActionEvent ev) {
                 BibleComboBoxModelSet set = (BibleComboBoxModelSet) ev.getSource();
                 Verse start = set.getVerse();
-                int book = start.getBook();
+                BibleBook book = start.getBook();
                 int chapter = start.getChapter();
                 try {
                     VerseRange range = new VerseRange(start, new Verse(book, chapter, BibleInfo.versesInChapter(book, chapter)));
@@ -277,7 +278,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
      */
     public void doInitialTextDisplay() {
         Verse start = quickSet.getVerse();
-        int book = start.getBook();
+        BibleBook book = start.getBook();
         int chapter = start.getChapter();
         try {
             VerseRange range = new VerseRange(start, new Verse(book, chapter, BibleInfo.versesInChapter(book, chapter)));

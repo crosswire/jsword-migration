@@ -30,6 +30,7 @@ import javax.swing.ComboBoxModel;
 import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
+import org.crosswire.jsword.versification.BibleBook;
 import org.crosswire.jsword.versification.BibleInfo;
 import org.crosswire.jsword.versification.BookName;
 
@@ -51,7 +52,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
         switch (level) {
         case LEVEL_BOOK:
             try {
-                selected = BibleInfo.getBookName(set.getVerse().getBook());
+                selected = set.getVerse().getBook().getBookName();
             } catch (NoSuchVerseException ex) {
                 assert false : ex;
             }
@@ -81,8 +82,8 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
         switch (level) {
         case LEVEL_BOOK:
             BookName bsel = (BookName) selected;
-            int book = bsel.getNumber();
-            assert book > 0;
+            BibleBook book = bsel.getBook();
+            assert book != null;
             setBook(book);
             break;
 
@@ -145,25 +146,21 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
      * @see javax.swing.ListModel#getElementAt(int)
      */
     public Object getElementAt(int index) {
-        try {
-            switch (level) {
-            case LEVEL_BOOK:
-                return BibleInfo.getBookName(index + 1);
+        switch (level) {
+        case LEVEL_BOOK:
+            BibleBook[] books = BibleInfo.getBooks();
+            return books[index];
 
-            default:
-                return Integer.valueOf(index + 1);
+        default:
+            return Integer.valueOf(index + 1);
 
-            }
-        } catch (NoSuchVerseException ex) {
-            assert false : ex;
-            return null;
         }
     }
 
     /**
      * Accessor for the book
      */
-    public void setBook(int book) {
+    public void setBook(BibleBook book) {
         try {
             // Try to honor current chapter and verse
             // Use 1 if it is not possible
@@ -189,7 +186,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
             // Try to honor current verse
             // Use 1 if it is not possible
             Verse old = set.getVerse();
-            int book = old.getBook();
+            BibleBook book = old.getBook();
             int verse = old.getVerse();
 
             verse = Math.min(verse, BibleInfo.versesInChapter(book, chapter));

@@ -66,7 +66,7 @@ import org.crosswire.jsword.util.ConverterFactory;
 import org.xml.sax.SAXException;
 
 /**
- * A JDK JTextPane implementation of an OSIS displayer.
+ * A JTextPane implementation of an OSIS displayer.
  * 
  * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.

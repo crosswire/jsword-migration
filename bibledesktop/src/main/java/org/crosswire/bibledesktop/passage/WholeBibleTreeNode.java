@@ -30,6 +30,7 @@ import org.crosswire.common.icu.NumberShaper;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.passage.VerseRange;
+import org.crosswire.jsword.versification.BibleBook;
 import org.crosswire.jsword.versification.BibleInfo;
 
 /**
@@ -50,13 +51,13 @@ public final class WholeBibleTreeNode implements TreeNode {
     /**
      * We could do some caching here if needs be.
      */
-    protected static WholeBibleTreeNode getNode(TreeNode parent, int b, int c, int v) {
+    protected static WholeBibleTreeNode getNode(TreeNode parent, BibleBook b, int c, int v) {
         try {
             Verse start = null;
             Verse end = null;
             int thislevel = 1;
 
-            if (b == -1) {
+            if (b == null) {
                 assert false : b;
             } else if (c == -1) {
                 thislevel = LEVEL_BOOK;
@@ -138,7 +139,7 @@ public final class WholeBibleTreeNode implements TreeNode {
                 return BDMsg.gettext("The Bible");
 
             case LEVEL_BOOK:
-                return BibleInfo.getPreferredBookName(range.getStart().getBook());
+                return range.getStart().getBook().getPreferredName();
 
             case LEVEL_CHAPTER:
                 return shaper.shape(Integer.toString(range.getStart().getChapter()));
@@ -162,7 +163,8 @@ public final class WholeBibleTreeNode implements TreeNode {
     public TreeNode getChildAt(int i) {
         switch (level) {
         case LEVEL_BIBLE:
-            return WholeBibleTreeNode.getNode(this, i + 1, -1, -1);
+            BibleBook[] books = BibleInfo.getBooks();
+            return WholeBibleTreeNode.getNode(this, books[i], -1, -1);
 
         case LEVEL_BOOK:
             return WholeBibleTreeNode.getNode(this, range.getStart().getBook(), i + 1, -1);
@@ -213,7 +215,7 @@ public final class WholeBibleTreeNode implements TreeNode {
 
         switch (level) {
         case LEVEL_BIBLE:
-            return vnode.getVerseRange().getStart().getBook() - 1;
+            return vnode.getVerseRange().getStart().getBook().ordinal();
 
         case LEVEL_BOOK:
             return vnode.getVerseRange().getStart().getChapter() - 1;

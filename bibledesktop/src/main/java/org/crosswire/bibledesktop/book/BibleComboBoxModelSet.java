@@ -35,7 +35,7 @@ import javax.swing.event.EventListenerList;
 import org.crosswire.common.swing.NumberCellRenderer;
 import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
-import org.crosswire.jsword.versification.BibleInfo;
+import org.crosswire.jsword.versification.BibleBook;
 import org.crosswire.jsword.versification.BookName;
 
 /**
@@ -74,7 +74,7 @@ public class BibleComboBoxModelSet implements Serializable {
         cboBook.setRenderer(new BibleNameCellRenderer(true));
 
         try {
-            cboBook.setToolTipText(BibleInfo.getLongBookName(verse.getBook()));
+            cboBook.setToolTipText(verse.getBook().getLongName());
         } catch (NoSuchVerseException ex) {
             assert false : ex;
         }
@@ -124,8 +124,8 @@ public class BibleComboBoxModelSet implements Serializable {
         try {
             Verse oldverse = verse;
             verse = newverse;
-            int bookval = newverse.getBook();
-            BookName bookName = BibleInfo.getBookName(bookval);
+            BibleBook bookval = newverse.getBook();
+            BookName bookName = bookval.getBookName();
             if (oldverse.getBook() != bookval || !cboBook.getSelectedItem().equals(bookName)) {
                 cboBook.setSelectedItem(bookName);
                 cboBook.setToolTipText(bookName.getLongName());
