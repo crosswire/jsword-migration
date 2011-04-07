@@ -32,7 +32,6 @@ import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.versification.BibleBook;
 import org.crosswire.jsword.versification.BibleInfo;
-import org.crosswire.jsword.versification.BookName;
 
 /**
  * A ComboBoxModel for selecting book/chapter/verse.
@@ -81,8 +80,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
 
         switch (level) {
         case LEVEL_BOOK:
-            BookName bsel = (BookName) selected;
-            BibleBook book = bsel.getBook();
+            BibleBook book = (BibleBook) selected;
             assert book != null;
             setBook(book);
             break;
