@@ -85,7 +85,7 @@ public class EditSitePane extends JPanel {
         userInitiated = true;
 
         init();
-        setState(STATE_DISPLAY, null);
+        setState(EditState.DISPLAY, null);
         select();
     }
 
@@ -286,17 +286,17 @@ public class EditSitePane extends JPanel {
 
             if (name.length() == 0) {
                 // TRANSLATOR: Indicate to the user that they did not supply a download site name.
-                setState(STATE_EDIT_ERROR, BDMsg.gettext("Missing site name"));
+                setState(EditState.EDIT_ERROR, BDMsg.gettext("Missing site name"));
                 return;
             }
 
             if (imanager.getInstaller(name) != null) {
                 // TRANSLATOR: Indicate that the user supplied a name that matched a download site that they already have.
-                setState(STATE_EDIT_ERROR, BDMsg.gettext("Duplicate site name"));
+                setState(EditState.EDIT_ERROR, BDMsg.gettext("Duplicate site name"));
                 return;
             }
 
-            setState(STATE_EDIT_OK, "");
+            setState(EditState.EDIT_OK, "");
         }
     }
 
@@ -347,7 +347,7 @@ public class EditSitePane extends JPanel {
 
         // We need to call setState() to enable the text boxes so that
         // siteUpdate() works properly
-        setState(STATE_EDIT_OK, null);
+        setState(EditState.EDIT_OK, null);
         siteUpdate();
 
         GuiUtil.refresh(this);
@@ -372,7 +372,7 @@ public class EditSitePane extends JPanel {
 
         imanager.removeInstaller(name);
 
-        setState(STATE_EDIT_OK, null);
+        setState(EditState.EDIT_OK, null);
         siteUpdate();
 
         txtName.grabFocus();
@@ -395,7 +395,7 @@ public class EditSitePane extends JPanel {
         }
 
         clear();
-        setState(STATE_DISPLAY, null);
+        setState(EditState.DISPLAY, null);
     }
 
     /**
@@ -410,7 +410,7 @@ public class EditSitePane extends JPanel {
         editName = null;
         editInstaller = null;
 
-        setState(STATE_DISPLAY, "");
+        setState(EditState.DISPLAY, "");
         select();
     }
 
@@ -427,16 +427,16 @@ public class EditSitePane extends JPanel {
         editName = null;
         editInstaller = null;
 
-        setState(STATE_DISPLAY, "");
+        setState(EditState.DISPLAY, "");
         select();
     }
 
     /**
      * Set the various gui elements depending on the current edit mode
      */
-    private void setState(int state, String message) {
-        switch (state) {
-        case STATE_DISPLAY:
+    private void setState(EditState stateEditError, String message) {
+        switch (stateEditError) {
+        case DISPLAY:
             actions.findAction("Add").setEnabled(true);
             actions.findAction("Delete").setEnabled(true);
             actions.findAction("Edit").setEnabled(true);
@@ -456,15 +456,15 @@ public class EditSitePane extends JPanel {
 
             break;
 
-        case STATE_EDIT_OK:
-        case STATE_EDIT_ERROR:
+        case EDIT_OK:
+        case EDIT_ERROR:
             actions.findAction("Add").setEnabled(false);
             actions.findAction("Delete").setEnabled(false);
             actions.findAction("Edit").setEnabled(false);
             lstSite.setEnabled(false);
 
             actions.findAction("Reset").setEnabled(true);
-            actions.findAction("Save").setEnabled(state == STATE_EDIT_OK);
+            actions.findAction("Save").setEnabled(stateEditError == EditState.EDIT_OK);
 
             actions.findAction("Close").setEnabled(false);
 
@@ -478,7 +478,7 @@ public class EditSitePane extends JPanel {
             break;
 
         default:
-            assert false : state;
+            assert false : stateEditError;
         }
 
         if (message == null || message.trim().length() == 0) {
@@ -547,19 +547,24 @@ public class EditSitePane extends JPanel {
 
 
     /**
-     * The state is viewing a site
+     * An EditState give the possible states that an editor can be in.
      */
-    private static final int STATE_DISPLAY = 0;
+    private enum EditState {
+        /**
+         * The state is viewing a site
+         */
+        DISPLAY,
 
-    /**
-     * The state is editing a site (syntactically valid)
-     */
-    private static final int STATE_EDIT_OK = 1;
+        /**
+         * The state is editing a site (syntactically valid)
+         */
+        EDIT_OK,
 
-    /**
-     * The state is editing a site (syntactically invalid)
-     */
-    private static final int STATE_EDIT_ERROR = 2;
+        /**
+         * The state is editing a site (syntactically invalid)
+         */
+        EDIT_ERROR,
+    }
 
     /**
      * The model that we are providing a view/controller for
