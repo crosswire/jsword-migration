@@ -45,7 +45,7 @@ public final class WholeBibleTreeNode implements TreeNode {
      * The start point for all WholeBibleTreeNodes.
      */
     public static WholeBibleTreeNode getRootNode() {
-        return new WholeBibleTreeNode(null, VerseRange.getWholeBibleVerseRange(), LEVEL_BIBLE);
+        return new WholeBibleTreeNode(null, VerseRange.getWholeBibleVerseRange(), Level.BIBLE);
     }
 
     /**
@@ -55,23 +55,23 @@ public final class WholeBibleTreeNode implements TreeNode {
         try {
             Verse start = null;
             Verse end = null;
-            int thislevel = 1;
+            Level thislevel = Level.BOOK;
 
             if (b == null) {
                 assert false : b;
             } else if (c == -1) {
-                thislevel = LEVEL_BOOK;
+                thislevel = Level.BOOK;
                 int ec = BibleInfo.chaptersInBook(b);
                 int ev = BibleInfo.versesInChapter(b, ec);
                 start = new Verse(b, 1, 1);
                 end = new Verse(b, ec, ev);
             } else if (v == -1) {
-                thislevel = LEVEL_CHAPTER;
+                thislevel = Level.CHAPTER;
                 int ev = BibleInfo.versesInChapter(b, c);
                 start = new Verse(b, c, 1);
                 end = new Verse(b, c, ev);
             } else {
-                thislevel = LEVEL_VERSE;
+                thislevel = Level.VERSE;
                 start = new Verse(b, c, v);
                 end = start;
             }
@@ -87,7 +87,7 @@ public final class WholeBibleTreeNode implements TreeNode {
     /**
      * This constructor is for when we are really a BookTreeNode
      */
-    private WholeBibleTreeNode(TreeNode parent, VerseRange range, int level) {
+    private WholeBibleTreeNode(TreeNode parent, VerseRange range, Level level) {
         if (parent != null) {
             this.parent = parent;
         } else {
@@ -117,14 +117,14 @@ public final class WholeBibleTreeNode implements TreeNode {
      * @see javax.swing.tree.TreeNode#getAllowsChildren()
      */
     public boolean getAllowsChildren() {
-        return level != LEVEL_VERSE;
+        return level != Level.VERSE;
     }
 
     /**
      * @see javax.swing.tree.TreeNode#isLeaf()
      */
     public boolean isLeaf() {
-        return level == LEVEL_VERSE;
+        return level == Level.VERSE;
     }
 
     /**
@@ -134,17 +134,17 @@ public final class WholeBibleTreeNode implements TreeNode {
     public String toString() {
         try {
             switch (level) {
-            case LEVEL_BIBLE:
+            case BIBLE:
                 // TRANSLATOR: The top level of the tree of Bible books, chapters and verses.
                 return BDMsg.gettext("The Bible");
 
-            case LEVEL_BOOK:
+            case BOOK:
                 return range.getStart().getBook().getPreferredName();
 
-            case LEVEL_CHAPTER:
+            case CHAPTER:
                 return shaper.shape(Integer.toString(range.getStart().getChapter()));
 
-            case LEVEL_VERSE:
+            case VERSE:
                 return shaper.shape(Integer.toString(range.getStart().getVerse()));
 
             default:
@@ -162,14 +162,14 @@ public final class WholeBibleTreeNode implements TreeNode {
      */
     public TreeNode getChildAt(int i) {
         switch (level) {
-        case LEVEL_BIBLE:
+        case BIBLE:
             BibleBook[] books = BibleInfo.getBooks();
             return WholeBibleTreeNode.getNode(this, books[i], -1, -1);
 
-        case LEVEL_BOOK:
+        case BOOK:
             return WholeBibleTreeNode.getNode(this, range.getStart().getBook(), i + 1, -1);
 
-        case LEVEL_CHAPTER:
+        case CHAPTER:
             return WholeBibleTreeNode.getNode(this, range.getStart().getBook(), range.getStart().getChapter(), i + 1);
 
         default:
@@ -184,13 +184,13 @@ public final class WholeBibleTreeNode implements TreeNode {
     public int getChildCount() {
         try {
             switch (level) {
-            case LEVEL_BIBLE:
+            case BIBLE:
                 return BibleInfo.booksInBible();
 
-            case LEVEL_BOOK:
+            case BOOK:
                 return BibleInfo.chaptersInBook(range.getStart().getBook());
 
-            case LEVEL_CHAPTER:
+            case CHAPTER:
                 return BibleInfo.versesInChapter(range.getStart().getBook(), range.getStart().getChapter());
 
             default:
@@ -214,13 +214,13 @@ public final class WholeBibleTreeNode implements TreeNode {
         WholeBibleTreeNode vnode = (WholeBibleTreeNode) node;
 
         switch (level) {
-        case LEVEL_BIBLE:
+        case BIBLE:
             return vnode.getVerseRange().getStart().getBook().ordinal();
 
-        case LEVEL_BOOK:
+        case BOOK:
             return vnode.getVerseRange().getStart().getChapter() - 1;
 
-        case LEVEL_CHAPTER:
+        case CHAPTER:
             return vnode.getVerseRange().getStart().getVerse() - 1;
 
         default:
@@ -255,10 +255,12 @@ public final class WholeBibleTreeNode implements TreeNode {
         private int count;
     }
 
-    private static final int LEVEL_BIBLE = 0;
-    private static final int LEVEL_BOOK = 1;
-    private static final int LEVEL_CHAPTER = 2;
-    private static final int LEVEL_VERSE = 3;
+    private enum Level {
+        BIBLE,
+        BOOK,
+        CHAPTER,
+        VERSE,
+    }
 
     /** Change the number representation as needed */
     private NumberShaper shaper;
@@ -270,5 +272,5 @@ public final class WholeBibleTreeNode implements TreeNode {
     private TreeNode parent;
 
     /** The level of this node one of: LEVEL_[BIBLE|BOOK|CHAPTER|VERSE] */
-    private int level;
+    private Level level;
 }

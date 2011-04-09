@@ -309,7 +309,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
      */
     public void clear() {
         setKey(selected == null || selected.length == 0 ? new RocketPassage() : selected[0].createEmptyKeyList());
-        setTitle(CLEAR);
+        setTitle(Mode.CLEAR);
     }
 
     /**
@@ -349,7 +349,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         setKey(txtKey.getText());
         if (!key.isEmpty()) {
             txtSearch.setText("");
-            setTitle(PASSAGE);
+            setTitle(Mode.PASSAGE);
         }
     }
 
@@ -409,7 +409,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
                     // I18N(DMS): This needs support for singular/plural and to show internationalized numbers.
                     Reporter.informUser(this, BDMsg.gettext("Showing {1} of {2} verses with: {0}", param, Integer.toString(partial), Integer.toString(total)));
                 }
-                setTitle(SEARCH);
+                setTitle(Mode.SEARCH);
                 setKey(results);
             }
         } catch (BookException ex) {
@@ -504,7 +504,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
                 txtSearch.setText("");
 
                 updateDisplay();
-                setTitle(CLEAR);
+                setTitle(Mode.CLEAR);
             }
         } else if (!newKey.equals(key)) {
             key = newKey;
@@ -512,7 +512,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
             txtKey.setText(text);
             updateDisplay();
             if (isClear()) {
-                setTitle(PASSAGE);
+                setTitle(Mode.PASSAGE);
                 txtSearch.setText("");
             }
         }
@@ -565,8 +565,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         maxNumRankedVerses = count;
     }
 
-    private void setTitle(int newMode) {
-        mode = newMode;
+    private void setTitle(Mode clear) {
+        mode = clear;
         switch (mode) {
         case CLEAR:
             // TRANSLATOR: This is the initial title of a Bible View. {0} is a placeholder for a number that uniquely identifies the Bible View.
@@ -582,7 +582,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
             assert false;
         }
         if (title.length() == 0) {
-            setTitle(CLEAR);
+            setTitle(Mode.CLEAR);
         } else {
             fireTitleChanged(new TitleChangedEvent(this, title));
         }
@@ -803,13 +803,15 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     private AdvancedSearchPane advanced;
     private JButton btnIndex;
 
+    private enum Mode {
+        CLEAR,
+        PASSAGE,
+        SEARCH,
+    }
     /**
      * The current state of the display: SEARCH, PASSAGE, CLEAR
      */
-    private int mode;
-    private static final int CLEAR = 0;
-    private static final int PASSAGE = 1;
-    private static final int SEARCH = 2;
+    private Mode mode;
 
     /**
      * The current passage.

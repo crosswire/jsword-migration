@@ -42,14 +42,34 @@ import org.crosswire.jsword.versification.BibleInfo;
  */
 public class BibleComboBoxModel extends AbstractListModel implements ComboBoxModel {
     /**
+     * The level of the book combo.
+     */
+    protected enum Level {
+        /**
+         * For when the we are a book level combo
+         */
+        BOOK,
+
+        /**
+         * For when the we are a chapter level combo
+         */
+        CHAPTER,
+
+        /**
+         * For when the we are a verse level combo
+         */
+        VERSE,
+    }
+
+    /**
      * Simple ctor for choosing verses
      */
-    protected BibleComboBoxModel(BibleComboBoxModelSet set, int level) {
+    protected BibleComboBoxModel(BibleComboBoxModelSet set, Level level) {
         this.set = set;
         this.level = level;
 
         switch (level) {
-        case LEVEL_BOOK:
+        case BOOK:
             try {
                 selected = set.getVerse().getBook().getBookName();
             } catch (NoSuchVerseException ex) {
@@ -57,11 +77,11 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
             }
             break;
 
-        case LEVEL_CHAPTER:
+        case CHAPTER:
             selected = Integer.valueOf(set.getVerse().getChapter());
             break;
 
-        case LEVEL_VERSE:
+        case VERSE:
             selected = Integer.valueOf(set.getVerse().getVerse());
             break;
 
@@ -79,18 +99,18 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
         log.debug("setSelectedItem(" + selected + ") level=" + level);
 
         switch (level) {
-        case LEVEL_BOOK:
+        case BOOK:
             BibleBook book = (BibleBook) selected;
             assert book != null;
             setBook(book);
             break;
 
-        case LEVEL_CHAPTER:
+        case CHAPTER:
             Integer csel = (Integer) selected;
             setChapter(csel.intValue());
             break;
 
-        case LEVEL_VERSE:
+        case VERSE:
             Integer vsel = (Integer) selected;
             setVerse(vsel.intValue());
             break;
@@ -119,13 +139,13 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
     public int getSize() {
         try {
             switch (level) {
-            case LEVEL_BOOK:
+            case BOOK:
                 return BibleInfo.booksInBible();
 
-            case LEVEL_CHAPTER:
+            case CHAPTER:
                 return BibleInfo.chaptersInBook(set.getVerse().getBook());
 
-            case LEVEL_VERSE:
+            case VERSE:
                 return BibleInfo.versesInChapter(set.getVerse().getBook(), set.getVerse().getChapter());
 
             default:
@@ -145,7 +165,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
      */
     public Object getElementAt(int index) {
         switch (level) {
-        case LEVEL_BOOK:
+        case BOOK:
             BibleBook[] books = BibleInfo.getBooks();
             return books[index];
 
@@ -240,21 +260,6 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
     private static final Logger log = Logger.getLogger(BibleComboBoxModel.class);
 
     /**
-     * For when the we are a book level combo
-     */
-    public static final int LEVEL_BOOK = 0;
-
-    /**
-     * For when the we are a chapter level combo
-     */
-    public static final int LEVEL_CHAPTER = 1;
-
-    /**
-     * For when the we are a verse level combo
-     */
-    public static final int LEVEL_VERSE = 2;
-
-    /**
      * Shared settings
      */
     private transient BibleComboBoxModelSet set;
@@ -267,7 +272,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
     /**
      * Are we a book, chapter or verse selector
      */
-    protected int level;
+    protected Level level;
 
     /**
      * Serialization ID

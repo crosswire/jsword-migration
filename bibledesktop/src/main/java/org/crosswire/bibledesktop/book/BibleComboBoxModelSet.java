@@ -51,14 +51,14 @@ public class BibleComboBoxModelSet implements Serializable {
         listeners = new EventListenerList();
         cil = new CustomItemListener();
 
-        mdlBook = new BibleComboBoxModel(this, BibleComboBoxModel.LEVEL_BOOK);
+        mdlBook = new BibleComboBoxModel(this, BibleComboBoxModel.Level.BOOK);
         setBookComboBox(books);
 
-        mdlChapter = new BibleComboBoxModel(this, BibleComboBoxModel.LEVEL_CHAPTER);
+        mdlChapter = new BibleComboBoxModel(this, BibleComboBoxModel.Level.CHAPTER);
         setChapterComboBox(chapters);
 
         if (verses != null) {
-            mdlVerse = new BibleComboBoxModel(this, BibleComboBoxModel.LEVEL_VERSE);
+            mdlVerse = new BibleComboBoxModel(this, BibleComboBoxModel.Level.VERSE);
             setVerseComboBox(verses);
         }
     }
