@@ -182,22 +182,17 @@ public final class WholeBibleTreeNode implements TreeNode {
      * contains.
      */
     public int getChildCount() {
-        try {
-            switch (level) {
-            case BIBLE:
-                return BibleInfo.booksInBible();
+        switch (level) {
+        case BIBLE:
+            return BibleInfo.booksInBible();
 
-            case BOOK:
-                return BibleInfo.chaptersInBook(range.getStart().getBook());
+        case BOOK:
+            return BibleInfo.chaptersInBook(range.getStart().getBook());
 
-            case CHAPTER:
-                return BibleInfo.versesInChapter(range.getStart().getBook(), range.getStart().getChapter());
+        case CHAPTER:
+            return BibleInfo.versesInChapter(range.getStart().getBook(), range.getStart().getChapter());
 
-            default:
-                return 0;
-            }
-        } catch (NoSuchVerseException ex) {
-            assert false : ex;
+        default:
             return 0;
         }
     }

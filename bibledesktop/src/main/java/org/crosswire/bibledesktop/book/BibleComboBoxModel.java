@@ -137,23 +137,18 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
      * @see javax.swing.ListModel#getSize()
      */
     public int getSize() {
-        try {
-            switch (level) {
-            case BOOK:
-                return BibleInfo.booksInBible();
+        switch (level) {
+        case BOOK:
+            return BibleInfo.booksInBible();
 
-            case CHAPTER:
-                return BibleInfo.chaptersInBook(set.getVerse().getBook());
+        case CHAPTER:
+            return BibleInfo.chaptersInBook(set.getVerse().getBook());
 
-            case VERSE:
-                return BibleInfo.versesInChapter(set.getVerse().getBook(), set.getVerse().getChapter());
+        case VERSE:
+            return BibleInfo.versesInChapter(set.getVerse().getBook(), set.getVerse().getChapter());
 
-            default:
-                assert false : level;
-                return 0;
-            }
-        } catch (NoSuchVerseException ex) {
-            assert false : ex;
+        default:
+            assert false : level;
             return 0;
         }
     }
