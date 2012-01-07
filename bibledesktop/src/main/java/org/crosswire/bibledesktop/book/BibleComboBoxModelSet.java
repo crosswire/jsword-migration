@@ -33,7 +33,6 @@ import javax.swing.JComboBox;
 import javax.swing.event.EventListenerList;
 
 import org.crosswire.common.swing.NumberCellRenderer;
-import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.versification.BibleBook;
 import org.crosswire.jsword.versification.BookName;
@@ -73,11 +72,7 @@ public class BibleComboBoxModelSet implements Serializable {
         cboBook.addItemListener(cil);
         cboBook.setRenderer(new BibleNameCellRenderer(true));
 
-        try {
-            cboBook.setToolTipText(verse.getBook().getLongName());
-        } catch (NoSuchVerseException ex) {
-            assert false : ex;
-        }
+        cboBook.setToolTipText(verse.getBook().getLongName());
     }
 
     /**
@@ -121,34 +116,30 @@ public class BibleComboBoxModelSet implements Serializable {
             return;
         }
 
-        try {
-            Verse oldverse = verse;
-            verse = newverse;
-            BibleBook bookval = newverse.getBook();
-            BookName bookName = bookval.getBookName();
-            if (oldverse.getBook() != bookval || !cboBook.getSelectedItem().equals(bookName)) {
-                cboBook.setSelectedItem(bookName);
-                cboBook.setToolTipText(bookName.getLongName());
-            }
-
-            int chapterval = newverse.getChapter();
-            Integer chapternum = Integer.valueOf(chapterval);
-            if (oldverse.getChapter() != chapterval || !cboChapter.getSelectedItem().equals(chapternum)) {
-                cboChapter.setSelectedItem(chapternum);
-            }
-
-            if (cboVerse != null) {
-                int verseval = newverse.getVerse();
-                Integer versenum = Integer.valueOf(verseval);
-                if (oldverse.getVerse() != verseval || !cboVerse.getSelectedItem().equals(versenum)) {
-                    cboVerse.setSelectedItem(versenum);
-                }
-            }
-
-            fireContentsChanged();
-        } catch (NoSuchVerseException ex) {
-            assert false : ex;
+        Verse oldverse = verse;
+        verse = newverse;
+        BibleBook bookval = newverse.getBook();
+        BookName bookName = bookval.getBookName();
+        if (oldverse.getBook() != bookval || !cboBook.getSelectedItem().equals(bookName)) {
+            cboBook.setSelectedItem(bookName);
+            cboBook.setToolTipText(bookName.getLongName());
         }
+
+        int chapterval = newverse.getChapter();
+        Integer chapternum = Integer.valueOf(chapterval);
+        if (oldverse.getChapter() != chapterval || !cboChapter.getSelectedItem().equals(chapternum)) {
+            cboChapter.setSelectedItem(chapternum);
+        }
+
+        if (cboVerse != null) {
+            int verseval = newverse.getVerse();
+            Integer versenum = Integer.valueOf(verseval);
+            if (oldverse.getVerse() != verseval || !cboVerse.getSelectedItem().equals(versenum)) {
+                cboVerse.setSelectedItem(versenum);
+            }
+        }
+
+        fireContentsChanged();
     }
 
     /**

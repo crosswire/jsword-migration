@@ -28,7 +28,6 @@ import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
 import org.crosswire.common.util.Logger;
-import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.versification.BibleBook;
 import org.crosswire.jsword.versification.BibleInfo;
@@ -70,11 +69,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
 
         switch (level) {
         case BOOK:
-            try {
-                selected = set.getVerse().getBook().getBookName();
-            } catch (NoSuchVerseException ex) {
-                assert false : ex;
-            }
+            selected = set.getVerse().getBook().getBookName();
             break;
 
         case CHAPTER:
@@ -174,54 +169,42 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
      * Accessor for the book
      */
     public void setBook(BibleBook book) {
-        try {
-            // Try to honor current chapter and verse
-            // Use 1 if it is not possible
-            Verse old = set.getVerse();
-            int chapter = old.getChapter();
-            int verse = old.getVerse();
+        // Try to honor current chapter and verse
+        // Use 1 if it is not possible
+        Verse old = set.getVerse();
+        int chapter = old.getChapter();
+        int verse = old.getVerse();
 
-            chapter = Math.min(chapter, BibleInfo.chaptersInBook(book));
-            verse = Math.min(verse, BibleInfo.versesInChapter(book, chapter));
+        chapter = Math.min(chapter, BibleInfo.chaptersInBook(book));
+        verse = Math.min(verse, BibleInfo.versesInChapter(book, chapter));
 
-            Verse update = new Verse(book, chapter, verse);
-            set.setVerse(update);
-        } catch (NoSuchVerseException ex) {
-            assert false : ex;
-        }
+        Verse update = new Verse(book, chapter, verse);
+        set.setVerse(update);
     }
 
     /**
      * Accessor for the chapter
      */
     public void setChapter(int chapter) {
-        try {
-            // Try to honor current verse
-            // Use 1 if it is not possible
-            Verse old = set.getVerse();
-            BibleBook book = old.getBook();
-            int verse = old.getVerse();
+        // Try to honor current verse
+        // Use 1 if it is not possible
+        Verse old = set.getVerse();
+        BibleBook book = old.getBook();
+        int verse = old.getVerse();
 
-            verse = Math.min(verse, BibleInfo.versesInChapter(book, chapter));
+        verse = Math.min(verse, BibleInfo.versesInChapter(book, chapter));
 
-            Verse update = new Verse(book, chapter, verse);
-            set.setVerse(update);
-        } catch (NoSuchVerseException ex) {
-            assert false : ex;
-        }
+        Verse update = new Verse(book, chapter, verse);
+        set.setVerse(update);
     }
 
     /**
      * Accessor for the chapter
      */
     public void setVerse(int verse) {
-        try {
-            Verse old = set.getVerse();
-            Verse update = new Verse(old.getBook(), old.getChapter(), verse);
-            set.setVerse(update);
-        } catch (NoSuchVerseException ex) {
-            assert false : ex;
-        }
+        Verse old = set.getVerse();
+        Verse update = new Verse(old.getBook(), old.getChapter(), verse);
+        set.setVerse(update);
     }
 
     /*

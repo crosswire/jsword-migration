@@ -67,7 +67,6 @@ import org.crosswire.jsword.index.search.DefaultSearchModifier;
 import org.crosswire.jsword.index.search.DefaultSearchRequest;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.NoSuchKeyException;
-import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.PassageTally;
 import org.crosswire.jsword.passage.RocketPassage;
 import org.crosswire.jsword.passage.Verse;
@@ -134,14 +133,10 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
                 Verse start = set.getVerse();
                 BibleBook book = start.getBook();
                 int chapter = start.getChapter();
-                try {
-                    VerseRange range = new VerseRange(start, new Verse(book, chapter, BibleInfo.versesInChapter(book, chapter)));
-                    txtSearch.setText("");
-                    txtKey.setText(range.getName());
-                    doGoPassage();
-                } catch (NoSuchVerseException ex) {
-                    assert false : ex;
-                }
+                VerseRange range = new VerseRange(start, new Verse(book, chapter, BibleInfo.versesInChapter(book, chapter)));
+                txtSearch.setText("");
+                txtKey.setText(range.getName());
+                doGoPassage();
             }
         });
 
@@ -280,14 +275,10 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         Verse start = quickSet.getVerse();
         BibleBook book = start.getBook();
         int chapter = start.getChapter();
-        try {
-            VerseRange range = new VerseRange(start, new Verse(book, chapter, BibleInfo.versesInChapter(book, chapter)));
-            txtSearch.setText("");
-            txtKey.setText(range.getName());
-            doGoPassage();
-        } catch (NoSuchVerseException ex) {
-            assert false : ex;
-        }
+        VerseRange range = new VerseRange(start, new Verse(book, chapter, BibleInfo.versesInChapter(book, chapter)));
+        txtSearch.setText("");
+        txtKey.setText(range.getName());
+        doGoPassage();
     }
 
     /**

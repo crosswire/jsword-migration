@@ -27,7 +27,6 @@ import javax.swing.tree.TreeNode;
 
 import org.crosswire.bibledesktop.BDMsg;
 import org.crosswire.common.icu.NumberShaper;
-import org.crosswire.jsword.passage.NoSuchVerseException;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.passage.VerseRange;
 import org.crosswire.jsword.versification.BibleBook;
@@ -52,36 +51,31 @@ public final class WholeBibleTreeNode implements TreeNode {
      * We could do some caching here if needs be.
      */
     protected static WholeBibleTreeNode getNode(TreeNode parent, BibleBook b, int c, int v) {
-        try {
-            Verse start = null;
-            Verse end = null;
-            Level thislevel = Level.BOOK;
+        Verse start = null;
+        Verse end = null;
+        Level thislevel = Level.BOOK;
 
-            if (b == null) {
-                assert false : b;
-            } else if (c == -1) {
-                thislevel = Level.BOOK;
-                int ec = BibleInfo.chaptersInBook(b);
-                int ev = BibleInfo.versesInChapter(b, ec);
-                start = new Verse(b, 1, 1);
-                end = new Verse(b, ec, ev);
-            } else if (v == -1) {
-                thislevel = Level.CHAPTER;
-                int ev = BibleInfo.versesInChapter(b, c);
-                start = new Verse(b, c, 1);
-                end = new Verse(b, c, ev);
-            } else {
-                thislevel = Level.VERSE;
-                start = new Verse(b, c, v);
-                end = start;
-            }
-
-            VerseRange rng = new VerseRange(start, end);
-            return new WholeBibleTreeNode(parent, rng, thislevel);
-        } catch (NoSuchVerseException ex) {
-            assert false : ex;
-            return null;
+        if (b == null) {
+            assert false : b;
+        } else if (c == -1) {
+            thislevel = Level.BOOK;
+            int ec = BibleInfo.chaptersInBook(b);
+            int ev = BibleInfo.versesInChapter(b, ec);
+            start = new Verse(b, 1, 1);
+            end = new Verse(b, ec, ev);
+        } else if (v == -1) {
+            thislevel = Level.CHAPTER;
+            int ev = BibleInfo.versesInChapter(b, c);
+            start = new Verse(b, c, 1);
+            end = new Verse(b, c, ev);
+        } else {
+            thislevel = Level.VERSE;
+            start = new Verse(b, c, v);
+            end = start;
         }
+
+        VerseRange rng = new VerseRange(start, end);
+        return new WholeBibleTreeNode(parent, rng, thislevel);
     }
 
     /**
@@ -132,28 +126,23 @@ public final class WholeBibleTreeNode implements TreeNode {
      */
     @Override
     public String toString() {
-        try {
-            switch (level) {
-            case BIBLE:
-                // TRANSLATOR: The top level of the tree of Bible books, chapters and verses.
-                return BDMsg.gettext("The Bible");
+        switch (level) {
+        case BIBLE:
+            // TRANSLATOR: The top level of the tree of Bible books, chapters and verses.
+            return BDMsg.gettext("The Bible");
 
-            case BOOK:
-                return range.getStart().getBook().getPreferredName();
+        case BOOK:
+            return range.getStart().getBook().getPreferredName();
 
-            case CHAPTER:
-                return shaper.shape(Integer.toString(range.getStart().getChapter()));
+        case CHAPTER:
+            return shaper.shape(Integer.toString(range.getStart().getChapter()));
 
-            case VERSE:
-                return shaper.shape(Integer.toString(range.getStart().getVerse()));
+        case VERSE:
+            return shaper.shape(Integer.toString(range.getStart().getVerse()));
 
-            default:
-                // TRANSLATOR: Unexpected error condition.
-                return BDMsg.gettext("Error");
-            }
-        } catch (NoSuchVerseException ex) {
-            assert false : ex;
-            return "!Error!";
+        default:
+            // TRANSLATOR: Unexpected error condition.
+            return BDMsg.gettext("Error");
         }
     }
 
