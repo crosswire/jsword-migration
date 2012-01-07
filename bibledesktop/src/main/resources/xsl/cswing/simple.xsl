@@ -140,14 +140,15 @@
           FONT.divineName { font-variant: small-caps; }
           FONT.normal { font-variant: normal; }
           FONT.caps { text-transform: uppercase; }
-          H1.level { text-align: center; font-size: 115%; color: #000000; }
-          H2.level { text-align: center; font-size: 110%; color: #000000; }
-          H3.level { text-align: center; font-size: 100%; }
-          H4.level { text-align: center; font-size: 90%; }
-          H5.level { text-align: center; font-size: 85%; }
-          H6.level { text-align: center; font-size: 80%; }
-          H3.heading { font-size: 110%; color: #666699; font-weight: bold; }
-          H2.heading { font-size: 115%; color: #669966; font-weight: bold; }
+          H1 { font-size: 115%; font-weight: bold; }
+          H2 { font-size: 110%; font-weight: bold; }
+          H3 { font-size: 100%; font-weight: bold; }
+          H4 { font-size:  90%; font-weight: bold; }
+          H5 { font-size:  85%; font-weight: bold; }
+          H6 { font-size:  80%; font-weight: bold; }
+          .heading { color: #669966; }
+          .canonical { color: #666699; }
+          .gen { color: #996666; }
           div.margin { font-size:90%; }
           TD.notes { width:20%; background:#f4f4e8; }
           TD.text { width:80%; }
@@ -300,10 +301,7 @@
     <xsl:for-each select=".//*[@subType = 'x-preverse' or @subtype = 'x-preverse']">
       <xsl:choose>
         <xsl:when test="local-name() = 'title'">
-          <!-- Always show canonical titles or if headings is turned on -->
-          <xsl:if test="@canonical = 'true' or $Headings = 'true'">
-            <h3 class="heading"><xsl:apply-templates /></h3>
-          </xsl:if>
+          <xsl:call-template name="render-title"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:apply-templates />
@@ -333,18 +331,25 @@
   </xsl:template>
 
   <xsl:template match="verse[not(@eID)]" mode="jesus">
+    <!-- output each preverse element in turn -->
+    <xsl:for-each select=".//*[@subType = 'x-preverse' or @subtype = 'x-preverse']">
+      <xsl:choose>
+        <xsl:when test="local-name() = 'title'">
+          <xsl:call-template name="render-title"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+    <!-- Handle the KJV paragraph marker. -->
+    <xsl:if test="milestone[@type = 'x-p']"><br/><br/></xsl:if>
     <!-- If the verse doesn't start on its own line and -->
     <!-- the verse is not the first verse of a set of siblings, -->
     <!-- output an extra space. -->
     <xsl:if test="$VLine = 'false' and preceding-sibling::*[local-name() = 'verse']">
       <xsl:text>&#160;</xsl:text>
     </xsl:if>
-    <xsl:variable name="title" select=".//title"/>
-    <xsl:if test="string-length($title) > 0">
-      <h3 class="heading"><xsl:value-of select="$title"/></h3>
-    </xsl:if>
-    <!-- Handle the KJV paragraph marker. -->
-    <xsl:if test="milestone[@type = 'x-p']"><br/><br/></xsl:if>
     <!-- Always output the verse -->
     <xsl:choose>
       <xsl:when test="$VLine = 'true'">
@@ -793,73 +798,63 @@
     </h3>
   -->
   </xsl:template>
-
-  <!--=======================================================================-->
-  <xsl:template match="title[@level]">
+ 
+ <!--=======================================================================-->
+  <xsl:template name="render-title">
     <!-- Always show canonical titles or if headings is turned on -->
     <xsl:if test="@canonical = 'true' or $Headings = 'true'">
+      <xsl:variable name="heading">
+        <xsl:choose>
+          <xsl:when test="@canonical = 'true'">canonical</xsl:when>
+          <xsl:when test="@type = 'x-gen'">gen</xsl:when>
+          <xsl:otherwise>heading</xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
       <xsl:choose>
         <xsl:when test="@level = '1'">
-          <h1 class="level"><xsl:apply-templates/></h1>
+          <h1 class="{$heading}"><xsl:apply-templates/></h1>
         </xsl:when>
         <xsl:when test="@level = '2'">
-          <h2 class="level"><xsl:apply-templates/></h2>
+          <h2 class="{$heading}"><xsl:apply-templates/></h2>
         </xsl:when>
         <xsl:when test="@level = '3'">
-          <h3 class="level"><xsl:apply-templates/></h3>
+          <h3 class="{$heading}"><xsl:apply-templates/></h3>
         </xsl:when>
         <xsl:when test="@level = '4'">
-          <h4 class="level"><xsl:apply-templates/></h4>
+          <h4 class="{$heading}"><xsl:apply-templates/></h4>
         </xsl:when>
         <xsl:when test="@level = '5'">
-          <h5 class="level"><xsl:apply-templates/></h5>
+          <h5 class="{$heading}"><xsl:apply-templates/></h5>
+        </xsl:when>
+        <xsl:when test="@level = '6'">
+          <h6 class="{$heading}"><xsl:apply-templates/></h6>
+        </xsl:when>
+        <xsl:when test="@type = 'x-gen'">
+          <h4 class="{$heading}"><xsl:apply-templates/></h4>
         </xsl:when>
         <xsl:otherwise>
-          <h6 class="level"><xsl:apply-templates/></h6>
+          <h3 class="{$heading}"><xsl:apply-templates /></h3>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
   </xsl:template>
 
+  <!--=======================================================================-->
+  <xsl:template match="title[@level]">
+    <xsl:call-template name="render-title"/>
+  </xsl:template>
+
   <xsl:template match="title[@level]" mode="jesus">
-    <!-- Always show canonical titles or if headings is turned on -->
-    <xsl:if test="@canonical = 'true' or $Headings = 'true'">
-      <xsl:choose>
-        <xsl:when test="@level = '1'">
-          <h1 class="level"><xsl:apply-templates/></h1>
-        </xsl:when>
-        <xsl:when test="@level = '2'">
-          <h2 class="level"><xsl:apply-templates/></h2>
-        </xsl:when>
-        <xsl:when test="@level = '3'">
-          <h3 class="level"><xsl:apply-templates/></h3>
-        </xsl:when>
-        <xsl:when test="@level = '4'">
-          <h4 class="level"><xsl:apply-templates/></h4>
-        </xsl:when>
-        <xsl:when test="@level = '5'">
-          <h5 class="level"><xsl:apply-templates/></h5>
-        </xsl:when>
-        <xsl:otherwise>
-          <h6 class="level"><xsl:apply-templates/></h6>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:if>
+    <xsl:call-template name="render-title"/>
   </xsl:template>
 
   <!--=======================================================================-->
   <xsl:template match="title">
-    <!-- Always show canonical titles or if headings is turned on -->
-    <xsl:if test="@canonical = 'true' or $Headings = 'true'">
-      <h2 class="heading"><xsl:apply-templates/></h2>
-    </xsl:if>
+    <xsl:call-template name="render-title"/>
   </xsl:template>
 
   <xsl:template match="title" mode="jesus">
-    <!-- Always show canonical titles or if headings is turned on -->
-    <xsl:if test="@canonical = 'true' or $Headings = 'true'">
-      <h2 class="heading"><xsl:apply-templates/></h2>
-    </xsl:if>
+    <xsl:call-template name="render-title"/>
   </xsl:template>
 
   <!--=======================================================================-->
