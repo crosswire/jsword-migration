@@ -146,7 +146,7 @@
           H4 { font-size:  90%; font-weight: bold; }
           H5 { font-size:  85%; font-weight: bold; }
           H6 { font-size:  80%; font-weight: bold; }
-          .heading { color: #669966; }
+          .heading { color: #669966; text-align: center; }
           .canonical { color: #666699; }
           .gen { color: #996666; }
           div.margin { font-size:90%; }
@@ -466,7 +466,7 @@
 
   <xsl:template match="note" mode="jesus">
     <xsl:if test="$Notes = 'true'">
-     <!-- If there is a following sibling that is a note, emit a separator -->
+      <!-- If there is a following sibling that is a note, emit a separator -->
       <xsl:variable name="siblings" select="../child::node()"/>
       <xsl:variable name="next-position" select="position() + 1"/>
       <xsl:choose>
@@ -783,22 +783,27 @@
   </xsl:template>
 
   <!--=======================================================================-->
-  <xsl:template match="title[@subType ='x-preverse' or @subtype = 'x-preverse']">
+  <xsl:template match="title[@subType ='x-preverse' or @subtype = 'x-preverse']" priority="1">
   <!-- Done by a line in [verse]
-    <h3 class="heading">
-      <xsl:apply-templates/>
-    </h3>
+    <xsl:call-template name="render-title"/>
   -->
   </xsl:template>
 
-  <xsl:template match="title[@subType ='x-preverse' or @subtype = 'x-preverse']" mode="jesus">
+  <xsl:template match="title[@subType ='x-preverse' or @subtype = 'x-preverse']" priority="1" mode="jesus">
   <!-- Done by a line in [verse]
-    <h3 class="heading">
-      <xsl:apply-templates/>
-    </h3>
+    <xsl:call-template name="render-title"/>
   -->
   </xsl:template>
  
+  <!--=======================================================================-->
+  <xsl:template match="title" priority="0">
+    <xsl:call-template name="render-title"/>
+  </xsl:template>
+
+  <xsl:template match="title" priority="0" mode="jesus">
+    <xsl:call-template name="render-title"/>
+  </xsl:template>
+
  <!--=======================================================================-->
   <xsl:template name="render-title">
     <!-- Always show canonical titles or if headings is turned on -->
@@ -837,24 +842,6 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
-  </xsl:template>
-
-  <!--=======================================================================-->
-  <xsl:template match="title[@level]">
-    <xsl:call-template name="render-title"/>
-  </xsl:template>
-
-  <xsl:template match="title[@level]" mode="jesus">
-    <xsl:call-template name="render-title"/>
-  </xsl:template>
-
-  <!--=======================================================================-->
-  <xsl:template match="title">
-    <xsl:call-template name="render-title"/>
-  </xsl:template>
-
-  <xsl:template match="title" mode="jesus">
-    <xsl:call-template name="render-title"/>
   </xsl:template>
 
   <!--=======================================================================-->
