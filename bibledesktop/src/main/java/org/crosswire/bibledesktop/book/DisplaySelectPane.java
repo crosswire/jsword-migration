@@ -588,7 +588,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         //     The user has chosen to not install a Bible when starting the program for the first time.
         //     The user has never installed a Bible.
         //     The user has deleted the last installed Bible.
-        //     The books are on a CD, USB or someother removeable media and are not available.
+        //     The books are on a CD, USB or some other removable media and are not available.
         String noBible = BDMsg.gettext("No Bible is installed");
         CWOptionPane.showMessageDialog(this, noBible, noBible, JOptionPane.WARNING_MESSAGE);
     }

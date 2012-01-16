@@ -61,12 +61,12 @@ public final class WholeBibleTreeNode implements TreeNode {
             thislevel = Level.BOOK;
             int ec = BibleInfo.chaptersInBook(b);
             int ev = BibleInfo.versesInChapter(b, ec);
-            start = new Verse(b, 1, 1);
+            start = new Verse(b, 0, 0);
             end = new Verse(b, ec, ev);
         } else if (v == -1) {
             thislevel = Level.CHAPTER;
             int ev = BibleInfo.versesInChapter(b, c);
-            start = new Verse(b, c, 1);
+            start = new Verse(b, c, 0);
             end = new Verse(b, c, ev);
         } else {
             thislevel = Level.VERSE;
@@ -156,10 +156,10 @@ public final class WholeBibleTreeNode implements TreeNode {
             return WholeBibleTreeNode.getNode(this, books[i], -1, -1);
 
         case BOOK:
-            return WholeBibleTreeNode.getNode(this, range.getStart().getBook(), i + 1, -1);
+            return WholeBibleTreeNode.getNode(this, range.getStart().getBook(), i, -1);
 
         case CHAPTER:
-            return WholeBibleTreeNode.getNode(this, range.getStart().getBook(), range.getStart().getChapter(), i + 1);
+            return WholeBibleTreeNode.getNode(this, range.getStart().getBook(), range.getStart().getChapter(), i);
 
         default:
             return null;
@@ -176,10 +176,10 @@ public final class WholeBibleTreeNode implements TreeNode {
             return BibleInfo.booksInBible();
 
         case BOOK:
-            return BibleInfo.chaptersInBook(range.getStart().getBook());
+            return BibleInfo.chaptersInBook(range.getStart().getBook()) + 1;
 
         case CHAPTER:
-            return BibleInfo.versesInChapter(range.getStart().getBook(), range.getStart().getChapter());
+            return BibleInfo.versesInChapter(range.getStart().getBook(), range.getStart().getChapter()) + 1;
 
         default:
             return 0;
@@ -188,11 +188,11 @@ public final class WholeBibleTreeNode implements TreeNode {
 
     /**
      * Returns the index of <code>node</code> in the receivers children. If the
-     * receiver does not contain <code>node</code>, -1 will be returned.
+     * receiver does not contain <code>node</code>, 0 will be returned.
      */
     public int getIndex(TreeNode node) {
         if (!(node instanceof WholeBibleTreeNode)) {
-            return -1;
+            return 0;
         }
 
         WholeBibleTreeNode vnode = (WholeBibleTreeNode) node;
@@ -202,13 +202,13 @@ public final class WholeBibleTreeNode implements TreeNode {
             return vnode.getVerseRange().getStart().getBook().ordinal();
 
         case BOOK:
-            return vnode.getVerseRange().getStart().getChapter() - 1;
+            return vnode.getVerseRange().getStart().getChapter();
 
         case CHAPTER:
-            return vnode.getVerseRange().getStart().getVerse() - 1;
+            return vnode.getVerseRange().getStart().getVerse();
 
         default:
-            return -1;
+            return 0;
         }
     }
 
