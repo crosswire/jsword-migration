@@ -1,7 +1,9 @@
 /**
  * Distribution License:
  * BibleDesktop is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, version 2 as published by
+ * the terms of the GNU General Pub
+import org.crosswire.jsword.versification.system.Versifications;
+lic License, version 2 as published by
  * the Free Software Foundation. This program is distributed in the hope
  * that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
@@ -63,7 +65,6 @@ import org.crosswire.common.swing.CWAction;
 import org.crosswire.common.swing.CWLabel;
 import org.crosswire.common.swing.CWScrollPane;
 import org.crosswire.common.swing.GuiUtil;
-import org.crosswire.jsword.passage.KeyFactory;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageEvent;
@@ -71,6 +72,8 @@ import org.crosswire.jsword.passage.PassageKeyFactory;
 import org.crosswire.jsword.passage.PassageListener;
 import org.crosswire.jsword.passage.RestrictionType;
 import org.crosswire.jsword.passage.VerseRange;
+import org.crosswire.jsword.versification.Versification;
+import org.crosswire.jsword.versification.system.Versifications;
 
 /**
  * A JPanel (or dialog) that presents a interactive GUI way to select passages.
@@ -218,7 +221,8 @@ public class PassageSelectionPane extends JPanel {
         String refstr = txtDisplay.getText();
 
         try {
-            Passage temp = (Passage) keyf.getKey(refstr);
+            Versification v11n = Versifications.instance().getVersification("KJV");
+            Passage temp = (Passage) keyf.getKey(v11n, refstr);
             ref.clear();
             ref.addAll(temp);
             model.setPassage(ref);
@@ -278,7 +282,8 @@ public class PassageSelectionPane extends JPanel {
      */
     public String showInDialog(Component parent, String title, boolean modal, String refstr) {
         try {
-            ref = (Passage) keyf.getKey(refstr);
+            Versification v11n = Versifications.instance().getVersification("KJV");
+            ref = (Passage) keyf.getKey(v11n, refstr);
 
             txtDisplay.setText(refstr);
 
@@ -411,7 +416,7 @@ public class PassageSelectionPane extends JPanel {
     /**
      * To convert strings into Biblical keys
      */
-    protected transient KeyFactory keyf = PassageKeyFactory.instance();
+    protected transient PassageKeyFactory keyf = PassageKeyFactory.instance();
 
     /**
      * If escape was pressed we don't want to update the parent

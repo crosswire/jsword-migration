@@ -30,7 +30,8 @@ import org.crosswire.common.icu.NumberShaper;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.passage.VerseRange;
 import org.crosswire.jsword.versification.BibleBook;
-import org.crosswire.jsword.versification.BibleInfo;
+import org.crosswire.jsword.versification.Versification;
+import org.crosswire.jsword.versification.system.Versifications;
 
 /**
  * A PassageTreeNode extends TreeNode to Model a Passage.
@@ -51,6 +52,7 @@ public final class WholeBibleTreeNode implements TreeNode {
      * We could do some caching here if needs be.
      */
     protected static WholeBibleTreeNode getNode(TreeNode parent, BibleBook b, int c, int v) {
+        Versification rs = Versifications.instance().getVersification("KJV");
         Verse start = null;
         Verse end = null;
         Level thislevel = Level.BOOK;
@@ -59,13 +61,13 @@ public final class WholeBibleTreeNode implements TreeNode {
             assert false : b;
         } else if (c == -1) {
             thislevel = Level.BOOK;
-            int ec = BibleInfo.chaptersInBook(b);
-            int ev = BibleInfo.versesInChapter(b, ec);
+            int ec = rs.getLastChapter(b);
+            int ev = rs.getLastVerse(b, ec);
             start = new Verse(b, 0, 0);
             end = new Verse(b, ec, ev);
         } else if (v == -1) {
             thislevel = Level.CHAPTER;
-            int ev = BibleInfo.versesInChapter(b, c);
+            int ev = rs.getLastVerse(b, c);
             start = new Verse(b, c, 0);
             end = new Verse(b, c, ev);
         } else {
@@ -74,7 +76,7 @@ public final class WholeBibleTreeNode implements TreeNode {
             end = start;
         }
 
-        VerseRange rng = new VerseRange(start, end);
+        VerseRange rng = new VerseRange(rs, start, end);
         return new WholeBibleTreeNode(parent, rng, thislevel);
     }
 
@@ -152,8 +154,7 @@ public final class WholeBibleTreeNode implements TreeNode {
     public TreeNode getChildAt(int i) {
         switch (level) {
         case BIBLE:
-            BibleBook[] books = BibleInfo.getBooks();
-            return WholeBibleTreeNode.getNode(this, books[i], -1, -1);
+            return WholeBibleTreeNode.getNode(this, rs.getBooks().getBook(i), -1, -1);
 
         case BOOK:
             return WholeBibleTreeNode.getNode(this, range.getStart().getBook(), i, -1);
@@ -173,13 +174,13 @@ public final class WholeBibleTreeNode implements TreeNode {
     public int getChildCount() {
         switch (level) {
         case BIBLE:
-            return BibleInfo.booksInBible();
+            return rs.getBooks().getBookCount();
 
         case BOOK:
-            return BibleInfo.chaptersInBook(range.getStart().getBook()) + 1;
+            return rs.getLastChapter(range.getStart().getBook()) + 1;
 
         case CHAPTER:
-            return BibleInfo.versesInChapter(range.getStart().getBook(), range.getStart().getChapter()) + 1;
+            return rs.getLastVerse(range.getStart().getBook(), range.getStart().getChapter()) + 1;
 
         default:
             return 0;
@@ -245,6 +246,8 @@ public final class WholeBibleTreeNode implements TreeNode {
         CHAPTER,
         VERSE,
     }
+
+    private Versification rs = Versifications.instance().getVersification("KJV");
 
     /** Change the number representation as needed */
     private NumberShaper shaper;

@@ -1,7 +1,9 @@
 /**
  * Distribution License:
  * BibleDesktop is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, version 2 as published by
+ * the terms of the GNU General Pub
+import org.crosswire.jsword.passage.KeyUtil;
+lic License, version 2 as published by
  * the Free Software Foundation. This program is distributed in the hope
  * that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
@@ -66,13 +68,15 @@ import org.crosswire.jsword.index.IndexStatusListener;
 import org.crosswire.jsword.index.search.DefaultSearchModifier;
 import org.crosswire.jsword.index.search.DefaultSearchRequest;
 import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.passage.KeyUtil;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.PassageTally;
 import org.crosswire.jsword.passage.RocketPassage;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.passage.VerseRange;
 import org.crosswire.jsword.versification.BibleBook;
-import org.crosswire.jsword.versification.BibleInfo;
+import org.crosswire.jsword.versification.Versification;
+import org.crosswire.jsword.versification.system.Versifications;
 
 /**
  * Passage Selection area.
@@ -109,8 +113,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
             }
         };
 
-        // search() and version() rely on this returning only Books indexed by
-        // verses
+        // search() and version() rely on this returning only Books indexed by verses
         biblePicker = new ParallelBookPicker(BookFilters.getBibles(), BookComparators.getInitialComparator());
         biblePicker.addBookListener(this);
         selected = biblePicker.getBooks();
@@ -121,7 +124,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
             // The application has started and there are no installed bibles.
             // Should always get a key from book, unless we need a PassageTally
             // But here we don't have a book yet.
-            key = new RocketPassage();
+            key = new RocketPassage(Versifications.instance().getVersification("KJV"));
         }
 
         JComboBox cboBooks = new JComboBox();
@@ -133,7 +136,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
                 Verse start = set.getVerse();
                 BibleBook book = start.getBook();
                 int chapter = start.getChapter();
-                VerseRange range = new VerseRange(start, new Verse(book, chapter, BibleInfo.versesInChapter(book, chapter)));
+                Versification v11n = KeyUtil.getPassage(key).getVersification();
+                VerseRange range = new VerseRange(v11n, start, new Verse(book, chapter, v11n.getLastVerse(book, chapter)));
                 txtSearch.setText("");
                 txtKey.setText(range.getName());
                 doGoPassage();
@@ -275,7 +279,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         Verse start = quickSet.getVerse();
         BibleBook book = start.getBook();
         int chapter = start.getChapter();
-        VerseRange range = new VerseRange(start, new Verse(book, chapter, BibleInfo.versesInChapter(book, chapter)));
+        Versification v11n = Versifications.instance().getVersification("KJV");
+        VerseRange range = new VerseRange(v11n, start, new Verse(book, chapter, v11n.getLastVerse(book, chapter)));
         txtSearch.setText("");
         txtKey.setText(range.getName());
         doGoPassage();
@@ -299,7 +304,7 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
      *
      */
     public void clear() {
-        setKey(selected == null || selected.length == 0 ? new RocketPassage() : selected[0].createEmptyKeyList());
+        setKey(selected == null || selected.length == 0 ? new RocketPassage(Versifications.instance().getVersification("KJV")) : selected[0].createEmptyKeyList());
         setTitle(Mode.CLEAR);
     }
 

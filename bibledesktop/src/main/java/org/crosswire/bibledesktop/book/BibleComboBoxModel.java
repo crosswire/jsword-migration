@@ -30,7 +30,8 @@ import javax.swing.ComboBoxModel;
 import org.crosswire.common.util.Logger;
 import org.crosswire.jsword.passage.Verse;
 import org.crosswire.jsword.versification.BibleBook;
-import org.crosswire.jsword.versification.BibleInfo;
+import org.crosswire.jsword.versification.Versification;
+import org.crosswire.jsword.versification.system.Versifications;
 
 /**
  * A ComboBoxModel for selecting book/chapter/verse.
@@ -38,6 +39,13 @@ import org.crosswire.jsword.versification.BibleInfo;
  * @see gnu.gpl.License for license details.<br>
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
+ */
+/**
+ *
+ *
+ * @see gnu.gpl.License for license details.
+ *      The copyright to this program is held by it's authors.
+ * @author DM Smith [dmsmith555 at yahoo dot com]
  */
 public class BibleComboBoxModel extends AbstractListModel implements ComboBoxModel {
     /**
@@ -85,9 +93,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
+    /* (non-Javadoc)
      * @see javax.swing.ComboBoxModel#setSelectedItem(java.lang.Object)
      */
     public void setSelectedItem(Object selected) {
@@ -117,30 +123,26 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
         this.selected = selected;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
+    /* (non-Javadoc)
      * @see javax.swing.ComboBoxModel#getSelectedItem()
      */
     public Object getSelectedItem() {
         return selected;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
+    /* (non-Javadoc)
      * @see javax.swing.ListModel#getSize()
      */
     public int getSize() {
         switch (level) {
         case BOOK:
-            return BibleInfo.booksInBible();
+            return v11n.getBooks().getBookCount();
 
         case CHAPTER:
-            return BibleInfo.chaptersInBook(set.getVerse().getBook());
+            return v11n.getLastChapter(set.getVerse().getBook());
 
         case VERSE:
-            return BibleInfo.versesInChapter(set.getVerse().getBook(), set.getVerse().getChapter());
+            return v11n.getLastVerse(set.getVerse().getBook(), set.getVerse().getChapter());
 
         default:
             assert false : level;
@@ -148,17 +150,13 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
+    /* (non-Javadoc)
      * @see javax.swing.ListModel#getElementAt(int)
      */
     public Object getElementAt(int index) {
         switch (level) {
         case BOOK:
-            BibleBook[] books = BibleInfo.getBooks();
-            return books[index];
-
+            return v11n.getBooks().getBook(index);
         default:
             return Integer.valueOf(index + 1);
 
@@ -175,8 +173,8 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
         int chapter = old.getChapter();
         int verse = old.getVerse();
 
-        chapter = Math.min(chapter, BibleInfo.chaptersInBook(book));
-        verse = Math.min(verse, BibleInfo.versesInChapter(book, chapter));
+        chapter = Math.min(chapter, v11n.getLastChapter(book));
+        verse = Math.min(verse, v11n.getLastVerse(book, chapter));
 
         Verse update = new Verse(book, chapter, verse);
         set.setVerse(update);
@@ -192,7 +190,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
         BibleBook book = old.getBook();
         int verse = old.getVerse();
 
-        verse = Math.min(verse, BibleInfo.versesInChapter(book, chapter));
+        verse = Math.min(verse, v11n.getLastVerse(book, chapter));
 
         Verse update = new Verse(book, chapter, verse);
         set.setVerse(update);
@@ -207,11 +205,8 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
         set.setVerse(update);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see javax.swing.AbstractListModel#fireContentsChanged(java.lang.Object,
-     * int, int)
+    /* (non-Javadoc)
+     * @see javax.swing.AbstractListModel#fireContentsChanged(java.lang.Object, int, int)
      */
     @Override
     protected void fireContentsChanged(Object source, int index0, int index1) {
@@ -229,6 +224,7 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
         // Broken but we don't serialize views
         set = null;
         selected = null;
+        v11n = Versifications.instance().getVersification("KJV");
         is.defaultReadObject();
     }
 
@@ -236,6 +232,8 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
      * The log stream
      */
     private static final Logger log = Logger.getLogger(BibleComboBoxModel.class);
+
+    private transient Versification v11n = Versifications.instance().getVersification("KJV");
 
     /**
      * Shared settings
