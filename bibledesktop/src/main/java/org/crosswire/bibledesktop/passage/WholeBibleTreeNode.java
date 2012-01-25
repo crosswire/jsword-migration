@@ -45,14 +45,15 @@ public final class WholeBibleTreeNode implements TreeNode {
      * The start point for all WholeBibleTreeNodes.
      */
     public static WholeBibleTreeNode getRootNode() {
-        return new WholeBibleTreeNode(null, VerseRange.getWholeBibleVerseRange(), Level.BIBLE);
+        Versification v11n = Versifications.instance().getVersification("KJV");
+        return new WholeBibleTreeNode(null, v11n.getAllVerses(), Level.BIBLE);
     }
 
     /**
      * We could do some caching here if needs be.
      */
     protected static WholeBibleTreeNode getNode(TreeNode parent, BibleBook b, int c, int v) {
-        Versification rs = Versifications.instance().getVersification("KJV");
+        Versification v11n = Versifications.instance().getVersification("KJV");
         Verse start = null;
         Verse end = null;
         Level thislevel = Level.BOOK;
@@ -61,13 +62,13 @@ public final class WholeBibleTreeNode implements TreeNode {
             assert false : b;
         } else if (c == -1) {
             thislevel = Level.BOOK;
-            int ec = rs.getLastChapter(b);
-            int ev = rs.getLastVerse(b, ec);
+            int ec = v11n.getLastChapter(b);
+            int ev = v11n.getLastVerse(b, ec);
             start = new Verse(b, 0, 0);
             end = new Verse(b, ec, ev);
         } else if (v == -1) {
             thislevel = Level.CHAPTER;
-            int ev = rs.getLastVerse(b, c);
+            int ev = v11n.getLastVerse(b, c);
             start = new Verse(b, c, 0);
             end = new Verse(b, c, ev);
         } else {
@@ -76,7 +77,7 @@ public final class WholeBibleTreeNode implements TreeNode {
             end = start;
         }
 
-        VerseRange rng = new VerseRange(rs, start, end);
+        VerseRange rng = new VerseRange(v11n, start, end);
         return new WholeBibleTreeNode(parent, rng, thislevel);
     }
 
