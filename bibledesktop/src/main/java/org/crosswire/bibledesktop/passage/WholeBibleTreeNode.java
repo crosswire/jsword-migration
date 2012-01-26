@@ -45,7 +45,8 @@ public final class WholeBibleTreeNode implements TreeNode {
      * The start point for all WholeBibleTreeNodes.
      */
     public static WholeBibleTreeNode getRootNode() {
-        Versification v11n = Versifications.instance().getVersification("KJV");
+        // AV11N(DMS): Is this right?
+        Versification v11n = Versifications.instance().getDefaultVersification();
         return new WholeBibleTreeNode(null, v11n.getAllVerses(), Level.BIBLE);
     }
 
@@ -53,7 +54,8 @@ public final class WholeBibleTreeNode implements TreeNode {
      * We could do some caching here if needs be.
      */
     protected static WholeBibleTreeNode getNode(TreeNode parent, BibleBook b, int c, int v) {
-        Versification v11n = Versifications.instance().getVersification("KJV");
+        // AV11N(DMS): Is this right?
+        Versification v11n = Versifications.instance().getDefaultVersification();
         Verse start = null;
         Verse end = null;
         Level thislevel = Level.BOOK;
@@ -201,6 +203,7 @@ public final class WholeBibleTreeNode implements TreeNode {
 
         switch (level) {
         case BIBLE:
+            // AV11N(DMS): need to get ordinal from the BibleBookList
             return vnode.getVerseRange().getStart().getBook().ordinal();
 
         case BOOK:
@@ -241,6 +244,9 @@ public final class WholeBibleTreeNode implements TreeNode {
         private int count;
     }
 
+    /**
+     * Levels at which this node stands.
+     */
     private enum Level {
         BIBLE,
         BOOK,
@@ -248,7 +254,8 @@ public final class WholeBibleTreeNode implements TreeNode {
         VERSE,
     }
 
-    private Versification rs = Versifications.instance().getVersification("KJV");
+    // AV11N(DMS): Is this right?
+    private Versification rs = Versifications.instance().getDefaultVersification();
 
     /** Change the number representation as needed */
     private NumberShaper shaper;

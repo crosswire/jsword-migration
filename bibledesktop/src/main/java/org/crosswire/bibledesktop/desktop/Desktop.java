@@ -982,7 +982,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
                 public void propertyChange(PropertyChangeEvent evt) {
                     // When the font changes update all the visible locations
                     // using it.
-                    if (evt.getPropertyName().equals("BibleDisplay.ConfigurableFont"))
+                    if ("BibleDisplay.ConfigurableFont".equals(evt.getPropertyName()))
                     {
                         BibleViewPane view = (BibleViewPane) getViews().getSelected();
                         SplitBookDataDisplay da = view.getPassagePane();
@@ -991,7 +991,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
                         reference.refresh();
                     }
 
-                    if (evt.getPropertyName().equals("BibleDisplay.MaxPickers"))
+                    if ("BibleDisplay.MaxPickers".equals(evt.getPropertyName()))
                     {
                         BibleViewPane view = (BibleViewPane) getViews().getSelected();
                         DisplaySelectPane selector = view.getSelectPane();

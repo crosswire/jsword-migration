@@ -92,8 +92,9 @@ public class ActiveURITip extends MouseAdapter implements URIEventListener {
     }
 
     public void updateText(URIEvent event) {
-        if (event == null)
+        if (event == null) {
             return;
+        }
         String txt = null;
         String protocol = event.getScheme();
         Book book = null;

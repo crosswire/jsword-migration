@@ -224,7 +224,7 @@ public class FontChooser extends JPanel {
                 // We need to exclude certain fonts that cause the JVM to crash.
                 // BUG_PARADE(DMS): 6376296
                 // It will be fixed in Java 1.6 (Mustang)
-                if (names[i].equals("padmaa") || names[i].equals("Rekha") || names[i].indexOf("Lohit") > -1 || names[i].indexOf("aakar") > -1)
+                if ("padmaa".equals(names[i]) || "Rekha".equals(names[i]) || names[i].indexOf("Lohit") > -1 || names[i].indexOf("aakar") > -1)
                 {
                     continue;
                 }

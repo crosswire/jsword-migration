@@ -221,7 +221,8 @@ public class PassageSelectionPane extends JPanel {
         String refstr = txtDisplay.getText();
 
         try {
-            Versification v11n = Versifications.instance().getVersification("KJV");
+            // AV11N(DMS): Is this right?
+            Versification v11n = Versifications.instance().getDefaultVersification();
             Passage temp = (Passage) keyf.getKey(v11n, refstr);
             ref.clear();
             ref.addAll(temp);
@@ -282,7 +283,8 @@ public class PassageSelectionPane extends JPanel {
      */
     public String showInDialog(Component parent, String title, boolean modal, String refstr) {
         try {
-            Versification v11n = Versifications.instance().getVersification("KJV");
+            // AV11N(DMS): Is this right?
+            Versification v11n = Versifications.instance().getDefaultVersification();
             ref = (Passage) keyf.getKey(v11n, refstr);
 
             txtDisplay.setText(refstr);

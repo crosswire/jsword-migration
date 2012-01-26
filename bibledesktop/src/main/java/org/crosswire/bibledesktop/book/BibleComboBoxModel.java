@@ -224,7 +224,8 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
         // Broken but we don't serialize views
         set = null;
         selected = null;
-        v11n = Versifications.instance().getVersification("KJV");
+        // AV11N(DMS): Is this right?
+        v11n = Versifications.instance().getDefaultVersification();
         is.defaultReadObject();
     }
 
@@ -233,7 +234,8 @@ public class BibleComboBoxModel extends AbstractListModel implements ComboBoxMod
      */
     private static final Logger log = Logger.getLogger(BibleComboBoxModel.class);
 
-    private transient Versification v11n = Versifications.instance().getVersification("KJV");
+    // AV11N(DMS): Is this right?
+    private transient Versification v11n = Versifications.instance().getDefaultVersification();
 
     /**
      * Shared settings

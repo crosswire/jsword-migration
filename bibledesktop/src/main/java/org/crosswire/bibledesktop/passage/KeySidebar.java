@@ -149,7 +149,7 @@ public class KeySidebar extends JPanel implements DisplaySelectListener, KeyChan
     private void doBlur(int amount) {
         // Remember what was selected
         Object[] objs = list.getSelectedValues();
-        
+
         // Make sure that key changes are not visible until blur is done.
         Key copy = key.clone();
 

@@ -307,7 +307,7 @@ public final class ExceptionPane extends JPanel {
 
         // The message in the exception
         String msg = ex.getMessage();
-        if (msg == null || msg.equals("")) {
+        if (msg == null || "".equals(msg)) {
             // TRANSLATOR: When an error dialog is presented to the user, this is shown when
             // there is no other message available
             msg = CWMsg.gettext("No description available.");

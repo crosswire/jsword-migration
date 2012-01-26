@@ -99,7 +99,7 @@ import org.crosswire.common.util.MsgBase;
      * The current version of Bible Desktop. Adjust for each release.
      * And increment after each release and append alpha, beta, ... to it.
      */
-    private static String VERSION = shaper.shape("1.6.1beta");
+    private static final String VERSION = shaper.shape("1.6.1beta");
 
     private static MsgBase msg = new BDMsg();
 }

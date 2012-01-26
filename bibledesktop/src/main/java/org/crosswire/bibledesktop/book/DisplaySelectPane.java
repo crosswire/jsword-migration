@@ -124,7 +124,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
             // The application has started and there are no installed bibles.
             // Should always get a key from book, unless we need a PassageTally
             // But here we don't have a book yet.
-            key = new RocketPassage(Versifications.instance().getVersification("KJV"));
+            // AV11N(DMS): Is this right?
+            key = new RocketPassage(Versifications.instance().getDefaultVersification());
         }
 
         JComboBox cboBooks = new JComboBox();
@@ -279,7 +280,8 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         Verse start = quickSet.getVerse();
         BibleBook book = start.getBook();
         int chapter = start.getChapter();
-        Versification v11n = Versifications.instance().getVersification("KJV");
+        // AV11N(DMS): Is this right?
+        Versification v11n = Versifications.instance().getDefaultVersification();
         VerseRange range = new VerseRange(v11n, start, new Verse(book, chapter, v11n.getLastVerse(book, chapter)));
         txtSearch.setText("");
         txtKey.setText(range.getName());
@@ -301,15 +303,16 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     }
 
     /**
-     *
+     * Clear the contents
      */
     public void clear() {
-        setKey(selected == null || selected.length == 0 ? new RocketPassage(Versifications.instance().getVersification("KJV")) : selected[0].createEmptyKeyList());
+        // AV11N(DMS): Is this right?
+        setKey(selected == null || selected.length == 0 ? new RocketPassage(Versifications.instance().getDefaultVersification()) : selected[0].createEmptyKeyList());
         setTitle(Mode.CLEAR);
     }
 
     /**
-     *
+     * Determine whether there is content
      */
     public boolean isClear() {
         // TRANSLATOR: This must match the word that is used for "Untitled {0}".
@@ -480,6 +483,10 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         return biblePicker;
     }
 
+    /**
+     * Set the key
+     * @param newKey the new key
+     */
     public void setKey(String newKey) {
         if (selected == null || selected.length == 0) {
             return;
@@ -492,6 +499,10 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
         }
     }
 
+    /**
+     * Set the key
+     * @param newKey the new key
+     */
     public void setKey(Key newKey) {
         if (newKey == null || newKey.isEmpty()) {
             if (!key.isEmpty()) {
@@ -799,6 +810,9 @@ public class DisplaySelectPane extends JPanel implements KeyChangeListener, Book
     private AdvancedSearchPane advanced;
     private JButton btnIndex;
 
+    /**
+     * Defines the state of this DisplaySelectPane
+     */
     private enum Mode {
         CLEAR,
         PASSAGE,

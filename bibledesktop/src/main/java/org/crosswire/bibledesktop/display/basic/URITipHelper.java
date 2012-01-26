@@ -21,15 +21,11 @@
  */
 package org.crosswire.bibledesktop.display.basic;
 
-import java.awt.Dimension;
-import java.awt.Insets;
 import java.net.URI;
 import java.util.Locale;
 
-import javax.swing.JTextPane;
 import javax.swing.JToolTip;
 import javax.swing.ToolTipManager;
-import javax.swing.text.html.HTMLEditorKit;
 import javax.xml.transform.TransformerException;
 
 import org.crosswire.bibledesktop.book.install.BookFont;
@@ -37,7 +33,6 @@ import org.crosswire.bibledesktop.desktop.Desktop;
 import org.crosswire.bibledesktop.desktop.XSLTProperty;
 import org.crosswire.bibledesktop.display.URIEvent;
 import org.crosswire.bibledesktop.display.URIEventListener;
-import org.crosswire.common.swing.AntiAliasedTextPane;
 import org.crosswire.common.swing.GuiConvert;
 import org.crosswire.common.swing.GuiUtil;
 import org.crosswire.common.util.Reporter;
@@ -262,48 +257,4 @@ public class URITipHelper implements URIEventListener {
      */
     private URIEvent event;
     private String txt;
-}
-
-/**
- * A specialization of a JToolTip
- * 
- * @see gnu.gpl.License for license details.<br>
- *      The copyright to this program is held by it's authors.
- * @author Yingjie Lan [lanyjie at yahoo dot com]
- */
-class FullHTMLTip extends JToolTip {
-    public FullHTMLTip() {
-        this.setLayout(new java.awt.CardLayout());
-        txtView = new AntiAliasedTextPane();
-        txtView.setEditable(false);
-        txtView.setEditorKit(new HTMLEditorKit());
-        this.add(txtView, "HTMLTip");
-    }
-
-    @Override
-    public Dimension getPreferredSize() {
-        Insets ist = getBorder().getBorderInsets(txtView);
-        Dimension d = txtView.getPreferredSize();
-        d.width += ist.left + ist.right;
-        d.height += ist.top + ist.bottom;
-        return d;
-    }
-
-    @Override
-    public void setTipText(String tipText) {
-        txtView.setText(tipText);
-    }
-
-    /**
-     * @return the text view
-     */
-    public JTextPane getTextView() {
-        return txtView;
-    }
-
-    /**
-     * randomly generated sid.
-     */
-    private static final long serialVersionUID = 6364125062683029727L;
-    private JTextPane txtView;
 }

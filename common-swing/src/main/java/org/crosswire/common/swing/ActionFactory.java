@@ -223,7 +223,7 @@ public class ActionFactory implements ActionListener, Actionable {
      * @param key
      *            the internal name of the CWAction
      * @return CWAction null if it does not exist
-     * @deprecated
+     * @deprecated use {@link #findAction(String)} instead
      */
     @Deprecated
     public Action getAction(String key) {
