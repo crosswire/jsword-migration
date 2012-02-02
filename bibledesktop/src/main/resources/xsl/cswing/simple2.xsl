@@ -94,6 +94,9 @@
   <xsl:param name="css"/>
   
   <!-- The order of display. Hebrew is rtl (right to left) -->
+  <xsl:param name="v11n" select="'KJV'"/>
+
+  <!-- The order of display. Hebrew is rtl (right to left) -->
   <xsl:param name="direction" select="'ltr'"/>
 
   <!-- The font that is passed in is in one of two forms:
@@ -111,6 +114,8 @@
       </xsl:call-template>
   </xsl:variable>
 
+  <!-- Create a versification from which verse numbers are understood -->
+  <xsl:variable name="v11nf" select="jsword:org.crosswire.jsword.versification.system.Versifications.instance()"/>
   <!-- Create a global key factory from which OSIS ids will be generated -->
   <xsl:variable name="keyf" select="jsword:org.crosswire.jsword.passage.PassageKeyFactory.instance()"/>
 
@@ -346,7 +351,8 @@
 
   <xsl:template match="verse" mode="print-notes">
     <xsl:if test=".//note[not(@type) or not(@type = 'x-strongsMarkup')]">
-      <xsl:variable name="passage" select="jsword:getValidKey($keyf, @osisID)"/>
+      <xsl:variable name="versification" select="jsword:getVersification($v11nf, $v11n)"/>
+      <xsl:variable name="passage" select="jsword:getValidKey($keyf, $versification, @osisID)"/>
       <a href="#{substring-before(concat(@osisID, ' '), ' ')}">
         <xsl:value-of select="jsword:getName($passage)"/>
       </a>
