@@ -5,10 +5,13 @@ Obtain the most recent version of findbugs from:
 
 Unzip the file into this directory.
 
-In the new directory, remove the following:
+In the new directory:
+Ensure that plugin contains noUpdateChecks.jar. If it is in optionalPlugin, move copy it from there.
+Remove the following:
    bin
    doc
    src
+   optionalPlugin
 
 Change the references to the old directory to the new directory in the following files:
    build.xml
