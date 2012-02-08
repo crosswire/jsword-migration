@@ -205,6 +205,7 @@ public class BooksListModel extends AbstractListModel {
         // and read them in here.
         // But at this time we don't serialize views.
         bookList = Books.installed();
+        books = new ArrayList<Book>();
 
         is.defaultReadObject();
     }
@@ -229,7 +230,7 @@ public class BooksListModel extends AbstractListModel {
      * marked synchronized to ensure that one thread can't update the list of
      * books while another is trying to create a JList based on this class.
      */
-    protected List<Book> books;
+    protected transient List<Book> books;
 
     /**
      * The sort algorithm to use.

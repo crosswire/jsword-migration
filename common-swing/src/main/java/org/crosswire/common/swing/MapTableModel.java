@@ -21,6 +21,9 @@
  */
 package org.crosswire.common.swing;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -66,7 +69,7 @@ public class MapTableModel extends AbstractTableModel {
      * @param map
      *            The map we are getting our data from
      */
-    public final void setMap(Map map) {
+    public final void setMap(Map<Object, Object> map) {
         this.map = map;
         list.clear();
         if (map != null) {
@@ -229,15 +232,27 @@ public class MapTableModel extends AbstractTableModel {
     }
 
     /**
+     * Serialization support.
+     * 
+     * @param is
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
+        list = new ArrayList<StringPair>();
+        is.defaultReadObject();
+    }
+
+    /**
      * The List that is a copy of the list. A list is used for direct access
      * performance.
      */
-    private List<StringPair> list;
+    private transient List<StringPair> list;
 
     /**
      * The backing map
      */
-    private Map map;
+    private Map<Object, Object> map;
 
     /**
      * The default column names
@@ -254,7 +269,7 @@ public class MapTableModel extends AbstractTableModel {
     /**
      * A simple holder of a key/value pair of Strings.
      */
-    private static final class StringPair {
+    private static final class StringPair implements Serializable {
         /**
          * @param k
          *            The non-null key.
@@ -289,5 +304,11 @@ public class MapTableModel extends AbstractTableModel {
          * <code>value</code> is the string representation of a Map entry value
          */
         private String value;
+
+        /**
+         * Serialization ID
+         */
+        private static final long serialVersionUID = 1730905297956834949L;
+
     }
 }

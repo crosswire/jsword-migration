@@ -70,6 +70,7 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
      */
     public ViewManager(ViewGenerator generator) {
         this.generator = generator;
+        contextActions = null;
     }
 
     /**
@@ -349,7 +350,7 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
      */
     public void setLayoutType(LayoutType next) {
         // Check if this is a change
-        if (getViewLayoutType().equals(next)) {
+        if (panel == null || getViewLayoutType().equals(next)) {
             return;
         }
 
@@ -436,6 +437,9 @@ public class ViewManager implements Viewable, TitleChangedListener, ViewEventLis
      * @return the action requested or null if it does not exist
      */
     public Action getContextAction(String key) {
+        if (contextActions == null) {
+            return null;
+        }
         return contextActions.findAction(key);
     }
 

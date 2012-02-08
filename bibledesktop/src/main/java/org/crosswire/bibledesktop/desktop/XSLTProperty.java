@@ -22,7 +22,6 @@
 package org.crosswire.bibledesktop.desktop;
 
 import java.io.File;
-import java.io.Serializable;
 import java.net.MalformedURLException;
 
 import org.crosswire.common.util.NetUtil;
@@ -36,84 +35,84 @@ import org.crosswire.common.xml.TransformingSAXEventProvider;
  *      The copyright to this program is held by it's authors.
  * @author DM Smith [ dmsmith555 at yahoo dot com]
  */
-public final class XSLTProperty implements Serializable {
+public enum XSLTProperty {
     /**
      * Determines whether Strong's Numbers should show
      */
-    public static final XSLTProperty STRONGS_NUMBERS = new XSLTProperty("Strongs", false);
+    STRONGS_NUMBERS("Strongs", false),
 
     /**
      * Determines whether Word Morphology (e.g. Robinson) should show
      */
-    public static final XSLTProperty MORPH = new XSLTProperty("Morph", false);
+   MORPH("Morph", false),
 
     /**
      * Determines whether verses should start on a new line.
      */
-    public static final XSLTProperty START_VERSE_ON_NEWLINE = new XSLTProperty("VLine", false);
+    START_VERSE_ON_NEWLINE("VLine", false),
 
     /**
      * Show verse numbers
      */
-    public static final XSLTProperty VERSE_NUMBERS = new XSLTProperty("VNum", true);
+    VERSE_NUMBERS("VNum", true),
 
     /**
      * Show chapter and verse numbers.
      */
-    public static final XSLTProperty CV = new XSLTProperty("CVNum", false);
+    CV("CVNum", false),
 
     /**
      * Show book, chapter and verse numbers.
      */
-    public static final XSLTProperty BCV = new XSLTProperty("BCVNum", false);
+    BCV("BCVNum", false),
 
     /**
      * Show no verse numbers
      */
-    public static final XSLTProperty NO_VERSE_NUMBERS = new XSLTProperty("NoVNum", false);
+    NO_VERSE_NUMBERS("NoVNum", false),
 
     /**
      * Show verse numbers as a superscript.
      */
-    public static final XSLTProperty TINY_VERSE_NUMBERS = new XSLTProperty("TinyVNum", true);
+    TINY_VERSE_NUMBERS("TinyVNum", true),
 
     /**
      * Should headings be shown
      */
-    public static final XSLTProperty HEADINGS = new XSLTProperty("Headings", true);
+    HEADINGS("Headings", true),
 
     /**
      * Should notes be shown
      */
-    public static final XSLTProperty NOTES = new XSLTProperty("Notes", true);
+    NOTES("Notes", true),
 
     /**
      * Should cross references be shown
      */
-    public static final XSLTProperty XREF = new XSLTProperty("XRef", true);
+    XREF("XRef", true),
 
     /**
      * What is the base of the current document. Note this needs to be set each
      * time the document is shown.
      */
-    public static final XSLTProperty BASE_URL = new XSLTProperty("baseURL", "", true);
+    BASE_URL("baseURL", "", true),
 
     /**
      * What is the base of the current document. Note this needs to be set each
      * time the document is shown.
      */
-    public static final XSLTProperty DIRECTION = new XSLTProperty("direction", "");
+    DIRECTION("direction", ""),
 
     /**
      * What is the base of the current document. Note this needs to be set each
      * time the font changes.
      */
-    public static final XSLTProperty FONT = new XSLTProperty("font", "Serif-PLAIN-14");
+    FONT("font", "Serif-PLAIN-14"),
 
     /**
      * What is the base of the current document.
      */
-    public static final XSLTProperty CSS = new XSLTProperty("css", "", true);
+    CSS("css", "", true);
 
     /**
      * @param name
@@ -194,8 +193,8 @@ public final class XSLTProperty implements Serializable {
     }
 
     public static void setProperties(TransformingSAXEventProvider provider) {
-        for (int i = 0; i < VALUES.length; i++) {
-            VALUES[i].setProperty(provider);
+        for (XSLTProperty v : values()) {
+            v.setProperty(provider);
         }
     }
 
@@ -203,12 +202,13 @@ public final class XSLTProperty implements Serializable {
      * Lookup method to convert from a String
      */
     public static XSLTProperty fromString(String name) {
-        for (int i = 0; i < VALUES.length; i++) {
-            XSLTProperty o = VALUES[i];
-            if (o.name.equalsIgnoreCase(name)) {
-                return o;
+        for (XSLTProperty v : values()) {
+            if (v.name().equalsIgnoreCase(name)) {
+                return v;
             }
         }
+
+        // cannot get here
         assert false;
         return null;
     }
@@ -217,7 +217,15 @@ public final class XSLTProperty implements Serializable {
      * Lookup method to convert from an integer
      */
     public static XSLTProperty fromInteger(int i) {
-        return VALUES[i];
+        for (XSLTProperty v : values()) {
+            if (v.ordinal() == i) {
+                return v;
+            }
+        }
+
+        // cannot get here
+        assert false;
+        return null;
     }
 
     /* (non-Javadoc)
@@ -248,22 +256,4 @@ public final class XSLTProperty implements Serializable {
      * property.
      */
     private boolean asURL;
-
-    // Support for serialization
-    private static int nextObj;
-    private final int obj = nextObj++;
-
-    Object readResolve() {
-        return VALUES[obj];
-    }
-
-    private static final XSLTProperty[] VALUES = {
-            STRONGS_NUMBERS, MORPH, START_VERSE_ON_NEWLINE, VERSE_NUMBERS, CV, BCV, NO_VERSE_NUMBERS, TINY_VERSE_NUMBERS, HEADINGS, NOTES, XREF, BASE_URL,
-            DIRECTION, FONT, CSS,
-    };
-
-    /**
-     * Serialization ID
-     */
-    private static final long serialVersionUID = 3257567325749326905L;
 }

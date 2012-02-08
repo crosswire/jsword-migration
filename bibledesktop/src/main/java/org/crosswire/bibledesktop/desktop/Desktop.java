@@ -1301,7 +1301,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     /**
      * Whether to show differences between versions of the Bible
      */
-    private static boolean compareShowing;
+    private boolean compareShowing;
 
     /**
      * Whether to current BibleView should be used for links
@@ -1316,7 +1316,7 @@ public class Desktop extends JFrame implements URIEventListener, ViewEventListen
     /**
      * The factory for actions that this class works with
      */
-    private volatile ActionFactory actions;
+    private transient volatile ActionFactory actions;
     /**
      * The DesktopActions is the holder for the actions, merely to keep the size of this file smaller.
      */

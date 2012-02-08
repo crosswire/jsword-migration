@@ -248,12 +248,12 @@ public class JobsProgressBar extends JPanel implements WorkListener {
     /**
      * Where we store the currently displayed jobs
      */
-    protected Map<Progress, JobData> jobs;
+    protected transient Map<Progress, JobData> jobs;
 
     /**
      * Array telling us what y position the jobs have in the window
      */
-    private List<JobData> positions;
+    private transient List<JobData> positions;
 
     /**
      * The font for the progress-bars

@@ -61,7 +61,7 @@ public final class WholeBibleTreeNode implements TreeNode {
         Level thislevel = Level.BOOK;
 
         if (b == null) {
-            assert false : b;
+            assert false : "BibleBook is null";
         } else if (c == -1) {
             thislevel = Level.BOOK;
             int ec = v11n.getLastChapter(b);

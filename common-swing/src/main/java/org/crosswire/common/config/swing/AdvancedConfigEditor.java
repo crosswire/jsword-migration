@@ -52,7 +52,7 @@ public class AdvancedConfigEditor extends TreeConfigEditor {
     /**
      * WARNING: this code is not called from anywhere and is probably broken
      */
-    protected void jbInit() {
+    protected AdvancedConfigEditor() {
         ctm = new AdvancedConfigureTreeModel();
         tree = new JTree();
         JScrollPane scroll = new CWScrollPane(tree);
