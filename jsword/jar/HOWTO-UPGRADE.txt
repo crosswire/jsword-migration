@@ -1,3 +1,5 @@
+This is obsolete. Now using ivy over maven for dependencies.
+
 Instructions on how to upgrade Lucene from one version to another.
 
 Obtain the most recent version of Lucene from
