@@ -44,7 +44,8 @@
     <!--
       == Prepare the Mac distribution as a zip file.
 	  -->
-  	<copy file="${source.etc}/installer/macosx/BibleDesktop.app/Contents/Info.plist"
+  	<copy verbose="${verbose.copy}"
+  		  file="${source.etc}/installer/macosx/BibleDesktop.app/Contents/Info.plist"
           toFile="${target.installed}/Info.plist"
           preservelastmodified="true">
   	  <filterset>
@@ -77,21 +78,16 @@
 	</zip>
     <delete file="${target.installed}/Info.plist"/>
 
-    <!-- sign the jars to a temporary location so they can be reused -->
-  	<copy todir="${target.installed}" preservelastmodified="true">
-      <fileset dir="${target.jar}">
-        <patternset refid="external.runtime.jars"/>
-        <patternset refid="internal.built.jars"/>
-      </fileset>
-    </copy>
+    <!-- sign the jars and copy them to the installation directory -->
     <signjar
+    	  destDir="${target.installed}"
           storepass="${keystore.pswd}"
           alias="${keystore.alias}"
           keystore="${keystore.file}"
     	  preservelastmodified="true"
           lazy="true">
       <path>
-      	<fileset dir="${target.installed}">
+      	<fileset dir="${target.jar}">
           <patternset refid="external.runtime.jars"/>
           <patternset refid="internal.built.jars"/>
         </fileset>
@@ -102,7 +98,8 @@
     <touch file="${target.root}/.flagfile"/>
 
   	<!-- Copy the files needed for the distribution -->
-    <copy todir="${target.installed}"
+    <copy verbose="${verbose.copy}"
+    	  todir="${target.installed}"
           preservelastmodified="true">
       <fileset dir="${source.etc}/jnlp">
         <include name="*.gif"/>
@@ -114,7 +111,8 @@
     </copy>
 
   	<!-- Copy and filter to make it work -->
-  	<copy file="${source.etc}/jnlp/bibledesktop.jnlp"
+  	<copy verbose="${verbose.copy}"
+  		  file="${source.etc}/jnlp/bibledesktop.jnlp"
           tofile="${target.installed}/bibledesktop.jnlp"
           filtering="true"
           preservelastmodified="true">
@@ -140,7 +138,8 @@
     </fixcrlf>
 
   	<!-- Build the Windows installers from the installed/signed jars -->
-  	<copy todir="${target.installed}"
+  	<copy verbose="${verbose.copy}"
+  		  todir="${target.installed}"
           filtering="true"
           preservelastmodified="true">
       <fileset dir="${source.etc}/installer/win32">
@@ -150,7 +149,8 @@
         <filter token="release.version" value="${release.version}"/>
       </filterset>
     </copy>
-  	<copy todir="${target.installed}"
+  	<copy verbose="${verbose.copy}"
+  		  todir="${target.installed}"
           preservelastmodified="true">
       <fileset dir="${source.etc}/installer/win32">
         <include name="*.ico"/>
